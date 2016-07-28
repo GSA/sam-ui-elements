@@ -1,0 +1,23 @@
+{
+  "name": "samuikitjs",
+  "version": "0.0.01",
+  "description": "Open source UI elements and components generator for the System for Award Management environment.",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshbruce/sam-uikit-js"
+  },
+  "author": "SAM",
+  "contributors": [
+    "Josh Bruce <joshua.bruce@gsa.gov>"
+  ],
+  "license": "SEE LICENSE in LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/joshbruce/sam-uikit-js/issues"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
