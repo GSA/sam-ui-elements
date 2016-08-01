@@ -2,8 +2,7 @@
   "name": "samuikitjs",
   "version": "0.0.01",
   "description": "Open source UI elements and components generator for the System for Award Management environment.",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/joshbruce/sam-uikit-js"
@@ -16,8 +15,21 @@
   "bugs": {
     "url": "https://github.com/joshbruce/sam-uikit-js/issues"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
+    "browserify": "^5.10.0",
+    "chai": "^3.5.0",
+    "gulp": "^3.8.7",
+    "gulp-browserify": "^0.5.0",
+    "gulp-clean": "^0.3.1",
+    "gulp-concat": "^2.3.4",
+    "gulp-connect": "^2.0.6",
+    "gulp-jshint": "^1.8.4",
+    "gulp-minify-css": "^0.3.7",
+    "gulp-mocha": "^2.2.0",
+    "gulp-uglify": "^0.3.1",
+    "gulp-util": "^3.0.7",
+    "mocha": "^2.5.3",
+    "run-sequence": "^1.1.4"
   }
 }
