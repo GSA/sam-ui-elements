@@ -1,6 +1,6 @@
 'use strict';
 var expect = require('chai').expect;
-var Alerts = require('../../src/js/formcontrols/alerts.js');
+var Alerts = require('../../src/js/components/alerts.js');
 
 describe('Alerts', function() {
     it('should exist', function() {        
