@@ -10,12 +10,14 @@
 // 	display: none !important;
 // }
 
-a:visited{
+a:visited{ 
     color: $color-primary !important;
 }
+
 .usa-sidenav-list a:visited {
     color: $color-base !important;
 }
+
 .flexcontainer {
     display: flex;
     /* or inline-flex */
@@ -27,6 +29,7 @@ a:visited{
     flex: 1 1 auto;
     /*none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]*/
 }
+
 .clearfix:after {
      visibility: hidden;
      display: block;
@@ -98,7 +101,6 @@ a:visited{
     filter: alpha(opacity=$opacity-ie); //IE8
 }
 
-// joe's stuff
 @mixin panel($bgcolor, $padding) {
     display: block;
     padding: $padding;
@@ -117,16 +119,6 @@ hr {
     text-transform: uppercase;
     font-size: .8em;
     margin-bottom: .4em;
-}
-
-.usa-label {
-    text-transform: none;
-    padding: .2em 1em .2em 1em;
-}
-
-.header {
-    padding: 30.5px 0 30.5px 0;
-    background: $color-white;
 }
 
 .centered {
@@ -179,186 +171,4 @@ hr {
 
 .iae-border-top {
     border-top: 1px solid #c3c3c3;
-}
-
-.usa-sidenav-list li {
-    font-size: 1.4rem;
-}
-
-button.usa-button-primary-alt {
-    color: $color-white;
-    margin: 2em 0 1.5em 0;
-}
-
-// Section Specific Styling
-section.header {
-    border-bottom: 1px solid rgba(#000000, .2);
-    box-shadow: 0 2px 4px rgba(1, 2, 2, 0.1);
-    z-index: 100;
-    .logo {
-        display: block;
-        height: 84px;
-        margin: 0px auto;
-        img {
-            max-height: 100%;
-        }
-    }
-}
-
-section.bottom-section {
-    background: $lgtgrey;
-    //border-top:1px solid darken($lgtgrey, 10%);
-    .info-box.panel {
-        border: none;
-    }
-}
-
-// Individual Element Styling
-h1.subHead {
-    font-size: 1.7em;
-    margin-bottom: 1em;
-    &.veticalCenter {
-        margin: 1em 0 .75em 0;
-    }
-    &.timeLine {
-        margin-bottom: 2.3em
-    }
-}
-
-h3.subHead {
-    color: $green;
-    margin-bottom: 0px;
-}
-
-.lead.panel {
-    @include panel(rgba(#333333, .85), .7em);
-    //position:absolute;
-    //bottom:0;
-    border: none;
-    //margin-top:20%;
-    .heading {
-        margin: .5em 0 0 0;
-        color: $color-white;
-    }
-    .leadText {
-        margin-top: .5em;
-        color: $color-white;
-    }
-}
-
-.info-box.panel {
-    @include panel($lgtgrey, 1.5em);
-    margin-top: 1em;
-    .icon img {
-        height: 48px;
-    }
-    p {
-        margin-top: .07em;
-    }
-}
-
-.bottomLink {
-    img {
-        padding-bottom: 4px;
-    }
-    a {
-        display: block;
-        padding: 5px 0px;
-        height: 40px;
-    }
-    a img:hover {
-        border-bottom: 4px solid $green;
-    }
-}
-
-button.signUp {
-    margin: 0;
-    padding: 1.55rem 2rem;
-}
-
-.tagList {
-    margin-top: 1.1em;
-    li {
-        display: inline-block;
-        float: right;
-        margin-left: 1em
-    }
-}
-
-p.alertText {
-    margin-top: 0px;
-    a {
-        text-decoration: none;
-        margin-left: 1em;
-    }
-    a:first-child {
-        margin-left: 0px;
-    }
-}
-
-p.alertTitle {
-    margin: 0px;
-    font-size: 1em;
-    a {
-        color: #000000;
-        text-decoration: none;
-    }
-}
-
-.loadmore {
-    display: block;
-    width: 100%;
-    height: 30px;
-    text-align: center;
-    border-top: 1px solid #CCCCCC;
-    padding-top: 1em;
-    margin-top: 4em;
-}
-
-.breadCrumbs a {
-    font-size: .7em;
-}
-
-.alertContainer {
-    padding-left: 2.5em;
-    width: 75% !important;
-}
-
-.sideBarContainer {
-    width: 21% !important;
-}
-
-.secondary-nav {
-    padding-left: 4em;
-    border-bottom: 1px solid #EBEBEB;
-    .subcategories {
-        margin: 1em 0;
-        :nth-child(2) {
-            margin-left: .5em;
-        }
-        li {
-            display: inline-block;
-            list-style: none;
-            //margin-left:.5em;
-            a.usa-current {
-                background: $color-primary;
-                color: $color-white;
-                padding: .3em;
-                border-radius: 3px;
-                font-weight: bold;
-            }
-            span {
-                padding: 0 .5em;
-            }
-        }
-        .currentCategory {
-            font-size: 2rem;
-            font-weight: 700;
-        }
-    }
-}
-
-button.fbo,
-button.cfda {
-    margin: 10px 0 10px 0;
 }
