@@ -5,7 +5,7 @@
 // Styleguide globals.grid
 
 
-@mixin maring-and-padding-spacing( $spacing ) {
+@mixin margin-and-padding-spacing( $spacing ) {
   @for $i from 1 to 11 {
      // Margin
      %margin-#{$i}x { margin: $spacing * $i !important; }
@@ -40,7 +40,7 @@
 }
 
 $spacing: 5px;
-@include maring-and-padding-spacing($spacing);
+@include margin-and-padding-spacing($spacing);
 
 .m_All-3x { @extend %margin-3x; }
 .m_All-4x { @extend %margin-4x; }
