@@ -5,7 +5,7 @@
   "scripts": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/joshbruce/sam-uikit-js"
+    "url": "git+https://github.com/GSA/sam-uikit-js"
   },
   "author": "SAM",
   "contributors": [
@@ -13,7 +13,7 @@
   ],
   "license": "SEE LICENSE in LICENSE.md",
   "bugs": {
-    "url": "https://github.com/joshbruce/sam-uikit-js/issues"
+    "url": "https://github.com/GSA/sam-uikit-js/issues"
   },
   "dependencies": {},
   "devDependencies": {
