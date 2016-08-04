@@ -1,0 +1,59 @@
+// Footer CSS ------- //
+body {
+	margin: 0;
+}
+.iae-footer {
+	width: 100%;
+	padding-bottom: 3em;
+	background-color: $color-primary-darkest;
+	font-family: $font-sans;
+	font-size: $em-base;
+	z-index: 10010;
+
+	a {
+		&,
+		&:focus,
+		&:visited,
+		&:hover,
+		&:active {
+			color: $color-white !important;
+			box-shadow: none;
+			text-decoration: none;
+		}
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+.iae-footer-body {
+	padding-top: 3em;
+
+	.image-wrap {
+		display: inline-block;
+	}
+
+	img {
+    	width: 100px;
+    	height: 100px; 
+	}
+	.iae-footer-logo {
+		// Because IE puts borders around everything
+		a {
+			img {
+				border: none;
+			}
+		}
+	}
+	.iae-footer-head {
+		font-family: $font-sans;
+		color: $color-white;
+	}
+	.iae-footer-links {
+		font-family: $font-sans;
+		font-size: 15px;
+		span {
+			font-weight: $bold-font;
+		}
+	}
+}
