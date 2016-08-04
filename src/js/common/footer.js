@@ -1,6 +1,6 @@
 var Footer;
 
-Labels = {
+Footer = {
     Footer: function(config) {
     	var html =  '<section id="iae-footer"><footer><div class="iae-footer">' +
 						'<div class="iae-footer-body usa-grid">' +
