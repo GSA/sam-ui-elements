@@ -10,9 +10,13 @@ var clean = require('gulp-clean');
 var browserify = require('gulp-browserify');
 var concat = require('gulp-concat');
 var runSequence = require('run-sequence');
+var sass = require('gulp-sass');
 
 var mocha = require('gulp-mocha');
 var util = require('gulp-util');
+
+var DIST_DIR = 'dist';
+var SASS_DIR = 'src/assets/_scss/**/*.scss';
 
 // tasks
 gulp.task('lint', function() {
@@ -80,6 +84,12 @@ gulp.task('test', function () {
  
 gulp.task('watch-test', function () {
     gulp.watch(['src/**',  'test/**'], ['test']);
+});
+
+gulp.task('sass', function() {
+    return gulp.src(SASS_DIR)
+        .pipe(sass())
+        .pipe(gulp.dest(DIST_DIR + '/css'))
 });
 
 /*
