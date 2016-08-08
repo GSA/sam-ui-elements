@@ -23,9 +23,14 @@ Selects = {
       html.push('</label>');
       html.push('<select name="'+name+'" id="'+name+'">');
       for (var optionValue in options) {
+        var isSelected = false;
+        if (config.selected !== undefined && config.selected.indexOf(optionValue) > -1) {
+          isSelected = true;
+        }
         var optionConfig = {
           value: optionValue,
-          title: options[optionValue]
+          title: options[optionValue],
+          selected: isSelected
         }
         var optionHtml = this.option(optionConfig);
         html.push(optionHtml);
@@ -42,8 +47,9 @@ Selects = {
       // make configuration members concrete
       var value = config.value;
       var title = config.title;
+      var selected = (config.selected) ? ' selected' : '';
       
-      return '<option value="'+value+'">'+title+'</option>';
+      return '<option value="'+value+'"'+selected+'>'+title+'</option>';
     },
     isInvalidConfiguration: function(config) {
 
