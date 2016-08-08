@@ -33,19 +33,25 @@ Selects = {
     isInvalidConfiguration(config) {
 
       if (config.label == undefined || config.label.length < 1) {
-        console.log('Selects: label is required member.');
+        console.log('Selects: "label" is required member.');
         console.log(config);
         return true;
 
       } else if (config.name == undefined || config.name.length < 1) {
-        console.log('Selects: name is required member.');
+        console.log('Selects: "name" is required member.');
         console.log(config);
         return true;
 
       } else if (config.type == undefined || config.type.length < 1) {
-        console.log('Selects: type is required member.');
+        console.log('Selects: "type" is required member.');
         console.log(config);
         return true;
+
+      } else if (config.options == undefined || config.options.length < 1) {
+        console.log('Selects: "options" is required member.');
+        console.log(config);
+        return true;
+
       }
       return false;
     }
