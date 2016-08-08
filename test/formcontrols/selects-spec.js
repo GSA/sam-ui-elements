@@ -8,20 +8,6 @@ describe('#SelectExists', function() {
   });
 });
 
-// TODO: Testing required members failing gracefully too fragile this way.
-// 
-// describe('#SelectLabelRequired)', function() {
-//   it('should return empty string', function() {
-
-//     var expected = '';
-
-//     var config = {};
-//     var actual = Selects.select(config);
-
-//     expect(actual).to.eql(expected);
-//   });
-// });
-
 describe('#SelectLabelIsCorrect)', function() {
   it('should return correct label', function() {
 
@@ -39,7 +25,11 @@ describe('#SelectLabelIsCorrect)', function() {
       type: 'dropdown',
       label: 'Hello',
       name: 'options',
-      options: {}
+      options: {
+        'value1': 'Option A',
+        'value2': 'Option B',
+        'value3': 'Option C'
+      }
     };
     var actual = Selects.select(config);
     expect(actual).to.equal(expected);
@@ -48,28 +38,16 @@ describe('#SelectLabelIsCorrect)', function() {
       type: 'dropdown',
       label: 'Devious',
       name: 'options',
-      options: {}
+      options: {
+        'value1': 'Option A',
+        'value2': 'Option B',
+        'value3': 'Option C'        
+      }
     };
     var actual = Selects.select(config);
     expect(actual).to.not.equal(expected);
   });
 });
-
-// TODO: Testing required members failing gracefully too fragile this way.
-// 
-// describe('#SelectNameRequired)', function() {
-//   it('should return empty string', function() {
-
-//     var expected = '';
-
-//     var config = {
-//       label: 'Dropdown label',
-//     };
-//     var actual = Selects.select(config);
-
-//     expect(actual).to.eql(expected);
-//   });
-// });
 
 describe('#SelectNameIsCorrect)', function() {
   it('should return correct name', function() {
@@ -88,7 +66,11 @@ describe('#SelectNameIsCorrect)', function() {
       type: 'dropdown',
       label: 'Dropdown label',
       name: 'something',
-      options: {}
+      options: {
+        'value1': 'Option A',
+        'value2': 'Option B',
+        'value3': 'Option C'
+      }
     };
     var actual = Selects.select(config);
 
@@ -96,33 +78,24 @@ describe('#SelectNameIsCorrect)', function() {
   });
 });
 
-// TODO: Testing required members failing gracefully too fragile this way.
-// 
-// describe('#SelectTypeRequired)', function() {
-//   it('should return empty string', function() {
+describe('#SelectOptionsAreTheExpectedValues)', function() {
+  it('should return correct dropdowns', function() {
 
-//     var expected = '';
-
-//     var config = {
-//       label: 'hello',
-//       name: 'hello'
-//     };
-//     var actual = Selects.select(config);
-
-//     expect(actual).to.eql(expected);
-//   });
-// });
-
-describe('#SelectOptionsAreRequired)', function() {
-  it('should return empty string', function() {
-
-    var expected = '';
+    var expected =
+      '<div>'+
+        '<label for="options">Dropdown label</label>'+
+        '<select name="options" id="options">'+
+          '<option value="value1">Option A</option>'+
+        '</select>'+
+      '</div>';
 
     var config = {
       type: 'dropdown',
       label: 'Dropdown label',
       name: 'options',
-      opttions: {}
+      options: {
+        'value1': 'Option A'
+      }
     };
     var actual = Selects.select(config);
 
@@ -147,7 +120,11 @@ describe('#SelectInitial)', function() {
       type: 'dropdown',
       label: 'Dropdown label',
       name: 'options',
-      options: {}
+      options: {
+        'value1': 'Option A',
+        'value2': 'Option B',
+        'value3': 'Option C'
+      }
     };
     var actual = Selects.select(config);
 

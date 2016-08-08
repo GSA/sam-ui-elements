@@ -11,8 +11,9 @@ Selects = {
 
       // make configuration members concrete
       // required members
-      var label = config.label;
-      var name = config.name;
+      var label   = config.label;
+      var name    = config.name;
+      var options = config.options;
 
       // build string parts
       var html = [];
@@ -21,9 +22,11 @@ Selects = {
       html.push(label);
       html.push('</label>');
       html.push('<select name="'+name+'" id="'+name+'">');
-      html.push('<option value="value1">Option A</option>');
-      html.push('<option value="value2">Option B</option>');
-      html.push('<option value="value3">Option C</option>');
+      for (var value in options) {
+        html.push('<option value="'+value+'">'+options[value]+'</option>');
+      }
+      // html.push('<option value="value2">Option B</option>');
+      // html.push('<option value="value3">Option C</option>');
       html.push('</select>');
       html.push('</div>');
 
@@ -33,22 +36,23 @@ Selects = {
     isInvalidConfiguration(config) {
 
       if (config.label == undefined || config.label.length < 1) {
-        console.log('Selects: "label" is required member.');
+        console.log('Selects: "label" is required member. And must have value.');
         console.log(config);
         return true;
 
       } else if (config.name == undefined || config.name.length < 1) {
-        console.log('Selects: "name" is required member.');
+        console.log('Selects: "name" is required member. And must have value.');
         console.log(config);
         return true;
 
       } else if (config.type == undefined || config.type.length < 1) {
-        console.log('Selects: "type" is required member.');
+        console.log('Selects: "type" is required member. And must have value');
         console.log(config);
         return true;
 
-      } else if (config.options == undefined || Object.keys(config.options).length < 1) {
+      } else if (config.options == undefined || Object.keys(config.options).length == 0) {
         console.log('Selects: "options" is required member, and must have at least one.');
+        console.log(Object.keys(config.options).length);
         console.log(config);
         return true;
 
