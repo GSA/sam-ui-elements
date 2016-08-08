@@ -22,18 +22,30 @@ Selects = {
       html.push(label);
       html.push('</label>');
       html.push('<select name="'+name+'" id="'+name+'">');
-      for (var value in options) {
-        html.push('<option value="'+value+'">'+options[value]+'</option>');
+      for (var optionValue in options) {
+        var optionConfig = {
+          value: optionValue,
+          title: options[optionValue]
+        }
+        var optionHtml = this.option(optionConfig);
+        html.push(optionHtml);
+
       }
-      // html.push('<option value="value2">Option B</option>');
-      // html.push('<option value="value3">Option C</option>');
       html.push('</select>');
       html.push('</div>');
 
       // join parts
       return html.join('');
     },
-    isInvalidConfiguration(config) {
+    option: function(config) {
+      // do not need to validate this config, system-generated
+      // make configuration members concrete
+      var value = config.value;
+      var title = config.title;
+      
+      return '<option value="'+value+'">'+title+'</option>';
+    },
+    isInvalidConfiguration: function(config) {
 
       if (config.label == undefined || config.label.length < 1) {
         console.log('Selects: "label" is required member. And must have value.');

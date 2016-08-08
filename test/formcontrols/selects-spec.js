@@ -8,7 +8,7 @@ describe('#SelectExists', function() {
   });
 });
 
-describe('#SelectLabelIsCorrect)', function() {
+describe('#SelectLabelIsCorrect', function() {
   it('should return correct label', function() {
 
     var expected =
@@ -49,7 +49,7 @@ describe('#SelectLabelIsCorrect)', function() {
   });
 });
 
-describe('#SelectNameIsCorrect)', function() {
+describe('#SelectNameIsCorrect', function() {
   it('should return correct name', function() {
 
     var expected = 
@@ -78,7 +78,7 @@ describe('#SelectNameIsCorrect)', function() {
   });
 });
 
-describe('#SelectOptionsAreTheExpectedValues)', function() {
+describe('#SelectOptionsAreTheExpectedValues', function() {
   it('should return correct dropdowns', function() {
 
     var expected =
@@ -96,6 +96,32 @@ describe('#SelectOptionsAreTheExpectedValues)', function() {
       options: {
         'value1': 'Option A'
       }
+    };
+    var actual = Selects.select(config);
+
+    expect(actual).to.eql(expected);
+  });
+});
+
+describe('#SelectOptionsCanPreselect', function() {
+  it('should return correct dropdowns, preselected option', function() {
+
+    var expected =
+      '<div>'+
+        '<label for="options">Dropdown label</label>'+
+        '<select name="options" id="options">'+
+          '<option value="value1" selected>Option A</option>'+
+        '</select>'+
+      '</div>';
+
+    var config = {
+      type: 'dropdown',
+      label: 'Dropdown label',
+      name: 'options',
+      options: {
+        'value1': 'Option A'
+      },
+      selected: ['value1']
     };
     var actual = Selects.select(config);
 
