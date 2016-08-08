@@ -47,8 +47,8 @@ Selects = {
         console.log(config);
         return true;
 
-      } else if (config.options == undefined || config.options.length < 1) {
-        console.log('Selects: "options" is required member.');
+      } else if (config.options == undefined || Object.keys(config.options).length < 1) {
+        console.log('Selects: "options" is required member, and must have at least one.');
         console.log(config);
         return true;
 
