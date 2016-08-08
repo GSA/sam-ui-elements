@@ -31,8 +31,12 @@ Selects = {
     isInvalidConfiguration(config) {
 
       if (config.label == undefined || config.label.length < 1) {
-        console.log('Selects: invalid configuration.');
         console.log('Selects: label is required member.');
+        console.log(config);
+        return true;
+
+      } else if (config.name == undefined || config.name.length < 1) {
+        console.log('Selects: name is required member.');
         console.log(config);
         return true;
       }

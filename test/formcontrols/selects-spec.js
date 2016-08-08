@@ -34,16 +34,32 @@ describe('#SelectLabelIsCorrect)', function() {
       '</div>';    
 
     var config = {
-      label: 'Hello'
+      label: 'Hello',
+      name: 'options'
     };
     var actual = Selects.select(config);
     expect(actual).to.equal(expected);
 
     config = {
-      label: 'Devious'
+      label: 'Devious',
+      name: 'options'
     };
     var actual = Selects.select(config);
     expect(actual).to.not.equal(expected);
+  });
+});
+
+describe('#SelectNameRequired)', function() {
+  it('should return empty string', function() {
+
+    var expected = '';
+
+    var config = {
+      name: 'hello'
+    };
+    var actual = Selects.select(config);
+
+    expect(actual).to.eql(expected);
   });
 });
 
