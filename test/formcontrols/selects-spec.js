@@ -63,6 +63,29 @@ describe('#SelectNameRequired)', function() {
   });
 });
 
+describe('#SelectNameIsCorrect)', function() {
+  it('should return correct name', function() {
+
+    var expected = 
+      '<div>'+
+        '<label for="something">Dropdown label</label>'+
+        '<select name="something" id="something">'+
+          '<option value="value1">Option A</option>'+
+          '<option value="value2">Option B</option>'+
+          '<option value="value3">Option C</option>'+
+        '</select>'+
+      '</div>';    
+
+    var config = {
+      label: 'Dropdown label',
+      name: 'something'
+    };
+    var actual = Selects.select(config);
+
+    expect(actual).to.eql(expected);
+  });
+});
+
 describe('#SelectInitial)', function() {
   it('should return dropdown', function() {
 
