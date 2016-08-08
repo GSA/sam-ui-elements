@@ -14,7 +14,7 @@ describe('#SelectInitial)', function() {
     var expected = 
       '<div>'+
         '<label for="options">Dropdown label</label>'+
-        '<select name="options" id="options">'+
+        '<select id="options" name="options">'+
           '<option value="value1">Option A</option>'+
           '<option value="value2">Option B</option>'+
           '<option value="value3">Option C</option>'+
@@ -43,7 +43,7 @@ describe('#SelectLabelIsCorrect', function() {
     var expected =
       '<div>'+
         '<label for="options">Hello</label>'+
-        '<select name="options" id="options">'+
+        '<select id="options" name="options">'+
           '<option value="value1">Option A</option>'+
           '<option value="value2">Option B</option>'+
           '<option value="value3">Option C</option>'+
@@ -84,7 +84,7 @@ describe('#SelectNameIsCorrect', function() {
     var expected = 
       '<div>'+
         '<label for="something">Dropdown label</label>'+
-        '<select name="something" id="something">'+
+        '<select id="something" name="something">'+
           '<option value="value1">Option A</option>'+
           '<option value="value2">Option B</option>'+
           '<option value="value3">Option C</option>'+
@@ -113,7 +113,7 @@ describe('#SelectOptionsAreTheExpectedValues', function() {
     var expected =
       '<div>'+
         '<label for="options">Dropdown label</label>'+
-        '<select name="options" id="options">'+
+        '<select id="options" name="options">'+
           '<option value="value1">Option A</option>'+
         '</select>'+
       '</div>';
@@ -132,13 +132,13 @@ describe('#SelectOptionsAreTheExpectedValues', function() {
   });
 });
 
-describe('#SelectOptionsCanPreselect', function() {
+describe.only('#SelectOptionsCanPreselect', function() {
   it('should return correct dropdowns, preselected option', function() {
 
     var expected =
       '<div>'+
         '<label for="options">Dropdown label</label>'+
-        '<select name="options" id="options">'+
+        '<select id="options" name="options">'+
           '<option value="value1" selected>Option A</option>'+
         '</select>'+
       '</div>';
@@ -209,7 +209,7 @@ describe('#SelectOptionsCanBeDisabled', function() {
   });
 });
 
-describe.only('#RadioInitial)', function() {
+describe('#RadioInitial)', function() {
   it('should return radio select', function() {
 
     var expected = 
@@ -218,7 +218,7 @@ describe.only('#RadioInitial)', function() {
           '<legend>Historical figures 2</legend>'+
           '<ul class="usa-unstyled-list">'+
             '<li>'+
-              '<input id="stanton" type="radio" checked="" name="historical-figures-2" value="stanton">'+
+              '<input id="stanton" type="radio" name="historical-figures-2" value="stanton">'+
               '<label for="stanton">Elizabeth Cady Stanton</label>'+
             '</li>'+
             '<li>'+

@@ -57,6 +57,10 @@ Selects = {
       return html.join('');
     },
     // @private
+    processSelect: function(config) {
+
+    },
+    // @private
     option: function(config) {
       // do not need to validate this config, system-generated
       // make configuration members concrete
