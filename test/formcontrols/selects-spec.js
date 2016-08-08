@@ -129,7 +129,7 @@ describe('#SelectOptionsCanPreselect', function() {
   });
 });
 
-describe.only('#SelectOptionsCanOnlyHaveOneSelection', function() {
+describe('#SelectOptionsCanOnlyHaveOneSelection', function() {
   it('should return empty string, too many preselected option', function() {
 
     var expected = '';
@@ -143,6 +143,36 @@ describe.only('#SelectOptionsCanOnlyHaveOneSelection', function() {
         'value2': 'Option B'
       },
       selected: ['value1', 'value2']
+    };
+    var actual = Selects.select(config);
+
+    expect(actual).to.eql(expected);
+  });
+});
+
+describe.only('#SelectOptionsCanBeDisabled', function() {
+  it('should be able to disable select', function() {
+
+    var expected = 
+      '<div>'+
+        '<label for="options">Dropdown label</label>'+
+        '<select name="options" id="options" disabled>'+
+          '<option value="value1">Option A</option>'+
+          '<option value="value2">Option B</option>'+
+          '<option value="value3">Option C</option>'+
+        '</select>'+
+      '</div>';
+
+    var config = {
+      type: 'dropdown',
+      label: 'Dropdown label',
+      name: 'options',
+      options: {
+        'value1': 'Option A',
+        'value2': 'Option B'
+      },
+      selected: ['value1'],
+      disabled: ['value1']
     };
     var actual = Selects.select(config);
 

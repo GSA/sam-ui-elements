@@ -86,6 +86,8 @@ Selects = {
         //       introduced, there are only two places that defect could be:
         //       1. Either the configuration is invalid.
         //       2. The build is not working properly.
+        //       3. NOT - state was mutated somewhere while the object was 
+        //          being passed around the system. See functional programming.
         console.log('Selects: A select dropdown can only have one pre-selected value.');
         console.log(Object.keys(config.selected).length);
         console.log(config);
