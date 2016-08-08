@@ -110,6 +110,22 @@ describe('#SelectNameIsCorrect)', function() {
 //   });
 // });
 
+describe('#SelectOptionsAreRequired)', function() {
+  it('should return empty string', function() {
+
+    var expected = '';
+
+    var config = {
+      type: 'dropdown',
+      label: 'Dropdown label',
+      name: 'options'
+    };
+    var actual = Selects.select(config);
+
+    expect(actual).to.eql(expected);
+  });
+});
+
 describe('#SelectInitial)', function() {
   it('should return dropdown', function() {
 
