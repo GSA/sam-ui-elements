@@ -24,10 +24,6 @@ describe('#SelectLabelRequired)', function() {
 describe('#SelectInitial)', function() {
   it('should return dropdown', function() {
 
-    var config = {
-
-    }
-
     var expected = 
       '<div>'+
         '<label for="options">Dropdown label</label>'+
@@ -38,7 +34,9 @@ describe('#SelectInitial)', function() {
         '</select>'+
       '</div>';
 
-    var config = {};
+    var config = {
+      label: 'Dropdown label'
+    };
     var actual = Selects.select(config);
 
     expect(actual).to.eql(expected);
