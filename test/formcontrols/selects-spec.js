@@ -20,6 +20,32 @@ describe('#SelectLabelRequired)', function() {
   });
 });
 
+describe('#SelectLabelIsCorrect)', function() {
+  it('should return correct label', function() {
+
+    var expected =
+      '<div>'+
+        '<label for="options">Hello</label>'+
+        '<select name="options" id="options">'+
+          '<option value="value1">Option A</option>'+
+          '<option value="value2">Option B</option>'+
+          '<option value="value3">Option C</option>'+
+        '</select>'+
+      '</div>';    
+
+    var config = {
+      label: 'Hello'
+    };
+    var actual = Selects.select(config);
+    expect(actual).to.equal(expected);
+
+    config = {
+      label: 'Devious'
+    };
+    var actual = Selects.select(config);
+    expect(actual).to.not.equal(expected);
+  });
+});
 
 describe('#SelectInitial)', function() {
   it('should return dropdown', function() {
