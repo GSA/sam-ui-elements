@@ -6,6 +6,7 @@ Selects = {
       if (this.isInvalidConfiguration(config)) {
         // configuration is not valid
         // return early without crash
+        // errors logged in console
         return '';
       }
 
@@ -14,6 +15,8 @@ Selects = {
       var label   = config.label;
       var name    = config.name;
       var options = config.options;
+      var hasSelected = (config.selected !== undefined && config.selected.indexOf(optionValue) > -1);
+      var selectedValues = (hasSelected) ? config.selected : [];
 
       // build string parts
       var html = [];
@@ -21,14 +24,10 @@ Selects = {
       html.push('<label for="'+name+'">'+label+'</label>');
       html.push('<select name="'+name+'" id="'+name+'">');
       for (var optionValue in options) {
-        var isSelected = false;
-        if (config.selected !== undefined && config.selected.indexOf(optionValue) > -1) {
-          isSelected = true;
-        }
         var optionConfig = {
           value: optionValue,
           title: options[optionValue],
-          selected: isSelected
+          selected: selectedValues
         }
         var optionHtml = this.option(optionConfig);
         html.push(optionHtml);
