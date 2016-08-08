@@ -13,9 +13,9 @@ describe('Buttons', function() {
 describe('#Button)', function() {
     it('it should return a string', function() {
         
-        var dataItem = {type:"Primry-Default", data:"Default"};
-        var expected = '<button>Default</button>';
-        var actual = Buttons.Button(dataItem);
+        var dataItem = {type:"default", data:"Primary"};
+        var expected = '<button>Primary</button>';
+        var actual = Buttons.button(dataItem);
         expect(actual).to.eql(expected);
     });
 });
