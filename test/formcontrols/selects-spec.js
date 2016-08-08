@@ -77,7 +77,8 @@ describe('#SelectInitial)', function() {
       '</div>';
 
     var config = {
-      label: 'Dropdown label'
+      label: 'Dropdown label',
+      name: 'options'
     };
     var actual = Selects.select(config);
 
