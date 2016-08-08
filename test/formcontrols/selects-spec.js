@@ -38,7 +38,8 @@ describe('#SelectLabelIsCorrect)', function() {
     var config = {
       type: 'dropdown',
       label: 'Hello',
-      name: 'options'
+      name: 'options',
+      options: {}
     };
     var actual = Selects.select(config);
     expect(actual).to.equal(expected);
@@ -46,7 +47,8 @@ describe('#SelectLabelIsCorrect)', function() {
     config = {
       type: 'dropdown',
       label: 'Devious',
-      name: 'options'
+      name: 'options',
+      options: {}
     };
     var actual = Selects.select(config);
     expect(actual).to.not.equal(expected);
@@ -85,7 +87,8 @@ describe('#SelectNameIsCorrect)', function() {
     var config = {
       type: 'dropdown',
       label: 'Dropdown label',
-      name: 'something'
+      name: 'something',
+      options: {}
     };
     var actual = Selects.select(config);
 
@@ -118,7 +121,8 @@ describe('#SelectOptionsAreRequired)', function() {
     var config = {
       type: 'dropdown',
       label: 'Dropdown label',
-      name: 'options'
+      name: 'options',
+      opttions: {}
     };
     var actual = Selects.select(config);
 
@@ -142,7 +146,8 @@ describe('#SelectInitial)', function() {
     var config = {
       type: 'dropdown',
       label: 'Dropdown label',
-      name: 'options'
+      name: 'options',
+      options: {}
     };
     var actual = Selects.select(config);
 
