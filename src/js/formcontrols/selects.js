@@ -3,6 +3,12 @@ var Selects;
 Selects = {
     select: function(config) {
 
+      if (this.isInvalidConfiguration(config)) {
+        // configuration is not valid
+        // return early without crash
+        return '';
+      }
+
       // build string parts
       var html = [];
       html.push('<div>');
@@ -16,7 +22,18 @@ Selects = {
 
       // join parts
       return html.join('');
+    },
+    isInvalidConfiguration(config) {
+
+      if (config.label == undefined || config.label.length < 1) {
+        console.log('Selects: invalid configuration.');
+        console.log('Selects: label is required member.');
+        console.log(config);
+        return true;
+      }
+      return false;
     }
+
 };
 
 module.exports = Selects;

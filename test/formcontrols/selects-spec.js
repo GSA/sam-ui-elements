@@ -8,11 +8,22 @@ describe('#SelectExists', function() {
   });
 });
 
+describe('#SelectLabelRequired)', function() {
+  it('should return empty string', function() {
+
+    var expected = '';
+
+    var config = {};
+    var actual = Selects.select(config);
+
+    expect(actual).to.eql(expected);
+  });
+});
 
 
-describe('#Select)', function() {
+describe('#SelectInitial)', function() {
   it('should return dropdown', function() {
-    console.log('test found');
+
     var config = {
 
     }
