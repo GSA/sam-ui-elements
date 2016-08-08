@@ -18,9 +18,7 @@ Selects = {
       // build string parts
       var html = [];
       html.push('<div>');
-      html.push('<label for="'+name+'">');
-      html.push(label);
-      html.push('</label>');
+      html.push('<label for="'+name+'">'+label+'</label>');
       html.push('<select name="'+name+'" id="'+name+'">');
       for (var optionValue in options) {
         var isSelected = false;
@@ -74,7 +72,26 @@ Selects = {
         console.log(config);
         return true;
 
+      } else if (config.selected !== undefined && config.selected.length > 1) {
+        // Note: A select dropdown can only have one pre-selected option.
+        //       We could solve this by:
+        //       1. Only paying attention to the first one during the build.
+        //       2. Removing all but the first one from config.selected.
+        //       3. Something else...??
+        //       
+        //       However, mutating state on the object passed in could make
+        //       tracking down defects related to the way developers setup
+        //       the configuration in the first place. Therefore, this is an
+        //       implementation rule that must be followed. If a bug is
+        //       introduced, there are only two places that defect could be:
+        //       1. Either the configuration is invalid.
+        //       2. The build is not working properly.
+        console.log('Selects: A select dropdown can only have one pre-selected value.');
+        console.log(Object.keys(config.selected).length);
+        console.log(config);
+        return true;
       }
+
       return false;
     }
 

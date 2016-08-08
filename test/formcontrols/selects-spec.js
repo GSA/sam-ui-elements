@@ -129,6 +129,27 @@ describe('#SelectOptionsCanPreselect', function() {
   });
 });
 
+describe.only('#SelectOptionsCanOnlyHaveOneSelection', function() {
+  it('should return empty string, too many preselected option', function() {
+
+    var expected = '';
+
+    var config = {
+      type: 'dropdown',
+      label: 'Dropdown label',
+      name: 'options',
+      options: {
+        'value1': 'Option A',
+        'value2': 'Option B'
+      },
+      selected: ['value1', 'value2']
+    };
+    var actual = Selects.select(config);
+
+    expect(actual).to.eql(expected);
+  });
+});
+
 describe('#SelectInitial)', function() {
   it('should return dropdown', function() {
 
