@@ -41,6 +41,11 @@ Selects = {
         console.log('Selects: name is required member.');
         console.log(config);
         return true;
+
+      } else if (config.type == undefined || config.type.length < 1) {
+        console.log('Selects: type is required member.');
+        console.log(config);
+        return true;
       }
       return false;
     }
