@@ -12,17 +12,34 @@ Selects = {
 
       // make configuration members concrete
       // required members
-      var label   = config.label;
-      var name    = config.name;
+      var label = config.label;
+      var name = config.name;
+
       var options = config.options;
       var hasSelected = (config.selected !== undefined && config.selected.indexOf(optionValue) > -1);
-      var selectedValues = (hasSelected) ? config.selected : [];
+      
+      var selectedValues = (hasSelected) 
+        ? config.selected 
+        : [];
+
+      var hasDisabled = (config.disabled !== undefined && config.disabled.length > 0);
+      var disabled = (hasDisabled) 
+        ? config.disabled 
+        : [];
 
       // build string parts
       var html = [];
       html.push('<div>');
       html.push('<label for="'+name+'">'+label+'</label>');
-      html.push('<select name="'+name+'" id="'+name+'">');
+
+      if (hasDisabled) {
+        html.push('<select id="'+name+'" name="'+name+'" disabled>');
+
+      } else {
+        html.push('<select id="'+name+'" name="'+name+'">');
+
+      }
+      
       for (var optionValue in options) {
         var optionConfig = {
           value: optionValue,
@@ -39,15 +56,19 @@ Selects = {
       // join parts
       return html.join('');
     },
+    // @private
     option: function(config) {
       // do not need to validate this config, system-generated
       // make configuration members concrete
       var value = config.value;
       var title = config.title;
-      var selected = (config.selected) ? ' selected' : '';
+      var selected = (config.selected !== undefined && config.selected.length > 0) 
+        ? ' selected' 
+        : '';
       
       return '<option value="'+value+'"'+selected+'>'+title+'</option>';
     },
+    // @private
     isInvalidConfiguration: function(config) {
 
       if (config.label == undefined || config.label.length < 1) {

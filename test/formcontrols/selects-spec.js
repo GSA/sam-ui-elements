@@ -156,7 +156,7 @@ describe.only('#SelectOptionsCanBeDisabled', function() {
     var expected = 
       '<div>'+
         '<label for="options">Dropdown label</label>'+
-        '<select name="options" id="options" disabled>'+
+        '<select id="options" name="options" disabled>'+
           '<option value="value1">Option A</option>'+
           '<option value="value2">Option B</option>'+
           '<option value="value3">Option C</option>'+
@@ -169,9 +169,9 @@ describe.only('#SelectOptionsCanBeDisabled', function() {
       name: 'options',
       options: {
         'value1': 'Option A',
-        'value2': 'Option B'
+        'value2': 'Option B',
+        'value3': 'Option C'
       },
-      selected: ['value1'],
       disabled: ['value1']
     };
     var actual = Selects.select(config);
