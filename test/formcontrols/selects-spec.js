@@ -352,3 +352,28 @@ describe('#CheckboxLegendIsCorrect', function() {
   });
 });
 
+describe('#CheckboxOptionCanBeDisabled', function() {
+  it('should be able to disable a single radio button', function() {
+
+    var expected = 
+      '<div>'+
+        '<fieldset class="usa-fieldset-inputs">'+
+          '<legend>Custom label</legend>'+
+          '<ul class="usa-unstyled-list">'+
+            '<li>'+
+              '<input id="stanton" type="checkbox" name="historical-figures-2" value="stanton" disabled>'+
+              '<label for="stanton">Elizabeth Cady Stanton</label>'+
+            '</li>'+
+          '</ul>'+
+        '</fieldset>'+
+      '</div>'; 
+    var config = checkboxShortConfig;
+    config.type = 'checkbox';
+    config.disabled = ['stanton'];
+
+    var actual = Selects.select(config);
+
+    expect(actual).to.eql(expected);
+  });
+});
+
