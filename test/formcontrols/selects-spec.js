@@ -122,6 +122,19 @@ var checkboxMain =
     '</fieldset>'+
   '</div>';
 
+var checkboxMainShort = 
+    '<div>'+
+      '<fieldset class="usa-fieldset-inputs">'+
+        '<legend>Custom label</legend>'+
+        '<ul class="usa-unstyled-list">'+
+          '<li>'+
+            '<input id="stanton" type="checkbox" name="historical-figures-2" value="stanton">'+
+            '<label for="stanton">Elizabeth Cady Stanton</label>'+
+          '</li>'+
+        '</ul>'+
+      '</fieldset>'+
+    '</div>'; 
+
 var checkboxMainConfig = {
   type: 'checkbox',
   label: 'Historical figures 2',
@@ -130,6 +143,15 @@ var checkboxMainConfig = {
     'stanton': 'Elizabeth Cady Stanton',
     'anthony': 'Susan B. Anthony',
     'tubman': 'Harriet Tubman'
+  }
+};
+
+var checkboxShortConfig = {
+  type: 'checkbox',
+  label: 'Custom label',
+  name: 'historical-figures-2',
+  options: {
+    'stanton': 'Elizabeth Cady Stanton'
   }
 };
 
@@ -319,4 +341,14 @@ describe('#CheckboxInitial)', function() {
   });
 });
 
+describe('#CheckboxLegendIsCorrect', function() {
+  it('should return correct label', function() {
+
+    var expected = checkboxMainShort;
+    var config = checkboxShortConfig;
+
+    var actual = Selects.select(config);
+    expect(actual).to.equal(expected);
+  });
+});
 
