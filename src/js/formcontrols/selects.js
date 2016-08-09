@@ -16,8 +16,7 @@ Selects = {
       var name = config.name;
 
       var options = config.options;
-      var hasSelected = (config.selected !== undefined && config.selected.indexOf(optionValue) > -1);
-      
+      var hasSelected = (config.selected !== undefined && config.selected.length > 0);
       var selectedValues = (hasSelected) 
         ? config.selected 
         : [];
@@ -66,10 +65,9 @@ Selects = {
       // make configuration members concrete
       var value = config.value;
       var title = config.title;
-      var selected = (config.selected !== undefined && config.selected.length > 0) 
+      var selected = (config.selected !== undefined && config.selected.indexOf(value) > -1) 
         ? ' selected' 
         : '';
-      
       return '<option value="'+value+'"'+selected+'>'+title+'</option>';
     },
     // @private

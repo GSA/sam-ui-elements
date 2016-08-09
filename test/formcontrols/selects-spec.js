@@ -132,7 +132,7 @@ describe('#SelectOptionsAreTheExpectedValues', function() {
   });
 });
 
-describe.only('#SelectOptionsCanPreselect', function() {
+describe('#SelectOptionsCanPreselect', function() {
   it('should return correct dropdowns, preselected option', function() {
 
     var expected =
@@ -209,7 +209,7 @@ describe('#SelectOptionsCanBeDisabled', function() {
   });
 });
 
-describe('#RadioInitial)', function() {
+describe.only('#RadioInitial)', function() {
   it('should return radio select', function() {
 
     var expected = 
