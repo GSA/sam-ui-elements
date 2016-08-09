@@ -101,6 +101,38 @@ var radioShortConfig = {
   }
 };
 
+var checkboxMain = 
+  '<div>'+
+    '<fieldset class="usa-fieldset-inputs">'+
+      '<legend>Historical figures 2</legend>'+
+      '<ul class="usa-unstyled-list">'+
+        '<li>'+
+          '<input id="stanton" type="checkbox" name="historical-figures-2" value="stanton">'+
+          '<label for="stanton">Elizabeth Cady Stanton</label>'+
+        '</li>'+
+        '<li>'+
+          '<input id="anthony" type="checkbox" name="historical-figures-2" value="anthony">'+
+          '<label for="anthony">Susan B. Anthony</label>'+
+        '</li>'+
+        '<li>'+
+          '<input id="tubman" type="checkbox" name="historical-figures-2" value="tubman">'+
+          '<label for="tubman">Harriet Tubman</label>'+
+        '</li>'+
+      '</ul>'+
+    '</fieldset>'+
+  '</div>';
+
+var checkboxMainConfig = {
+  type: 'checkbox',
+  label: 'Historical figures 2',
+  name: 'historical-figures-2',
+  options: {
+    'stanton': 'Elizabeth Cady Stanton',
+    'anthony': 'Susan B. Anthony',
+    'tubman': 'Harriet Tubman'
+  }
+};
+
 describe('#SelectInitial)', function() {
   it('should return dropdown', function() {
 
@@ -269,6 +301,17 @@ describe('#RadioOptionCanBeDisabled', function() {
     config.type = 'radio';
     config.disabled = ['stanton'];
 
+    var actual = Selects.select(config);
+
+    expect(actual).to.eql(expected);
+  });
+});
+
+describe('#CheckboxInitial)', function() {
+  it('should return checkbox select', function() {
+
+    var expected = checkboxMain;
+    var config = checkboxMainConfig;
     var actual = Selects.select(config);
 
     expect(actual).to.eql(expected);
