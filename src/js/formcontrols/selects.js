@@ -12,10 +12,55 @@ Selects = {
 
       html = [];
       html.push('<div>');
-      html.push(this.processSelect(config));
+      if (config.type == 'radio') {
+        html.push(this.processRadio(config));
+
+      } else {
+        html.push(this.processSelect(config));
+
+      }
+      
       html.push('</div>');
 
       // join parts
+      return html.join('');
+    },
+    // @private
+    processRadio: function(config) {
+      // make configuration members concrete
+      // required members
+      var label = config.label;
+      var name = config.name;
+
+      var options = config.options;
+      var hasSelected = (config.selected !== undefined && config.selected.length > 0);
+      var selectedValues = (hasSelected) 
+        ? config.selected 
+        : [];
+
+      var hasDisabled = (config.disabled !== undefined && config.disabled.length > 0);
+      var disabled = (hasDisabled) 
+        ? config.disabled 
+        : [];
+
+      // build string parts
+      var html = [];
+      html.push('<fieldset class="usa-fieldset-inputs">');
+      html.push('<legend>'+label+'</legend>');
+      html.push('<ul class="usa-unstyled-list">');
+      for (var optionValue in options) {
+        var optionConfig = {
+          value: optionValue,
+          title: options[optionValue],
+          selected: selectedValues
+        }
+        html.push('<li>');
+        html.push('<input id="'+optionValue+'" type="radio" name="'+name+'" value="'+optionValue+'">');
+        html.push('<label for="'+optionValue+'">'+optionConfig.title+'</label>');
+        html.push('</li>');
+      }
+      html.push('</ul>');
+      html.push('</fieldset>');
       return html.join('');
     },
     // @private
@@ -70,7 +115,9 @@ Selects = {
       var selected = (config.selected !== undefined && config.selected.indexOf(value) > -1) 
         ? ' selected' 
         : '';
-      return '<option value="'+value+'"'+selected+'>'+title+'</option>';
+      
+      var html = '<option value="'+value+'"'+selected+'>'+title+'</option>';
+      return html;
     },
     // @private
     isInvalidConfiguration: function(config) {
