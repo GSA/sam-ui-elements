@@ -10,6 +10,16 @@ Selects = {
         return '';
       }
 
+      html = [];
+      html.push('<div>');
+      html.push(this.processSelect(config));
+      html.push('</div>');
+
+      // join parts
+      return html.join('');
+    },
+    // @private
+    processSelect: function(config) {
       // make configuration members concrete
       // required members
       var label = config.label;
@@ -28,7 +38,6 @@ Selects = {
 
       // build string parts
       var html = [];
-      html.push('<div>');
       html.push('<label for="'+name+'">'+label+'</label>');
 
       if (hasDisabled) {
@@ -50,14 +59,7 @@ Selects = {
 
       }
       html.push('</select>');
-      html.push('</div>');
-
-      // join parts
       return html.join('');
-    },
-    // @private
-    processSelect: function(config) {
-
     },
     // @private
     option: function(config) {

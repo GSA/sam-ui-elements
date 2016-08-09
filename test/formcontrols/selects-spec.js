@@ -209,7 +209,7 @@ describe('#SelectOptionsCanBeDisabled', function() {
   });
 });
 
-describe.only('#RadioInitial)', function() {
+describe('#RadioInitial)', function() {
   it('should return radio select', function() {
 
     var expected = 
