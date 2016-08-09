@@ -55,7 +55,14 @@ Selects = {
           selected: selectedValues
         }
         html.push('<li>');
-        html.push('<input id="'+optionValue+'" type="radio" name="'+name+'" value="'+optionValue+'">');
+
+        if (hasDisabled) {
+          html.push('<input id="'+optionValue+'" type="radio" name="'+name+'" value="'+optionValue+'" disabled>');
+
+        } else {
+          html.push('<input id="'+optionValue+'" type="radio" name="'+name+'" value="'+optionValue+'">');
+
+        }
         html.push('<label for="'+optionValue+'">'+optionConfig.title+'</label>');
         html.push('</li>');
       }
