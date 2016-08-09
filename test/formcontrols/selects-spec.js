@@ -353,7 +353,7 @@ describe('#CheckboxLegendIsCorrect', function() {
 });
 
 describe('#CheckboxOptionCanBeDisabled', function() {
-  it('should be able to disable a single radio button', function() {
+  it('should be able to disable a single checkbox', function() {
 
     var expected = 
       '<div>'+
@@ -370,6 +370,38 @@ describe('#CheckboxOptionCanBeDisabled', function() {
     var config = checkboxShortConfig;
     config.type = 'checkbox';
     config.disabled = ['stanton'];
+
+    var actual = Selects.select(config);
+
+    expect(actual).to.eql(expected);
+  });
+});
+
+describe.only('#CheckboxOptionCanBeDisableMultiple', function() {
+  it('should be able to disable a single checkbox', function() {
+
+    var expected = 
+      '<div>'+
+        '<fieldset class="usa-fieldset-inputs">'+
+          '<legend>Historical figures 2</legend>'+
+          '<ul class="usa-unstyled-list">'+
+            '<li>'+
+              '<input id="stanton" type="checkbox" name="historical-figures-2" value="stanton" disabled>'+
+              '<label for="stanton">Elizabeth Cady Stanton</label>'+
+            '</li>'+
+            '<li>'+
+              '<input id="anthony" type="checkbox" name="historical-figures-2" value="anthony">'+
+              '<label for="anthony">Susan B. Anthony</label>'+
+            '</li>'+
+            '<li>'+
+              '<input id="tubman" type="checkbox" name="historical-figures-2" value="tubman" disabled>'+
+              '<label for="tubman">Harriet Tubman</label>'+
+            '</li>'+
+          '</ul>'+
+        '</fieldset>'+
+      '</div>';    
+    var config = checkboxMainConfig;
+    config.disabled = ['stanton', 'tubman'];
 
     var actual = Selects.select(config);
 
