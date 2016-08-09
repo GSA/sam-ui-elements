@@ -270,6 +270,7 @@ describe('#RadioLegendIsCorrect', function() {
 describe('#RadioOptionsCanPreselect', function() {
   it('should return correct dropdowns, preselected option', function() {
 
+
     var expected = radioMainShort;
     var config = radioShortConfig;
     config.label = 'Custom label'
