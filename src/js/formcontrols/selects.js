@@ -61,7 +61,7 @@ Selects = {
         html.push('<li>');
 
         if (hasDisabled) {
-          html.push('<input id="'+optionValue+'" type="radio" name="'+name+'" value="'+optionValue+'" disabled>');
+          html.push('<input id="'+optionValue+'" type="'+type+'" name="'+name+'" value="'+optionValue+'" disabled>');
 
         } else {
           html.push('<input id="'+optionValue+'" type="'+type+'" name="'+name+'" value="'+optionValue+'">');
