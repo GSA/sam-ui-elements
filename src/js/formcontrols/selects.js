@@ -12,7 +12,7 @@ Selects = {
 
       html = [];
       html.push('<div>');
-      if (config.type == 'radio') {
+      if (config.type == 'radio' || config.type == 'checkbox') {
         html.push(this.processRadio(config));
 
       } else {
@@ -29,6 +29,10 @@ Selects = {
     processRadio: function(config) {
       // make configuration members concrete
       // required members
+      var type = 'radio';
+      if (config.type == 'checkbox') {
+        var type = 'checkbox';
+      }
       var label = config.label;
       var name = config.name;
 
@@ -60,7 +64,7 @@ Selects = {
           html.push('<input id="'+optionValue+'" type="radio" name="'+name+'" value="'+optionValue+'" disabled>');
 
         } else {
-          html.push('<input id="'+optionValue+'" type="radio" name="'+name+'" value="'+optionValue+'">');
+          html.push('<input id="'+optionValue+'" type="'+type+'" name="'+name+'" value="'+optionValue+'">');
 
         }
         html.push('<label for="'+optionValue+'">'+optionConfig.title+'</label>');
