@@ -1,6 +1,28 @@
 var Selects;
 
+/**
+ * @Class Selects
+ *
+ * A 'pure' class, for lack of a better term. For generating:
+ *   select - with options
+ *   checkboxes - with options
+ *   radio button - with options
+ *
+ * The config passed into the main entry method is not modified.
+ *   
+ * @type {Object}
+ */
 Selects = {
+    /**
+     * Main entry method.
+     *
+     * Note: For error handling, all form controls are wrapped in
+     *       a container <div>.
+     * 
+     * @param  {[type]} config A string using JSON
+     * @return {[type]}        HTML string in compliance with US and SAM WDS
+     * 
+     */
     select: function(config) {
 
       if (this.isInvalidConfiguration(config)) {
@@ -18,7 +40,20 @@ Selects = {
       
       return html;
     },
-    // @private
+    /**
+     * @private
+     *
+     * Generates the main wrapper for the specified type.
+     * 
+     * radio and checkbox types are wrapped in a <fieldset>, with <legend>,
+     *   and the opening of a list.
+     *   
+     * select type uses label and <select> opening tag.
+     * 
+     * @param  {[type]} config A string using JSON
+     * @return {[type]}        HTML string in compliance with US and SAM WDS
+     * 
+     */
     getOpening: function(config) {
       var opening = [];
       if (config.type == 'radio' || config.type == 'checkbox') {
@@ -38,7 +73,15 @@ Selects = {
       }
       return opening.join('');
     },
-    // @private
+    /**
+     * @private
+     *
+     * Generates the closing for the main wrapper (see getOpening) for the type.
+     *
+     * @param  {[type]} config A string using JSON
+     * @return {[type]}        HTML string in compliance with US and SAM WDS
+     * 
+     */
     getClosing: function(config) {
       var closing = [];
       if (config.type == 'radio' || config.type == 'checkbox') {
@@ -51,7 +94,15 @@ Selects = {
       }
       return closing.join('');
     },
-    // @private
+    /**
+     * @private
+     *
+     * Prepares and enumerates the individual form options for the user to choose from.
+     * 
+     * @param  {[type]} config A string using JSON
+     * @return {[type]}        HTML string in compliance with US and SAM WDS
+     * 
+     */
     getOptions: function(config) {
       // make configuration members concrete
       // required members
@@ -61,11 +112,12 @@ Selects = {
       // build options
       var optionHtml = [];
       for (var optionValue in config.options) {
+        // TODO: Is there a linter rule (or set of rules) that allows/checks for something like this?        
         var optionConfig = {
-          type: config.type,
-          name: config.name,
-          value: optionValue,
-          title: config.options[optionValue],
+          type    : config.type,
+          name    : config.name,
+          value   : optionValue,
+          title   : config.options[optionValue],
           selected: selected,
           disabled: disabled
         }
@@ -75,15 +127,27 @@ Selects = {
       }
       return optionHtml.join('');
     },    
-    // @private
-    option: function(config) {
+    /**
+     * @private
+     *
+     * Process individual form option. Configuration is system generated, not the same
+     * as the config passed to the main entry method.
+     * 
+     * @param  {[type]} config A string using JSON
+     * @return {[type]}        HTML string in compliance with US and SAM WDS
+     * 
+     */
+    option: function(optionConfig) {
       // do not need to validate this config, system-generated
       // make configuration members concrete
-      var type = config.type;
-      var name = config.name;
-      var value = config.value;
-      var title = config.title;
-      var selected = (config.selected !== undefined && config.selected.indexOf(value) > -1) 
+      // 
+      // TODO: Is there a linter rule (or set of rules) that allows/checks for something like this?
+      var type     = optionConfig.type;
+      var name     = optionConfig.name;
+      var value    = optionConfig.value;
+      var title    = optionConfig.title;
+      var selected = (optionConfig.selected !== undefined 
+        && optionConfig.selected.indexOf(value) > -1) 
         ? ' selected' 
         : '';
 
@@ -113,27 +177,60 @@ Selects = {
       
       return html.join('');
     },
-    // @private
+    /**
+     * @private
+     * 
+     * @param  {[type]}  config A string using JSON
+     * @return {Boolean}        Whether there are values marked as disabled.
+     * 
+     */
     hasDisabled: function(config) {
       return (config.disabled !== undefined && config.disabled.length > 0);      
     },
-    // @private
+    /**
+     * @private
+     * 
+     * @param  {[type]} config A string using JSON
+     * @return {[type]}        The array of disabled values set in config
+     * 
+     */
     disabled: function(config) {
       return (this.hasDisabled(config)) 
         ? config.disabled 
         : [];
     },
-    // @private
+    /**
+     * @private
+     * 
+     * @param  {[type]}  config A string using JSON
+     * @return {Boolean}        Whether there are values marked as selected.
+     * 
+     */
     hasSelected: function(config) {
       return (config.selected !== undefined && config.selected.length > 0);
     },
+    /**
+     * @private
+     * 
+     * @param  {[type]} config A string using JSON
+     * @return {[type]}        The array of selected values set in config
+     * 
+     */
     selected: function(config) {
       return (this.hasSelected(config)) 
         ? config.selected 
         : [];
     },
-    // @private
-    // @private
+    /**
+     * @private
+     *
+     * Validates the config against the specified business (established by SAM WDS)
+     * and technical (established by W3C on use of select, radio, and checkbox) rules.
+     * 
+     * @param  {[type]}  config A string using JSON
+     * @return {Boolean}        Whether configuration complies with established rules.
+     * 
+     */
     isInvalidConfiguration: function(config) {
 
       if (config.label == undefined || config.label.length < 1) {
