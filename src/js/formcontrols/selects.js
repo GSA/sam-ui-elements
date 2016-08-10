@@ -8,13 +8,15 @@ var Selects;
  *   checkboxes - with options
  *   radio button - with options
  *
- * The config passed into the main entry method is not modified.
+ * The config passed into the main entry method is not modified, and no external
+ * methods are called either; this is the complete, encapsulated, spec.
  *   
  * @type {Object}
+ * 
  */
 Selects = {
     /**
-     * Main entry method.
+     * Entry point.
      *
      * Note: For error handling, all form controls are wrapped in
      *       a container <div>.
@@ -28,7 +30,7 @@ Selects = {
       if (this.isInvalidConfiguration(config)) {
         // configuration is not valid
         // return early without crash
-        // errors logged in console
+        // errors are logged in console
         return '';
       }
 
@@ -48,7 +50,7 @@ Selects = {
      * radio and checkbox types are wrapped in a <fieldset>, with <legend>,
      *   and the opening of a list.
      *   
-     * select type uses label and <select> opening tag.
+     * select type uses <label> and <select> opening tag, instead.
      * 
      * @param  {[type]} config A string using JSON
      * @return {[type]}        HTML string in compliance with US and SAM WDS
