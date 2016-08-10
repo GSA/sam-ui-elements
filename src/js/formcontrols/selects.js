@@ -12,7 +12,7 @@ Selects = {
 
       html = '<div>';
       html += this.getOpening(config);
-      html += this.processOptions(config);
+      html += this.getOptions(config);
       html += this.getClosing(config);
       html += '</div>';
       
@@ -52,7 +52,7 @@ Selects = {
       return closing.join('');
     },
     // @private
-    processOptions: function(config) {
+    getOptions: function(config) {
       // make configuration members concrete
       // required members
       var disabled = this.disabled(config);
