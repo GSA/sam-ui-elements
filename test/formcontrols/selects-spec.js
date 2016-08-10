@@ -155,11 +155,37 @@ var checkboxShortConfig = {
   }
 };
 
+/**
+ * 
+ * Begin <select>
+ * 
+ */
 describe('#SelectInitial)', function() {
   it('should return dropdown', function() {
 
     var expected = dropdownMain;
     var config = dropdownMainConfig;
+    var actual = Selects.select(config);
+
+    expect(actual).to.eql(expected);
+  });
+});
+
+describe('#SelectCanHaveError)', function() {
+  it('should return dropdown with error message', function() {
+
+    var expected = 
+      '<div class="usa-input-error">'+
+        '<label for="options" class="usa-input-error-label">Dropdown label</label>'+
+        '<span id="options-input-error" class="usa-input-error-message" role="alert">Helpful error message</span>'+
+        '<select name="options2" id="options" aria-describedby="options-input-error">'+
+          '<option value="value1">Option A</option>'+
+          '<option value="value2">Option B</option>'+
+          '<option value="value3">Option C</option>'+
+        '</select>'+
+      '</div>';
+    var config = dropdownMainConfig;
+    config.error = 'Helpful error message';
     var actual = Selects.select(config);
 
     expect(actual).to.eql(expected);
@@ -267,6 +293,11 @@ describe('#SelectOptionsCanBeDisabled', function() {
   });
 });
 
+/**
+ * 
+ * Begin <radio>
+ * 
+ */
 describe('#RadioInitial)', function() {
   it('should return radio select', function() {
 
@@ -330,6 +361,11 @@ describe('#RadioOptionCanBeDisabled', function() {
   });
 });
 
+/**
+ * 
+ * Begin <checkbox>
+ * 
+ */
 describe('#CheckboxInitial)', function() {
   it('should return checkbox select', function() {
 

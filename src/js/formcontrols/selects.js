@@ -156,9 +156,9 @@ Selects = {
       var html = [];
       if (type == 'radio' || type == 'checkbox') {
         //TODO: Make these method calls
-        var hasDisabled = (config.disabled !== undefined && config.disabled.length > 0);
+        var hasDisabled = (optionConfig.disabled !== undefined && optionConfig.disabled.length > 0);
         var disabled = (hasDisabled) 
-          ? config.disabled 
+          ? optionConfig.disabled 
           : [];
         html.push('<li>');
 
