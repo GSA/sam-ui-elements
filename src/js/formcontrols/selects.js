@@ -34,7 +34,12 @@ Selects = {
         return '';
       }
 
-      html = '<div>';
+      var error = '';
+      if (this.hasError(config)) {
+        error = ' class="usa-input-error"'
+
+      }
+      html = '<div'+error+'>';
       html += this.getOpening(config);
       html += this.getOptions(config);
       html += this.getClosing(config);
@@ -69,8 +74,24 @@ Selects = {
           disabled = ' disabled';
 
         }
-        opening.push('<label for="'+config.name+'">'+config.label+'</label>');        
-        opening.push('<select id="'+config.name+'" name="'+config.name+'"'+disabled+'>');
+
+        var error = '';
+        if (this.hasError(config)) {
+          error = ' class="usa-input-error-label"'
+
+        }
+        opening.push('<label for="'+config.name+'"'+error+'>'+config.label+'</label>');
+        
+        if (this.hasError(config)) {
+          opening.push('<span id="options-input-error" class="usa-input-error-message" role="alert">Helpful error message</span>');
+        }
+        
+        var selectAria = '';
+        if (this.hasError(config)) {
+          selectAria = ' aria-describedby="options-input-error"';
+
+        }
+        opening.push('<select id="'+config.name+'" name="'+config.name+'"'+selectAria+disabled+'>');
 
       }
       return opening.join('');
@@ -210,6 +231,16 @@ Selects = {
      */
     hasSelected: function(config) {
       return (config.selected !== undefined && config.selected.length > 0);
+    },
+    /**
+     * @private
+     * 
+     * @param  {[type]}  config A string using JSON
+     * @return {Boolean}        Whether an error message was passed.
+     */
+    hasError: function(config) {
+      return (config.error !== undefined && config.error.length > 0);
+
     },
     /**
      * @private

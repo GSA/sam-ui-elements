@@ -178,13 +178,16 @@ describe('#SelectCanHaveError)', function() {
       '<div class="usa-input-error">'+
         '<label for="options" class="usa-input-error-label">Dropdown label</label>'+
         '<span id="options-input-error" class="usa-input-error-message" role="alert">Helpful error message</span>'+
-        '<select name="options2" id="options" aria-describedby="options-input-error">'+
+        '<select id="options" name="options" aria-describedby="options-input-error">'+
           '<option value="value1">Option A</option>'+
           '<option value="value2">Option B</option>'+
           '<option value="value3">Option C</option>'+
         '</select>'+
       '</div>';
-    var config = dropdownMainConfig;
+    // TODO: var s = {} - is equivalent to creating an instance. Therefore,
+    //       var config = s - is equivalent to reference, not copy or clone.
+    //       Update tests to us the following: Object.create(s);
+    var config = Object.create(dropdownMainConfig);
     config.error = 'Helpful error message';
     var actual = Selects.select(config);
 
@@ -247,7 +250,10 @@ describe('#SelectOptionsCanPreselect', function() {
           '<option value="value1" selected>Option A</option>'+
         '</select>'+
       '</div>';
-    var config = dropdownShortConfig;
+    // TODO: var s = {} - is equivalent to creating an instance. Therefore,
+    //       var config = s - is equivalent to reference, not copy or clone.
+    //       Update tests to us the following.
+    var config = Object.create(dropdownShortConfig);
     config.selected = ['value1'];
 
     var actual = Selects.select(config);
