@@ -27,15 +27,14 @@ Selects = {
         opening.push('<ul class="usa-unstyled-list">');
 
       } else {
-        opening.push('<label for="'+config.name+'">'+config.label+'</label>');
-
+        var disabled = '';
         if (this.hasDisabled(config)) {
-          opening.push('<select id="'+config.name+'" name="'+config.name+'" disabled>');
-
-        } else {
-          opening.push('<select id="'+config.name+'" name="'+config.name+'">');
+          disabled = ' disabled';
 
         }
+        opening.push('<label for="'+config.name+'">'+config.label+'</label>');        
+        opening.push('<select id="'+config.name+'" name="'+config.name+'"'+disabled+'>');
+
       }
       return opening.join('');
     },
@@ -56,26 +55,18 @@ Selects = {
     processOptions: function(config) {
       // make configuration members concrete
       // required members
-      var label = config.label;
-      var name = config.name;
-
-      var options = config.options;
-      var hasSelected = (config.selected !== undefined && config.selected.length > 0);
-      var selectedValues = (hasSelected) 
-        ? config.selected 
-        : [];
-
       var disabled = this.disabled(config);
+      var selected = this.selected(config);
 
       // build options
       var optionHtml = [];
-      for (var optionValue in options) {
+      for (var optionValue in config.options) {
         var optionConfig = {
           type: config.type,
-          name: name,
+          name: config.name,
           value: optionValue,
-          title: options[optionValue],
-          selected: selectedValues,
+          title: config.options[optionValue],
+          selected: selected,
           disabled: disabled
         }
         var html = this.option(optionConfig);
@@ -132,6 +123,16 @@ Selects = {
         ? config.disabled 
         : [];
     },
+    // @private
+    hasSelected: function(config) {
+      return (config.selected !== undefined && config.selected.length > 0);
+    },
+    selected: function(config) {
+      return (this.hasSelected(config)) 
+        ? config.selected 
+        : [];
+    },
+    // @private
     // @private
     isInvalidConfiguration: function(config) {
 
