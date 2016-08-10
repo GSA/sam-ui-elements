@@ -13,7 +13,7 @@ Selects = {
       html = [];
       html.push('<div>');
       if (config.type == 'radio' || config.type == 'checkbox') {
-        html.push(this.processRadio(config));
+        html.push(this.processSelect(config));
 
       } else {
         html.push(this.processSelect(config));
@@ -23,55 +23,6 @@ Selects = {
       html.push('</div>');
 
       // join parts
-      return html.join('');
-    },
-    // @private
-    processRadio: function(config) {
-      // make configuration members concrete
-      // required members
-      var type = 'radio';
-      if (config.type == 'checkbox') {
-        var type = 'checkbox';
-      }
-      var label = config.label;
-      var name = config.name;
-
-      var options = config.options;
-      var hasSelected = (config.selected !== undefined && config.selected.length > 0);
-      var selectedValues = (hasSelected) 
-        ? config.selected 
-        : [];
-
-      var hasDisabled = (config.disabled !== undefined && config.disabled.length > 0);
-      var disabled = (hasDisabled) 
-        ? config.disabled 
-        : [];
-
-      // build string parts
-      var html = [];
-      html.push('<fieldset class="usa-fieldset-inputs">');
-      html.push('<legend>'+label+'</legend>');
-      html.push('<ul class="usa-unstyled-list">');
-      for (var optionValue in options) {
-        var optionConfig = {
-          value: optionValue,
-          title: options[optionValue],
-          selected: selectedValues
-        }
-        html.push('<li>');
-
-        if (hasDisabled && disabled.indexOf(optionConfig.value) > -1) {
-          html.push('<input id="'+optionValue+'" type="'+type+'" name="'+name+'" value="'+optionValue+'" disabled>');
-
-        } else {
-          html.push('<input id="'+optionValue+'" type="'+type+'" name="'+name+'" value="'+optionValue+'">');
-
-        }
-        html.push('<label for="'+optionValue+'">'+optionConfig.title+'</label>');
-        html.push('</li>');
-      }
-      html.push('</ul>');
-      html.push('</fieldset>');
       return html.join('');
     },
     // @private
@@ -92,11 +43,16 @@ Selects = {
         ? config.disabled 
         : [];
 
-      // build string parts
+      // build wrapper
       var opening = [];
       var closing = [];
-      var optionHtml = [];
       if (config.type == 'radio' || config.type == 'checkbox') {
+        opening.push('<fieldset class="usa-fieldset-inputs">');
+        opening.push('<legend>'+label+'</legend>');
+        opening.push('<ul class="usa-unstyled-list">');
+
+        closing.push('</ul>');
+        closing.push('</fieldset>');
 
       } else {
         opening.push('<label for="'+name+'">'+label+'</label>');
@@ -111,11 +67,16 @@ Selects = {
         closing.push('</select>');
       }
 
+      // build options
+      var optionHtml = [];
       for (var optionValue in options) {
         var optionConfig = {
+          type: config.type,
+          name: name,
           value: optionValue,
           title: options[optionValue],
-          selected: selectedValues
+          selected: selectedValues,
+          disabled: disabled
         }
         var html = this.option(optionConfig);
         optionHtml.push(html);
@@ -130,14 +91,39 @@ Selects = {
     option: function(config) {
       // do not need to validate this config, system-generated
       // make configuration members concrete
+      var type = config.type;
+      var name = config.name;
       var value = config.value;
       var title = config.title;
       var selected = (config.selected !== undefined && config.selected.indexOf(value) > -1) 
         ? ' selected' 
         : '';
+
+      var html = [];
+      if (type == 'radio' || type == 'checkbox') {
+        //TODO: Make these method calls
+        var hasDisabled = (config.disabled !== undefined && config.disabled.length > 0);
+        var disabled = (hasDisabled) 
+          ? config.disabled 
+          : [];
+        html.push('<li>');
+
+        if (hasDisabled && disabled.indexOf(value) > -1) {
+          html.push('<input id="'+value+'" type="'+type+'" name="'+name+'" value="'+value+'" disabled>');
+
+        } else {
+          html.push('<input id="'+value+'" type="'+type+'" name="'+name+'" value="'+value+'">');
+
+        }
+        html.push('<label for="'+value+'">'+title+'</label>');
+        html.push('</li>');
+
+      } else {
+        html.push('<option value="'+value+'"'+selected+'>'+title+'</option>');
+
+      }
       
-      var html = '<option value="'+value+'"'+selected+'>'+title+'</option>';
-      return html;
+      return html.join('');
     },
     // @private
     isInvalidConfiguration: function(config) {
