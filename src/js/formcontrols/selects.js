@@ -93,21 +93,22 @@ Selects = {
         : [];
 
       // build string parts
-      var html = [];
       var opening = [];
       var closing = [];
+      var optionHtml = [];
       if (config.type == 'radio' || config.type == 'checkbox') {
 
       } else {
-        html.push('<label for="'+name+'">'+label+'</label>');
+        opening.push('<label for="'+name+'">'+label+'</label>');
 
         if (hasDisabled) {
-          html.push('<select id="'+name+'" name="'+name+'" disabled>');
+          opening.push('<select id="'+name+'" name="'+name+'" disabled>');
 
         } else {
-          html.push('<select id="'+name+'" name="'+name+'">');
+          opening.push('<select id="'+name+'" name="'+name+'">');
 
-        }        
+        }
+        closing.push('</select>');
       }
 
       for (var optionValue in options) {
@@ -116,12 +117,14 @@ Selects = {
           title: options[optionValue],
           selected: selectedValues
         }
-        var optionHtml = this.option(optionConfig);
-        html.push(optionHtml);
+        var html = this.option(optionConfig);
+        optionHtml.push(html);
 
       }
-      html.push('</select>');
-      return html.join('');
+      compiledOpening = opening.join('');
+      compiledClosing = closing.join('');
+      compiledOptions = optionHtml.join('');
+      return compiledOpening + compiledOptions + compiledClosing;
     },
     // @private
     option: function(config) {
