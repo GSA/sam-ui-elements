@@ -10,23 +10,50 @@ Selects = {
         return '';
       }
 
-      html = [];
-      html.push('<div>');
-      if (config.type == 'radio' || config.type == 'checkbox') {
-        html.push(this.processSelect(config));
-
-      } else {
-        html.push(this.processSelect(config));
-
-      }
+      html = '<div>';
+      html += this.getOpening(config);
+      html += this.processOptions(config);
+      html += this.getClosing(config);
+      html += '</div>';
       
-      html.push('</div>');
-
-      // join parts
-      return html.join('');
+      return html;
     },
     // @private
-    processSelect: function(config) {
+    getOpening: function(config) {
+      var opening = [];
+      if (config.type == 'radio' || config.type == 'checkbox') {
+        opening.push('<fieldset class="usa-fieldset-inputs">');
+        opening.push('<legend>'+config.label+'</legend>');
+        opening.push('<ul class="usa-unstyled-list">');
+
+      } else {
+        opening.push('<label for="'+config.name+'">'+config.label+'</label>');
+
+        if (this.hasDisabled(config)) {
+          opening.push('<select id="'+config.name+'" name="'+config.name+'" disabled>');
+
+        } else {
+          opening.push('<select id="'+config.name+'" name="'+config.name+'">');
+
+        }
+      }
+      return opening.join('');
+    },
+    // @private
+    getClosing: function(config) {
+      var closing = [];
+      if (config.type == 'radio' || config.type == 'checkbox') {
+        closing.push('</ul>');
+        closing.push('</fieldset>');
+
+      } else {
+        closing.push('</select>');
+
+      }
+      return closing.join('');
+    },
+    // @private
+    processOptions: function(config) {
       // make configuration members concrete
       // required members
       var label = config.label;
@@ -38,34 +65,7 @@ Selects = {
         ? config.selected 
         : [];
 
-      var hasDisabled = (config.disabled !== undefined && config.disabled.length > 0);
-      var disabled = (hasDisabled) 
-        ? config.disabled 
-        : [];
-
-      // build wrapper
-      var opening = [];
-      var closing = [];
-      if (config.type == 'radio' || config.type == 'checkbox') {
-        opening.push('<fieldset class="usa-fieldset-inputs">');
-        opening.push('<legend>'+label+'</legend>');
-        opening.push('<ul class="usa-unstyled-list">');
-
-        closing.push('</ul>');
-        closing.push('</fieldset>');
-
-      } else {
-        opening.push('<label for="'+name+'">'+label+'</label>');
-
-        if (hasDisabled) {
-          opening.push('<select id="'+name+'" name="'+name+'" disabled>');
-
-        } else {
-          opening.push('<select id="'+name+'" name="'+name+'">');
-
-        }
-        closing.push('</select>');
-      }
+      var disabled = this.disabled(config);
 
       // build options
       var optionHtml = [];
@@ -82,11 +82,8 @@ Selects = {
         optionHtml.push(html);
 
       }
-      compiledOpening = opening.join('');
-      compiledClosing = closing.join('');
-      compiledOptions = optionHtml.join('');
-      return compiledOpening + compiledOptions + compiledClosing;
-    },
+      return optionHtml.join('');
+    },    
     // @private
     option: function(config) {
       // do not need to validate this config, system-generated
@@ -124,6 +121,16 @@ Selects = {
       }
       
       return html.join('');
+    },
+    // @private
+    hasDisabled: function(config) {
+      return (config.disabled !== undefined && config.disabled.length > 0);      
+    },
+    // @private
+    disabled: function(config) {
+      return (this.hasDisabled(config)) 
+        ? config.disabled 
+        : [];
     },
     // @private
     isInvalidConfiguration: function(config) {
