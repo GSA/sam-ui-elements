@@ -60,7 +60,7 @@ Selects = {
         }
         html.push('<li>');
 
-        if (hasDisabled) {
+        if (hasDisabled && disabled.indexOf(optionConfig.value) > -1) {
           html.push('<input id="'+optionValue+'" type="'+type+'" name="'+name+'" value="'+optionValue+'" disabled>');
 
         } else {
