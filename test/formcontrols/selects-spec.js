@@ -160,7 +160,7 @@ var checkboxShortConfig = {
  * Begin <select>
  * 
  */
-describe('#SelectInitial)', function() {
+describe('#SelectInitial', function() {
   it('should return dropdown', function() {
 
     var expected = dropdownMain;
@@ -171,7 +171,7 @@ describe('#SelectInitial)', function() {
   });
 });
 
-describe('#SelectCanHaveError)', function() {
+describe('#SelectCanHaveError', function() {
   it('should return dropdown with error message', function() {
 
     var expected = 
@@ -186,8 +186,33 @@ describe('#SelectCanHaveError)', function() {
       '</div>';
     // TODO: var s = {} - is equivalent to creating an instance. Therefore,
     //       var config = s - is equivalent to reference, not copy or clone.
-    //       Update tests to us the following: Object.create(s);
+    //       Update tests to use the following: Object.create(s);
     var config = Object.create(dropdownMainConfig);
+    config.error = 'Helpful error message';
+    var actual = Selects.select(config);
+
+    expect(actual).to.eql(expected);
+  });
+});
+
+describe.only('#SelectCanHaveErrorExpectsCorrectIdAndAria', function() {
+  it('should return dropdown with error message, with the correct values for id and aria', function() {
+
+    var expected = 
+      '<div class="usa-input-error">'+
+        '<label for="devious" class="usa-input-error-label">Dropdown label</label>'+
+        '<span id="devious-input-error" class="usa-input-error-message" role="alert">Helpful error message</span>'+
+        '<select id="devious" name="devious" aria-describedby="devious-input-error">'+
+          '<option value="value1">Option A</option>'+
+          '<option value="value2">Option B</option>'+
+          '<option value="value3">Option C</option>'+
+        '</select>'+
+      '</div>';
+    // TODO: var s = {} - is equivalent to creating an instance. Therefore,
+    //       var config = s - is equivalent to reference, not copy or clone.
+    //       Update tests to use the following: Object.create(s);
+    var config = Object.create(dropdownMainConfig);
+    config.name = 'devious';
     config.error = 'Helpful error message';
     var actual = Selects.select(config);
 

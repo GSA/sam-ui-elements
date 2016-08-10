@@ -83,12 +83,12 @@ Selects = {
         opening.push('<label for="'+config.name+'"'+error+'>'+config.label+'</label>');
         
         if (this.hasError(config)) {
-          opening.push('<span id="options-input-error" class="usa-input-error-message" role="alert">Helpful error message</span>');
+          opening.push('<span id="'+config.name+'-input-error" class="usa-input-error-message" role="alert">Helpful error message</span>');
         }
         
         var selectAria = '';
         if (this.hasError(config)) {
-          selectAria = ' aria-describedby="options-input-error"';
+          selectAria = ' aria-describedby="'+config.name+'-input-error"';
 
         }
         opening.push('<select id="'+config.name+'" name="'+config.name+'"'+selectAria+disabled+'>');
@@ -161,6 +161,8 @@ Selects = {
      * 
      */
     option: function(optionConfig) {
+      // TODO: Refactor and re-engineer
+      // 
       // do not need to validate this config, system-generated
       // make configuration members concrete
       // 
