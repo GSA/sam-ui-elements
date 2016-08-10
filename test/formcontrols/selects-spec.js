@@ -377,7 +377,7 @@ describe('#CheckboxOptionCanBeDisabled', function() {
   });
 });
 
-describe.only('#CheckboxOptionCanBeDisableMultiple', function() {
+describe('#CheckboxOptionCanBeDisableMultiple', function() {
   it('should be able to disable a single checkbox', function() {
 
     var expected = 

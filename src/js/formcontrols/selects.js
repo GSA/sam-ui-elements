@@ -94,16 +94,22 @@ Selects = {
 
       // build string parts
       var html = [];
-      html.push('<label for="'+name+'">'+label+'</label>');
-
-      if (hasDisabled) {
-        html.push('<select id="'+name+'" name="'+name+'" disabled>');
+      var opening = [];
+      var closing = [];
+      if (config.type == 'radio' || config.type == 'checkbox') {
 
       } else {
-        html.push('<select id="'+name+'" name="'+name+'">');
+        html.push('<label for="'+name+'">'+label+'</label>');
 
+        if (hasDisabled) {
+          html.push('<select id="'+name+'" name="'+name+'" disabled>');
+
+        } else {
+          html.push('<select id="'+name+'" name="'+name+'">');
+
+        }        
       }
-      
+
       for (var optionValue in options) {
         var optionConfig = {
           value: optionValue,
