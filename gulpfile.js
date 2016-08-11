@@ -7,9 +7,10 @@ var uglify = require('gulp-uglify');
 var clean = require('gulp-clean');
 var concat = require('gulp-concat');
 var runSequence = require('run-sequence');
-
 var mocha = require('gulp-mocha');
 var util = require('gulp-util');
+
+
 
 // tasks
 gulp.task('lint', function() {
@@ -25,9 +26,9 @@ gulp.task('clean', function() {
 });
 
 gulp.task('javascript', function() {
-  return gulp.src('src/**/*.js')    
-    .pipe(concat('samuikit.js'))    
-    .pipe(uglify())    
+  return gulp.src('src/**/*.js')
+    .pipe(concat('samuikit.js'))
+    .pipe(uglify())
     .pipe(gulp.dest('./dist'));
 });
 
@@ -36,13 +37,11 @@ gulp.task('test', function () {
         .pipe(mocha({ reporter: 'nyan' }))
         .on('error', util.log);
 });
- 
+
 gulp.task('watch-test', function () {
     gulp.watch(['src/**',  'test/**'], ['test']);
 });
 
-/*
-=======
 gulp.task('bundle-test', function () {
     return gulp.src(['spec/samuikit-spec.js'], { read: false })
         .pipe(mocha({ reporter: 'nyan' }))
@@ -50,7 +49,6 @@ gulp.task('bundle-test', function () {
 });
 
 
->>>>>>> GSA/develop
 
 // *** default task *** //
 gulp.task('default', function() {
@@ -62,6 +60,3 @@ gulp.task('default', function() {
     ['bundle-test']
   );
 });
-
-
-
