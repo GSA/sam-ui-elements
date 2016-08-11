@@ -26,9 +26,9 @@ gulp.task('clean', function() {
 });
 
 gulp.task('javascript', function() {
-  return gulp.src('src/**/*.js')    
-    .pipe(concat('samuikit.js'))    
-    .pipe(uglify())    
+  return gulp.src('src/**/*.js')
+    .pipe(concat('samuikit.js'))
+    .pipe(uglify())
     .pipe(gulp.dest('./dist'));
 });
 
@@ -37,7 +37,7 @@ gulp.task('test', function () {
         .pipe(mocha({ reporter: 'nyan' }))
         .on('error', util.log);
 });
- 
+
 gulp.task('watch-test', function () {
     gulp.watch(['src/**',  'test/**'], ['test']);
 });
@@ -60,6 +60,3 @@ gulp.task('default', function() {
     ['bundle-test']
   );
 });
-
-
-
