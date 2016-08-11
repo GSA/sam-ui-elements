@@ -34,7 +34,3 @@ Alerts = {
 };
 
 module.exports = Alerts;
-
-
-  
-
