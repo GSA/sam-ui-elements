@@ -171,6 +171,30 @@ describe('#SelectInitial', function() {
   });
 });
 
+describe('#SelectCanHavehint', function() {
+  it('should return dropdown with hint message', function() {
+
+    var expected = 
+      '<div>'+
+        '<label for="options">Dropdown label</label>'+
+        '<span class="usa-form-hint">Instructional text.</span>'+
+        '<select id="options" name="options">'+
+          '<option value="value1">Option A</option>'+
+          '<option value="value2">Option B</option>'+
+          '<option value="value3">Option C</option>'+
+        '</select>'+
+      '</div>';
+    // TODO: var s = {} - is equivalent to creating an instance. Therefore,
+    //       var config = s - is equivalent to reference, not copy or clone.
+    //       Update tests to use the following: Object.create(s);
+    var config = Object.create(dropdownMainConfig);
+    config.hint = 'Instructional text.';
+    var actual = Selects.select(config);
+
+    expect(actual).to.eql(expected);
+  });
+});
+
 describe('#SelectCanHaveError', function() {
   it('should return dropdown with error message', function() {
 

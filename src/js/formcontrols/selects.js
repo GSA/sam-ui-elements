@@ -85,6 +85,11 @@ Selects = {
         if (this.hasError(config)) {
           opening.push('<span id="'+config.name+'-input-error" class="usa-input-error-message" role="alert">'+config.error+'</span>');
         }
+
+        if (this.hasHint(config)) {
+          opening.push('<span class="usa-form-hint">'+config.hint+'</span>');
+
+        }
         
         var selectAria = '';
         if (this.hasError(config)) {
@@ -264,6 +269,9 @@ Selects = {
      */
     hasError: function(config) {
       return (config.error !== undefined && config.error.length > 0);
+    },
+    hasHint: function(config) {
+      return (config.hint !== undefined && config.hint.length > 0);
     },
     /**
      * @private
