@@ -195,7 +195,7 @@ describe('#SelectCanHaveError', function() {
   });
 });
 
-describe.only('#SelectCanHaveErrorExpectsCorrectIdAndAria', function() {
+describe('#SelectCanHaveErrorExpectsCorrectIdAndAria', function() {
   it('should return dropdown with error message, with the correct values for id and aria', function() {
 
     var expected = 
@@ -367,7 +367,7 @@ describe('#RadioOptionsCanPreselect', function() {
   });
 });
 
-describe('#RadioOptionCanBeDisabled', function() {
+describe.only('#RadioOptionCanBeDisabled', function() {
   it('should be able to disable a single radio button', function() {
 
     var expected = 

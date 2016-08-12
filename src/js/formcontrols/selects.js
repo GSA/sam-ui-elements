@@ -184,14 +184,18 @@ Selects = {
           ? optionConfig.disabled 
           : [];
         html.push('<li>');
-
-        if (hasDisabled && disabled.indexOf(value) > -1) {
-          html.push('<input id="'+value+'" type="'+type+'" name="'+name+'" value="'+value+'" disabled>');
-
-        } else {
-          html.push('<input id="'+value+'" type="'+type+'" name="'+name+'" value="'+value+'">');
-
+        var disabled = '';
+        if (this.optionIsDisabled(optionConfig)) {
+          disabled = ' disabled';
         }
+        html.push('<input id="'+value+'" type="'+type+'" name="'+name+'" value="'+value+'"'+disabled+'>');
+        // if (hasDisabled && disabled.indexOf(value) > -1) {
+
+
+        // } else {
+        //   html.push('<input id="'+value+'" type="'+type+'" name="'+name+'" value="'+value+'">');
+
+        // }
         html.push('<label for="'+value+'">'+title+'</label>');
         html.push('</li>');
 
@@ -227,6 +231,26 @@ Selects = {
     /**
      * @private
      * 
+     * @param  {[type]} config A string using JSON
+     * @return {[type]}        Whether the option is selected.
+     * 
+     */
+    optionIsSelected: function(config) {
+
+    },
+    /**
+     * @private
+     * 
+     * @param  {[type]} config A string using JSON
+     * @return {Boolean}       Whether the option is disabled.
+     * 
+     */
+    optionIsDisabled: function(config) {
+
+    },
+    /**
+     * @private
+     * 
      * @param  {[type]}  config A string using JSON
      * @return {Boolean}        Whether there are values marked as selected.
      * 
@@ -254,7 +278,6 @@ Selects = {
      */
     hasError: function(config) {
       return (config.error !== undefined && config.error.length > 0);
-
     },
     /**
      * @private
