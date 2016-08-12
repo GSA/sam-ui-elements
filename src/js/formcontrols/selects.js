@@ -9,7 +9,7 @@ var Selects;
  *   radio button - with options
  *
  * The config passed into the main entry method is not modified, and no external
- * methods are called either; this is the complete, encapsulated, spec.
+ * methods are called either; this is the complete, encapsulated, definition.
  *   
  * @type {Object}
  * 
