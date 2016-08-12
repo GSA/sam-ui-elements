@@ -164,7 +164,7 @@ describe('#SelectInitial', function() {
   it('should return dropdown', function() {
 
     var expected = dropdownMain;
-    var config = dropdownMainConfig;
+    var config = Object.create(dropdownMainConfig);
     var actual = Selects.select(config);
 
     expect(actual).to.eql(expected);
@@ -224,7 +224,7 @@ describe('#SelectLabelIsCorrect', function() {
   it('should return correct label', function() {
 
     var expected = dropdownMain;
-    var config = dropdownMainConfig;
+    var config = Object.create(dropdownMainConfig);
     var actual = Selects.select(config);
     expect(actual).to.equal(expected);
 
@@ -247,7 +247,7 @@ describe('#SelectNameIsCorrect', function() {
   it('should return correct name', function() {
 
     var expected = dropdownMain;
-    var config = dropdownMainConfig;
+    var config = Object.create(dropdownMainConfig);
     var actual = Selects.select(config);
 
     expect(actual).to.eql(expected);
@@ -258,7 +258,7 @@ describe('#SelectOptionsAreTheExpectedValues', function() {
   it('should return correct dropdowns', function() {
 
     var expected = dropdownShort;
-    var config = dropdownShortConfig;
+    var config = Object.create(dropdownShortConfig);
     var actual = Selects.select(config);
 
     expect(actual).to.eql(expected);
@@ -294,7 +294,7 @@ describe('#SelectOptionsCanOnlyHaveOneSelection', function() {
   it('should return empty string, too many preselected option', function() {
 
     var expected = '';
-    var config = dropdownShortConfig;
+    var config = Object.create(dropdownShortConfig);
     config.selected = ['value1', 'value2'];
 
     var actual = Selects.select(config);
@@ -315,7 +315,7 @@ describe('#SelectOptionsCanBeDisabled', function() {
           '<option value="value3">Option C</option>'+
         '</select>'+
       '</div>';
-    var config = dropdownMainConfig;
+    var config = Object.create(dropdownMainConfig);
     config.disabled = ['value1'];
 
     var actual = Selects.select(config);
@@ -333,7 +333,7 @@ describe('#RadioInitial)', function() {
   it('should return radio select', function() {
 
     var expected = radioMain;
-    var config = radioMainConfig;
+    var config = Object.create(radioMainConfig);
     var actual = Selects.select(config);
 
     expect(actual).to.eql(expected);
@@ -344,7 +344,7 @@ describe('#RadioLegendIsCorrect', function() {
   it('should return correct label', function() {
 
     var expected = radioMainShort;
-    var config = radioShortConfig;
+    var config = Object.create(radioShortConfig);
 
     var actual = Selects.select(config);
     expect(actual).to.equal(expected);
@@ -355,8 +355,19 @@ describe('#RadioOptionsCanPreselect', function() {
   it('should return correct dropdowns, preselected option', function() {
 
 
-    var expected = radioMainShort;
-    var config = radioShortConfig;
+    var expected =
+      '<div>'+
+        '<fieldset class="usa-fieldset-inputs">'+
+          '<legend>Custom label</legend>'+
+          '<ul class="usa-unstyled-list">'+
+            '<li>'+
+              '<input id="stanton" type="radio" name="historical-figures-2" value="stanton" selected>'+
+              '<label for="stanton">Elizabeth Cady Stanton</label>'+
+            '</li>'+
+          '</ul>'+
+        '</fieldset>'+
+      '</div>';
+    var config = Object.create(radioShortConfig);
     config.label = 'Custom label'
     config.type = 'radio';
     config.selected = ['stanton'];
@@ -367,7 +378,7 @@ describe('#RadioOptionsCanPreselect', function() {
   });
 });
 
-describe.only('#RadioOptionCanBeDisabled', function() {
+describe('#RadioOptionCanBeDisabled', function() {
   it('should be able to disable a single radio button', function() {
 
     var expected = 
@@ -382,7 +393,7 @@ describe.only('#RadioOptionCanBeDisabled', function() {
           '</ul>'+
         '</fieldset>'+
       '</div>'; 
-    var config = radioShortConfig;
+    var config = Object.create(radioShortConfig);
     config.type = 'radio';
     config.disabled = ['stanton'];
 
@@ -401,7 +412,7 @@ describe('#CheckboxInitial)', function() {
   it('should return checkbox select', function() {
 
     var expected = checkboxMain;
-    var config = checkboxMainConfig;
+    var config = Object.create(checkboxMainConfig);
     var actual = Selects.select(config);
 
     expect(actual).to.eql(expected);
@@ -412,7 +423,7 @@ describe('#CheckboxLegendIsCorrect', function() {
   it('should return correct label', function() {
 
     var expected = checkboxMainShort;
-    var config = checkboxShortConfig;
+    var config = Object.create(checkboxShortConfig);
 
     var actual = Selects.select(config);
     expect(actual).to.equal(expected);
@@ -434,7 +445,7 @@ describe('#CheckboxOptionCanBeDisabled', function() {
           '</ul>'+
         '</fieldset>'+
       '</div>'; 
-    var config = checkboxShortConfig;
+    var config = Object.create(checkboxShortConfig);
     config.type = 'checkbox';
     config.disabled = ['stanton'];
 
@@ -467,7 +478,7 @@ describe('#CheckboxOptionCanBeDisableMultiple', function() {
           '</ul>'+
         '</fieldset>'+
       '</div>';    
-    var config = checkboxMainConfig;
+    var config = Object.create(checkboxMainConfig);
     config.disabled = ['stanton', 'tubman'];
 
     var actual = Selects.select(config);
@@ -476,3 +487,34 @@ describe('#CheckboxOptionCanBeDisableMultiple', function() {
   });
 });
 
+describe('#CheckboxOptionCanBeSelectMultiple', function() {
+  it('should be able to select multiple checkboxes', function() {
+
+    var expected = 
+      '<div>'+
+        '<fieldset class="usa-fieldset-inputs">'+
+          '<legend>Historical figures 2</legend>'+
+          '<ul class="usa-unstyled-list">'+
+            '<li>'+
+              '<input id="stanton" type="checkbox" name="historical-figures-2" value="stanton" checked>'+
+              '<label for="stanton">Elizabeth Cady Stanton</label>'+
+            '</li>'+
+            '<li>'+
+              '<input id="anthony" type="checkbox" name="historical-figures-2" value="anthony">'+
+              '<label for="anthony">Susan B. Anthony</label>'+
+            '</li>'+
+            '<li>'+
+              '<input id="tubman" type="checkbox" name="historical-figures-2" value="tubman" checked>'+
+              '<label for="tubman">Harriet Tubman</label>'+
+            '</li>'+
+          '</ul>'+
+        '</fieldset>'+
+      '</div>';    
+    var config = Object.create(checkboxMainConfig);
+    config.selected = ['stanton', 'tubman'];
+
+    var actual = Selects.select(config);
+
+    expect(actual).to.eql(expected);
+  });
+});

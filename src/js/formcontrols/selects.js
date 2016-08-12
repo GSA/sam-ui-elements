@@ -161,49 +161,35 @@ Selects = {
      * 
      */
     option: function(optionConfig) {
-      // TODO: Refactor and re-engineer
-      // 
       // do not need to validate this config, system-generated
       // make configuration members concrete
-      // 
-      // TODO: Is there a linter rule (or set of rules) that allows/checks for something like this?
-      var type     = optionConfig.type;
-      var name     = optionConfig.name;
-      var value    = optionConfig.value;
-      var title    = optionConfig.title;
-      var selected = (optionConfig.selected !== undefined 
-        && optionConfig.selected.indexOf(value) > -1) 
-        ? ' selected' 
-        : '';
+      selected = '';
+      if (this.optionIsSelected(optionConfig) && optionConfig.type == 'checkbox') {
+        selected = ' checked';
+
+      } else if (this.optionIsSelected(optionConfig) && (optionConfig.type == 'dropdown' || optionConfig.type == 'radio')) {
+        selected = ' selected';
+
+      }
 
       var html = [];
-      if (type == 'radio' || type == 'checkbox') {
-        //TODO: Make these method calls
-        var hasDisabled = (optionConfig.disabled !== undefined && optionConfig.disabled.length > 0);
-        var disabled = (hasDisabled) 
-          ? optionConfig.disabled 
-          : [];
-        html.push('<li>');
+      if (optionConfig.type == 'radio' || optionConfig.type == 'checkbox') {
         var disabled = '';
         if (this.optionIsDisabled(optionConfig)) {
           disabled = ' disabled';
+
         }
-        html.push('<input id="'+value+'" type="'+type+'" name="'+name+'" value="'+value+'"'+disabled+'>');
-        // if (hasDisabled && disabled.indexOf(value) > -1) {
+        
+        html.push('<li>');
+        html.push('<input id="'+optionConfig.value+'" type="'+optionConfig.type+'" name="'+optionConfig.name+'" value="'+optionConfig.value+'"'+disabled+selected+'>');
 
-
-        // } else {
-        //   html.push('<input id="'+value+'" type="'+type+'" name="'+name+'" value="'+value+'">');
-
-        // }
-        html.push('<label for="'+value+'">'+title+'</label>');
+        html.push('<label for="'+optionConfig.value+'">'+optionConfig.title+'</label>');
         html.push('</li>');
 
       } else {
-        html.push('<option value="'+value+'"'+selected+'>'+title+'</option>');
+        html.push('<option value="'+optionConfig.value+'"'+selected+'>'+optionConfig.title+'</option>');
 
       }
-      
       return html.join('');
     },
     /**
@@ -231,26 +217,6 @@ Selects = {
     /**
      * @private
      * 
-     * @param  {[type]} config A string using JSON
-     * @return {[type]}        Whether the option is selected.
-     * 
-     */
-    optionIsSelected: function(config) {
-
-    },
-    /**
-     * @private
-     * 
-     * @param  {[type]} config A string using JSON
-     * @return {Boolean}       Whether the option is disabled.
-     * 
-     */
-    optionIsDisabled: function(config) {
-
-    },
-    /**
-     * @private
-     * 
      * @param  {[type]}  config A string using JSON
      * @return {Boolean}        Whether there are values marked as selected.
      * 
@@ -269,6 +235,26 @@ Selects = {
       return (this.hasSelected(config)) 
         ? config.selected 
         : [];
+    },
+    /**
+     * @private
+     * 
+     * @param  {[type]} config A string using JSON
+     * @return {[type]}        Whether the option is selected.
+     * 
+     */
+    optionIsSelected: function(config) {
+      return (this.hasSelected(config) && config.selected.indexOf(config.value) > -1);
+    },
+    /**
+     * @private
+     * 
+     * @param  {[type]} config A string using JSON
+     * @return {Boolean}       Whether the option is disabled.
+     * 
+     */
+    optionIsDisabled: function(config) {
+      return (this.hasDisabled(config) && config.disabled.indexOf(config.value) > -1);
     },
     /**
      * @private
@@ -312,7 +298,7 @@ Selects = {
         console.log(config);
         return true;
 
-      } else if (config.selected !== undefined && config.selected.length > 1) {
+      } else if ((config.type == 'dropdown' || config.type == 'radio') && config.selected !== undefined && config.selected.length > 1) {
         // Note: A select dropdown can only have one pre-selected option.
         //       We could solve this by:
         //       1. Only paying attention to the first one during the build.
