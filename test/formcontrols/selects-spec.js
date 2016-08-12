@@ -201,7 +201,7 @@ describe.only('#SelectCanHaveErrorExpectsCorrectIdAndAria', function() {
     var expected = 
       '<div class="usa-input-error">'+
         '<label for="devious" class="usa-input-error-label">Dropdown label</label>'+
-        '<span id="devious-input-error" class="usa-input-error-message" role="alert">Helpful error message</span>'+
+        '<span id="devious-input-error" class="usa-input-error-message" role="alert">Helpful message</span>'+
         '<select id="devious" name="devious" aria-describedby="devious-input-error">'+
           '<option value="value1">Option A</option>'+
           '<option value="value2">Option B</option>'+
@@ -213,7 +213,7 @@ describe.only('#SelectCanHaveErrorExpectsCorrectIdAndAria', function() {
     //       Update tests to use the following: Object.create(s);
     var config = Object.create(dropdownMainConfig);
     config.name = 'devious';
-    config.error = 'Helpful error message';
+    config.error = 'Helpful message';
     var actual = Selects.select(config);
 
     expect(actual).to.eql(expected);

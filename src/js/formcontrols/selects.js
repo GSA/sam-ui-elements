@@ -83,7 +83,7 @@ Selects = {
         opening.push('<label for="'+config.name+'"'+error+'>'+config.label+'</label>');
         
         if (this.hasError(config)) {
-          opening.push('<span id="'+config.name+'-input-error" class="usa-input-error-message" role="alert">Helpful error message</span>');
+          opening.push('<span id="'+config.name+'-input-error" class="usa-input-error-message" role="alert">'+config.error+'</span>');
         }
         
         var selectAria = '';
@@ -237,16 +237,6 @@ Selects = {
     /**
      * @private
      * 
-     * @param  {[type]}  config A string using JSON
-     * @return {Boolean}        Whether an error message was passed.
-     */
-    hasError: function(config) {
-      return (config.error !== undefined && config.error.length > 0);
-
-    },
-    /**
-     * @private
-     * 
      * @param  {[type]} config A string using JSON
      * @return {[type]}        The array of selected values set in config
      * 
@@ -255,6 +245,16 @@ Selects = {
       return (this.hasSelected(config)) 
         ? config.selected 
         : [];
+    },
+    /**
+     * @private
+     * 
+     * @param  {[type]}  config A string using JSON
+     * @return {Boolean}        Whether an error message was passed.
+     */
+    hasError: function(config) {
+      return (config.error !== undefined && config.error.length > 0);
+
     },
     /**
      * @private
