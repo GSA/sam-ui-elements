@@ -3,14 +3,16 @@ var Selects;
 /**
  * @Class Selects
  *
- * A 'pure' class, for lack of a better term. For generating:
+ * A 'pure' (stateless) class, for lack of a better term. For generating:
  *   select - with options
  *   checkboxes - with options
  *   radio button - with options
  *
- * The config passed into the main entry method is not modified, and no external
- * methods are called either; this is the complete, encapsulated, definition.
- *   
+ * The config passed into the main entry method is not modified (does not mutate), 
+ * and no external methods are called; this is the complete, encapsulated, definition.
+ *
+ * Errors in the configuration are logged to the console.
+ * 
  * @type {Object}
  * 
  */
@@ -66,6 +68,8 @@ Selects = {
       if (config.type == 'radio' || config.type == 'checkbox') {
         opening.push('<fieldset class="usa-fieldset-inputs">');
         opening.push('<legend>'+config.label+'</legend>');
+        opening.push(this.getError(config));
+        opening.push(this.getHint(config));
         opening.push('<ul class="usa-unstyled-list">');
 
       } else {
@@ -82,14 +86,8 @@ Selects = {
         }
         opening.push('<label for="'+config.name+'"'+error+'>'+config.label+'</label>');
         
-        if (this.hasError(config)) {
-          opening.push('<span id="'+config.name+'-input-error" class="usa-input-error-message" role="alert">'+config.error+'</span>');
-        }
-
-        if (this.hasHint(config)) {
-          opening.push('<span class="usa-form-hint">'+config.hint+'</span>');
-
-        }
+        opening.push(this.getError(config));
+        opening.push(this.getHint(config));
         
         var selectAria = '';
         if (this.hasError(config)) {
@@ -169,10 +167,10 @@ Selects = {
       // do not need to validate this config, system-generated
       // make configuration members concrete
       selected = '';
-      if (this.optionIsSelected(optionConfig) && optionConfig.type == 'checkbox') {
+      if (this.optionIsSelected(optionConfig) && (optionConfig.type == 'checkbox' || optionConfig.type == 'radio')) {
         selected = ' checked';
 
-      } else if (this.optionIsSelected(optionConfig) && (optionConfig.type == 'dropdown' || optionConfig.type == 'radio')) {
+      } else if (this.optionIsSelected(optionConfig) && optionConfig.type == 'dropdown') {
         selected = ' selected';
 
       }
@@ -196,6 +194,32 @@ Selects = {
 
       }
       return html.join('');
+    },
+    /**
+     * @private
+     * 
+     * @param  {[type]} config A string using JSON
+     * @return {[type]}        String containing the error message.
+     */
+    getError: function(config) {
+      if (this.hasError(config)) {
+        return '<span id="'+config.name+'-input-error" class="usa-input-error-message" role="alert">'+config.error+'</span>';
+      }
+      return '';
+    },
+    /**
+     * @private
+     * 
+     * @param  {[type]} config A string using JSON
+     * @return {[type]}        String containing the hint text.
+     * 
+     */
+    getHint: function(config) {
+      if (this.hasHint(config)) {
+        return '<span class="usa-form-hint">'+config.hint+'</span>';
+
+      }
+      return '';
     },
     /**
      * @private

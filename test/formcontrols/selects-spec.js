@@ -385,7 +385,7 @@ describe('#RadioOptionsCanPreselect', function() {
           '<legend>Custom label</legend>'+
           '<ul class="usa-unstyled-list">'+
             '<li>'+
-              '<input id="stanton" type="radio" name="historical-figures-2" value="stanton" selected>'+
+              '<input id="stanton" type="radio" name="historical-figures-2" value="stanton" checked>'+
               '<label for="stanton">Elizabeth Cady Stanton</label>'+
             '</li>'+
           '</ul>'+
@@ -479,6 +479,7 @@ describe('#CheckboxOptionCanBeDisabled', function() {
   });
 });
 
+
 describe('#CheckboxOptionCanBeDisableMultiple', function() {
   it('should be able to disable a single checkbox', function() {
 
@@ -511,7 +512,7 @@ describe('#CheckboxOptionCanBeDisableMultiple', function() {
   });
 });
 
-describe('#CheckboxOptionCanBeSelectMultiple', function() {
+describe('#CheckboxOptionCanSelectMultiple', function() {
   it('should be able to select multiple checkboxes', function() {
 
     var expected = 
@@ -542,3 +543,56 @@ describe('#CheckboxOptionCanBeSelectMultiple', function() {
     expect(actual).to.eql(expected);
   });
 });
+
+describe('#CheckboxOptionCanHaveHint', function() {
+  it('should be able to add hint to a checkbox fieldset', function() {
+
+    var expected = 
+      '<div>'+
+        '<fieldset class="usa-fieldset-inputs">'+
+          '<legend>Custom label</legend>'+
+          '<span class="usa-form-hint">Instructional text.</span>'+
+          '<ul class="usa-unstyled-list">'+
+            '<li>'+
+              '<input id="stanton" type="checkbox" name="historical-figures-2" value="stanton">'+
+              '<label for="stanton">Elizabeth Cady Stanton</label>'+
+            '</li>'+
+          '</ul>'+
+        '</fieldset>'+
+      '</div>'; 
+    var config = Object.create(checkboxShortConfig);
+    config.type = 'checkbox';
+    config.hint = 'Instructional text.';
+
+    var actual = Selects.select(config);
+
+    expect(actual).to.eql(expected);
+  });
+});
+
+describe('#CheckboxOptionCanHaveError', function() {
+  it('should be able to add an error message to a checkbox fieldset', function() {
+
+    var expected = 
+      '<div class="usa-input-error">'+
+        '<fieldset class="usa-fieldset-inputs">'+
+          '<legend>Custom label</legend>'+
+          '<span id="historical-figures-2-input-error" class="usa-input-error-message" role="alert">Helpful error message</span>'+
+          '<ul class="usa-unstyled-list">'+
+            '<li>'+
+              '<input id="stanton" type="checkbox" name="historical-figures-2" value="stanton">'+
+              '<label for="stanton">Elizabeth Cady Stanton</label>'+
+            '</li>'+
+          '</ul>'+
+        '</fieldset>'+
+      '</div>'; 
+    var config = Object.create(checkboxShortConfig);
+    config.error = 'Helpful error message';
+
+    var actual = Selects.select(config);
+
+    expect(actual).to.eql(expected);
+  });
+});
+
+
