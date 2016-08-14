@@ -186,15 +186,7 @@ Selects = {
      */
     option: function(optionConfig) {
       // do not need to validate this config, system-generated
-      // make configuration members concrete
-      selected = '';
-      if (this.optionIsSelected(optionConfig) && (optionConfig.type == 'checkbox' || optionConfig.type == 'radio')) {
-        selected = ' checked';
-
-      } else if (this.optionIsSelected(optionConfig) && optionConfig.type == 'dropdown') {
-        selected = ' selected';
-
-      }
+      var selected = this.optionSelectedText(optionConfig);
 
       var html = [];
       if (optionConfig.type == 'radio' || optionConfig.type == 'checkbox') {
@@ -295,6 +287,17 @@ Selects = {
      */
     optionIsSelected: function(config) {
       return (this.hasSelected(config) && config.selected.indexOf(config.value) > -1);
+    },
+    optionSelectedText: function(config) {
+      selected = '';
+      if (this.optionIsSelected(config) && (config.type == 'checkbox' || config.type == 'radio')) {
+        selected = ' checked';
+
+      } else if (this.optionIsSelected(config) && config.type == 'dropdown') {
+        selected = ' selected';
+
+      }
+      return selected;
     },
     /**
      * @private
