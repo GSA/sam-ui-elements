@@ -195,6 +195,29 @@ describe('#SelectCanHavehint', function() {
   });
 });
 
+describe('#SelectLabelCanBeScreenReaderOnly', function() {
+  it('should return dropdown with label for screen reader only', function() {
+
+    var expected = 
+      '<div>'+
+        '<label for="options" class="usa-sr-only">Dropdown label</label>'+
+        '<select id="options" name="options">'+
+          '<option value="value1">Option A</option>'+
+          '<option value="value2">Option B</option>'+
+          '<option value="value3">Option C</option>'+
+        '</select>'+
+      '</div>';
+    // TODO: var s = {} - is equivalent to creating an instance. Therefore,
+    //       var config = s - is equivalent to reference, not copy or clone.
+    //       Update tests to use the following: Object.create(s);
+    var config = Object.create(dropdownMainConfig);
+    config.srOnly = true;
+    var actual = Selects.select(config);
+
+    expect(actual).to.eql(expected);
+  });
+});
+
 describe('#SelectCanHaveError', function() {
   it('should return dropdown with error message', function() {
 
@@ -576,7 +599,7 @@ describe('#CheckboxOptionCanHaveError', function() {
     var expected = 
       '<div class="usa-input-error">'+
         '<fieldset class="usa-fieldset-inputs">'+
-          '<legend>Custom label</legend>'+
+          '<legend class="usa-input-error-label">Custom label</legend>'+
           '<span id="historical-figures-2-input-error" class="usa-input-error-message" role="alert">Helpful error message</span>'+
           '<ul class="usa-unstyled-list">'+
             '<li>'+
@@ -595,4 +618,26 @@ describe('#CheckboxOptionCanHaveError', function() {
   });
 });
 
+describe('#CheckboxOptionCanHaveScreenReaderOnly', function() {
+  it('should be able to add screen read only property to legend', function() {
 
+    var expected = 
+      '<div>'+
+        '<fieldset class="usa-fieldset-inputs">'+
+          '<legend class="usa-sr-only">Custom label</legend>'+
+          '<ul class="usa-unstyled-list">'+
+            '<li>'+
+              '<input id="stanton" type="checkbox" name="historical-figures-2" value="stanton">'+
+              '<label for="stanton">Elizabeth Cady Stanton</label>'+
+            '</li>'+
+          '</ul>'+
+        '</fieldset>'+
+      '</div>'; 
+    var config = Object.create(checkboxShortConfig);
+    config.srOnly = true;
+
+    var actual = Selects.select(config);
+
+    expect(actual).to.eql(expected);
+  });
+});

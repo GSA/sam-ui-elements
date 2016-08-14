@@ -67,7 +67,12 @@ Selects = {
       var opening = [];
       if (config.type == 'radio' || config.type == 'checkbox') {
         opening.push('<fieldset class="usa-fieldset-inputs">');
-        opening.push('<legend>'+config.label+'</legend>');
+        // var srOnly = '';
+        // if (config.srOnly !== undefined && config.srOnly) {
+        //   srOnly = ' class="usa-sr-only"';
+        // }
+        var labelClass = this.getLabelClass(config);
+        opening.push('<legend'+labelClass+'>'+config.label+'</legend>');
         opening.push(this.getError(config));
         opening.push(this.getHint(config));
         opening.push('<ul class="usa-unstyled-list">');
@@ -79,12 +84,8 @@ Selects = {
 
         }
 
-        var error = '';
-        if (this.hasError(config)) {
-          error = ' class="usa-input-error-label"'
-
-        }
-        opening.push('<label for="'+config.name+'"'+error+'>'+config.label+'</label>');
+        var labelClass = this.getLabelClass(config)
+        opening.push('<label for="'+config.name+'"'+labelClass+'>'+config.label+'</label>');
         
         opening.push(this.getError(config));
         opening.push(this.getHint(config));
@@ -98,6 +99,26 @@ Selects = {
 
       }
       return opening.join('');
+    },
+    getLabelClass: function(config) {
+        var classDef = [];
+        if (this.hasError(config)) {
+          classDef.push('usa-input-error-label');
+
+        }
+
+        if (config.srOnly !== undefined && config.srOnly) {
+          classDef.push('usa-sr-only');
+
+        }
+        
+        var classCompiled = '';
+        if (classDef.length > 0) {
+          classCompiled = ' class="';
+          classCompiled += classDef.join(' ');
+          classCompiled += '"';
+        }
+        return classCompiled;
     },
     /**
      * @private
