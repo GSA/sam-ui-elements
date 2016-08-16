@@ -43,7 +43,7 @@ gulp.task('watch-test', function () {
 });
 
 gulp.task('bundle-test', function () {
-    return gulp.src(['spec/samuikit-spec.js'], { read: false })
+    return gulp.src(['integration-test/samuikit-spec.js'], { read: false })
         .pipe(mocha({ reporter: 'nyan' }))
         .on('error', util.log);
 });
