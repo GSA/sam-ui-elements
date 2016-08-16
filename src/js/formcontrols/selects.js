@@ -67,26 +67,13 @@ Selects = {
       var opening = [];
       if (config.type == 'radio' || config.type == 'checkbox') {
         opening.push('<fieldset class="usa-fieldset-inputs">');
-        // var srOnly = '';
-        // if (config.srOnly !== undefined && config.srOnly) {
-        //   srOnly = ' class="usa-sr-only"';
-        // }
-        var labelClass = this.getLabelClass(config);
-        opening.push('<legend'+labelClass+'>'+config.label+'</legend>');
+        opening.push(this.getLabel(config));
         opening.push(this.getError(config));
         opening.push(this.getHint(config));
         opening.push('<ul class="usa-unstyled-list">');
 
       } else {
-        var disabled = '';
-        if (this.hasDisabled(config)) {
-          disabled = ' disabled';
-
-        }
-
-        var labelClass = this.getLabelClass(config)
-        opening.push('<label for="'+config.name+'"'+labelClass+'>'+config.label+'</label>');
-        
+        opening.push(this.getLabel(config));
         opening.push(this.getError(config));
         opening.push(this.getHint(config));
         
@@ -95,11 +82,44 @@ Selects = {
           selectAria = ' aria-describedby="'+config.name+'-input-error"';
 
         }
+
+        var disabled = '';
+        if (this.hasDisabled(config)) {
+          disabled = ' disabled';
+
+        }        
         opening.push('<select id="'+config.name+'" name="'+config.name+'"'+selectAria+disabled+'>');
 
       }
       return opening.join('');
     },
+    /**
+     * @private
+     * 
+     * @param  {[type]} config A string using JSON
+     * @return {[type]}        HTML string in compliance with US and SAM WDS
+     * 
+     */
+    getLabel: function(config) {
+      var label = '';
+      var labelClass = this.getLabelClass(config);
+      var labelMark = this.getLabelMark(config);
+      if (config.type == 'radio' || config.type == 'checkbox') {
+        label = '<legend'+labelClass+'>'+config.label+labelMark+'</legend>';
+
+      } else {
+        label = '<label for="'+config.name+'"'+labelClass+'>'+config.label+labelMark+'</label>';
+
+      }
+      return label;
+    },
+    /**
+     * @private
+     * 
+     * @param  {[type]} config A string using JSON
+     * @return {[type]}        String for element class
+     * 
+     */
     getLabelClass: function(config) {
         var classDef = [];
         if (this.hasError(config)) {
@@ -119,6 +139,23 @@ Selects = {
           classCompiled += '"';
         }
         return classCompiled;
+    },
+    /**
+     * @private
+     * 
+     * @param  {[type]} config A string using JSON
+     * @return {[type]}        Whether or not the field is required or optional
+     */
+    getLabelMark: function(config) {
+      var mark = '';
+      if (config.markAs !== undefined && config.markAs == 'required') {
+        mark = ' <span class="usa-additional_text">Required</span>';
+
+      } else if (config.markAs !== undefined && config.markAs == 'optional') {
+        mark = ' <span class="usa-additional_text">Optional</span>';
+
+      }
+      return mark;
     },
     /**
      * @private

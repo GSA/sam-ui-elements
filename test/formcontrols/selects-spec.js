@@ -641,3 +641,51 @@ describe('#CheckboxOptionCanHaveScreenReaderOnly', function() {
     expect(actual).to.eql(expected);
   });
 });
+
+describe('#CheckboxOptionCanBeMarkedRequired', function() {
+  it('should be able to add required', function() {
+
+    var expected = 
+      '<div>'+
+        '<fieldset class="usa-fieldset-inputs">'+
+          '<legend>Custom label <span class="usa-additional_text">Required</span></legend>'+
+          '<ul class="usa-unstyled-list">'+
+            '<li>'+
+              '<input id="stanton" type="checkbox" name="historical-figures-2" value="stanton">'+
+              '<label for="stanton">Elizabeth Cady Stanton</label>'+
+            '</li>'+
+          '</ul>'+
+        '</fieldset>'+
+      '</div>'; 
+    var config = Object.create(checkboxShortConfig);
+    config.markAs = 'required';
+
+    var actual = Selects.select(config);
+
+    expect(actual).to.eql(expected);
+  });
+});
+
+describe('#CheckboxOptionCanBeMarkedOptional', function() {
+  it('should be able to add required', function() {
+
+    var expected = 
+      '<div>'+
+        '<fieldset class="usa-fieldset-inputs">'+
+          '<legend>Custom label <span class="usa-additional_text">Optional</span></legend>'+
+          '<ul class="usa-unstyled-list">'+
+            '<li>'+
+              '<input id="stanton" type="checkbox" name="historical-figures-2" value="stanton">'+
+              '<label for="stanton">Elizabeth Cady Stanton</label>'+
+            '</li>'+
+          '</ul>'+
+        '</fieldset>'+
+      '</div>'; 
+    var config = Object.create(checkboxShortConfig);
+    config.markAs = 'optional';
+
+    var actual = Selects.select(config);
+
+    expect(actual).to.eql(expected);
+  });
+});
