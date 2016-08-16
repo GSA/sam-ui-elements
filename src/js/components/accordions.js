@@ -1,7 +1,7 @@
 var Accordions;
 
 
-  exports.accordions= function(config) {
+  exports.accordions = function(config) {
          
       var html = [];
 

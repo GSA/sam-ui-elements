@@ -1,6 +1,6 @@
 'use strict';
 var expect = require('chai').expect;
-var Selects = require('../../src/js/formcontrols/selects.js');
+var Selects = require('../../../src/js/elements/form-controls/selects.js');
 
 describe('#SelectExists', function() {
   it('should exist', function() {        

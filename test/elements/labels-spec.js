@@ -1,6 +1,6 @@
 'use strict';
 var expect = require('chai').expect;
-var Labels = require('../../src/js/formcontrols/labels.js');
+var Labels = require('../../src/js/elements/labels.js');
 
 describe('Labels', function() {
     it('should exist', function() {        
