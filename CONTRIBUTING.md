@@ -37,4 +37,20 @@ Here are a few guidelines to follow when submitting a pull request:
 1. Once you're ready to submit a pull request, fill out the PULL REQUEST template provided.
 1. Submit your pull request against the `staging` branch.
 
-Have questions or need help with setup? Open an issue here [https://github.com/18F/web-design-standards/issues](https://github.com/18F/web-design-standards/issues).
+Have questions or need help with setup? Open an issue here [https://github.com/GSA/sam-uikit-js/issues](https://github.com/GSA/sam-uikit-js/issues).
+
+### What goes here & where things are
+
+This repository houses the elements and components defined in the [SAM Web Design Standards](https://gsa.github.io/sam-web-design-standards/) - not page templates.
+
+The folder structure for this repository follows the information architecture of the [SAM Web Design Standards](https://gsa.github.io/sam-web-design-standards/). Therefore, if the HTML is defined in [elements -> form-controls](https://gsa.github.io/sam-web-design-standards/elements/form-controls/) the corresponding element should be located in `src -> js -> elements-> form-controls` in this repository.
+
+### Coding standards
+
+|Name                |Style                          |Example           |
+|:-------------------|:-----------------------------:|:----------------:|
+|Class names         |TitleCased                     |Select = {}       |
+|Function definitions|camelCased                     |isRequired(config)|
+|Variable names      |camelCased and self documenting|isRequired = true; <br> NOT i = true;|
+|Tabs & spaces       |Follow the provided linter and provided .editorconfig|n/a |
+
