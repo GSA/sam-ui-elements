@@ -45,6 +45,32 @@ This repository houses the elements and components defined in the [SAM Web Desig
 
 The folder structure for this repository follows the information architecture of the [SAM Web Design Standards](https://gsa.github.io/sam-web-design-standards/). Therefore, if the HTML is defined in [elements -> form-controls](https://gsa.github.io/sam-web-design-standards/elements/form-controls/) the corresponding element should be located in `src -> js -> elements-> form-controls` in this repository.
 
+### Design
+
+The design of this kit is to be modular by nature - each element and component is defined as a single encapsulated unit. This allows you (and future-you) to reason about the code locally with little-to-no knowledge of the kit as a whole.
+
+This kit is designed to be framework independent, meaning almost any developer using any JavaScript runtime (or client-side framework) should be able to include the kit and begin using it.
+
+Each modular is written in a [self-documenting](https://en.wikipedia.org/wiki/Self-documenting_code) fashion as much as possible. This means sometimes extracting the logic of a conditional to a method to increase human readability.
+
+```
+if (this.hasSelected(config)) {
+  
+}
+
+hasSelected = function(config) {
+  return (config.selected !== undefined && config.selected.length > 0);
+}
+```
+
+Instead of:
+
+```
+if (config.selected !== undefined && config.selected.length > 0) {
+  
+}
+```
+
 ### Coding standards
 
 |Name                |Style                          |Example           |
