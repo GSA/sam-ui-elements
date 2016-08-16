@@ -52,5 +52,6 @@ The folder structure for this repository follows the information architecture of
 |Class names         |TitleCased                     |Select = {}       |
 |Function definitions|camelCased                     |isRequired(config)|
 |Variable names      |camelCased and self documenting|isRequired = true; <br> NOT i = true;|
+|Configuration JSON member names|camelCased and self documenting|srOnly: true <br> NOT sr-only: true <br> NOT s: true|
 |Tabs & spaces       |Follow the provided linter and provided .editorconfig|n/a |
 
