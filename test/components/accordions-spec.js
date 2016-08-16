@@ -1,6 +1,6 @@
 'use strict';
 var expect = require('chai').expect;
-var Accordions = require('../../src/js/misc/accordions.js');
+var Accordions = require('../../src/js/components/accordions.js');
 
 describe('Accordions', function() {
     it('should exist', function() {        
