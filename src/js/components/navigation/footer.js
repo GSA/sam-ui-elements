@@ -2,9 +2,8 @@ var Footer;
 
 Footer = {
     Footer: function(config) {
-		console.log(config.type);
-    	var html =  	'<section id="iae-footer"><footer><div class="usa-grid usa-footer-return-to-top"><a href="#">Return to top</a>' +
-						'</div><div class="iae-footer"><div class="iae-footer-body usa-grid">' +
+    	var html =  	'<section id="iae-footer"><footer><div class="usa-grid-full usa-footer-return-to-top"><a href="#">Return to top</a>' +
+						'</div><div class="iae-footer"><div class="iae-footer-body usa-grid-full">' +
 				         '<div class="iae-footer-logo usa-width-one-sixth">' +
 			             '<a class="image-wrap" href="http://www.gsa.gov" target="_blank"><img alt="GSA logo" src="assets/img/logo-gsa.png"></a></div>' +
 				        '<ul class="iae-footer-links usa-unstyled-list usa-width-five-sixths">' +
