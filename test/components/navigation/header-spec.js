@@ -1,15 +1,15 @@
 'use strict';
 var expect = require('chai').expect;
-var Header = require('../../../src/js/components/navigation/header.js');
+var Header = require('../../../src/common/navigation/header.js');
 
 describe('Header', function() {
-    it('should exist', function() {        
+    it('should exist', function() {
         expect(Header).to.not.be.undefined;
     });
 });
 
 describe('Header', function() {
-    it('returns a string', function() {       
+    it('returns a string', function() {
       var expected = '<section id="iae-header"><header><div class="iae-header">' +
 			'<div class="usa-grid-full"><div class="iae-header-menu"><div class="iae-header-nav">' +
 			'<i class="fa fa-bars"></i><div class="m_T-1x">MENU</div></div>' +

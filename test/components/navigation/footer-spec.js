@@ -1,15 +1,15 @@
 'use strict';
 var expect = require('chai').expect;
-var Footer = require('../../../src/js/components/navigation/footer.js');
+var Footer = require('../../../src/common/navigation/footer.js');
 
 describe('Footer', function() {
-    it('should exist', function() {        
+    it('should exist', function() {
         expect(Footer).to.not.be.undefined;
     });
 });
 
 describe('Footer', function() {
-    it('returns a string', function() {       
+    it('returns a string', function() {
       var expected = 	'<section id="iae-footer"><footer><div class="usa-grid-full usa-footer-return-to-top"><a href="#">Return to top</a>' +
 						'</div><div class="iae-footer"><div class="iae-footer-body usa-grid-full">' +
 				         '<div class="iae-footer-logo usa-width-one-sixth">' +
