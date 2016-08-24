@@ -1,6 +1,6 @@
 'use strict';
 var expect = require('chai').expect;
-var Header = require('../../src/js/common/header.js');
+var Header = require('../../../src/js/components/navigation/header.js');
 
 describe('Header', function() {
     it('should exist', function() {        

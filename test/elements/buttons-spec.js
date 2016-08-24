@@ -1,6 +1,6 @@
 'use strict';
 var expect = require('chai').expect;
-var Buttons = require('../../src/js/formcontrols/buttons.js');
+var Buttons = require('../../src/js/elements/buttons.js');
 
 describe('Buttons', function() {
     it('should exist', function() {        

@@ -37,4 +37,47 @@ Here are a few guidelines to follow when submitting a pull request:
 1. Once you're ready to submit a pull request, fill out the PULL REQUEST template provided.
 1. Submit your pull request against the `staging` branch.
 
-Have questions or need help with setup? Open an issue here [https://github.com/18F/web-design-standards/issues](https://github.com/18F/web-design-standards/issues).
+Have questions or need help with setup? Open an issue here [https://github.com/GSA/sam-uikit-js/issues](https://github.com/GSA/sam-uikit-js/issues).
+
+### What goes here & where things are
+
+This repository houses the elements and components defined in the [SAM Web Design Standards](https://gsa.github.io/sam-web-design-standards/) - not page templates.
+
+The folder structure for this repository follows the information architecture of the [SAM Web Design Standards](https://gsa.github.io/sam-web-design-standards/). Therefore, if the HTML is defined in [elements -> form-controls](https://gsa.github.io/sam-web-design-standards/elements/form-controls/) the corresponding element should be located in `src -> js -> elements-> form-controls` in this repository.
+
+### Design
+
+The design of this kit is to be modular by nature - each element and component is defined as a single encapsulated unit. This allows you (and future-you) to reason about the code locally with little-to-no knowledge of the kit as a whole.
+
+This kit is designed to be framework independent, meaning almost any developer using any JavaScript runtime (or client-side framework) should be able to include the kit and begin using it.
+
+Each modular is written in a [self-documenting](https://en.wikipedia.org/wiki/Self-documenting_code) fashion as much as possible. This means sometimes extracting the logic of a conditional to a method to increase human readability.
+
+```
+if (this.hasSelected(config)) {
+  
+}
+
+hasSelected = function(config) {
+  return (config.selected !== undefined && config.selected.length > 0);
+}
+```
+
+Instead of:
+
+```
+if (config.selected !== undefined && config.selected.length > 0) {
+  
+}
+```
+
+### Coding standards
+
+|Name                |Style                          |Example           |
+|:-------------------|:-----------------------------:|:----------------:|
+|Class names         |TitleCased                     |Select = {}       |
+|Function definitions|camelCased                     |isRequired(config)|
+|Variable names      |camelCased and self documenting|isRequired = true; <br> NOT i = true;|
+|Configuration JSON member names|camelCased and self documenting|srOnly: true <br> NOT sr-only: true <br> NOT s: true|
+|Tabs & spaces       |Follow the provided linter and provided .editorconfig|n/a |
+
