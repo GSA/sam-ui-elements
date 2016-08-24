@@ -1,6 +1,6 @@
 'use strict';
 var expect = require('chai').expect;
-var Labels = require('../../src/js/formcontrols/labels.js');
+var Labels = require('../../src/js/elements/labels.js');
 
 describe('Labels', function() {
     it('should exist', function() {        
@@ -13,9 +13,9 @@ describe('Labels', function() {
 describe('#Label)', function() {
     it('it should return a string', function() {
         
-        var dataItem = {type:"Small", data:"Test"};
+        var dataItem = {type:"small", data:"Test"};
         var expected = '<span class="usa-label">Test</span>'; 
-        var actual = Labels.Label(dataItem);
+        var actual = Labels.label(dataItem);
         console.log(actual);
         expect(actual).to.eql(expected);
     });

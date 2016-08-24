@@ -13,14 +13,14 @@ describe('Alerts', function() {
 describe('#Alerts)', function() {
     it('it should return a string', function() {
         
-        var dataItem = {type:"Success", title:"Test", description:"This is Test"};
+        var dataItem = {type:"success", title:"Test", description:"This is Test"};
         var expected = '<div class="usa-alert usa-alert-success">'+
                             '<div class="usa-alert-body">'+
                               '<h3 class="usa-alert-heading">'+dataItem.title+'</h3>'+
                               '<p class="usa-alert-text">'+dataItem.description+'</p>'+
                             '</div>'+
                           '</div>';
-        var actual = Alerts.Alert(dataItem);
+        var actual = Alerts.alert(dataItem);
         expect(actual).to.eql(expected);
     });
 });
