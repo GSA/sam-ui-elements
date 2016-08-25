@@ -22,7 +22,7 @@ describe('Footer', function() {
 						'<li class="m_B"><a href="https://interact.gsa.gov/group/integrated-award-environment-iae-industry-community" target="_blank" title="Join our Interact Community">Join our Interact Community</a></li>' +
 						'<li class="m_B"><a href="/for-developers/" title="For Developers">For Developers</a></li></ul></li></ul></div></div></footer></section>';
 
-        var actual = Footer.Footer({});
+        var actual = Footer.footer.render({});
         expect(actual).to.eql(expected);
     });
 });

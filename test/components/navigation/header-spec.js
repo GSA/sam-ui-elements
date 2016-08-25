@@ -18,7 +18,7 @@ describe('Header', function() {
 					 '<div class="pull-right m_L-3x">Create Account</div><div class="pull-right">|</div>' +
 					 '<div class="pull-right m_R-3x">Sign in</div></div></div></div></header></section>';
 
-        var actual = Header.Header({});
+        var actual = Header.header.render({});
         expect(actual).to.eql(expected);
     });
 });

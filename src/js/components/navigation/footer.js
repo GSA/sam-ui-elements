@@ -1,7 +1,5 @@
-var Footer;
-
-Footer = {
-    Footer: function(config) {
+exports.footer ={
+	render : function(config) {
 		console.log(config.type);
     	var html =  	'<section id="iae-footer"><footer><div class="usa-grid usa-footer-return-to-top"><a href="#">Return to top</a>' +
 						'</div><div class="iae-footer"><div class="iae-footer-body usa-grid">' +
@@ -17,5 +15,4 @@ Footer = {
     	return html;
     }
 };
-
-module.exports = Footer;
+     

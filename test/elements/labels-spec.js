@@ -15,7 +15,7 @@ describe('#Label)', function() {
         
         var dataItem = {type:"small", data:"Test"};
         var expected = '<span class="usa-label">Test</span>'; 
-        var actual = Labels.label(dataItem);
+        var actual = Labels.label.render(dataItem);
         console.log(actual);
         expect(actual).to.eql(expected);
     });
