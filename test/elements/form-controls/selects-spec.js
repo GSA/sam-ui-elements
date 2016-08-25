@@ -165,7 +165,7 @@ describe('#SelectInitial', function() {
 
     var expected = dropdownMain;
     var config = Object.create(dropdownMainConfig);
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });
@@ -189,7 +189,7 @@ describe('#SelectCanHavehint', function() {
     //       Update tests to use the following: Object.create(s);
     var config = Object.create(dropdownMainConfig);
     config.hint = 'Instructional text.';
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });
@@ -212,7 +212,7 @@ describe('#SelectLabelCanBeScreenReaderOnly', function() {
     //       Update tests to use the following: Object.create(s);
     var config = Object.create(dropdownMainConfig);
     config.srOnly = true;
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });
@@ -236,7 +236,7 @@ describe('#SelectCanHaveError', function() {
     //       Update tests to use the following: Object.create(s);
     var config = Object.create(dropdownMainConfig);
     config.error = 'Helpful error message';
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });
@@ -261,7 +261,7 @@ describe('#SelectCanHaveErrorExpectsCorrectIdAndAria', function() {
     var config = Object.create(dropdownMainConfig);
     config.name = 'devious';
     config.error = 'Helpful message';
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });
@@ -272,7 +272,7 @@ describe('#SelectLabelIsCorrect', function() {
 
     var expected = dropdownMain;
     var config = Object.create(dropdownMainConfig);
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
     expect(actual).to.equal(expected);
 
     config = {
@@ -285,7 +285,7 @@ describe('#SelectLabelIsCorrect', function() {
         'value3': 'Option C'        
       }
     };
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
     expect(actual).to.not.equal(expected);
   });
 });
@@ -295,7 +295,7 @@ describe('#SelectNameIsCorrect', function() {
 
     var expected = dropdownMain;
     var config = Object.create(dropdownMainConfig);
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });
@@ -306,7 +306,7 @@ describe('#SelectOptionsAreTheExpectedValues', function() {
 
     var expected = dropdownShort;
     var config = Object.create(dropdownShortConfig);
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });
@@ -328,7 +328,7 @@ describe('#SelectOptionsCanPreselect', function() {
     var config = Object.create(dropdownShortConfig);
     config.selected = ['value1'];
 
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });
@@ -344,7 +344,7 @@ describe('#SelectOptionsCanOnlyHaveOneSelection', function() {
     var config = Object.create(dropdownShortConfig);
     config.selected = ['value1', 'value2'];
 
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });
@@ -365,7 +365,7 @@ describe('#SelectOptionsCanBeDisabled', function() {
     var config = Object.create(dropdownMainConfig);
     config.disabled = ['value1'];
 
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });
@@ -381,7 +381,7 @@ describe('#RadioInitial)', function() {
 
     var expected = radioMain;
     var config = Object.create(radioMainConfig);
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });
@@ -393,7 +393,7 @@ describe('#RadioLegendIsCorrect', function() {
     var expected = radioMainShort;
     var config = Object.create(radioShortConfig);
 
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
     expect(actual).to.equal(expected);
   });
 });
@@ -419,7 +419,7 @@ describe('#RadioOptionsCanPreselect', function() {
     config.type = 'radio';
     config.selected = ['stanton'];
 
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });
@@ -444,7 +444,7 @@ describe('#RadioOptionCanBeDisabled', function() {
     config.type = 'radio';
     config.disabled = ['stanton'];
 
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });
@@ -460,7 +460,7 @@ describe('#CheckboxInitial)', function() {
 
     var expected = checkboxMain;
     var config = Object.create(checkboxMainConfig);
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });
@@ -472,7 +472,7 @@ describe('#CheckboxLegendIsCorrect', function() {
     var expected = checkboxMainShort;
     var config = Object.create(checkboxShortConfig);
 
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
     expect(actual).to.equal(expected);
   });
 });
@@ -496,7 +496,7 @@ describe('#CheckboxOptionCanBeDisabled', function() {
     config.type = 'checkbox';
     config.disabled = ['stanton'];
 
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });
@@ -529,7 +529,7 @@ describe('#CheckboxOptionCanBeDisableMultiple', function() {
     var config = Object.create(checkboxMainConfig);
     config.disabled = ['stanton', 'tubman'];
 
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });
@@ -561,7 +561,7 @@ describe('#CheckboxOptionCanSelectMultiple', function() {
     var config = Object.create(checkboxMainConfig);
     config.selected = ['stanton', 'tubman'];
 
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });
@@ -587,7 +587,7 @@ describe('#CheckboxOptionCanHaveHint', function() {
     config.type = 'checkbox';
     config.hint = 'Instructional text.';
 
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });
@@ -612,7 +612,7 @@ describe('#CheckboxOptionCanHaveError', function() {
     var config = Object.create(checkboxShortConfig);
     config.error = 'Helpful error message';
 
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });
@@ -636,7 +636,7 @@ describe('#CheckboxOptionCanHaveScreenReaderOnly', function() {
     var config = Object.create(checkboxShortConfig);
     config.srOnly = true;
 
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });
@@ -660,7 +660,7 @@ describe('#CheckboxOptionCanBeMarkedRequired', function() {
     var config = Object.create(checkboxShortConfig);
     config.markAs = 'required';
 
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });
@@ -684,7 +684,7 @@ describe('#CheckboxOptionCanBeMarkedOptional', function() {
     var config = Object.create(checkboxShortConfig);
     config.markAs = 'optional';
 
-    var actual = Selects.select(config);
+    var actual = Selects.select.render(config);
 
     expect(actual).to.eql(expected);
   });

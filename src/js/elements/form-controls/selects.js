@@ -1,4 +1,4 @@
-var Selects;
+
 
 /**
  * @Class Selects
@@ -16,7 +16,7 @@ var Selects;
  * @type {Object}
  * 
  */
-Selects = {
+exports.select = {
   /**
    * Entry point.
    *
@@ -27,7 +27,7 @@ Selects = {
    * @return {[type]}        HTML string in compliance with US and SAM WDS
    * 
    */
-  select: function(config) {
+  render: function(config) {
 
     if (this.isInvalidConfiguration(config)) {
       // configuration is not valid
@@ -418,4 +418,4 @@ Selects = {
 
 };
 
-module.exports = Selects;
+

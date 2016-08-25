@@ -1,7 +1,5 @@
-var Header;
-
-Header = {
-    Header: function(config) {
+exports.header = {
+	render : function(config) {
     	var html =  '<section id="iae-header"><header><div class="iae-header"><div class="usa-grid">' +
 				     '<div class="iae-header-menu"><div class="iae-header-nav"><i class="fa fa-bars"></i>' + 
 					 '<div class="m_T-1x">MENU</div></div><div class="iae-header-logo"><a class="image-wrap" href="#">' +
@@ -12,5 +10,4 @@ Header = {
     	return html;
     }
 };
-
-module.exports = Header;
+     
