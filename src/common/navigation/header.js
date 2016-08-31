@@ -43,7 +43,7 @@ Header = {
 							<div class="iae-user-dropdown" id="user-dropdown">
 								<ul class="usa-unstyled-list">
                   <li><a href="${ENV_ROOT}/my-details/">Personal Details</a></li>
-                  <li><a href="#">Password Reset</a></li>
+                  <li><a href="${ENV_ROOT}/password/">Password Reset</a></li>
                   <li><a href="${ENV_ROOT}/my-access">My Access</a></li>
 								</ul>
 							</div>
