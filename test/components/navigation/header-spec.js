@@ -12,6 +12,7 @@ describe('Header', function() {
     it('returns a string', function() {
 
 	  const SITE_ROOT = 'http://test.sam.gov';
+    const ENV_ROOT =  'http://test.comp.micropaas.io';
 
     var expected = `<section id="iae-header"><header class="usa-grid">
 						<div class="iae-header-menu">
@@ -41,9 +42,9 @@ describe('Header', function() {
 							</div>
 							<div class="iae-user-dropdown" id="user-dropdown">
 								<ul class="usa-unstyled-list">
-                  <li><a href="http://clp-unified.comp.micropaas.io/my-details/">Personal Details</a></li>
+                  <li><a href="http://test.comp.micropaas.io/my-details/">Personal Details</a></li>
                   <li><a href="#">Password Reset</a></li>
-                  <li><a href="http://clp-unified.comp.micropaas.io/my-access">My Access</a></li>
+                  <li><a href="http://test.comp.micropaas.io/my-access">My Access</a></li>
 								</ul>
 							</div>
 						</div>
@@ -69,7 +70,7 @@ describe('Header', function() {
 							<label id="auth_password_label" for="auth_password" class="m_T-2x">Password<span class="sr-only"> Required</span></label>
 							<i class="fa fa-lock"></i>
 							<input type="password" id="auth_password" value="" name="password" />
-							<a class="forgot-password" href="http://clp-unified.comp.micropaas.io/password/">Forgot?</a>
+							<a class="forgot-password" href="http://test.comp.micropaas.io/password/">Forgot?</a>
 							<span class="sr-only"> Password</span>
 						</div>
 						<input type="submit" value="Next" />
@@ -96,7 +97,7 @@ describe('Header', function() {
 				</div>
 				</section>`;
 
-        var actual = Header.Header({site_root: SITE_ROOT});
+        var actual = Header.Header({site_root: SITE_ROOT, env_root: ENV_ROOT});
         expect(actual).to.eql(expected);
     });
 });

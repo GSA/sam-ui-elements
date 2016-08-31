@@ -8,6 +8,11 @@ Header = {
 
     //set site root for pathing, default to transition.sam.gov
     var SITE_ROOT = (config.site_root) ? config.site_root : 'https://transition.sam.gov';
+    var ENV_ROOT = (config.env_root) ? config.env_root : 'http://clp-unified.comp.micropaas.io';
+
+    /* Other required config properties that need to be added once a clear plan is set for the
+    authentication code integration: "auth_api_key", "auth_url", "auth_header"
+    */
 
     var html =  `<section id="iae-header"><header class="usa-grid">
 						<div class="iae-header-menu">
@@ -37,9 +42,9 @@ Header = {
 							</div>
 							<div class="iae-user-dropdown" id="user-dropdown">
 								<ul class="usa-unstyled-list">
-                  <li><a href="http://clp-unified.comp.micropaas.io/my-details/">Personal Details</a></li>
+                  <li><a href="${ENV_ROOT}/my-details/">Personal Details</a></li>
                   <li><a href="#">Password Reset</a></li>
-                  <li><a href="http://clp-unified.comp.micropaas.io/my-access">My Access</a></li>
+                  <li><a href="${ENV_ROOT}/my-access">My Access</a></li>
 								</ul>
 							</div>
 						</div>
@@ -65,7 +70,7 @@ Header = {
 							<label id="auth_password_label" for="auth_password" class="m_T-2x">Password<span class="sr-only"> Required</span></label>
 							<i class="fa fa-lock"></i>
 							<input type="password" id="auth_password" value="" name="password" />
-							<a class="forgot-password" href="http://clp-unified.comp.micropaas.io/password/">Forgot?</a>
+							<a class="forgot-password" href="${ENV_ROOT}/password/">Forgot?</a>
 							<span class="sr-only"> Password</span>
 						</div>
 						<input type="submit" value="Next" />
