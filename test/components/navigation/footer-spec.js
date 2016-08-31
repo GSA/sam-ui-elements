@@ -16,7 +16,7 @@ describe('Footer', function() {
       var expected = 	`<section id="iae-footer">
 					<footer>
 						<div class="usa-grid usa-footer-return-to-top"><a href="#">Return to top</a></div>
-						<div class="iae-footer">
+						<nav class="iae-footer">
 							<div class="iae-footer-body usa-grid">
 								<div class="iae-footer-logo usa-width-one-sixth"><a class="image-wrap" href="http://gsa.gov" target="_blank"><img alt="GSAlogo" src="http://test.sam.gov/assets/img/logo-gsa.png"></a></div>
 								<ul class="iae-footer-links usa-unstyled-list usa-width-five-sixths">
@@ -57,7 +57,7 @@ describe('Footer', function() {
 									</li>
 								</ul>
 							</div>
-						</div>
+						</nav>
 					</footer>
 				</section>`;
 

@@ -10,10 +10,10 @@ describe('Header', function() {
 
 describe('Header', function() {
     it('returns a string', function() {
-		
+
 	  const SITE_ROOT = 'http://test.sam.gov';
-		
-      var expected = `<section id="iae-header"><header class="usa-grid">
+
+    var expected = `<section id="iae-header"><header class="usa-grid">
 						<div class="iae-header-menu">
 						<div class="iae-header-nav">
 							<a href=""><i class="fa fa-bars"><span class="usa-sr-only">Menu</span></i></a>
@@ -41,9 +41,9 @@ describe('Header', function() {
 							</div>
 							<div class="iae-user-dropdown" id="user-dropdown">
 								<ul class="usa-unstyled-list">
-									<li><a href="#">Personal Details</a></li>
-									<li><a href="#">Password Reset</a></li>
-									<li><a href="#">My Access</a></li>
+                  <li><a href="http://clp-unified.comp.micropaas.io/my-details/">Personal Details</a></li>
+                  <li><a href="#">Password Reset</a></li>
+                  <li><a href="http://clp-unified.comp.micropaas.io/my-access">My Access</a></li>
 								</ul>
 							</div>
 						</div>
@@ -96,7 +96,7 @@ describe('Header', function() {
 				</div>
 				</section>`;
 
-        var actual = Header.Header({});
+        var actual = Header.Header({site_root: SITE_ROOT});
         expect(actual).to.eql(expected);
     });
 });

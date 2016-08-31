@@ -9,7 +9,7 @@ Header = {
     //set site root for pathing, default to transition.sam.gov
     var SITE_ROOT = (config.site_root) ? config.site_root : 'https://transition.sam.gov';
 
-    	var html =  `<section id="iae-header"><header class="usa-grid">
+    var html =  `<section id="iae-header"><header class="usa-grid">
 						<div class="iae-header-menu">
 						<div class="iae-header-nav">
 							<a href=""><i class="fa fa-bars"><span class="usa-sr-only">Menu</span></i></a>
@@ -37,9 +37,9 @@ Header = {
 							</div>
 							<div class="iae-user-dropdown" id="user-dropdown">
 								<ul class="usa-unstyled-list">
-									<li><a href="#">Personal Details</a></li>
-									<li><a href="#">Password Reset</a></li>
-									<li><a href="#">My Access</a></li>
+                  <li><a href="http://clp-unified.comp.micropaas.io/my-details/">Personal Details</a></li>
+                  <li><a href="#">Password Reset</a></li>
+                  <li><a href="http://clp-unified.comp.micropaas.io/my-access">My Access</a></li>
 								</ul>
 							</div>
 						</div>
@@ -95,5 +95,181 @@ Header = {
     	return html;
     }
 };
+
+/* Authentication Code and Supporting functions */
+
+/*document.addEventListener("DOMContentLoaded", function() {
+
+	var form_login = document.getElementById('form_login');
+
+	if (form_login) {
+		form_login.onsubmit = function() { return onLoginSubmit(); }
+	}
+
+	var form_otp = document.getElementById('form_otp');
+
+	if (form_otp) {
+		form_otp.onsubmit = function() { return onOTPSubmit(); }
+	}
+
+	window.addEventListener("userLoggedIn", onUserLoggedIn);
+});
+
+function showLogin(target) {
+	event.stopPropagation();
+	document.getElementById(target).style.display = 'block';
+}
+
+function hideLogin(target) {
+	document.getElementById(target).style.display = 'none';
+}
+
+function onLoginSubmit() {
+
+	var username = document.getElementById('auth_email');
+	var password = document.getElementById('auth_password');
+
+	var xhr = new XMLHttpRequest();
+
+	var jsonData= JSON.stringify({
+		username: username.value,
+		password: password.value,
+		service: "LDAPandHOTP"
+	});
+
+	xhr.open('POST', 'https://csp-api.sam.gov/comp/IdentityandAccess/v3/auth/session/?api_key=rkkGBk7AU8UQs9LHT6rM0rFkg3A3rGaiBntKSGEC', true);
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.send(jsonData);
+
+	xhr.onload = function() {
+		if (xhr.status == 200) {
+			console.log(xhr.responseText);
+
+			if (xhr.responseText) {
+				var data = JSON.parse(xhr.responseText);
+
+				if (data["authnResponse"]) {
+					var authObject = data["authnResponse"];
+					showOTP(authObject["authId"], authObject["stage"]);
+				}
+			}
+
+		}
+	};
+
+	return false;
+}
+
+function showOTP(authId, stage) {
+
+  hideLogin('iae-pswd-login');
+  showLogin('iae-otp-login');
+
+	console.log(`${authId} - ${stage}`, authId, stage);
+
+	document.getElementById("authId").value = authId;
+	document.getElementById("stage").value = stage;
+}
+
+function onOTPSubmit() {
+
+	var otp = document.getElementById('auth_otp_password');
+	var authId = document.getElementById("authId");
+	var stage = document.getElementById("stage");
+
+	var xhr = new XMLHttpRequest();
+
+	var jsonData = JSON.stringify({
+			service: "LDAPandHOTP",
+			stage: stage.value,
+			otp: otp.value,
+			authId: authId.value
+		});
+
+	xhr.open('POST', 'https://csp-api.sam.gov/comp/IdentityandAccess/v3/auth/session/?api_key=rkkGBk7AU8UQs9LHT6rM0rFkg3A3rGaiBntKSGEC', true);
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.send(jsonData);
+
+	xhr.onload = function() {
+		if (xhr.status == 200) {
+			console.log(xhr.responseText);
+
+			if (xhr.responseText) {
+				var data = JSON.parse(xhr.responseText);
+
+				if (data["authnResponse"]) {
+					var authObject = data["authnResponse"];
+
+					if (authObject["tokenId"]) {
+						document.cookie = (`iPlanetDirectoryPro=${authObject["tokenId"]}; path=/`);
+						var event = new Event('userLoggedIn');
+						window.dispatchEvent(event);
+            hideLogin('iae-header-login');
+					}
+				}
+			}
+
+		}
+	};
+
+	return false;
+}
+
+function onUserLoggedIn() {
+
+	var cookie = window.getCookie('iPlanetDirectoryPro');
+
+	var xhr = new XMLHttpRequest();
+
+	xhr.open('GET', 'https://csp-api.sam.gov/comp/IdentityandAccess/v3/auth/session/?api_key=rkkGBk7AU8UQs9LHT6rM0rFkg3A3rGaiBntKSGEC', true);
+	xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.setRequestHeader('iPlanetDirectoryPro', cookie);
+	xhr.send();
+	xhr.onload = function() {
+		if (xhr.status == 200) {
+
+			if (xhr.responseText) {
+        console.log(xhr.responseText);
+
+				showLogin('iae-user-on');
+				hideLogin('iae-user-off');
+				var data = JSON.parse(xhr.responseText);
+
+				var user_greeting = document.getElementById('user-greeting');
+				user_greeting.textContent = `Hello, ${data.sessionToken.uid}`;
+			}
+
+		}
+	};
+}
+
+function signOut() {
+	var cookie = window.getCookie('iPlanetDirectoryPro');
+
+	var xhr = new XMLHttpRequest();
+
+	xhr.open('DELETE', 'https://csp-api.sam.gov/comp/IdentityandAccess/v3/auth/session/?api_key=rkkGBk7AU8UQs9LHT6rM0rFkg3A3rGaiBntKSGEC', true);
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.setRequestHeader('iPlanetDirectoryPro', cookie);
+	xhr.send();
+	xhr.onload = function() {
+		if (xhr.status == 200) {
+
+			if (xhr.responseText) {
+				console.log(xhr.responseText);
+				window.location.reload(true);
+			}
+		}
+	};
+
+	//reset cookie for the past
+	document.cookie = (`iPlanetDirectoryPro=${cookie}; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`);
+}
+
+window.getCookie = function(name) {
+  match = document.cookie.match(new RegExp(name + '=([^;]+)'));
+  if (match) return match[1];
+}*/
+
 
 module.exports = Header;
