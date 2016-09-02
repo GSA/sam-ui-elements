@@ -1,14 +1,14 @@
 'use strict';
 var expect = require('chai').expect;
-var Footer = require('../../../src/common/navigation/footer.js');
+var navigation = require('../../../src/common/navigation');
 
-describe('Footer', function() {
+describe('footer', function() {
     it('should exist', function() {
-        expect(Footer).to.not.be.undefined;
+        expect(navigation.footer).to.not.be.undefined;
     });
 });
 
-describe('Footer', function() {
+describe('footer', function() {
     it('returns a string', function() {
 
       const SITE_ROOT = 'http://test.sam.gov';
@@ -61,7 +61,7 @@ describe('Footer', function() {
 					</footer>
 				</section>`;
 
-        var actual = Footer.Footer({site_root: SITE_ROOT});
+        var actual = navigation.footer.render({site_root: SITE_ROOT});
 
         expect(actual).to.eql(expected);
     });

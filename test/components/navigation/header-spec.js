@@ -1,17 +1,17 @@
 'use strict';
 var expect = require('chai').expect;
-var Header = require('../../../src/common/navigation/header.js');
+var navigation = require('../../../src/common/navigation');
 
-describe('Header', function() {
+describe('header', function() {
     it('should exist', function() {
-        expect(Header).to.not.be.undefined;
+        expect(navigation.header).to.not.be.undefined;
     });
 });
 
-describe('Header', function() {
+describe('header', function() {
     it('returns a string', function() {
 
-	const SITE_ROOT = 'http://test.sam.gov';
+    const SITE_ROOT = 'http://test.sam.gov';
     const ENV_ROOT =  'http://test.comp.micropaas.io';
 
     var expected = `<section id="iae-header"><header class="usa-grid">
@@ -97,7 +97,7 @@ describe('Header', function() {
 				</div>
 				</section>`;
 
-        var actual = Header.Header({site_root: SITE_ROOT, env_root: ENV_ROOT});
+        var actual = navigation.header.render({site_root: SITE_ROOT, env_root: ENV_ROOT});
 
         expect(actual).to.eql(expected);
     });
