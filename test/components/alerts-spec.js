@@ -20,7 +20,7 @@ describe('#Alerts)', function() {
                               '<p class="usa-alert-text">'+dataItem.description+'</p>'+
                             '</div>'+
                           '</div>';
-        var actual = Alerts.alert(dataItem);
+        var actual = Alerts.alert.render(dataItem);
         expect(actual).to.eql(expected);
     });
 });

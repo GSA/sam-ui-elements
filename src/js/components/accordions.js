@@ -1,7 +1,5 @@
-var Accordions;
-
-
-  exports.accordions = function(config) {
+exports.accordions = {
+  render : function(config) {
          
       var html = [];
 
@@ -29,14 +27,14 @@ var Accordions;
 
         }
 
-        html.push(module.exports.accordion(accordion));
+        html.push(this.accordion(accordion));
       }
       
       html.push('</ul>');
       html.push('</div>');
       return html.join('');
-  };
-  exports.accordion= function(config) {
+  },
+  accordion : function(config) {
 
     var id = (config.index*1+1);
     var title = config.title;
@@ -60,7 +58,9 @@ var Accordions;
     html.push('</li>');
 
     return html.join('');
-  };
+  }
+};
+  
 
 
 

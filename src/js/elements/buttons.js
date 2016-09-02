@@ -1,4 +1,5 @@
-exports.button= function(config) {
+exports.button= {
+    render : function(config) {
         console.log(config.type);
         var html = {
             'default' : '<button>'+config.data+'</button>',         
@@ -11,4 +12,5 @@ exports.button= function(config) {
             'big' : '<button class="usa-button-big" type="button">'+config.data+'</button>'
         };
         return (html[config.type] || html.primary);
-    };
+    }
+};

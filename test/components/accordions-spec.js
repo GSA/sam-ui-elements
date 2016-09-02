@@ -52,7 +52,7 @@ describe('#Accordions', function() {
                         console.log(expected);
                       
         
-        var actual = Accordions.accordions(dataItem);
+        var actual = Accordions.accordions.render(dataItem);
         
         expect(actual).to.eql(expected);
     });
