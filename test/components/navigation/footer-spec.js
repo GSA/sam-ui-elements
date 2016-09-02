@@ -11,7 +11,6 @@ describe('Footer', function() {
 describe('Footer', function() {
     it('returns a string', function() {
 
-<<<<<<< HEAD
       const SITE_ROOT = 'http://test.sam.gov';
 
       var expected = 	`<section id="iae-footer">
@@ -63,9 +62,7 @@ describe('Footer', function() {
 				</section>`;
 
         var actual = Footer.Footer({site_root: SITE_ROOT});
-=======
-        var actual = Footer.footer.render({});
->>>>>>> GSA/develop
+
         expect(actual).to.eql(expected);
     });
 });

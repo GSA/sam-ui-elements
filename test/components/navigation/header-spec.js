@@ -11,8 +11,7 @@ describe('Header', function() {
 describe('Header', function() {
     it('returns a string', function() {
 
-<<<<<<< HEAD
-	  const SITE_ROOT = 'http://test.sam.gov';
+	const SITE_ROOT = 'http://test.sam.gov';
     const ENV_ROOT =  'http://test.comp.micropaas.io';
 
     var expected = `<section id="iae-header"><header class="usa-grid">
@@ -99,9 +98,7 @@ describe('Header', function() {
 				</section>`;
 
         var actual = Header.Header({site_root: SITE_ROOT, env_root: ENV_ROOT});
-=======
-        var actual = Header.header.render({});
->>>>>>> GSA/develop
+
         expect(actual).to.eql(expected);
     });
 });
