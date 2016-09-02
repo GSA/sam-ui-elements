@@ -1,12 +1,12 @@
-var Footer;
+var footer;
 
-Footer = {
-    Footer: function(config) {
+footer = {
+    render: function(config) {
 
       //set site root for pathing, default to transition.sam.gov
       var SITE_ROOT = (config.site_root) ? config.site_root : 'https://transition.sam.gov';
 
-	  var html =  	`<section id="iae-footer">
+	     var html =  	`<section id="iae-footer">
 					<footer>
 						<div class="usa-grid usa-footer-return-to-top"><a href="#">Return to top</a></div>
 						<nav class="iae-footer">
@@ -58,4 +58,4 @@ Footer = {
     }
 };
 
-module.exports = Footer;
+module.exports = footer;

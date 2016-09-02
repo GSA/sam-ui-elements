@@ -1,7 +1,7 @@
-var Header;
+var header;
 
-Header = {
-    Header: function(config) {
+header = {
+    render: function(config) {
 		/* The onclick line of code below needs to be added to the body element to close the user-dropdown box. */
 		/* This is a work around in the absence of a tooltip library been provided for R7 */
 		/* onclick="hideLogin('user-dropdown')" */
@@ -277,4 +277,4 @@ window.getCookie = function(name) {
 }*/
 
 
-module.exports = Header;
+module.exports = header;
