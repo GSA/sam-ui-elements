@@ -11,8 +11,16 @@ header = {
     var ENV_ROOT = (config.env_root) ? config.env_root : 'http://clp-unified.comp.micropaas.io';
 
     /* Other required config properties that need to be added once a clear plan is set for the
-    authentication code integration: "auth_api_key", "auth_url", "auth_header"
+    authentication code integration: "auth_api_key", "auth_url", "auth_cookie"
     */
+    var AUTH_API_KEY = (config.auth_api_key) ? config.auth_api_key : 'rkkGBk7AU8UQs9LHT6rM0rFkg3A3rGaiBntKSGEC';
+
+    //NOTE: the default endpoint does not currently exists
+    // The format is: https://csp-api.sam.gov/{ENV}/IdentityandAccess/v3/auth/session/
+    // where ENV is: COMP, MINC, PRODLIKE
+    // assuming PROD will be the production value
+    var AUTH_URL = (config.auth_url) ? config.auth_url : 'https://csp-api.sam.gov/prod/IdentityandAccess/v3/auth/session/';
+    var AUTH_COOKIE = (config.auth_cookie) ? config.auth_cookie : 'iPlanetDirectoryPro';
 
     var html =  `<section id="iae-header"><header class="usa-grid">
 						<div class="iae-header-menu">
