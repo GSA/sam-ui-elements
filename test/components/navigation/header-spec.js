@@ -43,7 +43,7 @@ describe('Header', function() {
 							<div class="iae-user-dropdown" id="user-dropdown">
 								<ul class="usa-unstyled-list">
                   <li><a href="http://test.comp.micropaas.io/my-details/">Personal Details</a></li>
-                  <li><a href="#">Password Reset</a></li>
+                  <li><a href="http://test.comp.micropaas.io/password/">Password Reset</a></li>
                   <li><a href="http://test.comp.micropaas.io/my-access">My Access</a></li>
 								</ul>
 							</div>
