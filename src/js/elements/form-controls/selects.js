@@ -38,7 +38,7 @@ exports.select = {
 
     var error = '';
     if (this.hasError(config)) {
-      error = ' class="usa-input-error"'
+      error = ' class="usa-input-error"';
 
     }
     html = '<div'+error+'>';
@@ -204,7 +204,7 @@ exports.select = {
         title   : config.options[optionValue],
         selected: selected,
         disabled: disabled
-      }
+      };
       var html = this.option(optionConfig);
       optionHtml.push(html);
 
@@ -289,9 +289,7 @@ exports.select = {
    * 
    */
   disabled: function(config) {
-    return (this.hasDisabled(config)) 
-      ? config.disabled 
-      : [];
+    return (this.hasDisabled(config)) ? config.disabled : [];
   },
   /**
    * @private
@@ -311,9 +309,7 @@ exports.select = {
    * 
    */
   selected: function(config) {
-    return (this.hasSelected(config)) 
-      ? config.selected 
-      : [];
+    return (this.hasSelected(config)) ? config.selected : [];
   },
   /**
    * @private
@@ -370,28 +366,28 @@ exports.select = {
    */
   isInvalidConfiguration: function(config) {
 
-    if (config.label == undefined || config.label.length < 1) {
+    if (config.label === undefined || config.label.length < 1) {
       console.log('Selects: "label" is required member. And must have value.');
       console.log(config);
       return true;
 
-    } else if (config.name == undefined || config.name.length < 1) {
+    } else if (config.name === undefined || config.name.length < 1) {
       console.log('Selects: "name" is required member. And must have value.');
       console.log(config);
       return true;
 
-    } else if (config.type == undefined || config.type.length < 1) {
+    } else if (config.type === undefined || config.type.length < 1) {
       console.log('Selects: "type" is required member. And must have value');
       console.log(config);
       return true;
 
-    } else if (config.options == undefined || Object.keys(config.options).length == 0) {
+    } else if (config.options === undefined || Object.keys(config.options).length === 0) {
       console.log('Selects: "options" is required member, and must have at least one.');
       console.log(Object.keys(config.options).length);
       console.log(config);
       return true;
 
-    } else if ((config.type == 'dropdown' || config.type == 'radio') && config.selected !== undefined && config.selected.length > 1) {
+    } else if ((config.type === 'dropdown' || config.type === 'radio') && config.selected !== undefined && config.selected.length > 1) {
       // Note: A select dropdown can only have one pre-selected option.
       //       We could solve this by:
       //       1. Only paying attention to the first one during the build.
