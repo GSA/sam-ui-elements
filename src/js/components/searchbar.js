@@ -2,7 +2,7 @@ exports.searchbar = {
   render : function(config) {    
     var id = 'search-field-big';
     var type = '';
-    var method = 'GET';
+    var method = 'POST';
     if(config.type && config.type==='big'){
       type = ' usa-search-big';
     }
