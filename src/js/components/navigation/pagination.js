@@ -11,74 +11,113 @@
 exports.pagination={
   html : '',
 
+  /**
+   *
+   * @param config: config object needs to contain the totalPage, currentPage and offset porperties
+   * totalPage: the size of pages
+   * currentPage: the page that is currently selected
+   * offset: the number of pages needs to show before and after the currentPage
+   * @returns {string}
+     */
   render: function(config){
 
-    // converting initialize config data
-    this.size = config.size || 300;
-    this.page = config.page || 1;
-    this.step = config.step || 3;
-
-    this.html += '<nav class="usa-pagination" aria-label="pagination"><ul><li><a>&lsaquo;</a></li>';// previous button
-    this.Start();  // Add the page numbers
-    this.html += '<li><a>&rsaquo;</a></li></ul></nav>';  // next button
+    this.html += '<nav class="usa-pagination" aria-label="pagination"><ul>';
+    this.html += this.getPreviousLink();
+    this.html += this.getPageLinks(config);
+    this.html += this.getNextLink();
+    this.html += '</ul></nav>';
     return this.html;
   },
 
   /**
-   * find pagination type
-   * @constructor
+   * Get HTML string for previous link
+   * @returns {string}
    */
-  Start: function() {
-    if (this.size < this.step * 2 + 6) {
-      this.Add(1, this.size + 1);
-    }
-    else if (this.page < this.step * 2 + 1) {
-      this.Add(1, this.step * 2 + 4);
-      this.Last();
-    }
-    else if (this.page > this.size - this.step * 2) {
-      this.First();
-      this.Add(this.size - this.step * 2 - 2, this.size + 1);
-    }
-    else {
-      this.First();
-      this.Add(this.page - this.step, this.page + this.step + 1);
-      this.Last();
-    }
-  },
-
-  // --------------------
-  // Utility
-  // --------------------
-
-  /**
-   * add pages by number (from [s] to [f])
-   * @param s: start index
-   * @param f: final index
-   * @constructor
-   */
-  Add: function(s, f) {
-    for (var i = s; i < f; i++) {
-      this.html += this.AddPage(i);
-    }
+  getPreviousLink: function(){
+    var previousHtml = '<li><a aria-label="previous">&lsaquo; Pre</a></li>';
+    return previousHtml;
   },
 
   /**
-   * add last page with separator
-   * @constructor
+   * Get HTML string for next link
+   * @returns {string}
    */
-  Last: function() {
-    this.html += '<li><span>&hellip;</span></li>';
-    this.html += this.AddPage(this.size);
+  getNextLink: function(){
+    var nextHtml = '<li><a aria-label="next">Next &rsaquo;</a></li>';
+    return nextHtml;
   },
 
   /**
-   * add first page with separator
-   * @constructor
+   * Get the HTML string for all the pages according to config
+   * @param config
+   * @returns {string}
    */
-  First: function() {
-    this.html += this.AddPage(1);
-    this.html += '<li><span>&hellip;</span></li>';
+  getPageLinks: function(config) {
+    var pageLinksHtml = '';
+    if (config.totalPage < config.offset * 2 + 6) {//default
+      pageLinksHtml += this.enumeratePageLinks(1, config.totalPage + 1, config.currentPage);
+    }
+    else if (config.currentPage < config.offset * 2 + 1) {//check to add the last ellipsis
+      pageLinksHtml += this.enumeratePageLinks(1, config.offset * 2 + 4, config.currentPage);
+      pageLinksHtml += this.getLastPageLink(config);
+    }
+    else if (config.currentPage > config.totalPage - config.offset * 2) {//check to add the first ellipsis
+      pageLinksHtml += this.getFirstLink(config);
+      pageLinksHtml += this.enumeratePageLinks(config.totalPage - config.offset * 2 - 2, config.totalPage + 1, config.currentPage);
+    }
+    else {//add both the first and last ellipsis
+      pageLinksHtml += this.getFirstLink(config);
+      pageLinksHtml += this.enumeratePageLinks(config.currentPage - config.offset, config.currentPage + config.offset + 1, config.currentPage);
+      pageLinksHtml += this.getLastPageLink(config);
+    }
+    return pageLinksHtml;
+  },
+
+  /**
+   * Get unicode for ellipsis
+   * @returns {string}
+   */
+  getEllipsis: function(){
+    return '&hellip;';
+  },
+
+  /**
+   * Get HTML string for page number between start index and end index
+   * @param start
+   * @param end
+   * @param currentPage
+   * @returns {string}
+   */
+  enumeratePageLinks: function(start, end, currentPage) {
+    var pagesHtml = '';
+    for (var i = start; i < end; i++) {
+      pagesHtml += this.AddPage(i,currentPage);
+    }
+    return pagesHtml;
+  },
+
+  /**
+   * Get HTML string for the last page and ellipsis before it
+   * @param config
+   * @returns {string}
+   */
+  getLastPageLink: function(config) {
+    var lastHtml = '';
+    lastHtml += '<li><span>'+this.getEllipsis()+'</span></li>';
+    lastHtml += this.AddPage(config.totalPage, config.currentPage);
+    return lastHtml;
+  },
+
+  /**
+   * Get HTML string for the first page and ellipsis after it
+   * @param config
+   * @returns {string}
+   */
+  getFirstLink: function(config) {
+    var firstHtml = '';
+    firstHtml += this.AddPage(1,config.currentPage);
+    firstHtml += '<li><span>'+this.getEllipsis()+'</span></li>';
+    return firstHtml;
   },
 
   /**
@@ -87,16 +126,17 @@ exports.pagination={
    * @returns {string}: the html string for the page
    * @constructor
    */
-  AddPage: function(index){
-    var html_str = '<li><a';
+  AddPage: function(index, currentPage){
+    var htmlStr = '<li><a';
 
     //Add class usa-current if it is the current step
-    if(this.page == index){
-      html_str += ' class="usa-current"';
+    if(currentPage == index){
+      htmlStr += ' class="usa-current"';
     }
-    html_str += '>' + index + '</a></li>';
-    return html_str;
+    htmlStr += '>' + index + '</a></li>';
+    return htmlStr;
   }
+
 
 
 };
