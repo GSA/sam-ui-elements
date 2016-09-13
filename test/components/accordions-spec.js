@@ -1,16 +1,14 @@
 'use strict';
 var expect = require('chai').expect;
-var Samuikit = require('../dist/samuikit.js');
+var Accordions = require('../../src/js/components/accordions.js');
 
-describe('Samuikit', function() {
+describe('Accordions', function() {
     it('should exist', function() {        
-        expect(Samuikit).to.not.be.undefined;
+        expect(Accordions).to.not.be.undefined;
     });
 });
 
-
-
-describe('#Accordions)', function() {
+describe('#Accordions', function() {
     it('it should return a string', function() {
         
         var dataItem = 
@@ -51,23 +49,11 @@ describe('#Accordions)', function() {
                             '</li>'+
                           '</ul>'+
                         '</div>';
-                        
+                        console.log(expected);
                       
         
-        var actual = Samuikit.accordions(dataItem);
+        var actual = Accordions.accordions.render(dataItem);
         
         expect(actual).to.eql(expected);
     });
-});
-
-describe('#Label)', function() {
-    it('it should return a string', function() {
-        
-        var dataItem = {type:"small", data:"Test"};
-        var expected = '<span class="usa-label">Test</span>'; 
-        var actual = Samuikit.label(dataItem);
-        console.log(actual);
-        expect(actual).to.eql(expected);
-    });
-
 });

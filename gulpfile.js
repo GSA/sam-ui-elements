@@ -9,7 +9,7 @@ var concat = require('gulp-concat');
 var runSequence = require('run-sequence');
 var mocha = require('gulp-mocha');
 var util = require('gulp-util');
-
+var replace = require('gulp-replace');
 
 
 // tasks
@@ -43,12 +43,16 @@ gulp.task('watch-test', function () {
 });
 
 gulp.task('bundle-test', function () {
-    return gulp.src(['spec/samuikit-spec.js'], { read: false })
+    return gulp.src(['integration-test/samuikit-spec.js'], { read: false })
         .pipe(mocha({ reporter: 'nyan' }))
         .on('error', util.log);
 });
 
-
+gulp.task('no-exports', function(){
+  gulp.src(['dist/samuikit.js'])
+    .pipe(replace('exports.', ''))
+    .pipe(gulp.dest('dist/samuikit-no-exports'));
+});
 
 // *** default task *** //
 gulp.task('default', function() {
@@ -57,6 +61,7 @@ gulp.task('default', function() {
     ['lint'],
     ['test'],
     ['javascript'],
-    ['bundle-test']
+    ['bundle-test'],
+    ['no-exports']
   );
 });

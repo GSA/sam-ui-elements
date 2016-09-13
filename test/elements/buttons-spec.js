@@ -1,6 +1,6 @@
 'use strict';
 var expect = require('chai').expect;
-var Buttons = require('../../src/js/formcontrols/buttons.js');
+var Buttons = require('../../src/js/elements/buttons.js');
 
 describe('Buttons', function() {
     it('should exist', function() {        
@@ -15,7 +15,7 @@ describe('#Button)', function() {
         
         var dataItem = {type:"default", data:"Primary"};
         var expected = '<button>Primary</button>';
-        var actual = Buttons.button(dataItem);
+        var actual = Buttons.button.render(dataItem);
         expect(actual).to.eql(expected);
     });
 });

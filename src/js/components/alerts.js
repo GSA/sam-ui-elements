@@ -1,4 +1,5 @@
-exports.alert= function(config) {
+exports.alert={
+  render : function(config) {
       console.log('Alert:'+config.type);
       var html = {
         'success' : '<div class="usa-alert usa-alert-success">'+
@@ -27,4 +28,5 @@ exports.alert= function(config) {
                           '</div>'
       };
       return (html[config.type] || html.success);
-    };
+    }
+};
