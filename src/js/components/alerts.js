@@ -1,6 +1,6 @@
 exports.alert={
   render : function(config) {
-      console.log('Alert:'+config.type);
+      // console.log('Alert:'+config.type);
       var html = {
         'success' : '<div class="usa-alert usa-alert-success">'+
                             '<div class="usa-alert-body">'+

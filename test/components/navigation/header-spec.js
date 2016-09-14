@@ -1,14 +1,14 @@
 'use strict';
 var expect = require('chai').expect;
-var navigation = require('../../../src/common/navigation');
+var navigation = require('../../../src/js/components/navigation/header.js');
 
-describe('header', function() {
+describe('#headerDefined', function() {
     it('should exist', function() {
         expect(navigation.header).to.not.be.undefined;
     });
 });
 
-describe('header', function() {
+describe('#headerReturnsExpectedString', function() {
     it('returns a string', function() {
 
     const SITE_ROOT = 'http://test.sam.gov';

@@ -1,6 +1,4 @@
-var footer;
-
-footer = {
+exports.footer = {
     render: function(config) {
 
       //set site root for pathing, default to transition.sam.gov
@@ -57,5 +55,3 @@ footer = {
       return html;
     }
 };
-
-module.exports = footer;

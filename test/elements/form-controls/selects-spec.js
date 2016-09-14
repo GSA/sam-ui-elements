@@ -337,18 +337,18 @@ describe('#SelectOptionsCanPreselect', function() {
 // TODO: Test is annoying - because it logs - maybe we should just take the first? 
 // Do we really want to make developers change the pre-selected options every time they
 // change the type?
-describe('#SelectOptionsCanOnlyHaveOneSelection', function() {
-  it('should return empty string, too many preselected option', function() {
+// describe('#SelectOptionsCanOnlyHaveOneSelection', function() {
+//   it('should return empty string, too many preselected option', function() {
 
-    var expected = '';
-    var config = Object.create(dropdownShortConfig);
-    config.selected = ['value1', 'value2'];
+//     var expected = '';
+//     var config = Object.create(dropdownShortConfig);
+//     config.selected = ['value1', 'value2'];
 
-    var actual = Selects.select.render(config);
+//     var actual = Selects.select.render(config);
 
-    expect(actual).to.eql(expected);
-  });
-});
+//     expect(actual).to.eql(expected);
+//   });
+// });
 
 describe('#SelectOptionsCanBeDisabled', function() {
   it('should be able to disable select', function() {

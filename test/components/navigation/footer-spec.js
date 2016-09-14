@@ -1,6 +1,6 @@
 'use strict';
 var expect = require('chai').expect;
-var navigation = require('../../../src/common/navigation');
+var navigation = require('../../../src/js/components/navigation/footer.js');
 
 describe('footer', function() {
     it('should exist', function() {

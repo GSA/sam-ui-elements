@@ -1,7 +1,15 @@
-var header;
-
-header = {
+/**
+ * @Class Selects
+ * 
+ * @type {Object}
+ */
+exports.header = {
     render: function(config) {
+    // TODO: These variables, I think should be part of the Angular 2 or other 
+    //       framework controller logic. As the view itself should not know about
+    //       the environment. Also, not sure the header view actually needs to consider
+    //       these concepts within the configuration parameters.
+    
 		/* The onclick line of code below needs to be added to the body element to close the user-dropdown box. */
 		/* This is a work around in the absence of a tooltip library been provided for R7 */
 		/* onclick="hideLogin('user-dropdown')" */
@@ -22,6 +30,7 @@ header = {
     var AUTH_URL = (config.auth_url) ? config.auth_url : 'https://csp-api.sam.gov/prod/IdentityandAccess/v3/auth/session/';
     var AUTH_COOKIE = (config.auth_cookie) ? config.auth_cookie : 'iPlanetDirectoryPro';
 
+    // var html = '';
     var html =  `<section id="iae-header"><header class="usa-grid">
 						<div class="iae-header-menu">
 						<div class="iae-header-nav">
@@ -283,6 +292,3 @@ window.getCookie = function(name) {
   match = document.cookie.match(new RegExp(name + '=([^;]+)'));
   if (match) return match[1];
 }*/
-
-
-module.exports = header;

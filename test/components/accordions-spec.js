@@ -49,7 +49,7 @@ describe('#Accordions', function() {
                             '</li>'+
                           '</ul>'+
                         '</div>';
-                        console.log(expected);
+                        // console.log(expected);
                       
         
         var actual = Accordions.accordions.render(dataItem);
