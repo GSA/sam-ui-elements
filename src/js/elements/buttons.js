@@ -1,6 +1,6 @@
 exports.button= {
     render : function(config) {
-        console.log(config.type);
+        // console.log(config.type);
         var html = {
             'default' : '<button>'+config.data+'</button>',         
             'alt' : '<button class="usa-button-primary-alt">'+config.data+'</button>',          

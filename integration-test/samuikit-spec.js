@@ -66,7 +66,7 @@ describe('#Label)', function() {
         var dataItem = {type:"small", data:"Test"};
         var expected = '<span class="usa-label">Test</span>'; 
         var actual = Samuikit.label.render(dataItem);
-        console.log(actual);
+        // console.log(actual);
         expect(actual).to.eql(expected);
     });
 
