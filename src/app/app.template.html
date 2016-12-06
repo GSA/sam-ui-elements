@@ -1,19 +1,10 @@
 <!-- includes HTML for app component-->
 <div>
-
-   <samSpace labelname = "space" ></samSpace>
-   <samHeader labelname = "header" ></samHeader>
-  <nav class="usa-grid">
-    <a [routerLinkActive]="['active', 'router-link-active']" [routerLink]=" ['./home'] ">Home</a>
-    <a [routerLinkActive]="['active', 'router-link-active']" [routerLink]="['./sam-angular']">Sam Angular Components</a>
-  </nav>
+    <samHeader labelname = "header" ></samHeader>
 </div>
 
  <main>
        <router-outlet></router-outlet>
  </main>
 
-
- <samButton (click)='clicked()' labelname = "button" [config] = buttonValue></samButton>
- <samLabel labelname="label" [config] = labelValue></samLabel>
  <samFooter labelname = "footer" ></samFooter>
