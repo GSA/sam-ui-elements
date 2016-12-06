@@ -86,10 +86,10 @@ module.exports = {
         test: /\.js$/,
         loader: 'source-map-loader',
         exclude: [
-        // these packages have problems with their sourcemaps
-        helpers.root('node_modules/rxjs'),
-        helpers.root('node_modules/@angular')
-      ]}
+          // these packages have problems with their sourcemaps
+          helpers.root('node_modules/rxjs'),
+          helpers.root('node_modules/@angular')
+        ]}
 
     ],
 
@@ -110,16 +110,16 @@ module.exports = {
        */
       {
         test: /\.ts$/,
-        loader: 'awesome-typescript-loader',
-        query: {
-          compilerOptions: {
+        loaders: ['awesome-typescript-loader','angular2-template-loader'],
+        /*query: {
+         compilerOptions: {
 
-            // Remove TypeScript helpers to be injected
-            // below by DefinePlugin
-            removeComments: true
+         // Remove TypeScript helpers to be injected
+         // below by DefinePlugin
+         removeComments: true
 
-          }
-        },
+         }
+         },*/
         exclude: [/\.e2e\.ts$/]
       },
 
@@ -144,7 +144,12 @@ module.exports = {
        *
        * See: https://github.com/webpack/raw-loader
        */
-      { test: /\.html$/, loader: 'raw-loader', exclude: [helpers.root('src/index.html')] }
+      { test: /\.html$/, loader: 'raw-loader', exclude: [helpers.root('src/index.html')] },
+
+      /**
+       * Compile css
+       */
+      { test: /\.scss$/, loaders: ['raw-loader', 'sass'], exclude: /node_modules/ },
 
     ],
 

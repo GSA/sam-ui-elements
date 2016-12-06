@@ -24,8 +24,6 @@ import { SamSpace } from "./common/samuikit/sam-space";
 import { SamAngularDemo } from "./sam-angular-demo";
 import { SamButton } from "./common/samuikit/sam-button";
 import { SamLabel } from "./common/samuikit/sam-label";
-import { SamAccordions } from "./common/samuikit/sam-accordions";
-import { SamSelect } from "./common/samuikit/sam-select";
 
 
 // Application wide providers
@@ -49,8 +47,6 @@ const APP_PROVIDERS = [
     SamSpace,
     SamButton,
     SamLabel,
-    SamAccordions,
-    SamSelect,
   ],
   imports: [ // import Angular's modules
     BrowserModule,

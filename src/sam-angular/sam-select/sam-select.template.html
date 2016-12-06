@@ -1,7 +1,0 @@
-<div *ngIf="config" [class.usa-input-error]="config.hasError">
-  <span *ngIf="config.label">{{config.label}}</span>
-  <select *ngIf="config.options" [(ngModel)]="value">
-    <option select="selected" [value]=""></option>
-    <option *ngFor="let option of config.options" [value]="option.key">{{option.value}}</option>
-  </select>
-</div>

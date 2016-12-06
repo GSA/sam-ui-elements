@@ -1,20 +1,58 @@
+
 <div class="usa-grid">
-  <h1>SAM Select Component &lt;samSelect2&gt;</h1>
-  <h2>Basic</h2>
-  <p>Config</p>
-  <div>
-    <pre><code>{{basicConfig | json}}</code></pre>
+  <h2>Select Component &lt;samSelect&gt;</h2>
+  <div class="usa-width-one-third">
+    <samSelect
+            [(model)]="selectModel"
+            [name]="selectConfig.name"
+            [options]="selectConfig.options"
+            [label]="selectConfig.label"
+            [hint]="selectConfig.hint"
+            [errorMessage]="selectConfig.errorMessage"
+            [disabled]="selectConfig.disabled">
+    </samSelect>
   </div>
-  <samSelect2 [config]="basicConfig" #basicSelect></samSelect2>
-  <p>Value</p>
-  <div>
-    <pre><code>{{basicSelect.value || "null" | json}}</code></pre>
+  <div class="usa-width-one-third">
+    <fieldset class="usa-fieldset-inputs usa-sans">
+      <h3>Options</h3>
+      <ul class="usa-unstyled-list">
+        <li>
+          <input id="hasEmptyOption" type="checkbox" (change)="onEmptyOptionChanged($event)">
+          <label for="hasEmptyOption">Add an empty option</label>
+        </li>
+        <li>
+          <input id="isDisabled" type="checkbox" [(ngModel)]="selectConfig.disabled">
+          <label for="isDisabled">Disabled</label>
+        </li>
+        <li>
+          <label>Label text</label>
+          <input type="text" [(ngModel)]="selectConfig.label">
+        </li>
+        <li>
+          <label>Error message text</label>
+          <input type="text" [(ngModel)]="selectConfig.errorMessage">
+        </li>
+        <li>
+          <label>Hint text</label>
+          <input type="text" [(ngModel)]="selectConfig.hint">
+        </li>
+      </ul>
+    </fieldset>
   </div>
-  <h2>Set config dynamically</h2>
-  <samSelect2 [config]="dynamicConfig" #dynamicSelect></samSelect2>
-  <textarea [(ngModel)]="dynamicConfigString" (ngModelChange)="dynamicConfigChanged(dynamicConfigString)"></textarea>
-  <p>Value</p>
-  <div>
-    <pre><code>{{dynamicSelect.value || "null" | json}}</code></pre>
+  <div class="usa-width-one-third">
+    <h3>Model</h3>
+    <pre><code>{{selectModel | json}}</code></pre>
+  </div>
+</div>
+
+<div class="usa-grid">
+  <h2>Accordions Component &lt;samAccordions&gt;</h2>
+  <div class="usa-width-one-whole">
+    <h3>Accordions without border</h3>
+    <samAccordions [accordionsName]="'noBorder'" [accordionsData]="accordionsData" [bordered]="false"></samAccordions>
+  </div>
+  <div class="usa-width-one-whole">
+    <h3>Accordions with border</h3>
+    <samAccordions [accordionsName]="'bordered'" [accordionsData]="accordionsData" [bordered]="true">></samAccordions>
   </div>
 </div>

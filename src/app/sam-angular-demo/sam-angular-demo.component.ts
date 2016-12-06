@@ -5,38 +5,38 @@ import { Component } from '@angular/core';
   templateUrl: 'sam-angular-demo.template.html'
 })
 export class SamAngularDemo {
-  basicConfig: any;
-  myString: string;
-  dynamicConfigString: string; // Config the user has enter in the text box
-  dynamicConfig: any; // JSON of our config
+
+  // Select Component
+  selectModel = '';
+  selectConfig = {
+    options: [
+      {value:'', label: 'Default option', name: 'empty', disabled: true},
+      {value: 'dc', label: 'Washington DC', name: 'dc'},
+      {value: 'ma', label: 'Maryland', name: 'maryland'},
+      {value: 'va', label: 'Virginia', name: 'virginia'},
+    ],
+    disabled: false,
+    label: 'region',
+    name: 'region',
+  };
+
+  // Accordions Component
+  accordionsData =
+      [
+        {title:"Test1", content:"This is Test1"},
+        {title:"Test2", content:"This is Test2"},
+        {title:"Test3", content:"This is Test3"}
+      ];
 
   constructor() {
-    this.basicConfig = {
-      options: [
-        {key: 1, value: 'One'},
-        {key: 2, value: 'Two'},
-        {key: 3, value: 'Three'},
-      ],
-      label: 'A label',
-    };
-    this.myString = `I'm a string`;
-    this.dynamicConfigString = JSON.stringify({
-      options: [
-        {key: 1, value: 'One'},
-        {key: 2, value: 'Two'},
-        {key: 3, value: 'Three'},
-      ],
-      label: 'A label',
-    });
   }
 
-  dynamicConfigChanged(dynamicConfig) {
-    try {
-      this.dynamicConfig = JSON.parse(dynamicConfig);
-    } catch (e) {
-      console.error(e);
-      this.dynamicConfig = null;
+
+  onEmptyOptionChanged($event) {
+    if ($event.target.checked) {
+      this.selectConfig.options.unshift({label: '', value: '', name: 'empty-option'});
+    } else {
+      this.selectConfig.options.shift();
     }
-    console.log(this.dynamicConfig);
   }
 }

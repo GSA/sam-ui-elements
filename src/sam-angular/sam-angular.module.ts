@@ -5,7 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 // Sam Angular Exports
-import { SamSelectComponent } from './sam-select';
+import { SamSelectComponent } from './select/select.component';
+import { SamAccordionsComponent } from './accordions/accordions.component';
+import { FieldsetWrapper } from './wrapper/fieldset-wrapper.component';
+import { LabelWrapper } from './wrapper/label-wrapper.component';
 
 
 /**
@@ -13,13 +16,23 @@ import { SamSelectComponent } from './sam-select';
  * https://gsa.github.io/sam-web-design-standards/
  */
 @NgModule({
-  declarations: [ SamSelectComponent ],
+  declarations: [
+    SamSelectComponent,
+    SamAccordionsComponent,
+    FieldsetWrapper,
+    LabelWrapper
+  ],
   imports: [ // import Angular's modules
     BrowserModule,
     FormsModule,
     HttpModule,
   ],
-  exports: [ SamSelectComponent ],
+  exports: [ 
+    SamSelectComponent,
+    SamAccordionsComponent,
+    FieldsetWrapper,
+    LabelWrapper
+  ],
   providers: [ ]
 })
 export class SamAngularModule { }
