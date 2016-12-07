@@ -4,13 +4,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { ComponentInjectService } from './common/service/component.inject.service.ts';
 import { InputTypeConstants } from './common/constants/input.type.constants.ts';
-import { SamFooter } from './common/samuikit/sam-footer.ts';
-import { SamHeader } from './common/samuikit/sam-header.ts';
-import { SamSpace } from './common/samuikit/sam-space.ts';
-import { SamButton } from './common/samuikit/sam-button.ts';
-import { SamLabel } from './common/samuikit/sam-label.ts';
-import { SamAccordions } from './common/samuikit/sam-accordions.ts';
-import { SamSelect } from './common/samuikit/sam-select.ts';
 import '../assets/js/samuikit.js';
 
 /*
