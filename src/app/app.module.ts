@@ -16,14 +16,11 @@ import { ROUTES } from './app.routes';
 import { App } from './app.component';
 import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState } from './app.service';
-import { Home } from './home';
 import { NoContent } from './common/no-content';
 import { SamFooter } from "./common/samuikit/sam-footer";
 import { SamHeader } from "./common/samuikit/sam-header";
-import { SamSpace } from "./common/samuikit/sam-space";
 import { SamAngularDemo } from "./sam-angular-demo";
-import { SamButton } from "./common/samuikit/sam-button";
-import { SamLabel } from "./common/samuikit/sam-label";
+
 
 
 // Application wide providers
@@ -43,9 +40,6 @@ const APP_PROVIDERS = [
     SamAngularDemo,
     SamFooter,
     SamHeader,
-    SamSpace,
-    SamButton,
-    SamLabel,
   ],
   imports: [ // import Angular's modules
     BrowserModule,

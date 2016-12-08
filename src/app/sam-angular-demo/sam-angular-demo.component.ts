@@ -7,6 +7,9 @@ import { Component } from '@angular/core';
 })
 export class SamAngularDemo {
 
+  // Button Component
+  btnType: string = "default";
+
   // Select Component
   selectModel = '';
   selectConfig = {
@@ -29,6 +32,51 @@ export class SamAngularDemo {
         {title:"Test3", content:"This is Test3"}
       ];
 
+  // Radio Component
+  radioModel: any = 'ma';
+  radioConfig = {
+    options: [
+      {value: 'dc', label: 'DC', name: 'radio-dc'},
+      {value: 'ma', label: 'Maryland', name: 'radio-maryland'},
+      {value: 'va', label: 'Virginia', name: 'radio-virginia'},
+    ],
+    name: 'radio-component',
+    label: 'Select a region',
+    errorMessage: '',
+    hint: ''
+  };
+
+  // Checkboxes Component
+  checkboxModel: any = ['ma'];
+  checkboxConfig = {
+    options: [
+      {value: 'dc', label: 'DC', name: 'checkbox-dc'},
+      {value: 'ma', label: 'Maryland', name: 'checkbox-maryland'},
+      {value: 'va', label: 'Virginia', name: 'checkbox-virginia'},
+    ],
+    name: 'my-sr-name',
+    label: 'Select a region',
+  };
+
+  // Pagination Component
+  paginationConfig = {
+    currentPage: 1,
+    totalPages: 1
+  };
+
+  // Name Component
+  nameModel = {
+    title: "Mr.",
+    firstName: "John",
+    middleName: "",
+    lastName: "Doe",
+    suffix: "Sr."
+  };
+
+  // Phone Entry Component
+  phoneModel = "";
+
+
   constructor() {
   }
 
@@ -39,5 +87,22 @@ export class SamAngularDemo {
     } else {
       this.selectConfig.options.shift();
     }
+  }
+
+  /**
+   * Example to change button type when click
+   */
+  onDefaultBtnClick(){
+    if(this.btnType === "default"){
+      this.btnType = "alt";
+    }else if(this.btnType === "alt"){
+      this.btnType = "secondary";
+    }else{
+      this.btnType = "default";
+    }
+  }
+
+  phoneModelChange(phoneNum){
+    this.phoneModel = phoneNum;
   }
 }
