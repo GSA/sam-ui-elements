@@ -1,13 +1,8 @@
-.usa-pagination ul{
-  list-style-type: none !important;
-}
-
 .usa-pagination li {
   display: inline-block;
   vertical-align: middle;
   padding: 5px 5px 5px 5px;
   color: #112e51;
-  /*font: $font-sans;*/
   margin-bottom: 0;
   text-decoration: none;
   list-style: none;
