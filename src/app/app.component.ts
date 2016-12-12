@@ -50,6 +50,7 @@ export class App {
 
   clicked(){
     console.log("****This is test*****");
+      
   }
 
 }
