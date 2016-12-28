@@ -1,0 +1,12 @@
+<labelWrapper [label]="'Phone Number'" 
+              [name]="getIdentifer('phone-number')"
+              [errorMessage]="errorMsg">
+  <input (blur)="check()" 
+         maxlength="15"
+         #phoneInput
+         [value]="phoneNumberTemplate"
+         (keydown)="process($event)"
+         id="{{getIdentifer('phone-number')}}"
+         name="{{getIdentifer('phone-number')}}"
+         type="text">
+</labelWrapper>
