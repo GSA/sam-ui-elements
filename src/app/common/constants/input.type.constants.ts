@@ -9,7 +9,7 @@ declare var accordions: any;
 
 @Injectable()
 export class InputTypeConstants {
-	getConstants(){
-		return {label,alert,footer,header,button,select,accordions};
+	getConstants() {
+		return { label, alert, footer, header, button, select, accordions };
 	}
 }

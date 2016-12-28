@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
- 
 
 @Component({
   selector: 'swds',
@@ -14,7 +13,7 @@ export class SamAngularDemo {
   selectModel = '';
   selectConfig = {
     options: [
-      {value:'', label: 'Default option', name: 'empty', disabled: true},
+      {value: '', label: 'Default option', name: 'empty', disabled: true},
       {value: 'dc', label: 'Washington DC', name: 'dc'},
       {value: 'ma', label: 'Maryland', name: 'maryland'},
       {value: 'va', label: 'Virginia', name: 'virginia'},
@@ -27,9 +26,9 @@ export class SamAngularDemo {
   // Accordions Component
   accordionsData =
       [
-        {title:"Test1", content:"This is Test1"},
-        {title:"Test2", content:"This is Test2"},
-        {title:"Test3", content:"This is Test3"}
+        {title: "Test1", content: "This is Test1"},
+        {title: "Test2", content: "This is Test2"},
+        {title: "Test3", content: "This is Test3"}
       ];
 
   // Radio Component
@@ -75,11 +74,6 @@ export class SamAngularDemo {
 
   // Phone Entry Component
   phoneModel = "";
-
-
-  constructor() {
-  }
-
 
   onEmptyOptionChanged($event) {
     if ($event.target.checked) {

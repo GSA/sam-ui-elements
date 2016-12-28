@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { FieldsetWrapper } from '../wrapper/fieldset-wrapper.component';
-import { OptionsType } from '../types';
+import { FieldsetWrapper } from '../../../ui-kit';
+import { OptionsType } from '../../types';
 
 /**
  * The <samCheckbox> component is a set of checkboxes compliant with sam.gov standards
@@ -30,7 +30,7 @@ export class SamCheckboxComponent {
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild(FieldsetWrapper)
-  public wrapper: FieldsetWrapper;
+  public wrapper: any;
 
   /*
    * We want our model to list the checked items in the order that they appear in the options list

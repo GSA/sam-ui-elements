@@ -1,23 +1,20 @@
 // Angular Imports
-import {
-    inject,
-    TestBed
-} from '@angular/core/testing';
-import { FormsModule } from "@angular/forms";
+import { inject, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 
 // SAM Imports
 import { SamAngularDemo } from './sam-angular-demo.component';
-import { SamAngularModule } from "../../sam-angular/sam-angular.module";
+import { SamUiKitModule } from '../../ui-kit';
 
 describe('Sam Angular Demo page', () => {
     // provide our implementations or mocks to the dependency injector
     let component: SamAngularDemo;
     let fixture: any;
-    
+
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [SamAngularDemo],
-            imports: [SamAngularModule, FormsModule],
+            imports: [SamUiKitModule, FormsModule],
             declarations: [SamAngularDemo]
         });
         fixture = TestBed.createComponent(SamAngularDemo);
@@ -27,7 +24,5 @@ describe('Sam Angular Demo page', () => {
     it('should compile without error', () => {
         expect(true).toEqual(true);
     });
-
-
 
 });

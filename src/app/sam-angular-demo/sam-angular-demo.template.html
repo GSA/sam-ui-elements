@@ -1,48 +1,50 @@
 <div class="usa-grid">
-  <h2>Button Component &lt;samButton&gt;</h2>
+  <h2>Button Component &lt;sam-button/sam-button&gt;</h2>
   <div class="usa-width-one-whole">
     <div class="usa-width-one-fourth">
-      <samButton [buttonId]="'defaultBtn'" [buttonText]="'Default'" [buttonType]="btnType" (click)="onDefaultBtnClick()"></samButton>
+      <sam-button [buttonId]="'defaultBtn'" [buttonText]="'Default'" [buttonType]="btnType" 
+                 (click)="onDefaultBtnClick()">
+      </sam-button>
     </div>
     <div class="usa-width-one-fourth">
-      <samButton [buttonId]="'altBtn'" [buttonText]="'Alt'" [buttonType]="'alt'"></samButton>
+      <sam-button [buttonId]="'altBtn'" [buttonText]="'Alt'" [buttonType]="'alt'"></sam-button>
     </div>
     <div class="usa-width-one-fourth">
-      <samButton [buttonId]="'secondaryBtn'" [buttonText]="'Secondary'" [buttonType]="'secondary'"></samButton>
+      <sam-button [buttonId]="'secondaryBtn'" [buttonText]="'Secondary'" [buttonType]="'secondary'"></sam-button>
     </div>
     <div class="usa-width-one-fourth">
-      <samButton [buttonId]="'grayBtn'" [buttonText]="'Gray'" [buttonType]="'gray'"></samButton>
+      <sam-button [buttonId]="'grayBtn'" [buttonText]="'Gray'" [buttonType]="'gray'"></sam-button>
     </div>
   </div>
   <div class="usa-width-one-whole">
     <div class="usa-width-one-fourth">
-      <samButton [buttonId]="'outlineBtn'" [buttonText]="'Outline'" [buttonType]="'outline'"></samButton>
+      <sam-button [buttonId]="'outlineBtn'" [buttonText]="'Outline'" [buttonType]="'outline'"></sam-button>
     </div>
     <div class="usa-width-one-fourth">
-      <samButton [buttonId]="'invertedBtn'" [buttonText]="'Inverted'" [buttonType]="'inverted'"></samButton>
+      <sam-button [buttonId]="'invertedBtn'" [buttonText]="'Inverted'" [buttonType]="'inverted'"></sam-button>
     </div>
     <div class="usa-width-one-fourth">
-      <samButton [buttonId]="'disabledBtn'" [buttonText]="'Disabled'" [buttonType]="'disabled'"></samButton>
+      <sam-button [buttonId]="'disabledBtn'" [buttonText]="'Disabled'" [buttonType]="'disabled'"></sam-button>
     </div>
     <div class="usa-width-one-fourth">
-      <samButton [buttonId]="'bigBtn'" [buttonText]="'Big'" [buttonType]="'big'"></samButton>
+      <sam-button [buttonId]="'bigBtn'" [buttonText]="'Big'" [buttonType]="'big'"></sam-button>
     </div>
   </div>
 </div>
 <div class="usa-grid">
-  <h2>Label Component &lt;samLabel&gt;</h2>
+  <h2>Label Component &lt;sam-label&gt;</h2>
   <div class="usa-width-one-sixth">
-    <samLabel [labelType]="'big'" [labelText]="'Big Label'"></samLabel>
+    <sam-label [labelType]="'big'" [labelText]="'Big Label'"></sam-label>
   </div>
   <div class="usa-width-one-sixth">
-    <samLabel [labelType]="'small'" [labelText]="'Small Label'"></samLabel>
+    <sam-label [labelType]="'small'" [labelText]="'Small Label'"></sam-label>
   </div>
 </div>
 
 <div class="usa-grid">
-  <h2>Select Component &lt;samSelect&gt;</h2>
+  <h2>Select Component &lt;sam-select&gt;</h2>
   <div class="usa-width-one-third">
-    <samSelect
+    <sam-select
             [(model)]="selectModel"
             [name]="selectConfig.name"
             [options]="selectConfig.options"
@@ -50,7 +52,7 @@
             [hint]="selectConfig.hint"
             [errorMessage]="selectConfig.errorMessage"
             [disabled]="selectConfig.disabled">
-    </samSelect>
+    </sam-select>
   </div>
   <div class="usa-width-one-third">
     <fieldset class="usa-fieldset-inputs usa-sans">
@@ -89,16 +91,16 @@
 </div>
 
 <div class="usa-grid">
-  <h2>Radiobuttons Component &lt;samRadioButtons&gt;</h2>
+  <h2>Radiobuttons Component &lt;sam-radio-buttons&gt;</h2>
   <div class="usa-width-one-third">
-    <samRadioButton
+    <sam-radio-button
             [(model)]="radioModel"
             [options]="radioConfig.options"
             [label]="radioConfig.label"
             [hint]="radioConfig.hint"
             [name]="radioConfig.name"
             [errorMessage]="radioConfig.errorMessage">
-    </samRadioButton>
+    </sam-radio-button>
   </div>
   <div class="usa-width-one-third">
     <fieldset class="usa-fieldset-inputs usa-sans">
@@ -128,9 +130,9 @@
 </div>
 
 <div class="usa-grid">
-  <h2>Checkboxes Component &lt;samCheckbox&gt;</h2>
+  <h2>Checkboxes Component &lt;sam-checkbox&gt;</h2>
   <div class="usa-width-one-third">
-    <samCheckbox
+    <sam-checkbox
             [(model)]="checkboxModel"
             [name]="checkboxConfig.name"
             [options]="checkboxConfig.options"
@@ -138,7 +140,7 @@
             [hint]="checkboxConfig.hint"
             [errorMessage]="checkboxConfig.errorMessage"
             [hasSelectAll]="checkboxConfig.hasSelectAll">
-    </samCheckbox>
+    </sam-checkbox>
   </div>
   <div class="usa-width-one-third">
     <fieldset class="usa-fieldset-inputs usa-sans">
@@ -173,30 +175,30 @@
 </div>
 
 <div class="usa-grid">
-  <h2>Accordions Component &lt;samAccordions&gt;</h2>
+  <h2>Accordions Component &lt;sam-accordions&gt;</h2>
   <div class="usa-width-one-whole">
     <h3>Accordions without border</h3>
-    <samAccordions [accordionsName]="'noBorder'" [accordionsData]="accordionsData" [bordered]="false"></samAccordions>
+    <sam-accordions [accordionsName]="'noBorder'" [accordionsData]="accordionsData" [bordered]="false"></sam-accordions>
   </div>
   <div class="usa-width-one-whole">
     <h3>Accordions with border</h3>
-    <samAccordions [accordionsName]="'bordered'" [accordionsData]="accordionsData" [bordered]="true">></samAccordions>
+    <sam-accordions [accordionsName]="'bordered'" [accordionsData]="accordionsData" [bordered]="true">></sam-accordions>
   </div>
 </div>
 
 <div class="usa-grid">
   <div class="usa-width-one">
-    <h2>Pagination &lt;samPagination&gt;</h2>
-    <samLabel [labelType]="'small'" [labelText]="'Current Page'"></samLabel><input [(ngModel)]="paginationConfig.currentPage" type="number">
-    <samLabel [labelType]="'small'" [labelText]="'Total Page'"></samLabel><input [(ngModel)]="paginationConfig.totalPages" type="number">
-    <samPagination [currentPage]="paginationConfig.currentPage" [totalPages]="paginationConfig.totalPages"></samPagination>
+    <h2>Pagination &lt;sam-pagination&gt;</h2>
+    <sam-label [labelType]="'small'" [labelText]="'Current Page'"></sam-label><input [(ngModel)]="paginationConfig.currentPage" type="number">
+    <sam-label [labelType]="'small'" [labelText]="'Total Page'"></sam-label><input [(ngModel)]="paginationConfig.totalPages" type="number">
+    <sam-pagination [currentPage]="paginationConfig.currentPage" [totalPages]="paginationConfig.totalPages"></sam-pagination>
   </div>
 </div>
 
 <div class="usa-grid">
-  <h2 class="usa-width-one">Name Entry &lt;samNameEntry&gt;</h2>
+  <h2 class="usa-width-one">Name Entry &lt;sam-name-entry&gt;</h2>
   <div class="usa-width-one-half">
-    <samNameEntry [model]="nameModel" [prefix]="'ui-kit'"></samNameEntry>
+    <sam-name-entry [model]="nameModel" [prefix]="'ui-kit'"></sam-name-entry>
   </div>
   <div class="usa-width-one-half">
     <h3>Model</h3>
@@ -205,9 +207,9 @@
 </div>
 
 <div class="usa-grid">
-  <h2 class="usa-width-one">Phone Entry &lt;samPhoneEntry&gt;</h2>
+  <h2 class="usa-width-one">Phone Entry &lt;sam-phone-entry&gt;</h2>
   <div class="usa-width-one-third">
-    <samPhoneEntry [(model)]="phoneModel" (emitter)="phoneModelChange($event)"></samPhoneEntry>
+    <sam-phone-entry [(model)]="phoneModel" (emitter)="phoneModelChange($event)"></sam-phone-entry>
   </div>
   <div class="usa-width-one-third">
     <h3>Model</h3>

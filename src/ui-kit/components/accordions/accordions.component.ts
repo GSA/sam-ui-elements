@@ -10,7 +10,7 @@ import { Component, Input } from '@angular/core';
  */
 @Component({
     selector: 'sam-accordions',
-    template: 'accordions.template.html',
+    templateUrl: 'accordions.template.html',
     styleUrls: ['accordions.style.css']
 })
 export class SamAccordionsComponent {

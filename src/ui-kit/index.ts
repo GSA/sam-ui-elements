@@ -4,3 +4,5 @@ export * from './form-controls';
 export * from './form-templates';
 // export * from './directives';
 // export * from './pipes';
+
+export { SamUiKitModule } from './ui-kit.module';

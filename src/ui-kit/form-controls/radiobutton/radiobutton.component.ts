@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { FieldsetWrapper } from '../wrapper/fieldset-wrapper.component';
-import { OptionsType } from '../types';
+import { FieldsetWrapper } from '../../../ui-kit';
+import { OptionsType } from '../../types';
 
 /**
  * The <samRadioButton> component is a set of checkboxes compliant with sam.gov standards
@@ -15,7 +15,7 @@ import { OptionsType } from '../types';
  */
 @Component({
   selector: 'sam-radio-button',
-  template: 'radiobutton.template.html',
+  templateUrl: 'radiobutton.template.html',
 })
 export class SamRadioButtonComponent {
   @Input() model: string|number|symbol;

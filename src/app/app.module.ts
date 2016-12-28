@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 
-import { SamAngularModule } from '../sam-angular';
+import { SamUiKitModule } from '../ui-kit';
 
 /*
  * Platform and Environment providers/directives/pipes
@@ -46,7 +46,7 @@ const APP_PROVIDERS = [
     FormsModule,
     HttpModule,
     RouterModule.forRoot(ROUTES, { useHash: false }),
-    SamAngularModule,
+    SamUiKitModule,
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection
     ENV_PROVIDERS,
@@ -54,7 +54,7 @@ const APP_PROVIDERS = [
   ]
 })
 export class AppModule {
-  constructor(public appRef: ApplicationRef, public appState: AppState) {}
+  constructor(public appRef: ApplicationRef, public appState: AppState) { }
   hmrOnInit(store) {
     if (!store || !store.state) return;
     console.log('HMR store', store);

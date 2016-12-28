@@ -1,2 +1,2 @@
-import { SamButtonComponent } from './button';
-import { SamLabelComponent } from './label';
+export { SamButtonComponent } from './button';
+export { SamLabelComponent } from './label';

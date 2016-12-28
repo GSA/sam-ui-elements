@@ -1,1 +1,1 @@
-export { SamAccordionComponent } from './accordions.component.ts';
+export { SamAccordionsComponent } from './accordions.component.ts';

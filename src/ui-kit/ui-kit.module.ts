@@ -3,21 +3,23 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import {  } from '../ui-kit';
-import { SamAccordionComponent, SamCheckboxComponent, SamFieldsetWrapper,
+import { SamAccordionsComponent, SamCheckboxComponent, FieldsetWrapper, LabelWrapper,
          SamNameEntryComponent, SamPaginationComponent, SamPhoneEntryComponent,
-         SamRadioButtonComponent, SamSelectComponent } from '../ui-kit';
+         SamRadioButtonComponent, SamSelectComponent, SamButtonComponent, SamLabelComponent } from '../ui-kit';
 
 @NgModule({
   declarations: [
-    SamAccordionComponent,
+    SamAccordionsComponent,
     SamCheckboxComponent,
-    SamFieldsetWrapper,
+    FieldsetWrapper,
+    LabelWrapper,
     SamNameEntryComponent,
     SamPaginationComponent,
     SamPhoneEntryComponent,
     SamRadioButtonComponent,
-    SamSelectComponent
+    SamSelectComponent,
+    SamButtonComponent,
+    SamLabelComponent
   ],
   imports: [
     BrowserModule,
@@ -25,14 +27,17 @@ import { SamAccordionComponent, SamCheckboxComponent, SamFieldsetWrapper,
     HttpModule
   ],
   exports: [
-    SamAccordionComponent,
+    SamAccordionsComponent,
     SamCheckboxComponent,
-    SamFieldsetWrapper,
+    FieldsetWrapper,
+    LabelWrapper,
     SamNameEntryComponent,
     SamPaginationComponent,
     SamPhoneEntryComponent,
     SamRadioButtonComponent,
-    SamSelectComponent
+    SamSelectComponent,
+    SamButtonComponent,
+    SamLabelComponent
   ],
   providers: [ ]
 })

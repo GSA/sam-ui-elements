@@ -1,3 +1,3 @@
-export { SamAccordionComponent } from './accordions';
+export { SamAccordionsComponent } from './accordions';
 export { SamPaginationComponent } from './pagination';
-export { SamFieldsetWrapper } from './wrapper';
+export { FieldsetWrapper, LabelWrapper } from './wrapper';

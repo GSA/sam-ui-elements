@@ -10,7 +10,7 @@ import { LabelWrapper } from '../wrapper/label-wrapper.component';
  */
 @Component({
   selector: 'sam-name-entry',
-  templateUrl: `name-entry.template.html`,
+  templateUrl: 'name-entry.template.html',
 })
 export class SamNameEntryComponent {
   @Input() model: any = {

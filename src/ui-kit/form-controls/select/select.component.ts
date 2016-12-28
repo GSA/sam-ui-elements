@@ -1,6 +1,6 @@
 import { Component, Input, Output, ViewChild, EventEmitter } from '@angular/core';
-import { LabelWrapper } from '../wrapper/label-wrapper.component';
-import { OptionsType } from '../types';
+import { LabelWrapper } from '../../../ui-kit';
+import { OptionsType } from '../../types';
 
 /**
  * The <samSelect> component is a select/options group compliant with sam.gov standards
