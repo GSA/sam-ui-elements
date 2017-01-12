@@ -101,10 +101,10 @@ TypedocWebpackPlugin.prototype.apply = function(compiler) {
 
 			if (project) {
 				console.log('Generating updated typedocs');
-				if (typedocOptions.out) {
-					typedocApp.generateDocs(project, typedocOptions.out);
+				if (typedocOptions.json) {
+					typedocApp.generateJson(project, typedocOptions.json);
 				} else {
-					typedocApp.generateJson(project, typedocOptions.json);					
+					typedocApp.generateDocs(project, typedocOptions.out);										
 				}
 			}
 		}

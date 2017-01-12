@@ -11,7 +11,7 @@ const commonConfig = require('./webpack.common.js'); // the settings that are co
  */
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
-const TypedocWebpackPlugin = require('./typedoc-webpack-plugin-modified');
+const TypedocWebpackPlugin = require('./typedoc-webpack-plugin-modified.js');
 
 /**
  * Webpack Constants
