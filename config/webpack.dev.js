@@ -11,7 +11,7 @@ const commonConfig = require('./webpack.common.js'); // the settings that are co
  */
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
-const TypedocWebpackPlugin = require('typedoc-webpack-plugin');
+const TypedocWebpackPlugin = require('./typedoc-webpack-plugin-modified.js');
 
 /**
  * Webpack Constants
@@ -134,13 +134,13 @@ module.exports = webpackMerge(commonConfig, {
      * See: https://github.com/Microsoft/Typedoc-Webpack-Plugin
      */
     new TypedocWebpackPlugin({
-      json: 'dist/docs.json',
+      json: 'docs.json',
       target: 'es6',
       exclude: 'node_modules',
       externalPattern: "/**/*(*.spec|index).ts",
       excludeExternals: true,
       ignoreCompilerErrors: true,
-    }, './src/ui-kit')
+    }, ['./src/ui-kit'])
 
   ],
 
