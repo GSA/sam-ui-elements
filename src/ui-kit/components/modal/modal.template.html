@@ -1,0 +1,22 @@
+<div #modalRoot *ngIf="show" tabindex="-1" role="dialog" class="modal-dialog" tabindex="-1" (keydown.esc)="closeOnEscape ? closeModal() : 0" (click)="closeOnOutsideClick ? closeModal() : 0">
+	<div class="modal-content" (click)="preventClosing($event)">
+		<div class="usa-alert {{this.types[type]}}">
+		  <div class="usa-alert-body">
+		    <h3 class="usa-alert-heading">
+		      {{title}}
+		      <span class="pull-right" *ngIf="showClose">
+		        <a><i class="fa fa-times-circle" (click)="closeModal()"></i></a>
+		      </span>
+		    </h3>
+		  </div>
+		</div>
+		<div class="modal-body">
+		  <p *ngIf="description">{{description}}</p>
+			<ng-content></ng-content>
+			<div *ngIf="cancelButtonLabel || submitButtonLabel" class="usa-modal-content-btn-area">
+				<button class="usa-modal-content-submit-btn" *ngIf="submitButtonLabel" (click)="submitBtnClick()">{{submitButtonLabel}}</button>
+				<button class="usa-button-outline usa-modal-content-cancel-btn" *ngIf="cancelButtonLabel" (click)="closeModal()">{{cancelButtonLabel}}</button>
+			</div>
+		</div>
+	</div>
+</div>

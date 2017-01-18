@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { LabelWrapper } from '../wrapper/label-wrapper.component';
+import { LabelWrapper } from '../../components/wrapper/label-wrapper.component';
 
 /**
  * The <samNameInput> component is a Name entry portion of a form
@@ -9,10 +9,11 @@ import { LabelWrapper } from '../wrapper/label-wrapper.component';
  *
  */
 @Component({
-  selector: 'sam-name-entry',
+  selector: 'samNameEntry',
   templateUrl: 'name-entry.template.html',
 })
 export class SamNameEntryComponent {
+  @Input() legend: string = "Name"
   @Input() model: any = {
     title: "",
     firstName: "",
@@ -20,7 +21,9 @@ export class SamNameEntryComponent {
     lastName: "",
     suffix: ""
   };
+
   @Input() prefix: string = "";
+
   titleErrorMsg: string = "";
   fNameErrorMsg: string = "";
   mNameErrorMsg: string = "";

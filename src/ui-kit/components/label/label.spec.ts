@@ -3,7 +3,7 @@ import {By} from '@angular/platform-browser';
 
 // Load the implementations that should be tested
 import {SamLabelComponent} from './label.component.ts';
-import {SamAngularModule} from '../sam-angular.module';
+import {SamUIKitModule} from '../ui-kit.module';
 
 describe('The Sam Label component', () => {
   let component:SamLabelComponent;
@@ -22,7 +22,7 @@ describe('The Sam Label component', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [SamLabelComponent],
-      imports: [SamAngularModule]
+      imports: [SamUIKitModule]
     });
 
     fixture = TestBed.createComponent(SamLabelComponent);

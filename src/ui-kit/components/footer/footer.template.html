@@ -1,0 +1,53 @@
+<footer id="sam-footer" aria-label="footer-navigation">
+  <nav class="sam-footer-wrapper">
+    <div class="sam-footer-body usa-grid">
+      <!--<div class="sam-footer-logo usa-width-one-sixth">-->
+        <!--<a href="http://www.gsa.gov">-->
+          <!--<img src="assets/img/logos/gsa-reverse.png" />-->
+          <!--<span>General Services Administration Website</span>-->
+        <!--</a>-->
+      <!--</div>-->
+
+      <div class="sam-footer-logo usa-width-one-sixth">
+        <a href="http://www.gsa.gov"><span>General Services Administration Website</span></a>
+      </div>
+      <ul class="sam-footer-links usa-unstyled-list usa-width-five-sixths">
+        <li class=" usa-width-one-fourth">
+          <h4 class="m_T-0 sam-footer-head">About SAM.GOV</h4>
+          <ul class="sam-footer-links usa-unstyled-list">
+            <li class="m_B"><a href="#" title="Who we are" *ngIf="linkToggle()">Who we are</a></li>
+            <li class="m_B"><a [routerLink]="[alertsUrl]" title="System Alerts">System Alerts</a></li>
+            <li class="m_B"><a class="usa-external_link-alt" href="https://interact.gsa.gov/group/integrated-award-environment-iae-industry-community" title="Explore Our Community" target="Explore Our Community">Explore Our Community</a></li>
+          </ul>
+        </li>
+        <li class=" usa-width-one-fourth">
+          <h4 class="m_T-0 sam-footer-head">Partners</h4>
+          <ul class="sam-footer-links usa-unstyled-list">
+            <li class="m_B"><a class="usa-external_link-alt" href="https://www.acquisition.gov/" title="Acquisition.gov" target="Acquisition.gov">Acquisition.gov</a></li>
+            <li class="m_B"><a class="usa-external_link-alt" href="https://www.usaspending.gov/Pages/Default.aspx" title="USASpending.gov" target="USASpending.gov">USASpending.gov</a></li>
+            <li class="m_B"><a class="usa-external_link-alt" href="http://www.grants.gov/" title="Grants.gov" target="Grants.gov">Grants.gov</a></li>
+            <li class="m_B"><a [routerLink]="['/help/partners']" title="More Partners" >More Partners</a></li>
+          </ul>
+        </li>
+        <li class=" usa-width-one-fourth">
+          <h4 class="m_T-0 sam-footer-head">Customer Service</h4>
+          <ul class="sam-footer-links usa-unstyled-list">
+            <li class="m_B"><a [routerLink]="['/help/overview']" title="Online Help">Online Help</a></li>
+            <li class="m_B"><a class="usa-external_link-alt" href="https://www.fsd.gov/fsd-gov/home.do" title="Contact Federal Service Desk" target="Contact Federal Service Desk">Contact Federal Service Desk</a></li>
+            <li class="m_B"><a [routerLink]="['/help/reference']" title="Reference Library">Reference Library</a></li>
+          </ul>
+        </li>
+        <li class=" usa-width-one-fourth">
+          <h4 class="m_T-0 sam-footer-head" *ngIf="linkToggle()">Policies</h4>
+          <ul class="sam-footer-links usa-unstyled-list">
+            <li class="m_B"><a href="#" title="Accessibility" *ngIf="linkToggle()">Accessibility</a></li>
+            <li class="m_B"><a href="#" title="Legal" *ngIf="linkToggle()">Legal</a></li>
+            <li class="m_B"><a href="#" title="Privacy Policy" *ngIf="linkToggle()">Privacy Policy</a></li>
+            <li class="m_B"><a href="#" title="Terms of Use" *ngIf="linkToggle()">Terms of Use</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</footer>
+

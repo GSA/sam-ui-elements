@@ -1,0 +1,8 @@
+<li>
+  <button class="usa-accordion-button" [attr.aria-expanded]="isExpanded" [attr.aria-controls]="name" (click)="toggle()">
+    {{headerText}}
+  </button>
+  <div [attr.aria-hidden]="!isExpanded" class="usa-accordion-content">
+    <ng-content></ng-content>
+  </div>
+<li>

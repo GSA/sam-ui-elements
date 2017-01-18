@@ -3,7 +3,7 @@ import { By } from '@angular/platform-browser';
 
 // Load the implementations that should be tested
 import { SamRadioButtonComponent } from './radiobutton.component';
-import {SamAngularModule} from '../sam-angular.module';
+import { SamUIKitModule } from 'ui-kit';
 
 describe('The Sam Radio Buttons component', () => {
   let component: SamRadioButtonComponent;
@@ -25,7 +25,7 @@ describe('The Sam Radio Buttons component', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [SamRadioButtonComponent],
-      imports: [SamAngularModule]
+      imports: [SamUIKitModule]
     });
 
     fixture = TestBed.createComponent(SamRadioButtonComponent);

@@ -1,0 +1,20 @@
+<div class="dropdown" samClickOutside (clickOutside)="onMoveOutside()" style="display: inline-block">
+    <div class="dropdown-title pointer" [ngClass]='disabled && "disabled"' role="button" tabindex="0"
+        (click)="toggleItemList($event)" (keydown)="toggleItemList($event)">
+        {{elementLabel}}
+        <span><i class="fa fa-chevron-down"></i></span>
+    </div>
+    <div class="dropdown-list" #optionsList>
+        <samCheckbox [(model)]="model"
+                     [options]="options"
+                     [name]="name"
+                     [hint]="hint"
+                     [errorMessage]="errorMessage"
+                     [hasSelectAll]="hasSelectAll"
+                     (modelChange)="modelChanged($event)">
+        </samCheckbox>
+    </div>
+</div>
+
+
+

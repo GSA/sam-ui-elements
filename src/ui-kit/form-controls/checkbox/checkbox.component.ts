@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { FieldsetWrapper } from '../../../ui-kit';
+import { FieldsetWrapper } from '../../components/wrapper/fieldset-wrapper.component';
 import { OptionsType } from '../../types';
 
 /**
@@ -15,7 +15,7 @@ import { OptionsType } from '../../types';
  * @Input hasSelectAll: boolean - if true, an addition checkbox is added that selects all the checkboxes
  */
 @Component({
-  selector: 'sam-checkbox',
+  selector: 'samCheckbox',
   templateUrl: 'checkbox.template.html',
 })
 export class SamCheckboxComponent {
@@ -30,7 +30,7 @@ export class SamCheckboxComponent {
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild(FieldsetWrapper)
-  public wrapper: any;
+  public wrapper: FieldsetWrapper;
 
   /*
    * We want our model to list the checked items in the order that they appear in the options list

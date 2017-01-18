@@ -1,1 +1,1 @@
-export * from './phone-entry.component';
+export { SamPhoneEntryComponent } from './phone-entry.component';

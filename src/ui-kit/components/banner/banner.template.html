@@ -1,0 +1,54 @@
+<nav class="sticky-banner">
+  <div class="m_L-1x">
+
+    <img title="An official website of the United States Government" class="image-wrap"
+         src="src/assets/img/us_flag_small.png" alt="US Flag Logo"/>
+
+                  <span>An official website of the United States Government &nbsp;
+                    <a (click)="toggleDetails()">Here's how you
+                    know<i class="fa" [ngClass]="{'fa-angle-up': showDetail,'fa-angle-down': !showDetail} "></i></a></span>
+
+                  <span class="pull-right m_R-1x">This site is in beta and a work in progress &nbsp;
+                  </span>
+
+  </div>
+  <!--gov banner expand: explain the website is official-->
+  <div class="usa-grid-full" *ngIf="showDetail">
+    <div class="usa-width-one-whole">
+      <div class="usa-width-one-half">
+        <div class="usa-width-one-fourth m_T-4x">
+          <div class="span-circle-wrap pull-right blue-circle-wrap">
+            <span><i class="fa fa-bank"></i> </span>
+          </div>
+        </div>
+        <div class="usa-width-three-fourths m_T-4x">
+          <p><strong> The .gov means it's official.</strong><br>
+            Federal government websites always use a <strong>.gov</strong> or .mil domain. Before
+            sharing
+            sensitive information online, make sure you are on a .gov or .mil site by inspecting your
+            browsers' address(for "location") bar.</p>
+        </div>
+      </div>
+
+      <div class="usa-width-one-half">
+        <div class="usa-width-one-fourth m_T-4x">
+          <div class="span-circle-wrap pull-right green-circle-wrap">
+            <span><i class="fa fa-lock"></i> </span>
+          </div>
+        </div>
+        <div class="usa-width-three-fourths m_T-4x">
+          <p>This site is also protected by an SSL(Secure Sockets Layer) certificate that's been signed by
+            the
+            U.S.
+            government. The <strong>http://</strong> means all transmitted data is encrypted - in other
+            words, any information
+            or browsing history that you provide is transmitted securely.</p>
+        </div>
+      </div>
+    </div>
+    <div class="usa-width-one-whole centered">
+      <a (click)="toggleDetails()"><span><i class="fa fa-angle-double-up"></i> </span></a>
+    </div>
+
+  </div>
+</nav>

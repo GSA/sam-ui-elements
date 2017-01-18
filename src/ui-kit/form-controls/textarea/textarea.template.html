@@ -1,0 +1,5 @@
+<labelWrapper [label]="label" [name]="name" [hint]="hint" [errorMessage]="errorMessage" [required]="required">
+  <textarea [value]="value" [attr.id]="name" 
+    [disabled]="disabled" (change)="onInputChange($event.target.value)">
+  </textarea>
+</labelWrapper>

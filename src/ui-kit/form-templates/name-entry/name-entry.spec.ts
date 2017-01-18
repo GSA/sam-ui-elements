@@ -2,7 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 
 // Load the implementations that should be tested
 import { SamNameEntryComponent } from './name-entry.component';
-import { SamAngularModule } from '../sam-angular.module';
+import { SamUIKitModule } from 'ui-kit';
 
 describe('The Sam Name Entry component', () => {
   let component: SamNameEntryComponent;
@@ -19,7 +19,7 @@ describe('The Sam Name Entry component', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SamAngularModule],
+      imports: [SamUIKitModule],
       providers: [SamNameEntryComponent],
     });
 
