@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter} from '@angular/core';
 
 /**
  * The <samPagination> allows users to select a page
@@ -9,42 +9,41 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
  *
  */
 @Component({
-  selector: 'sam-pagination',
+  selector: 'samPagination',
   templateUrl: 'pagination.template.html',
-  styleUrls: [ 'pagination.style.css' ],
 })
 export class SamPaginationComponent {
 
   private MaxPagesBeforeOrAfterCurrent: number = 3;
   private ellipsisThreshold: number = 6; // The threshold to check whether ellipsis is needed
-  private MaxTotalPageWithoutEllipsis: number = 10; // If the total number of pages is less than this threshold,
-                                                    // display all pages
+  private MaxTotalPageWithoutEllipsis: number = 10; // If the total number of pages is less than this threshold, display all pages
 
+  @Input() disabled: boolean = false;
   @Input() currentPage: number;
   @Input() totalPages: number;
   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
 
+  constructor() { }
+
+  ngOnInit(){ }
+
   consecutivePageRange() {
 
-    let start = 2;
-    let end = this.totalPages - 1;
+    var start = 2;
+    var end = this.totalPages - 1;
     // If total number of pages less than or equal to 10, then display all page links
     // Otherwise, use the algorithm to calculate the start and end page to show between the first and last page
-    if (this.totalPages > this.MaxTotalPageWithoutEllipsis) {
-      // If the current page is less than the threshold, 
-      // then display first 8 page links followed by ellipsis and the last page link
-      if (this.currentPage < this.ellipsisThreshold) {
+    if(this.totalPages > this.MaxTotalPageWithoutEllipsis){
+      // If the current page is less than the threshold, then display first 8 page links followed by ellipsis and the last page link
+      if(this.currentPage < this.ellipsisThreshold){
         end = start + this.ellipsisThreshold;
       }
-      // If the current page is greater than the total page minus threshold, 
-      // then display the first page link followed by ellipsis and the last 8 page links
-      else if (this.currentPage > this.totalPages - this.ellipsisThreshold) {
+      // If the current page is greater than the total page minus threshold, then display the first page link followed by ellipsis and the last 8 page links
+      else if(this.currentPage > this.totalPages - this.ellipsisThreshold){
         start = end - this.ellipsisThreshold;
       }
-      // For all other conditions, display the first page link followed by ellipsis 
-      // and three links before and after the current page followed by ellipsis 
-      // and the last page link
-      else {
+      // For all other conditions, display the first page link followed by ellipsis and three links before and after the current page followed by ellipsis and the last page link
+      else{
         start = this.currentPage - this.MaxPagesBeforeOrAfterCurrent;
         end = this.currentPage + this.MaxPagesBeforeOrAfterCurrent;
       }
@@ -84,20 +83,19 @@ export class SamPaginationComponent {
   }
 
   showLastEllipsis() {
-    return this.totalPages > this.MaxTotalPageWithoutEllipsis &&
-           this.currentPage <= this.totalPages - this.ellipsisThreshold;
+    return this.totalPages > this.MaxTotalPageWithoutEllipsis && this.currentPage <= this.totalPages - this.ellipsisThreshold;
   }
 
   showFirstEllipsis() {
-    return this.totalPages > this.MaxTotalPageWithoutEllipsis &&
-           this.currentPage >= this.ellipsisThreshold;
+    return this.totalPages > this.MaxTotalPageWithoutEllipsis && this.currentPage >= this.ellipsisThreshold;
+
   }
 
   textDecoration(i) {
     return this.currentPage === i ? 'usa-current' : '';
   }
 
-  getAriaLabel(i) {
+  getAriaLabel(i){
     return this.currentPage === i ? 'current' : '';
   }
 

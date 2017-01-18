@@ -1,12 +1,12 @@
-<labelWrapper [label]="'Phone Number'" 
-              [name]="getIdentifer('phone-number')"
-              [errorMessage]="errorMsg">
-  <input (blur)="check()" 
-         maxlength="15"
-         #phoneInput
-         [value]="phoneNumberTemplate"
-         (keydown)="process($event)"
-         id="{{getIdentifer('phone-number')}}"
-         name="{{getIdentifer('phone-number')}}"
-         type="text">
-</labelWrapper>
+<labelWrapper [label]="label" [name]="getIdentifier('phone-number')" [errorMessage]="errorMsg">
+      <input type="text"
+             id=" { {getIdentifier('phone-number')}}"
+             name=" { {getIdentifier('phone-number')}}"
+             class=""
+             maxlength="15"
+             [value]="phoneNumberMirror"
+             [placeholder]="phoneNumberTemplate"
+             (keydown)="process($event)"
+             (blur)="check()"
+             #phoneInput>
+    </labelWrapper>

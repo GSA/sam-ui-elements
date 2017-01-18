@@ -1,0 +1,7 @@
+<labelWrapper [label]="label" [name]="name" [hint]="hint" [errorMessage]="errorMessage">
+  <select #select multiple (change)="change($event.target.options)" class="sam-multiselect" [disabled]="disabled">
+    <option *ngFor="let item of options" [value]="item.value">
+      {{item.name}}
+    </option>
+  </select>
+</labelWrapper>

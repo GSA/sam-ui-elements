@@ -1,2 +1,25 @@
-export { SamNameEntryComponent } from './name-entry';
-export { SamPhoneEntryComponent } from './phone-entry';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { SamNameEntryComponent } from './name-entry';
+import { SamPhoneEntryComponent } from './phone-entry';
+import { SamWrapperModule } from '../components/wrapper';
+
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    SamWrapperModule
+  ],
+  declarations: [
+    SamNameEntryComponent,
+    SamPhoneEntryComponent
+  ],
+  exports: [
+    SamNameEntryComponent,
+    SamPhoneEntryComponent,
+    SamWrapperModule
+  ]
+})
+export class SamFormTemplatesModule {}

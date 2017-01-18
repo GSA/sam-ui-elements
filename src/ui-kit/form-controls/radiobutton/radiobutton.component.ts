@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { FieldsetWrapper } from '../../../ui-kit';
+import { FieldsetWrapper } from '../../components/wrapper/fieldset-wrapper.component';
 import { OptionsType } from '../../types';
 
 /**
@@ -14,7 +14,7 @@ import { OptionsType } from '../../types';
  * @Input errorMessage: string - red error message
  */
 @Component({
-  selector: 'sam-radio-button',
+  selector: 'samRadioButton',
   templateUrl: 'radiobutton.template.html',
 })
 export class SamRadioButtonComponent {

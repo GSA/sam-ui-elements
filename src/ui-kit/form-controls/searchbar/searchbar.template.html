@@ -1,0 +1,42 @@
+<div class="usa-width-one-whole m_B-6x search-bar" id="search-div">
+
+  <form class="usa-search relative" onsubmit="return false;">
+
+    <div class="relative div-left">
+      <button class="filter-btn pull-right">
+        <span class="usa-search-submit-text">{{getLabelForValue(filterValue)}}&nbsp;&nbsp;<i class="fa fa-caret-down"></i></span>
+      </button>
+      <samSelect class="filter-select"
+                 [(model)]="selectModel"
+                 [name]="selectConfig.name"
+                 [options]="selectConfig.options"
+                 [label]="selectConfig.label"
+                 [hint]="selectConfig.hint"
+                 [errorMessage]="selectConfig.errorMessage"
+                 [disabled]="selectConfig.disabled"
+                 (modelChange)='onSelect($event)'>
+      </samSelect>
+    </div>
+
+    <div class="relative div-fill">
+      <samInputAutocomplete [serviceName]="'suggestions'"
+                            [index]="filterValue"
+                            (searchTermEmit)="callSearch($event)"
+                            [searchTerm]="keyword"
+                            (keyEnterEmit)="onSearchClick()">
+      </samInputAutocomplete>
+    </div>
+
+    <div class="relative div-right">
+      <button type="submit"
+              class="usa-button-primary usa-search-submit search-btn" (click)="onSearchClick()">
+        <span class="usa-sr-only">searchBtn</span>
+        <span class="usa-search-submit-text">{{searchBtnText}}
+          <i class="fa" [ngClass]="{'fa-search':isSizeSmall()}"></i>
+        </span>
+      </button>
+    </div>
+
+  </form>
+
+</div>

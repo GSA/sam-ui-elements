@@ -1,0 +1,11 @@
+<div class="usa-alert {{selectedType}}">
+  <div class="usa-alert-body">
+    <h3 class="usa-alert-heading">
+      {{title}}
+      <span class="pull-right usa-alert-close" *ngIf="showClose">
+        <a><i class="fa fa-times-circle" (click)="onDismissClick()"></i></a>
+      </span>
+    </h3>
+    <p class="usa-alert-text">{{description}}</p>
+  </div>
+</div>

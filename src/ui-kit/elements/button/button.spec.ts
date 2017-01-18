@@ -2,8 +2,8 @@ import {TestBed, async} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 
 // Load the implementations that should be tested
-import { SamButtonComponent } from './button.component';
-import { SamAngularModule } from '../sam-angular.module';
+import {SamButtonComponent} from './button.component';
+import {SamUIKitModule} from '../../ui-kit.module';
 
 describe('The Sam Button component', () => {
   let component:SamButtonComponent;
@@ -24,7 +24,7 @@ describe('The Sam Button component', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [SamButtonComponent],
-      imports: [SamAngularModule]
+      imports: [SamUIKitModule]
     });
 
     fixture = TestBed.createComponent(SamButtonComponent);
@@ -39,7 +39,7 @@ describe('The Sam Button component', () => {
     component.buttonText = defaultBtnConfig.buttonText;
     fixture.detectChanges();
 
-    expect(component.btnClass()).toBe("");
+    expect(component.btnClass).toBe("");
     expect(component.disabled).toBe(false);
     let btnElement = fixture.debugElement.query(By.css("#defaultBtn"));
     expect(btnElement.nativeElement.innerHTML).toBe("Default");
@@ -52,7 +52,7 @@ describe('The Sam Button component', () => {
     component.buttonText = altBtnConfig.buttonText;
     fixture.detectChanges();
 
-    expect(component.btnClass()).toBe("usa-button-primary-alt");
+    expect(component.btnClass).toBe("usa-button-primary-alt");
     expect(component.disabled).toBe(false);
     let btnElement = fixture.debugElement.query(By.css("#altBtn"));
     expect(btnElement.nativeElement.innerHTML).toBe("Alt");
@@ -65,7 +65,7 @@ describe('The Sam Button component', () => {
     component.buttonText = secondaryBtnConfig.buttonText;
     fixture.detectChanges();
 
-    expect(component.btnClass()).toBe("usa-button-secondary");
+    expect(component.btnClass).toBe("usa-button-secondary");
     expect(component.disabled).toBe(false);
     let btnElement = fixture.debugElement.query(By.css("#secondaryBtn"));
     expect(btnElement.nativeElement.innerHTML).toBe("Secondary");
@@ -78,7 +78,7 @@ describe('The Sam Button component', () => {
     component.buttonText = grayBtnConfig.buttonText;
     fixture.detectChanges();
 
-    expect(component.btnClass()).toBe("usa-button-gray");
+    expect(component.btnClass).toBe("usa-button-gray");
     expect(component.disabled).toBe(false);
     let btnElement = fixture.debugElement.query(By.css("#grayBtn"));
     expect(btnElement.nativeElement.innerHTML).toBe("Gray");
@@ -91,7 +91,7 @@ describe('The Sam Button component', () => {
     component.buttonText = outlineBtnConfig.buttonText;
     fixture.detectChanges();
 
-    expect(component.btnClass()).toBe("usa-button-outline");
+    expect(component.btnClass).toBe("usa-button-outline");
     expect(component.disabled).toBe(false);
     let btnElement = fixture.debugElement.query(By.css("#outlineBtn"));
     expect(btnElement.nativeElement.innerHTML).toBe("Outline");
@@ -104,7 +104,7 @@ describe('The Sam Button component', () => {
     component.buttonText = invertedBtnConfig.buttonText;
     fixture.detectChanges();
 
-    expect(component.btnClass()).toBe("usa-button-outline-inverse");
+    expect(component.btnClass).toBe("usa-button-outline-inverse");
     expect(component.disabled).toBe(false);
     let btnElement = fixture.debugElement.query(By.css("#invertedBtn"));
     expect(btnElement.nativeElement.innerHTML).toBe("Inverted");
@@ -117,7 +117,7 @@ describe('The Sam Button component', () => {
     component.buttonText = disabledBtnConfig.buttonText;
     fixture.detectChanges();
 
-    expect(component.btnClass()).toBe("usa-button-disabled");
+    expect(component.btnClass).toBe("usa-button-disabled");
     expect(component.disabled).toBe(true);
     let btnElement = fixture.debugElement.query(By.css("#disabledBtn"));
     expect(btnElement.nativeElement.innerHTML).toBe("Disabled");
@@ -130,7 +130,7 @@ describe('The Sam Button component', () => {
     component.buttonText = bigBtnConfig.buttonText;
     fixture.detectChanges();
 
-    expect(component.btnClass()).toBe("usa-button-big");
+    expect(component.btnClass).toBe("usa-button-big");
     expect(component.disabled).toBe(false);
     let btnElement = fixture.debugElement.query(By.css("#bigBtn"));
     expect(btnElement.nativeElement.innerHTML).toBe("Big");
@@ -143,7 +143,7 @@ describe('The Sam Button component', () => {
     component.buttonText = samBtnErrorConfig.buttonText;
     fixture.detectChanges();
 
-    expect(component.btnClass()).toBe("");
+    expect(component.btnClass).toBe("");
     expect(component.disabled).toBe(false);
     let btnElement = fixture.debugElement.query(By.css("#errorConfigBtn"));
     expect(btnElement.nativeElement.innerHTML).toBe("Wrong buttonType");

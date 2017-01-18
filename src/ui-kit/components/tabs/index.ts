@@ -1,0 +1,1 @@
+export { SamTabComponent } from './tabs.component';

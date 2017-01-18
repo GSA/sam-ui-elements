@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 /**
  * The <samLabel> component can generate a label matching SAMWDS.
@@ -9,24 +9,34 @@ import { Component, Input } from '@angular/core';
  * @Input labelText: the text content that will show on the label
  */
 @Component({
-  selector: 'sam-label',
+  selector: 'samLabel',
   template: `<span [ngClass]="labelClass()">{{labelText}}</span>`,
 })
 export class SamLabelComponent {
 
-  @Input() labelType: string;
-  @Input() labelText: string;
+  @Input() labelType:string;
+  @Input() labelText:string;
+
+
+  constructor() {
+
+  }
+
+  ngOnInit() {
+  }
 
   /**
    * Set up the SAMWDS class for the label according to the size of the label
    */
-  private labelClass(): string {
-    if (this.labelType === "small") {
-      return 'usa-label';
-    } else if (this.labelType === "big") {
+  private labelClass():string{
+    if(this.labelType === "small"){
+      return 'usa-label' ;
+    } else if(this.labelType === "big") {
       return 'usa-label-big';
     }
   }
+
+
 }
 
 

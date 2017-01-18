@@ -1,0 +1,8 @@
+ <div class="">
+        <input type="text" class="search-inputbar" (blur)="autocompleteBlur($event)" aria-autocomplete="list" aria-haspopup="true" (keydown)="keydownHandler($event)" [(ngModel)]="searchTerm" (ngModelChange)="searchTermChange($event)" maxlength="75"/>
+   <span class="{{ searchTerm?.length > 0 ? 'reset-icon-active' : 'reset-icon'}}"><i class="fa fa-times-circle" (click)="onResetClick()"></i></span>
+    <ul (blur)="autocompleteBlur($event)" #autocompletelist tabindex="0" *ngIf="autoCompleteToggle" class="usa-search-autocomplete" (mousedown)="cancelBlurMethod()">
+        <li *ngIf="showAutocompleteMsg" class="autocomplete-msg">{{autocompleteMsg}}</li>
+        <li *ngFor="let result of autoComplete; let i = index;" (mouseover)='autocompleteMouseover(i)' [ngClass]="i === autocompleteIndex?'autocomplete-selected':''" (mousedown)="autocompleteSelection(result)">{{result}}</li>
+    </ul>
+</div>

@@ -3,7 +3,6 @@ import {By} from '@angular/platform-browser';
 
 // Load the implementations that should be tested
 import {SamPaginationComponent} from './pagination.component';
-import {SamAngularModule} from '../sam-angular.module';
 
 describe('The Sam Pagination component', () => {
   let component:SamPaginationComponent;
