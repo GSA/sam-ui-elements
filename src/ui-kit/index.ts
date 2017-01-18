@@ -35,7 +35,7 @@ import { SamPipesModule } from './pipes';
   ],
   providers: []
 })
-export class SamUiKitModule { }
+export class SamUIKitModule { }
 
 
 

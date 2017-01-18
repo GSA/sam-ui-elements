@@ -3,7 +3,7 @@ import { RouterTestingModule} from '@angular/router/testing';
 
 // Load the implementations that should be tested
 import { SamHeaderComponent } from './header.component';
-import { SamUIKitModule } from "ui-kit";
+import { SamUIKitModule } from 'ui-kit';
 
 
 describe('The Sam Header component', () => {

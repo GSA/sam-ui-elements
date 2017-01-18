@@ -5,14 +5,14 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { decorateModuleRef } from './app/environment';
 import { ApplicationRef } from '@angular/core';
 import { bootloader } from '@angularclass/hmr';
-import { SamUiKitModule } from './ui-kit';
+import { SamUIKitModule } from './ui-kit';
 
 /*
  * Bootstrap our Angular app with a top level NgModule
  */
 export function main(): Promise<any> {
   return platformBrowserDynamic()
-    .bootstrapModule(SamUiKitModule)
+    .bootstrapModule(SamUIKitModule)
     .then(decorateModuleRef)
     .catch(err => console.error(err));
 }
