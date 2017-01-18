@@ -43,6 +43,8 @@ import { SamWrapperModule } from './wrapper';
     SamPointOfContactComponent,
     SamSearchHeaderComponent,
     SamTabComponent,
+    SamWrapperModule,
+    AccordionsModule
   ]
 })
 export class SamComponentsModule {}
