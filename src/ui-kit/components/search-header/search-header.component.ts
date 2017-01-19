@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'samSearchHeader',
-  template: 'search-header.template.html'
+  templateUrl: 'search-header.template.html'
 })
 export class SamSearchHeaderComponent {
 

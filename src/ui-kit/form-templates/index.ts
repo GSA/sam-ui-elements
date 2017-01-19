@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 
 import { SamNameEntryComponent } from './name-entry';
 import { SamPhoneEntryComponent } from './phone-entry';
-import { SamWrapperModule } from '../components/wrapper';
+import { SamWrapperModule } from '../wrappers';
 
 @NgModule({
   imports: [

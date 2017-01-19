@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SamCheckboxComponent } from './checkbox.component';
-import { SamWrapperModule } from '../../components/wrapper';
+import { SamWrapperModule } from '../../wrappers';
 import { OptionsType } from '../../types';
 
 @NgModule({

@@ -1,5 +1,4 @@
 import { Component, Input, Output, ViewChild, EventEmitter  } from '@angular/core';
-import { LabelWrapper } from '../../components/wrapper/label-wrapper.component';
 import { OptionsType } from '../../types';
 
 /**

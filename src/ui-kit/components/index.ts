@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { SamFormControlsModule } from '../form-controls';
+import { SamDirectivesModule } from '../directives';
+
 import { AccordionsModule } from './accordion';
 import { SamAlertComponent } from './alert';
 import { SamBannerComponent } from './banner';
@@ -12,11 +15,13 @@ import { SamPaginationComponent } from './pagination';
 import { SamPointOfContactComponent } from './point-of-contact';
 import { SamSearchHeaderComponent } from './search-header';
 import { SamTabComponent } from './tabs';
-import { SamWrapperModule } from './wrapper';
+import { SamWrapperModule } from '../wrappers';
 
 @NgModule({
   imports: [ 
     CommonModule,
+    SamFormControlsModule,
+    SamDirectivesModule,
     AccordionsModule,
     SamWrapperModule 
   ],
@@ -43,7 +48,6 @@ import { SamWrapperModule } from './wrapper';
     SamPointOfContactComponent,
     SamSearchHeaderComponent,
     SamTabComponent,
-    SamWrapperModule,
     AccordionsModule
   ]
 })

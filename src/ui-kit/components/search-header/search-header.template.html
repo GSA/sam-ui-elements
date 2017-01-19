@@ -1,7 +1,7 @@
 <header id="sam-search-header" class='search-header'>
   <div class="usa-grid align-top">
     <div class="header-container">
-      <a class="logo-img" [routerLink]="['/']">
+      <a class="logo-img" routerLink="/">
         <img src="src/assets/img/transition-sam-logo.png" alt="Sam.gov Logo">
       </a>
       <samSearchbar [size]="'small'" (onSearch)="onSearchEvent($event)" 
@@ -12,5 +12,5 @@
     <img title="An official website of the United States Government" class="image-wrap"
         src="src/assets/img/us_flag_small.png" alt="US Flag Logo"/>
   </div>
-  <SamHeaderLinks (onDropdownToggle)="dropdownEventControl($event)"></SamHeaderLinks>
+  <!--SamHeaderLinks (onDropdownToggle)="dropdownEventControl($event)"></SamHeaderLinks-->
 </header>
