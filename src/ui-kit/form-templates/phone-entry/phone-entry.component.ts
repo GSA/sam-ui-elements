@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild,Output, EventEmitter,OnInit } from '@angular/core';
-import { LabelWrapper } from '../wrapper/label-wrapper.component';
+import { LabelWrapper } from '../../components/wrapper/label-wrapper.component';
 
 /**
  * The <samNameInput> component is a Name entry portion of a form
