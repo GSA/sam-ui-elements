@@ -1,6 +1,5 @@
-import { Component, Inject, forwardRef, NgModule } from '@angular/core';
+import { Component, Inject, forwardRef } from '@angular/core';
 import { Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'samAccordionSection',

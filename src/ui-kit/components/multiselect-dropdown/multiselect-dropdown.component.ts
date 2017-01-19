@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ViewChild, ElementRef, OnChanges } from '@angular/core';
-import { OptionsType } from '../form-controls/types';
+import { OptionsType } from '../../types';
 
 @Component({
     selector: 'samMultiSelectDropdown',

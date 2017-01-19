@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { AccordionsModule } from './accordion';
 import { SamAlertComponent } from './alert';
 import { SamBannerComponent } from './banner';
-import { SamFooterComponent } from './footer';
 import { SamHeaderComponent } from './header';
 import { SamLabelComponent } from './label';
 import { SamModalComponent } from './modal';
@@ -24,7 +23,6 @@ import { SamWrapperModule } from './wrapper';
   declarations: [
     SamAlertComponent,
     SamBannerComponent,
-    SamFooterComponent,
     SamHeaderComponent,
     SamLabelComponent,
     SamModalComponent,
@@ -37,7 +35,6 @@ import { SamWrapperModule } from './wrapper';
   exports: [
     SamAlertComponent,
     SamBannerComponent,
-    SamFooterComponent,
     SamHeaderComponent,
     SamLabelComponent,
     SamModalComponent,
@@ -46,6 +43,8 @@ import { SamWrapperModule } from './wrapper';
     SamPointOfContactComponent,
     SamSearchHeaderComponent,
     SamTabComponent,
+    SamWrapperModule,
+    AccordionsModule
   ]
 })
 export class SamComponentsModule {}
