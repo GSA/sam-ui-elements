@@ -1,8 +1,6 @@
 
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { CommonModule } from '@angular/common';
 
 import { SamComponentsModule } from './components';
 import { SamDirectivesModule } from './directives';
@@ -14,9 +12,7 @@ import { SamPipesModule } from './pipes';
 
 @NgModule({
   imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule,
+    CommonModule,
     SamComponentsModule,
     SamDirectivesModule,
     SamElementsModule,
@@ -24,7 +20,6 @@ import { SamPipesModule } from './pipes';
     SamFormTemplatesModule,
     SamPipesModule
   ],
-  declarations: [],
   exports: [
     SamComponentsModule,
     SamDirectivesModule,
@@ -32,8 +27,7 @@ import { SamPipesModule } from './pipes';
     SamFormControlsModule,
     SamFormTemplatesModule,
     SamPipesModule
-  ],
-  providers: []
+  ]
 })
 export class SamUIKitModule { }
 

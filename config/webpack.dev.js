@@ -164,16 +164,16 @@ module.exports = webpackMerge(commonConfig, {
    *
    * See: https://webpack.github.io/docs/webpack-dev-server.html
    */
-  devServer: {
-    port: METADATA.port,
-    host: METADATA.host,
-    historyApiFallback: true,
-    watchOptions: {
-      aggregateTimeout: 300,
-      poll: 1000
-    },
-    outputPath: helpers.root('dist')
-  },
+  // devServer: {
+  //   port: METADATA.port,
+  //   host: METADATA.host,
+  //   historyApiFallback: true,
+  //   watchOptions: {
+  //     aggregateTimeout: 300,
+  //     poll: 1000
+  //   },
+  //   outputPath: helpers.root('dist')
+  // },
 
   /*
    * Include polyfills or mocks for various node stuff

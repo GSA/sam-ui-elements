@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SamAccordionSection, SamAccordionComponent } from './accordion.component.ts';
+import { SamAccordionSection, SamAccordionComponent } from './accordion.component';
 
 @NgModule({
   imports: [ CommonModule ],
