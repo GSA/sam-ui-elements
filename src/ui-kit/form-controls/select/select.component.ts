@@ -1,5 +1,5 @@
 import {Component, Input, Output, ViewChild, EventEmitter, forwardRef} from '@angular/core';
-import { LabelWrapper } from '../../components/wrapper/label-wrapper.component';
+import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { OptionsType } from '../../types';
 import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor, Validators} from "@angular/forms";
 
@@ -69,7 +69,7 @@ export class SamSelectComponent implements ControlValueAccessor {
     }
     this.model = val;
     this.modelChange.emit(val);
-    this.wrapper.formatErrors(this.control);
+    //this.wrapper.formatErrors(this.control);
   }
 
   setDisabledState(disabled) {
@@ -81,7 +81,7 @@ export class SamSelectComponent implements ControlValueAccessor {
   }
 
   onBlur() {
-    this.wrapper.formatErrors(this.control);
+    //this.wrapper.formatErrors(this.control);
     if (this.onTouched) {
       this.onTouched();
     }

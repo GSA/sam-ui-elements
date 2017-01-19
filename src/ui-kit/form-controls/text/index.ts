@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { SamTextComponent } from './text.component';
-import { SamWrapperModule } from '../../components/wrapper';
+import { SamWrapperModule } from '../../wrappers';
 
 @NgModule({
   imports: [

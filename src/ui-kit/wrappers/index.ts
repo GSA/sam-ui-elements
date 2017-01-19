@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FieldsetWrapper } from './fieldset-wrapper.component';
-import { LabelWrapper } from './label-wrapper.component';
+import { FieldsetWrapper } from './fieldset-wrapper';
+import { LabelWrapper } from './label-wrapper';
 
 @NgModule({
   imports: [ CommonModule ],

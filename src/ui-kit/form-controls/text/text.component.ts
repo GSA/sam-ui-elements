@@ -1,5 +1,5 @@
 import {Component, Input, ViewChild, forwardRef} from '@angular/core';
-import { LabelWrapper } from '../../components/wrapper/label-wrapper.component';
+import { LabelWrapper } from '../../wrappers/label-wrapper';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators} from "@angular/forms";
 
 export const TEXT_VALUE_ACCESSOR: any = {
@@ -28,7 +28,7 @@ export class SamTextComponent implements ControlValueAccessor {
   @Input() maxlength: number;
 
   onChange: any = () => {
-    this.wrapper.formatErrors(this.control);
+    //this.wrapper.formatErrors(this.control);
   };
   onTouched: any = () => { };
 
@@ -60,7 +60,7 @@ export class SamTextComponent implements ControlValueAccessor {
     this.control.setValidators(validators);
     this.control.valueChanges.subscribe(this.onChange);
 
-    this.wrapper.formatErrors(this.control);
+    //this.wrapper.formatErrors(this.control);
   }
 
   onInputChange(value) {
