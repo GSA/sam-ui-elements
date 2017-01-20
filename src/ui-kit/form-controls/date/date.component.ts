@@ -4,7 +4,7 @@ import * as moment from 'moment/moment';
 /**
  * The <samNameInput> component is a Name entry portion of a form
  *
- * @Input/@Output model - the bound value of the component
+ * @Input model - the bound value of the component
  * @Input name - Prefix name/id attribute values
  *
  */

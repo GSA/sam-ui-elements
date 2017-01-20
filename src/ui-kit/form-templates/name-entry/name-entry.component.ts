@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { LabelWrapper } from '../../components/wrapper/label-wrapper.component';
+import { LabelWrapper } from '../../wrappers/label-wrapper';
 
 /**
  * The <samNameInput> component is a Name entry portion of a form
  *
- * @Input/@Output model - the bound value of the component
+ * @Input model - The bound value of the component
+ * @Input legend - Label text for template
  * @Input prefix - Prefix name/id attribute values
  *
  */
