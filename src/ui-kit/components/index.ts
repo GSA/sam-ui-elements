@@ -14,7 +14,7 @@ import { SamMultiSelectDropdownComponent } from './multiselect-dropdown';
 import { SamPaginationComponent } from './pagination';
 import { SamPointOfContactComponent } from './point-of-contact';
 import { SamSearchHeaderComponent } from './search-header';
-import { SamTabComponent } from './tabs';
+import { SamTabsComponent,SamTabComponent } from './tabs';
 import { SamWrapperModule } from '../wrappers';
 
 @NgModule({
@@ -35,6 +35,7 @@ import { SamWrapperModule } from '../wrappers';
     SamPaginationComponent,
     SamPointOfContactComponent,
     SamSearchHeaderComponent,
+    SamTabsComponent,
     SamTabComponent,
   ],
   exports: [
@@ -47,6 +48,7 @@ import { SamWrapperModule } from '../wrappers';
     SamPaginationComponent,
     SamPointOfContactComponent,
     SamSearchHeaderComponent,
+    SamTabsComponent,
     SamTabComponent,
     AccordionsModule
   ]
