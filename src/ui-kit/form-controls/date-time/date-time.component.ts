@@ -12,6 +12,18 @@ const MY_VALUE_ACCESSOR: any = {
   multi: true
 };
 
+/**
+ * The <samDateTime> component is a DateTime entry portion of a form
+ *
+ * @Input value - Starting value for input
+ * @Input label - Label text for input
+ * @Input name - Name attribute value
+ * @Input errorMessage - Error message string to display for invalid values
+ * @Input disabled - Disabled attribute value for input
+ * @Input control
+ * @Output valueChange - Prefix name/id attribute values
+ *
+ */
 @Component({
   selector: 'samDateTime',
   templateUrl: 'date-time.template.html',

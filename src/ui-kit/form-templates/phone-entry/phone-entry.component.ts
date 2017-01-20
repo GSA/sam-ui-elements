@@ -2,7 +2,7 @@ import { Component, Input, ViewChild,Output, EventEmitter,OnInit } from '@angula
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 
 /**
- * The <samNameInput> component is a Name entry portion of a form
+ * The <samPhoneInput> component is a Phone entry portion of a form
  *
  * @Input label - The lable text to appear above the input
  * @Input model - Angular model string value, should match the format of the phoneNumberTemplate
