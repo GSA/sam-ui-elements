@@ -2,11 +2,11 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 /**
  * The <samPagination> allows users to select a page
- * https://gsa.github.io/sam-web-design-standards/
- * @Input currentPage:number - shows the current page number
- * @Input totalPage:number - shows the number of total pages
- * @Output pageChange: trigger when current page is changed
  *
+ * @Input disabled:booean - Sets the disabled status of the component, defaults to false
+ * @Input currentPage:number - Shows the current page number
+ * @Input totalPage:number - Shows the number of total pages
+ * @Output pageChange: Event emitted when current page is changed
  */
 @Component({
   selector: 'samPagination',

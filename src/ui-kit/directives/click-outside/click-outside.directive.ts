@@ -2,6 +2,7 @@ import { Directive, ElementRef, Output, EventEmitter, HostListener } from '@angu
 
 /**
  * The <samClickOutside> directive can detect whether a click is made inside the div
+ *
  * @Output clickOutside: emit event when clicked outside the div
  */
 @Directive({

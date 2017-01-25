@@ -1,6 +1,14 @@
 import {Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges} from '@angular/core';
 import * as moment from 'moment/moment';
 
+/**
+ * The <samTime> component provides a time input form control
+ *
+ * @Input value: string - Sets the time value 
+ * @Input disabled: boolean - Sets the disabled attribute
+ * @Input name: string - Sets the name attribute 
+ * @Output valueChange: boolean - Emits event when value change
+ */
 @Component({
   selector: 'samTime',
   templateUrl: 'time.template.html',

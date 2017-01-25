@@ -2,6 +2,9 @@ import { HostListener, Directive, ElementRef, Input, Renderer, OnInit } from '@a
 
 /**
  * The sam-sticky directive is made to help nav bar stick on the page
+ *
+ * @Input limit: number - Sets the minimum pixel width for sticky to trigger on.
+ * @Input container: string - Sets the container target class
  */
 @Directive({ selector: '[sam-sticky]' })
 export class SamStickyComponent implements OnInit {

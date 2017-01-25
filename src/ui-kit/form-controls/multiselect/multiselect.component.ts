@@ -5,10 +5,11 @@ import { OptionsType } from '../../types';
  * The <samMultiSelect> component is a multi-select/options group compliant
  *
  * @Input options: [{Option}] - the array of checkbox values and labels (see OptionsType)
- * @Input label: string - the innerHtml of <fieldset>
- * @Input name: string - semantic description for the component
- * @Input hint: string - helpful text for the using the component
- * @Input errorMessage: string - red error message
+ * @Input label: string - Sets the label text
+ * @Input name: string - Sets the semantic description for the component
+ * @Input hint: string - Sets the helpful text for the using the component
+ * @Input errorMessage: string - Sets the general component error message
+ * @Input disabled: boolean - Sets the disabled attribute status
  *
  */
 @Component({

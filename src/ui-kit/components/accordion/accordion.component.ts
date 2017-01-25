@@ -1,6 +1,14 @@
 import { Component, Inject, forwardRef } from '@angular/core';
 import { Input, Output, EventEmitter, OnInit } from '@angular/core';
 
+/**
+ * The <samAccordionSection> component can generates content for a single accordion item
+ *
+ * @Input headerText: string - Accordion header text
+ * @Input isExpanded: boolean - Defines whether accordion item should be expanded when loaded
+ * @Input name: string - populates the 'name' attribute for the accordion item for 508 compliance
+ * @Output isExpandedChange: object - The accordion section that has changed is emitted back to parent
+ */
 @Component({
   selector: 'samAccordionSection',
   templateUrl: 'accordion.template.html'
@@ -51,11 +59,10 @@ export class SamAccordionSection implements OnInit {
 
 /**
  * The <samAccordions> component can generate accordions component with provided data
- * It is designed with sam.gov standards
- * https://gsa.github.io/sam-web-design-standards/
- * @Input accordionsName: string - name for the accordions
- * @Input accordionsData: array - Contains all the data for each accordion [{title:"", content:""},...]
+ *
+ * @Input expandIndex: number - Index of an accordion item that should be expanded on load
  * @Input bordered: boolean - Control whether the accordion component has a border
+ * @Output selectedIndexChange: number - The index of the accordion item that has been opened/closed
  */
 @Component({
   selector: 'samAccordion',

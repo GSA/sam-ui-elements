@@ -2,6 +2,19 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ViewChild, ElementRef, OnChanges } from '@angular/core';
 import { OptionsType } from '../../types';
 
+/**
+ * The <samMultiSelectDropdown> component provides a form control to multiselect a list
+ *
+ * @Input model: any - Sets the component model for active selections
+ * @Input options: OptionsType - Set the dropdown option items
+ * @Input label: string - Set form control label
+ * @Input name: string - Set form control name attribute
+ * @Input hint: string - Set form control hint
+ * @Input errorMessage: string - String for general error message
+ * @Input hasSelectAll: boolean - Configure if list should have a "Select All" option
+ * @Input disabled: boolean - Sets the disabled attribute for component, defaults to false
+ * @Output modelChange: any - event emitted when model changes
+ */
 @Component({
     selector: 'samMultiSelectDropdown',
     templateUrl: 'multiselect-dropdown.template.html'
