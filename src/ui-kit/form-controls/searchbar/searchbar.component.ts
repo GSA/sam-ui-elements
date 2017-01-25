@@ -2,11 +2,12 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
 
 /**
  * The <samSearchbar> component(filter,input bar and search button) can automatically change it size according to the div the wrap it.
- * It is designed with sam.gov standards
- * https://gsa.github.io/sam-web-design-standards/
- * @Input size: string - 'small': show only the search icon on the search btn
- *                       'large': show the 'Search' text on the search btn
- * @Output onSearch: output the search object that contains keyword and searchField(filter value)
+ *
+ * @Input size: string - Sets the size of the component (small,large)
+ * @Input keyword: string - Sets the searchbar input text
+ * @Input placeholder: string - Sets the searchbar placeholder text
+ * @Input filterValue: string - Sets the searchbar filter value
+ * @Output onSearch: any - output the search object that contains keyword and searchField(filter value)
  */
 @Component({
   selector: 'samSearchbar',

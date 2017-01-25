@@ -3,16 +3,16 @@ import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
 import { OptionsType } from '../../types';
 
 /**
- * The <samCheckbox> component is a set of checkboxes compliant with sam.gov standards
- * https://gsa.github.io/sam-web-design-standards/
+ * The <samCheckbox> component is a set of checkboxes 
  *
- * @Input/@Output model - the bound value of the component
- * @Input options: [{Option}] - the array of checkbox values and labels (see OptionsType)
- * @Input label: string - the content of <label>
- * @Input name: string - semantic description for the component
- * @Input hint: string - helpful text for the using the component
- * @Input errorMessage: string - red error message
- * @Input hasSelectAll: boolean - if true, an addition checkbox is added that selects all the checkboxes
+ * @Input model - Sets the bound value of the component
+ * @Input options: [{Option}] - Sets the array of checkbox values and labels (see OptionsType)
+ * @Input label: string - Sets the content of <label>
+ * @Input name: string - Sets the semantic description for the component
+ * @Input hint: string - Sets helpful text for the using the component
+ * @Input errorMessage: string - Sets the form control error message
+ * @Input hasSelectAll: boolean - If true, an addition checkbox is added that selects all the checkboxes
+ * @Output modelChange: any - Event emitted when the model value changes
  */
 @Component({
   selector: 'samCheckbox',

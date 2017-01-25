@@ -15,14 +15,12 @@ const MY_VALUE_ACCESSOR: any = {
 /**
  * The <samDateTime> component is a DateTime entry portion of a form
  *
- * @Input value - Starting value for input
- * @Input label - Label text for input
- * @Input name - Name attribute value
- * @Input errorMessage - Error message string to display for invalid values
- * @Input disabled - Disabled attribute value for input
- * @Input control
+ * @Input value - Sets starting value for input
+ * @Input label - Sets label text for input
+ * @Input name - Sets name attribute value
+ * @Input errorMessage - Sets error message string to display for invalid values
+ * @Input disabled - Sets disabled attribute value for input
  * @Output valueChange - Prefix name/id attribute values
- *
  */
 @Component({
   selector: 'samDateTime',
@@ -33,12 +31,12 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
   public INPUT_FORMAT: string = 'Y-M-DTH:m';
 
   @Input() value: string = null;
-  @Output() valueChange: EventEmitter<any> = new EventEmitter();
   @Input() label: string;
   @Input() name: string;
   @Input() errorMessage: string;
   @Input() disabled: boolean = false;
   @Input() control;
+  @Output() valueChange: EventEmitter<any> = new EventEmitter();
 
   time: string = null;
   date: string = null;

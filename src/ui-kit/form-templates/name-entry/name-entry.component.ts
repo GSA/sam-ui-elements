@@ -4,10 +4,9 @@ import { LabelWrapper } from '../../wrappers/label-wrapper';
 /**
  * The <samNameInput> component is a Name entry portion of a form
  *
- * @Input model - The bound value of the component
- * @Input legend - Label text for template
- * @Input prefix - Prefix name/id attribute values
- *
+ * @Input model: any - The bound value of the component
+ * @Input legend: string - Label text for template
+ * @Input prefix: string - Prefix name/id attribute values
  */
 @Component({
   selector: 'samNameEntry',

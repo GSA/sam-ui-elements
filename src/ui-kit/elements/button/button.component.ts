@@ -1,12 +1,12 @@
 import {Component, Input} from '@angular/core';
 
 /**
- * The <samButton> component can generate a button matching SAMWDS.
- * It is designed with sam.gov standards
- * https://gsa.github.io/sam-web-design-standards/
- * @Input buttonType: the type of the button(default,alt,secondary,outline,gray,disabled,big)
- * @Input buttonId: the id that will assign to the button element
- * @Input buttonText: the text content that will show on the button
+ * The <samButton> component generates a button for user interaction
+ *
+ * @Input buttonId: string - Sets the id that will assign to the button element
+ * @Input buttonText: string - Sets the text content that will show on the button
+ * @Input buttonType: string - Sets the type of the button (default,alt,secondary,outline,gray,disabled,big)
+ * @Input buttonClass: string - Sets the button css class
  */
 @Component({
   selector: 'samButton',
