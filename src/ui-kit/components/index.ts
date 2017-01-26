@@ -13,7 +13,6 @@ import { SamModalComponent } from './modal';
 import { SamMultiSelectDropdownComponent } from './multiselect-dropdown';
 import { SamPaginationComponent } from './pagination';
 import { SamPointOfContactComponent } from './point-of-contact';
-import { SamSearchHeaderComponent } from './search-header';
 import { SamTabsComponent,SamTabComponent } from './tabs';
 import { SamWrapperModule } from '../wrappers';
 
@@ -34,7 +33,6 @@ import { SamWrapperModule } from '../wrappers';
     SamMultiSelectDropdownComponent,
     SamPaginationComponent,
     SamPointOfContactComponent,
-    SamSearchHeaderComponent,
     SamTabsComponent,
     SamTabComponent,
   ],
@@ -47,7 +45,6 @@ import { SamWrapperModule } from '../wrappers';
     SamMultiSelectDropdownComponent,
     SamPaginationComponent,
     SamPointOfContactComponent,
-    SamSearchHeaderComponent,
     SamTabsComponent,
     SamTabComponent,
     AccordionsModule
