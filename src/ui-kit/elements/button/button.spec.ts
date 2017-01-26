@@ -3,7 +3,6 @@ import {By} from '@angular/platform-browser';
 
 // Load the implementations that should be tested
 import {SamButtonComponent} from './button.component';
-import {SamUIKitModule} from '../../ui-kit.module';
 
 describe('The Sam Button component', () => {
   let component:SamButtonComponent;
@@ -23,8 +22,7 @@ describe('The Sam Button component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SamButtonComponent],
-      imports: [SamUIKitModule]
+      declarations: [SamButtonComponent]
     });
 
     fixture = TestBed.createComponent(SamButtonComponent);

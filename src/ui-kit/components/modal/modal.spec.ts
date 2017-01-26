@@ -3,7 +3,6 @@ import {By} from '@angular/platform-browser';
 
 // Load the implementations that should be tested
 import {SamModalComponent} from './modal.component';
-import {SamUIKitModule} from '../ui-kit.module';
 
 describe('The Sam Modal component', () => {
   let component:SamModalComponent;
@@ -12,8 +11,7 @@ describe('The Sam Modal component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SamModalComponent],
-      imports: [SamUIKitModule]
+      declarations: [SamModalComponent]
     });
 
     fixture = TestBed.createComponent(SamModalComponent);

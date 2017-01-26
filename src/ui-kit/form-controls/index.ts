@@ -8,7 +8,6 @@ import { SamDateTimeComponent } from './date-time';
 //import { SamInputAutocompleteModule } from './input-autocomplete';
 import { SamMultiSelectModule } from './multiselect';
 import { SamRadioButtonComponent } from './radiobutton';
-import { SamSearchbarComponent } from './searchbar';
 import { SamSelectModule } from './select';
 import { SamTextInputModule } from './text';
 import { SamTextAreaModule } from './textarea';
@@ -28,7 +27,6 @@ import { SamTimeComponent } from './time';
     SamDateComponent,
     SamDateTimeComponent,
     SamRadioButtonComponent,
-    SamSearchbarComponent,
     SamTimeComponent
   ],
   exports: [
@@ -37,7 +35,6 @@ import { SamTimeComponent } from './time';
     SamDateTimeComponent,
     SamMultiSelectModule,
     SamRadioButtonComponent,
-    SamSearchbarComponent,
     SamSelectModule,
     SamTextInputModule,
     SamTextAreaModule,
