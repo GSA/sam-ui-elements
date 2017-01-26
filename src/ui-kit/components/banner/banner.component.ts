@@ -1,10 +1,8 @@
 import { Component, Output, EventEmitter} from '@angular/core';
 
 /**
- * The <samBanner> component is designed with sam.gov standards to show that this is an official website
- * https://gsa.github.io/sam-web-design-standards/
+ * The <samBanner> component informs the user that the site is an official website of the United States Government
  *
- * @Output onClose: output false when the close button on banner has been clicked.
  */
 @Component({
   selector: 'samBanner',

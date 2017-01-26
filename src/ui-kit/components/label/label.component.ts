@@ -1,12 +1,10 @@
 import { Component, Input } from '@angular/core';
 
 /**
- * The <samLabel> component can generate a label matching SAMWDS.
- * It is designed with sam.gov standards
- * https://gsa.github.io/sam-web-design-standards/
- * @Input labelType: string - 'small': display small label
- *                       'big': display big label
- * @Input labelText: the text content that will show on the label
+ * The <samLabel> component draws attention to new or important content.
+ *
+ * @Input labelType: string - Sets size of label, takes value of 'small' or 'big'
+ * @Input labelText: string - The text content that will show on the label
  */
 @Component({
   selector: 'samLabel',

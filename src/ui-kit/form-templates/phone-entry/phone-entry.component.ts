@@ -4,11 +4,11 @@ import { LabelWrapper } from '../../wrappers/label-wrapper';
 /**
  * The <samPhoneInput> component is a Phone entry portion of a form
  *
- * @Input label - The lable text to appear above the input
- * @Input model - Angular model string value, should match the format of the phoneNumberTemplate
- * @Input phoneNumberTemplate - String value that is the phone number should match. Default is "_+(___)___-____" (underscores denote where numbers are allowed)
- * @Input prefix - Prefix name/id attribute values
- * @Output emitter - Event emitter when model changes, outputs a string
+ * @Input label: string - The lable text to appear above the input
+ * @Input model: string - Angular model string value, should match the format of the phoneNumberTemplate
+ * @Input phoneNumberTemplate: string - String value that is the phone number should match. Default is "_+(___)___-____" (underscores denote where numbers are allowed)
+ * @Input prefix: string - Prefix name/id attribute values
+ * @Output emitter: string - Event emitter when model changes, outputs a string
  */
 @Component( {
   selector: 'samPhoneEntry',

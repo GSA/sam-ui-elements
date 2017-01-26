@@ -11,6 +11,7 @@ import { OptionsType } from '../../types';
  * @Input name: string - semantic description for the component
  * @Input hint: string - helpful text for the using the component
  * @Input errorMessage: string - red error message
+ * @Output modelChange: any - Event emitted when model value changes
  */
 @Component({
   selector: 'samRadioButton',

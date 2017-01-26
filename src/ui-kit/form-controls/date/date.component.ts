@@ -2,11 +2,16 @@ import {Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges} fr
 import * as moment from 'moment/moment';
 
 /**
- * The <samNameInput> component is a Name entry portion of a form
+ * The <samDate> component is a Date entry portion of a form
  *
- * @Input model - the bound value of the component
- * @Input name - Prefix name/id attribute values
- *
+ * @Input errorMessage: string - Sets the general error message for component
+ * @Input name: string - Sets the name attribute for component
+ * @Input label: string - Sets the label text
+ * @Input hint: string - Sets the helpful hint text
+ * @Input disabled: boolean - Sets the disabled status of component, defaults to false
+ * @Input value: string - Sets the current value of the form control
+ * @Output valueChange: any - Event emitted when value changes
+ * @Output blurEvent: any -  Event emitted when form control loses focus
  */
 @Component({
   selector: 'samDate',

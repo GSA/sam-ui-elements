@@ -11,16 +11,18 @@ const MY_VALUE_ACCESSOR: any = {
 };
 
 /**
- * The <samSelect> component is a select/options group compliant with sam.gov standards
- * https://gsa.github.io/sam-web-design-standards/
+ * The <samSelect> component is a select/options group form control
  *
- * @Input/@Output value - the bound value of the component
- * @Input options: [{Option}] - the array of checkbox values and labels (see OptionsType)
- * @Input label: string - the innerHtml of <fieldset>
- * @Input name: string - semantic description for the component
- * @Input hint: string - helpful text for the using the component
- * @Input errorMessage: string - red error message
- *
+ * @Input model: string|number|symbol - Sets the bound value of the component
+ * @Input options: [{Option}] - Sets the array of option values and text (see OptionsType)
+ * @Input label: string - Sets the label text
+ * @Input name: string - Sets the semantic description for the component
+ * @Input hint: string - Sets the helpful text for the using the component
+ * @Input errorMessage: string - Sets the general error message
+ * @Input required: boolean - Sets the general error message
+ * @Input disabled: disabled - Sets the general error message
+ * @Input control: FormControl - Sets the general error message
+ * @Output modelChange: any - Event emitted on modal value change
  */
 @Component({
   selector: 'samSelect',
