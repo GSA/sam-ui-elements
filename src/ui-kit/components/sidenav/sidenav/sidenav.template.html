@@ -1,4 +1,4 @@
-<aside class="usa-width-one-fourth p_T-2x" sam-sticky limit=1200 container="help-content">
+<aside class="usa-width-one-fourth p_T-2x">
   <ul class="usa-sidenav-list">
     <li *ngFor="let child of model.children; let $index = index">
       <a [ngClass]="{'usa-current': isSelected($index)}"(click)="updateUI($index, $event)">{{child.label}}</a>
