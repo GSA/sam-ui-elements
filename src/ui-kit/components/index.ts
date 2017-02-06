@@ -13,6 +13,7 @@ import { SamModalComponent } from './modal';
 import { SamMultiSelectDropdownComponent } from './multiselect-dropdown';
 import { SamPaginationComponent } from './pagination';
 import { SamPointOfContactComponent } from './point-of-contact';
+import { SamSidenavModule } from './sidenav';
 import { SamTabsComponent,SamTabComponent } from './tabs';
 import { SamWrapperModule } from '../wrappers';
 
@@ -22,6 +23,7 @@ import { SamWrapperModule } from '../wrappers';
     SamFormControlsModule,
     SamDirectivesModule,
     AccordionsModule,
+    SamSidenavModule,
     SamWrapperModule 
   ],
   declarations: [
@@ -45,6 +47,7 @@ import { SamWrapperModule } from '../wrappers';
     SamMultiSelectDropdownComponent,
     SamPaginationComponent,
     SamPointOfContactComponent,
+    SamSidenavModule,
     SamTabsComponent,
     SamTabComponent,
     AccordionsModule
