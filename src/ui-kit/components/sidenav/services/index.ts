@@ -1,1 +1,1 @@
-export { SidenavService } from './sidenav.service.ts';
+export { SidenavService } from './sidenav.service';
