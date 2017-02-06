@@ -3,7 +3,6 @@ import { Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SamMenuItemComponent } from '../menu-item';
 import { SidenavService } from '../services';
-import { SamStickyComponent } from 'ui-kit';
 import { MenuItem } from '../interfaces';
 
 @Component({
