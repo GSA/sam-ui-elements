@@ -86,3 +86,4 @@ export class SamMultiSelectDropdownComponent implements OnChanges {
         this.modelChange.emit(event);
     }
 }
+
