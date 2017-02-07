@@ -14,7 +14,7 @@ const MY_VALUE_ACCESSOR: any = {
  * The <samSelect> component is a select/options group form control
  *
  * @Input model: string|number|symbol - Sets the bound value of the component
- * @Input options: [{Option}] - Sets the array of option values and text (see OptionsType)
+ * @Input options: OptionsType[] - Sets the array of option values and text (see OptionsType)
  * @Input label: string - Sets the label text
  * @Input name: string - Sets the semantic description for the component
  * @Input hint: string - Sets the helpful text for the using the component
@@ -31,7 +31,7 @@ const MY_VALUE_ACCESSOR: any = {
 })
 export class SamSelectComponent implements ControlValueAccessor {
   @Input() model: string|number|symbol;
-  @Input() options: OptionsType;
+  @Input() options: OptionsType[];
   @Input() label: string;
   @Input() name: string;
   @Input() hint: string;

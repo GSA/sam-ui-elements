@@ -6,7 +6,7 @@ import { OptionsType } from '../../types';
  * The <samMultiSelectDropdown> component provides a form control to multiselect a list
  *
  * @Input model: any - Sets the component model for active selections
- * @Input options: OptionsType - Set the dropdown option items
+ * @Input options: OptionsType[] - Set the dropdown option items
  * @Input label: string - Set form control label
  * @Input name: string - Set form control name attribute
  * @Input hint: string - Set form control hint
@@ -22,7 +22,7 @@ import { OptionsType } from '../../types';
 export class SamMultiSelectDropdownComponent implements OnChanges {
 
     @Input() model: any = [];
-    @Input() options: OptionsType;
+    @Input() options: OptionsType[];
     @Input() label: string;
     @Input() name: string;
     @Input() hint: string;
@@ -86,3 +86,4 @@ export class SamMultiSelectDropdownComponent implements OnChanges {
         this.modelChange.emit(event);
     }
 }
+

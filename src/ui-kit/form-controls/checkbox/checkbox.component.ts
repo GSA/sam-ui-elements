@@ -6,7 +6,7 @@ import { OptionsType } from '../../types';
  * The <samCheckbox> component is a set of checkboxes 
  *
  * @Input model - Sets the bound value of the component
- * @Input options: [{Option}] - Sets the array of checkbox values and labels (see OptionsType)
+ * @Input options: OptionsType[] - Sets the array of checkbox values and labels (see OptionsType)
  * @Input label: string - Sets the content of <label>
  * @Input name: string - Sets the semantic description for the component
  * @Input hint: string - Sets helpful text for the using the component
@@ -20,7 +20,7 @@ import { OptionsType } from '../../types';
 })
 export class SamCheckboxComponent {
   @Input() model: any = [];
-  @Input() options: OptionsType;
+  @Input() options: OptionsType[];
   @Input() label: string;
   @Input() name: string;
   @Input() hint: string;
