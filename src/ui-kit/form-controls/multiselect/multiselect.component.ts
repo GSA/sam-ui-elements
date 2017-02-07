@@ -4,7 +4,7 @@ import { OptionsType } from '../../types';
 /**
  * The <samMultiSelect> component is a multi-select/options group compliant
  *
- * @Input options: [{Option}] - the array of checkbox values and labels (see OptionsType)
+ * @Input options: OptionsType[] - the array of checkbox values and labels (see OptionsType)
  * @Input label: string - Sets the label text
  * @Input name: string - Sets the semantic description for the component
  * @Input hint: string - Sets the helpful text for the using the component
@@ -18,7 +18,7 @@ import { OptionsType } from '../../types';
 })
 export class SamMultiSelectComponent {
   @ViewChild('select') selectElRef;
-  @Input() options: OptionsType;
+  @Input() options: OptionsType[];
   @Input() label: string;
   @Input() name: string;
   @Input() hint: string;

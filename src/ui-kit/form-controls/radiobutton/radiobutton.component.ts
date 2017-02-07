@@ -6,7 +6,7 @@ import { OptionsType } from '../../types';
  * The <samRadioButton> component is a set of checkboxes compliant with sam.gov standards
  *
  * @Input model - the bound value of the component
- * @Input options: [{Option}] - the array of checkbox values and labels (see OptionsType)
+ * @Input options: OptionsType[] - the array of checkbox values and labels (see OptionsType)
  * @Input label: string - the innerHtml of <fieldset>
  * @Input name: string - semantic description for the component
  * @Input hint: string - helpful text for the using the component
@@ -19,7 +19,7 @@ import { OptionsType } from '../../types';
 })
 export class SamRadioButtonComponent {
   @Input() model: string|number|symbol;
-  @Input() options: OptionsType;
+  @Input() options: OptionsType[];
   @Input() label: string;
   @Input() name: string;
   @Input() hint: string;
