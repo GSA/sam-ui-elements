@@ -15,15 +15,30 @@ import { LabelWrapper } from '../../wrappers/label-wrapper';
   templateUrl: 'phone-entry.template.html',
 })
 export class SamPhoneEntryComponent implements OnInit {
+  /**
+  * The label text to appear above the input
+  */
   @Input() label: string = 'Phone Number';
+  /**
+  * Angular model string value, should match the format of the phoneNumberTemplate
+  */
   @Input() model: string = "";
+  /**
+  * String value that is the phone number should match. Default is "_+(___)___-____" (underscores denote where numbers are allowed)
+  */
+  @Input() phoneNumberTemplate: string = "_+(___)___-____";
+  /**
+  * Prefix name/id attribute values
+  */
   @Input() prefix: string = "";
-
-  @ViewChild("phoneInput") phoneInput;
+  /**
+  * Event emitter when model changes, outputs a string
+  */
   @Output() emitter = new EventEmitter<string>();
 
+  @ViewChild("phoneInput") phoneInput;
   errorMsg: string = "";
-  @Input() phoneNumberTemplate: string = "_+(___)___-____";
+  
   phoneNumberTemplateLength = this.phoneNumberTemplate.length;
   phoneNumberMirror = this.phoneNumberTemplate;
   phoneNumber = this.phoneNumberTemplate;

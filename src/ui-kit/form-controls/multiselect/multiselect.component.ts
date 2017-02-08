@@ -3,14 +3,6 @@ import { OptionsType } from '../../types';
 
 /**
  * The <samMultiSelect> component is a multi-select/options group compliant
- *
- * @Input options: OptionsType[] - the array of checkbox values and labels (see OptionsType)
- * @Input label: string - Sets the label text
- * @Input name: string - Sets the semantic description for the component
- * @Input hint: string - Sets the helpful text for the using the component
- * @Input errorMessage: string - Sets the general component error message
- * @Input disabled: boolean - Sets the disabled attribute status
- *
  */
 @Component({
   selector: 'samMultiSelect',
@@ -18,11 +10,29 @@ import { OptionsType } from '../../types';
 })
 export class SamMultiSelectComponent {
   @ViewChild('select') selectElRef;
+  /**
+  * the array of checkbox values and labels (see OptionsType)
+  */
   @Input() options: OptionsType[];
+  /**
+  * Sets the label text
+  */
   @Input() label: string;
+  /**
+  * Sets the semantic description for the component
+  */
   @Input() name: string;
+  /**
+  * Sets the helpful text for the using the component
+  */
   @Input() hint: string;
+  /**
+  * Sets the general component error message
+  */
   @Input() errorMessage: string;
+  /**
+  * Sets the disabled attribute status
+  */
   @Input() disabled:boolean;
   selectedValues = [];
   constructor() { console.clear(); }

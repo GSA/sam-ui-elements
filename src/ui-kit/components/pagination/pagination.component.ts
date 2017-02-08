@@ -2,11 +2,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 /**
  * The <samPagination> allows users to select a page
- *
- * @Input disabled:booean - Sets the disabled status of the component, defaults to false
- * @Input currentPage:number - Shows the current page number
- * @Input totalPage:number - Shows the number of total pages
- * @Output pageChange: Event emitted when current page is changed
  */
 @Component({
   selector: 'samPagination',
@@ -18,9 +13,21 @@ export class SamPaginationComponent {
   private ellipsisThreshold: number = 6; // The threshold to check whether ellipsis is needed
   private MaxTotalPageWithoutEllipsis: number = 10; // If the total number of pages is less than this threshold, display all pages
 
+  /**
+  * Sets the disabled status of the component, defaults to false
+  */
   @Input() disabled: boolean = false;
+  /**
+  * Shows the current page number
+  */
   @Input() currentPage: number;
+  /**
+  * Shows the number of total pages
+  */
   @Input() totalPages: number;
+  /**
+  * Event emitted when current page is changed
+  */
   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
 
   constructor() { }

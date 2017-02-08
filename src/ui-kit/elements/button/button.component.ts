@@ -2,20 +2,27 @@ import {Component, Input} from '@angular/core';
 
 /**
  * The <samButton> component generates a button for user interaction
- *
- * @Input buttonId: string - Sets the id that will assign to the button element
- * @Input buttonText: string - Sets the text content that will show on the button
- * @Input buttonType: string - Sets the type of the button (default,alt,secondary,outline,gray,disabled,big)
- * @Input buttonClass: string - Sets the button css class
  */
 @Component({
   selector: 'samButton',
   template: `<button id={{buttonId}} [ngClass]="btnClass" [disabled]="disabled" type="button">{{buttonText}}</button>`,
 })
 export class SamButtonComponent {
+  /**
+  * Sets the id that will assign to the button element
+  */
   @Input() buttonId:string;
+  /**
+  * Sets the text content that will show on the button
+  */
   @Input() buttonText:string;
+  /**
+  * Sets the type of the button (default,alt,secondary,outline,gray,disabled,big)
+  */
   @Input() buttonType:string;
+  /**
+  * Sets the button css class
+  */
   @Input() buttonClass:string = '';
 
   private btnClassMap: any = {

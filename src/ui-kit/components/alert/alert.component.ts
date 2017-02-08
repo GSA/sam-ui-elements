@@ -2,24 +2,35 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 /**
  * The <samAlert> component keeps users informed of important and sometimes time-sensitive changes
- *
- * @Input type: string - Set alert type, defaults to 'success'
- * @Input title: string - Set alert title
- * @Input description: string - Set alert description
- * @Input showClose: boolean - Control whether to display/hide the Close button
- * @Input dismissTimer: number - assign a timeout to dismiss the alert
- * @Output dismiss: null - emitted event when alert is dismissed
  */
 @Component({
   selector: 'samAlert',
   templateUrl: './alert.template.html'
 })
 export class SamAlertComponent {
+  /**
+  * Set alert type, defaults to 'success'
+  */
   @Input() type: string;
+  /**
+  * Set alert title
+  */
   @Input() title: string;
+  /**
+  * Set alert description
+  */
   @Input() description: string;
+  /**
+  * Control whether to display/hide the Close button
+  */
   @Input() showClose: boolean = false;
+  /**
+  * Assign a timeout to dismiss the alert
+  */
   @Input() dismissTimer: number = 0;
+  /**
+  * Emitted event when alert is dismissed
+  */
   @Output() dismiss: EventEmitter<any> = new EventEmitter<any>();
 
   types:any = {

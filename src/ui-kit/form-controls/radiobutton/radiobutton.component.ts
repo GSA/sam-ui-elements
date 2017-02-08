@@ -4,27 +4,39 @@ import { OptionsType } from '../../types';
 
 /**
  * The <samRadioButton> component is a set of checkboxes compliant with sam.gov standards
- *
- * @Input model - the bound value of the component
- * @Input options: OptionsType[] - the array of checkbox values and labels (see OptionsType)
- * @Input label: string - the innerHtml of <fieldset>
- * @Input name: string - semantic description for the component
- * @Input hint: string - helpful text for the using the component
- * @Input errorMessage: string - red error message
- * @Output modelChange: any - Event emitted when model value changes
  */
 @Component({
   selector: 'samRadioButton',
   templateUrl: 'radiobutton.template.html',
 })
 export class SamRadioButtonComponent {
+  /**
+  * Sets the bound value of the component
+  */
   @Input() model: string|number|symbol;
+  /**
+  * Sets the array of checkbox values and labels (see OptionsType)
+  */
   @Input() options: OptionsType[];
+  /**
+  * Sets the label text
+  */
   @Input() label: string;
+  /**
+  * Sets the semantic description for the component
+  */
   @Input() name: string;
+  /**
+  * Sets the helpful text for the using the component
+  */
   @Input() hint: string;
+  /**
+  * Sets the general error message
+  */
   @Input() errorMessage: string;
-
+  /**
+  * Event emitted when model value changes
+  */
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild(FieldsetWrapper)

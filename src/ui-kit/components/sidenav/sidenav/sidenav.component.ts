@@ -5,13 +5,25 @@ import { SamMenuItemComponent } from '../menu-item';
 import { SidenavService } from '../services';
 import { MenuItem } from '../interfaces';
 
+/**
+* The <samSidenav> component builds a side navigation bar
+*/
 @Component({
   selector: 'samSidenav',
   templateUrl: './sidenav.template.html'
 })
 export class SamSidenavComponent implements OnInit {
+  /**
+  * Object that defines the sidenav labels, routes, and structure
+  */
   @Input() model: MenuItem;
+  /**
+  * Event emitted on interaction, returns the selected menu item's path value
+  */
   @Output() path: EventEmitter<string> = new EventEmitter<string>();
+  /**
+  * Event emitted on interaction, returns the selected menu item
+  */
   @Output() data: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private service: SidenavService) { }

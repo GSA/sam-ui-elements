@@ -2,9 +2,6 @@ import { Component, AfterContentInit, ContentChildren, QueryList, Input, Output,
 
 /**
  * The <samTab> component contains the content for a tab
- *
- * @Input title: string - Set tab text
- * @Input active: boolean - Set tab active class, defaults to false
  */
 @Component({
   selector: 'samTab',
@@ -15,14 +12,18 @@ import { Component, AfterContentInit, ContentChildren, QueryList, Input, Output,
   `
 })
 export class SamTabComponent {
+  /**
+  * Set tab text
+  */
   @Input('tabTitle') title: string;
+  /**
+  * Set tab active class, defaults to false
+  */
   @Input() active: boolean = false;
 }
 
 /**
  * The <samTabs> component is a wrapper for navigating through and displaying tabs
- *
- * @Output currentSelectedTab: SamTabComponent - Event emitted on tab selection
  */
 @Component({
   selector: 'samTabs',
@@ -37,7 +38,9 @@ export class SamTabComponent {
 })
 export class SamTabsComponent implements AfterContentInit {
   @ContentChildren(SamTabComponent) tabs: QueryList<SamTabComponent>;
-
+  /**
+  * Event emitted on tab selection
+  */
   @Output() currentSelectedTab = new EventEmitter(); 
 
   ngAfterContentInit(){

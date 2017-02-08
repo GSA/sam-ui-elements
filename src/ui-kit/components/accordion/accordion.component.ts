@@ -14,6 +14,7 @@ import { Input, Output, EventEmitter, OnInit } from '@angular/core';
   templateUrl: 'accordion.template.html'
 })
 export class SamAccordionSection implements OnInit {
+  
   @Input() headerText: string;
   @Input() isExpanded: boolean;
   @Input() name: string;
@@ -59,10 +60,6 @@ export class SamAccordionSection implements OnInit {
 
 /**
  * The <samAccordions> component can generate accordions component with provided data
- *
- * @Input expandIndex: number - Index of an accordion item that should be expanded on load
- * @Input bordered: boolean - Control whether the accordion component has a border
- * @Output selectedIndexChange: number - The index of the accordion item that has been opened/closed
  */
 @Component({
   selector: 'samAccordion',
@@ -73,8 +70,17 @@ export class SamAccordionSection implements OnInit {
 `,
 })
 export class SamAccordionComponent implements OnInit {
+  /**
+  * Control whether the accordion component has a border
+  */
   @Input() bordered:boolean = false;
+  /**
+  * Index of an accordion item that should be expanded on load
+  */
   @Input() expandIndex = -1;
+  /**
+  * The index of the accordion item that has been opened/closed
+  */
   @Output() selectedIndexChange: EventEmitter<number> = new EventEmitter<number>();
 
   public accordionClass:string = "usa-accordion";

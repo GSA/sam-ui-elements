@@ -4,29 +4,43 @@ import { OptionsType } from '../../types';
 
 /**
  * The <samCheckbox> component is a set of checkboxes 
- *
- * @Input model - Sets the bound value of the component
- * @Input options: OptionsType[] - Sets the array of checkbox values and labels (see OptionsType)
- * @Input label: string - Sets the content of <label>
- * @Input name: string - Sets the semantic description for the component
- * @Input hint: string - Sets helpful text for the using the component
- * @Input errorMessage: string - Sets the form control error message
- * @Input hasSelectAll: boolean - If true, an addition checkbox is added that selects all the checkboxes
- * @Output modelChange: any - Event emitted when the model value changes
  */
 @Component({
   selector: 'samCheckbox',
   templateUrl: 'checkbox.template.html',
 })
 export class SamCheckboxComponent {
+  /**
+  * Sets the bound value of the component
+  */
   @Input() model: any = [];
+  /**
+  * Sets the array of checkbox values and labels (see OptionsType[])
+  */
   @Input() options: OptionsType[];
+  /**
+  * Sets the label text
+  */
   @Input() label: string;
+  /**
+  * Sets the semantic description for the component
+  */
   @Input() name: string;
+  /**
+  * Sets helpful text for the using the component
+  */
   @Input() hint: string;
+  /**
+  * Sets the form control error message
+  */
   @Input() errorMessage: string;
+  /**
+  * If true, an addition checkbox is added that selects all the checkboxes
+  */
   @Input() hasSelectAll: boolean;
-
+  /**
+  * Event emitted when the model value changes
+  */
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild(FieldsetWrapper)
@@ -38,7 +52,7 @@ export class SamCheckboxComponent {
    */
   private _ordering: any = {};
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     if (!this.name) {
