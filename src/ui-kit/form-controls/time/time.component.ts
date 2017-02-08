@@ -16,11 +16,23 @@ import * as moment from 'moment/moment';
 export class SamTimeComponent implements OnInit, OnChanges {
   INPUT_FORMAT: string = "H:m";
   OUTPUT_FORMAT: string = "HH:mm:ss";
-
+  
+  /**
+  * Sets the time value 
+  */
   @Input() value: string = null; // must be a 24 hour time and have the format HH:mm
-  @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
+  /**
+  * Sets the disabled attribute
+  */
   @Input() disabled: boolean = false;
+  /**
+  * Sets the name attribute 
+  */
   @Input() name: string;
+  /**
+  * Emits event when value change
+  */
+  @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
 
   hours: number = null;
   minutes: number = null;

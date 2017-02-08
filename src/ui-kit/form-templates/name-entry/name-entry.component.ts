@@ -13,7 +13,13 @@ import { LabelWrapper } from '../../wrappers/label-wrapper';
   templateUrl: 'name-entry.template.html',
 })
 export class SamNameEntryComponent {
+  /**
+  * The bound value of the component
+  */
   @Input() legend: string = "Name"
+  /**
+  * Label text for template
+  */
   @Input() model: any = {
     title: "",
     firstName: "",
@@ -21,7 +27,9 @@ export class SamNameEntryComponent {
     lastName: "",
     suffix: ""
   };
-
+  /**
+  * Prefix name/id attribute values
+  */
   @Input() prefix: string = "";
 
   titleErrorMsg: string = "";

@@ -14,13 +14,6 @@ const MY_VALUE_ACCESSOR: any = {
 
 /**
  * The <samDateTime> component is a DateTime entry portion of a form
- *
- * @Input value - Sets starting value for input
- * @Input label - Sets label text for input
- * @Input name - Sets name attribute value
- * @Input errorMessage - Sets error message string to display for invalid values
- * @Input disabled - Sets disabled attribute value for input
- * @Output valueChange - Prefix name/id attribute values
  */
 @Component({
   selector: 'samDateTime',
@@ -30,12 +23,29 @@ const MY_VALUE_ACCESSOR: any = {
 export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAccessor {
   public INPUT_FORMAT: string = 'Y-M-DTH:m';
 
+  /**
+  * Sets starting value for input
+  */
   @Input() value: string = null;
+  /**
+  * Sets label text for input
+  */
   @Input() label: string;
+  /**
+  * Sets name attribute value
+  */
   @Input() name: string;
+  /**
+  * Sets error message string to display for invalid values
+  */
   @Input() errorMessage: string;
+  /**
+  * Sets disabled attribute value for input
+  */
   @Input() disabled: boolean = false;
-  @Input() control;
+  /**
+  * Event emitted when value is changed
+  */
   @Output() valueChange: EventEmitter<any> = new EventEmitter();
 
   time: string = null;
@@ -52,9 +62,9 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
       throw new Error('SamDateTimeComponent requires a [name] input for 508 compliance');
     }
 
-    if (this.control) {
+    //if (this.control) {
       //this.wrapper.formatErrors(this.control);
-    }
+    //}
   }
 
   ngOnChanges() {

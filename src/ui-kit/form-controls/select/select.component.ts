@@ -12,17 +12,6 @@ const MY_VALUE_ACCESSOR: any = {
 
 /**
  * The <samSelect> component is a select/options group form control
- *
- * @Input model: string|number|symbol - Sets the bound value of the component
- * @Input options: OptionsType[] - Sets the array of option values and text (see OptionsType)
- * @Input label: string - Sets the label text
- * @Input name: string - Sets the semantic description for the component
- * @Input hint: string - Sets the helpful text for the using the component
- * @Input errorMessage: string - Sets the general error message
- * @Input required: boolean - Sets the general error message
- * @Input disabled: disabled - Sets the general error message
- * @Input control: FormControl - Sets the general error message
- * @Output modelChange: any - Event emitted on modal value change
  */
 @Component({
   selector: 'samSelect',
@@ -30,16 +19,45 @@ const MY_VALUE_ACCESSOR: any = {
   providers: [MY_VALUE_ACCESSOR]
 })
 export class SamSelectComponent implements ControlValueAccessor {
+  /**
+  * Sets the bound value of the component
+  */
   @Input() model: string|number|symbol;
+  /**
+  * Sets the array of option values and text (see OptionsType)
+  */
   @Input() options: OptionsType[];
+  /**
+  * Sets the label text
+  */
   @Input() label: string;
+  /**
+  * Sets the semantic description for the component
+  */
   @Input() name: string;
+  /**
+  * Sets the helpful text for the using the component
+  */
   @Input() hint: string;
+  /**
+  * Sets the general error message
+  */
   @Input() errorMessage: string;
+  /**
+  * Sets the general error message
+  */
   @Input() required: boolean;
+  /**
+  * Sets the general error message
+  */
   @Input() disabled: boolean;
+  /**
+  * Sets the general error message
+  */
   @Input() control: FormControl;
-
+  /**
+  * Event emitted on modal value change
+  */
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild(LabelWrapper)

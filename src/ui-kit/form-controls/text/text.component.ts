@@ -10,15 +10,6 @@ export const TEXT_VALUE_ACCESSOR: any = {
 
 /**
  * The <samText> component provides a text input form control
- *
- * @Input value: string - Sets the text input value
- * @Input label: string - Sets the label text
- * @Input name: string - Sets the name attribute 
- * @Input hint: string - Sets the helpful hint text
- * @Input errorMessage: string - Sets the general error message
- * @Input disabled: boolean - Sets the disabled attribute
- * @Input required: boolean - Sets the required attribute
- * @Input maxlength: number - Sets the maxlength attribute
  */
 @Component({
   selector: 'samText',
@@ -26,14 +17,38 @@ export const TEXT_VALUE_ACCESSOR: any = {
   providers: [ TEXT_VALUE_ACCESSOR ]
 })
 export class SamTextComponent implements ControlValueAccessor {
+  /**
+  * Sets the text input value
+  */
   @Input() value: string;
+  /**
+  * Sets the label text
+  */
   @Input() label: string;
+  /**
+  * Sets the name attribute 
+  */
   @Input() name: string;
+  /**
+  * Sets the helpful hint text
+  */
   @Input() hint: string;
+  /**
+  * Sets the general error message
+  */
   @Input() errorMessage: string;
+  /**
+  * Sets the disabled attribute
+  */
   @Input() disabled: boolean;
+  /**
+  * Sets the required attribute
+  */
   @Input() required: boolean;
   @Input() control: FormControl;
+  /**
+  * Sets the maxlength attribute
+  */
   @Input() maxlength: number;
 
   onChange: any = () => {
