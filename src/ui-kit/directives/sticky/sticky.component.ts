@@ -2,16 +2,19 @@ import { HostListener, Directive, ElementRef, Input, Renderer, OnInit } from '@a
 
 /**
  * The sam-sticky directive is made to help nav bar stick on the page
- *
- * @Input limit: number - Sets the minimum pixel width for sticky to trigger on.
- * @Input container: string - Sets the container target class
  */
 @Directive({ selector: '[sam-sticky]' })
 export class SamStickyComponent implements OnInit {
 
   // Research sticky polyfill
   // http://html5please.com/#sticky
+  /**
+  * Sets the minimum pixel width for sticky to trigger on.
+  */
   @Input() limit: number = 0;
+  /**
+  * Sets the container target class
+  */
   @Input() container: string;
 
   // Make a nav bar sticky when the diff between nav bar and its container is larger than diffLimit
@@ -30,7 +33,6 @@ export class SamStickyComponent implements OnInit {
   @HostListener('window:scroll', ['$event'])
   scroll(event) {
     this.makeSticky();
-
   }
 
   constructor( private el: ElementRef, private renderer: Renderer) {}
@@ -111,7 +113,4 @@ export class SamStickyComponent implements OnInit {
       this.setPosition("static");
     }
   }
-
 }
-
-

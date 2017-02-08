@@ -1,38 +1,59 @@
 import { OnInit, Component, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
 /**
- * The <samModal> component is designed with sam.gov standards to show that this is an official website
- * https://gsa.github.io/sam-web-design-standards/
- *
- * @Input id: string - ID html attribute of modal
- * @Input type: string - Sets type of modal, takes values of "success", "warning", "error", or "info"
- * @Input title: string - Sets the modal title text
- * @Input description: string - Sets the modal text description
- * @Input cancelButtonLabel: string - Sets the cancel button text
- * @Input submitButtonLabel: string - Sets the submit button text
- * @Input showClose: boolean - Show/hide the modal close button, defaults to true
- * @Input closeOnOutsideClick: boolean - Close modal if user clicks outside of modal, defaults to true
- * @Input closeOnEscape: boolean - Close modal if ESC key is pressed, defaults to true
- * @Output onOpen: any - emitted event when modal is opened
- * @Output onClose: any - emitted event when modal is closed
- * @Output onSubmit: any - emitted event on modal submission
+ * The <samModal> component display a popover for user interaction
  */
-
 @Component({
   selector: 'samModal',
   templateUrl: './modal.template.html'
 })
 export class SamModalComponent implements OnInit {
+  /**
+  * Sets ID html attribute of modal
+  */
   @Input() id: string = "";
+  /**
+  * Sets type of modal, takes values of "success", "warning", "error", or "info"
+  */
   @Input() type: string;
+  /**
+  * Sets the modal title text
+  */
   @Input() title: string;
+  /**
+  * Sets the modal text description
+  */
   @Input() description: string;
+  /**
+  * Sets the cancel button text
+  */
   @Input() cancelButtonLabel: string = "";
+  /**
+  * Sets the submit button text
+  */
   @Input() submitButtonLabel: string = "";
-  @Input() showClose: boolean = false;
+  /**
+  * Show/hide the modal close button, defaults to true
+  */
+  @Input() showClose: boolean = true;
+  /**
+  * Close modal if user clicks outside of modal, defaults to true
+  */
   @Input() closeOnOutsideClick: boolean = true;
+  /**
+  * Close modal if ESC key is pressed, defaults to true
+  */
   @Input() closeOnEscape: boolean = true;
+  /**
+  * Emitted event when modal is opened
+  */
   @Output() onOpen: EventEmitter<any> = new EventEmitter<any>();
+  /**
+  * Emitted event when modal is closed
+  */
   @Output() onClose: EventEmitter<any> = new EventEmitter<any>();
+  /**
+  * Emitted event on modal submission
+  */
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>();
   show = false;
   private backdropElement: HTMLElement;
@@ -52,7 +73,6 @@ export class SamModalComponent implements OnInit {
   }
 
   ngOnInit(){
-    
     if(!this.typeNotDefined()){
       this.selectedType = this.types[this.type];
     }
@@ -86,7 +106,6 @@ export class SamModalComponent implements OnInit {
     if(window){
       window.setTimeout(() => this.modalRoot.nativeElement.focus(), 0);
     }
-    
   }
 
   closeModal(){

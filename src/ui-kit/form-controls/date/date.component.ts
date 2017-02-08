@@ -3,15 +3,6 @@ import * as moment from 'moment/moment';
 
 /**
  * The <samDate> component is a Date entry portion of a form
- *
- * @Input errorMessage: string - Sets the general error message for component
- * @Input name: string - Sets the name attribute for component
- * @Input label: string - Sets the label text
- * @Input hint: string - Sets the helpful hint text
- * @Input disabled: boolean - Sets the disabled status of component, defaults to false
- * @Input value: string - Sets the current value of the form control
- * @Output valueChange: any - Event emitted when value changes
- * @Output blurEvent: any -  Event emitted when form control loses focus
  */
 @Component({
   selector: 'samDate',
@@ -26,16 +17,37 @@ export class SamDateComponent implements OnInit, OnChanges {
     day: null,
     year: null
   };
+  /**
+  * Sets the general error message for component
+  */
   @Input() errorMessage: string = "";
+  /**
+  * Sets the name attribute for component
+  */
   @Input() name: string = "";
+  /**
+  * Sets the label text
+  */
   @Input() label: string = "";
+  /**
+  * Sets the helpful hint text
+  */
   @Input() hint: string = "";
-  @Input() prefix: string = "";
+  /**
+  * Sets the disabled status of component, defaults to false
+  */
   @Input() disabled: boolean = false;
-  @Input() control;
-
+  /**
+  * Sets the current value of the form control
+  */
   @Input() value: string;
+  /**
+  * Event emitted when value changes
+  */
   @Output() valueChange = new EventEmitter<any>();
+  /**
+  * Event emitted when form control loses focus
+  */
   @Output() blurEvent = new EventEmitter<any>();
 
   @ViewChild('month') month;
