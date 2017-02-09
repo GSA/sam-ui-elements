@@ -15,6 +15,7 @@ import { SamMultiSelectDropdownComponent } from './multiselect-dropdown';
 import { SamPaginationComponent } from './pagination';
 import { SamPointOfContactComponent } from './point-of-contact';
 import { SamSidenavModule } from './sidenav';
+import { SamSpinnerComponent } from './spinner';
 import { SamTabsComponent,SamTabComponent } from './tabs';
 import { SamWrapperModule } from '../wrappers';
 
@@ -37,6 +38,7 @@ import { SamWrapperModule } from '../wrappers';
     SamMultiSelectDropdownComponent,
     SamPaginationComponent,
     SamPointOfContactComponent,
+    SamSpinnerComponent,
     SamTabsComponent,
     SamTabComponent,
   ],
@@ -51,6 +53,7 @@ import { SamWrapperModule } from '../wrappers';
     SamPaginationComponent,
     SamPointOfContactComponent,
     SamSidenavModule,
+    SamSpinnerComponent,
     SamTabsComponent,
     SamTabComponent,
     AccordionsModule
