@@ -6,6 +6,7 @@ import { SamDirectivesModule } from '../directives';
 
 import { AccordionsModule } from './accordion';
 import { SamAlertComponent } from './alert';
+import { SamAlphabetSelectorComponent } from './alphabet-selector';
 import { SamBannerComponent } from './banner';
 import { SamHeaderComponent } from './header';
 import { SamLabelComponent } from './label';
@@ -28,6 +29,7 @@ import { SamWrapperModule } from '../wrappers';
   ],
   declarations: [
     SamAlertComponent,
+    SamAlphabetSelectorComponent,
     SamBannerComponent,
     SamHeaderComponent,
     SamLabelComponent,
@@ -40,6 +42,7 @@ import { SamWrapperModule } from '../wrappers';
   ],
   exports: [
     SamAlertComponent,
+    SamAlphabetSelectorComponent,
     SamBannerComponent,
     SamHeaderComponent,
     SamLabelComponent,
