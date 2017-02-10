@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { SamFormControlsModule } from '../form-controls';
@@ -9,6 +10,7 @@ import { SamAlertComponent } from './alert';
 import { SamAlphabetSelectorComponent } from './alphabet-selector';
 import { SamBannerComponent } from './banner';
 import { SamHeaderComponent } from './header';
+import { SamHeaderMenuComponent } from './header-menu';
 import { SamLabelComponent } from './label';
 import { SamModalComponent } from './modal';
 import { SamMultiSelectDropdownComponent } from './multiselect-dropdown';
@@ -22,6 +24,7 @@ import { SamWrapperModule } from '../wrappers';
 @NgModule({
   imports: [ 
     CommonModule,
+    RouterModule,
     SamFormControlsModule,
     SamDirectivesModule,
     AccordionsModule,
@@ -33,6 +36,7 @@ import { SamWrapperModule } from '../wrappers';
     SamAlphabetSelectorComponent,
     SamBannerComponent,
     SamHeaderComponent,
+    SamHeaderMenuComponent,
     SamLabelComponent,
     SamModalComponent,
     SamMultiSelectDropdownComponent,
@@ -47,6 +51,7 @@ import { SamWrapperModule } from '../wrappers';
     SamAlphabetSelectorComponent,
     SamBannerComponent,
     SamHeaderComponent,
+    SamHeaderMenuComponent,
     SamLabelComponent,
     SamModalComponent,
     SamMultiSelectDropdownComponent,
