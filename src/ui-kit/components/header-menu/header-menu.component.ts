@@ -12,26 +12,32 @@ interface MenuItem {
 }
 
 /**
- * The <sam-header-menu> component is designed with sam.gov standards to show that this is an official website
- * https://gsa.github.io/sam-web-design-standards/
- *
- * @Input items: Array of `MenuItem` objects
- * @Input open: Boolean for setting menu open/close states (2-way binding)
- *
- * @Output onOpen: Menu open callback
- * @Output onClose: Menu close callback
- * @Output onSelect: Menu item click callback
+ * The <sam-header-menu> component provides a menu dropdown
  */
 @Component({
   selector: 'sam-header-menu',
   templateUrl: 'header-menu.component.html'
 })
 export class SamHeaderMenuComponent {
+  /**
+  * Array of `MenuItem` objects
+  */
   @Input() items: MenuItem[] = [];
-
+  /**
+  * Menu open/close callback
+  */
   @Output() openChange = new EventEmitter();
+  /**
+  * Menu open callback
+  */
   @Output() onOpen:EventEmitter<any> = new EventEmitter<any>();
+  /**
+  * Menu close callback
+  */
   @Output() onClose:EventEmitter<any> = new EventEmitter<any>();
+  /**
+  * Menu item click callback
+  */
   @Output() onSelect:EventEmitter<any> = new EventEmitter<any>();
 
   private states = {
