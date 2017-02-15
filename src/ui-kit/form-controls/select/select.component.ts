@@ -89,7 +89,7 @@ export class SamSelectComponent implements ControlValueAccessor {
     }
     this.model = val;
     this.modelChange.emit(val);
-    //this.wrapper.formatErrors(this.control);
+    this.wrapper.formatErrors(this.control);
   }
 
   setDisabledState(disabled) {
@@ -101,7 +101,7 @@ export class SamSelectComponent implements ControlValueAccessor {
   }
 
   onBlur() {
-    //this.wrapper.formatErrors(this.control);
+    this.wrapper.formatErrors(this.control);
     if (this.onTouched) {
       this.onTouched();
     }

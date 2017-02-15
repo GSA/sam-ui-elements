@@ -84,7 +84,7 @@ export class SamTextComponent implements ControlValueAccessor {
     this.control.setValidators(validators);
     this.control.valueChanges.subscribe(this.onChange);
 
-    //this.wrapper.formatErrors(this.control);
+    this.wrapper.formatErrors(this.control);
   }
 
   onInputChange(value) {
