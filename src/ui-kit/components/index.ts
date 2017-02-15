@@ -9,6 +9,8 @@ import { AccordionsModule } from './accordion';
 import { SamAlertComponent } from './alert';
 import { SamAlphabetSelectorComponent } from './alphabet-selector';
 import { SamBannerComponent } from './banner';
+import { SamCollapsibleComponent } from './collapsible';
+import { SamFiltersContainerComponent } from './filters-container';
 import { SamHeaderComponent } from './header';
 import { SamHeaderMenuComponent } from './header-menu';
 import { SamLabelComponent } from './label';
@@ -35,6 +37,8 @@ import { SamWrapperModule } from '../wrappers';
     SamAlertComponent,
     SamAlphabetSelectorComponent,
     SamBannerComponent,
+    SamCollapsibleComponent,
+    SamFiltersContainerComponent,
     SamHeaderComponent,
     SamHeaderMenuComponent,
     SamLabelComponent,
@@ -50,6 +54,8 @@ import { SamWrapperModule } from '../wrappers';
     SamAlertComponent,
     SamAlphabetSelectorComponent,
     SamBannerComponent,
+    SamCollapsibleComponent,
+    SamFiltersContainerComponent,
     SamHeaderComponent,
     SamHeaderMenuComponent,
     SamLabelComponent,
