@@ -43,6 +43,8 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
   * Sets disabled attribute value for input
   */
   @Input() disabled: boolean = false;
+  
+  @Input() control;
   /**
   * Event emitted when value is changed
   */
@@ -62,9 +64,9 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
       throw new Error('SamDateTimeComponent requires a [name] input for 508 compliance');
     }
 
-    //if (this.control) {
-      //this.wrapper.formatErrors(this.control);
-    //}
+    if (this.control) {
+      this.wrapper.formatErrors(this.control);
+    }
   }
 
   ngOnChanges() {
