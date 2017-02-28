@@ -32,6 +32,10 @@ export class SamPhoneEntryComponent implements OnInit {
   */
   @Input() prefix: string = "";
   /**
+  * Flag to determine whether Phone Entry is required for submission
+  */
+  @Input() required: boolean = false;
+  /**
   * Event emitter when model changes, outputs a string
   */
   @Output() emitter = new EventEmitter<string>();
