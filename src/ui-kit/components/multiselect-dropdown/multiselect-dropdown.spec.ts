@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { SamMultiSelectDropdownComponent } from './multiselect-dropdown.component';
-import { SamUIKitModule } from 'ui-kit';
+import { SamUIKitModule } from 'samUIKit';
 
 describe('Sam Multiselect Dropdown Component', function() {
     let component: SamMultiSelectDropdownComponent;
