@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
+
 /**
- * The <samAlert> component is designed with sam.gov standards to show that this is an official website
- * https://gsa.github.io/sam-web-design-standards/
+ * The <samAlert> component keeps users informed of important and sometimes time-sensitive changes
  */
 @Component({
   selector: 'samAlert',
@@ -31,30 +31,27 @@ export class SamAlertComponent {
   */
   @Input() dismissTimer: number = 0;
   /**
-   * Element to position alert against (Either native HTMLElement/select/ElementRef)
-   */
+  * Element to position alert against (Either native HTMLElement/selector/ElementRef)
+  */
   @Input() target: any;
   /**
-   * Position against element '<vertical> <horizontal>' or '<horizontal> <vertical>' [top|right|bottom|center]
-   */
+  * Position against element '<vertical> <horizontal>' or '<horizontal> <vertical>' [top|right|bottom|center]
+  */
   @Input() placement: string;
   /**
-   * Any additional { top: 0, left: 0 } offsets after x, y has been applied
-   */
+  * Any additional { top: 0, left: 0 } offsets after x, y has been applied
+  */
   @Input() offset: Offset = {
     top: 0,
     left: 0
   };
-  /**
-   * Output to alert if hidden change occurs
-   */
   @Output() hiddenChange = new EventEmitter();
   /**
   * Emitted event when alert is dismissed
   */
   @Output() dismiss: EventEmitter<any> = new EventEmitter<any>();
 
-    @ViewChild('alert') alert;
+  @ViewChild('alert') alert;
 
   private states = {
     loaded: false,
@@ -164,7 +161,7 @@ export class SamAlertComponent {
 
     return false;
   }
-
+  
   private setPosition() {
     if(this.target == undefined) {
       return;

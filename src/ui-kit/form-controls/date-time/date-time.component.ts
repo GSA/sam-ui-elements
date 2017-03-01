@@ -44,6 +44,8 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
    * Sets disabled attribute value for input
    */
   @Input() disabled: boolean = false;
+  
+  @Input() control;
   /**
    * Something to do with formbuilder? This needs to be document and annotated
    */

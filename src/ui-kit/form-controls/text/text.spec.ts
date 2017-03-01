@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { SamTextComponent } from './text.component';
-import { LabelWrapper } from "ui-kit/wrappers/label-wrapper";
+import { LabelWrapper } from "../../wrappers/label-wrapper";
 import { FormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 

@@ -3,12 +3,6 @@ import { LabelWrapper } from '../../wrappers/label-wrapper';
 
 /**
  * The <samPhoneInput> component is a Phone entry portion of a form
- *
- * @Input label: string - The lable text to appear above the input
- * @Input model: string - Angular model string value, should match the format of the phoneNumberTemplate
- * @Input phoneNumberTemplate: string - String value that is the phone number should match. Default is "_+(___)___-____" (underscores denote where numbers are allowed)
- * @Input prefix: string - Prefix name/id attribute values
- * @Output emitter: string - Event emitter when model changes, outputs a string
  */
 @Component( {
   selector: 'samPhoneEntry',
@@ -24,12 +18,16 @@ export class SamPhoneEntryComponent implements OnInit {
   */
   @Input() model: string = "";
   /**
+  * String value that is the phone number should match. Default is "_+(___)___-____" (underscores denote where numbers are allowed)
+  */
+  @Input() phoneNumberTemplate: string = "_+(___)___-____";
+  /**
   * Prefix name/id attribute values
   */
   @Input() prefix: string = "";
   /**
-   * Is required?
-   */
+  * Flag to determine whether Phone Entry is required for submission
+  */
   @Input() required: boolean = false;
   /**
   * Event emitter when model changes, outputs a string
@@ -37,16 +35,23 @@ export class SamPhoneEntryComponent implements OnInit {
   @Output() emitter = new EventEmitter<string>();
 
   @ViewChild("phoneInput") phoneInput;
-
   errorMsg: string = "";
-  phoneNumberTemplate = "_+(___)___-____";
+  
+  phoneNumberTemplateLength = this.phoneNumberTemplate.length;
   phoneNumberMirror = this.phoneNumberTemplate;
   phoneNumber = this.phoneNumberTemplate;
-  badIndex = [1,2,6,10];
-
+  badIndex = [];
+  //1,2,6,10
   constructor() {}
 
   ngOnInit() {
+    this.phoneNumberTemplateLength = this.phoneNumberTemplate.length;
+    for(var i = 0; i < this.phoneNumberTemplate.length; i++){
+      if(this.phoneNumberTemplate.charAt(i)!="_"){
+        this.badIndex.push(i);
+      }
+    }
+    
     if(this.model.length>0) {
       this.phoneNumberMirror = this.model;
       this.phoneNumber = this.model;
@@ -82,10 +87,9 @@ export class SamPhoneEntryComponent implements OnInit {
           }
         }
       }
-
       updatedPhoneNumber = this.replaceAt(replacePos,event.key,updatedPhoneNumber);
-      this.phoneInput.nativeElement.value = updatedPhoneNumber.substr(0,15);
-      this.phoneNumber = updatedPhoneNumber.substr(0,15);
+      this.phoneInput.nativeElement.value = updatedPhoneNumber.substr(0,this.phoneNumberTemplate.length);
+      this.phoneNumber = updatedPhoneNumber.substr(0,this.phoneNumberTemplate.length);
       this.phoneInput.nativeElement.setSelectionRange(positionIncrement,positionIncrement);
     } else if(event.key=="Backspace") {
       let positionDecrement = this.getPositionDecrement(start);
@@ -111,6 +115,7 @@ export class SamPhoneEntryComponent implements OnInit {
       this.phoneInput.nativeElement.value = this.phoneNumber;
       this.phoneInput.nativeElement.setSelectionRange(start,start);
     }
+    
     /*
     let updateModel = this.phoneNumber.replace(/\(/g,'');
     updateModel = updateModel.replace(/\)/g,'-');
@@ -126,46 +131,32 @@ export class SamPhoneEntryComponent implements OnInit {
   }
 
   getPositionIncrement(pos) {
-    switch(pos) {
-      case 0:
-      case 1:
-      case 2:
-        return 3;
-      case 5:
-      case 6:
-        return 7;
-      case 9:
-      case 10:
-        return 11;
-      default:
-        return pos+1;
+    for(var i = pos+1; i < this.phoneNumberTemplate.length; i++){
+      if(this.phoneNumberTemplate.charAt(i)=="_"){
+        return i;
+      }
     }
+    return pos+1;
   }
 
   getPositionDecrement(pos) {
-    switch(pos) {
-      case 0:
-      case 1:
-      case 2:
-      case 3:
-        return 0;
-      case 6:
-      case 7:
-        return 5;
-      case 10:
-      case 11:
-        return 9;
-      default:
-        return pos-1;
+    for(var i = pos-1; i >= 0; i--){
+      if(this.phoneNumberTemplate.charAt(i)=="_"){
+        return i;
+      }
     }
+    if(pos-1>0){
+      return pos-1;  
+    }
+    return 0;
   }
 
   check() {
     let error = false;
     let digitCount = this.model.replace(/[^0-9]/g,"").length;
-
-    if(digitCount < 11) {
-      if((digitCount == 10 && this.model.match(/^\d/g)) || digitCount < 10) {
+    let correctDigitCount = this.phoneNumberTemplate.replace(/[^_]/g,"").length;
+    if(digitCount < correctDigitCount) {
+      if((digitCount == correctDigitCount-1 && this.model.match(/^\d/g)) || digitCount < correctDigitCount-1) {
         error = true;
         this.errorMsg = "Invalid phone number";
       }
