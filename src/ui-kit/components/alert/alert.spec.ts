@@ -27,9 +27,7 @@ describe('The Sam Alert component', () => {
     component.title = defaultConfig.title;
     component.description = defaultConfig.description;
     component.ngOnInit();
-    console.log("get here?");
-      fixture.detectChanges();
-      console.log("get here2?");
+    fixture.detectChanges();
 
   });
 

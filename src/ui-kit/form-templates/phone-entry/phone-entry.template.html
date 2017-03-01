@@ -1,8 +1,7 @@
-<labelWrapper [label]="label" [name]="getIdentifier('phone-number')" [errorMessage]="errorMsg" [required]="required">
+<labelWrapper [label]="label" [name]="getIdentifier('phone-number')" [errorMessage]="errorMsg">
       <input type="text"
-      id=" {{getIdentifier('phone-number')}}"
-      name=" {{getIdentifier('phone-number')}}"
-      class=""
+      [attr.id]="getIdentifier('phone-number')"
+      [attr.name]="getIdentifier('phone-number')"
       [attr.maxlength]="phoneNumberTemplateLength"
       [value]="phoneNumberMirror"
       [placeholder]="phoneNumberTemplate"

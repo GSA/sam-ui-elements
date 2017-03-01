@@ -1,10 +1,7 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
-export interface Offset {
-  top?:  number,
-  left?: number
-};
+
 /**
  * The <samAlert> component keeps users informed of important and sometimes time-sensitive changes
  */
@@ -166,7 +163,7 @@ export class SamAlertComponent {
 
     return false;
   }
-
+  
   private setPosition() {
     if(this.target == undefined) {
       return;
@@ -402,3 +399,8 @@ export class SamAlertComponent {
     return inlineStyles;
   }
 }
+
+export interface Offset {
+  top?:  number;
+  left?: number;
+};

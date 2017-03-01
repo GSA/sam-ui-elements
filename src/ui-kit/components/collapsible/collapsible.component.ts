@@ -38,6 +38,6 @@ export class SamCollapsibleComponent implements OnChanges {
   }
 
   toggleButtonLabel(): string {
-    return this.isFilterOpen() ? 'collapse' : 'expand';
+    return this.isFilterOpen() ? 'fa fa-minus' : 'fa fa-plus';
   }
 }
