@@ -37,7 +37,17 @@ module.exports = {
 
     // Make sure root is src
     root: helpers.root('src'),
-
+    // aliases
+    alias: {
+      samUIKit: helpers.root('src') + '/ui-kit',
+      samDirectives: helpers.root('src') + '/ui-kit/directives',
+      samComponents: helpers.root('src') + '/ui-kit/components',
+      samElements: helpers.root('src') + '/ui-kit/elements',
+      samFormControls: helpers.root('src') + '/ui-kit/form-controls',
+      samFormTemplates: helpers.root('src') + '/ui-kit/form-templates',
+      samPipes: helpers.root('src') + '/ui-kit/pipes',
+      samWrappers: helpers.root('src') + '/ui-kit/wrappers'
+    },
     // remove other default values
     modulesDirectories: ['node_modules'],
 

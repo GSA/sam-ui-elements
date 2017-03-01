@@ -92,13 +92,15 @@ export class SamAlertComponent {
   };
 
   private position: any = {};
-  private selectedType: string = this.types['success'];
+  private selectedType: string;
 
   constructor(private sanitizer: DomSanitizer) {}
 
   ngOnInit() {
     if(!this.typeNotDefined()) {
       this.selectedType = this.types[this.type];
+    } else {
+      this.selectedType = this.types['success'];
     }
   }
 
