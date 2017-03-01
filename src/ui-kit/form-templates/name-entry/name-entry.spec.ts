@@ -2,7 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 
 // Load the implementations that should be tested
 import { SamNameEntryComponent } from './name-entry.component';
-import { SamUIKitModule } from 'ui-kit';
+import { SamUIKitModule } from 'samUIKit';
 
 describe('The Sam Name Entry component', () => {
   let component: SamNameEntryComponent;

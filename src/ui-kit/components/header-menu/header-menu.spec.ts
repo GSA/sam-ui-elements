@@ -2,7 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 
-import { SamUIKitModule } from "ui-kit";
+import { SamUIKitModule } from "samUIKit";
 import { SamHeaderMenuComponent } from "./header-menu.component";
 
 describe('The Sam Header Menu component', () => {
