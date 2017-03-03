@@ -19,6 +19,10 @@ export class SamAlertComponent {
   */
   @Input() title: string;
   /**
+  * Set alert title
+  */
+  @Input() class: string = "";
+  /**
   * Set alert description
   */
   @Input() description: string;
@@ -105,6 +109,12 @@ export class SamAlertComponent {
   }
 
   ngAfterViewInit() {
+    if (this.dismissTimer > 0) {
+      setTimeout(() => {
+        this.close();
+      }, this.dismissTimer);
+    }
+    
     if(this.states.show && this.target !== undefined) {
       this.setPosition();
     }
