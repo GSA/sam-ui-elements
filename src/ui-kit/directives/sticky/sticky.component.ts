@@ -26,6 +26,11 @@ export class SamStickyComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   resize(event) {
+    // Set element to initial styles
+    // to help finding the initial element width
+    this.renderer.setElementStyle(this.el.nativeElement, 'position', "static");
+    this.renderer.setElementStyle(this.el.nativeElement, 'width', "auto");
+    
     this.elemWidth = this.el.nativeElement.offsetWidth;
     this.makeSticky();
   }
