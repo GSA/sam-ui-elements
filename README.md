@@ -1,3 +1,4 @@
+Developers should work in the `main` branch. We're not using `develop` or `master` since this repo is meant to be a submodule and doesn't need to be deployed with the pipeline.
 
 # Getting Started
 ## Dependencies
