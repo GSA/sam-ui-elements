@@ -1,64 +1,42 @@
-import { Component, Input, ViewChild, forwardRef, Output, EventEmitter } from '@angular/core';
-import { LabelWrapper } from '../../wrappers/label-wrapper';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, Validators, FormControl } from "@angular/forms";
+import {Component, Input, ViewChild, forwardRef} from '@angular/core';
+import { LabelWrapper } from '../../wrappers/label-wrapper/label-wrapper.component';
+import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators} from "@angular/forms";
 
 export const TEXT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => SamTextareaComponent),
+  useExisting: forwardRef(() => SamNumberComponent),
   multi: true
 };
 
 /**
- * The <samTextArea> component provides a textarea input form control
+ *
  */
 @Component({
-  selector: 'samTextArea',
-  templateUrl: 'textarea.template.html',
+  selector: 'samNumber',
+  template: `
+      <labelWrapper [label]="label" [name]="name" [hint]="hint" [errorMessage]="errorMessage" [required]="required">
+        <input type="number" [attr.min]="min ? min : null" [attr.max]="max ? max : null" [value]="value" [attr.id]="name" [disabled]="disabled" (change)="onInputChange($event.target.value)">
+      </labelWrapper>
+  `,
   providers: [ TEXT_VALUE_ACCESSOR ]
 })
-export class SamTextareaComponent implements ControlValueAccessor {
-  /**
-  * Sets the text input value
-  */
-  @Input() value: string;
-  /**
-  * Sets the label text
-  */
+export class SamNumberComponent implements ControlValueAccessor {
+  @Input() value: number;
   @Input() label: string;
-  /**
-  * Sets the name attribute 
-  */
   @Input() name: string;
-  /**
-  * Sets the helpful hint text
-  */
+  @Input() min: number;
+  @Input() max: number;
   @Input() hint: string;
-  /**
-  * Sets the general error message
-  */
   @Input() errorMessage: string;
-  /**
-  * Sets the disabled attribute
-  */
   @Input() disabled: boolean;
-  /**
-  * Sets the required attribute
-  */
   @Input() required: boolean;
-  /**
-  * Sets the maxlength attribute
-  */
-  @Input() maxlength: number;
   @Input() control: FormControl;
-  @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
+  @Input() maxlength: number;
 
   onChange: any = () => {
     this.wrapper.formatErrors(this.control);
   };
-
-  onTouched: any = () => {
-
-  };
+  onTouched: any = () => { };
 
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
 
@@ -68,7 +46,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error("<samTextArea> requires a [name] parameter for 508 compliance");
+      throw new Error("<samNumber> requires a [name] parameter for 508 compliance");
     }
 
     if (!this.control) {
@@ -87,13 +65,13 @@ export class SamTextareaComponent implements ControlValueAccessor {
 
     this.control.setValidators(validators);
     this.control.valueChanges.subscribe(this.onChange);
+
     this.wrapper.formatErrors(this.control);
   }
 
   onInputChange(value) {
     this.value = value;
     this.onChange(value);
-    this.valueChange.emit(value);
   }
 
   registerOnChange(fn) {

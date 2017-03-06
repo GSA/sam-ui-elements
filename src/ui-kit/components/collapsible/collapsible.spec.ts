@@ -21,7 +21,7 @@ describe('SamCollapsibleComponent', () => {
     component = fixture.componentInstance;
     component.label = 'Test';
 
-    element = fixture.debugElement.query(By.css('.collapsible')).nativeElement;
+    element = fixture.debugElement.query(By.css('.sam-collapsible')).nativeElement;
     toggleButton = fixture.debugElement.query(By.css('.usa-button-link')).nativeElement;
     collapsibleSection = fixture.debugElement.query(By.css('.collapsible-content')).nativeElement;
   });
@@ -35,7 +35,7 @@ describe('SamCollapsibleComponent', () => {
   it('should change button text to collapse after collapse area opened', () => {
     toggleButton.click();
     fixture.detectChanges();
-    expect(toggleButton.innerText).toBe('collapse');
+    expect(toggleButton.innerHTML).toContain('fa-minus');
   });
 
   it('should be open if startOpened is true', () => {

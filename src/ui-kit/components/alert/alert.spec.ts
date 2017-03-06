@@ -26,6 +26,8 @@ describe('The Sam Alert component', () => {
     component.type = defaultConfig.type;
     component.title = defaultConfig.title;
     component.description = defaultConfig.description;
+    component.ngOnInit();
+    fixture.detectChanges();
 
   });
 
@@ -33,11 +35,15 @@ describe('The Sam Alert component', () => {
 
   it('title + description check', () => {
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.usa-alert-heading')).nativeElement.textContent.trim()).toBe("i-am-a-title");
-    expect(fixture.debugElement.query(By.css('.usa-alert-text')).nativeElement.textContent.trim()).toBe("i-am-a-description");
+    fixture.whenStable().then(() => {
+      expect(fixture.debugElement.query(By.css('.usa-alert-heading')).nativeElement.textContent.trim()).toBe("i-am-a-title");
+      expect(fixture.debugElement.query(By.css('.usa-alert-text')).nativeElement.textContent.trim()).toBe("i-am-a-description");
+    });
   });
   it('type check', () => {
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('.usa-alert')).nativeElement.className).toContain("usa-alert-success");
+    fixture.whenStable().then(() => {
+      expect(fixture.debugElement.query(By.css('.usa-alert')).nativeElement.className).toContain("usa-alert-success");
+    });
   });
 });
