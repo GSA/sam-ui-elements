@@ -1,0 +1,8 @@
+<labelWrapper [label]="label" [name]="name" [hint]="hint" [errorMessage]="errorMessage">
+  <input type="text" [attr.id]="name" [disabled]="disabled" (change)="onInputChange($event.target.value)"/>
+  <ul class="usa-unstyled-list">
+    <li *ngFor="let item of selections; let i = index;">
+      <span (click)="removeItem(i)" tabindex="0" (keyup.enter)="removeItem(i)"><i class="fa fa-times" aria-hidden="true"></i></span> {{item}}
+    </li>
+  </ul>
+</labelWrapper>
