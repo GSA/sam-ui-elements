@@ -15,8 +15,8 @@
 			<ng-content></ng-content>
 			<div *ngIf="cancelButtonLabel || submitButtonLabel" class="usa-modal-content-btn-area">
 				<button class="usa-button-outline usa-modal-content-cancel-btn" *ngIf="cancelButtonLabel" (click)="closeModal()">{{cancelButtonLabel}}</button>
-        <button class="usa-modal-content-submit-btn" *ngIf="submitButtonLabel" (click)="submitBtnClick()">{{submitButtonLabel}}</button>
-      </div>
+				<button class="usa-modal-content-submit-btn" *ngIf="submitButtonLabel" (click)="submitBtnClick()">{{submitButtonLabel}}</button>
+			</div>
 		</div>
 	</div>
 </div>

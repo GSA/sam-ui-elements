@@ -327,7 +327,7 @@ export class SamAlertComponent {
 
     this.store.source.isOutOfViewport = isOutOfViewport;
 
-    source.style = this.toPx(style);
+    source.style.cssText = this.toPx(style);
   }
 
   private getDimensions(element) {
@@ -369,7 +369,7 @@ export class SamAlertComponent {
         newStyles += 'top:0px;left:0px;';
       }
 
-      element.style = newStyles;
+      element.style.cssText = newStyles;
     }
 
     while(element) {
@@ -379,7 +379,7 @@ export class SamAlertComponent {
       position.left = Math.max(position.left, bounds.left);
 
       if(element.tagName !== 'BODY' && !intLevel) {
-        element.style = styles;
+        element.style.cssText = styles;
       }
 
       element = element.offsetParent;
