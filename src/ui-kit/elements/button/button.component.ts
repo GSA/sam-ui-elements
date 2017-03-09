@@ -1,11 +1,11 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 
 /**
  * The <samButton> component generates a button for user interaction
  */
 @Component({
   selector: 'samButton',
-  template: `<button id={{buttonId}} [ngClass]="btnClass" [disabled]="disabled" type="button">{{buttonText}}</button>`,
+  template: `<button id={{buttonId}} [ngClass]="btnClass" [disabled]="disabled" (click)="click($event)" type="button">{{buttonText}}</button>`,
 })
 export class SamButtonComponent {
   /**
@@ -24,6 +24,8 @@ export class SamButtonComponent {
   * Sets the button css class
   */
   @Input() buttonClass:string = '';
+  
+  @Output() onClick: EventEmitter<any> = new EventEmitter();
 
   private btnClassMap: any = {
     "default":"",
@@ -42,10 +44,7 @@ export class SamButtonComponent {
     let classMap = [];
 
     if(this.btnClassMap.hasOwnProperty(this.buttonType)){
-      if(this.buttonType === "disabled"){
-        this.disabled = true;
-      }
-
+      this.disabled = (this.buttonType === 'disabled');
       classMap.push(this.btnClassMap[this.buttonType]);
     }
 
@@ -54,5 +53,9 @@ export class SamButtonComponent {
     }
 
     return classMap.join(' ');
+  }
+
+  click($event) {
+    this.onClick.emit($event);
   }
 }
