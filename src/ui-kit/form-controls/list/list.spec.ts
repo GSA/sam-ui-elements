@@ -4,7 +4,7 @@ import { LabelWrapper } from "../../wrappers/label-wrapper";
 import { FormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 
-fdescribe('The Sam List component', () => {
+describe('The Sam List component', () => {
   let component: SamListComponent;
   let fixture: any;
 
@@ -21,7 +21,23 @@ fdescribe('The Sam List component', () => {
 
     fixture = TestBed.createComponent(SamListComponent);
     component = fixture.componentInstance;
-    component.options = ['apple','orange','banana','grape'];
+    component.options = [{
+      label: 'apple',
+      value: 1,
+      name: 'apple'
+    },{
+      label: 'orange',
+      value: 2,
+      name: 'orange'
+    },{
+      label: 'banana',
+      value: 3,
+      name: 'banana'
+    },{
+      label: 'grape',
+      value: 4,
+      name: 'grape'
+    }];
     fixture.detectChanges();
   });
   it('should compile', () => {
