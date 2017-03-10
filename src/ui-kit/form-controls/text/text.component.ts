@@ -52,7 +52,7 @@ export class SamTextComponent implements ControlValueAccessor {
   @Input() maxlength: number;
 
   onChange: any = () => {
-    //this.wrapper.formatErrors(this.control);
+    this.wrapper.formatErrors(this.control);
   };
   onTouched: any = () => { };
 
