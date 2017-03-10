@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SamAutocompleteModule } from './autocomplete';
 import { SamWrapperModule } from '../wrappers';
 import { SamCheckboxModule } from './checkbox';
 import { SamDateComponent } from './date';
@@ -27,7 +28,8 @@ import { SamTimeComponent } from './time';
     SamDateComponent,
     SamDateTimeComponent,
     SamRadioButtonComponent,
-    SamTimeComponent
+    SamTimeComponent,
+    SamAutocompleteModule
   ],
   exports: [
     SamCheckboxModule,
@@ -38,7 +40,8 @@ import { SamTimeComponent } from './time';
     SamSelectModule,
     SamTextInputModule,
     SamTextAreaModule,
-    SamTimeComponent
+    SamTimeComponent,
+    SamAutocompleteModule
   ],
   providers: []
 })
