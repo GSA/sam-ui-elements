@@ -3,12 +3,6 @@ import { LabelWrapper } from '../../wrappers/label-wrapper';
 
 /**
  * The <samPhoneInput> component is a Phone entry portion of a form
- *
- * @Input label: string - The lable text to appear above the input
- * @Input model: string - Angular model string value, should match the format of the phoneNumberTemplate
- * @Input phoneNumberTemplate: string - String value that is the phone number should match. Default is "_+(___)___-____" (underscores denote where numbers are allowed)
- * @Input prefix: string - Prefix name/id attribute values
- * @Output emitter: string - Event emitter when model changes, outputs a string
  */
 @Component( {
   selector: 'samPhoneEntry',
@@ -32,6 +26,14 @@ export class SamPhoneEntryComponent implements OnInit {
   */
   @Input() prefix: string = "";
   /**
+  * Flag to determine whether Phone Entry is required for submission
+  */
+  @Input() required: boolean = false;
+  /**
+  * Flag for when model is only numbers
+  */
+  @Input() numbersOnly: boolean;
+  /**
   * Event emitter when model changes, outputs a string
   */
   @Output() emitter = new EventEmitter<string>();
@@ -43,7 +45,6 @@ export class SamPhoneEntryComponent implements OnInit {
   phoneNumberMirror = this.phoneNumberTemplate;
   phoneNumber = this.phoneNumberTemplate;
   badIndex = [];
-  //1,2,6,10
   constructor() {}
 
   ngOnInit() {
@@ -55,9 +56,22 @@ export class SamPhoneEntryComponent implements OnInit {
     }
     
     if(this.model.length>0) {
-      this.phoneNumberMirror = this.model;
-      this.phoneNumber = this.model;
+      var phoneNum = this.model;
+      if(this.numbersOnly){
+        phoneNum = this.formatWithTemplate(phoneNum);
+      }
+      this.phoneNumberMirror = phoneNum;
+      this.phoneNumber = phoneNum;
     }
+  }
+  
+  formatWithTemplate(numberStr:string){
+    var templateStr = this.phoneNumberTemplate;
+    var idx = 0;
+    while(templateStr.indexOf('_') > -1 && idx < numberStr.length) {
+      templateStr = templateStr.replace(/_/, numberStr.charAt(idx++));
+    }
+    return templateStr;
   }
 
   getIdentifier(str) {
@@ -71,8 +85,9 @@ export class SamPhoneEntryComponent implements OnInit {
   process(event) {
     let start = this.phoneInput.nativeElement.selectionStart;
     let end = this.phoneInput.nativeElement.selectionEnd;
-
-    if(!isNaN(event.key)) {
+    
+    //if a number
+    if( (event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105) ) {
       let updatedPhoneNumber = this.phoneNumber;
       let positionIncrement = this.getPositionIncrement(start);
       let replacePos = start;
@@ -93,12 +108,13 @@ export class SamPhoneEntryComponent implements OnInit {
       this.phoneInput.nativeElement.value = updatedPhoneNumber.substr(0,this.phoneNumberTemplate.length);
       this.phoneNumber = updatedPhoneNumber.substr(0,this.phoneNumberTemplate.length);
       this.phoneInput.nativeElement.setSelectionRange(positionIncrement,positionIncrement);
-    } else if(event.key=="Backspace") {
+    } 
+    //if backspace
+    else if(event.keyCode==8){
       let positionDecrement = this.getPositionDecrement(start);
-
       event.preventDefault();
-
       if(start!=end) {
+        //for selections
         for(let idx=start; idx < end; idx++) {
           if(this.badIndex.indexOf(idx)==-1) {
             this.phoneNumber = this.replaceAt(idx,"_",this.phoneNumber);
@@ -106,11 +122,14 @@ export class SamPhoneEntryComponent implements OnInit {
         }
         positionDecrement = start;
       } else {
+        //single characters
         this.phoneNumber = this.replaceAt(positionDecrement,"_",this.phoneNumber).substr(0,16);
       }
       this.phoneInput.nativeElement.value = this.phoneNumber;
       this.phoneInput.nativeElement.setSelectionRange(positionDecrement,positionDecrement);
-    } else if(event.key=="ArrowRight" || event.key=="ArrowLeft") {
+    } 
+    //left or right
+    else if(event.keyCode==37 || event.keyCode==39) {
       this.phoneInput.nativeElement.setSelectionRange(start,end);
     } else {
       //don't change
@@ -118,39 +137,30 @@ export class SamPhoneEntryComponent implements OnInit {
       this.phoneInput.nativeElement.setSelectionRange(start,start);
     }
     
-    /*
-    let updateModel = this.phoneNumber.replace(/\(/g,'');
-    updateModel = updateModel.replace(/\)/g,'-');
-    updateModel = updateModel.replace(/\+/g,'-');
-    updateModel = updateModel.replace(/_/g,'');
-    updateModel = updateModel.replace(/^\D+/g,'');
-    this.model = updateModel;
-    */
     let updateModel = this.phoneNumber;
-
-    this.model = updateModel;
+    if(this.numbersOnly){
+      for(var idx in this.badIndex){
+        updateModel = this.replaceAt(this.badIndex[idx],"_",updateModel);
+      }
+      this.model = updateModel.replace(/_/g,"");
+    } else {
+      this.model = updateModel;
+    }
     this.emitter.emit(this.model);
   }
 
   getPositionIncrement(pos) {
-    for(var i = pos+1; i < this.phoneNumberTemplate.length; i++){
-      if(this.phoneNumberTemplate.charAt(i)=="_"){
-        return i;
-      }
+    if(this.phoneNumberTemplate.indexOf('_', pos + 1)==-1){
+      return pos+1;
     }
-    return pos+1;
+    return this.phoneNumberTemplate.indexOf('_', pos + 1);
   }
 
   getPositionDecrement(pos) {
-    for(var i = pos-1; i >= 0; i--){
-      if(this.phoneNumberTemplate.charAt(i)=="_"){
-        return i;
-      }
+    if(this.phoneNumberTemplate.lastIndexOf("_", pos - 1)==-1){
+      return this.phoneNumberTemplate.indexOf("_");
     }
-    if(pos-1>0){
-      return pos-1;  
-    }
-    return 0;
+    return this.phoneNumberTemplate.lastIndexOf("_", pos - 1);
   }
 
   check() {

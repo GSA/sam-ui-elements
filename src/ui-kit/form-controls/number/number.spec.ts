@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-import { SamTextareaComponent } from './textarea.component';
-import { LabelWrapper } from "../../wrappers/label-wrapper";
+import { SamNumberComponent } from './number.component';
+import { LabelWrapper } from '../../wrappers/label-wrapper/label-wrapper.component';
 import { FormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
 
-describe('The Sam Textarea component', () => {
-  let component: SamTextareaComponent;
+describe('The Sam Number component', () => {
+  let component: SamNumberComponent;
   let fixture: any;
 
   beforeEach(() => {
@@ -14,22 +14,22 @@ describe('The Sam Textarea component', () => {
         FormsModule
       ],
       declarations: [
-        SamTextareaComponent,
+        SamNumberComponent,
         LabelWrapper,
       ],
     });
 
-    fixture = TestBed.createComponent(SamTextareaComponent);
+    fixture = TestBed.createComponent(SamNumberComponent);
     component = fixture.componentInstance;
     component.label = 'A label can have spaces';
-    component.name = 'my-text-component';
+    component.name = 'my-num-component';
   });
 
   it('should allow an initial value to be set by the value input', () => {
-    component.value = "ABC123";
+    component.value = 123;
     fixture.detectChanges();
-    let input = fixture.debugElement.query(By.css('#my-text-component'));
-    expect(input.nativeElement.value).toBe("ABC123");
+    let input = fixture.debugElement.query(By.css('#my-num-component'));
+    expect(input.nativeElement.value).toBe('123');
   });
 
   it('should show a hint message', () => {

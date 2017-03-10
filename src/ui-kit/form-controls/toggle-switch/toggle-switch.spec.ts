@@ -1,27 +1,25 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 // Load the implementations that should be tested
-import { SamDateComponent } from './date.component';
+import { SamToggleSwitchComponent } from './toggle-switch.component';
 import { SamUIKitModule } from 'samUIKit';
 
-describe('The Sam Date component', () => {
-  let component: SamDateComponent;
+describe('The Sam Toggle Switch component', () => {
+  let component: SamToggleSwitchComponent;
   let fixture: any;
 
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [SamUIKitModule],
-      providers: [SamDateComponent],
+      providers: [SamToggleSwitchComponent],
     });
 
-    fixture = TestBed.createComponent(SamDateComponent);
+    fixture = TestBed.createComponent(SamToggleSwitchComponent);
     component = fixture.componentInstance;
-    component.value = "2016-12-29";
-    component.name = 'test';
   });
 
-  it('Date Check', function () {
+  it('should compile', () => {
     fixture.detectChanges();
     expect(true).toBe(true);
   });

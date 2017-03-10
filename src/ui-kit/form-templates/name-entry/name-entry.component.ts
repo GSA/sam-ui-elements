@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
-
+import * as suffixes from './suffixes.json';
 /**
  * The <samNameInput> component is a Name entry portion of a form
  *
@@ -38,9 +38,18 @@ export class SamNameEntryComponent {
   lNameErrorMsg: string = "";
   suffixErrorMsg: string = "";
 
-  constructor() { }
+  private store = {
+    suffixes: suffixes.map((item) => {
+      return {
+        label: item.suffix,
+        value: item.suffix
+      };
+    })
+  };
 
-  ngOnInit() {
+  setSubmitted() {
+    this.validateFirstName();
+    this.validateLastName();
   }
 
   getIdentifer(str){

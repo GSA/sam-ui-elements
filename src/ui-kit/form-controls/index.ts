@@ -8,11 +8,13 @@ import { SamDateComponent } from './date';
 import { SamDateTimeComponent } from './date-time';
 //import { SamInputAutocompleteModule } from './input-autocomplete';
 import { SamMultiSelectModule } from './multiselect';
+import { SamNumberComponent } from './number';
 import { SamRadioButtonComponent } from './radiobutton';
 import { SamSelectModule } from './select';
 import { SamTextInputModule } from './text';
 import { SamTextAreaModule } from './textarea';
 import { SamTimeComponent } from './time';
+import { SamToggleSwitchComponent } from './toggle-switch';
 
 @NgModule({
   imports: [
@@ -27,21 +29,25 @@ import { SamTimeComponent } from './time';
   declarations: [
     SamDateComponent,
     SamDateTimeComponent,
+    SamNumberComponent,
     SamRadioButtonComponent,
     SamTimeComponent,
-    SamAutocompleteModule
+    SamAutocompleteModule,
+    SamToggleSwitchComponent,
   ],
   exports: [
     SamCheckboxModule,
     SamDateComponent,
     SamDateTimeComponent,
     SamMultiSelectModule,
+    SamNumberComponent,
     SamRadioButtonComponent,
     SamSelectModule,
     SamTextInputModule,
     SamTextAreaModule,
     SamTimeComponent,
-    SamAutocompleteModule
+    SamAutocompleteModule,
+    SamToggleSwitchComponent,
   ],
   providers: []
 })
