@@ -3,7 +3,7 @@ import { OptionsType } from '../../types';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators} from "@angular/forms";
 
-export const TEXT_VALUE_ACCESSOR: any = {
+export const LIST_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamListComponent),
   multi: true
@@ -15,7 +15,7 @@ export const TEXT_VALUE_ACCESSOR: any = {
 @Component({
   selector: 'sam-list-input',
   templateUrl: 'list.template.html',
-  providers: [ TEXT_VALUE_ACCESSOR ]
+  providers: [ LIST_VALUE_ACCESSOR ]
 })
 export class SamListComponent implements ControlValueAccessor {
   /**
@@ -49,15 +49,43 @@ export class SamListComponent implements ControlValueAccessor {
   /**
   * Sets the disabled attribute status
   */
+  @Input() required:boolean;
+  /**
+  * Sets the disabled attribute status
+  */
   @Input() disabled:boolean;
   onChange: any = () => {
     this.wrapper.formatErrors(this.control);
   };
   onTouched: any = () => { };
   selectedValues = [];
+  textValue = "";
+  resetIconClass:string = "usa-agency-picker-search-reset";
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
   constructor() {  }
-  
+  ngOnInit(){
+    if (!this.control) {
+      return;
+    }
+    
+    let validators: any[] = [];
+
+    if (this.required) {
+      validators.push(Validators.required);
+    }
+
+    this.control.setValidators(validators);
+    this.control.valueChanges.subscribe(this.onChange);
+
+    this.wrapper.formatErrors(this.control);
+  }
+  textInputChange(evt){
+    if(evt.length>0){
+      this.resetIconClass = "usa-agency-picker-search-reset-active";
+    } else {
+      this.resetIconClass = "usa-agency-picker-search-reset";
+    }
+  }
   registerOnChange(fn) {
     this.onChange = fn;
   }
@@ -102,9 +130,14 @@ export class SamListComponent implements ControlValueAccessor {
     } else {
       this.errorMessage="Not a valid selection";
     }
+    
+    this.onChange(this.selections); 
   }
   
   removeItem(idx){
     this.selections.splice(idx,1);
+  }
+  onResetClick(){
+    this.textValue = "";
   }
 }
