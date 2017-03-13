@@ -7,6 +7,7 @@ import { SamCheckboxModule } from './checkbox';
 import { SamDateComponent } from './date';
 import { SamDateTimeComponent } from './date-time';
 //import { SamInputAutocompleteModule } from './input-autocomplete';
+import { SamListModule } from './list';
 import { SamMultiSelectModule } from './multiselect';
 import { SamNumberComponent } from './number';
 import { SamRadioButtonComponent } from './radiobutton';
@@ -20,6 +21,7 @@ import { SamToggleSwitchComponent } from './toggle-switch';
   imports: [
     CommonModule,
     FormsModule,
+    SamListModule,
     SamWrapperModule,
     SamMultiSelectModule,
     SamCheckboxModule,
@@ -38,6 +40,7 @@ import { SamToggleSwitchComponent } from './toggle-switch';
     SamCheckboxModule,
     SamDateComponent,
     SamDateTimeComponent,
+    SamListModule,
     SamMultiSelectModule,
     SamNumberComponent,
     SamRadioButtonComponent,
