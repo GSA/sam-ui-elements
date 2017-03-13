@@ -32,7 +32,6 @@ import { SamToggleSwitchComponent } from './toggle-switch';
     SamNumberComponent,
     SamRadioButtonComponent,
     SamTimeComponent,
-    SamAutocompleteModule,
     SamToggleSwitchComponent,
   ],
   exports: [

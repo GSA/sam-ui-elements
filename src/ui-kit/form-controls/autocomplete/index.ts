@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { SamAutocompleteComponent } from './autocomplete.component';
-import { AutocompleteService } from './autocomplete.service';
-import { SamTabOutsideDirective } from '../../directives/tab-outside/taboutside.directive';
 
 @NgModule({
-  imports: [ SamTabOutsideDirective ],
+  imports: [ FormsModule, CommonModule ],
   declarations: [ SamAutocompleteComponent ],
   exports: [ SamAutocompleteComponent ]
 })

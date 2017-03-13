@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { SamSidenavModule, SamSidenavComponent } from './';
 import { SidenavService } from '../services';
-import { SamUIKitModule } from 'ui-kit';
+import { SamUIKitModule } from '../../../index';
 
 import { data } from '../services/testdata';
 

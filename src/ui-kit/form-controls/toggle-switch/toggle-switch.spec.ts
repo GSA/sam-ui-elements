@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 // Load the implementations that should be tested
 import { SamToggleSwitchComponent } from './toggle-switch.component';
-import { SamUIKitModule } from 'samUIKit';
+import { SamUIKitModule } from '../../index';
 
 describe('The Sam Toggle Switch component', () => {
   let component: SamToggleSwitchComponent;
