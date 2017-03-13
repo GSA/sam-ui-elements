@@ -2,7 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 
 // Load the implementations that should be tested
 import { SamDateComponent } from './date.component';
-import { SamUIKitModule } from 'samUIKit';
+import { SamUIKitModule } from '../../index';
 
 describe('The Sam Date component', () => {
   let component: SamDateComponent;

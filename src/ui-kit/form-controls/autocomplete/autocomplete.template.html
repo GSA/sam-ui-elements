@@ -1,0 +1,45 @@
+<!--<style>
+  .isSelected {
+    background-color: darkblue;
+    color: white;
+  }
+
+  .sam-autocomplete {
+    display: inline-block;
+    overflow: hidden;
+  }
+
+  .sam-autocomplete #sam-autocomplete-results {
+    width: 100%;
+    max-height: 12rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: 1rem 0.7em;
+    margin: 0.2em 0;
+    border: 1px solid black;
+    position: relative;
+  }
+
+  .sam-autocomplete #sam-autocomplete-results div {
+    position: relative;
+    max-height: 100%;
+    overflow: hidden;
+  }
+
+  .sam-autocomplete #sam-autocomplete-results div:hover {
+    background-color: darkblue;
+    color: white;
+  }
+</style>-->
+
+<div class="sam-autocomplete" samClickOutside (clickOutside)="checkForFocus($event)" samTabOutside (tabOutside)="checkForFocus($event)">
+  <div>
+    <label [attr.for]="id">{{labelText}}<span class="usa-sr-only">&nbsp;autocomplete</span></label>
+    <input [attr.id]="id" #input [attr.name]="name" type="text" (focus)="hasFocus = true" (change)="onChange($event.target.value)" (keydown)="onKeydown($event)" (keyup)="onKeyup($event)" [(ngModel)]="innerValue">
+  </div>
+  <div id="sam-autocomplete-results" #resultsList *ngIf="results && hasFocus">
+    <div *ngFor="let result of results" (click)="setSelected(result)">{{result}}</div>
+  </div>
+  <ul #srOnly class="usa-sr-only" role="status" aria-live="assertive" aria-relevant="additions">
+  </ul>
+</div>
