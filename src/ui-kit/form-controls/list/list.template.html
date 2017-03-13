@@ -2,8 +2,6 @@
   <div class="input-area">
     <div class="input-wrapper">
       <sam-autocomplete #textinput [name]="name" [options]="autocompleteOptions" (selection)="autocompleteSelect($event)"></sam-autocomplete>
-      <!--input #textinput type="text" [attr.id]="name" [disabled]="disabled" (keyup.enter)="onInputChange(textinput.value)" [(ngModel)]="textValue" (ngModelChange)="textInputChange(textinput.value)" /-->
-      <!--span [ngClass]="resetIconClass"><i class="fa fa-times-circle" (click)="onResetClick()" tabindex="0" (keyup.enter)="onResetClick()"></i></span-->
     </div>
     <a tabindex="0" (click)="onInputChange(textinput.value)" (keyup.enter)="onInputChange(textinput.value)" class="usa-list-input-submit">
       <i class="fa fa-search-plus" aria-hidden="true"></i>
