@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { SamListComponent } from './list.component';
+import { SamAutocompleteModule } from '../autocomplete';
 import { LabelWrapper } from "../../wrappers/label-wrapper";
 import { FormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
@@ -11,7 +12,8 @@ describe('The Sam List component', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        FormsModule
+        FormsModule,
+        SamAutocompleteModule
       ],
       declarations: [
         SamListComponent,
