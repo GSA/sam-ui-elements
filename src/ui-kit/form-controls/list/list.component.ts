@@ -54,16 +54,23 @@ export class SamListComponent implements ControlValueAccessor {
   * Sets the disabled attribute status
   */
   @Input() disabled:boolean;
+  @ViewChild('textinput') textinput;
   onChange: any = () => {
     this.wrapper.formatErrors(this.control);
   };
   onTouched: any = () => { };
   selectedValues = [];
   textValue = "";
+  autocompleteOptions: string[];
   resetIconClass:string = "usa-agency-picker-search-reset";
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
   constructor() {  }
   ngOnInit(){
+    if(this.options){
+      this.autocompleteOptions = <string[]>this.options.map((item)=>{
+        return <string>item.label;
+      });
+    }
     if (!this.control) {
       return;
     }
@@ -120,13 +127,15 @@ export class SamListComponent implements ControlValueAccessor {
 
   onInputChange(evt){
     this.control.markAsDirty();
+    this.textinput.clear();
+    //console.log(this.textinput);
     if(this.searchByLabel(evt)){
       let selection = this.searchByLabel(evt);
       this.errorMessage="";
       if(this.selections.indexOf(""+(selection.value)) == -1){
         this.selections.push(""+(selection.value));
       }
-    } else if(evt.length==0) {
+    } else if(evt && evt['length'] && evt.length==0) {
       this.errorMessage="";
     } else {
       this.errorMessage="Not a valid selection";
@@ -144,5 +153,9 @@ export class SamListComponent implements ControlValueAccessor {
   onResetClick(){
     this.resetIconClass = "usa-agency-picker-search-reset";
     this.textValue = "";
+  }
+  autocompleteSelect(selection){
+    console.log("ac",selection);
+    this.onInputChange(selection);
   }
 }

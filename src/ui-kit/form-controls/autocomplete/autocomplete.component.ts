@@ -26,6 +26,8 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
   @Input() public labelText: string;
 
   @Input() public options: Array<string>;
+  
+  @Output() public selection = new EventEmitter();;
 
 
   public results: Array<string>;
@@ -50,6 +52,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
     if (val !== this.innerValue) {
       this.innerValue = val;
       this.propogateChange(JSON.stringify(val));
+      this.selection.emit(this.innerValue);
     }
   }
 
@@ -155,6 +158,12 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
         if (selectedChild !== -1) {
           this.innerValue = this.results[selectedChild];
         }
+        console.log("should emit event?");
+        if(this.results[selectedChild]){
+          this.selection.emit(this.results[selectedChild]);
+        } else {
+          this.selection.emit(this.innerValue);
+        }
         this.renderer.invokeElementMethod(this.input.nativeElement, 'blur', []);
         this.hasFocus = false;
         this.renderer.setElementProperty(this.srOnly.nativeElement, 'innerHTML', null);
@@ -162,6 +171,10 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
         this.renderer.setElementProperty(chosenValue, 'innerText', `You chose ${this.results[selectedChild]}`);
         this.renderer.invokeElementMethod(this.srOnly.nativeElement, 'appendChild', [chosenValue]);
       }
+    } else {
+      //if ((event.code === 'Enter' || event.keyIdentified === 'Enter') && (this.results && this.results.length > 0) && !this.hasServiceError) {
+      console.log("should emit event?");
+      //this.selection.emit({error:true,message:"invalid value"});
     }
   }
 
@@ -175,6 +188,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
     this.innerValue = result;
     this.hasFocus = false;
     this.propogateChange(this.innerValue);
+    this.selection.emit(this.innerValue);
   }
 
   writeValue(value: any): void {
@@ -197,5 +211,12 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
         return str;
       }
     });
+  }
+  
+  clear(){
+    this.renderer.invokeElementMethod(this.input.nativeElement, 'blur', []);
+    this.hasFocus = false;
+    this.renderer.setElementProperty(this.srOnly.nativeElement, 'innerHTML', null);
+    //this.results = [];
   }
 }
