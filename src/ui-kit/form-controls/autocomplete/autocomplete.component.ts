@@ -27,7 +27,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
 
   @Input() public options: Array<string>;
   
-  @Output() public selection = new EventEmitter();;
+  @Output() public selection = new EventEmitter();
 
 
   public results: Array<string>;
@@ -158,7 +158,6 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
         if (selectedChild !== -1) {
           this.innerValue = this.results[selectedChild];
         }
-        console.log("should emit event?");
         if(this.results[selectedChild]){
           this.selection.emit(this.results[selectedChild]);
         } else {
@@ -171,10 +170,6 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
         this.renderer.setElementProperty(chosenValue, 'innerText', `You chose ${this.results[selectedChild]}`);
         this.renderer.invokeElementMethod(this.srOnly.nativeElement, 'appendChild', [chosenValue]);
       }
-    } else {
-      //if ((event.code === 'Enter' || event.keyIdentified === 'Enter') && (this.results && this.results.length > 0) && !this.hasServiceError) {
-      console.log("should emit event?");
-      //this.selection.emit({error:true,message:"invalid value"});
     }
   }
 

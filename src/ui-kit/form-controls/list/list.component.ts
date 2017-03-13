@@ -10,7 +10,7 @@ export const LIST_VALUE_ACCESSOR: any = {
 };
 
 /**
- * The <sam-list-input> component is a multi-select list component
+ * The <sam-list-input> component is a list multi-select component
  */
 @Component({
   selector: 'sam-list-input',
@@ -126,9 +126,10 @@ export class SamListComponent implements ControlValueAccessor {
   }
 
   onInputChange(evt){
-    this.control.markAsDirty();
+    if(this.control){
+      this.control.markAsDirty();
+    }
     this.textinput.clear();
-    //console.log(this.textinput);
     if(this.searchByLabel(evt)){
       let selection = this.searchByLabel(evt);
       this.errorMessage="";
@@ -155,7 +156,6 @@ export class SamListComponent implements ControlValueAccessor {
     this.textValue = "";
   }
   autocompleteSelect(selection){
-    console.log("ac",selection);
     this.onInputChange(selection);
   }
 }
