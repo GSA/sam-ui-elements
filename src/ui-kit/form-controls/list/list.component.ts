@@ -119,6 +119,7 @@ export class SamListComponent implements ControlValueAccessor {
   }
 
   onInputChange(evt){
+    this.control.markAsDirty();
     if(this.searchByLabel(evt)){
       let selection = this.searchByLabel(evt);
       this.errorMessage="";
@@ -130,14 +131,18 @@ export class SamListComponent implements ControlValueAccessor {
     } else {
       this.errorMessage="Not a valid selection";
     }
-    
+    this.onTouched(()=>{});
     this.onChange(this.selections); 
   }
   
   removeItem(idx){
+    this.control.markAsDirty();
     this.selections.splice(idx,1);
+    this.onTouched(()=>{});
+    this.onChange(this.selections);
   }
   onResetClick(){
+    this.resetIconClass = "usa-agency-picker-search-reset";
     this.textValue = "";
   }
 }

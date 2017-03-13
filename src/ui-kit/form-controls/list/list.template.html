@@ -1,10 +1,10 @@
 <labelWrapper class="sam-list-input" [label]="label" [name]="name" [hint]="hint" [errorMessage]="errorMessage" [required]="required">
   <div class="input-area">
     <div class="input-wrapper">
-      <input #textinput type="text" [attr.id]="name" [disabled]="disabled" (change)="onInputChange($event.target.value)" [(ngModel)]="textValue" (ngModelChange)="textInputChange($event)"/>
+      <input #textinput type="text" [attr.id]="name" [disabled]="disabled" (keyup.enter)="onInputChange(textinput.value)" [(ngModel)]="textValue" (ngModelChange)="textInputChange(textinput.value)" />
       <span [ngClass]="resetIconClass"><i class="fa fa-times-circle" (click)="onResetClick()" tabindex="0" (keyup.enter)="onResetClick()"></i></span>
     </div>
-    <a (click)="onInputChange(textinput.value)" class="usa-list-input-submit">
+    <a tabindex="0" (click)="onInputChange(textinput.value)" (keyup.enter)="onInputChange(textinput.value)" class="usa-list-input-submit">
       <i class="fa fa-search-plus" aria-hidden="true"></i>
     </a>
   </div>
