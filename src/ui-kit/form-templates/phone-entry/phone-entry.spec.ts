@@ -2,7 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser/index';
 // Load the implementations that should be tested
 import { SamPhoneEntryComponent } from './phone-entry.component';
-import { SamUIKitModule } from 'samUIKit';
+import { SamUIKitModule } from '../../index';
 
 describe('The Sam Phone Entry component', () => {
   let component: SamPhoneEntryComponent;

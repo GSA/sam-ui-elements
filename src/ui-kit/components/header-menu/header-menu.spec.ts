@@ -2,8 +2,8 @@ import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 
-import { SamUIKitModule } from "samUIKit";
-import { SamHeaderMenuComponent } from "./header-menu.component";
+import { SamUIKitModule } from '../../index';
+import { SamHeaderMenuComponent } from './header-menu.component';
 
 describe('The Sam Header Menu component', () => {
   let component: SamHeaderMenuComponent;

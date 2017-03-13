@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 // Load the implementations that should be tested
 import { SamTimeComponent } from './time.component';
-import { SamUIKitModule } from 'samUIKit';
+import { SamUIKitModule } from '../../index';
 
 describe('The Sam Time component', () => {
   let component: SamTimeComponent;
