@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
-
 /**
  * The <samAlert> component keeps users informed of important and sometimes time-sensitive changes
  */
@@ -96,17 +95,8 @@ export class SamAlertComponent {
   };
 
   private position: any = {};
-  private selectedType: string;
 
   constructor(private sanitizer: DomSanitizer) {}
-
-  ngOnInit() {
-    if(!this.typeNotDefined()) {
-      this.selectedType = this.types[this.type];
-    } else {
-      this.selectedType = this.types['success'];
-    }
-  }
 
   ngAfterViewInit() {
     if (this.dismissTimer > 0) {
@@ -114,7 +104,7 @@ export class SamAlertComponent {
         this.close();
       }, this.dismissTimer);
     }
-    
+
     if(this.states.show && this.target !== undefined) {
       this.setPosition();
     }
@@ -123,9 +113,19 @@ export class SamAlertComponent {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if(this.states.show && changes['target'] !== undefined ) {
+    if(this.states.show && changes['target'] !== undefined) {
       this.setPosition();
     }
+  }
+
+  get selectedType() {
+    let type = this.types['success'];
+
+    if(!this.typeNotDefined()) {
+      type = this.types[this.type];
+    }
+
+    return type;
   }
 
   @Input()
@@ -173,7 +173,7 @@ export class SamAlertComponent {
 
     return false;
   }
-  
+
   private setPosition() {
     if(this.target == undefined) {
       return;
