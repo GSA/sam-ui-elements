@@ -1,4 +1,4 @@
-import { Component, Input, Output, ViewChild, EventEmitter,forwardRef  } from '@angular/core';
+import { Component, Input, Output, ViewChild, EventEmitter,forwardRef,OnInit,OnChanges  } from '@angular/core';
 import { OptionsType } from '../../types';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators} from "@angular/forms";
@@ -17,7 +17,7 @@ export const LIST_VALUE_ACCESSOR: any = {
   templateUrl: 'list.template.html',
   providers: [ LIST_VALUE_ACCESSOR ]
 })
-export class SamListComponent implements ControlValueAccessor {
+export class SamListComponent implements ControlValueAccessor,OnInit,OnChanges {
   /**
   * the list of options a user can select from
   */
@@ -65,12 +65,14 @@ export class SamListComponent implements ControlValueAccessor {
   resetIconClass:string = "usa-agency-picker-search-reset";
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
   constructor() {  }
-  ngOnInit(){
+  ngOnChanges(){
     if(this.options){
       this.autocompleteOptions = <string[]>this.options.map((item)=>{
         return <string>item.label;
       });
     }
+  }
+  ngOnInit(){
     if (!this.control) {
       return;
     }
