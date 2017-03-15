@@ -72,7 +72,11 @@ export class SamListComponent implements ControlValueAccessor,OnInit,OnChanges {
       });
     }
   }
+
   ngOnInit(){
+    if(typeof this.selections != "array"){
+      console.error("selections must be an array");
+    }
     if (!this.control) {
       return;
     }
@@ -108,6 +112,9 @@ export class SamListComponent implements ControlValueAccessor,OnInit,OnChanges {
   }
 
   writeValue(selections) {
+    if(!selections){
+      selections = [];
+    }
     this.selections = selections;
   }
   
