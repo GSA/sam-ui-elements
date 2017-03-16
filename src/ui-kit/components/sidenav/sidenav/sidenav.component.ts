@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SamMenuItemComponent } from '../menu-item';
 import { SidenavService } from '../services';
 import { MenuItem } from '../interfaces';
+import { Observable }    from 'rxjs/Observable';
 
 /**
 * The <samSidenav> component builds a side navigation bar
@@ -13,6 +14,12 @@ import { MenuItem } from '../interfaces';
   templateUrl: './sidenav.template.html'
 })
 export class SamSidenavComponent implements OnInit {
+  /**
+  * Sets active selection in menu
+  */
+  @Input() selection:number[] = [];
+  
+  @Output() selectionChange:EventEmitter<number[]> = new EventEmitter<number[]>();
   /**
   * Object that defines the sidenav labels, routes, and structure
   */
@@ -26,6 +33,7 @@ export class SamSidenavComponent implements OnInit {
   */
   @Output() data: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('rootEl') rootEl: ElementRef;
+  private initialized = false;
   constructor(private service: SidenavService,private zone: NgZone) { }
 
   ngOnInit(): void {
@@ -38,8 +46,29 @@ export class SamSidenavComponent implements OnInit {
     if (!this.data) {
       console.warn('You will not have access to the data of the selected item without including a callback for data.');
     }
+    this.service.paramsUpdated$.subscribe((data)=>{
+      this.zone.run(() => {});
+    });
     this.service.setModel(this.model);
     this.service.setChildren(this.model.children);
+  }
+  
+  ngOnChanges(){
+    if(this.initialized){
+      this.override();
+    }
+  }
+  
+  ngAfterViewInit(){
+    this.override();
+    this.initialized = true;
+  }
+  
+  overrideService(){
+    for(var i = 1; i <= this.selection.length; i++){
+      var idx = this.selection[i-1];
+      this.service.overrideData(i-1,idx);
+    }
   }
 
   isSelected(index: number): boolean {
@@ -47,15 +76,10 @@ export class SamSidenavComponent implements OnInit {
   }
 
   updateUI(index: number, event: Event): void {
-    this.service.setSelected(event.target);
     this.service.updateData(0, index);
     this.data.emit(this.service.getSelectedModel());
     this.path.emit(this.service.getPath());
     return;
-  }
-
-  isNodeSelected(node: EventTarget): boolean {
-    return this.service.getSelected() === node;
   }
 
   emitChildData(event: Event): void {
@@ -63,13 +87,13 @@ export class SamSidenavComponent implements OnInit {
     this.path.emit(this.service.getPath());
     return;
   }
-  override(idx){
-    //children[idx] = li
-    //children[0] = a or children[1] could be samMenuItem for further traversal
-    this.service.setSelected(this.rootEl.nativeElement.children[idx].children[0]);
-    this.service.updateData(0,idx);
-    //force re-render
-    this.zone.run(() => {});
+  
+  override(){
+    if(this.selection.length>0){
+      var idx = this.selection.length-1;
+      this.overrideService();
+      this.zone.run(() => {});
+    }
   }
 }
 

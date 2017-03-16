@@ -8,27 +8,22 @@ import { MenuItem } from '../interfaces';
   templateUrl: './menu-item.template.html'
 })
 export class SamMenuItemComponent {
+  @Input() path: number[];
   @Input() children: MenuItem[];
   @Input() private nodeDepth: number;
   @Output() private data: EventEmitter<any> = new EventEmitter<any>();
 
-  private path: string;
-
   constructor(private service: SidenavService) { }
 
   updateUI(index: number, event: Event): void {
-    this.service.setSelected(event.target);
     this.service.updateData(this.nodeDepth, index);
     this.data.emit(this.service.getSelectedModel());
     return;
   }
 
   isSelected(index: number): boolean {
+    console.log("isSelected",this.service.getData()[this.nodeDepth],this.nodeDepth,index);
     return this.service.getData()[this.nodeDepth] === index;
-  }
-
-  isNodeSelected(node: EventTarget): boolean {
-    return this.service.getSelected() === node;
   }
 
   emitSelectedChild(event: any): void {

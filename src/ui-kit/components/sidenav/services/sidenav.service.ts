@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject }    from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
@@ -7,7 +8,9 @@ export class SidenavService {
   private path: string;
   private children: any[];
   private model: any;
-  private selected: EventTarget;
+  
+  private params = new Subject<number[]>();
+  paramsUpdated$ = this.params.asObservable();
 
   setChildren(children: any[]): any[] {
     return this.children = children;
@@ -28,6 +31,15 @@ export class SidenavService {
       this.indexArray[nodeDepth] = index;
     }
     this.indexArray = this.indexArray.slice(0, nodeDepth + 1);
+    this.params.next(this.indexArray);
+  }
+  
+  overrideData(nodeDepth: number, index: number): void{
+    if (this.indexArray[nodeDepth] === undefined) {
+      this.indexArray.push(index);
+    } else {
+      this.indexArray[nodeDepth] = index;
+    }
   }
 
   getSelectedModel(): any {
@@ -51,14 +63,6 @@ export class SidenavService {
       path += model.route;
     });
     return path;
-  }
-
-  setSelected(node: EventTarget): EventTarget {
-    return this.selected = node;
-  }
-
-  getSelected(): EventTarget {
-    return this.selected;
   }
 
 };
