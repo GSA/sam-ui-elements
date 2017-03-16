@@ -1,4 +1,4 @@
-import { Component, OnInit, NgModule, NgZone } from '@angular/core';
+import { Component, OnInit, NgModule } from '@angular/core';
 import { Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SamMenuItemComponent } from '../menu-item';
@@ -32,7 +32,7 @@ export class SamSidenavComponent implements OnInit {
   */
   @Output() data: EventEmitter<any> = new EventEmitter<any>();
   private initialized = false;
-  constructor(private service: SidenavService,private zone: NgZone) { }
+  constructor(private service: SidenavService) { }
 
   ngOnInit(): void {
     if (!this.model || !this.model.label || !this.model.children) {
@@ -62,7 +62,6 @@ export class SamSidenavComponent implements OnInit {
       var idx = this.selection[i-1];
       this.service.overrideData(i-1,idx);
     }
-    this.zone.run(() => {});
   }
 
   isSelected(index: number): boolean {
