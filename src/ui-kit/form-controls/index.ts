@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SamAutocompleteModule } from './autocomplete';
 import { SamWrapperModule } from '../wrappers';
 import { SamCheckboxModule } from './checkbox';
 import { SamDateComponent } from './date';
 import { SamDateTimeComponent } from './date-time';
 //import { SamInputAutocompleteModule } from './input-autocomplete';
+import { SamListModule } from './list';
 import { SamMultiSelectModule } from './multiselect';
 import { SamNumberComponent } from './number';
 import { SamRadioButtonComponent } from './radiobutton';
@@ -19,6 +21,7 @@ import { SamToggleSwitchComponent } from './toggle-switch';
   imports: [
     CommonModule,
     FormsModule,
+    SamListModule,
     SamWrapperModule,
     SamMultiSelectModule,
     SamCheckboxModule,
@@ -31,12 +34,13 @@ import { SamToggleSwitchComponent } from './toggle-switch';
     SamNumberComponent,
     SamRadioButtonComponent,
     SamTimeComponent,
-    SamToggleSwitchComponent
+    SamToggleSwitchComponent,
   ],
   exports: [
     SamCheckboxModule,
     SamDateComponent,
     SamDateTimeComponent,
+    SamListModule,
     SamMultiSelectModule,
     SamNumberComponent,
     SamRadioButtonComponent,
@@ -44,7 +48,8 @@ import { SamToggleSwitchComponent } from './toggle-switch';
     SamTextInputModule,
     SamTextAreaModule,
     SamTimeComponent,
-    SamToggleSwitchComponent
+    SamAutocompleteModule,
+    SamToggleSwitchComponent,
   ],
   providers: []
 })

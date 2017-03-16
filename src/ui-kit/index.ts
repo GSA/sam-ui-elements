@@ -1,6 +1,7 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { SamComponentsModule } from './components';
 import { SamDirectivesModule } from './directives';
@@ -13,6 +14,7 @@ import { SamPipesModule } from './pipes';
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     SamComponentsModule,
     SamDirectivesModule,
     SamElementsModule,
