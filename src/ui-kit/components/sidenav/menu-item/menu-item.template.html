@@ -1,6 +1,6 @@
 <ul class="usa-sidenav-sub_list">
   <li *ngFor="let child of children; let $index = index;">
-    <a #myElement (click)="updateUI($index, $event)"
+    <a (click)="updateUI($index, $event)"
       [ngClass]="{'usa-current': isSelected($index)}">
       {{child.label}}
     </a>
