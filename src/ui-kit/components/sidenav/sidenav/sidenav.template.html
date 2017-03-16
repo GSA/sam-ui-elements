@@ -1,5 +1,5 @@
 <aside>
-  <ul class="usa-sidenav-list">
+  <ul #rootEl class="usa-sidenav-list">
     <li *ngFor="let child of model.children; let $index = index">
       <a [ngClass]="{'usa-current': isSelected($index)}"(click)="updateUI($index, $event)">{{child.label}}</a>
       <samMenuItem *ngIf="isSelected($index)"

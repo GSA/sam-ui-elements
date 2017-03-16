@@ -1,4 +1,4 @@
-import { Component, OnInit, NgModule } from '@angular/core';
+import { Component, OnInit, NgModule, ViewChild, ElementRef,NgZone } from '@angular/core';
 import { Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SamMenuItemComponent } from '../menu-item';
@@ -25,8 +25,8 @@ export class SamSidenavComponent implements OnInit {
   * Event emitted on interaction, returns the selected menu item
   */
   @Output() data: EventEmitter<any> = new EventEmitter<any>();
-
-  constructor(private service: SidenavService) { }
+  @ViewChild('rootEl') rootEl: ElementRef;
+  constructor(private service: SidenavService,private zone: NgZone) { }
 
   ngOnInit(): void {
     if (!this.model || !this.model.label || !this.model.children) {
@@ -63,7 +63,14 @@ export class SamSidenavComponent implements OnInit {
     this.path.emit(this.service.getPath());
     return;
   }
-
+  override(idx){
+    //children[idx] = li
+    //children[0] = a or children[1] could be samMenuItem for further traversal
+    this.service.setSelected(this.rootEl.nativeElement.children[idx].children[0]);
+    this.service.updateData(0,idx);
+    //force re-render
+    this.zone.run(() => {});
+  }
 }
 
 @NgModule({
