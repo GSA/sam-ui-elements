@@ -1,6 +1,6 @@
-import { Component, Input, ViewChild, forwardRef, Output, EventEmitter } from '@angular/core';
+import {Component, Input, ViewChild, forwardRef} from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators } from "@angular/forms";
+import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators} from "@angular/forms";
 
 export const TEXT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -21,18 +21,12 @@ export class SamTextComponent implements ControlValueAccessor {
   * Sets the text input value
   */
   @Input() value: string;
-
-  /**
-   * Emitted when then user changes the input value
-   * @type {EventEmitter<string>}
-   */
-  @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
   /**
   * Sets the label text
   */
   @Input() label: string;
   /**
-  * Sets the name attribute
+  * Sets the name attribute 
   */
   @Input() name: string;
   /**
@@ -96,7 +90,6 @@ export class SamTextComponent implements ControlValueAccessor {
   onInputChange(value) {
     this.value = value;
     this.onChange(value);
-    this.valueChange.emit(this.value);
   }
 
   registerOnChange(fn) {
