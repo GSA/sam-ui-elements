@@ -47,6 +47,7 @@ export class SidenavService {
     this.indexArray.forEach((index) => {
       model = model.children[index];
     });
+    model.selection = this.indexArray;
     return model;
   }
 
