@@ -32,7 +32,6 @@ export class SamSidenavComponent implements OnInit {
   * Event emitted on interaction, returns the selected menu item
   */
   @Output() data: EventEmitter<any> = new EventEmitter<any>();
-  @ViewChild('rootEl') rootEl: ElementRef;
   private initialized = false;
   constructor(private service: SidenavService,private zone: NgZone) { }
 
@@ -46,29 +45,25 @@ export class SamSidenavComponent implements OnInit {
     if (!this.data) {
       console.warn('You will not have access to the data of the selected item without including a callback for data.');
     }
-    this.service.paramsUpdated$.subscribe((data)=>{
-      this.zone.run(() => {});
-    });
     this.service.setModel(this.model);
     this.service.setChildren(this.model.children);
+    if(this.selection){
+      this.setSelection();
+    }
+    this.initialized= true;
   }
-  
   ngOnChanges(){
     if(this.initialized){
-      this.override();
+      this.setSelection();
     }
   }
   
-  ngAfterViewInit(){
-    this.override();
-    this.initialized = true;
-  }
-  
-  overrideService(){
+  setSelection(){
     for(var i = 1; i <= this.selection.length; i++){
       var idx = this.selection[i-1];
       this.service.overrideData(i-1,idx);
     }
+    this.zone.run(() => {});
   }
 
   isSelected(index: number): boolean {
@@ -86,14 +81,6 @@ export class SamSidenavComponent implements OnInit {
     this.data.emit(event);
     this.path.emit(this.service.getPath());
     return;
-  }
-  
-  override(){
-    if(this.selection.length>0){
-      var idx = this.selection.length-1;
-      this.overrideService();
-      this.zone.run(() => {});
-    }
   }
 }
 

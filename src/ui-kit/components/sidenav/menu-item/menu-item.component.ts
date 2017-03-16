@@ -8,7 +8,6 @@ import { MenuItem } from '../interfaces';
   templateUrl: './menu-item.template.html'
 })
 export class SamMenuItemComponent {
-  @Input() path: number[];
   @Input() children: MenuItem[];
   @Input() private nodeDepth: number;
   @Output() private data: EventEmitter<any> = new EventEmitter<any>();

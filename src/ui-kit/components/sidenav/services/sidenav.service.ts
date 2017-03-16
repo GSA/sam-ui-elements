@@ -8,9 +8,6 @@ export class SidenavService {
   private path: string;
   private children: any[];
   private model: any;
-  
-  private params = new Subject<number[]>();
-  paramsUpdated$ = this.params.asObservable();
 
   setChildren(children: any[]): any[] {
     return this.children = children;
@@ -31,7 +28,6 @@ export class SidenavService {
       this.indexArray[nodeDepth] = index;
     }
     this.indexArray = this.indexArray.slice(0, nodeDepth + 1);
-    this.params.next(this.indexArray);
   }
   
   overrideData(nodeDepth: number, index: number): void{
