@@ -22,7 +22,6 @@ export class SamMenuItemComponent {
   }
 
   isSelected(index: number): boolean {
-    console.log("isSelected",this.service.getData()[this.nodeDepth],this.nodeDepth,index);
     return this.service.getData()[this.nodeDepth] === index;
   }
 
