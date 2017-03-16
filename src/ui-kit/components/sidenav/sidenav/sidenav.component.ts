@@ -17,8 +17,6 @@ export class SamSidenavComponent implements OnInit {
   * Sets active selection in menu
   */
   @Input() selection:number[] = [];
-  
-  @Output() selectionChange:EventEmitter<number[]> = new EventEmitter<number[]>();
   /**
   * Object that defines the sidenav labels, routes, and structure
   */
