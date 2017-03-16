@@ -1,10 +1,9 @@
-import { Component, OnInit, NgModule, ViewChild, ElementRef,NgZone } from '@angular/core';
+import { Component, OnInit, NgModule, NgZone } from '@angular/core';
 import { Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SamMenuItemComponent } from '../menu-item';
 import { SidenavService } from '../services';
 import { MenuItem } from '../interfaces';
-import { Observable }    from 'rxjs/Observable';
 
 /**
 * The <samSidenav> component builds a side navigation bar
