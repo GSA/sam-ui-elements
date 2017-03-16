@@ -31,7 +31,6 @@ export class SamSidenavComponent implements OnInit {
   * Event emitted on interaction, returns the selected menu item
   */
   @Output() data: EventEmitter<any> = new EventEmitter<any>();
-  private initialized = false;
   constructor(private service: SidenavService) { }
 
   ngOnInit(): void {
@@ -46,13 +45,9 @@ export class SamSidenavComponent implements OnInit {
     }
     this.service.setModel(this.model);
     this.service.setChildren(this.model.children);
-    if(this.selection){
-      this.setSelection();
-    }
-    this.initialized= true;
   }
   ngOnChanges(){
-    if(this.initialized){
+    if(this.selection){
       this.setSelection();
     }
   }
