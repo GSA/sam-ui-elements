@@ -68,14 +68,18 @@ export class SamModalComponent implements OnInit {
   };
   selectedType: string = this.types['success'];
 
-  constructor() { 
-    this.createBackdrop();
+  constructor() {
   }
 
   ngOnInit(){
+    this.createBackdrop();
     if(!this.typeNotDefined()){
       this.selectedType = this.types[this.type];
     }
+  }
+
+  ngOnDestroy(){
+    if(this.show) this.removeBackdrop();
   }
 
   typeNotDefined(){
@@ -88,7 +92,7 @@ export class SamModalComponent implements OnInit {
     return false;
   }
 
-  
+
 
   private preventClosing(evt){
     evt.stopPropagation();
@@ -111,10 +115,7 @@ export class SamModalComponent implements OnInit {
   closeModal(){
     this.show = false;
     this.onClose.emit();
-    if(document && document.body){
-      document.body.removeChild(this.backdropElement);
-      document.body.className = document.body.className.replace(/modal-open\b/, "");
-    }
+    this.removeBackdrop();
   }
 
   submitBtnClick(){
@@ -125,5 +126,12 @@ export class SamModalComponent implements OnInit {
   private createBackdrop(){
     this.backdropElement = document.createElement("div");
     this.backdropElement.classList.add("modal-backdrop");
+  }
+
+  private removeBackdrop(){
+    if(document && document.body){
+      document.body.removeChild(this.backdropElement);
+      document.body.className = document.body.className.replace(/modal-open\b/, "");
+    }
   }
 }
