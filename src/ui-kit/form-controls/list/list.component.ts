@@ -9,6 +9,7 @@ export const LIST_VALUE_ACCESSOR: any = {
   multi: true
 };
 
+
 /**
  * The <sam-list-input> component is a list multi-select component
  */
@@ -56,11 +57,13 @@ export class SamListComponent implements ControlValueAccessor,OnInit,OnChanges {
   @Input() disabled:boolean;
   @ViewChild('textinput') textinput;
   onChange: any = () => {
+    this.validate();
     this.wrapper.formatErrors(this.control);
   };
   onTouched: any = () => { };
   selectedValues = [];
   textValue = "";
+  tmpErrorMessage = "";
   autocompleteOptions: string[];
   resetIconClass:string = "usa-agency-picker-search-reset";
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
@@ -81,7 +84,7 @@ export class SamListComponent implements ControlValueAccessor,OnInit,OnChanges {
     let validators: any[] = [];
 
     if (this.required) {
-      validators.push(Validators.required);
+      //validators.push(validateRequired);
     }
 
     this.control.setValidators(validators);
@@ -89,6 +92,40 @@ export class SamListComponent implements ControlValueAccessor,OnInit,OnChanges {
 
     this.wrapper.formatErrors(this.control);
   }
+  
+  validateRequired() {
+    if(this.selections.length > 0 ? false : true){
+      this.pushValidationError("A selection must be made");
+    } else if(this.control && this.control['errors'] && this.control['errors']["selection-required"]){
+      delete this.control['errors']["selection-required"];
+    } 
+  }
+  
+  pushValidationError(str){
+    if(this.control){
+      this.control.setErrors({
+        "selection-required": {
+          'message': str
+        }
+      });
+    } else {
+      this.tmpErrorMessage = str;
+    }
+  }
+  
+  validate() {
+    this.tmpErrorMessage = "";
+    if(this.required){
+      this.validateRequired();  
+    }
+    if(!this.control && this.tmpErrorMessage){
+      this.errorMessage = this.tmpErrorMessage;
+      this.tmpErrorMessage = "";
+    } else if(!this.control && !this.tmpErrorMessage){
+      this.errorMessage = "";
+    }
+  }
+  
   textInputChange(evt){
     if(evt.length>0){
       this.resetIconClass = "usa-agency-picker-search-reset-active";
@@ -116,7 +153,11 @@ export class SamListComponent implements ControlValueAccessor,OnInit,OnChanges {
       console.error("provided selections is not an array", selections);
       return;
     }
-    this.selections = selections;
+    if(this.control){
+      this.control.setValue(this.selections);
+    } else {
+      this.selections = selections;
+    }
   }
   
   searchByLabel(text){
@@ -142,21 +183,25 @@ export class SamListComponent implements ControlValueAccessor,OnInit,OnChanges {
     this.textinput.clear();
     if(this.searchByLabel(evt)){
       let selection = this.searchByLabel(evt);
-      this.errorMessage="";
       if(this.selections.indexOf(""+(selection.value)) == -1){
-        this.selections.push(""+(selection.value));
+        let newSelections = this.selections;
+        newSelections.push(""+(selection.value));
+        if(this.control){
+          this.writeValue(newSelections);
+        } else {
+          this.selections = newSelections;
+          this.onChange(this.selections);
+        }
+        
       }
-    } else if(evt && evt['length'] && evt.length==0) {
-      this.errorMessage="";
-    } else {
-      this.errorMessage="Not a valid selection";
-    }
-    this.onTouched(()=>{});
-    this.onChange(this.selections); 
+    } 
+    this.onTouched(()=>{}); 
   }
   
   removeItem(idx){
-    this.control.markAsDirty();
+    if(this.control){
+      this.control.markAsDirty();
+    }
     this.selections.splice(idx,1);
     this.onTouched(()=>{});
     this.onChange(this.selections);
