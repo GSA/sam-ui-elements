@@ -69,10 +69,10 @@ export class SamModalComponent implements OnInit {
   selectedType: string = this.types['success'];
 
   constructor() {
-    this.createBackdrop();
   }
 
   ngOnInit(){
+    this.createBackdrop();
     if(!this.typeNotDefined()){
       this.selectedType = this.types[this.type];
     }
