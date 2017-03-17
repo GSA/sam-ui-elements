@@ -16,6 +16,8 @@ describe('The Sam Modal component', () => {
 
     fixture = TestBed.createComponent(SamModalComponent);
     component = fixture.componentInstance;
+    component.ngOnInit();
+    fixture.detectChanges();
   });
 
   it('default test', function () {

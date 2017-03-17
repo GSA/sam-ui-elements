@@ -14,6 +14,10 @@ import { MenuItem } from '../interfaces';
 })
 export class SamSidenavComponent implements OnInit {
   /**
+  * Sets active selection in menu
+  */
+  @Input() selection:number[] = [];
+  /**
   * Object that defines the sidenav labels, routes, and structure
   */
   @Input() model: MenuItem;
@@ -25,7 +29,6 @@ export class SamSidenavComponent implements OnInit {
   * Event emitted on interaction, returns the selected menu item
   */
   @Output() data: EventEmitter<any> = new EventEmitter<any>();
-
   constructor(private service: SidenavService) { }
 
   ngOnInit(): void {
@@ -41,21 +44,28 @@ export class SamSidenavComponent implements OnInit {
     this.service.setModel(this.model);
     this.service.setChildren(this.model.children);
   }
+  ngOnChanges(){
+    if(this.selection){
+      this.setSelection();
+    }
+  }
+  
+  setSelection(){
+    for(var i = 1; i <= this.selection.length; i++){
+      var idx = this.selection[i-1];
+      this.service.overrideData(i-1,idx);
+    }
+  }
 
   isSelected(index: number): boolean {
     return this.service.getData()[0] === index;
   }
 
   updateUI(index: number, event: Event): void {
-    this.service.setSelected(event.target);
     this.service.updateData(0, index);
     this.data.emit(this.service.getSelectedModel());
     this.path.emit(this.service.getPath());
     return;
-  }
-
-  isNodeSelected(node: EventTarget): boolean {
-    return this.service.getSelected() === node;
   }
 
   emitChildData(event: Event): void {
@@ -63,7 +73,6 @@ export class SamSidenavComponent implements OnInit {
     this.path.emit(this.service.getPath());
     return;
   }
-
 }
 
 @NgModule({
