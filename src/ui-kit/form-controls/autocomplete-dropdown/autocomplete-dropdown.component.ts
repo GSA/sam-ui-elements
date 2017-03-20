@@ -54,7 +54,7 @@ export class SamAutocompleteDropdownComponent implements ControlValueAccessor, O
   set value(val: any) {
     if (val !== this._value) {
       this._value = val;
-      this.propogateChange(JSON.stringify(val));
+      this.propogateChange(val);
     }
   }
 
