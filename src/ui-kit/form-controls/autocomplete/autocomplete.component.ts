@@ -26,9 +26,6 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
   @Input() public labelText: string;
 
   @Input() public options: Array<string>;
-  
-  @Output() public selection = new EventEmitter();
-
 
   public results: Array<string>;
   private innerValue: any = '';
@@ -52,7 +49,6 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
     if (val !== this.innerValue) {
       this.innerValue = val;
       this.propogateChange(JSON.stringify(val));
-      this.selection.emit(this.innerValue);
     }
   }
 
@@ -158,10 +154,10 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
         if (selectedChild !== -1) {
           this.innerValue = this.results[selectedChild];
         }
-        if(this.results[selectedChild]){
-          this.selection.emit(this.results[selectedChild]);
+        if (this.results[selectedChild]){
+          this.setSelected(this.results[selectedChild]);
         } else {
-          this.selection.emit(this.innerValue);
+          this.setSelected(this.innerValue);
         }
         this.renderer.invokeElementMethod(this.input.nativeElement, 'blur', []);
         this.hasFocus = false;
@@ -183,7 +179,6 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
     this.innerValue = result;
     this.hasFocus = false;
     this.propogateChange(this.innerValue);
-    this.selection.emit(this.innerValue);
   }
 
   writeValue(value: any): void {
