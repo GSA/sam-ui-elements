@@ -1,0 +1,26 @@
+<div class="sam-autocomplete-dropdown">
+  <label *ngIf="label">{{label}}</label>
+  <div>
+    <div class="sam-autocomplete-dropdown-list">
+      <samSelect [(model)]="selectedOption"
+                  [name]="name + 'fetch method list'"
+                  [options]="options"
+                  (modelChange)="detectSelection($event)">
+      </samSelect>
+    </div>
+    <div class="sam-autocomplete-dropdown-input">
+      <sam-autocomplete [name]="name + 'autocomplete input'"
+                        [id]="name + 'autocompletecomponent'"
+                        [(ngModel)]="value">
+      </sam-autocomplete>
+    </div>
+    <div *ngIf="button" class="sam-autocomplete-dropdown-action">
+      <button (click)="emitButtonPress($event)" [ngClass]="button.class">{{button.label}}
+        <span *ngIf="button.icon">
+          <i [ngClass]="button.icon.class"></i>
+          <span class="usa-sr-only">{{button.icon.altText}}</span>
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
