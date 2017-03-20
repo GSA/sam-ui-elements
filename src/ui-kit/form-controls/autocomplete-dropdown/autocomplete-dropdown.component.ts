@@ -68,6 +68,7 @@ export class SamAutocompleteDropdownComponent implements ControlValueAccessor, O
     this.selectedOption = this.options[0];
     if (!this.name) {
       throw new Error('SAM Autocomplete Dropdown Component must have a name.');
+    }
   }
 
   detectSelection(event: Event) {

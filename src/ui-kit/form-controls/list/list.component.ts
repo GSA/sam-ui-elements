@@ -112,6 +112,10 @@ export class SamListComponent implements ControlValueAccessor,OnInit,OnChanges {
     if(!selections){
       selections = [];
     }
+    if(!Array.isArray(selections)){
+      console.error("provided selections is not an array", selections);
+      return;
+    }
     this.selections = selections;
   }
   

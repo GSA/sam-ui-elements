@@ -26,7 +26,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
   */
   @Input() label: string;
   /**
-  * Sets the name attribute 
+  * Sets the name attribute
   */
   @Input() name: string;
   /**
@@ -51,6 +51,11 @@ export class SamTextareaComponent implements ControlValueAccessor {
   @Input() maxlength: number;
   @Input() control: FormControl;
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
+
+  /**
+   * Optional text to be displayed when the text area is empty
+   */
+  @Input() placeholder: string;
 
   onChange: any = () => {
     this.wrapper.formatErrors(this.control);
