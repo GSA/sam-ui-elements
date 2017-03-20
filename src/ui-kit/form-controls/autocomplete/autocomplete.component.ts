@@ -92,7 +92,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
         (err) => {
           this.results = ['An error occurred. Try a different value'];
           this.hasServiceError = true;
-          const srError = this.renderer.createElement(this.srOnly.nativeElement, 'div');
+          const srError = this.renderer.createElement(this.srOnly.nativeElement, 'li');
           this.renderer.setElementProperty(srError, 'innerText', this.results[0]);
           this.renderer.invokeElementMethod(this.srOnly.nativeElement, 'appendChild', [srError]);
         }
@@ -113,11 +113,11 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
         }
       }
 
-      let srResults: HTMLElement = this.renderer.createElement(this.srOnly.nativeElement, 'div');
+      let srResults: HTMLElement = this.renderer.createElement(this.srOnly.nativeElement, 'li');
       this.renderer.setElementProperty(srResults, 'innerText', `${this.results.length} results available. Use up and down arrows to scroll through results. Hit enter to select.`);
       this.renderer.invokeElementMethod(this.srOnly.nativeElement, 'appendChild', [srResults]);
 
-      let srOption: HTMLElement = this.renderer.createElement(this.srOnly.nativeElement, 'div');
+      let srOption: HTMLElement = this.renderer.createElement(this.srOnly.nativeElement, 'li');
 
       // On down arrow press
       if ((event.code === 'ArrowDown' || event.keyIdentifier === 'Down') && (this.results && this.results.length > 0)) {
@@ -166,7 +166,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
         this.renderer.invokeElementMethod(this.input.nativeElement, 'blur', []);
         this.hasFocus = false;
         this.renderer.setElementProperty(this.srOnly.nativeElement, 'innerHTML', null);
-        const chosenValue: HTMLElement = this.renderer.createElement(this.srOnly.nativeElement, 'div');
+        const chosenValue: HTMLElement = this.renderer.createElement(this.srOnly.nativeElement, 'li');
         this.renderer.setElementProperty(chosenValue, 'innerText', `You chose ${this.results[selectedChild]}`);
         this.renderer.invokeElementMethod(this.srOnly.nativeElement, 'appendChild', [chosenValue]);
       }
