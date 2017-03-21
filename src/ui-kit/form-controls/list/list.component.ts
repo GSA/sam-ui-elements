@@ -139,7 +139,7 @@ export class SamListComponent implements ControlValueAccessor,OnInit,OnChanges {
     if(this.control){
       this.control.markAsDirty();
     }
-    this.textinput.clear();
+    this.textinput.clearDropdown();
     if(this.searchByLabel(evt)){
       let selection = this.searchByLabel(evt);
       this.errorMessage="";

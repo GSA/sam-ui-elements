@@ -21,11 +21,26 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
   @ViewChild('input') input: ElementRef;
   @ViewChild('srOnly') srOnly: ElementRef;
 
+  /**
+  * Sets the name attribute
+  */
   @Input() public name: string;
+  /**
+  * Sets the id attribute
+  */
   @Input() public id: string;
+  /**
+  * Sets the label text
+  */
   @Input() public labelText: string;
-
+  /**
+  * Define autocomplete options
+  */
   @Input() public options: Array<string>;
+  /**
+  * Display a clear button for the text input
+  */
+  @Input() public showClearButton: boolean = false;
 
   public results: Array<string>;
   private innerValue: any = '';
@@ -166,6 +181,11 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
         this.renderer.setElementProperty(chosenValue, 'innerText', `You chose ${this.results[selectedChild]}`);
         this.renderer.invokeElementMethod(this.srOnly.nativeElement, 'appendChild', [chosenValue]);
       }
+      
+      //ESC
+      if ((event.code === 'Escape' || event.keyIdentified === 'Escape') && (this.results && this.results.length > 0) && !this.hasServiceError) {
+        this.clearDropdown();
+      }
     }
   }
 
@@ -203,10 +223,14 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
     });
   }
   
-  clear(){
+  clearDropdown(){
     this.renderer.invokeElementMethod(this.input.nativeElement, 'blur', []);
     this.hasFocus = false;
     this.renderer.setElementProperty(this.srOnly.nativeElement, 'innerHTML', null);
-    //this.results = [];
+  }
+  
+  clearInput(){
+    this.input.nativeElement.value = "";
+    this.clearDropdown();
   }
 }
