@@ -21,11 +21,26 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
   @ViewChild('input') input: ElementRef;
   @ViewChild('srOnly') srOnly: ElementRef;
 
+  /**
+  * Sets the name attribute
+  */
   @Input() public name: string;
+  /**
+  * Sets the id attribute
+  */
   @Input() public id: string;
+  /**
+  * Sets the label text
+  */
   @Input() public labelText: string;
-
+  /**
+  * Define autocomplete options
+  */
   @Input() public options: Array<string>;
+  /**
+  * Display a clear button for the text input
+  */
+  @Input() public showClearButton: boolean = false;
 
   public results: Array<string>;
   private innerValue: any = '';
