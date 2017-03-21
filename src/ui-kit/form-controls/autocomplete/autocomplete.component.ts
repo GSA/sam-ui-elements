@@ -166,6 +166,11 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
         this.renderer.setElementProperty(chosenValue, 'innerText', `You chose ${this.results[selectedChild]}`);
         this.renderer.invokeElementMethod(this.srOnly.nativeElement, 'appendChild', [chosenValue]);
       }
+      
+      //ESC
+      if ((event.code === 'Escape' || event.keyIdentified === 'Escape') && (this.results && this.results.length > 0) && !this.hasServiceError) {
+        this.clearDropdown();
+      }
     }
   }
 
@@ -203,10 +208,14 @@ export class SamAutocompleteComponent implements ControlValueAccessor {
     });
   }
   
-  clear(){
+  clearDropdown(){
     this.renderer.invokeElementMethod(this.input.nativeElement, 'blur', []);
     this.hasFocus = false;
     this.renderer.setElementProperty(this.srOnly.nativeElement, 'innerHTML', null);
-    //this.results = [];
+  }
+  
+  clearInput(){
+    this.input.nativeElement.value = "";
+    this.clearDropdown();
   }
 }
