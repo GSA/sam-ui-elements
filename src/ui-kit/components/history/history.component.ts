@@ -1,10 +1,10 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { HistoryNodeType } from "../../types";
 @Component({
   selector: 'sam-history',
   templateUrl:'history.template.html'
 })
-export class SamHistoryComponent implements OnInit {
+export class SamHistoryComponent {
   /**
   * sets the model for generating nodes
   */
@@ -14,5 +14,4 @@ export class SamHistoryComponent implements OnInit {
   */
   @Input() currentId: string;
 
-  ngOnInit(): void {}
 }
