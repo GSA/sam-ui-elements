@@ -15,3 +15,12 @@ export interface AutocompleteDropdownButtonIcon {
   class: string; // String for icon clas (font-awesome, glphicon, etc)
   altText: string; // String for alt icon text for screen readers
 }
+
+export interface HistoryNodeType {
+  id: string; // identifier for node
+  date: string; // date value for node
+  url?: string; // url value for title
+  title: string; // title value for node
+  description?: string; 
+  isTagged?: boolean;
+}
