@@ -1,0 +1,14 @@
+<i class="fa fa-minus" aria-hidden="true"></i>
+<ul>
+  <li *ngFor="let item of data" [class.current]="item.id == currentId" [attr.aria-label]=" item.id == currentId ? 'Current Opportunity' : '' ">
+    <span>  
+      <strong>{{item.date}}</strong>
+      <a *ngIf="item.url" href="{{ item.url }}">{{ item.title }}</a>
+      <ng-container *ngIf="!item.url">{{ item.title }}</ng-container>
+      <br *ngIf="item.title && item.description"/>
+      <em *ngIf="item.description">{{ item.description }}</em>
+      <i *ngIf="item.isTagged" class="fa fa-certificate" aria-hidden="true"></i>
+    </span>
+  </li>
+</ul>
+<i class="fa fa-minus" aria-hidden="true"></i>

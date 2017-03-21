@@ -13,6 +13,7 @@ import { SamCollapsibleComponent } from './collapsible';
 import { SamFiltersContainerComponent } from './filters-container';
 import { SamHeaderComponent } from './header';
 import { SamHeaderMenuComponent } from './header-menu';
+import { SamHistoryComponent } from './history';
 import { SamLabelComponent } from './label';
 import { SamModalComponent } from './modal';
 import { SamMultiSelectDropdownComponent } from './multiselect-dropdown';
@@ -41,6 +42,7 @@ import { SamWrapperModule } from '../wrappers';
     SamFiltersContainerComponent,
     SamHeaderComponent,
     SamHeaderMenuComponent,
+    SamHistoryComponent,
     SamLabelComponent,
     SamModalComponent,
     SamMultiSelectDropdownComponent,
@@ -58,6 +60,7 @@ import { SamWrapperModule } from '../wrappers';
     SamFiltersContainerComponent,
     SamHeaderComponent,
     SamHeaderMenuComponent,
+    SamHistoryComponent,
     SamLabelComponent,
     SamModalComponent,
     SamMultiSelectDropdownComponent,
