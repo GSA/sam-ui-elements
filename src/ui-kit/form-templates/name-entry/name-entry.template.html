@@ -1,8 +1,5 @@
 <fieldset>
   <legend *ngIf="legend.length" [innerText]="legend"></legend>
-  <labelWrapper class="label-wrapper" [label]="'Title'" [name]="getIdentifer('title')" [errorMessage]="titleErrorMsg">
-    <input class="usa-input-tiny" [(ngModel)]="model.title" id="{{getIdentifer('title')}}" name="{{getIdentifer('title')}}" type="text">
-  </labelWrapper>
 
   <labelWrapper class="label-wrapper" [label]="'First Name'" [name]="getIdentifer('first-name')" [errorMessage]="fNameErrorMsg" [required]="true">
     <input (blur)="validateFirstName()" (ngModelChange)="validateFirstName()" [(ngModel)]="model.firstName" id="{{getIdentifer('first-name')}}" name="{{getIdentifer('first-name')}}" type="text" required="" aria-required="true">
