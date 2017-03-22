@@ -15,8 +15,11 @@
   <labelWrapper class="label-wrapper" [label]="'Last Name'" [name]="getIdentifer('last-name')" [errorMessage]="lNameErrorMsg" [required]="true">
     <input (blur)="validateLastName()" (ngModelChange)="validateLastName()" [(ngModel)]="model.lastName" id="{{getIdentifer('last-name')}}" name="{{getIdentifer('last-name')}}" type="text" required="" aria-required="true">
   </labelWrapper>
-
-  <labelWrapper class="label-wrapper" [label]="'Suffix'" [name]="getIdentifer('suffix')" [errorMessage]="suffixErrorMsg">
-    <input class="usa-input-tiny" [(ngModel)]="model.suffix" id="{{getIdentifer('suffix')}}" name="{{getIdentifer('suffix')}}" type="text">
-  </labelWrapper>
+  
+  <samSelect [(model)]="model.suffix"
+             [name]="getIdentifer('suffix')"
+             [options]="store.suffixes"
+             [errorMessage]="suffixErrorMsg"
+             label="Suffix">
+  </samSelect>
 </fieldset>
