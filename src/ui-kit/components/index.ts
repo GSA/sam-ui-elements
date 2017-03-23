@@ -10,6 +10,7 @@ import { SamAlertComponent } from './alert';
 import { SamAlphabetSelectorComponent } from './alphabet-selector';
 import { SamBannerComponent } from './banner';
 import { SamCollapsibleComponent } from './collapsible';
+import { SamDownloadComponent } from './download';
 import { SamFiltersContainerComponent } from './filters-container';
 import { SamHeaderComponent } from './header';
 import { SamHeaderMenuComponent } from './header-menu';
@@ -39,6 +40,7 @@ import { SamWrapperModule } from '../wrappers';
     SamAlphabetSelectorComponent,
     SamBannerComponent,
     SamCollapsibleComponent,
+    SamDownloadComponent,
     SamFiltersContainerComponent,
     SamHeaderComponent,
     SamHeaderMenuComponent,
@@ -57,6 +59,7 @@ import { SamWrapperModule } from '../wrappers';
     SamAlphabetSelectorComponent,
     SamBannerComponent,
     SamCollapsibleComponent,
+    SamDownloadComponent,
     SamFiltersContainerComponent,
     SamHeaderComponent,
     SamHeaderMenuComponent,
