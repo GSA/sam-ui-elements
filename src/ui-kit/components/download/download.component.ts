@@ -3,9 +3,7 @@ import { trigger, state, style, transition, animate } from '@angular/core';
 import { DownloadPackageType } from '../../types';
 
 /**
- * Sam Collapsible Component
- * This component behaves similar to the accordion. However, a collapsible
- * should contain actions rather than content.
+ * Sam Download Component
  */
 @Component({
   selector: 'sam-download',
