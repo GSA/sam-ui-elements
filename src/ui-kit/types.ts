@@ -24,3 +24,36 @@ export interface HistoryNodeType {
   description?: string; 
   isTagged?: boolean;
 }
+
+//Download
+export interface DownloadPackageType{
+  packageId: string;
+  name: number;
+  type: string;
+  access: DownloadAccess;
+  postedDate: string;
+  resources: DownloadResourceType[];
+  accordionState: DownloadAccordionState;
+  downloadUrl: string;
+}
+export interface DownloadResourceType {
+  resourceId: string;
+  name: string;
+  type: string;
+  description: string;
+  size: string;
+  downloadUrl: string;
+  typeInfo: DownloadResourceTypeInfoType;
+}
+export interface DownloadResourceTypeInfoType{
+  name: string;
+  iconClass: string;
+}
+export enum DownloadAccess {
+    "Public",
+    "Private"
+}
+export enum DownloadAccordionState {
+    "collapsed",
+    "expanded"
+}

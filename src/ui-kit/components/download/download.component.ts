@@ -1,5 +1,7 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/core';
+import { DownloadPackageType } from '../../types';
+
 /**
  * Sam Collapsible Component
  * This component behaves similar to the accordion. However, a collapsible
@@ -41,13 +43,26 @@ import { trigger, state, style, transition, animate } from '@angular/core';
   ]
 })
 export class SamDownloadComponent {
-  @Input() public packages: any = [];
+  /**
+  * model for populating downloads
+  */
+  @Input() public packages: DownloadPackageType[] = [];
+  /**
+  * pass in an attachment error to trigger a message
+  */
+  @Input() public attachmentError: boolean = false;
+  /**
+  * sets download all url link
+  */
   @Input() public downloadAllUrl: string;
   constructor() {}
-  
+
   public hasPublicPackages(){
     for(let pkg of this.packages){
-      if(pkg['access'] === 'Public') { return true; }
+      //0 = public from interface
+      if(pkg.access === 0) { 
+        return true; 
+      }
     }
     return false;
   }

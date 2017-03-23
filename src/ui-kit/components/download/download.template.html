@@ -12,16 +12,14 @@
   </div>
 
   <ng-container *ngIf="packages && packages.length > 0">
-    <!-- Header -->
     <div class="card download-container" *ngFor="let package of packages" [@intro]="fade">
-
       <!-- It's public -->
       <div *ngIf="package.access === 'Public'" class="card-header {{ package.accordionState }}" (click)="toggleAccordion(package)" tabindex="0" (keyup.enter)="toggleAccordion(package)">
-        <h3>{{ package.name }} ({{ package.attachments?.length }})</h3>
+        <h3>{{ package.name }} ({{ package.resources?.length }})</h3>
         <strong>Type: {{ package.type }}</strong>
       </div>
 
-      <span *ngIf="package.access === 'Public'" class="download-button">
+      <span *ngIf="package.access === 'Public' && package.downloadUrl" class="download-button">
         <a class="usa-button-small usa-button-gray" [attr.href]="package.downloadUrl">
           <i class="fa fa-cloud-download" aria-hidden="true"></i>
           <span>Download</span>
@@ -29,39 +27,29 @@
       </span>
 
       <ul *ngIf="package.access === 'Public'" [@accordion]="package.accordionState" class="usa-zebra-list">
-        <!--<li *ngFor="let element of package.attachments">-->
         <li *ngFor="let resource of package.resources">
-          <!-- Element -->
-          <!--<ng-container *ngFor="let resource of attachment.resources">-->
-            <!-- Resource -->
-            <!--<ng-container *ngIf="element.resourceId === resource.resourceId">-->
-              <div class="download-info">
-
-                <span class="download-info-icon">
-                  <i class="{{resource.typeInfo.iconClass}}"></i>
-                </span>
-
-                <span class="download-info-link">
-                  <a *ngIf="resource.type === 'file'" [attr.href]="resource.downloadUrl">
-                    {{resource.description}}
-                    <sup *ngIf="resource.size && resource.size != 0">
-                      {{resource.size }}
-                    </sup>
-                  </a>
-                </span>
-
-                <span class="download-info-type">
-                  {{resource.typeInfo.name}}
-                </span>
-              </div>
-            <!--</ng-container> -->
-          <!--</ng-container> -->
+          <div class="download-info">
+            <span class="download-info-icon">
+              <i class="{{resource.typeInfo.iconClass}}"></i>
+            </span>
+            <span class="download-info-link">
+              <a *ngIf="resource.type === 'file'" [attr.href]="resource.downloadUrl">
+                {{resource.description}}
+                <sup *ngIf="resource.size && resource.size != 0">
+                  {{resource.size }}
+                </sup>
+              </a>
+            </span>
+            <span class="download-info-type">
+              {{resource.typeInfo.name}}
+            </span>
+          </div>
         </li>
       </ul>
 
       <!-- Its private -->
       <div *ngIf="package.access === 'Private'" class="card-header-secure">
-        <h3>{{ package.name }} ({{ package.attachments?.length }})</h3>
+        <h3>{{ package.name }} ({{ package.resources?.length }})</h3>
         <strong>Type: {{ package.type }}</strong>
       </div>
 
@@ -84,7 +72,6 @@
         </div>
       </div>
     </div>
-    <!--</div>-->
   </ng-container>
 
   <div class="card" *ngIf="packages.length < 1 && !attachmentError" [@intro]="fade">
