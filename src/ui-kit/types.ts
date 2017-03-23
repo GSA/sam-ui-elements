@@ -41,7 +41,7 @@ export interface AutocompleteKeyValueConfig {
   valueProperty: string;
 }
 //Download
-export interface DownloadPackageType{
+export interface DownloadPackageType {
   packageId: string;
   name: string;
   type: string;
