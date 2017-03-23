@@ -26,20 +26,12 @@ describe('SamDownloadComponent', () => {
         "type": "Other (Draft RFPs/RFIs, Responses to Questions, etc..)",
         "postedDate": "Apr 07, 2015",
         "access": "Public",
-        "attachments": [
-          {
-            "attachmentId": "38112bb086ee9b88163c734c16b88307",
-            "resourceId": "862178b04be2db1778a697464f186836"
-          }
-        ],
         "resources": [
           {
             "resourceId": "862178b04be2db1778a697464f186836",
             "name": "J.pdf",
             "type": "file",
-            "uri": "J.pdf",
             "description": "Industry Day IV change of conference room.",
-            "mimeType": "application/pdf",
             "size": "83 kB",
             "downloadUrl": "http://fakesite.com/download/4444",
             "typeInfo": {
@@ -53,8 +45,6 @@ describe('SamDownloadComponent', () => {
       }
     ];
     component.downloadAllUrl = 'http://fakesite.com/download/1234';
-    
-    // fixture.debugElement.query(By.css('.sam-collapsible')).nativeElement
     fixture.detectChanges();
   });
 

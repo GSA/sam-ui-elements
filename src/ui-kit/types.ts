@@ -28,12 +28,12 @@ export interface HistoryNodeType {
 //Download
 export interface DownloadPackageType{
   packageId: string;
-  name: number;
+  name: string;
   type: string;
-  access: DownloadAccess;
+  access: "Public"|"Private";
   postedDate: string;
   resources: DownloadResourceType[];
-  accordionState: DownloadAccordionState;
+  accordionState: "collapsed"|"expanded";
   downloadUrl: string;
 }
 export interface DownloadResourceType {
@@ -48,12 +48,4 @@ export interface DownloadResourceType {
 export interface DownloadResourceTypeInfoType{
   name: string;
   iconClass: string;
-}
-export enum DownloadAccess {
-    "Public",
-    "Private"
-}
-export enum DownloadAccordionState {
-    "collapsed",
-    "expanded"
 }

@@ -59,8 +59,7 @@ export class SamDownloadComponent {
 
   public hasPublicPackages(){
     for(let pkg of this.packages){
-      //0 = public from interface
-      if(pkg.access === 0) { 
+      if(pkg.access === "Public") { 
         return true; 
       }
     }
