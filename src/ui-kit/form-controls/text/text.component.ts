@@ -20,13 +20,13 @@ export class SamTextComponent implements ControlValueAccessor {
   /**
   * Sets the text input value
   */
-  @Input() value: string;
+  @Input() value: string = '';
   /**
   * Sets the label text
   */
   @Input() label: string;
   /**
-  * Sets the name attribute 
+  * Sets the name attribute
   */
   @Input() name: string;
   /**
