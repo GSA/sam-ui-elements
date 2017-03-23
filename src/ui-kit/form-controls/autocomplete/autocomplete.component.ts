@@ -55,24 +55,24 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   @Input() public allowAny: boolean = false;
 
   public results: Array<string>;
-  private innerValue: any = '';
-  private inputValue: any;
-  private selectedChild: HTMLElement;
-  private hasFocus: boolean = false;
-  private hasServiceError: boolean = false;
+  public innerValue: any = '';
+  public inputValue: any;
+  public selectedChild: HTMLElement;
+  public hasFocus: boolean = false;
+  public hasServiceError: boolean = false;
 
-  private endOfList: boolean = true;
-  private lastSearchedValue: string;
+  public endOfList: boolean = true;
+  public lastSearchedValue: string;
 
-  private lastReturnedResults: Array<string>;
+  public lastReturnedResults: Array<string>;
 
-  private keyValuePairs: any;
-  private filteredKeyValuePairs: any;
+  public keyValuePairs: any;
+  public filteredKeyValuePairs: any;
 
-  private resultsAvailable: string = ' results available. Use up and down arrows to scroll through results. Hit enter to select.';
+  public resultsAvailable: string = ' results available. Use up and down arrows to scroll through results. Hit enter to select.';
 
-  private onTouchedCallback: () => void = () => {};
-  private propogateChange: (_: any) => void = (_: any) => { };
+  public onTouchedCallback: () => void = () => {};
+  public propogateChange: (_: any) => void = (_: any) => { };
 
   get value(): any {
     return this.innerValue;
@@ -85,7 +85,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     }
   }
 
-  constructor(@Optional() private autocompleteService: AutocompleteService, private renderer: Renderer) {}
+  constructor(@Optional() public autocompleteService: AutocompleteService, public renderer: Renderer) {}
 
   ngOnChanges() {
 
