@@ -33,7 +33,7 @@ export class LabelWrapper {
           case 'maxlength':
             const actualLength = errorObject.actualLength;
             const requiredLength = errorObject.requiredLength;
-            this.errorMessage = `Too many characters (${actualLength} or ${requiredLength})`;
+            this.errorMessage = `${actualLength} characters input but max length is ${requiredLength}`;
             return;
           case 'required':
             this.errorMessage = 'This field cannot be empty';

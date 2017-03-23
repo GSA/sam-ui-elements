@@ -21,7 +21,6 @@ export class SamNameEntryComponent {
   * Label text for template
   */
   @Input() model: any = {
-    title: "",
     firstName: "",
     middleName: "",
     lastName: "",
@@ -32,7 +31,6 @@ export class SamNameEntryComponent {
   */
   @Input() prefix: string = "";
 
-  titleErrorMsg: string = "";
   fNameErrorMsg: string = "";
   mNameErrorMsg: string = "";
   lNameErrorMsg: string = "";

@@ -40,3 +40,27 @@ export interface AutocompleteKeyValueConfig {
   keyProperty: string;
   valueProperty: string;
 }
+//Download
+export interface DownloadPackageType{
+  packageId: string;
+  name: string;
+  type: string;
+  access: "Public"|"Private";
+  postedDate: string;
+  resources: DownloadResourceType[];
+  accordionState: "collapsed"|"expanded";
+  downloadUrl: string;
+}
+export interface DownloadResourceType {
+  resourceId: string;
+  name: string;
+  type: string;
+  description: string;
+  size: string;
+  downloadUrl: string;
+  typeInfo: DownloadResourceTypeInfoType;
+}
+export interface DownloadResourceTypeInfoType{
+  name: string;
+  iconClass: string;
+}
