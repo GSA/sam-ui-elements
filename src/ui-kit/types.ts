@@ -24,3 +24,19 @@ export interface HistoryNodeType {
   description?: string; 
   isTagged?: boolean;
 }
+
+// Autocomplete Config Interfaces
+
+export interface AutocompleteConfig {
+  name?: string;
+  id?: string;
+  labelText?: string;
+  showClearButton?: boolean;
+  allowAny?: boolean;
+  keyValueConfig?: AutocompleteKeyValueConfig;
+}
+
+export interface AutocompleteKeyValueConfig {
+  keyProperty: string;
+  valueProperty: string;
+}
