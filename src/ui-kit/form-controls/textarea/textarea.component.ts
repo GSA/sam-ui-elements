@@ -20,7 +20,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
   /**
   * Sets the text input value
   */
-  @Input() value: string;
+  @Input() value: string = '';
   /**
   * Sets the label text
   */
