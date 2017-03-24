@@ -25,8 +25,23 @@ export interface HistoryNodeType {
   isTagged?: boolean;
 }
 
+// Autocomplete Config Interfaces
+
+export interface AutocompleteConfig {
+  name?: string;
+  id?: string;
+  labelText?: string;
+  showClearButton?: boolean;
+  allowAny?: boolean;
+  keyValueConfig?: AutocompleteKeyValueConfig;
+}
+
+export interface AutocompleteKeyValueConfig {
+  keyProperty: string;
+  valueProperty: string;
+}
 //Download
-export interface DownloadPackageType{
+export interface DownloadPackageType {
   packageId: string;
   name: string;
   type: string;

@@ -1,1 +1,1 @@
-export {SamTabOutsideDirective} from './taboutside.directive';
+export { SamTabOutsideDirective } from './taboutside.directive';
