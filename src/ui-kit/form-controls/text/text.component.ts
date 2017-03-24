@@ -45,6 +45,9 @@ export class SamTextComponent implements ControlValueAccessor {
   * Sets the required attribute
   */
   @Input() required: boolean;
+  /**
+  * Passes in the Angular FormControl
+  */
   @Input() control: FormControl;
   /**
   * Sets the maxlength attribute
