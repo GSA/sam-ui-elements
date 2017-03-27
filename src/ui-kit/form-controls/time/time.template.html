@@ -1,0 +1,17 @@
+<div class="sam-time usa-date-of-birth">
+  <div class="usa-form-group usa-form-group-month">
+    <label [attr.for]="hourName()">Hour</label>
+    <input [attr.id]="hourName()" type="number" [(ngModel)]='hours' (ngModelChange)="onInputChange()" class="usa-form-control" [disabled]="disabled">
+  </div>
+  <div class="usa-form-group usa-form-group-month">
+    <label [attr.for]="minuteName()">Minute</label>
+    <input [attr.id]="minuteName()" type="number" [(ngModel)]="minutes" (ngModelChange)="onInputChange()" class="usa-form-control" [disabled]="disabled">
+  </div>
+  <div class="usa-form-group usa-form-group-year">
+    <label [attr.for]="amPmName()">AM/PM</label>
+    <select [attr.id]="amPmName()" [(ngModel)]='amPm' (ngModelChange)="onInputChange()" [disabled]="disabled">
+      <option value="am">AM</option>
+      <option value="pm">PM</option>
+    </select>
+  </div>
+</div>

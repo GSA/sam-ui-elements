@@ -1,0 +1,11 @@
+<labelWrapper [label]="label" [name]="getIdentifier('phone-number')" [errorMessage]="errorMsg" [required]="required">
+  <input type="text"
+  [attr.id]="getIdentifier('phone-number')"
+  [attr.name]="getIdentifier('phone-number')"
+  [attr.maxlength]="phoneNumberTemplateLength"
+  [value]="phoneNumberMirror"
+  [placeholder]="phoneNumberTemplate"
+  (keydown)="process($event)"
+  (blur)="check()"
+  #phoneInput />
+</labelWrapper>

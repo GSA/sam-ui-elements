@@ -1,0 +1,15 @@
+<div *ngIf="debug.enabled && target" [ngStyle]="debug.style">
+  <pre [innerText]="store | json"></pre>
+</div>
+<div class="usa-alert" [ngClass]="[selectedType, class]" [hidden]="!states.show" #alert>
+  <span class="usa-alert-close" *ngIf="showClose">
+    <a><i class="fa fa-times-circle" (click)="close()"></i></a>
+  </span>
+  <div class="usa-alert-body">
+    <h3 *ngIf="title" class="usa-alert-heading" [innerText]="title"></h3>
+    <p class="usa-alert-text">
+      {{description}}
+      <ng-content></ng-content>
+    </p>
+  </div>
+</div>

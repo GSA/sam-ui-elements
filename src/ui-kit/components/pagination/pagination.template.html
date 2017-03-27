@@ -1,0 +1,11 @@
+<nav class="usa-pagination" aria-label="pagination" [ngClass]="disabled && 'disabled'">
+  <ul class="usa-color-text usa-color-primary-darkest usa-color-text-white">
+    <li *ngIf="showPrevious()"><a class="page-previous" aria-label="previous" (click)="onPreviousClick()">&lsaquo; Prev</a></li>
+    <li><a class="page-button" [ngClass]="textDecoration(1)" (click)="onPageClick(1)" [attr.aria-label]="getAriaLabel(1)">1</a></li>
+    <li *ngIf="showFirstEllipsis()"><span class="first-ellipsis">&hellip;</span></li>
+    <li *ngFor="let i of consecutivePageRange()"><a class="page-button" [ngClass]="textDecoration(i)" (click)="onPageClick(i)" [attr.aria-label]="getAriaLabel(i)">{{i}}</a></li>
+    <li *ngIf="showLastEllipsis()"><span class="last-ellipsis">&hellip;</span></li>
+    <li *ngIf="showLastButton()"><a class="page-button" [ngClass]="textDecoration(totalPages)" (click)="onPageClick(totalPages)" [attr.aria-label]="getAriaLabel(totalPages)">{{totalPages}}</a></li>
+    <li *ngIf="showNext()"><a class="page-next" aria-label="next" (click)="onNextClick()">Next &rsaquo;</a></li>
+  </ul>
+</nav> 
