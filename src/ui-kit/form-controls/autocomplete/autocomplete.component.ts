@@ -53,10 +53,6 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
    * Allows any value typed in the input to be chosen
    */
   @Input() public allowAny: boolean = false;
-  /**
-   * Show a magnifying glass on the right side of the input
-   */
-  @Input() public showMagnifyingGlass: boolean = false;
 
   public results: Array<string>;
   public innerValue: any = '';

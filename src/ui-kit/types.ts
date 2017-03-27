@@ -6,9 +6,9 @@ export interface OptionsType {
 }
 
 export interface AutocompleteDropdownButton {
-  label?: string; // The text that appears on the button 
+  label?: string; // The text that appears on the button
   class?: string; // The class for button style
-  icon?: AutocompleteDropdownButtonIcon; // An option icon that will appear on the button 
+  icon?: AutocompleteDropdownButtonIcon; // An option icon that will appear on the button
 }
 
 export interface AutocompleteDropdownButtonIcon {
@@ -21,7 +21,7 @@ export interface HistoryNodeType {
   date: string; // date value for node
   url?: string; // url value for title
   title: string; // title value for node
-  description?: string; 
+  description?: string;
   isTagged?: boolean;
 }
 
@@ -32,6 +32,7 @@ export interface AutocompleteConfig {
   id?: string;
   labelText?: string;
   showClearButton?: boolean;
+  addOnIconClass?: string;
   allowAny?: boolean;
   keyValueConfig?: AutocompleteKeyValueConfig;
 }
