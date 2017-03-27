@@ -6,8 +6,10 @@
         <button class="usa-button-link" (click)="removeItem(i)">
           <span class="usa-sr-only">Click button to delete</span>
           <i class="fa fa-times"></i>
-          {{item}}</button>
-        </li>
+          {{item}}
+          <span *ngIf="isNewItem(item)"><em>&nbsp;New</em></span>
+        </button>
+      </li>
     </ul>
   </div>
 </div>

@@ -8,12 +8,12 @@ const LIST_VALUE_ACCESSOR = {
 }
 
 /**
- * Sam List Display Sam List Display Component 
+ * Sam List Display Sam List Display Component
  * This component watches for changes on the model of an input
  * and displays new values in an list.
  * It is itself a form control, so it should be used with inputs
  * where multiselection is available.
- * This component also requires an input for ngModel that is 
+ * This component also requires an input for ngModel that is
  * initialized to an array.
  */
 @Component({
@@ -24,11 +24,16 @@ const LIST_VALUE_ACCESSOR = {
 export class SamListDisplayComponent implements ControlValueAccessor, OnChanges{
   /**
    * The newValue property should be the model of the input
-   * that this list is listening to. It updates the value in the 
+   * that this list is listening to. It updates the value in the
    * list on changes to the model.
    */
   @Input() newValue: any;
-  
+
+  /*
+   * If true, place a "New" label next to new items
+   */
+  @Input() showNewIndicator: boolean = false;
+
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
 
   get value(): any {
@@ -43,6 +48,7 @@ export class SamListDisplayComponent implements ControlValueAccessor, OnChanges{
   }
 
   public selectedItems: Array<any> = [];
+  public newItems: Object = {};
 
   public onChangedCallback: (_:any) => void = (_: any) => {};
   public onTouchedCallback: () => void = () => {};
@@ -51,12 +57,14 @@ export class SamListDisplayComponent implements ControlValueAccessor, OnChanges{
 
   ngOnChanges(changes: any) {
     if (this.newValue && this.selectedItems.indexOf(this.newValue) === -1) {
+      this.newItems[this.newValue] = true;
       this.selectedItems.push(this.newValue);
     }
   }
 
-  removeItem(item) {
-    this.selectedItems.splice(item, 1);
+  removeItem(idx, value) {
+    this.selectedItems.splice(idx, 1);
+    delete this.newItems[value];
     this.modelChange.emit();
   }
 
@@ -74,4 +82,7 @@ export class SamListDisplayComponent implements ControlValueAccessor, OnChanges{
     this.onChangedCallback = fn;
   }
 
+  isNewItem(item) {
+    return this.showNewIndicator && typeof this.newItems[item] !== 'undefined';
+  }
 }
