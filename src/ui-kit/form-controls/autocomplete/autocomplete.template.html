@@ -1,9 +1,10 @@
 <div class="sam-autocomplete" samClickOutside (clickOutside)="checkForFocus($event)" samTabOutside (tabOutside)="checkForFocus($event)">
   <!-- Text input -->
-  <div>
-    <label *ngIf="labelText || labelText" [attr.for]="id">{{labelText}}<span class="usa-sr-only">&nbsp;autocomplete</span></label>
+  <label *ngIf="labelText || labelText" [attr.for]="id">{{labelText}}<span class="usa-sr-only">&nbsp;autocomplete</span></label>
+  <div class="input-container">
     <input [attr.id]="id" #input autocomplete="off" [attr.name]="name" type="text" (focus)="hasFocus = true" (change)="onChange()" (keydown)="onKeydown($event)" (keyup)="onKeyup($event)" [(ngModel)]="inputValue">
     <span *ngIf="showClearButton" class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}"><i class="fa fa-times-circle" (click)="clearInput()" (keyup.enter)="clearInput()" tabindex="0"></i></span>
+    <span *ngIf="showMagnifyingGlass" class="magnifying-glass"><i class="fa fa-search"></i></span>
   </div>
   <!-- Lists data if array of strings is passed to component -->
   <ul id="sam-autocomplete-results" #resultsList *ngIf="results && hasFocus">
