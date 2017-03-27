@@ -28,6 +28,8 @@ export class SamListDisplayComponent implements ControlValueAccessor, OnChanges{
    * list on changes to the model.
    */
   @Input() newValue: any;
+  
+  @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
 
   get value(): any {
     return this.selectedItems;
@@ -55,6 +57,7 @@ export class SamListDisplayComponent implements ControlValueAccessor, OnChanges{
 
   removeItem(item) {
     this.selectedItems.splice(item, 1);
+    this.modelChange.emit();
   }
 
   writeValue(value) {
