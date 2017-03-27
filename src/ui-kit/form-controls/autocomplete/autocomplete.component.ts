@@ -90,7 +90,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   ngOnChanges() {
 
   }
-  
+
   onChange() {
     if (this.allowAny) {
       this.propogateChange(this.inputValue);
@@ -139,7 +139,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
                 data.forEach((item) => {
                   this.filteredKeyValuePairs.push(item);
                 });
-              } 
+              }
             } else {
               this.filteredKeyValuePairs = data;
             }
@@ -182,7 +182,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     if (list) {
 
       // On down arrow press
-      if (event.code === 'ArrowDown' || event.keyIdentifier === 'Down') { 
+      if (event.code === 'ArrowDown' || event.keyIdentifier === 'Down') {
         this.onDownArrowDown(list);
       }
 
@@ -192,10 +192,10 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       }
 
       // On enter press
-      if ((event.code === 'Enter' || event.keyIdentified === 'Enter') && !this.hasServiceError ){ 
+      if ((event.code === 'Enter' || event.keyIdentified === 'Enter') && !this.hasServiceError ){
         this.onEnterDown(list);
       }
-      
+
       //ESC
       if ((event.code === 'Escape' || event.keyIdentified === 'Escape') && (this.results && this.results.length > 0) && !this.hasServiceError) {
         this.clearDropdown();
@@ -207,7 +207,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     const children = list.nativeElement.children;
     const selectedChild = this.getSelectedChild(children);
     let message;
-    
+
     if (children && children.length > 0) {
       if (selectedChild === children.length - 2) {
         this.endOfList = true;
@@ -221,13 +221,13 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       } else {
         this.renderer.setElementClass(children[selectedChild + 1], 'isSelected', true);
         this.selectedChild = children[selectedChild + 1];
-        message = !!this.results ? 
-                    this.results[selectedChild + 1] : 
+        message = !!this.results ?
+                    this.results[selectedChild + 1] :
                     this.filteredKeyValuePairs[selectedChild + 1][this.config.keyValueConfig.valueProperty];
       }
 
       this.pushSROnlyMessage(message);
-      this.renderer.setElementProperty(list.nativeElement, 'scrollTop', 
+      this.renderer.setElementProperty(list.nativeElement, 'scrollTop',
                                        this.selectedChild.offsetTop - list.nativeElement.clientTop)
     }
   }
@@ -242,19 +242,19 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
         this.endOfList = true;
         this.renderer.setElementClass(children[children.length - 1], 'isSelected', true);
         this.selectedChild = children[children.length - 1];
-        message = !!this.results ? 
-                  this.results[children.length - 1] : 
+        message = !!this.results ?
+                  this.results[children.length - 1] :
                   this.filteredKeyValuePairs[children.length -1][this.config.keyValueConfig.valueProperty];
       } else {
         this.renderer.setElementClass(children[selectedChild - 1], 'isSelected', true);
         this.selectedChild = children[selectedChild - 1];
-        message = !!this.results ? 
-                  this.results[selectedChild - 1] : 
+        message = !!this.results ?
+                  this.results[selectedChild - 1] :
                   this.filteredKeyValuePairs[selectedChild -1][this.config.keyValueConfig.valueProperty];
       }
       this.pushSROnlyMessage(message);
-      this.renderer.setElementProperty(list.nativeElement, 
-                                       'scrollTop', 
+      this.renderer.setElementProperty(list.nativeElement,
+                                       'scrollTop',
                                        this.selectedChild.offsetTop - list.nativeElement.clientTop)
     }
   }
@@ -337,7 +337,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     this.hasFocus = false;
     this.renderer.setElementProperty(this.srOnly.nativeElement, 'innerHTML', null);
   }
-  
+
   clearInput(){
     this.input.nativeElement.value = "";
     this.clearDropdown();
