@@ -5,9 +5,7 @@
       <li *ngFor="let item of selectedItems; let i = index">
         <button class="usa-button-link" (click)="removeItem(i)">
           <span class="usa-sr-only">Click button to delete</span>
-          <i class="fa fa-times"></i>
-          {{item}}
-          <span *ngIf="isNewItem(item)"><em>&nbsp;New</em></span>
+          <i class="fa fa-times"></i>{{item}}<span *ngIf="isNewItem(item) && config.showNewIndicator" class="{{config.newItemIndicator.class}}">{{config.newItemIndicator.label}}</span>
         </button>
       </li>
     </ul>

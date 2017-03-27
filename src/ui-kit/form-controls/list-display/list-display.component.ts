@@ -1,6 +1,8 @@
 import { Component, Input, Output, EventEmitter, OnChanges, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
+import { ListDisplayConfig } from '../../types';
+
 const LIST_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamListDisplayComponent),
@@ -33,6 +35,10 @@ export class SamListDisplayComponent implements ControlValueAccessor, OnChanges{
    * If true, place a "New" label next to new items
    */
   @Input() showNewIndicator: boolean = false;
+  /**
+   * Optional configuration object
+   */
+  @Input() config: ListDisplayConfig;
 
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
 
@@ -83,6 +89,6 @@ export class SamListDisplayComponent implements ControlValueAccessor, OnChanges{
   }
 
   isNewItem(item) {
-    return this.showNewIndicator && typeof this.newItems[item] !== 'undefined';
+    return this.config.showNewIndicator && typeof this.newItems[item] !== 'undefined';
   }
 }

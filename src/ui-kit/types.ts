@@ -65,3 +65,13 @@ export interface DownloadResourceTypeInfoType{
   name: string;
   iconClass: string;
 }
+
+export interface ListDisplayConfig {
+  showNewIndicator?: boolean;
+  newItemIndicator?: NewItemIndicator;
+}
+
+export interface NewItemIndicator {
+  class?: string;
+  label?: string;
+}
