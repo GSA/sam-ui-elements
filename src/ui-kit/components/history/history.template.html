@@ -1,6 +1,6 @@
 <i class="fa fa-minus" aria-hidden="true"></i>
 <ul>
-  <li *ngFor="let item of data" [class.current]="item.id == currentId" [attr.aria-label]=" item.id == currentId ? 'Current Opportunity' : '' ">
+  <li *ngFor="let item of data; let i = index;" [class.current]="item.id == currentId" [attr.aria-label]=" item.id == currentId ? 'Current Opportunity' : '' " [attr.class]="'history-item-'+i">
     <span>  
       <strong>{{item.date}}</strong>
       <a *ngIf="item.url" href="{{ item.url }}">{{ item.title }}</a>
