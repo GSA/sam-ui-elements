@@ -89,6 +89,8 @@ export class SamListDisplayComponent implements ControlValueAccessor, OnChanges{
   }
 
   isNewItem(item) {
-    return this.config.showNewIndicator && typeof this.newItems[item] !== 'undefined';
+    if(this.config) {
+      return this.config.showNewIndicator && typeof this.newItems[item] !== 'undefined';
+    }
   }
 }
