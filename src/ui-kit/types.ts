@@ -66,6 +66,7 @@ export interface DownloadResourceTypeInfoType{
   iconClass: string;
 }
 
+
 export interface ListDisplayConfig {
   showNewIndicator?: boolean;
   newItemIndicator?: NewItemIndicator;
@@ -74,4 +75,20 @@ export interface ListDisplayConfig {
 export interface NewItemIndicator {
   class?: string;
   label?: string;
+}
+
+//POC - all fields optional
+export interface PointOfContactType{
+  fullName?: string;
+  title?: string;
+  address?: string;
+  address2?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
+  email?: string;
+  phone?: string;
+  phone2?: string;
+  fax?: string;
+  website?: string;
 }
