@@ -29,7 +29,7 @@ describe('The Sam Point of Contact component', () => {
 
   it('basic test', () => {
     fixture.detectChanges();
-    let comp = fixture.debugElement.query(By.css('.sam-address'));
+    let comp = fixture.debugElement.query(By.css('.sam-poc'));
     expect(comp.nativeElement.innerHTML).toContain("John Doe");
     expect(comp.nativeElement.innerHTML).toContain("jdoe@test.gov");
     expect(comp.nativeElement.innerHTML).toContain("www.testsite.gov");
