@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormControl } from "@angular/forms";
+import { AbstractControl } from "@angular/forms";
 
 @Component({
   selector: 'fieldset-wrapper',
@@ -9,10 +9,10 @@ export class FieldsetWrapper {
   @Input() label: string;
   @Input() hint: string;
   @Input() errorMessage: string;
-  
+
   constructor() { }
 
-  formatErrors(control: FormControl) {
+  formatErrors(control: AbstractControl) {
     if (!control) {
       return;
     }

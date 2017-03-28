@@ -1,5 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import {FormControl} from "@angular/forms";
+import { AbstractControl } from "@angular/forms";
 
 @Component({
   selector: 'labelWrapper',
@@ -11,13 +11,13 @@ export class LabelWrapper {
   @Input() hint: string;
   @Input() required: boolean = false;
   @Input() errorMessage: string;
-  
+
   @ViewChild('labelDiv')
   public labelDiv: any;
 
   constructor() { }
 
-  formatErrors(control: FormControl) {
+  formatErrors(control: AbstractControl) {
     if (!control) {
       return;
     }
