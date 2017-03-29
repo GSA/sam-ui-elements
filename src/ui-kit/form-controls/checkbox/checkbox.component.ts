@@ -1,4 +1,5 @@
-import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, forwardRef, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { FormControl,ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
 import { OptionsType } from '../../types';
 
@@ -8,8 +9,13 @@ import { OptionsType } from '../../types';
 @Component({
   selector: 'samCheckbox',
   templateUrl: 'checkbox.template.html',
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => SamCheckboxComponent),
+    multi: true
+  }]
 })
-export class SamCheckboxComponent {
+export class SamCheckboxComponent implements ControlValueAccessor {
   /**
   * Sets the bound value of the component
   */
@@ -39,6 +45,10 @@ export class SamCheckboxComponent {
   */
   @Input() hasSelectAll: boolean;
   /**
+  * Sets the angular FormControl
+  */
+  @Input() control: FormControl;
+  /**
   * Event emitted when the model value changes
   */
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
@@ -51,7 +61,20 @@ export class SamCheckboxComponent {
    * This object allows us to efficiently determine if a value is before another value
    */
   private _ordering: any = {};
+  onChange: any = () => {
+    this.wrapper.formatErrors(this.control);
+  };
+  onTouched: any = () => { };
+  get value() {
+    return this.model;
+  }
 
+  set value(val) {
+    this.model = val;
+    this.onChange(val);
+    this.onTouched();
+  }
+  
   constructor() {}
 
   ngOnInit() {
@@ -76,9 +99,13 @@ export class SamCheckboxComponent {
   }
 
   onCheckChanged(value, isChecked) {
+    if(this.control){
+      this.control.markAsDirty();
+      this.control.markAsTouched();
+    }
     if (!isChecked) {
       // If the option was unchecked, remove it from the model
-      this.model = this.model.filter(val => val !== value);
+      this.writeValue(this.model.filter(val => val !== value));
     } else {
       // Else, insert the checked item into the model in the correct order
       let i = 0;
@@ -91,17 +118,45 @@ export class SamCheckboxComponent {
         }
         i++;
       }
-      this.model.splice(i, 0, value);
+      let clone = this.model.slice(0);
+      clone.splice(i, 0, value);
+      this.writeValue(clone);
     }
     this.modelChange.emit(this.model);
   }
 
   onSelectAllChange(isSelectAllChecked) {
+    if(this.control){
+      this.control.markAsDirty();
+      this.control.markAsTouched();
+    }
     if (!isSelectAllChecked) {
-      this.model = [];
+      this.writeValue([]);
     } else {
-      this.model = this.options.map(option => option.value);
+      this.writeValue(this.options.map(option => option.value));
     }
     this.modelChange.emit(this.model);
+  }
+  
+  registerOnChange(fn) {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn) {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(disabled) {
+    //todo
+  }
+
+  writeValue(value) {
+    if(!value){
+      value = [];
+    }
+    if(this.control){
+      this.control.setValue(value);
+    }
+    this.value = value;
   }
 }
