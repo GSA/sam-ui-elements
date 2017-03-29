@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { FormControl,ControlValueAccessor } from '@angular/forms';
+import { Component, forwardRef, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { FormControl,ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
 import { OptionsType } from '../../types';
 
@@ -9,6 +9,11 @@ import { OptionsType } from '../../types';
 @Component({
   selector: 'samCheckbox',
   templateUrl: 'checkbox.template.html',
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => SamCheckboxComponent),
+    multi: true
+  }]
 })
 export class SamCheckboxComponent implements ControlValueAccessor {
   /**
@@ -60,6 +65,15 @@ export class SamCheckboxComponent implements ControlValueAccessor {
     this.wrapper.formatErrors(this.control);
   };
   onTouched: any = () => { };
+  get value() {
+    return this.model;
+  }
+
+  set value(val) {
+    this.model = val;
+    this.onChange(val);
+    this.onTouched();
+  }
   
   constructor() {}
 
@@ -137,9 +151,12 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   }
 
   writeValue(value) {
+    if(!value){
+      value = [];
+    }
     if(this.control){
       this.control.setValue(value);
     }
-    this.model = value;
+    this.value = value;
   }
 }
