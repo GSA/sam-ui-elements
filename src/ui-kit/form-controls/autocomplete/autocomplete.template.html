@@ -11,8 +11,13 @@
     <li *ngFor="let result of results" (click)="setSelected(result)">{{result}}</li>
   </ul>
   <!-- Lists data if array of objects with key/value pair is passed to component -->
+<<<<<<< Updated upstream
   <ul id="sam-autocomplete-results-kv" #resultsListKV *ngIf="filteredKeyValuePairs && hasFocus">
     <li *ngFor="let obj of filteredKeyValuePairs" (click)="setSelected(obj[config.keyValueConfig.keyProperty], obj[config.keyValueConfig.valueProperty])">{{obj[config.keyValueConfig.valueProperty]}}</li>
+=======
+  <ul id="sam-autocomplete-results-kv" #resultsListKV *ngIf="filteredKeyValuePairs && filteredKeyValuePairs.length > 0 && hasFocus">
+    <li *ngFor="let obj of filteredKeyValuePairs" (click)="setSelected(obj)">{{obj[config.keyValueConfig.valueProperty]}}</li>
+>>>>>>> Stashed changes
   </ul>
   <!-- Screen Reader Only, reads results and selections -->
   <ul #srOnly class="usa-sr-only" role="status" aria-live="assertive" aria-relevant="additions">
