@@ -122,7 +122,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
       clone.splice(i, 0, value);
       this.writeValue(clone);
     }
-    this.modelChange.emit(this.model);
+    this.emitModel();
   }
 
   onSelectAllChange(isSelectAllChecked) {
@@ -134,6 +134,13 @@ export class SamCheckboxComponent implements ControlValueAccessor {
       this.writeValue([]);
     } else {
       this.writeValue(this.options.map(option => option.value));
+    }
+    this.emitModel();
+  }
+  
+  emitModel(){
+    if(this.control){
+      this.control.setValue(this.model);
     }
     this.modelChange.emit(this.model);
   }
@@ -153,9 +160,6 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   writeValue(value) {
     if(!value){
       value = [];
-    }
-    if(this.control){
-      this.control.setValue(value);
     }
     this.value = value;
   }
