@@ -74,6 +74,7 @@ export class SamTextComponent implements ControlValueAccessor {
     let validators: ValidatorFn[] = [];
 
     if(this.control.validator){
+      console.log("uhk",this.control.validator);
       validators.push(this.control.validator);
     }
     if (this.required) {
@@ -91,6 +92,10 @@ export class SamTextComponent implements ControlValueAccessor {
   }
 
   onInputChange(value) {
+    if(this.control){
+      this.control.markAsDirty();
+      this.control.markAsTouched();
+    }
     this.value = value;
     this.onChange(value);
   }
