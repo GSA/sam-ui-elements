@@ -270,8 +270,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       }
 
       if (this.filteredKeyValuePairs && this.filteredKeyValuePairs[selectedChild]) {
-        this.setSelected(this.filteredKeyValuePairs[selectedChild][this.config.keyValueConfig.keyProperty],
-                         this.filteredKeyValuePairs[selectedChild][this.config.keyValueConfig.valueProperty]);
+        this.setSelected(this.filteredKeyValuePairs[selectedChild]);
       }
     } else {
       if (this.allowAny) {
