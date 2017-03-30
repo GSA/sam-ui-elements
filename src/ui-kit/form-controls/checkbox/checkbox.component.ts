@@ -70,6 +70,9 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   }
 
   set value(val) {
+    if(!Array.isArray(val)){
+      val = [];
+    }
     this.model = val;
     this.onChange(val);
     this.onTouched();
