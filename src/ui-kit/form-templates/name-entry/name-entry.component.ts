@@ -1,6 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, forwardRef } from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import * as suffixes from './suffixes.json';
+import { NameEntryType } from '../../types';
+import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn} from "@angular/forms";
+
 /**
  * The <samNameInput> component is a Name entry portion of a form
  *
@@ -11,8 +14,13 @@ import * as suffixes from './suffixes.json';
 @Component({
   selector: 'samNameEntry',
   templateUrl: 'name-entry.template.html',
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => SamNameEntryComponent),
+    multi: true
+  }]
 })
-export class SamNameEntryComponent {
+export class SamNameEntryComponent implements ControlValueAccessor{
   /**
   * The bound value of the component
   */
@@ -20,7 +28,7 @@ export class SamNameEntryComponent {
   /**
   * Label text for template
   */
-  @Input() model: any = {
+  @Input() model: NameEntryType = {
     firstName: "",
     middleName: "",
     lastName: "",
@@ -35,6 +43,21 @@ export class SamNameEntryComponent {
   mNameErrorMsg: string = "";
   lNameErrorMsg: string = "";
   suffixErrorMsg: string = "";
+  
+  get value(){
+    return this.model;
+  };
+  set value(value: NameEntryType){
+    if(!value){
+      value = {
+        firstName: "",
+        middleName: "",
+        lastName: "",
+        suffix: ""
+      };
+    }
+    this.model = value;
+  };
 
   private store = {
     suffixes: suffixes.map((item) => {
@@ -95,4 +118,22 @@ export class SamNameEntryComponent {
     }
   }
 
+  onChange: any = () => { };
+  onTouched: any = () => { };
+  
+  registerOnChange(fn) {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn) {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(disabled) {
+    //this.disabled = disabled;
+  }
+
+  writeValue(value) {
+    this.value = value;
+  }
 }

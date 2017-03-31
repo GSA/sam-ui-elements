@@ -92,3 +92,10 @@ export interface PointOfContactType{
   fax?: string;
   website?: string;
 }
+
+export interface NameEntryType{
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  suffix: string;  
+}
