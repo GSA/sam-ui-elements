@@ -33,7 +33,7 @@
               <i class="{{resource.typeInfo.iconClass}}"></i>
             </span>
             <span class="download-info-link">
-              <a *ngIf="resource.type === 'file'" [attr.href]="resource.downloadUrl">
+              <a [attr.href]="resource.downloadUrl">
                 {{resource.description}}
                 <sup *ngIf="resource.size && resource.size != 0">
                   {{resource.size }}
