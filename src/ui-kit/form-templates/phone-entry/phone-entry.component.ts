@@ -1,5 +1,6 @@
-import { Component, Input, ViewChild,Output, EventEmitter,OnInit } from '@angular/core';
+import { Component, Input, ViewChild, Output, EventEmitter, OnInit, forwardRef } from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn } from "@angular/forms";
 
 /**
  * The <samPhoneInput> component is a Phone entry portion of a form
@@ -7,8 +8,13 @@ import { LabelWrapper } from '../../wrappers/label-wrapper';
 @Component( {
   selector: 'samPhoneEntry',
   templateUrl: 'phone-entry.template.html',
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => SamPhoneEntryComponent),
+    multi: true
+  }]
 })
-export class SamPhoneEntryComponent implements OnInit {
+export class SamPhoneEntryComponent implements OnInit,ControlValueAccessor {
   /**
   * The label text to appear above the input
   */
@@ -45,9 +51,22 @@ export class SamPhoneEntryComponent implements OnInit {
   phoneNumberMirror = this.phoneNumberTemplate;
   phoneNumber = this.phoneNumberTemplate;
   badIndex = [];
-  constructor() {}
+  
+  get value(){
+    return this.model;
+  };
+  set value(value: string){
+    console.log("ruh",value,this.phoneNumberTemplate);
+    if(!value){
+      value = this.phoneNumberTemplate;
+    }
+    this.model = value;
+  };
 
+  
   ngOnInit() {
+    this.phoneNumber = this.phoneNumberTemplate;
+    this.phoneNumberMirror = this.phoneNumberTemplate;
     this.phoneNumberTemplateLength = this.phoneNumberTemplate.length;
     for(var i = 0; i < this.phoneNumberTemplate.length; i++){
       if(this.phoneNumberTemplate.charAt(i)!="_"){
@@ -146,6 +165,7 @@ export class SamPhoneEntryComponent implements OnInit {
     } else {
       this.model = updateModel;
     }
+    this.onChange(this.model);//controlemitter
     this.emitter.emit(this.model);
   }
 
@@ -181,5 +201,24 @@ export class SamPhoneEntryComponent implements OnInit {
 
   replaceAt(index, character, str) {
     return str.substr(0, index) + character + str.substr(index+character.length);
+  }
+  
+  onChange: any = () => { };
+  onTouched: any = () => { };
+  
+  registerOnChange(fn) {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn) {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(disabled) {
+    //this.disabled = disabled;
+  }
+
+  writeValue(value) {
+    this.value = value;
   }
 }
