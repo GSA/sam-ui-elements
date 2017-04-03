@@ -270,8 +270,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       }
 
       if (this.filteredKeyValuePairs && this.filteredKeyValuePairs[selectedChild]) {
-        this.setSelected(this.filteredKeyValuePairs[selectedChild][this.config.keyValueConfig.keyProperty],
-                         this.filteredKeyValuePairs[selectedChild][this.config.keyValueConfig.valueProperty]);
+        this.setSelected(this.filteredKeyValuePairs[selectedChild]);
       }
     } else {
       if (this.allowAny) {
@@ -302,8 +301,12 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     this.renderer.setElementProperty(this.srOnly.nativeElement, 'innerHTML', null);
   }
 
-  setSelected(value: string, displayValue?: string) {
-    const message = displayValue || value;
+  setSelected(value: any) {
+    let displayValue = value;
+    if(this.config && this.config.keyValueConfig){
+      displayValue = value[this.config.keyValueConfig.valueProperty]
+    }
+    const message = displayValue;
     this.innerValue = value;
     this.hasFocus = false;
     this.inputValue = message;
@@ -345,6 +348,11 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
 
   writeValue(value: any): void {
     if (value !== this.innerValue) {
+      if(value && this.config && this.config.keyValueConfig){
+        this.inputValue = value[this.config.keyValueConfig.valueProperty];
+      } else {
+        this.inputValue = value;
+      }
       this.innerValue = value;
     }
   }

@@ -55,7 +55,6 @@ export interface DownloadPackageType {
 export interface DownloadResourceType {
   resourceId: string;
   name: string;
-  type: string;
   description: string;
   size: string;
   downloadUrl: string;
