@@ -19,7 +19,8 @@ describe('The Sam Phone Entry component', () => {
 
     fixture = TestBed.createComponent(SamPhoneEntryComponent);
     component = fixture.componentInstance;
-    component.phoneNumber = "1+(234)213-4213";
+    component.model = "1+(234)213-4213";
+    component.ngOnInit();
   });
 
   it('Phone Num Check', function () {
