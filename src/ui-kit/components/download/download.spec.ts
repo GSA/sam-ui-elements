@@ -30,7 +30,6 @@ describe('SamDownloadComponent', () => {
           {
             "resourceId": "862178b04be2db1778a697464f186836",
             "name": "J.pdf",
-            "type": "file",
             "description": "Industry Day IV change of conference room.",
             "size": "83 kB",
             "downloadUrl": "http://fakesite.com/download/4444",
@@ -57,7 +56,7 @@ describe('SamDownloadComponent', () => {
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('.download-container-header .download-button a')).nativeElement.getAttribute("href")).toContain('http://fakesite.com/download/1234');
   });
-  
+
   it('check fields', () => {
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('.card-header h3')).nativeElement.innerHTML).toContain('Industry Day IV Change of Location');
