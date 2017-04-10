@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, forwardRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, OnInit, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ListDisplayConfig } from '../../types';
@@ -23,14 +23,17 @@ const LIST_VALUE_ACCESSOR = {
   templateUrl: 'list-display.template.html',
   providers: [ LIST_VALUE_ACCESSOR ]
 })
-export class SamListDisplayComponent implements ControlValueAccessor, OnChanges{
+export class SamListDisplayComponent implements ControlValueAccessor, OnChanges, OnInit{
   /**
    * The newValue property should be the model of the input
    * that this list is listening to. It updates the value in the
    * list on changes to the model.
    */
   @Input() newValue: any;
-
+  /**
+   * Prepopulate the selectedItems on initialization only (not using ngModel)
+   */
+  @Input() initialSelection: Array<any>;
   /*
    * If true, place a "New" label next to new items
    */
@@ -39,7 +42,9 @@ export class SamListDisplayComponent implements ControlValueAccessor, OnChanges{
    * Optional configuration object
    */
   @Input() config: ListDisplayConfig;
-
+  /**
+   * Outputs removed items
+   */
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
 
   get value(): any {
@@ -61,17 +66,30 @@ export class SamListDisplayComponent implements ControlValueAccessor, OnChanges{
 
   constructor(){}
 
+  ngOnInit(){
+    if(this.initialSelection){
+      for(let idx in this.initialSelection){
+        this.newItems[this.initialSelection[idx]] = true;
+        this.selectedItems.push(this.initialSelection[idx]);
+      }
+    }
+  }
+
   ngOnChanges(changes: any) {
     if (this.newValue && this.selectedItems.indexOf(this.newValue) === -1) {
+      this.onTouchedCallback();
       this.newItems[this.newValue] = true;
       this.selectedItems.push(this.newValue);
+      this.onChangedCallback(this.selectedItems);
     }
   }
 
   removeItem(idx, value) {
+    this.onTouchedCallback();
     this.selectedItems.splice(idx, 1);
     delete this.newItems[value];
-    this.modelChange.emit();
+    this.modelChange.emit(value);
+    this.onChangedCallback(this.selectedItems);
   }
 
   writeValue(value) {
