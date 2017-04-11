@@ -1,0 +1,6 @@
+<select #mainSelectElement [(ngModel)]="value" (change)="updateSelected()" (focus)="onTouchedCallback()" style="width: initial;">
+  <ng-content></ng-content>
+</select>
+<select class="usa-sr-only" aria-hidden="true" role="presentation" #hiddenSelectElement style="width: initial;">
+  <option>{{value}}</option>
+</select>

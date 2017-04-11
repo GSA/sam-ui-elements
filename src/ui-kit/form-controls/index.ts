@@ -18,6 +18,7 @@ import { SamTextAreaModule } from './textarea';
 import { SamTimeComponent } from './time';
 import { SamToggleSwitchComponent } from './toggle-switch';
 import { SamListDisplayComponent } from './list-display';
+import { SamSelectResizableComponent } from './select-resizable';
 
 @NgModule({
   imports: [
@@ -29,7 +30,7 @@ import { SamListDisplayComponent } from './list-display';
     SamCheckboxModule,
     SamSelectModule,
     SamTextInputModule,
-    SamAutocompleteDropdownModule
+    SamAutocompleteDropdownModule,
   ],
   declarations: [
     SamDateComponent,
@@ -38,7 +39,8 @@ import { SamListDisplayComponent } from './list-display';
     SamRadioButtonComponent,
     SamTimeComponent,
     SamToggleSwitchComponent,
-    SamListDisplayComponent
+    SamListDisplayComponent,
+    SamSelectResizableComponent
   ],
   exports: [
     SamCheckboxModule,
@@ -55,7 +57,8 @@ import { SamListDisplayComponent } from './list-display';
     SamAutocompleteModule,
     SamToggleSwitchComponent,
     SamAutocompleteDropdownModule,
-    SamListDisplayComponent
+    SamListDisplayComponent,
+    SamSelectResizableComponent
   ],
   providers: []
 })
