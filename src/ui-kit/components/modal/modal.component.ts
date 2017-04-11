@@ -90,7 +90,6 @@ export class SamModalComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked() {
     if (this.show) {
-      console.log("I'm running")
       this._allFocusableElements = document.querySelectorAll(this._focusableString);
       this._modalFocusableElements = this.hostElement.nativeElement.querySelectorAll(this._focusableString);
 
