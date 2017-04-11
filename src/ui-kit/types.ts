@@ -35,6 +35,7 @@ export interface AutocompleteConfig {
   addOnIconClass?: string;
   allowAny?: boolean;
   keyValueConfig?: AutocompleteKeyValueConfig;
+  placeholder?: string;
 }
 
 export interface AutocompleteKeyValueConfig {
