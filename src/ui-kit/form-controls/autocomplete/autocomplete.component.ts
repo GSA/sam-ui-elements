@@ -54,6 +54,12 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
    */
   @Input() public allowAny: boolean = false;
 
+  /**
+   * Emitted only when the user selects an item from the dropdown list, or when the user clicks enter and the mode is
+   * allowAny. This is useful if you do not want to respond to onChange events when the input is blurred.
+   */
+  @Output() public enterEvent: EventEmitter<any> = new EventEmitter();
+
   public results: Array<string>;
   public innerValue: any = '';
   public inputValue: any;
@@ -200,6 +206,8 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       if ((event.code === 'Escape' || event.keyIdentified === 'Escape') && (this.results && this.results.length > 0) && !this.hasServiceError) {
         this.clearDropdown();
       }
+    } else if ((event.code === 'Enter' || event.keyIdentified === 'Enter') && this.allowAny ) {
+      this.setSelected(this.inputValue);
     }
   }
 
@@ -314,6 +322,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     this.renderer.setElementProperty(this.srOnly.nativeElement, 'innerHTML', null);
     this.renderer.invokeElementMethod(this.input.nativeElement, 'blur', []);
     this.pushSROnlyMessage(`You chose ${message}`);
+    this.enterEvent.emit(value);
   }
 
   filterResults(subStr: string, stringArray: Array<string>): Array<string> {
