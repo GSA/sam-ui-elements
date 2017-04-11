@@ -6,7 +6,7 @@ export class AutocompleteService {
   setFetchMethod(_?: any): any {
   }
 
-  fetch(val: string, pageEnd: boolean): Observable<any> {
+  fetch(val: string, pageEnd: boolean, serviceOptions?: any): Observable<any> {
     return Observable.of([]).map(o => o);
   }
 }

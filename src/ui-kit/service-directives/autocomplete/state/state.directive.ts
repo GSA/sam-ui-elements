@@ -11,7 +11,7 @@ export class StateService implements AutocompleteService {
 
   setFetchMethod() {}
 
-  fetch(val: string, pageEnd: boolean): Observable<any> {
+  fetch(val: string, pageEnd: boolean, serviceOptions?: any): Observable<any> {
     val = val.toLowerCase();
 
     const filteredStates = this.states.reduce((prev, curr, arr, index) => {
