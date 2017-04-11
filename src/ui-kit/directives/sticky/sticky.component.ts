@@ -30,7 +30,7 @@ export class SamStickyComponent implements OnInit {
     // to help finding the initial element width
     this.renderer.setElementStyle(this.el.nativeElement, 'position', "static");
     this.renderer.setElementStyle(this.el.nativeElement, 'width', "auto");
-    
+
     this.elemWidth = this.el.nativeElement.offsetWidth;
     this.makeSticky();
   }
@@ -89,7 +89,42 @@ export class SamStickyComponent implements OnInit {
     return distance;
   }
 
+  isHighestAmongSibling():boolean{
+    let highest = true;
+    let parentContainer: any = document.getElementsByClassName(this.container);
+    let directChild = this.findDirectChild();
+    let height = directChild.offsetHeight;
+
+    for(var i = 0; i < parentContainer[0].children.length; i++) {
+      if(directChild !== parentContainer[0].children[i] && parentContainer[0].children[i].offsetHeight > height) {
+        highest = false;
+      }
+    }
+    return highest;
+  }
+
+  findDirectChild(){
+    let parentContainer: any = document.getElementsByClassName(this.container);
+    let directChild;
+    let curNode = this.el.nativeElement;
+    if (curNode.parentNode) {
+      do {
+        if(curNode.parentNode === parentContainer[0]){
+          directChild = curNode;
+          break;
+        }
+        curNode = curNode.parentNode;
+      } while (curNode);
+    }
+    return directChild;
+  }
+
   adjustStickyPos(){
+    if(this.isHighestAmongSibling()){
+      this.setPosition("static");
+      return;
+    }
+
     let parentContainer: any = document.getElementsByClassName(this.container);
     let documentHeight = this.getDocHeight();
     let scrollPosition = this.getScrollTop() + window.innerHeight;
@@ -100,11 +135,13 @@ export class SamStickyComponent implements OnInit {
     let stopLimit = (documentHeight - restOfDocumentHeight) + ( window.innerHeight - stickyElementLimit);
     let parentContainerToTop = this.getElemDistanceToTop(parentContainer[0]);
 
+    
     // Start to make it sticky when:
     // 1.the element is scrolled to top
     // 2.the container's height is larger than the element height plus diffLimit
-    if(this.getScrollTop() + this.stickyTop > parentContainerToTop+ this.el.nativeElement.offsetTop &&
-      this.el.nativeElement.offsetHeight + this.diffLimit < parentContainer[0].offsetHeight){
+
+    if(this.getScrollTop() + this.stickyTop > parentContainerToTop+ this.el.nativeElement.offsetTop
+      && this.el.nativeElement.offsetHeight + this.diffLimit < parentContainer[0].offsetHeight){
       this.setPosition("fixed");
       // Make the elem stick on top until the space is not enough to show the elem
       if (this.el.nativeElement.offsetHeight+this.getScrollTop()< parentContainerToTop+parentContainer[0].offsetHeight-50) {
@@ -118,4 +155,5 @@ export class SamStickyComponent implements OnInit {
       this.setPosition("static");
     }
   }
+
 }

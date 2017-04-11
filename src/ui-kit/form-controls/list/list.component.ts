@@ -156,7 +156,9 @@ export class SamListComponent implements ControlValueAccessor,OnInit,OnChanges {
   }
   
   removeItem(idx){
-    this.control.markAsDirty();
+    if(this.control) {
+      this.control.markAsDirty();
+    }
     this.selections.splice(idx,1);
     this.onTouched(()=>{});
     this.onChange(this.selections);

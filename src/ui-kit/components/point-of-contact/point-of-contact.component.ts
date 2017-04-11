@@ -1,4 +1,5 @@
-import { HostListener, Component, ElementRef, Input, Renderer, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { PointOfContactType } from '../../types';
 
 /**
  * The <samPOC> component outputs Point of Contact information
@@ -6,15 +7,9 @@ import { HostListener, Component, ElementRef, Input, Renderer, OnInit } from '@a
 @Component({ selector: 'samPOC',
   templateUrl: 'point-of-contact.template.html'
 })
-export class SamPointOfContactComponent implements OnInit {
+export class SamPointOfContactComponent {
   /**
   * Populates the component with the provided data
   */
-  @Input() data: any;
-
-  constructor( ) {}
-
-  ngOnInit(){
-  }
-
+  @Input() data: PointOfContactType;
 }

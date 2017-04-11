@@ -2,7 +2,7 @@ import { Directive, ElementRef, Output, EventEmitter, HostListener } from '@angu
 
 
 @Directive({
-  selector: '[tabOutside]'
+  selector: '[samTabOutside]'
 })
 export class SamTabOutsideDirective {
   @Output() tabOutside: EventEmitter<any> = new EventEmitter();

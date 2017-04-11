@@ -1,12 +1,24 @@
 <div class="sam-autocomplete" samClickOutside (clickOutside)="checkForFocus($event)" samTabOutside (tabOutside)="checkForFocus($event)">
-  <div>
-    <label *ngIf="labelText" [attr.for]="id">{{labelText}}<span class="usa-sr-only">&nbsp;autocomplete</span></label>
-    <input [attr.id]="id" #input autocomplete="off" [attr.name]="name" type="text" (focus)="hasFocus = true" (change)="onChange($event.target.value)" (keydown)="onKeydown($event)" (keyup)="onKeyup($event)" [(ngModel)]="innerValue">
+  <!-- Text input -->
+  <label *ngIf="labelText || labelText" [attr.for]="id">{{labelText}}<span class="usa-sr-only">&nbsp;autocomplete</span></label>
+  <div class="input-container">
+    <input [attr.id]="id" #input autocomplete="off" [attr.name]="name" type="text" (focus)="hasFocus = true" (change)="onChange()" (keydown)="onKeydown($event)" (keyup)="onKeyup($event)" [(ngModel)]="inputValue">
     <span *ngIf="showClearButton" class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}"><i class="fa fa-times-circle" (click)="clearInput()" (keyup.enter)="clearInput()" tabindex="0"></i></span>
+    <span *ngIf="config && config.addOnIconClass" class="add-on"><i class="{{config.addOnIconClass}}"></i></span>
   </div>
-  <ul id="sam-autocomplete-results" #resultsList *ngIf="results && hasFocus">
+  
+  <ul class="sam-autocomplete-no-results" *ngIf="((results && results.length == 0) || (filteredKeyValuePairs && filteredKeyValuePairs.length == 0))  && hasFocus">
+    <li>No results found</li>
+  </ul>
+  <!-- Lists data if array of strings is passed to component -->
+  <ul id="sam-autocomplete-results" #resultsList *ngIf="results && results.length > 0 && hasFocus">
     <li *ngFor="let result of results" (click)="setSelected(result)">{{result}}</li>
   </ul>
+  <!-- Lists data if array of objects with key/value pair is passed to component -->
+  <ul id="sam-autocomplete-results-kv" #resultsListKV *ngIf="filteredKeyValuePairs && filteredKeyValuePairs.length > 0 && hasFocus">
+    <li *ngFor="let obj of filteredKeyValuePairs" (click)="setSelected(obj)">{{obj[config.keyValueConfig.valueProperty]}}</li>
+  </ul>
+  <!-- Screen Reader Only, reads results and selections -->
   <ul #srOnly class="usa-sr-only" role="status" aria-live="assertive" aria-relevant="additions">
   </ul>
 </div>

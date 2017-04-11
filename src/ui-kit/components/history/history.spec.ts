@@ -57,7 +57,7 @@ describe("The SAM History Component", ()=> {
   
   it('check current class', () => {
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('ul li:nth-child(2)')).nativeElement.getAttribute("class")).toBe("current");
+    expect(fixture.debugElement.query(By.css('ul li:nth-child(2)')).nativeElement.getAttribute("class")).toContain("current");
   });
   
 });
