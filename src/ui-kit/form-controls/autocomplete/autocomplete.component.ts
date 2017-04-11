@@ -311,7 +311,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
 
   setSelected(value: any) {
     let displayValue = value;
-    if(this.config && this.config.keyValueConfig){
+    if(this.config && this.config.keyValueConfig && value[this.config.keyValueConfig.valueProperty]){
       displayValue = value[this.config.keyValueConfig.valueProperty]
     }
     const message = displayValue;
