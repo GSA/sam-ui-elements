@@ -36,6 +36,7 @@ export interface AutocompleteConfig {
   allowAny?: boolean;
   keyValueConfig?: AutocompleteKeyValueConfig;
   placeholder?: string;
+  serviceOptions?: any;
 }
 
 export interface AutocompleteKeyValueConfig {
