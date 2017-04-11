@@ -69,6 +69,7 @@ export interface DownloadResourceTypeInfoType{
 export interface ListDisplayConfig {
   showNewIndicator?: boolean;
   newItemIndicator?: NewItemIndicator;
+  keyValueConfig?: AutocompleteKeyValueConfig;
 }
 
 export interface NewItemIndicator {
