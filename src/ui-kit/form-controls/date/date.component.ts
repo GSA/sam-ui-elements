@@ -1,7 +1,7 @@
 import {Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, forwardRef} from '@angular/core';
 import * as moment from 'moment/moment';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators} from "@angular/forms";
-
+import {DateType} from '../../types';
 
 /**
  * The <samDate> component is a Date entry portion of a form
@@ -101,18 +101,17 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   onChangeHandler() {
-    if(this.control){
-      this.control.markAsDirty();
-      this.control.markAsTouched();
-    }
+    this.onTouched();
     if (this.isClean()) {
+      this.onChange(null);
       this.valueChange.emit(null);
     } else if (!this.getDate().isValid()) {
+      this.onChange('Invalid Date');
       this.valueChange.emit('Invalid Date');
     } else {
       // use the strict format for outputs
       let dateString = this.getDate().format(this.OUTPUT_FORMAT);
-      this.writeValue(dateString);
+      this.onChange(dateString);
       this.valueChange.emit(dateString);
     }
   }
@@ -152,8 +151,9 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   writeValue(value) {
-    if(this.control){
-      this.control.setValue(value);
+    if(value){
+      this.value = value;
+      this.parseValueString();
     }
   }
 }
