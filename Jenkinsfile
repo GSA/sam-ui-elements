@@ -1,5 +1,5 @@
 #!groovy
-//nodeJS Jenkinsfile
+//SprintBoot Jenkinsfile
 
-def pipeline = fileLoader.fromGit('nodejs-pipeline', 'https://csp-github.sam.gov/GSA-IAE-Infrastructure/pipeline.git', 'master', 'prod-github-cred', '')
+def pipeline = fileLoader.fromGit('nodejs-pipeline', 'https://github.helix.gsa.gov/GSA-IAE/pipeline.git', 'master', 'ghiaeapps', '')
 pipeline.start()
