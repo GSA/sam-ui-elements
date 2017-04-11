@@ -1,4 +1,5 @@
-import { OnInit, Component, Input, Output, EventEmitter, ElementRef, ViewChild } from '@angular/core';
+import { OnInit, Component, Input, Output, EventEmitter, ElementRef, ViewChild, AfterViewChecked } from '@angular/core';
+
 /**
  * The <samModal> component display a popover for user interaction
  */
@@ -6,7 +7,7 @@ import { OnInit, Component, Input, Output, EventEmitter, ElementRef, ViewChild }
   selector: 'samModal',
   templateUrl: './modal.template.html'
 })
-export class SamModalComponent implements OnInit {
+export class SamModalComponent implements OnInit, AfterViewChecked {
   /**
   * Sets ID html attribute of modal
   */
@@ -55,20 +56,29 @@ export class SamModalComponent implements OnInit {
   * Emitted event on modal submission
   */
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>();
-  show = false;
-  private backdropElement: HTMLElement;
-  @ViewChild("modalRoot")
-    public modalRoot: ElementRef;
 
-  types:any = {
+  @ViewChild("modalRoot") public modalRoot: ElementRef;
+  @ViewChild("modalContent") public modalContent: ElementRef;
+
+  public show = false;
+  public types:any = {
     "success":"usa-alert-success",
     "warning":"usa-alert-warning",
     "error":"usa-alert-error",
     "info":"usa-alert-info"
   };
-  selectedType: string = this.types['success'];
+  public selectedType: string = this.types['success'];
 
-  constructor() {
+  private backdropElement: HTMLElement;
+  private internalId;
+  private _focusModalElement: boolean = false;
+  private _focusableString: string = 'a[href], area, button, select, textarea, *[tabindex="0"], input:not([type="hidden"])';
+
+  private _allFocusableElements: NodeListOf<Element>;
+  private _modalFocusableElements: NodeListOf<Element>;
+
+  constructor(private hostElement: ElementRef) {
+    this.internalId = Date.now();
   }
 
   ngOnInit(){
@@ -78,8 +88,44 @@ export class SamModalComponent implements OnInit {
     }
   }
 
+  ngAfterViewChecked() {
+    if (this.show) {
+      this._allFocusableElements = document.querySelectorAll(this._focusableString);
+      this._modalFocusableElements = this.hostElement.nativeElement.querySelectorAll(this._focusableString);
+
+      for (let i = 0; i < this._allFocusableElements.length; i++) {
+        if (!this.hostElement.nativeElement.contains(this._allFocusableElements[i])) {
+          this.removeTabbable(this._allFocusableElements[i])
+        }
+      }
+
+      for (let j = 0; j < this._modalFocusableElements.length; j++) {
+        this.reinsertTabbable(this._modalFocusableElements[j]);
+      }
+    }
+
+    if (this._focusModalElement) {
+      const focusable = this._modalFocusableElements[1] as HTMLElement;
+      focusable.focus();
+      this._focusModalElement = false;
+    }
+
+  }
+
+  removeTabbable(item: any) {
+    item.setAttribute('tabindex', '-1');
+    item.setAttribute('aria-hidden', 'true');
+  }
+
+  reinsertTabbable(item: any) {
+    item.setAttribute('tabindex', '0');
+    item.setAttribute('aria-hidden', 'false');
+  }
+
   ngOnDestroy(){
-    if(this.show) this.removeBackdrop();
+    if (this.show) {
+      this.removeBackdrop();
+    }
   }
 
   typeNotDefined(){
@@ -91,8 +137,6 @@ export class SamModalComponent implements OnInit {
     }
     return false;
   }
-
-
 
   private preventClosing(evt){
     evt.stopPropagation();
@@ -107,15 +151,20 @@ export class SamModalComponent implements OnInit {
       document.body.appendChild(this.backdropElement);
       document.body.className += " modal-open";
     }
-    if(window){
-      window.setTimeout(() => this.modalRoot.nativeElement.focus(), 0);
-    }
+    this._focusModalElement = true;
   }
 
   closeModal(){
     this.show = false;
     this.onClose.emit();
     this.removeBackdrop();
+    for (let i = 0; i < this._allFocusableElements.length; i++) {
+      this.reinsertTabbable(this._allFocusableElements[i]);
+    }
+
+    for (let j = 0; j < this._modalFocusableElements.length; j++) {
+      this.removeTabbable(this._modalFocusableElements[j]);
+    }
   }
 
   submitBtnClick(){
