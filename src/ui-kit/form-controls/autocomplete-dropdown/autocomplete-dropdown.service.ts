@@ -14,7 +14,7 @@ export class AutocompleteDropdownService implements AutocompleteService {
     return this._method = method;
   }
 
-  fetch(val: string, pageEnd: boolean): Observable<any> {
+  fetch(val: string, pageEnd: boolean, serviceOptions?: any): Observable<any> {
     if (this._method === 'Opportunities') {
       return Observable.of(['Labor Opp', 'Government Opp', 'Another Opp']).map(o => o);
     } else if (this._method === 'Entities') {

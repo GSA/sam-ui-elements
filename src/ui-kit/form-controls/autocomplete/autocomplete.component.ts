@@ -127,7 +127,11 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       this.results = this.filterResults(event.target.value, this.options);
       this.pushSROnlyMessage(this.results.length + this.resultsAvailable);
     } else if (this.endOfList) {
-      this.autocompleteService.fetch(event.target.value, this.endOfList).subscribe(
+      let options = null;
+      if (this.config) {
+        options = this.config.serviceOptions || null;
+      }
+      this.autocompleteService.fetch(event.target.value, this.endOfList, options).subscribe(
         (data) => {
           this.hasServiceError = false;
           if (this.isKeyValuePair(data)) {
