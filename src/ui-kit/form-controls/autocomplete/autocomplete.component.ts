@@ -53,10 +53,6 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
    * Allows any value typed in the input to be chosen
    */
   @Input() public allowAny: boolean = false;
-  /**
-   * Limits the number of dropdown results in case filter results are too large
-   */
-  @Input() public dropdownLimit: number;
 
   public results: Array<string>;
   public innerValue: any = '';
@@ -329,8 +325,8 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     if(!Array.isArray(reducedArr)){
       reducedArr = [];
     }
-    if(this.dropdownLimit && reducedArr.length > this.dropdownLimit){
-      reducedArr.length = this.dropdownLimit
+    if(this.config && this.config.dropdownLimit && reducedArr.length > this.config.dropdownLimit){
+      reducedArr.length = this.config.dropdownLimit
     }
     return reducedArr;
   }
@@ -344,8 +340,8 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       }
       return prev;
     }, []);
-    if(this.dropdownLimit && reducedArr.length > this.dropdownLimit){
-      reducedArr.length = this.dropdownLimit;
+    if(this.config && this.config.dropdownLimit && reducedArr.length > this.config.dropdownLimit){
+      reducedArr.length = this.config.dropdownLimit;
     }
     return reducedArr;
   }
