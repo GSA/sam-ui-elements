@@ -37,6 +37,7 @@ export interface AutocompleteConfig {
   keyValueConfig?: AutocompleteKeyValueConfig;
   placeholder?: string;
   serviceOptions?: any;
+  dropdownLimit?: number;
 }
 
 export interface AutocompleteKeyValueConfig {

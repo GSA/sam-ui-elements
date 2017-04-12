@@ -321,22 +321,33 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   }
 
   filterResults(subStr: string, stringArray: Array<string>): Array<string> {
-    return stringArray.filter((str) => {
+    let reducedArr = stringArray.filter((str) => {
       if (str.toLowerCase().includes(subStr.toLowerCase())) {
         return str;
       }
     });
+    if(!Array.isArray(reducedArr)){
+      reducedArr = [];
+    }
+    if(this.config && this.config.dropdownLimit && reducedArr.length > this.config.dropdownLimit){
+      reducedArr.length = this.config.dropdownLimit
+    }
+    return reducedArr;
   }
 
   filterKeyValuePairs(subStr: string, keyValuePairs: any): any {
     subStr = subStr.toLowerCase();
-    return keyValuePairs.reduce((prev, curr, index, arr) => {
+    let reducedArr = keyValuePairs.reduce((prev, curr, index, arr) => {
       if (curr[this.config.keyValueConfig.keyProperty].toLowerCase().includes(subStr) ||
           curr[this.config.keyValueConfig.valueProperty].toLowerCase().includes(subStr)) {
         prev.push(curr);
       }
       return prev;
     }, []);
+    if(this.config && this.config.dropdownLimit && reducedArr.length > this.config.dropdownLimit){
+      reducedArr.length = this.config.dropdownLimit;
+    }
+    return reducedArr;
   }
 
   clearDropdown(){
