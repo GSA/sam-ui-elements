@@ -1,0 +1,63 @@
+<div class="sam-info-accordion-library" *ngFor="let row of data; let i = index">
+  <div class="usa-width-one-whole relative m_T-4x" [ngClass]="getImageContainerClass()">
+    <div class="usa-width-one-whole">
+      <div class="usa-width-one-third" *ngFor="let item of row; let j = index">
+        <div class="usa-width-three-fourths sam-info-accordion-library-wrap relative" tabindex="0" (keyup.enter)="selectDetail(i,j,$event)" [ngClass]="getBorderClass(i, j)">
+          <div *ngIf="hasLayer" [id]="name+'-'+i+j+'-div'" [ngClass]="getLayerClass(i, j)" class="reference-sam-info-accordion-layer-unselect sam-info-accordion-layers" (click)="selectDetail(i,j,$event)">
+            <span [id]="name+'-'+i+j+'-link'" class="sam-info-accordion-library-title" (click)="selectDetail(i,j,$event)">{{item.title}}</span>
+          </div>
+          <span class="sam-info-accordion-library-toggle" (click)="selectDetail(i,j,$event)">
+            <i [id]="name+'-'+i+j+'-icon'" class="fa fa-plus" [ngClass]="getItemClass(i,j)"></i>
+          </span>
+          <div class="sam-info-accordion-div" (click)="selectDetail(i,j,$event)"><img class="sam-info-accordion-align-center" [src]="item.img" alt="{{item.title}}"></div>
+        </div>
+      </div>
+    </div>
+    <!--Triangle div to point out which topic detail is currently showing-->
+    <div class="usa-width-one-whole tri-div">
+      <div *ngFor="let item of row; let j = index" class="usa-width-one-third" [ngClass]="getTriClass(i, j)"></div>
+    </div>
+  </div>
+
+
+  <div class="usa-width-one-whole relative" *ngIf = "toggleDetail(i)">
+    <div class="relative black-border" [ngClass]="{'detail-div':!largeScreen(),'detail-div-large':largeScreen()}">
+      <div class="usa-width-one-whole relative">
+
+        <a class="sam-info-accordion-library-close" (click)="closeReferenceDetail()">Close</a>
+        <div class="usa-width-one-whole m_T-4x">
+          <h3 class="p_L-2x" *ngIf="showDetailTitle">{{detailObj.item.title}}</h3>
+          <p class="p_L-5x p_R-2x p_B-1x detail-text" *ngIf="!isReleaseDetail">{{detailObj.item.detail}}</p>
+          <table class="usa-grid-full p_L-5x p_R-2x m_B-3x" *ngIf="isReleaseDetail" style="table-layout: fixed;">
+            <tr >
+              <td class="m_R-0 release-note-div vertical-line" valign="top">
+                <h4 class="p_L-1x">What we have achieved:</h4>
+                <p class="m_T-0 p_L-1x">
+                  <span class="release-note underline"><strong>Release {{detailObj.item.releaseDetail.preRelease.releaseNum}} - {{detailObj.item.releaseDetail.preRelease.releaseDate}}</strong><br></span>
+                  <span class="release-note" *ngFor="let feature of detailObj.item.releaseDetail.preRelease.releaseDetail"><strong>{{feature.featureName}} - </strong>{{feature.description}}<br></span>
+                </p>
+              </td>
+              <td class="m_R-0 release-note-div vertical-line" valign="top">
+                <h4 class="p_L-1x">What we're working on:</h4>
+                <p class="m_T-0 p_L-1x">
+                  <span class="release-note underline"><strong>Release {{detailObj.item.releaseDetail.curRelease.releaseNum}} - {{detailObj.item.releaseDetail.curRelease.releaseDate}}</strong><br></span>
+                  <span class="release-note" *ngFor="let feature of detailObj.item.releaseDetail.curRelease.releaseDetail"><strong>{{feature.featureName}} - </strong>{{feature.description}}<br></span>
+                </p>
+              </td>
+              <td class="release-note-div" valign="top">
+                <h4 class="p_L-1x">What's up next:</h4> d
+                <p class="m_T-0 p_L-1x">
+                  <span class="release-note underline"><strong>Release {{detailObj.item.releaseDetail.nextRelease.releaseNum}} - {{detailObj.item.releaseDetail.nextRelease.releaseDate}}</strong><br></span>
+                  <span class="release-note" *ngFor="let feature of detailObj.item.releaseDetail.nextRelease.releaseDetail"><strong>{{feature.featureName}} - </strong>{{feature.description}}<br></span>
+
+                </p>
+              </td>
+            </tr>
+          </table>
+          <span class="sam-info-accordion-library-content-link" [ngClass]="getLinkClass()"><a href="{{detailObj.item.url}}" target="{{detailObj.item.title}}">{{detailObj.item.link}}</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="usa-width-one-whole"></div>
+</div>
