@@ -78,7 +78,7 @@ describe('SAM Info Accordion Component', () => {
   it('should open detail when clicking on semi-transparent div', ()=> {
     fixture.detectChanges();
     expect(component.detailObj.showDetail).toBe(false);
-    fixture.nativeElement.querySelectorAll('.image-layers')[2].click();
+    fixture.nativeElement.querySelectorAll('.sam-info-accordion-layers')[2].click();
     fixture.whenStable().then(() => {
       fixture.detectChanges();
       let contractDetail = fixture.debugElement.query(By.css(".detail-text"));
@@ -117,7 +117,7 @@ describe('SAM Info Accordion Component', () => {
       fixture.detectChanges();
       let contractDetail = fixture.debugElement.query(By.css(".detail-text"));
       expect(contractDetail.nativeElement.innerHTML).toBe(component.data[0][2].detail);
-      fixture.nativeElement.querySelector('.image-library-close').click();
+      fixture.nativeElement.querySelector('.sam-info-accordion-library-close').click();
 
       fixture.detectChanges();
       expect(component.detailObj.showDetail).toBe(false);
