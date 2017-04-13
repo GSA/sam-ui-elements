@@ -30,7 +30,6 @@ export class SamListDisplayComponent implements ControlValueAccessor, OnChanges{
    * list on changes to the model.
    */
   @Input() newValue: any;
-
   /*
    * If true, place a "New" label next to new items
    */
@@ -39,7 +38,9 @@ export class SamListDisplayComponent implements ControlValueAccessor, OnChanges{
    * Optional configuration object
    */
   @Input() config: ListDisplayConfig;
-
+  /**
+   * Outputs removed items
+   */
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
 
   get value(): any {
@@ -63,15 +64,19 @@ export class SamListDisplayComponent implements ControlValueAccessor, OnChanges{
 
   ngOnChanges(changes: any) {
     if (this.newValue && this.selectedItems.indexOf(this.newValue) === -1) {
+      this.onTouchedCallback();
       this.newItems[this.newValue] = true;
       this.selectedItems.push(this.newValue);
+      this.onChangedCallback(this.selectedItems);
     }
   }
 
   removeItem(idx, value) {
+    this.onTouchedCallback();
     this.selectedItems.splice(idx, 1);
     delete this.newItems[value];
-    this.modelChange.emit();
+    this.modelChange.emit(value);
+    this.onChangedCallback(this.selectedItems);
   }
 
   writeValue(value) {

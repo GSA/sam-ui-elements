@@ -35,6 +35,9 @@ export interface AutocompleteConfig {
   addOnIconClass?: string;
   allowAny?: boolean;
   keyValueConfig?: AutocompleteKeyValueConfig;
+  placeholder?: string;
+  serviceOptions?: any;
+  dropdownLimit?: number;
 }
 
 export interface AutocompleteKeyValueConfig {
@@ -69,6 +72,7 @@ export interface DownloadResourceTypeInfoType{
 export interface ListDisplayConfig {
   showNewIndicator?: boolean;
   newItemIndicator?: NewItemIndicator;
+  keyValueConfig?: AutocompleteKeyValueConfig;
 }
 
 export interface NewItemIndicator {
