@@ -365,6 +365,13 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     this.renderer.setElementProperty(this.srOnly.nativeElement, 'innerHTML', null);
   }
 
+  inputFocusHandler(evt){
+    this.hasFocus = true;
+    if(evt.target.value){
+      this.onKeyup(evt);
+    }
+  }
+
   clearInput(){
     this.input.nativeElement.value = "";
     this.clearDropdown();
