@@ -89,6 +89,9 @@ export class SamListDisplayComponent implements ControlValueAccessor, OnChanges{
   }
 
   writeValue(value) {
+    if (!value|| value !== Array) {
+      value = [];
+    }
     if (value !== this.selectedItems) {
       this.selectedItems = value;
     }
