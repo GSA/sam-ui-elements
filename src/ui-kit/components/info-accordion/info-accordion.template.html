@@ -1,63 +1,85 @@
-<div class="sam-info-accordion-library" *ngFor="let row of data; let i = index">
-  <div class="usa-width-one-whole relative m_T-4x" [ngClass]="getImageContainerClass()">
-    <div class="usa-width-one-whole">
-      <div class="usa-width-one-third" *ngFor="let item of row; let j = index">
-        <div class="usa-width-three-fourths sam-info-accordion-library-wrap relative" tabindex="0" (keyup.enter)="selectDetail(i,j,$event)" [ngClass]="getBorderClass(i, j)">
-          <div *ngIf="hasLayer" [id]="name+'-'+i+j+'-div'" [ngClass]="getLayerClass(i, j)" class="reference-sam-info-accordion-layer-unselect sam-info-accordion-layers" (click)="selectDetail(i,j,$event)">
-            <span [id]="name+'-'+i+j+'-link'" class="sam-info-accordion-library-title" (click)="selectDetail(i,j,$event)">{{item.title}}</span>
+<!-- Add largeScreen() functionality -->
+<!-- getImageContainerClass() -->
+
+<div class="sam-ui vertically padded grid">
+  
+  <div class="twelve wide column" *ngFor="let row of data; let i = index">
+    
+    <div class="sam-ui very relaxed grid">  
+      <div class="three column row">
+        <div class="column" *ngFor="let item of row; let j = index">
+          
+          <div class="sam-ui segment" (mouseenter)='over(item, i, j)' (mouseleave)='over(item, i, j)' [@overState]="item.state ? item.state : 'inactive'" tabindex="0" (keyup.enter)="selectDetail(i,j,$event)" (click)="selectDetail(i,j,$event)"  [ngClass]="getBorderClass(i, j)">
+            
+            <div *ngIf="hasLayer" [id]="name+'-'+i+j+'-div'">
+              <h3 [id]="name+'-'+i+j+'-link'" (click)="selectDetail(i,j,$event)">
+                {{item.title}}
+              </h3>
+            </div>
+            
+            <i style="position: absolute; top: 15px; right: 15px;" [id]="name+'-'+i+j+'-icon'" class="fa fa-plus" [ngClass]="getItemClass(i,j)"></i>
+            
+            <img [src]="item.img" alt="{{item.title}}" style="mix-blend-mode: multiply; width: 30%;">
+            
           </div>
-          <span class="sam-info-accordion-library-toggle" (click)="selectDetail(i,j,$event)">
-            <i [id]="name+'-'+i+j+'-icon'" class="fa fa-plus" [ngClass]="getItemClass(i,j)"></i>
-          </span>
-          <div class="sam-info-accordion-div" (click)="selectDetail(i,j,$event)"><img class="sam-info-accordion-align-center" [src]="item.img" alt="{{item.title}}"></div>
+          
+          <!--Triangle div to point out which topic detail is currently showing-->
+          <div class="sam-ui pointing" [@pointingInOut]="fadeSegmentInOut"></div>
+          
         </div>
       </div>
     </div>
-    <!--Triangle div to point out which topic detail is currently showing-->
-    <div class="usa-width-one-whole tri-div">
-      <div *ngFor="let item of row; let j = index" class="usa-width-one-third" [ngClass]="getTriClass(i, j)"></div>
-    </div>
-  </div>
-
-
-  <div class="usa-width-one-whole relative" *ngIf = "toggleDetail(i)">
-    <div class="relative black-border" [ngClass]="{'detail-div':!largeScreen(),'detail-div-large':largeScreen()}">
-      <div class="usa-width-one-whole relative">
-
-        <a class="sam-info-accordion-library-close" (click)="closeReferenceDetail()">Close</a>
-        <div class="usa-width-one-whole m_T-4x">
-          <h3 class="p_L-2x" *ngIf="showDetailTitle">{{detailObj.item.title}}</h3>
-          <p class="p_L-5x p_R-2x p_B-1x detail-text" *ngIf="!isReleaseDetail">{{detailObj.item.detail}}</p>
-          <table class="usa-grid-full p_L-5x p_R-2x m_B-3x" *ngIf="isReleaseDetail" style="table-layout: fixed;">
-            <tr >
-              <td class="m_R-0 release-note-div vertical-line" valign="top">
-                <h4 class="p_L-1x">What we have achieved:</h4>
-                <p class="m_T-0 p_L-1x">
-                  <span class="release-note underline"><strong>Release {{detailObj.item.releaseDetail.preRelease.releaseNum}} - {{detailObj.item.releaseDetail.preRelease.releaseDate}}</strong><br></span>
-                  <span class="release-note" *ngFor="let feature of detailObj.item.releaseDetail.preRelease.releaseDetail"><strong>{{feature.featureName}} - </strong>{{feature.description}}<br></span>
-                </p>
+    <div class="sam-ui grid" [@slideInOut]="'in'" *ngIf="toggleDetail(i)">
+      <div class="column">
+        <div class="sam-ui clearing segment" [@fadeInOut]="fadeSegmentInOut">
+          
+          <a class="sam-ui top right attached label" (click)="closeReferenceDetail()">
+            <i class="fa fa-times" aria-hidden="true"></i> 
+          </a>
+          
+          <h3 *ngIf="showDetailTitle">
+            {{detailObj.item.title}}
+          </h3>
+          
+          <p *ngIf="!isReleaseDetail">
+            {{detailObj.item.detail}}
+          </p>
+          
+          <table class="sam-ui very basic celled attached table" *ngIf="isReleaseDetail">
+            <tr>
+              <td>
+                <h4>What we have achieved</h4>
+                <h5>Release {{detailObj.item.releaseDetail.preRelease.releaseNum}} - {{detailObj.item.releaseDetail.preRelease.releaseDate}}</h5>
+                <span *ngFor="let feature of detailObj.item.releaseDetail.preRelease.releaseDetail">
+                  <strong>{{feature.featureName}} - </strong>{{feature.description}}<br>
+                </span>
               </td>
-              <td class="m_R-0 release-note-div vertical-line" valign="top">
-                <h4 class="p_L-1x">What we're working on:</h4>
-                <p class="m_T-0 p_L-1x">
-                  <span class="release-note underline"><strong>Release {{detailObj.item.releaseDetail.curRelease.releaseNum}} - {{detailObj.item.releaseDetail.curRelease.releaseDate}}</strong><br></span>
-                  <span class="release-note" *ngFor="let feature of detailObj.item.releaseDetail.curRelease.releaseDetail"><strong>{{feature.featureName}} - </strong>{{feature.description}}<br></span>
-                </p>
+              <td>
+                <h4>What we're working on</h4>
+                <h5>Release {{detailObj.item.releaseDetail.curRelease.releaseNum}} - {{detailObj.item.releaseDetail.curRelease.releaseDate}}</h5>
+                <span *ngFor="let feature of detailObj.item.releaseDetail.curRelease.releaseDetail">
+                  <strong>{{feature.featureName}} - </strong>{{feature.description}}<br>
+                </span>
               </td>
-              <td class="release-note-div" valign="top">
-                <h4 class="p_L-1x">What's up next:</h4>
-                <p class="m_T-0 p_L-1x">
-                  <span class="release-note underline"><strong>Release {{detailObj.item.releaseDetail.nextRelease.releaseNum}} - {{detailObj.item.releaseDetail.nextRelease.releaseDate}}</strong><br></span>
-                  <span class="release-note" *ngFor="let feature of detailObj.item.releaseDetail.nextRelease.releaseDetail"><strong>{{feature.featureName}} - </strong>{{feature.description}}<br></span>
-
-                </p>
+              <td>
+                <h4>What's up next</h4>
+                <h5>Release {{detailObj.item.releaseDetail.nextRelease.releaseNum}} - {{detailObj.item.releaseDetail.nextRelease.releaseDate}}</h5>
+                <span *ngFor="let feature of detailObj.item.releaseDetail.nextRelease.releaseDetail">
+                  <strong>{{feature.featureName}} - </strong>{{feature.description}}<br>
+                </span>
               </td>
             </tr>
           </table>
-          <span class="sam-info-accordion-library-content-link" [ngClass]="getLinkClass()"><a href="{{detailObj.item.url}}" target="{{detailObj.item.title}}">{{detailObj.item.link}}</a></span>
+          
+          <a class="sam-ui small right floated primary button" href="{{detailObj.item.url}}" target="{{detailObj.item.title}}">
+            <i *ngIf="getLinkClass()" class="icon fa fa-external-link" aria-hidden="true"></i>  
+            {{detailObj.item.link}}
+          </a>
+          
         </div>
       </div>
     </div>
+  
   </div>
-  <div class="usa-width-one-whole"></div>
+  
 </div>
