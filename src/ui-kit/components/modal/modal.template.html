@@ -1,9 +1,9 @@
 <div aria-live="assertive" #modalRoot *ngIf="show" [attr.id]="id" tabindex="-1" role="dialog" class="modal-dialog" tabindex="-1" (keydown.esc)="closeOnEscape ? closeModal() : 0" (click)="closeOnOutsideClick ? closeModal() : 0">
 	<div #modalContent class="modal-content" (click)="preventClosing($event)">
-		<div class="usa-alert {{this.types[type]}}">
+		<div class="usa-alert {{this.types[type].class}}">
 		  <div class="usa-alert-body">
 		    <h3 class="usa-alert-heading">
-		      {{title}}
+		      <span class="sr-only">{{this.types[type].sr}}</span>{{title}}
 		      <span class="pull-right" *ngIf="showClose">
 		        <button class="usa-button-link" (click)="closeModal()"><i class="fa fa-times-circle"></i><span class="usa-sr-only">close modal</span></button>
 		      </span>
