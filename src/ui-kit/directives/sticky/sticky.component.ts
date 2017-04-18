@@ -89,7 +89,7 @@ export class SamStickyComponent implements OnInit {
     return distance;
   }
 
-  isHighestAmongSibling():boolean{
+  isTallestAmongSiblings():boolean{
     let highest = true;
     let parentContainer: any = document.getElementsByClassName(this.container);
     let directChild = this.findDirectChild();
@@ -120,7 +120,7 @@ export class SamStickyComponent implements OnInit {
   }
 
   adjustStickyPos(){
-    if(this.isHighestAmongSibling()){
+    if(this.isTallestAmongSiblings()){
       this.setPosition("static");
       return;
     }
