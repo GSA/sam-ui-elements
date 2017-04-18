@@ -1,7 +1,6 @@
 import {Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, forwardRef} from '@angular/core';
 import * as moment from 'moment/moment';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators} from "@angular/forms";
-import {DateType} from '../../types';
 
 /**
  * The <samDate> component is a Date entry portion of a form
