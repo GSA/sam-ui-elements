@@ -395,4 +395,8 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   registerOnTouched(fn: any): void {
     this.onTouchedCallback = fn;
   }
+
+  setDisabledState(isDisabled: boolean) {
+    this.input.nativeElement.disabled = isDisabled;
+  }
 }
