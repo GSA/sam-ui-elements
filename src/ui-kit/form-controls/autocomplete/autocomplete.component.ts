@@ -54,6 +54,12 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
    */
   @Input() public allowAny: boolean = false;
 
+  /**
+   * Emitted only when the user selects an item from the dropdown list, or when the user clicks enter and the mode is
+   * allowAny. This is useful if you do not want to respond to onChange events when the input is blurred.
+   */
+  @Output() public enterEvent: EventEmitter<any> = new EventEmitter();
+
   public results: Array<string>;
   public innerValue: any = '';
   public inputValue: any;
@@ -127,7 +133,11 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       this.results = this.filterResults(event.target.value, this.options);
       this.pushSROnlyMessage(this.results.length + this.resultsAvailable);
     } else if (this.endOfList) {
-      this.autocompleteService.fetch(event.target.value, this.endOfList).subscribe(
+      let options = null;
+      if (this.config) {
+        options = this.config.serviceOptions || null;
+      }
+      this.autocompleteService.fetch(event.target.value, this.endOfList, options).subscribe(
         (data) => {
           this.hasServiceError = false;
           if (this.isKeyValuePair(data)) {
@@ -200,6 +210,8 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       if ((event.code === 'Escape' || event.keyIdentified === 'Escape') && (this.results && this.results.length > 0) && !this.hasServiceError) {
         this.clearDropdown();
       }
+    } else if ((event.code === 'Enter' || event.keyIdentified === 'Enter') && this.allowAny ) {
+      this.setSelected(this.inputValue);
     }
   }
 
@@ -303,7 +315,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
 
   setSelected(value: any) {
     let displayValue = value;
-    if(this.config && this.config.keyValueConfig){
+    if(this.config && this.config.keyValueConfig && value[this.config.keyValueConfig.valueProperty]){
       displayValue = value[this.config.keyValueConfig.valueProperty]
     }
     const message = displayValue;
@@ -314,31 +326,50 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     this.renderer.setElementProperty(this.srOnly.nativeElement, 'innerHTML', null);
     this.renderer.invokeElementMethod(this.input.nativeElement, 'blur', []);
     this.pushSROnlyMessage(`You chose ${message}`);
+    this.enterEvent.emit(value);
   }
 
   filterResults(subStr: string, stringArray: Array<string>): Array<string> {
-    return stringArray.filter((str) => {
+    let reducedArr = stringArray.filter((str) => {
       if (str.toLowerCase().includes(subStr.toLowerCase())) {
         return str;
       }
     });
+    if(!Array.isArray(reducedArr)){
+      reducedArr = [];
+    }
+    if(this.config && this.config.dropdownLimit && reducedArr.length > this.config.dropdownLimit){
+      reducedArr.length = this.config.dropdownLimit
+    }
+    return reducedArr;
   }
 
   filterKeyValuePairs(subStr: string, keyValuePairs: any): any {
     subStr = subStr.toLowerCase();
-    return keyValuePairs.reduce((prev, curr, index, arr) => {
+    let reducedArr = keyValuePairs.reduce((prev, curr, index, arr) => {
       if (curr[this.config.keyValueConfig.keyProperty].toLowerCase().includes(subStr) ||
           curr[this.config.keyValueConfig.valueProperty].toLowerCase().includes(subStr)) {
         prev.push(curr);
       }
       return prev;
     }, []);
+    if(this.config && this.config.dropdownLimit && reducedArr.length > this.config.dropdownLimit){
+      reducedArr.length = this.config.dropdownLimit;
+    }
+    return reducedArr;
   }
 
   clearDropdown(){
     this.renderer.invokeElementMethod(this.input.nativeElement, 'blur', []);
     this.hasFocus = false;
     this.renderer.setElementProperty(this.srOnly.nativeElement, 'innerHTML', null);
+  }
+
+  inputFocusHandler(evt){
+    this.hasFocus = true;
+    if(evt.target.value){
+      this.onKeyup(evt);
+    }
   }
 
   clearInput(){
@@ -363,5 +394,9 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
 
   registerOnTouched(fn: any): void {
     this.onTouchedCallback = fn;
+  }
+
+  setDisabledState(isDisabled: boolean) {
+    this.input.nativeElement.disabled = isDisabled;
   }
 }

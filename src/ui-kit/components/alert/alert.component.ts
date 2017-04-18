@@ -339,8 +339,8 @@ export class SamAlertComponent {
     element.style.display = 'inline-block';
     computed = window.getComputedStyle(element),
     dimensions = {
-      width: +parseFloat(computed.width || 0).toFixed(1),
-      height: +parseFloat(computed.height || 0).toFixed(1)
+      width: +parseFloat(computed.width || "0").toFixed(1),
+      height: +parseFloat(computed.height || "0").toFixed(1)
     };
 
     element.style.display = display;

@@ -57,6 +57,8 @@ export class SamTextareaComponent implements ControlValueAccessor {
    */
   @Input() placeholder: string;
 
+  @Output() focusEvent: EventEmitter<any> = new EventEmitter();
+
   onChange: any = () => {
     this.wrapper.formatErrors(this.control);
   };
@@ -93,6 +95,10 @@ export class SamTextareaComponent implements ControlValueAccessor {
     this.control.setValidators(validators);
     this.control.valueChanges.subscribe(this.onChange);
     this.wrapper.formatErrors(this.control);
+  }
+
+  onFocus($event) {
+    this.focusEvent.emit($event);
   }
 
   onInputChange(value) {
