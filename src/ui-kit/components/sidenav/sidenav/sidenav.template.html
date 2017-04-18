@@ -1,7 +1,7 @@
 <aside>
   <ul class="usa-sidenav-list">
     <li *ngFor="let child of model.children; let $index = index">
-      <a [ngClass]="{'usa-current': isSelected($index)}"(click)="updateUI($index, $event)">{{child.label}}</a>
+      <a tabindex="0" [ngClass]="{'usa-current': isSelected($index)}"(click)="updateUI($index, $event)">{{child.label}}</a>
       <samMenuItem *ngIf="isSelected($index)"
                     [nodeDepth]="1"
                     [children]="model.children[$index].children"
