@@ -24,6 +24,7 @@ describe('The Sam Modal component', () => {
 
 
     component.title = "test title";
+    component.type = "success";
     component.openModal();
     fixture.detectChanges();
 
