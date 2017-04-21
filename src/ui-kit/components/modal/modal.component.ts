@@ -106,7 +106,9 @@ export class SamModalComponent implements OnInit, AfterViewChecked {
 
     if (this._focusModalElement) {
       const focusable = this._modalFocusableElements[1] as HTMLElement;
-      focusable.focus();
+      if(focusable){
+        focusable.focus();
+      }
       this._focusModalElement = false;
     }
 
