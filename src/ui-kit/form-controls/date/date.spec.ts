@@ -19,10 +19,27 @@ describe('The Sam Date component', () => {
     component = fixture.componentInstance;
     component.value = "2016-12-29";
     component.name = 'test';
+    component.ngOnChanges();
+  });
+
+  it('Date Initializes', function () {
+    fixture.detectChanges();
+    expect(true).toBe(true);
   });
 
   it('Date Check', function () {
     fixture.detectChanges();
-    expect(true).toBe(true);
+    expect(component.model.month).toBe(12);
+    expect(component.model.day).toBe(29);
+    expect(component.model.year).toBe(2016);
+  });
+
+  it('Update date', function () {
+    fixture.detectChanges();
+    component.month.nativeElement.value = "1";
+    fixture.detectChanges();
+    expect(component.model.month).toBe(1);
+    expect(component.model.day).toBe(29);
+    expect(component.model.year).toBe(2016);
   });
 });
