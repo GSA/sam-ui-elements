@@ -1,5 +1,5 @@
 import { TestBed, async } from '@angular/core/testing';
-
+import { FormsModule } from '@angular/forms';
 // Load the implementations that should be tested
 import { SamDateComponent } from './date.component';
 import { SamUIKitModule } from '../../index';
@@ -11,7 +11,7 @@ describe('The Sam Date component', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SamUIKitModule],
+      imports: [SamUIKitModule,FormsModule],
       providers: [SamDateComponent],
     });
 
@@ -20,26 +20,27 @@ describe('The Sam Date component', () => {
     component.value = "2016-12-29";
     component.name = 'test';
     component.ngOnChanges();
+    fixture.detectChanges();
   });
 
-  it('Date Initializes', function () {
-    fixture.detectChanges();
+  it('should initialize Date', function () {
     expect(true).toBe(true);
   });
 
-  it('Date Check', function () {
-    fixture.detectChanges();
+  it('should match specified date', function () {
     expect(component.model.month).toBe(12);
     expect(component.model.day).toBe(29);
     expect(component.model.year).toBe(2016);
   });
 
-  it('Update date', function () {
-    fixture.detectChanges();
+  it('should update', async(function () {
     component.month.nativeElement.value = "1";
+    component.month.nativeElement.dispatchEvent(new Event('input'));//ngmodel needs this
     fixture.detectChanges();
-    expect(component.model.month).toBe(1);
-    expect(component.model.day).toBe(29);
-    expect(component.model.year).toBe(2016);
-  });
+    fixture.whenStable().then(() => {
+      expect(component.model.month).toBe(1);
+      expect(component.model.day).toBe(29);
+      expect(component.model.year).toBe(2016);
+    });
+  }));
 });
