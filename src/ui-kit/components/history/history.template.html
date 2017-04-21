@@ -3,7 +3,7 @@
   <li *ngFor="let item of data; let i = index;" [ngClass]="'history-item-'+i" [class.current]="item.id == currentId" [attr.aria-label]=" item.id == currentId ? 'Current Opportunity' : '' ">
     <span>  
       <strong>{{item.date}}</strong>
-      <a *ngIf="item.url" href="{{ item.url }}">{{ item.title }}</a>
+      <a *ngIf="item.url" [routerLink]='item.url.split("/")'>{{ item.title }}</a>
       <ng-container *ngIf="!item.url">{{ item.title }}</ng-container>
       <br *ngIf="item.title && item.description"/>
       <em *ngIf="item.description">{{ item.description }}</em>
