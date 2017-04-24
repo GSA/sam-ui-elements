@@ -373,6 +373,8 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   }
 
   clearInput(){
+    this.filteredKeyValuePairs = null;
+    this.results = null;
     this.input.nativeElement.value = "";
     this.clearDropdown();
   }
