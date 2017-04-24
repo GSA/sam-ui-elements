@@ -90,6 +90,14 @@ export class SamCheckboxComponent implements ControlValueAccessor {
       let val = this.options[i].value;
       this._ordering[val] = i;
     }
+
+    if(!this.control){
+      return;
+    }
+
+    this.control.valueChanges.subscribe(this.onChange);
+
+    this.wrapper.formatErrors(this.control);
   }
 
   // Give the check all label a name for screen readers

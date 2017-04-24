@@ -1,16 +1,16 @@
-<!--<fieldsetWrapper [label]="label" [name]="getIdentifer('date')" [errorMessage]="errorMessage" [hint]="hint">-->
+<fieldset-wrapper [label]="label" [errorMessage]="errorMessage" [hint]="hint">
   <div class="usa-date-of-birth date-group" style="overflow:auto;">
     <div class="usa-form-group usa-form-group-month">
       <label [attr.for]="monthName()">Month</label>
-      <input [attr.id]="monthName()" #month="ngModel" (blur)="onBlur($event)" [(ngModel)]="model.month" (ngModelChange)="onChange()" class="usa-input-inline" aria-describedby="dobHint" class="usa-form-control" name="date_of_birth_1" pattern="0?[1-9]|1[012]" type="number" min="1" max="12" maxlength="2" [disabled]="disabled">
+      <input [attr.id]="monthName()" #month (blur)="onBlur($event)" [(ngModel)]="model.month" (ngModelChange)="onChangeHandler()" class="usa-input-inline" aria-describedby="dobHint" class="usa-form-control" name="date_of_birth_1" pattern="0?[1-9]|1[012]" type="number" min="1" max="12" maxlength="2" [disabled]="disabled">
     </div>
     <div class="usa-form-group usa-form-group-day">
       <label [attr.for]="dayName()">Day</label>
-      <input [attr.id]="dayName()" #day="ngModel" (blur)="onBlur($event)" [(ngModel)]="model.day" (ngModelChange)="onChange()" class="usa-input-inline" aria-describedby="dobHint" class="usa-form-control" name="date_of_birth_2" pattern="0?[1-9]|1[0-9]|2[0-9]|3[01]" type="number" min="1" max="31" maxlength="2" [disabled]="disabled">
+      <input [attr.id]="dayName()" #day (blur)="onBlur($event)" [(ngModel)]="model.day" (ngModelChange)="onChangeHandler()" class="usa-input-inline" aria-describedby="dobHint" class="usa-form-control" name="date_of_birth_2" pattern="0?[1-9]|1[0-9]|2[0-9]|3[01]" type="number" min="1" max="31" maxlength="2" [disabled]="disabled">
     </div>
     <div class="usa-form-group usa-form-group-year">
       <label [attr.for]="yearName()">Year</label>
-      <input [attr.id]="yearName()" #year="ngModel" (blur)="onBlur($event)" [(ngModel)]="model.year" (ngModelChange)="onChange()" class="usa-input-inline" aria-describedby="dobHint" class="usa-form-control" name="date_of_birth_3" pattern="[0-9]{4}" type="number" min="1900" max="3000" maxlength="4" [disabled]="disabled">
+      <input [attr.id]="yearName()" #year (blur)="onBlur($event)" [(ngModel)]="model.year" (ngModelChange)="onChangeHandler()" class="usa-input-inline" aria-describedby="dobHint" class="usa-form-control" name="date_of_birth_3" pattern="[0-9]{4}" type="number" min="1900" max="3000" maxlength="4" [disabled]="disabled">
     </div>
   </div>
-<!--</labelWrapper>-->
+</fieldset-wrapper>

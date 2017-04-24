@@ -1,5 +1,6 @@
-import {Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges} from '@angular/core';
+import {Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, forwardRef} from '@angular/core';
 import * as moment from 'moment/moment';
+import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators} from "@angular/forms";
 
 /**
  * The <samDate> component is a Date entry portion of a form
@@ -7,8 +8,13 @@ import * as moment from 'moment/moment';
 @Component({
   selector: 'samDate',
   templateUrl: 'date.template.html',
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => SamDateComponent),
+    multi: true
+  }]
 })
-export class SamDateComponent implements OnInit, OnChanges {
+export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor {
   public INPUT_FORMAT: string = 'Y-M-D';
   public OUTPUT_FORMAT: string = 'YYYY-MM-DD';
 
@@ -42,6 +48,10 @@ export class SamDateComponent implements OnInit, OnChanges {
   */
   @Input() value: string;
   /**
+  * Passes in the Angular FormControl
+  */
+  @Input() control: FormControl;
+  /**
   * Event emitted when value changes
   */
   @Output() valueChange = new EventEmitter<any>();
@@ -49,7 +59,10 @@ export class SamDateComponent implements OnInit, OnChanges {
   * Event emitted when form control loses focus
   */
   @Output() blurEvent = new EventEmitter<any>();
-
+  onChange: any = () => {
+    //this.wrapper.formatErrors(this.control);
+  };
+  onTouched: any = () => { };
   @ViewChild('month') month;
   @ViewChild('day') day;
   @ViewChild('year') year;
@@ -86,14 +99,18 @@ export class SamDateComponent implements OnInit, OnChanges {
     return moment([this.model.year, this.model.month-1, this.model.day]);
   }
 
-  onChange() {
+  onChangeHandler() {
+    this.onTouched();
     if (this.isClean()) {
+      this.onChange(null);
       this.valueChange.emit(null);
     } else if (!this.getDate().isValid()) {
+      this.onChange('Invalid Date');
       this.valueChange.emit('Invalid Date');
     } else {
       // use the strict format for outputs
       let dateString = this.getDate().format(this.OUTPUT_FORMAT);
+      this.onChange(dateString);
       this.valueChange.emit(dateString);
     }
   }
@@ -119,5 +136,23 @@ export class SamDateComponent implements OnInit, OnChanges {
   yearName() {
     return `${this.name}_year`;
   }
+  
+  registerOnChange(fn) {
+    this.onChange = fn;
+  }
 
+  registerOnTouched(fn) {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(disabled) {
+    this.disabled = disabled;
+  }
+
+  writeValue(value) {
+    if(value){
+      this.value = value;
+      this.parseValueString();
+    }
+  }
 }

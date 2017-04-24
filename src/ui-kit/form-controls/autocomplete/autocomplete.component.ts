@@ -63,6 +63,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   public results: Array<string>;
   public innerValue: any = '';
   public inputValue: any;
+  public selectedInputValue: any;
   public selectedChild: HTMLElement;
   public hasFocus: boolean = false;
   public hasServiceError: boolean = false;
@@ -309,6 +310,9 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   }
 
   checkForFocus(event) {
+    if(!this.allowAny && this.selectedInputValue!=this.inputValue){
+      this.inputValue = "";
+    }
     this.hasFocus = false;
     this.renderer.setElementProperty(this.srOnly.nativeElement, 'innerHTML', null);
   }
@@ -322,6 +326,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     this.innerValue = value;
     this.hasFocus = false;
     this.inputValue = message;
+    this.selectedInputValue = this.inputValue;
     this.propogateChange(this.innerValue);
     this.renderer.setElementProperty(this.srOnly.nativeElement, 'innerHTML', null);
     this.renderer.invokeElementMethod(this.input.nativeElement, 'blur', []);
@@ -373,7 +378,10 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   }
 
   clearInput(){
+    this.filteredKeyValuePairs = null;
+    this.results = null;
     this.input.nativeElement.value = "";
+    this.propogateChange(null);
     this.clearDropdown();
   }
 
@@ -394,5 +402,9 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
 
   registerOnTouched(fn: any): void {
     this.onTouchedCallback = fn;
+  }
+
+  setDisabledState(isDisabled: boolean) {
+    this.input.nativeElement.disabled = isDisabled;
   }
 }

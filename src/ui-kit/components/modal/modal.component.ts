@@ -62,12 +62,12 @@ export class SamModalComponent implements OnInit, AfterViewChecked {
 
   public show = false;
   public types:any = {
-    "success":"usa-alert-success",
-    "warning":"usa-alert-warning",
-    "error":"usa-alert-error",
-    "info":"usa-alert-info"
+    "success": { class:"usa-alert-success", sr:"success alert"},
+    "warning": { class:"usa-alert-warning", sr:"warning alert"},
+    "error": { class:"usa-alert-error", sr:"error alert"},
+    "info": { class:"usa-alert-info", sr:"information alert"}
   };
-  public selectedType: string = this.types['success'];
+  public selectedType: string = this.types['success'].class;
 
   private backdropElement: HTMLElement;
   private internalId;
@@ -84,7 +84,7 @@ export class SamModalComponent implements OnInit, AfterViewChecked {
   ngOnInit(){
     this.createBackdrop();
     if(!this.typeNotDefined()){
-      this.selectedType = this.types[this.type];
+      this.selectedType = this.types[this.type].class;
     }
   }
 
@@ -106,7 +106,9 @@ export class SamModalComponent implements OnInit, AfterViewChecked {
 
     if (this._focusModalElement) {
       const focusable = this._modalFocusableElements[1] as HTMLElement;
-      focusable.focus();
+      if(focusable){
+        focusable.focus();
+      }
       this._focusModalElement = false;
     }
 
@@ -132,7 +134,7 @@ export class SamModalComponent implements OnInit, AfterViewChecked {
     if(!this.type || this.type.length==0){
       return true;
     }
-    if(!this.types[this.type]){
+    if(!this.types[this.type].class){
       return true;
     }
     return false;
