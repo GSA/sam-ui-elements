@@ -389,6 +389,9 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   }
 
   clearInput(){
+    if(!this.inputValue){
+      return;
+    }
     this.filteredKeyValuePairs = null;
     this.results = null;
     this.input.nativeElement.value = "";
