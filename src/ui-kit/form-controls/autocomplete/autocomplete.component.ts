@@ -115,6 +115,9 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   }
 
   onKeyup(event: any) {
+    if((event.code === 'Tab' || event.keyIdentifier === 'Tab') && !this.inputValue && (!this.config || this.config && !this.config.showOnEmptyInput)){
+      return;
+    }
     if ((event.code === 'Backspace' || event.keyIdentifier === 'Backspace') && !this.innerValue) {
       this.results = null;
       this.filteredKeyValuePairs = null;
@@ -313,6 +316,10 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     if(!this.allowAny && this.selectedInputValue!=this.inputValue){
       this.inputValue = "";
     }
+    if(this.inputValue==""){
+      this.results = null;
+      this.filteredKeyValuePairs = null;
+    }
     this.hasFocus = false;
     this.renderer.setElementProperty(this.srOnly.nativeElement, 'innerHTML', null);
   }
@@ -376,12 +383,15 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
 
   inputFocusHandler(evt){
     this.hasFocus = true;
-    if(evt.target.value){
+    if(evt.target.value || (this.config && this.config.showOnEmptyInput)){
       this.onKeyup(evt);
     }
   }
 
   clearInput(){
+    if(!this.inputValue){
+      return;
+    }
     this.filteredKeyValuePairs = null;
     this.results = null;
     this.input.nativeElement.value = "";
