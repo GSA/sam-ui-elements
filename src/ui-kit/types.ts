@@ -39,6 +39,7 @@ export interface AutocompleteConfig {
   serviceOptions?: any;
   dropdownLimit?: number;
   clearOnSelection?: boolean;
+  showOnEmptyInput?: boolean;
 }
 
 export interface AutocompleteKeyValueConfig {
