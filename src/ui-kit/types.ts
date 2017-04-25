@@ -1,33 +1,81 @@
 export interface OptionsType {
-  value: string | number; // the model value
-  label: string; // the visible text for the input or option
-  name: string; // the machine readable description of the input
-  disabled?: boolean; // if true, the option is greyed out and not clickable
+  /**
+   * The model value
+   */
+  value: string | number;
+  /**
+   * The visible text for the input or option
+   */
+  label: string;
+  /**
+   * The machine readable description of the input
+   */
+  name: string; 
+  /**
+   * if true, the option is greyed out and not clickable
+   */
+  disabled?: boolean;
 }
 
 export interface AutocompleteDropdownButton {
-  label?: string; // The text that appears on the button
-  class?: string; // The class for button style
-  icon?: AutocompleteDropdownButtonIcon; // An option icon that will appear on the button
+  /**
+   * The text that appears on the button
+   */
+  label?: string;
+  /**
+   * The class for button style
+   */
+  class?: string;
+  /**
+   * An option icon that will appear on the button
+   */
+  icon?: AutocompleteDropdownButtonIcon;
 }
 
 export interface AutocompleteDropdownButtonIcon {
-  class: string; // String for icon clas (font-awesome, glphicon, etc)
-  altText: string; // String for alt icon text for screen readers
+  /**
+   * String for icon clas (font-awesome, glphicon, etc)
+   */
+  class: string;
+  /**
+   * String for alt icon text for screen readers
+   */
+  altText: string;
 }
 
 export interface HistoryNodeType {
-  id: string; // identifier for node
-  date: string; // date value for node
-  url?: string; // url value for title
-  title: string; // title value for node
+  /**
+   * identifier for node
+   */
+  id: string;
+  /**
+   * date value for node
+   */
+  date: string;
+  /**
+   * optional url value for title
+   */
+  url?: string;
+  /**
+   * title value for node
+   */
+  title: string; 
+  /**
+   * optional description for node
+   */
   description?: string;
+  /**
+   * optional tagged value for node
+   */
   isTagged?: boolean;
 }
 
 // Autocomplete Config Interfaces
 
 export interface AutocompleteConfig {
+  /**
+   * optional name attri
+   */
   name?: string;
   id?: string;
   labelText?: string;
