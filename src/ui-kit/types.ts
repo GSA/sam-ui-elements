@@ -38,6 +38,7 @@ export interface AutocompleteConfig {
   placeholder?: string;
   serviceOptions?: any;
   dropdownLimit?: number;
+  clearOnSelection?: boolean;
 }
 
 export interface AutocompleteKeyValueConfig {
