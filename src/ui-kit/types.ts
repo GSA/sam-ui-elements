@@ -45,27 +45,27 @@ export interface AutocompleteDropdownButtonIcon {
 
 export interface HistoryNodeType {
   /**
-   * identifier for node
+   * Identifier for node
    */
   id: string;
   /**
-   * date value for node
+   * Date value for node
    */
   date: string;
   /**
-   * optional url value for title
+   * Optional url value for title
    */
   url?: string;
   /**
-   * title value for node
+   * Title value for node
    */
   title: string; 
   /**
-   * optional description for node
+   * Optional description for node
    */
   description?: string;
   /**
-   * optional tagged value for node
+   * Optional tagged value for node
    */
   isTagged?: boolean;
 }
@@ -74,23 +74,23 @@ export interface HistoryNodeType {
 
 export interface AutocompleteConfig {
   /**
-   * optional name attribute
+   * Optional name attribute
    */
   name?: string;
   /**
-   * optional id attribute
+   * Optional id attribute
    */
   id?: string;
   /**
-   * optional label text
+   * Optional label text
    */
   labelText?: string;
   /**
-   * adds a clear button in the input
+   * Adds a clear button in the input
    */
   showClearButton?: boolean;
   /**
-   * adds an icon inside the input
+   * Adds an icon inside the input
    */
   addOnIconClass?: string;
   /**
@@ -215,6 +215,9 @@ export interface ListDisplayConfig {
    * Sets the new item indicator config
    */
   newItemIndicator?: NewItemIndicator;
+  /**
+   * Defines the key/value configuration
+   */
   keyValueConfig?: AutocompleteKeyValueConfig;
 }
 
@@ -224,7 +227,7 @@ export interface NewItemIndicator {
    */
   class?: string;
   /**
-   * label value for the new item
+   * Label value for the new item
    */
   label?: string;
 }
