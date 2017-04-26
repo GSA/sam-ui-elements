@@ -9,7 +9,7 @@ import { AccordionsModule } from './accordion';
 import { SamAlertComponent } from './alert';
 import { SamAlphabetSelectorComponent } from './alphabet-selector';
 import { SamBannerComponent } from './banner';
-import { SamBreadcrumbsComponent, SamBreadcrumbsRouterDirective } from './breadcrumbs';
+import { SamBreadcrumbsComponent } from './breadcrumbs';
 import { SamCollapsibleComponent } from './collapsible';
 import { SamDownloadComponent } from './download';
 import { SamFiltersContainerComponent } from './filters-container';
@@ -42,7 +42,6 @@ import { SamWrapperModule } from '../wrappers';
     SamAlphabetSelectorComponent,
     SamBannerComponent,
     SamBreadcrumbsComponent,
-    SamBreadcrumbsRouterDirective,
     SamCollapsibleComponent,
     SamDownloadComponent,
     SamFiltersContainerComponent,
@@ -64,7 +63,6 @@ import { SamWrapperModule } from '../wrappers';
     SamAlphabetSelectorComponent,
     SamBannerComponent,
     SamBreadcrumbsComponent,
-    SamBreadcrumbsRouterDirective,
     SamCollapsibleComponent,
     SamDownloadComponent,
     SamFiltersContainerComponent,

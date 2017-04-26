@@ -1,61 +1,90 @@
 import { Component, Input } from '@angular/core';
-import { Directive, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, UrlSegment } from '@angular/router';
+import { IBreadcrumb } from '../../types';
 
 @Component({
     selector: 'sam-breadcrumbs',
     templateUrl: 'breadcrumbs.template.html'
 })
 export class SamBreadcrumbsComponent {
-    @Input() crumbs: Array<BreadcrumbsModel>;
+    /**
+     * The crumbs property expects an array of breadcrumbs. The last in the list will be set as active
+     */
+    @Input() crumbs: Array<IBreadcrumb>;
+    /**
+     * The listenToRouter property uses the current route to generate breadcrumbs automagically. If applying this property, it is not necessary to provide crumbs via the crumb property.
+     */
+    @Input() listenToRouter: boolean = false;
+    /**
+     * The rootCrumb property takes a breadcrumb to be used for the root. It is only necessary to provide this if you are also using the listenToRouter property.
+     */
+    @Input() rootCrumb: IBreadcrumb = undefined;
 
-    constructor(){}
-}
+    private _routeSubscription: any;
 
-export interface BreadcrumbsModel {
-    breadcrumb: string;
-    url: string;
-}
+    constructor(private route: ActivatedRoute) {}
 
-@Directive({
-    selector: 'sam-breadcrumbs[use-router]'
-})
-export class SamBreadcrumbsRouterDirective implements OnInit {
-  @Input() breadcrumbs: any;
-  @Output() breadcrumbsChange: EventEmitter<any> = new EventEmitter<any>();
+    ngOnInit() {
+      // If listenToRouter is true, use internal function to generate breadcrumbs from routes
+      if (this.listenToRouter) {
+        this._routeSubscription = this.route.url.subscribe((segments: UrlSegment[]) => {
+          this.crumbs = this.getBreadcrumbs(this.route.root);
+        });
+      }
+    }
 
-  constructor(private router: Router, private route: ActivatedRoute) {
-    this.router.events
-                .filter( event => event instanceof NavigationEnd)
-                .subscribe( event => {
-                  let newbreadcrumbs = [];
-                  let currentRoute = this.route.root;
-                  let url = '';
-                  do {
-                    let children = currentRoute.children;
-                    currentRoute = null;
-                    children.forEach(route => {
-                      if (route.outlet === 'primary') {
-                        let routeSnapshot = route.snapshot;
-                        url += '/' + routeSnapshot.url.map(segment => segment.path).join('/');
-                        let crumb: any;
-                        if (routeSnapshot.data) {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-                          crumb = routeSnapshot.data.breadcrumb || undefined;
-                        }
-                        newbreadcrumbs.push({
-                          breadcrumb: crumb || 'xyz',
-                          url: url
-                        });
-                        currentRoute = route;
-                      }
-                    })
-                  } while (currentRoute);
-                  this.breadcrumbsChange.emit(newbreadcrumbs);
-                  console.log(newbreadcrumbs);
-                });
-  }
+    ngOnDestroy() {
+      // If using route to generate breadcrumbs, destroy subscription when component destroyed
+      if (this.listenToRouter) {
+        this._routeSubscription.unsubscribe();
+      }
+    }
 
-  ngOnInit() {
-    
-  }
+    // Recursive function that takes a route and returns an array of IBreacrumbs from the root to the lowest child
+    getBreadcrumbs(route: ActivatedRoute, url: string = '', crumbs: Array<IBreadcrumb> = []): IBreadcrumb[] {
+      // Get url from route snapshot
+      // Appends to url string of parent route
+      url += route.snapshot.url.reduce((prev, curr) =>  {return prev = prev + '/' + curr }, '');
+
+      // Creates a crumb from route snapshot data
+      // Breadcrumb property is set on the data property of the route
+      let crumb: string;
+      if (route.snapshot.data) {
+        crumb = route.snapshot.data.breadcrumb;
+      }
+      // If crumb is application root, it sets the crumb to the rootCrumb
+      // Else it takes the breadcrumb from the data property
+      if (route.root === route) {
+        crumbs.push({
+          url: this.rootCrumb.url || '',
+          breadcrumb: this.rootCrumb.breadcrumb || 'Component needs rootCrumb object'
+        });
+      } else {
+        crumbs.push({
+          url: url,
+          breadcrumb: crumb || '!!! You must set a breadcrumb on the data property of your route !!!'
+        });
+      }
+      // Recursive base case
+      // Returns crumbs when route has no more children
+      if (route.children.length === 0) {
+        return crumbs;
+      }
+      
+      // If route has children, recurse with child that is currently in the URL
+      if (route.children.length > 0) {
+        const currentChild: ActivatedRoute = this.getCurrentChild(route);
+        return this.getBreadcrumbs(currentChild, url, crumbs);
+      }
+    }
+
+    // Gets child route that is in path of primary outlet
+    getCurrentChild(route: ActivatedRoute): ActivatedRoute {
+      return route.children.reduce((prev, curr) => {
+        if (curr.outlet === 'primary') {
+          prev = curr;
+        }
+        return prev;
+      }, undefined);
+    }
 }

@@ -95,3 +95,8 @@ export interface PointOfContactType{
   fax?: string;
   website?: string;
 }
+
+export interface IBreadcrumb {
+  url: string;
+  breadcrumb: string;
+}
