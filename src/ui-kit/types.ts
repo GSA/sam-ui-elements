@@ -282,3 +282,8 @@ export interface PointOfContactType{
    */
   website?: string;
 }
+
+export interface IBreadcrumb {
+  url: string;
+  breadcrumb: string;
+}
