@@ -1,4 +1,4 @@
-<fieldset-wrapper [label]="label" [hint]="hint" [errorMessage]="errorMessage">
+<fieldset-wrapper [label]="label" [hint]="hint" [errorMessage]="errorMessage" [required]="required">
   <ul class="usa-unstyled-list">
     <li *ngFor="let option of options; let i = index">
       <input [attr.id]="option.name" type="radio" (change)="onRadioChange(option.value)" [attr.name]="name" [checked]="model === option.value">

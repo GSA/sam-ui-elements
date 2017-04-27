@@ -37,6 +37,10 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   */
   @Input() hint: string;
   /**
+  * Sets required text on component
+  */
+  @Input() required: boolean = false;
+  /**
   * Sets the form control error message
   */
   @Input() errorMessage: string;
@@ -61,9 +65,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
    * This object allows us to efficiently determine if a value is before another value
    */
   private _ordering: any = {};
-  onChange: any = () => {
-    this.wrapper.formatErrors(this.control);
-  };
+  onChange: any = () => { };
   onTouched: any = () => { };
   get value() {
     return this.model;
@@ -95,7 +97,9 @@ export class SamCheckboxComponent implements ControlValueAccessor {
       return;
     }
 
-    this.control.valueChanges.subscribe(this.onChange);
+    this.control.valueChanges.subscribe(()=>{
+      this.wrapper.formatErrors(this.control);
+    });
 
     this.wrapper.formatErrors(this.control);
   }
