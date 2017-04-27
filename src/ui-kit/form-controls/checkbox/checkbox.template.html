@@ -1,4 +1,4 @@
-<fieldset-wrapper [label]="label" [hint]="hint" [errorMessage]="errorMessage">
+<fieldset-wrapper [label]="label" [hint]="hint" [errorMessage]="errorMessage" [required]="required">
   <ul class="usa-unstyled-list">
     <li *ngIf="hasSelectAll">
       <input [attr.id]="checkAllLabelName()" type="checkbox" (change)="onSelectAllChange($event.target.checked)">

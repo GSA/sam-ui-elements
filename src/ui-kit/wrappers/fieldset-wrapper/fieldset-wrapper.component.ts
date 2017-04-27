@@ -9,6 +9,7 @@ export class FieldsetWrapper {
   @Input() label: string;
   @Input() hint: string;
   @Input() errorMessage: string;
+  @Input() required: boolean = false;
 
   constructor() { }
 
