@@ -21,14 +21,17 @@ export class SamBreadcrumbsComponent {
     @Input() rootCrumb: IBreadcrumb = undefined;
 
     private _routeSubscription: any;
-
+    private count = 0;
     constructor(private route: ActivatedRoute) {}
 
     ngOnInit() {
       // If listenToRouter is true, use internal function to generate breadcrumbs from routes
       if (this.listenToRouter) {
-        this._routeSubscription = this.route.url.subscribe((segments: UrlSegment[]) => {
-          this.crumbs = this.getBreadcrumbs(this.route.root);
+        this.route.url.subscribe((segments: UrlSegment[]) => {
+          // Requires setTimeout to load data from route config before running getBreadcrumbs
+          setTimeout(() => {
+            this.crumbs = this.getBreadcrumbs(this.route.root);
+          });
         });
       }
     }
@@ -36,35 +39,42 @@ export class SamBreadcrumbsComponent {
     ngOnDestroy() {
       // If using route to generate breadcrumbs, destroy subscription when component destroyed
       if (this.listenToRouter) {
-        this._routeSubscription.unsubscribe();
+        // this._routeSubscription.unsubscribe();
       }
     }
 
     // Recursive function that takes a route and returns an array of IBreacrumbs from the root to the lowest child
     getBreadcrumbs(route: ActivatedRoute, url: string = '', crumbs: Array<IBreadcrumb> = []): IBreadcrumb[] {
       // Get url from route snapshot
-      // Appends to url string of parent route
+      // Appends to url string of parent
       url += route.snapshot.url.reduce((prev, curr) =>  {return prev = prev + '/' + curr }, '');
 
       // Creates a crumb from route snapshot data
       // Breadcrumb property is set on the data property of the route
-      let crumb: string;
+      let crumbLabel: string;
       if (route.snapshot.data) {
-        crumb = route.snapshot.data.breadcrumb;
+        // This assignment is only here to cast to any to avoid a typescript error
+        const data: any = route.snapshot.data as any;
+        crumbLabel = data.breadcrumb;
       }
+
       // If crumb is application root, it sets the crumb to the rootCrumb
       // Else it takes the breadcrumb from the data property
+      let crumb: IBreadcrumb
       if (route.root === route) {
-        crumbs.push({
-          url: this.rootCrumb.url || '',
-          breadcrumb: this.rootCrumb.breadcrumb || 'Component needs rootCrumb object'
-        });
+        crumb = {
+          url: this.rootCrumb.url,
+          breadcrumb: this.rootCrumb.breadcrumb
+        }
+        crumbs.push(crumb);
       } else {
-        crumbs.push({
+        crumb = {
           url: url,
-          breadcrumb: crumb || '!!! You must set a breadcrumb on the data property of your route !!!'
-        });
+          breadcrumb: crumbLabel || '!!! You must set a breadcrumb on the data property of your route !!!'
+        }
+        crumbs.push(crumb);
       }
+
       // Recursive base case
       // Returns crumbs when route has no more children
       if (route.children.length === 0) {

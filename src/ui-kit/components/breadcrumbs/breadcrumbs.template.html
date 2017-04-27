@@ -1,5 +1,5 @@
 <ul class="sam-breadcrumbs">
     <li class="sam-crumb" *ngFor="let crumb of crumbs">
-        <a routerLink="[crumb.url]">{{crumb.breadcrumb}}</a>
+        <a [routerLink]="[crumb.url]">{{crumb.breadcrumb}}</a>
     </li>
 </ul>
