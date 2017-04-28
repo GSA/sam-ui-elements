@@ -72,9 +72,9 @@ export class SamListDisplayComponent implements ControlValueAccessor, OnChanges{
     if (!this.selectedItems || this.selectedItems.constructor !== Array) {
       throw new Error('ngModel must be an array for this component.')
     }
-    if (this.newValue && this.config && this.config.keyValueConfig && this.checkSelected(this.newValue)) {
+    if (this.newValue && typeof this.newValue=="object" && this.config && this.config.keyValueConfig && this.checkSelected(this.newValue)) {
       this.populateSelectedList();
-    } else if (this.newValue && this.selectedItems.indexOf(this.newValue) === -1) {
+    } else if (this.newValue && typeof this.newValue=="string" && this.selectedItems.indexOf(this.newValue) === -1) {
       this.populateSelectedList();
     }
   }
