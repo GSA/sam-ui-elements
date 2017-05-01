@@ -19,12 +19,12 @@ import { trigger, state, style, transition, animate, keyframes } from '@angular/
     ]),
     
     trigger('pointingInOut', [
-      state('in', style({opacity: '1', position: 'relative', top: '0'})),
-      state('out', style({opacity: '1', position: 'relative', top: '0'})),
+      state('in', style({opacity: '1', position: 'relative', top: '20px'})),
+      state('out', style({opacity: '1', position: 'relative', top: '20px'})),
       transition('* => *', [
         animate('0.03s 0.3s', keyframes([
           style({ opacity: '0', top: '10%', offset: 0}),
-          style({ opacity: '1', top: '0%', offset: 1.0})
+          style({ opacity: '1', top: '10%', offset: 1.0})
         ]))
       ])
     ]),

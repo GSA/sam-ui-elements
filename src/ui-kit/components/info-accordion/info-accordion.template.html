@@ -5,8 +5,8 @@
   
   <div class="twelve wide column" *ngFor="let row of data; let i = index">
     
-    <div class="sam-ui very relaxed grid">  
-      <div class="three column row">
+    <div class="sam-ui very relaxed three column grid">  
+      <div class="stretched row">
         <div class="column" *ngFor="let item of row; let j = index">
           
           <div class="sam-ui segment" (mouseenter)='over(item, i, j)' (mouseleave)='over(item, i, j)' [@overState]="item.state ? item.state : 'inactive'" tabindex="0" (keyup.enter)="selectDetail(i,j,$event)" (click)="selectDetail(i,j,$event)"  [ngClass]="getBorderClass(i, j)">
@@ -18,8 +18,8 @@
             </div>
             
             <i style="position: absolute; top: 15px; right: 15px;" [id]="name+'-'+i+j+'-icon'" class="fa fa-plus" [ngClass]="getItemClass(i,j)"></i>
-            
-            <img [src]="item.img" alt="{{item.title}}" style="mix-blend-mode: multiply; width: 30%;">
+            <div class="sam-ui hidden divider"></div>
+            <img [src]="item.img" alt="{{item.title}}" style="width: 70%;">
             
           </div>
           
@@ -32,44 +32,12 @@
     <div class="sam-ui grid" [@slideInOut]="'in'" *ngIf="toggleDetail(i)">
       <div class="column">
         <div class="sam-ui clearing segment" [@fadeInOut]="fadeSegmentInOut">
-          
-          <div class="sam-ui equal width very relaxed padded grid">
-            <div class="column">
-              <h3 class="sam-ui header">What we have achieved</h3>
-              <ul class="sam-ui bulleted list">
-                <li class="item">
-                  Nunc turpis dolor, commodo id porta vel,
-                  pulvinar interdum ex.
-                </li>
-                <li class="item">
-                  Integer at efficitur ligula. Lorem ipsum dolor 
-                  sit amet, consectetur adipiscing elit. Fusce 
-                  luctus, enim eget ultrices vulputate, ante 
-                  tellus molestie dui, et laoreet ipsum
-                </li>
-              </ul>
-            </div>
-            <div class="column">
-              <h3 class="sam-ui header">What's up next</h3>
-              <ul class="sam-ui bulleted list">
-                <li class="item">
-                  Mauris elementum eros id leo malesuada 
-                  condimentum.
-                </li>
-                <li class="item">
-                  Praesent viverra augue in ex sodales tincidunt. 
-                  Aliquam tincidunt neque ex, ut ultrices risus 
-                  tincidunt eu.
-                </li>
-              </ul>
-            </div>
-          </div>
-          
-          <!-- 
-      
+
           <a class="sam-ui top right attached label" (click)="closeReferenceDetail()">
             <i class="fa fa-times" aria-hidden="true"></i> 
           </a>
+          
+          <div class="sam-ui hidden divider"></div>
           
           <h3 *ngIf="showDetailTitle">
             {{detailObj.item.title}}
@@ -79,36 +47,41 @@
             {{detailObj.item.detail}}
           </p>
           
-          <table class="sam-ui very basic celled attached table" *ngIf="isReleaseDetail">
-            <tr>
-              <td>
-                <h4>What we have achieved</h4>
-                <h5>Release {{detailObj.item.releaseDetail.preRelease.releaseNum}} - {{detailObj.item.releaseDetail.preRelease.releaseDate}}</h5>
-                <span *ngFor="let feature of detailObj.item.releaseDetail.preRelease.releaseDetail">
-                  <strong>{{feature.featureName}} - </strong>{{feature.description}}<br>
-                </span>
-              </td>
-              <td>
-                <h4>What we're working on</h4>
-                <h5>Release {{detailObj.item.releaseDetail.curRelease.releaseNum}} - {{detailObj.item.releaseDetail.curRelease.releaseDate}}</h5>
-                <span *ngFor="let feature of detailObj.item.releaseDetail.curRelease.releaseDetail">
-                  <strong>{{feature.featureName}} - </strong>{{feature.description}}<br>
-                </span>
-              </td>
-              <td>
-                <h4>What's up next</h4>
-                <h5>Release {{detailObj.item.releaseDetail.nextRelease.releaseNum}} - {{detailObj.item.releaseDetail.nextRelease.releaseDate}}</h5>
-                <span *ngFor="let feature of detailObj.item.releaseDetail.nextRelease.releaseDetail">
-                  <strong>{{feature.featureName}} - </strong>{{feature.description}}<br>
-                </span>
-              </td>
-            </tr>
-          </table>
+          <div class="sam-ui equal width very relaxed padded grid" *ngIf="isReleaseDetail">
+            <div class="column">
+              <h3 class="sam-ui header">
+                What we have achieved
+                <div class="sub header">
+                  Release {{detailObj.item.releaseDetail.preRelease.releaseNum}} - 
+                  {{detailObj.item.releaseDetail.preRelease.releaseDate}}
+                </div>
+              </h3>
+              <ul class="sam-ui bulleted list">
+                <li class="item" *ngFor="let feature of detailObj.item.releaseDetail.preRelease.releaseDetail">
+                    <strong>{{feature.featureName}} - </strong>{{feature.description}}
+                </li>
+              </ul>
+            </div>
+            <div class="column">
+              <h3 class="sam-ui header">
+                What's up next
+                <div class="sub header">
+                  Release {{detailObj.item.releaseDetail.nextRelease.releaseNum}} - 
+                  {{detailObj.item.releaseDetail.nextRelease.releaseDate}}
+                </div>
+              </h3>
+              <ul class="sam-ui bulleted list">
+                <li class="item" *ngFor="let feature of detailObj.item.releaseDetail.nextRelease.releaseDetail">
+                  <strong>{{feature.featureName}} - </strong>{{feature.description}}
+                </li>
+              </ul>
+            </div>
+          </div>
           
           <a class="sam-ui small right floated primary button" href="{{detailObj.item.url}}" target="{{detailObj.item.title}}">
             <i *ngIf="getLinkClass()" class="icon fa fa-external-link" aria-hidden="true"></i>  
             {{detailObj.item.link}}
-          </a> -->
+          </a>
           
         </div>
       </div>
