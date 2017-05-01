@@ -38,9 +38,17 @@ export class SamRadioButtonComponent  {
   */
   @Input() hint: string;
   /**
+  * Sets required text on component
+  */
+  @Input() required: boolean = false;
+  /**
   * Sets the general error message
   */
   @Input() errorMessage: string;
+  /**
+  * Sets the angular FormControl
+  */
+  @Input() control: FormControl;
   /**
   * Event emitted when model value changes
   */
@@ -55,6 +63,16 @@ export class SamRadioButtonComponent  {
     if (!this.name) {
       throw new Error("<samRadioButton> requires a [name] parameter for 508 compliance");
     }
+
+    if(!this.control){
+      return;
+    }
+
+    this.control.valueChanges.subscribe(()=>{
+      this.wrapper.formatErrors(this.control);
+    });
+
+    this.wrapper.formatErrors(this.control);
   }
 
   onRadioChange(value) {
