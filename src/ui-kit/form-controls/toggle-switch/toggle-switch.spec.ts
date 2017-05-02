@@ -5,7 +5,7 @@ import { SamToggleSwitchComponent } from './toggle-switch.component';
 import { SamUIKitModule } from '../../index';
 import {By} from '@angular/platform-browser';
 
-fdescribe('The Sam Toggle Switch component', () => {
+describe('The Sam Toggle Switch component', () => {
   let component: SamToggleSwitchComponent;
   let fixture: any;
 
