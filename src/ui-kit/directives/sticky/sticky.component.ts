@@ -4,7 +4,7 @@ import { HostListener, Directive, ElementRef, Input, Renderer, OnInit } from '@a
  * The sam-sticky directive is made to help nav bar stick on the page
  */
 @Directive({ selector: '[sam-sticky]' })
-export class SamStickyComponent {
+export class SamStickyComponent implements OnInit{
 
   // Research sticky polyfill
   // http://html5please.com/#sticky
@@ -41,6 +41,12 @@ export class SamStickyComponent {
   }
 
   constructor( private el: ElementRef, private renderer: Renderer) {}
+  
+  ngOnInit(){
+    if(this.el.nativeElement.offsetWidth != this.elemWidth){
+      this.elemWidth = this.el.nativeElement.offsetWidth;
+    }
+  }
 
   ngAfterViewChecked(){
     if(this.el.nativeElement.offsetWidth != this.elemWidth){
