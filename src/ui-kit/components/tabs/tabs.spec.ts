@@ -24,9 +24,6 @@ describe('The Sam Tabs component', () => {
     TestBed.configureTestingModule({
       declarations: [SamTabsComponent,SamTabComponent,TabsDefault],
     });
-
-    
-
   });
 
   it('should compile', function () {
@@ -35,6 +32,4 @@ describe('The Sam Tabs component', () => {
     fixture.detectChanges();
     expect(true).toBe(true);
   });
-  
-
 });
