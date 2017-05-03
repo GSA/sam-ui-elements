@@ -1,4 +1,4 @@
-import { HostListener, Directive, ElementRef, Input, Renderer, OnInit } from '@angular/core';
+import { HostListener, Directive, ElementRef, Input, OnInit } from '@angular/core';
 
 /**
  * The sam-sticky directive is made to help nav bar stick on the page
@@ -28,8 +28,8 @@ export class SamStickyComponent implements OnInit{
   resize(event) {
     // Set element to initial styles
     // to help finding the initial element width
-    this.renderer.setElementStyle(this.el.nativeElement, 'position', "static");
-    this.renderer.setElementStyle(this.el.nativeElement, 'width', "auto");
+    this.el.nativeElement.style.position = 'static';
+    this.el.nativeElement.style.width = 'auto';
 
     this.elemWidth = this.el.nativeElement.offsetWidth;
     this.makeSticky();
@@ -40,8 +40,8 @@ export class SamStickyComponent implements OnInit{
     this.makeSticky();
   }
 
-  constructor( private el: ElementRef, private renderer: Renderer) {}
-  
+  constructor( private el: ElementRef) {}
+
   ngOnInit(){
     if(this.el.nativeElement.offsetWidth != this.elemWidth){
       this.elemWidth = this.el.nativeElement.offsetWidth;
@@ -57,15 +57,15 @@ export class SamStickyComponent implements OnInit{
   makeSticky(){
     if(window.innerWidth <= this.limit){
       this.setPosition("static");
-      this.renderer.setElementStyle(this.el.nativeElement, 'width', "auto");
-      this.renderer.setElementStyle(this.el.nativeElement, 'top', "auto");
+      this.el.nativeElement.style.width = 'auto';
+      this.el.nativeElement.style.top = 'auto';
     }else {
       this.adjustStickyPos();
     }
   }
 
   setPosition(position: string){
-    this.renderer.setElementStyle(this.el.nativeElement, 'position', position);
+    this.el.nativeElement.style.position = position;
   }
 
   getDocHeight() {
@@ -153,12 +153,12 @@ export class SamStickyComponent implements OnInit{
       this.setPosition("fixed");
       // Make the elem stick on top until the space is not enough to show the elem
       if (this.el.nativeElement.offsetHeight+this.getScrollTop()< parentContainerToTop+parentContainer[0].offsetHeight-50) {
-        this.renderer.setElementStyle(this.el.nativeElement, 'top', this.stickyTop + "px");
+        this.el.nativeElement.style.top = this.stickyTop + "px";
       }else  {
         let topPosition = (stickyElementTopMargin + (scrollPosition - stopLimit)) * -1;
-        this.renderer.setElementStyle(this.el.nativeElement, 'top', topPosition + "px");
+        this.el.nativeElement.style.top = topPosition + "px";
       }
-      this.renderer.setElementStyle(this.el.nativeElement, 'width', this.elemWidth+"px");
+      this.el.nativeElement.style.width = this.elemWidth+"px";
     }else{
       this.setPosition("static");
     }
