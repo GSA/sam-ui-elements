@@ -1,63 +1,111 @@
-<div class="sam-info-accordion-library" *ngFor="let row of data; let i = index">
-  <div class="usa-width-one-whole relative m_T-4x" [ngClass]="getImageContainerClass()">
-    <div class="usa-width-one-whole">
-      <div class="usa-width-one-third" *ngFor="let item of row; let j = index">
-        <div class="usa-width-three-fourths sam-info-accordion-library-wrap relative" tabindex="0" (keyup.enter)="selectDetail(i,j,$event)" [ngClass]="getBorderClass(i, j)">
-          <div *ngIf="hasLayer" [id]="name+'-'+i+j+'-div'" [ngClass]="getLayerClass(i, j)" class="reference-sam-info-accordion-layer-unselect sam-info-accordion-layers" (click)="selectDetail(i,j,$event)">
-            <span [id]="name+'-'+i+j+'-link'" class="sam-info-accordion-library-title" (click)="selectDetail(i,j,$event)">{{item.title}}</span>
+<div class="sam-ui vertically padded grid info-accordion">
+  
+  <div class="twelve wide column" *ngFor="let row of data; let i = index">
+    
+    <div class="sam-ui" [ngClass]="spacing + ' grid'">  
+      <div class="stretched row">
+
+        <ng-container *ngFor="let item of row; let j = index">
+          <div class="column" [ngClass]="item.columns ? item.columns + ' wide' : 'four wide'">
+            
+            <div class="sam-ui basic segment" *ngIf="!item.content">
+              <h4 [innerHTML]="item.title"></h4>
+            </div>
+            
+            <!-- Segment -->
+            <div  *ngIf="item.content" 
+                  class="sam-ui segment"
+                  (mouseenter)='over(item)' 
+                  (mouseleave)='over(item)' 
+                  [@overState]="item.state ? item.state : 'inactive'" 
+                  (keyup.enter)="selectDetail(i,j,$event)" 
+                  (click)="selectDetail(i,j,$event)"  
+                  [ngClass]="getActiveClass(i,j)"
+                  tabindex="0" >
+              
+              <h4>{{item.title}}</h4>
+              
+              <i  class="fa fa-plus" 
+                  [ngClass]="getItemClass(i,j)">
+              </i>
+              
+              <img  *ngIf="(item.img && !item.imgActive) || item.imgActive && (getActiveClass(i,j) === 'inverted cool blue')"
+                    [src]="item.img" 
+                    alt="{{item.title}}" 
+                    [ngStyle]="{'max-width': item.imgWidth ? item.imgWidth: '100%'}">
+              
+              <img  *ngIf="item.imgActive && (getActiveClass(i,j) === 'basic lightest blue')" 
+                    [src]="item.imgActive" 
+                    alt="{{item.title}}" 
+                    [ngStyle]="{'max-width': item.imgWidth ? item.imgWidth: '100%'}"> 
+              
+            </div>
+            
+            <!--Triangle div to point out which topic detail is currently showing-->
+            <div class="sam-ui pointing" [ngClass]="{'grey' : item.contentType === 'table'}" [@pointingInOut]="fadeSegmentInOut"></div>
+            
           </div>
-          <span class="sam-info-accordion-library-toggle" (click)="selectDetail(i,j,$event)">
-            <i [id]="name+'-'+i+j+'-icon'" class="fa fa-plus" [ngClass]="getItemClass(i,j)"></i>
-          </span>
-          <div class="sam-info-accordion-div" (click)="selectDetail(i,j,$event)"><img class="sam-info-accordion-align-center" [src]="item.img" alt="{{item.title}}"></div>
-        </div>
+        </ng-container>
       </div>
     </div>
-    <!--Triangle div to point out which topic detail is currently showing-->
-    <div class="usa-width-one-whole tri-div">
-      <div *ngFor="let item of row; let j = index" class="usa-width-one-third" [ngClass]="getTriClass(i, j)"></div>
-    </div>
-  </div>
-
-
-  <div class="usa-width-one-whole relative" *ngIf = "toggleDetail(i)">
-    <div class="relative black-border" [ngClass]="{'detail-div':!largeScreen(),'detail-div-large':largeScreen()}">
-      <div class="usa-width-one-whole relative">
-
-        <a class="sam-info-accordion-library-close" (click)="closeReferenceDetail()">Close</a>
-        <div class="usa-width-one-whole m_T-4x">
-          <h3 class="p_L-2x" *ngIf="showDetailTitle">{{detailObj.item.title}}</h3>
-          <p class="p_L-5x p_R-2x p_B-1x detail-text" *ngIf="!isReleaseDetail">{{detailObj.item.detail}}</p>
-          <table class="usa-grid-full p_L-5x p_R-2x m_B-3x" *ngIf="isReleaseDetail" style="table-layout: fixed;">
-            <tr >
-              <td class="m_R-0 release-note-div vertical-line" valign="top">
-                <h4 class="p_L-1x">What we have achieved:</h4>
-                <p class="m_T-0 p_L-1x">
-                  <span class="release-note underline"><strong>Release {{detailObj.item.releaseDetail.preRelease.releaseNum}} - {{detailObj.item.releaseDetail.preRelease.releaseDate}}</strong><br></span>
-                  <span class="release-note" *ngFor="let feature of detailObj.item.releaseDetail.preRelease.releaseDetail"><strong>{{feature.featureName}} - </strong>{{feature.description}}<br></span>
-                </p>
-              </td>
-              <td class="m_R-0 release-note-div vertical-line" valign="top">
-                <h4 class="p_L-1x">What we're working on:</h4>
-                <p class="m_T-0 p_L-1x">
-                  <span class="release-note underline"><strong>Release {{detailObj.item.releaseDetail.curRelease.releaseNum}} - {{detailObj.item.releaseDetail.curRelease.releaseDate}}</strong><br></span>
-                  <span class="release-note" *ngFor="let feature of detailObj.item.releaseDetail.curRelease.releaseDetail"><strong>{{feature.featureName}} - </strong>{{feature.description}}<br></span>
-                </p>
-              </td>
-              <td class="release-note-div" valign="top">
-                <h4 class="p_L-1x">What's up next:</h4> d
-                <p class="m_T-0 p_L-1x">
-                  <span class="release-note underline"><strong>Release {{detailObj.item.releaseDetail.nextRelease.releaseNum}} - {{detailObj.item.releaseDetail.nextRelease.releaseDate}}</strong><br></span>
-                  <span class="release-note" *ngFor="let feature of detailObj.item.releaseDetail.nextRelease.releaseDetail"><strong>{{feature.featureName}} - </strong>{{feature.description}}<br></span>
-
-                </p>
+    
+    <!-- Content -->
+    <div class="sam-ui grid" [@slideInOut]="'in'" *ngIf="toggleDetail(i)">
+      <div class="column" [ngSwitch]="detailObj.item.contentType">
+        
+        <!-- Table -->
+        <table  *ngSwitchCase="'table'"
+                [@fadeInOut]="fadeSegmentInOut"
+                class="sam-ui celled striped table">
+          <thead>
+            <tr>
+              <th *ngFor="let header of detailObj.item.content.header">
+                {{ header }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let body of detailObj.item.content.body">
+              <td *ngFor="let cell of body">
+                {{ cell }}
               </td>
             </tr>
-          </table>
-          <span class="sam-info-accordion-library-content-link" [ngClass]="getLinkClass()"><a href="{{detailObj.item.url}}" target="{{detailObj.item.title}}">{{detailObj.item.link}}</a></span>
+          </tbody>
+        </table>
+        
+        <!-- Grid -->
+        <div *ngSwitchCase="'grid'" class="sam-ui clearing padded segment" [@fadeInOut]="fadeSegmentInOut">
+          <div class="sam-ui equal width grid">
+            <div class="row">
+              <div class="column" *ngFor="let item of detailObj.item.content">
+                <div [innerHTML]="item"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Default -->
+        <div *ngSwitchDefault class="sam-ui clearing padded segment" [@fadeInOut]="fadeSegmentInOut">
+          
+          <h3 class="sam-ui header" *ngIf="showDetailTitle">
+            {{detailObj.item.title}}
+          </h3>
+          
+          <p *ngIf="!isReleaseDetail">
+            {{detailObj.item.content}}
+          </p>
+          
+          <a  class="sam-ui small right floated primary button" 
+              href="{{detailObj.item.url}}" 
+              target="{{detailObj.item.title}}">
+            <i *ngIf="getLinkClass()" class="icon fa fa-external-link" aria-hidden="true"></i>  
+            {{detailObj.item.link}}
+          </a>
+          
         </div>
       </div>
     </div>
+  
   </div>
-  <div class="usa-width-one-whole"></div>
+  
 </div>
