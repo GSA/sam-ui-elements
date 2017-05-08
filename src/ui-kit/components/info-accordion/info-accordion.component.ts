@@ -81,11 +81,16 @@ import { trigger, state, style, transition, animate, keyframes } from '@angular/
 export class SamInfoAccordionComponent {
 
   @Input() name:string;
+  
+  defaultItemsPerRow = 3;
+  @Input() itemsPerRow = [this.defaultItemsPerRow];
+  
+  @Input() spacing:string = ""; //options: "very relaxed" and "relaxed"
+  
   @Input() data:any;
   @Input() showDetailTitle:boolean = true;
   @Input() isExternalLink:boolean = true;
-  @Input() hasLayer:boolean = true;
-  @Input() isReleaseDetail:boolean = false;
+
   @Input() closeNotification:string = "";
   @Output() updateNotification:EventEmitter<any> = new EventEmitter<any>();
 
@@ -97,8 +102,7 @@ export class SamInfoAccordionComponent {
   };
 
   formatted: boolean = false;
-  innerWidth: number = window.innerWidth;
-  
+
   fadeSegmentInOut: string = '';
 
   constructor() { }
@@ -107,7 +111,7 @@ export class SamInfoAccordionComponent {
     this.formatData();
   }
   
-  over(item, i, j) {
+  over(item) {
     item.state = (item.state === 'active' ? 'inactive' : 'active');
   }
 
@@ -121,16 +125,18 @@ export class SamInfoAccordionComponent {
     if(!this.formatted) {
       let formatData = [];
       let tempData = this.data.slice(0);
-
-      // Split the data to fit in 3 data item a row
-      while (tempData.length > 0)
-        formatData.push(tempData.splice(0, 3));
+      let row = 0;
+      
+      while (tempData.length > 0){
+        formatData.push(tempData.splice(0, this.itemsPerRow[row] || this.defaultItemsPerRow));
+        row++;
+      }
 
       this.data = formatData;
       this.formatted = true;
     }
   }
-  
+
   selectDetail(i, j, event){
     if(this.isCurrent(i,j) && this.detailObj.showDetail){
       this.detailObj.showDetail = false;
@@ -146,18 +152,11 @@ export class SamInfoAccordionComponent {
     event.stopPropagation();
   }
 
-  private getItemClass(i, j){
+  private getItemClass(i,j){
     if(this.isCurrent(i,j) && this.detailObj.showDetail){
       return "fa-minus";
     }
     return "fa-plus";
-  }
-
-  private getTriClass(i, j): string{
-    if(this.isCurrent(i ,j) && this.detailObj.showDetail){
-      return "tri-down";
-    }
-    return "no-tri-down";
   }
 
   private closeReferenceDetail(){
@@ -165,47 +164,23 @@ export class SamInfoAccordionComponent {
     this.detailObj.item = {};
   }
 
-  private getLayerClass(i, j): string{
-    if(this.isCurrent(i ,j) && this.detailObj.showDetail){
-      return "image-filter-layer-select";
-    }
-    return "image-filter-layer-unselect";
-  }
-
-  private getBorderClass(i, j): string{
-    if(this.isCurrent(i ,j) && this.detailObj.showDetail){
+  private getActiveClass(i,j): string{
+    if(this.isCurrent(i,j) && this.detailObj.showDetail){
       return "basic lightest blue";
     }
     return "inverted cool blue";
   }
 
-  private largeScreen(): boolean{
-    return this.innerWidth >= 1200;
-  }
-
-  private getImageContainerClass(): string{
-    if(this.largeScreen()){
-      return "images-container"
-    }
-    return "images-container-small"
-
-  }
-
   private getLinkClass(): boolean{
     return this.isExternalLink ? true : false;
   }
-
+  
   private toggleDetail(i): boolean{
     return this.detailObj.showDetail && this.detailObj.posX === i;
   }
 
   private isCurrent(i,j):boolean{
     return i === this.detailObj.posX && j === this.detailObj.posY;
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event) {
-    this.innerWidth = event.target.innerWidth;
   }
 
 }
