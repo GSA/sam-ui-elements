@@ -1,28 +1,36 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 /**
- * The <samAlert> component is designed with sam.gov standards to show that this is an official website
- * https://gsa.github.io/sam-web-design-standards/
- *
- * @Input type: Set alert type, defaults to 'success'
- * @Input title: Set alert title
- * @Input description: Set alert description
- * @Input showDescription: boolean - Control the description of the alert
- * @Input showLinks: boolean - Control the Expand Link and the Close button
- * @Input closeCurAlert: boolean - Control the current alert
- * @Output onExpand: boolean - Trigger to expand or collapse the description of all the alerts
- * @Output onClose: boolean - Trigger to close all the alerts
+ * The <samAlert> component keeps users informed of important and (optionally) time-sensitive changes
  */
 @Component({
   selector: 'samAlert',
   templateUrl: './alert.template.html'
 })
 export class SamAlertComponent {
+  /**
+   * Sets the alert type, defaults to 'success'
+   */
   @Input() type: string;
+  /**
+   * Sets the alert title
+   */
   @Input() title: string;
+  /**
+   * Sets the alert description
+   */
   @Input() description: string;
+  /**
+   * Controls whether to display/hide the Close button
+   */
   @Input() showClose: boolean = false;
+  /**
+   * Assign a timeout to dismiss the alert
+   */
   @Input() dismissTimer = 0;
+  /**
+   * Emitted event when an alert is dismissed
+   */
   @Output() dismiss: EventEmitter<any> = new EventEmitter<any>();
 
   types:any = {
