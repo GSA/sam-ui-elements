@@ -1,0 +1,16 @@
+<style>
+ li.category {
+   background-color: red;
+   cursor: initial;
+ }
+ li.category.selectable {
+   cursor: pointer;
+ }
+</style>
+
+<input type="text" [(ngModel)]="input">
+<ul class="usa-unstyled-list">
+ <li *ngFor="let option of checkForResults(filterOptions(input))"
+     [ngClass]="{'category': isCategory(option), 'selectable': isCategorySelectable}"
+     (click)="selectOption(option)">{{option[valueProperty]}}</li>
+</ul>
