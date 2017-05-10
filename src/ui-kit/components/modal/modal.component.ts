@@ -162,6 +162,7 @@ export class SamModalComponent implements OnInit, AfterViewChecked {
   closeModal(){
     this.show = false;
     this.onClose.emit(this.args);
+    this.args = null;
     this.removeBackdrop();
     for (let i = 0; i < this._allFocusableElements.length; i++) {
       this.reinsertTabbable(this._allFocusableElements[i]);
