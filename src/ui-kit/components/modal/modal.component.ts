@@ -77,6 +77,8 @@ export class SamModalComponent implements OnInit, AfterViewChecked {
   private _allFocusableElements: NodeListOf<Element>;
   private _modalFocusableElements: NodeListOf<Element>;
 
+  private args = null;
+
   constructor(private hostElement: ElementRef) {
     this.internalId = Date.now();
   }
@@ -148,7 +150,8 @@ export class SamModalComponent implements OnInit, AfterViewChecked {
     if(this.show)
       return;
     this.show = true;
-    this.onOpen.emit(args);
+    this.args = args;
+    this.onOpen.emit(this.args);
     if(document && document.body){
       document.body.appendChild(this.backdropElement);
       document.body.className += " modal-open";
@@ -158,7 +161,8 @@ export class SamModalComponent implements OnInit, AfterViewChecked {
 
   closeModal(){
     this.show = false;
-    this.onClose.emit();
+    this.onClose.emit(this.args);
+    this.args = null;
     this.removeBackdrop();
     for (let i = 0; i < this._allFocusableElements.length; i++) {
       this.reinsertTabbable(this._allFocusableElements[i]);
@@ -170,7 +174,7 @@ export class SamModalComponent implements OnInit, AfterViewChecked {
   }
 
   submitBtnClick(){
-    this.onSubmit.emit();
+    this.onSubmit.emit(this.args);
     //if user needs modal to close, they should do it manually
   }
 
