@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild, forwardRef} from '@angular/core';
+import {Component, Input, ViewChild, forwardRef, Output, EventEmitter} from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn} from "@angular/forms";
 
@@ -53,11 +53,16 @@ export class SamTextComponent implements ControlValueAccessor {
   * Sets the maxlength attribute
   */
   @Input() maxlength: number;
+  /**
+   * Lose focus event emit
+   */
+  @Output() onBlur:EventEmitter<boolean> = new EventEmitter<boolean>();
 
   onChange: any = () => {
     this.wrapper.formatErrors(this.control);
   };
   onTouched: any = () => { };
+  onLoseFocus: any = () => {this.onBlur.emit(true)};
 
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
 
@@ -79,7 +84,7 @@ export class SamTextComponent implements ControlValueAccessor {
     if(this.control.validator){
       validators.push(this.control.validator);
     }
-    
+
     if (this.required) {
       validators.push(Validators.required);
     }
