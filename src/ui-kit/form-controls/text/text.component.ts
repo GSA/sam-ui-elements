@@ -58,7 +58,9 @@ export class SamTextComponent implements ControlValueAccessor {
    */
   @Output() onBlur:EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  onChange: any = () => { };
+  onChange: any = () => {
+    this.wrapper.formatErrors(this.control);
+  };
   onTouched: any = () => { };
   onLoseFocus: any = () => {this.onBlur.emit(true)};
 
