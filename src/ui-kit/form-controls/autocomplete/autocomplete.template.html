@@ -1,10 +1,3 @@
-<style>
-  li.category {
-    font-weight: 900;
-    margin-top: 1rem;
-  }
-</style>
-
 <div class="sam-autocomplete" samClickOutside (clickOutside)="checkForFocus($event)" samTabOutside (tabOutside)="checkForFocus($event)">
   <!-- Text input -->
   <label *ngIf="labelText || labelText" [attr.for]="id">{{labelText}}<span class="usa-sr-only">&nbsp;autocomplete</span></label>
