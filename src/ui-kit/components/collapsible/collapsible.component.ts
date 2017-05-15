@@ -37,6 +37,10 @@ export class SamCollapsibleComponent implements OnChanges {
     return this._isOpened = !this._isOpened;
   }
 
+  srOnlyText(): string {
+    return this.isFilterOpen() ? 'expand' : 'collapse';
+  }
+
   toggleButtonLabel(): string {
     return this.isFilterOpen() ? 'fa fa-minus' : 'fa fa-plus';
   }

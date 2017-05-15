@@ -40,7 +40,7 @@ import { SamSelectResizableComponent } from './select-resizable';
     SamTimeComponent,
     SamToggleSwitchComponent,
     SamListDisplayComponent,
-    SamSelectResizableComponent
+    SamSelectResizableComponent,
   ],
   exports: [
     SamCheckboxModule,
@@ -58,7 +58,7 @@ import { SamSelectResizableComponent } from './select-resizable';
     SamToggleSwitchComponent,
     SamAutocompleteDropdownModule,
     SamListDisplayComponent,
-    SamSelectResizableComponent
+    SamSelectResizableComponent,
   ],
   providers: []
 })

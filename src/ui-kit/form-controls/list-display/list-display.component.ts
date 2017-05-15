@@ -30,7 +30,6 @@ export class SamListDisplayComponent implements ControlValueAccessor, OnChanges{
    * list on changes to the model.
    */
   @Input() newValue: any;
-
   /*
    * If true, place a "New" label next to new items
    */
@@ -39,7 +38,9 @@ export class SamListDisplayComponent implements ControlValueAccessor, OnChanges{
    * Optional configuration object
    */
   @Input() config: ListDisplayConfig;
-
+  /**
+   * Outputs removed items
+   */
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
 
   get value(): any {
@@ -61,20 +62,50 @@ export class SamListDisplayComponent implements ControlValueAccessor, OnChanges{
 
   constructor(){}
 
-  ngOnChanges(changes: any) {
-    if (this.newValue && this.selectedItems.indexOf(this.newValue) === -1) {
-      this.newItems[this.newValue] = true;
-      this.selectedItems.push(this.newValue);
+  ngOnInit() {
+    if (!this.selectedItems || this.selectedItems.constructor !== Array) {
+      throw new Error('ngModel for sam-list-display must be an Array');
     }
   }
 
+  ngOnChanges(changes: any) {
+    if (!this.selectedItems || this.selectedItems.constructor !== Array) {
+      throw new Error('ngModel must be an array for this component.')
+    }
+    if (this.newValue && typeof this.newValue=="object" && this.config && this.config.keyValueConfig && this.checkSelected(this.newValue)) {
+      this.populateSelectedList();
+    } else if (this.newValue && typeof this.newValue=="string" && this.selectedItems.indexOf(this.newValue) === -1) {
+      this.populateSelectedList();
+    }
+  }
+
+  populateSelectedList(){
+    this.onTouchedCallback();
+    this.newItems[this.newValue] = true;
+    this.selectedItems.push(this.newValue);
+    this.onChangedCallback(this.selectedItems);
+  }
+
+  checkSelected(newValueObj: any) {
+    let filterArr = this.selectedItems.filter((obj)=>{
+      return obj[this.config.keyValueConfig.keyProperty] == newValueObj[this.config.keyValueConfig.keyProperty];
+    });
+
+    return filterArr.length == 0;
+  }
+
   removeItem(idx, value) {
+    this.onTouchedCallback();
     this.selectedItems.splice(idx, 1);
     delete this.newItems[value];
-    this.modelChange.emit();
+    this.modelChange.emit(value);
+    this.onChangedCallback(this.selectedItems);
   }
 
   writeValue(value) {
+    if (!value) {
+      value = [];
+    }
     if (value !== this.selectedItems) {
       this.selectedItems = value;
     }

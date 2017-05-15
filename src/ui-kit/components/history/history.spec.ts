@@ -1,5 +1,6 @@
 import {TestBed, async} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { SamHistoryComponent } from './history.component';
 
@@ -13,7 +14,7 @@ let historyData = [
     index: "1",
     isTagged: false,
     title: "Original Combined Synopsis/Solicitation",
-    url: "opportunities/0564cc38f28e1a85ea66de2bb78dae29",
+    url: "/opportunities/0564cc38f28e1a85ea66de2bb78dae29",
   },
   {
     authoritative: "1",
@@ -23,7 +24,7 @@ let historyData = [
     index: "2",
     isTagged: false,
     title: "Award Notice",
-    url: "opportunities/1a610c814d73fc23a6b71decc9b4c548",
+    url: "/opportunities/1a610c814d73fc23a6b71decc9b4c548",
   }
 ];
 
@@ -34,6 +35,7 @@ describe("The SAM History Component", ()=> {
   
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
       declarations: [SamHistoryComponent],
     });
 
@@ -52,7 +54,7 @@ describe("The SAM History Component", ()=> {
     // Description
     expect(fixture.debugElement.query(By.css('ul li:nth-child(1) em')).nativeElement.innerHTML).toBe("Lorem Ipsum");
     // URL
-    expect(fixture.debugElement.query(By.css('ul li:nth-child(1) a')).nativeElement.getAttribute("href")).toBe("opportunities/0564cc38f28e1a85ea66de2bb78dae29");
+    expect(fixture.debugElement.query(By.css('ul li:nth-child(1) a')).nativeElement.getAttribute("href")).toBe("/opportunities/0564cc38f28e1a85ea66de2bb78dae29");
   });
   
   it('check current class', () => {
