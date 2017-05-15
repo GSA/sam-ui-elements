@@ -87,6 +87,10 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
     this.onChange(this.toString());
     this.valueChange.emit(this.toString());
   }
+  
+  setTouched(){
+    this.onTouched();
+  }
 
   isValid() {
     return !isNaN(this.hours) && !isNaN(this.minutes)
