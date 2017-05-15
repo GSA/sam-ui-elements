@@ -9,12 +9,14 @@ import { AccordionsModule } from './accordion';
 import { SamAlertComponent } from './alert';
 import { SamAlphabetSelectorComponent } from './alphabet-selector';
 import { SamBannerComponent } from './banner';
+import { SamBreadcrumbsComponent } from './breadcrumbs';
 import { SamCollapsibleComponent } from './collapsible';
 import { SamDownloadComponent } from './download';
 import { SamFiltersContainerComponent } from './filters-container';
 import { SamHeaderComponent } from './header';
 import { SamHeaderMenuComponent } from './header-menu';
 import { SamHistoryComponent } from './history';
+import { SamInfoAccordionComponent } from './info-accordion';
 import { SamLabelComponent } from './label';
 import { SamModalComponent } from './modal';
 import { SamMultiSelectDropdownComponent } from './multiselect-dropdown';
@@ -39,12 +41,14 @@ import { SamWrapperModule } from '../wrappers';
     SamAlertComponent,
     SamAlphabetSelectorComponent,
     SamBannerComponent,
+    SamBreadcrumbsComponent,
     SamCollapsibleComponent,
     SamDownloadComponent,
     SamFiltersContainerComponent,
     SamHeaderComponent,
     SamHeaderMenuComponent,
     SamHistoryComponent,
+    SamInfoAccordionComponent,
     SamLabelComponent,
     SamModalComponent,
     SamMultiSelectDropdownComponent,
@@ -58,12 +62,14 @@ import { SamWrapperModule } from '../wrappers';
     SamAlertComponent,
     SamAlphabetSelectorComponent,
     SamBannerComponent,
+    SamBreadcrumbsComponent,
     SamCollapsibleComponent,
     SamDownloadComponent,
     SamFiltersContainerComponent,
     SamHeaderComponent,
     SamHeaderMenuComponent,
     SamHistoryComponent,
+    SamInfoAccordionComponent,
     SamLabelComponent,
     SamModalComponent,
     SamMultiSelectDropdownComponent,

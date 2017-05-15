@@ -10,38 +10,38 @@ import { SamUIKitModule } from '../../../index';
 
 import { data } from '../services/testdata';
 
-// describe('Sam Sidenav Component', function() {
-//   let component: SamSidenavComponent;
-//   let fixture: ComponentFixture<any>;
-//   const mockService = new SidenavService();
-//   beforeEach(() => {
-//     TestBed.configureTestingModule({
-//       imports: [SamSidenavModule],
-//       providers: [SidenavService]
-//     });
+describe('The Sam Sidenav component', () => {
+  let component:SamSidenavComponent;
+  let fixture:any;
 
-//     TestBed.compileComponents();
-//   });
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [SamSidenavModule],
+      declarations: [],
+    });
 
-//   fixture = TestBed.createComponent(SamSidenavComponent);
-//   component = fixture.componentInstance;
-//   component.model = data;
-//   component.data = new EventEmitter<any>();
-//   component.path = new EventEmitter<any>();
+    fixture = TestBed.createComponent(SamSidenavComponent);
+    component = fixture.componentInstance;
+    component.model = data;
+  });
 
-//   const item1: HTMLElement = fixture.nativeElement.querySelector('li')[0];
-//   item1.click();
+  it('should compile', function () {
+    fixture.detectChanges();
+    expect(true).toBe(true);
+  });
 
-//   it('Should update UI when sidenav item is selected', () => {
-//     const child1 = item1.children[0];
-//     expect(child1.textContent).toContain(data.children[1].label);
-//   });
-
-//   it('Should apply selected class if item is selected', () => {
-//     expect(item1.classList).toContain('usa-selected');
-//   });
-
-//   it('Should display children if item is selected', () => {
-//     expect(item1.children).toBeDefined();
-//   });
-// });
+  it('should output top level labels', function () {
+    fixture.detectChanges();
+    const item1 = fixture.debugElement.query(By.css('.usa-sidenav-list > li')).children[0].nativeElement;
+    expect(item1.textContent.trim()).toContain(data.children[0].label);
+  });
+  
+  it('should update UI when sidenav item is selected', () => {
+      fixture.detectChanges();
+      const item1 = fixture.debugElement.query(By.css('.usa-sidenav-list > li'));
+      item1.children[0].nativeElement.click();
+      fixture.detectChanges();
+      const subitem1 = item1.query(By.css('.usa-sidenav-sub_list > li')).nativeElement;
+      expect(subitem1.textContent.trim()).toContain(data.children[0]['children'][0].label);
+   });
+});

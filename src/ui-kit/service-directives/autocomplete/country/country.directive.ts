@@ -11,7 +11,7 @@ export class CountryService implements AutocompleteService {
 
   setFetchMethod() {}
 
-  fetch(val: string, pageEnd: boolean): Observable<any> {
+  fetch(val: string, pageEnd: boolean, serviceOptions?: any): Observable<any> {
     val = val.toLowerCase();
 
     const filtered = this.countries.reduce((prev, curr) => {

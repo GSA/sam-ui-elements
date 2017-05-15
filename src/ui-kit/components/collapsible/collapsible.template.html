@@ -2,7 +2,7 @@
   <!-- Div that contains title, filter summary, and expand/collapse button -->
   <div class="collapsible-header" [ngClass]="{bottomBorder: isFilterOpen()}">
     <span class="label">{{label}}</span>
-    <span class="expand-hide"><button type="button" class="usa-button-link" (click)="toggleFilter()"><i [ngClass]="toggleButtonLabel()"></i></button></span>
+    <span class="expand-hide"><button type="button" class="usa-button-link" (click)="toggleFilter()"><span class="usa-sr-only">{{ srOnlyText() }}</span><i [ngClass]="toggleButtonLabel()"></i></button></span>
   </div>
   <!-- Div that contains filter -->
   <!-- Content in this div should only be available to screen reader if its open -->

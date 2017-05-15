@@ -27,15 +27,9 @@ describe('The Sam Alert component', () => {
     component.type = defaultConfig.type;
     component.title = defaultConfig.title;
     component.description = defaultConfig.description;
-    let test:SimpleChanges = {
-      target:null
-    };
-    component.ngOnChanges(test);
     fixture.detectChanges();
 
   });
-
-
 
   it('title + description check', () => {
     fixture.detectChanges();
