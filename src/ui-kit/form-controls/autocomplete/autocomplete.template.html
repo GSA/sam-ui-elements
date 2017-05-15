@@ -1,3 +1,10 @@
+<style>
+  li.category {
+    font-weight: 900;
+    margin-top: 1rem;
+  }
+</style>
+
 <div class="sam-autocomplete" samClickOutside (clickOutside)="checkForFocus($event)" samTabOutside (tabOutside)="checkForFocus($event)">
   <!-- Text input -->
   <label *ngIf="labelText || labelText" [attr.for]="id">{{labelText}}<span class="usa-sr-only">&nbsp;autocomplete</span></label>
@@ -16,7 +23,7 @@
       </ul>
       <!-- Lists data if array of objects with key/value pair is passed to component -->
       <ul id="sam-autocomplete-results-kv" #resultsListKV *ngIf="filteredKeyValuePairs && filteredKeyValuePairs.length > 0 && hasFocus">
-        <li *ngFor="let obj of filteredKeyValuePairs" (click)="setSelected(obj)">{{obj[config.keyValueConfig.valueProperty]}}</li>
+        <li *ngFor="let obj of filteredKeyValuePairs" [ngClass]="{'category': obj.isCategory}" (click)="setSelected(obj)">{{obj[config.keyValueConfig.valueProperty]}}</li>
       </ul>
       <!-- Screen Reader Only, reads results and selections -->
       <ul #srOnly class="usa-sr-only" role="status" aria-live="assertive" aria-relevant="additions"></ul>

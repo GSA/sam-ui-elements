@@ -55,6 +55,10 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   @Input() public allowAny: boolean = false;
 
   /**
+   * Array of categories. Applies category class if labels match values.
+   */
+  @Input() public categories: any = [];
+  /**
    * Emitted only when the user selects an item from the dropdown list, or when the user clicks enter and the mode is
    * allowAny. This is useful if you do not want to respond to onChange events when the input is blurred.
    */
@@ -221,39 +225,66 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
 
   onDownArrowDown(list: ElementRef) {
     const children = list.nativeElement.children;
-    const selectedChild = this.getSelectedChild(children);
+    let selectedChildIndex = this.getSelectedChildIndex(children);
     let message;
+    let isFirstItemCategory: boolean = false;
 
     if (children && children.length > 0) {
-      if (selectedChild === children.length - 2) {
+      /**
+       * Check if the list has children
+       */
+      if (selectedChildIndex === children.length - 2) {
+        /**
+         * If current item is second to last item in list,
+         * set endOfList flag to true. This was intended
+         * to be used for pagination purposes with the
+         * autocomplete service.
+         */
         this.endOfList = true;
       }
-      if (selectedChild === children.length - 1) {
-        children[0].classList.add('isSelected');
-        this.selectedChild = children[0];
+      if (selectedChildIndex === children.length - 1) {
+        selectedChildIndex = 0;
+        if (this.categories.length > 0 && !this.config.isCategorySelectable) {
+          if (children[selectedChildIndex].classList.contains('category')) {
+            isFirstItemCategory = true;
+            selectedChildIndex++;
+          }
+        }
+        children[selectedChildIndex].classList.add('isSelected');
+        this.selectedChild = children[selectedChildIndex];
         message = !!this.results ?
-                  this.results[0] :
-                  this.filteredKeyValuePairs[0][this.config.keyValueConfig.valueProperty];
+                  this.results[selectedChildIndex] :
+                  this.filteredKeyValuePairs[selectedChildIndex][this.config.keyValueConfig.valueProperty];
       } else {
-        children[selectedChild + 1].classList.add('isSelected');
-        this.selectedChild = children[selectedChild + 1];
+        if (this.categories.length > 0 && !this.config.isCategorySelectable) {
+          if (children[selectedChildIndex + 1].classList.contains('category')) {
+            if (selectedChildIndex + 1 === 0) {
+              isFirstItemCategory = true;
+            }
+            selectedChildIndex++;
+          }
+        }
+        children[selectedChildIndex + 1].classList.add('isSelected');
+        this.selectedChild = children[selectedChildIndex + 1];
         message = !!this.results ?
-                    this.results[selectedChild + 1] :
-                    this.filteredKeyValuePairs[selectedChild + 1][this.config.keyValueConfig.valueProperty];
+                    this.results[selectedChildIndex + 1] :
+                    this.filteredKeyValuePairs[selectedChildIndex + 1][this.config.keyValueConfig.valueProperty];
       }
 
       this.pushSROnlyMessage(message);
-      list.nativeElement.scrollTop = this.selectedChild.offsetTop - list.nativeElement.clientTop;
+      list.nativeElement.scrollTop = isFirstItemCategory ? this.selectedChild.offsetTop - (list.nativeElement.clientTop * 24) : this.selectedChild.offsetTop - list.nativeElement.clientTop;
     }
   }
 
   onUpArrowDown(list) {
     const children = list.nativeElement.children;
-    const selectedChild = this.getSelectedChild(children);
+    let selectedChildIndex = this.getSelectedChildIndex(children);
     let message;
+    let isFirstItemCategory: boolean = false;
+
 
     if (children && children.length > 0) {
-      if (selectedChild === 0 || selectedChild === -1) {
+      if (selectedChildIndex === 0 || selectedChildIndex === -1) {
         this.endOfList = true;
         children[children.length - 1].classList.add('isSelected');
         this.selectedChild = children[children.length - 1];
@@ -261,20 +292,41 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
                   this.results[children.length - 1] :
                   this.filteredKeyValuePairs[children.length -1][this.config.keyValueConfig.valueProperty];
       } else {
-        children[selectedChild - 1].classList.add('isSelected');
-        this.selectedChild = children[selectedChild - 1];
+        if (this.categories.length > 0 && !this.config.isCategorySelectable) {
+          if (selectedChildIndex !== 1 && children[selectedChildIndex - 1].classList.contains('category')) {
+            selectedChildIndex--;
+          }
+
+          if (selectedChildIndex === 2) {
+            isFirstItemCategory = true;
+          }
+
+          if (selectedChildIndex - 1 === 0 && children[selectedChildIndex - 1].classList.contains('category')) {
+            this.endOfList = true;
+            children[children.length - 1].classList.add('isSelected');
+            this.selectedChild = children[children.length - 1];
+            message = !!this.results ?
+                      this.results[children.length - 1] :
+                      this.filteredKeyValuePairs[children.length -1][this.config.keyValueConfig.valueProperty];
+            this.pushSROnlyMessage(message);
+            list.nativeElement.scrollTop = this.selectedChild.offsetTop - list.nativeElement.clientTop;
+            return;
+          }
+        }
+        children[selectedChildIndex - 1].classList.add('isSelected');
+        this.selectedChild = children[selectedChildIndex - 1];
         message = !!this.results ?
-                  this.results[selectedChild - 1] :
-                  this.filteredKeyValuePairs[selectedChild -1][this.config.keyValueConfig.valueProperty];
+                  this.results[selectedChildIndex - 1] :
+                  this.filteredKeyValuePairs[selectedChildIndex -1][this.config.keyValueConfig.valueProperty];
       }
       this.pushSROnlyMessage(message);
-      list.nativeElement.scrollTop = this.selectedChild.offsetTop - list.nativeElement.clientTop;
+      list.nativeElement.scrollTop = isFirstItemCategory ? 0 : this.selectedChild.offsetTop - list.nativeElement.clientTop;
     }
   }
 
   onEnterDown(list) {
     const children = list.nativeElement.children;
-    const selectedChild = this.getSelectedChild(children);
+    const selectedChild = this.getSelectedChildIndex(children);
     let message;
 
     if (selectedChild !== -1) {
@@ -292,12 +344,12 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     }
   }
 
-  getSelectedChild(children: any) {
+  getSelectedChildIndex(children: any): number {
     let selectedChild: number = -1;
     for (let child = 0; child < children.length; child++) {
-      if (children[child].className.includes('isSelected')) {
+      if (children[child].classList.contains('isSelected')) {
         selectedChild = child;
-        children[child].className = '';
+        children[child].classList.remove('isSelected');
       }
     }
     return selectedChild;
@@ -322,6 +374,9 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   }
 
   setSelected(value: any) {
+    if (!this.config.isCategorySelectable && this.isCategory(value)) {
+      return;
+    }
     let displayValue = value;
     if(this.config && this.config.keyValueConfig && value[this.config.keyValueConfig.valueProperty]){
       displayValue = value[this.config.keyValueConfig.valueProperty]
@@ -359,9 +414,33 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
 
   filterKeyValuePairs(subStr: string, keyValuePairs: any): any {
     subStr = subStr.toLowerCase();
-    let reducedArr = keyValuePairs.reduce((prev, curr, index, arr) => {
+    const categories = [];
+    let currentCategory = '';
+    const reducedArr = keyValuePairs.reduce((prev, curr, index, arr) => {
       if (curr[this.config.keyValueConfig.keyProperty].toLowerCase().includes(subStr) ||
           curr[this.config.keyValueConfig.valueProperty].toLowerCase().includes(subStr)) {
+        /**
+         * Check if the current item in the array contains the substring value in
+         * either the key or value property provided on the config input
+         */
+        if (curr[this.config.categoryProperty] && currentCategory !== curr[this.config.categoryProperty]) {
+          /**
+           * Checks if the current item in the array has a category. If so, checks to see if 
+           * this category is the current category. If not, it will push it to the returned array.
+           * If it is the current category, it skips.
+           */
+          currentCategory = curr[this.config.categoryProperty];
+          const filteredCategories = this.categories.filter((category) => {
+            /**
+             * Filters the category input array property for a matching category property.
+             */
+            if (category[this.config.keyValueConfig.keyProperty] === curr[this.config.categoryProperty]) {
+              category.isCategory = true;
+              return category;
+            }
+          });
+          prev.push(filteredCategories[0]);
+        }
         prev.push(curr);
       }
       return prev;
@@ -395,6 +474,14 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     this.innerValue = "";
     this.propogateChange(null);
     this.clearDropdown();
+  }
+
+  isCategory(object: any): boolean {
+    if (this.categories.indexOf(object) !== -1) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   writeValue(value: any): void {
