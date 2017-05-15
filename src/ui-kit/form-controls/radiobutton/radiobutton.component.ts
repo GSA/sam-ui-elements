@@ -1,6 +1,8 @@
-import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, forwardRef } from '@angular/core';
 import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
 import { OptionsType } from '../../types';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn } from "@angular/forms";
+
 
 /**
  * The <samRadioButton> component is a set of checkboxes compliant with sam.gov standards
@@ -8,8 +10,13 @@ import { OptionsType } from '../../types';
 @Component({
   selector: 'samRadioButton',
   templateUrl: 'radiobutton.template.html',
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => SamRadioButtonComponent),
+    multi: true
+  }]
 })
-export class SamRadioButtonComponent {
+export class SamRadioButtonComponent  {
   /**
   * Sets the bound value of the component
   */
@@ -31,9 +38,17 @@ export class SamRadioButtonComponent {
   */
   @Input() hint: string;
   /**
+  * Sets required text on component
+  */
+  @Input() required: boolean = false;
+  /**
   * Sets the general error message
   */
   @Input() errorMessage: string;
+  /**
+  * Sets the angular FormControl
+  */
+  @Input() control: FormControl;
   /**
   * Event emitted when model value changes
   */
@@ -48,10 +63,40 @@ export class SamRadioButtonComponent {
     if (!this.name) {
       throw new Error("<samRadioButton> requires a [name] parameter for 508 compliance");
     }
+
+    if(!this.control){
+      return;
+    }
+
+    this.control.valueChanges.subscribe(()=>{
+      this.wrapper.formatErrors(this.control);
+    });
+
+    this.wrapper.formatErrors(this.control);
   }
 
-  onChange(value) {
+  onRadioChange(value) {
     this.model = value;
+    this.onChange(value);
     this.modelChange.emit(value);
+  }
+  
+  onChange: any = () => { };
+  onTouched: any = () => { };
+  
+  registerOnChange(fn) {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn) {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(disabled) {
+    //this.disabled = disabled;
+  }
+
+  writeValue(value) {
+    this.model = value;
   }
 }
