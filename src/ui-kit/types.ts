@@ -121,6 +121,14 @@ export interface AutocompleteConfig {
    * When input is empty, dropdown is still displayed on focus
    */
   showOnEmptyInput?: boolean;
+  /**
+   * Set value to be used to determine if an item is a category.
+   */
+  categoryProperty?: string;
+  /**
+   * Sets whether categories can be selected or not
+   */
+  isCategorySelectable?: boolean;
 }
 
 export interface AutocompleteKeyValueConfig {
