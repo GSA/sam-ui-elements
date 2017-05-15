@@ -20,8 +20,6 @@ import { SamToggleSwitchComponent } from './toggle-switch';
 import { SamListDisplayComponent } from './list-display';
 import { SamSelectResizableComponent } from './select-resizable';
 
-import { SamAutocompleteCategoriesComponent } from './autocomplete-categories';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -43,7 +41,6 @@ import { SamAutocompleteCategoriesComponent } from './autocomplete-categories';
     SamToggleSwitchComponent,
     SamListDisplayComponent,
     SamSelectResizableComponent,
-    SamAutocompleteCategoriesComponent
   ],
   exports: [
     SamCheckboxModule,
@@ -62,7 +59,6 @@ import { SamAutocompleteCategoriesComponent } from './autocomplete-categories';
     SamAutocompleteDropdownModule,
     SamListDisplayComponent,
     SamSelectResizableComponent,
-    SamAutocompleteCategoriesComponent
   ],
   providers: []
 })

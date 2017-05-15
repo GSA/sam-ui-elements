@@ -285,7 +285,6 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
 
     if (children && children.length > 0) {
       if (selectedChildIndex === 0 || selectedChildIndex === -1) {
-        console.log(selectedChildIndex);
         this.endOfList = true;
         children[children.length - 1].classList.add('isSelected');
         this.selectedChild = children[children.length - 1];
@@ -293,7 +292,6 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
                   this.results[children.length - 1] :
                   this.filteredKeyValuePairs[children.length -1][this.config.keyValueConfig.valueProperty];
       } else {
-        console.log(selectedChildIndex);
         if (this.categories.length > 0 && !this.config.isCategorySelectable) {
           if (selectedChildIndex !== 1 && children[selectedChildIndex - 1].classList.contains('category')) {
             selectedChildIndex--;
