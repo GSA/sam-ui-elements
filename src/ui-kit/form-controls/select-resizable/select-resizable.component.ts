@@ -1,4 +1,4 @@
-import { Component, forwardRef, ViewChild, ElementRef, Renderer, ChangeDetectorRef, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, forwardRef, ViewChild, ElementRef, ChangeDetectorRef, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -27,7 +27,7 @@ export class SamSelectResizableComponent implements ControlValueAccessor, AfterV
     this.onChangeCallback(val);
   }
 
-  constructor(private renderer: Renderer, private ref: ChangeDetectorRef) {}
+  constructor(private ref: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
     const options = this.mainSelectElement.nativeElement.options;
@@ -49,7 +49,7 @@ export class SamSelectResizableComponent implements ControlValueAccessor, AfterV
   updateSelected() {
     this.ref.detectChanges();
     const width = (this.hiddenSelectElement.nativeElement.clientWidth * 1.02) + 'px';
-    this.renderer.setElementStyle(this.mainSelectElement.nativeElement, 'width', width);
+    this.mainSelectElement.nativeElement.style.width = width;
   }
   
   writeValue(val: any) {
@@ -65,6 +65,6 @@ export class SamSelectResizableComponent implements ControlValueAccessor, AfterV
   }
 
   setDisabledState(isDisabled: boolean) {
-    this.renderer.setElementProperty(this.mainSelectElement.nativeElement, 'disabled', isDisabled);
+    this.mainSelectElement.nativeElement.disabled = isDisabled;
   }
 }

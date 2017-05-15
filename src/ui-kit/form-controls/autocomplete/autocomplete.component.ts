@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, forwardRef,
-         ViewChild, Renderer, ElementRef, Optional, OnChanges } from '@angular/core';
+         ViewChild, ElementRef, Optional, OnChanges } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { Observable } from 'rxjs';
 
@@ -54,9 +54,20 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
    */
   @Input() public allowAny: boolean = false;
 
+  /**
+   * Array of categories. Applies category class if labels match values.
+   */
+  @Input() public categories: any = [];
+  /**
+   * Emitted only when the user selects an item from the dropdown list, or when the user clicks enter and the mode is
+   * allowAny. This is useful if you do not want to respond to onChange events when the input is blurred.
+   */
+  @Output() public enterEvent: EventEmitter<any> = new EventEmitter();
+
   public results: Array<string>;
   public innerValue: any = '';
   public inputValue: any;
+  public selectedInputValue: any;
   public selectedChild: HTMLElement;
   public hasFocus: boolean = false;
   public hasServiceError: boolean = false;
@@ -85,7 +96,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     }
   }
 
-  constructor(@Optional() public autocompleteService: AutocompleteService, public renderer: Renderer) {}
+  constructor(@Optional() public autocompleteService: AutocompleteService) {}
 
   ngOnChanges() {
 
@@ -108,6 +119,9 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   }
 
   onKeyup(event: any) {
+    if((event.code === 'Tab' || event.keyIdentifier === 'Tab') && !this.inputValue && (!this.config || this.config && !this.config.showOnEmptyInput)){
+      return;
+    }
     if ((event.code === 'Backspace' || event.keyIdentifier === 'Backspace') && !this.innerValue) {
       this.results = null;
       this.filteredKeyValuePairs = null;
@@ -127,7 +141,11 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       this.results = this.filterResults(event.target.value, this.options);
       this.pushSROnlyMessage(this.results.length + this.resultsAvailable);
     } else if (this.endOfList) {
-      this.autocompleteService.fetch(event.target.value, this.endOfList).subscribe(
+      let options = null;
+      if (this.config) {
+        options = this.config.serviceOptions || null;
+      }
+      this.autocompleteService.fetch(event.target.value, this.endOfList, options).subscribe(
         (data) => {
           this.hasServiceError = false;
           if (this.isKeyValuePair(data)) {
@@ -175,7 +193,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   }
 
   onKeydown(event: any) {
-    this.renderer.setElementProperty(this.srOnly.nativeElement, 'innerHTML', null);
+    this.srOnly.nativeElement.innerHTML = null;
 
     const list: ElementRef = this.resultsList || this.resultsListKV;
 
@@ -200,68 +218,115 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       if ((event.code === 'Escape' || event.keyIdentified === 'Escape') && (this.results && this.results.length > 0) && !this.hasServiceError) {
         this.clearDropdown();
       }
+    } else if ((event.code === 'Enter' || event.keyIdentified === 'Enter') && this.allowAny ) {
+      this.setSelected(this.inputValue);
     }
   }
 
   onDownArrowDown(list: ElementRef) {
     const children = list.nativeElement.children;
-    const selectedChild = this.getSelectedChild(children);
+    let selectedChildIndex = this.getSelectedChildIndex(children);
     let message;
+    let isFirstItemCategory: boolean = false;
 
     if (children && children.length > 0) {
-      if (selectedChild === children.length - 2) {
+      /**
+       * Check if the list has children
+       */
+      if (selectedChildIndex === children.length - 2) {
+        /**
+         * If current item is second to last item in list,
+         * set endOfList flag to true. This was intended
+         * to be used for pagination purposes with the
+         * autocomplete service.
+         */
         this.endOfList = true;
       }
-      if (selectedChild === children.length - 1) {
-        this.renderer.setElementClass(children[0], 'isSelected', true);
-        this.selectedChild = children[0];
+      if (selectedChildIndex === children.length - 1) {
+        selectedChildIndex = 0;
+        if (this.categories.length > 0 && !this.config.isCategorySelectable) {
+          if (children[selectedChildIndex].classList.contains('category')) {
+            isFirstItemCategory = true;
+            selectedChildIndex++;
+          }
+        }
+        children[selectedChildIndex].classList.add('isSelected');
+        this.selectedChild = children[selectedChildIndex];
         message = !!this.results ?
-                  this.results[0] :
-                  this.filteredKeyValuePairs[0][this.config.keyValueConfig.valueProperty];
+                  this.results[selectedChildIndex] :
+                  this.filteredKeyValuePairs[selectedChildIndex][this.config.keyValueConfig.valueProperty];
       } else {
-        this.renderer.setElementClass(children[selectedChild + 1], 'isSelected', true);
-        this.selectedChild = children[selectedChild + 1];
+        if (this.categories.length > 0 && !this.config.isCategorySelectable) {
+          if (children[selectedChildIndex + 1].classList.contains('category')) {
+            if (selectedChildIndex + 1 === 0) {
+              isFirstItemCategory = true;
+            }
+            selectedChildIndex++;
+          }
+        }
+        children[selectedChildIndex + 1].classList.add('isSelected');
+        this.selectedChild = children[selectedChildIndex + 1];
         message = !!this.results ?
-                    this.results[selectedChild + 1] :
-                    this.filteredKeyValuePairs[selectedChild + 1][this.config.keyValueConfig.valueProperty];
+                    this.results[selectedChildIndex + 1] :
+                    this.filteredKeyValuePairs[selectedChildIndex + 1][this.config.keyValueConfig.valueProperty];
       }
 
       this.pushSROnlyMessage(message);
-      this.renderer.setElementProperty(list.nativeElement, 'scrollTop',
-                                       this.selectedChild.offsetTop - list.nativeElement.clientTop)
+      list.nativeElement.scrollTop = isFirstItemCategory ? this.selectedChild.offsetTop - (list.nativeElement.clientTop * 24) : this.selectedChild.offsetTop - list.nativeElement.clientTop;
     }
   }
 
   onUpArrowDown(list) {
     const children = list.nativeElement.children;
-    const selectedChild = this.getSelectedChild(children);
+    let selectedChildIndex = this.getSelectedChildIndex(children);
     let message;
+    let isFirstItemCategory: boolean = false;
+
 
     if (children && children.length > 0) {
-      if (selectedChild === 0 || selectedChild === -1) {
+      if (selectedChildIndex === 0 || selectedChildIndex === -1) {
         this.endOfList = true;
-        this.renderer.setElementClass(children[children.length - 1], 'isSelected', true);
+        children[children.length - 1].classList.add('isSelected');
         this.selectedChild = children[children.length - 1];
         message = !!this.results ?
                   this.results[children.length - 1] :
                   this.filteredKeyValuePairs[children.length -1][this.config.keyValueConfig.valueProperty];
       } else {
-        this.renderer.setElementClass(children[selectedChild - 1], 'isSelected', true);
-        this.selectedChild = children[selectedChild - 1];
+        if (this.categories.length > 0 && !this.config.isCategorySelectable) {
+          if (selectedChildIndex !== 1 && children[selectedChildIndex - 1].classList.contains('category')) {
+            selectedChildIndex--;
+          }
+
+          if (selectedChildIndex === 2) {
+            isFirstItemCategory = true;
+          }
+
+          if (selectedChildIndex - 1 === 0 && children[selectedChildIndex - 1].classList.contains('category')) {
+            this.endOfList = true;
+            children[children.length - 1].classList.add('isSelected');
+            this.selectedChild = children[children.length - 1];
+            message = !!this.results ?
+                      this.results[children.length - 1] :
+                      this.filteredKeyValuePairs[children.length -1][this.config.keyValueConfig.valueProperty];
+            this.pushSROnlyMessage(message);
+            list.nativeElement.scrollTop = this.selectedChild.offsetTop - list.nativeElement.clientTop;
+            return;
+          }
+        }
+        children[selectedChildIndex - 1].classList.add('isSelected');
+        this.selectedChild = children[selectedChildIndex - 1];
         message = !!this.results ?
-                  this.results[selectedChild - 1] :
-                  this.filteredKeyValuePairs[selectedChild -1][this.config.keyValueConfig.valueProperty];
+                  this.results[selectedChildIndex - 1] :
+                  this.filteredKeyValuePairs[selectedChildIndex -1][this.config.keyValueConfig.valueProperty];
       }
       this.pushSROnlyMessage(message);
-      this.renderer.setElementProperty(list.nativeElement,
-                                       'scrollTop',
-                                       this.selectedChild.offsetTop - list.nativeElement.clientTop)
+      list.nativeElement.scrollTop = isFirstItemCategory ? 0 : this.selectedChild.offsetTop - list.nativeElement.clientTop;
     }
   }
 
   onEnterDown(list) {
     const children = list.nativeElement.children;
-    const selectedChild = this.getSelectedChild(children);
+    const selectedChild = this.getSelectedChildIndex(children);
     let message;
 
     if (selectedChild !== -1) {
@@ -279,71 +344,144 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     }
   }
 
-  getSelectedChild(children: any) {
+  getSelectedChildIndex(children: any): number {
     let selectedChild: number = -1;
     for (let child = 0; child < children.length; child++) {
-      if (children[child].className.includes('isSelected')) {
+      if (children[child].classList.contains('isSelected')) {
         selectedChild = child;
-        children[child].className = '';
+        children[child].classList.remove('isSelected');
       }
     }
     return selectedChild;
   }
 
   pushSROnlyMessage(message: string) {
-    const srResults: HTMLElement = this.renderer.createElement(this.srOnly.nativeElement, 'li');
-    this.renderer.setElementProperty(srResults, 'innerText', message);
-    this.renderer.invokeElementMethod(this.srOnly.nativeElement, 'appendChild', [srResults]);
+    const srResults: HTMLElement = document.createElement("li");
+    srResults.innerText = message;
+    this.srOnly.nativeElement.appendChild(srResults);
   }
 
   checkForFocus(event) {
+    if(!this.allowAny && this.selectedInputValue!=this.inputValue){
+      this.inputValue = "";
+    }
+    if(this.inputValue==""){
+      this.results = null;
+      this.filteredKeyValuePairs = null;
+    }
     this.hasFocus = false;
-    this.renderer.setElementProperty(this.srOnly.nativeElement, 'innerHTML', null);
+    this.srOnly.nativeElement.innerHTML = null;
   }
 
   setSelected(value: any) {
+    if (!this.config.isCategorySelectable && this.isCategory(value)) {
+      return;
+    }
     let displayValue = value;
-    if(this.config && this.config.keyValueConfig){
+    if(this.config && this.config.keyValueConfig && value[this.config.keyValueConfig.valueProperty]){
       displayValue = value[this.config.keyValueConfig.valueProperty]
     }
     const message = displayValue;
     this.innerValue = value;
     this.hasFocus = false;
-    this.inputValue = message;
+    if(this.config && this.config.clearOnSelection){
+      this.inputValue = "";
+    } else {
+      this.inputValue = message;
+    }
+    this.selectedInputValue = this.inputValue;
     this.propogateChange(this.innerValue);
-    this.renderer.setElementProperty(this.srOnly.nativeElement, 'innerHTML', null);
-    this.renderer.invokeElementMethod(this.input.nativeElement, 'blur', []);
+    this.srOnly.nativeElement.innerHTML = null;
+    this.input.nativeElement.blur();
     this.pushSROnlyMessage(`You chose ${message}`);
+    this.enterEvent.emit(value);
   }
 
   filterResults(subStr: string, stringArray: Array<string>): Array<string> {
-    return stringArray.filter((str) => {
+    let reducedArr = stringArray.filter((str) => {
       if (str.toLowerCase().includes(subStr.toLowerCase())) {
         return str;
       }
     });
+    if(!Array.isArray(reducedArr)){
+      reducedArr = [];
+    }
+    if(this.config && this.config.dropdownLimit && reducedArr.length > this.config.dropdownLimit){
+      reducedArr.length = this.config.dropdownLimit
+    }
+    return reducedArr;
   }
 
   filterKeyValuePairs(subStr: string, keyValuePairs: any): any {
     subStr = subStr.toLowerCase();
-    return keyValuePairs.reduce((prev, curr, index, arr) => {
+    const categories = [];
+    let currentCategory = '';
+    const reducedArr = keyValuePairs.reduce((prev, curr, index, arr) => {
       if (curr[this.config.keyValueConfig.keyProperty].toLowerCase().includes(subStr) ||
           curr[this.config.keyValueConfig.valueProperty].toLowerCase().includes(subStr)) {
+        /**
+         * Check if the current item in the array contains the substring value in
+         * either the key or value property provided on the config input
+         */
+        if (curr[this.config.categoryProperty] && currentCategory !== curr[this.config.categoryProperty]) {
+          /**
+           * Checks if the current item in the array has a category. If so, checks to see if 
+           * this category is the current category. If not, it will push it to the returned array.
+           * If it is the current category, it skips.
+           */
+          currentCategory = curr[this.config.categoryProperty];
+          const filteredCategories = this.categories.filter((category) => {
+            /**
+             * Filters the category input array property for a matching category property.
+             */
+            if (category[this.config.keyValueConfig.keyProperty] === curr[this.config.categoryProperty]) {
+              category.isCategory = true;
+              return category;
+            }
+          });
+          prev.push(filteredCategories[0]);
+        }
         prev.push(curr);
       }
       return prev;
     }, []);
+    if(this.config && this.config.dropdownLimit && reducedArr.length > this.config.dropdownLimit){
+      reducedArr.length = this.config.dropdownLimit;
+    }
+    return reducedArr;
   }
 
   clearDropdown(){
-    this.renderer.invokeElementMethod(this.input.nativeElement, 'blur', []);
+    this.input.nativeElement.blur();
     this.hasFocus = false;
-    this.renderer.setElementProperty(this.srOnly.nativeElement, 'innerHTML', null);
+    this.srOnly.nativeElement.innerHTML = null;
+  }
+
+  inputFocusHandler(evt){
+    this.hasFocus = true;
+    if(evt.target.value || (this.config && this.config.showOnEmptyInput)){
+      this.onKeyup(evt);
+    }
   }
 
   clearInput(){
+    if(!this.inputValue){
+      return;
+    }
+    this.filteredKeyValuePairs = null;
+    this.results = null;
     this.input.nativeElement.value = "";
+    this.innerValue = "";
+    this.propogateChange(null);
     this.clearDropdown();
+  }
+
+  isCategory(object: any): boolean {
+    if (this.categories.indexOf(object) !== -1) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   writeValue(value: any): void {
@@ -363,5 +501,9 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
 
   registerOnTouched(fn: any): void {
     this.onTouchedCallback = fn;
+  }
+
+  setDisabledState(isDisabled: boolean) {
+    this.input.nativeElement.disabled = isDisabled;
   }
 }

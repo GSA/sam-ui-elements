@@ -1,100 +1,317 @@
 export interface OptionsType {
-  value: string | number; // the model value
-  label: string; // the visible text for the input or option
-  name: string; // the machine readable description of the input
-  disabled?: boolean; // if true, the option is greyed out and not clickable
+  /**
+   * The model value
+   */
+  value: string | number;
+  /**
+   * The visible text for the input or option
+   */
+  label: string;
+  /**
+   * The machine readable description of the input
+   */
+  name: string; 
+  /**
+   * if true, the option is greyed out and not clickable
+   */
+  disabled?: boolean;
 }
 
 export interface AutocompleteDropdownButton {
-  label?: string; // The text that appears on the button
-  class?: string; // The class for button style
-  icon?: AutocompleteDropdownButtonIcon; // An option icon that will appear on the button
+  /**
+   * The text that appears on the button
+   */
+  label?: string;
+  /**
+   * The class for button style
+   */
+  class?: string;
+  /**
+   * An option icon that will appear on the button
+   */
+  icon?: AutocompleteDropdownButtonIcon;
 }
 
 export interface AutocompleteDropdownButtonIcon {
-  class: string; // String for icon clas (font-awesome, glphicon, etc)
-  altText: string; // String for alt icon text for screen readers
+  /**
+   * String for icon clas (font-awesome, glphicon, etc)
+   */
+  class: string;
+  /**
+   * String for alt icon text for screen readers
+   */
+  altText: string;
 }
 
 export interface HistoryNodeType {
-  id: string; // identifier for node
-  date: string; // date value for node
-  url?: string; // url value for title
-  title: string; // title value for node
+  /**
+   * Identifier for node
+   */
+  id: string;
+  /**
+   * Date value for node
+   */
+  date: string;
+  /**
+   * Optional url value for title
+   */
+  url?: string;
+  /**
+   * Title value for node
+   */
+  title: string; 
+  /**
+   * Optional description for node
+   */
   description?: string;
+  /**
+   * Optional tagged value for node
+   */
   isTagged?: boolean;
 }
 
 // Autocomplete Config Interfaces
 
 export interface AutocompleteConfig {
+  /**
+   * Optional name attribute
+   */
   name?: string;
+  /**
+   * Optional id attribute
+   */
   id?: string;
+  /**
+   * Optional label text
+   */
   labelText?: string;
+  /**
+   * Adds a clear button in the input
+   */
   showClearButton?: boolean;
+  /**
+   * Adds an icon inside the input
+   */
   addOnIconClass?: string;
+  /**
+   * Allows any text inside the input to register as a selection
+   */
   allowAny?: boolean;
+  /**
+   * Defines the key/value configuration
+   */
   keyValueConfig?: AutocompleteKeyValueConfig;
+  /**
+   * Adds optional placeholder text
+   */
+  placeholder?: string;
+  /**
+   * Passes value to the custom autocomplete service fetch method call 
+   */
+  serviceOptions?: any;
+  /**
+   * Sets a hard limit on number of items to render at a time
+   */
+  dropdownLimit?: number;
+  /**
+   * Clears input on selection
+   */
+  clearOnSelection?: boolean;
+  /**
+   * When input is empty, dropdown is still displayed on focus
+   */
+  showOnEmptyInput?: boolean;
+  /**
+   * Set value to be used to determine if an item is a category.
+   */
+  categoryProperty?: string;
+  /**
+   * Sets whether categories can be selected or not
+   */
+  isCategorySelectable?: boolean;
 }
 
 export interface AutocompleteKeyValueConfig {
+  /**
+   * The lookup value for the option
+   */
   keyProperty: string;
+  /**
+   * The human-readable value of the option
+   */
   valueProperty: string;
 }
 //Download
 export interface DownloadPackageType {
+  /**
+   * Sets a package id value 
+   */
   packageId: string;
+  /**
+   * Sets the package name
+   */
   name: string;
+  /**
+   * Sets the package type
+   */
   type: string;
+  /**
+   * Sets the packages access property
+   */
   access: "Public"|"Private";
+  /**
+   * Sets the posted date property
+   */
   postedDate: string;
+  /**
+   * Sets the resources in the package
+   */
   resources: DownloadResourceType[];
+  /**
+   * Sets the initial state of package accordion
+   */
   accordionState: "collapsed"|"expanded";
+  /**
+   * Sets the download url for the whole package
+   */
   downloadUrl: string;
 }
 export interface DownloadResourceType {
+  /**
+   * Sets a resource id value
+   */
   resourceId: string;
+  /**
+   * Sets the resource name
+   */
   name: string;
+  /**
+   * Sets the resource description
+   */
   description: string;
+  /**
+   * Sets the resource filesize
+   */
   size: string;
+  /**
+   * Sets the resource download url
+   */
   downloadUrl: string;
+  /**
+   * Sets the resource type information
+   */
   typeInfo: DownloadResourceTypeInfoType;
 }
 export interface DownloadResourceTypeInfoType{
+  /**
+   * Sets the resource type name
+   */
   name: string;
+  /**
+   * Sets the font awesome icon to use for the resource
+   */
   iconClass: string;
 }
 
 
 export interface ListDisplayConfig {
+  /**
+   * Toggles a new item indicator feature
+   */
   showNewIndicator?: boolean;
+  /**
+   * Sets the new item indicator config
+   */
   newItemIndicator?: NewItemIndicator;
+  /**
+   * Defines the key/value configuration
+   */
+  keyValueConfig?: AutocompleteKeyValueConfig;
 }
 
 export interface NewItemIndicator {
+  /**
+   * HTML class passed added onto the new item
+   */
   class?: string;
+  /**
+   * Label value for the new item
+   */
   label?: string;
 }
 
-//POC - all fields optional
 export interface PointOfContactType{
+  /**
+   * Sets the full name property
+   */
   fullName?: string;
+  /**
+   * Sets the title property
+   */
   title?: string;
+  /**
+   * Sets the primary address property
+   */
   address?: string;
+  /**
+   * Sets the secondary address property
+   */
   address2?: string;
+  /**
+   * Sets the city name property
+   */
   city?: string;
+  /**
+   * Sets the state property
+   */
   state?: string;
+  /**
+   * Sets the zip code property
+   */
   zip?: string;
+  /**
+   * Sets the email property
+   */
   email?: string;
+  /**
+   * Sets the primary phone property
+   */
   phone?: string;
+  /**
+   * Sets the secondary phone property
+   */
   phone2?: string;
+  /**
+   * Sets the fax number property
+   */
   fax?: string;
+  /**
+   * Sets the website url
+   */
   website?: string;
 }
 
+export interface IBreadcrumb {
+  url: string;
+  breadcrumb: string;
+}
+
+
 export interface NameEntryType{
+  /**
+  * Sets the first name field
+  */
   firstName: string;
+  /**
+  * Sets the middle name field
+  */
   middleName: string;
+  /**
+  * Sets the last name field
+  */
   lastName: string;
+  /**
+  * Sets the suffix field
+  */
   suffix: string;  
 }

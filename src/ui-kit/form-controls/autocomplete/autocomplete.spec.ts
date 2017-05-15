@@ -24,7 +24,20 @@ describe('The Sam Autocomplete Component', () => {
     'Alaska',
     'Arkansas',
     'Arizona'
-  ]
+  ];
+  let kvoptions: any = [{
+    name:"Al",
+    value:"Alabama"
+  },{
+    name:"AK",
+    value:"Alaska"
+  },{
+    name:"AR",
+    value:"Arkansas"
+  },{
+    name:"AZ",
+    value:"Arizona"
+  }];
   let config: AutocompleteConfig = {
     keyValueConfig: {
       keyProperty: 'name',
@@ -70,5 +83,30 @@ describe('The Sam Autocomplete Component', () => {
     fixture.detectChanges();
     component.results = component.filterResults('Alaska', component.options);
     expect(component.results).toEqual(['Alaska']);
+  });
+
+  it('Should display "no results" message', () => {
+    component.hasFocus = true;
+    fixture.detectChanges();
+    component.results = component.filterResults('zzzzzz', component.options);
+    expect(component.results).toEqual([]);
+  });
+
+  it('Should work with k/v pairs', () => {
+    component.options = kvoptions;
+    fixture.detectChanges();
+    component.hasFocus = true;
+    fixture.detectChanges();
+    component.results = component.filterKeyValuePairs('Alaska', component.options);
+    expect(component.results[0]['name']).toEqual("AK");
+  });
+
+  it('Should display "no results" message (key/value)', () => {
+    component.options = kvoptions;
+    fixture.detectChanges();
+    component.hasFocus = true;
+    fixture.detectChanges();
+    component.results = component.filterKeyValuePairs('zzzzzz', component.options);
+    expect(component.results).toEqual([]);
   });
 });
