@@ -7,5 +7,6 @@
   [placeholder]="phoneNumberTemplate"
   (keydown)="process($event)"
   (blur)="check()"
+  (focus)="setTouched()"
   #phoneInput />
 </labelWrapper>

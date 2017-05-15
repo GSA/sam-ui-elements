@@ -164,9 +164,12 @@ export class SamPhoneEntryComponent implements OnInit,ControlValueAccessor {
     } else {
       this.model = updateModel;
     }
-    this.onTouched();
     this.onChange(this.model);//controlemitter
     this.emitter.emit(this.model);
+  }
+
+  setTouched(){
+    this.onTouched();
   }
 
   getPositionIncrement(pos) {
