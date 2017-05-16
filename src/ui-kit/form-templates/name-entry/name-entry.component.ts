@@ -69,6 +69,7 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator{
       };
     })
   };
+  private disabled = null;
   
   setSubmitted() {
     this.validateFirstName();
@@ -168,7 +169,7 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator{
   }
 
   setDisabledState(disabled) {
-    //this.disabled = disabled;
+    this.disabled = disabled;
   }
 
   writeValue(value) {

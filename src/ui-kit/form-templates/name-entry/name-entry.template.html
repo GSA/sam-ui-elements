@@ -2,15 +2,15 @@
   <legend *ngIf="legend.length" [innerText]="legend"></legend>
 
   <labelWrapper class="label-wrapper" [label]="'First Name'" [name]="getIdentifer('first-name')" [errorMessage]="fNameErrorMsg" [required]="true">
-    <input (blur)="modelChange()" (ngModelChange)="modelChange()" [(ngModel)]="model.firstName" id="{{getIdentifer('first-name')}}" name="{{getIdentifer('first-name')}}" type="text" required="" aria-required="true">
+    <input [attr.disabled]="disabled ? disabled : null" (blur)="modelChange()" (ngModelChange)="modelChange()" [(ngModel)]="model.firstName" id="{{getIdentifer('first-name')}}" name="{{getIdentifer('first-name')}}" type="text" required="" aria-required="true">
   </labelWrapper>
 
   <labelWrapper class="label-wrapper" [label]="'Middle Name'" [name]="getIdentifer('middle-name')" [errorMessage]="mNameErrorMsg">
-    <input (blur)="modelChange()" (ngModelChange)="modelChange()" [(ngModel)]="model.middleName" id="{{getIdentifer('middle-name')}}" name="{{getIdentifer('middle-name')}}" type="text">
+    <input [attr.disabled]="disabled ? disabled : null" (blur)="modelChange()" (ngModelChange)="modelChange()" [(ngModel)]="model.middleName" id="{{getIdentifer('middle-name')}}" name="{{getIdentifer('middle-name')}}" type="text">
   </labelWrapper>
 
   <labelWrapper class="label-wrapper" [label]="'Last Name'" [name]="getIdentifer('last-name')" [errorMessage]="lNameErrorMsg" [required]="true">
-    <input (blur)="modelChange()" (ngModelChange)="modelChange()" [(ngModel)]="model.lastName" id="{{getIdentifer('last-name')}}" name="{{getIdentifer('last-name')}}" type="text" required="" aria-required="true">
+    <input [attr.disabled]="disabled ? disabled : null" (blur)="modelChange()" (ngModelChange)="modelChange()" [(ngModel)]="model.lastName" id="{{getIdentifer('last-name')}}" name="{{getIdentifer('last-name')}}" type="text" required="" aria-required="true">
   </labelWrapper>
   
   <samSelect [(model)]="model.suffix"
@@ -18,6 +18,7 @@
              [name]="getIdentifer('suffix')"
              [options]="store.suffixes"
              [errorMessage]="suffixErrorMsg"
+             [disabled]="disabled ? disabled : null" 
              label="Suffix">
   </samSelect>
 </fieldset>
