@@ -3,6 +3,7 @@
   [attr.id]="getIdentifier('phone-number')"
   [attr.name]="getIdentifier('phone-number')"
   [attr.maxlength]="phoneNumberTemplateLength"
+  [attr.disabled]="disabled ? disabled : null"
   [value]="phoneNumberMirror"
   [placeholder]="phoneNumberTemplate"
   (keydown)="process($event)"

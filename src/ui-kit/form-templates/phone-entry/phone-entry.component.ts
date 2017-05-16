@@ -51,6 +51,7 @@ export class SamPhoneEntryComponent implements OnInit,ControlValueAccessor {
   phoneNumberMirror = this.phoneNumberTemplate;
   phoneNumber = this.phoneNumberTemplate;
   badIndex = [];
+  private disabled = null;
   
   get value(){
     return this.model;
@@ -218,7 +219,7 @@ export class SamPhoneEntryComponent implements OnInit,ControlValueAccessor {
   }
 
   setDisabledState(disabled) {
-    //this.disabled = disabled;
+    this.disabled = disabled;
   }
 
   writeValue(value) {
