@@ -13,5 +13,8 @@ export class SamHistoryComponent {
   * Sets the 'current' node on the id value defined in data
   */
   @Input() currentId: string;
-
+  /**
+   * Sets the 'qParams' node
+   */
+  @Input() qParams: any;
 }
