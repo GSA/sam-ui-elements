@@ -30,10 +30,12 @@ export class SamToggleSwitchComponent implements ControlValueAccessor{
   @Output() switchStatusChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   onSwitchClick(val: boolean): void {
-    this.isSwitchOn = val;
-    this.onChange(val);
     this.onTouched();
-    this.switchStatusChange.emit(val);
+    if(!this.disableSwitch){
+      this.isSwitchOn = val;
+      this.onChange(val);
+      this.switchStatusChange.emit(val);
+    }
   }
   
   onChange: any = () => { };
@@ -48,7 +50,7 @@ export class SamToggleSwitchComponent implements ControlValueAccessor{
   }
 
   setDisabledState(disabled) {
-    //this.disabled = disabled;
+    this.disableSwitch = disabled;
   }
 
   writeValue(value:boolean) {
