@@ -56,6 +56,7 @@ export class SamRadioButtonComponent  {
 
   @ViewChild(FieldsetWrapper)
   public wrapper: FieldsetWrapper;
+  private disabled = null;
 
   constructor() { }
 
@@ -93,7 +94,7 @@ export class SamRadioButtonComponent  {
   }
 
   setDisabledState(disabled) {
-    //this.disabled = disabled;
+    this.disabled = disabled;
   }
 
   writeValue(value) {
