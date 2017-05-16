@@ -2,7 +2,7 @@ import { Component, Inject, forwardRef } from '@angular/core';
 import { Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 /**
- * The <samAccordionSection> component can generates content for a single accordion item
+ * The <sam-accordion-section> component can generates content for a single accordion item
  *
  * @Input headerText: string - Accordion header text
  * @Input isExpanded: boolean - Defines whether accordion item should be expanded when loaded
@@ -10,7 +10,7 @@ import { Input, Output, EventEmitter, OnInit } from '@angular/core';
  * @Output isExpandedChange: object - The accordion section that has changed is emitted back to parent
  */
 @Component({
-  selector: 'samAccordionSection',
+  selector: 'sam-accordion-section',
   templateUrl: 'accordion.template.html'
 })
 export class SamAccordionSection implements OnInit {

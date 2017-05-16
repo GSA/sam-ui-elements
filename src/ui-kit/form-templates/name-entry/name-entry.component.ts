@@ -9,7 +9,7 @@ import * as suffixes from './suffixes.json';
  * @Input prefix: string - Prefix name/id attribute values
  */
 @Component({
-  selector: 'samNameEntry',
+  selector: 'sam-name-entry',
   templateUrl: 'name-entry.template.html',
 })
 export class SamNameEntryComponent {

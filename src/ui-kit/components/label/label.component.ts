@@ -1,10 +1,10 @@
 import { Component, Input } from '@angular/core';
 
 /**
- * The <samLabel> component draws attention to new or important content.
+ * The <sam-label> component draws attention to new or important content.
  */
 @Component({
-  selector: 'samLabel',
+  selector: 'sam-label',
   template: `<span [ngClass]="labelClass()">{{labelText}}</span>`,
 })
 export class SamLabelComponent {

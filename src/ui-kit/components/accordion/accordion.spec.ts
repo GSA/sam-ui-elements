@@ -8,8 +8,8 @@ import {SamAccordionComponent, SamAccordionSection} from "./accordion.component"
 @Component({
   template: `
     <samAccordion>
-      <samAccordionSection name="aria-friendly-name">Content Goes Here</samAccordionSection>
-      <samAccordionSection name="a-different-aria-friendly-name">More Content Goes Here</samAccordionSection>
+      <sam-accordion-section name="aria-friendly-name">Content Goes Here</sam-accordion-section>
+      <sam-accordion-section name="a-different-aria-friendly-name">More Content Goes Here</sam-accordion-section>
     </samAccordion>
 `
 })
@@ -18,8 +18,8 @@ class AccordionDefault { }
 @Component({
   template: `
     <samAccordion [bordered]="true">
-      <samAccordionSection name="aria-friendly-name">Content Goes Here</samAccordionSection>
-      <samAccordionSection name="a-different-aria-friendly-name">More Content Goes Here</samAccordionSection>
+      <sam-accordion-section name="aria-friendly-name">Content Goes Here</sam-accordion-section>
+      <sam-accordion-section name="a-different-aria-friendly-name">More Content Goes Here</sam-accordion-section>
     </samAccordion>
 `
 })
@@ -28,8 +28,8 @@ class AccordionBordered { }
 @Component({
   template: `
     <samAccordion [expandIndex]="0">
-      <samAccordionSection name="aria-friendly-name">Content Goes Here</samAccordionSection>
-      <samAccordionSection name="a-different-aria-friendly-name">More Content Goes Here</samAccordionSection>
+      <sam-accordion-section name="aria-friendly-name">Content Goes Here</sam-accordion-section>
+      <sam-accordion-section name="a-different-aria-friendly-name">More Content Goes Here</sam-accordion-section>
     </samAccordion>
 `
 })

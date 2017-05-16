@@ -1,10 +1,10 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 
 /**
- * The <samButton> component generates a button for user interaction
+ * The <sam-button> component generates a button for user interaction
  */
 @Component({
-  selector: 'samButton',
+  selector: 'sam-button',
   template: `<button id={{buttonId}} [ngClass]="btnClass" [disabled]="disabled" (click)="click($event)" type="button">{{buttonText}}</button>`,
 })
 export class SamButtonComponent {
