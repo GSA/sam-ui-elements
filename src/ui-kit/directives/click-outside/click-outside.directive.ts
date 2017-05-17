@@ -1,10 +1,10 @@
 import { Directive, ElementRef, Output, EventEmitter, HostListener } from '@angular/core';
 
 /**
- * The <samClickOutside> directive can detect whether a click is made inside the target
+ * The <sam-click-outside> directive can detect whether a click is made inside the target
  */
 @Directive({
-  selector: '[samClickOutside]'
+  selector: '[sam-click-outside]'
 })
 export class SamClickOutsideDirective {
   /**

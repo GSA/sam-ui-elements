@@ -4,10 +4,10 @@ import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
 import { OptionsType } from '../../types';
 
 /**
- * The <samCheckbox> component is a set of checkboxes 
+ * The <sam-checkbox> component is a set of checkboxes 
  */
 @Component({
-  selector: 'samCheckbox',
+  selector: 'sam-checkbox',
   templateUrl: 'checkbox.template.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
@@ -84,7 +84,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error("<samCheckbox> requires a [name] parameter for 508 compliance");
+      throw new Error("<sam-checkbox> requires a [name] parameter for 508 compliance");
     }
 
     // initialize the order lookup map
