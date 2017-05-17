@@ -4,7 +4,7 @@ import { SidenavService } from '../services';
 import { MenuItem } from '../interfaces';
 
 @Component({
-  selector: 'samMenuItem',
+  selector: 'sam-menu-item',
   templateUrl: './menu-item.template.html'
 })
 export class SamMenuItemComponent {

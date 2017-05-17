@@ -1,10 +1,10 @@
 import { OnInit, Component, Input, Output, EventEmitter, ElementRef, ViewChild, AfterViewChecked } from '@angular/core';
 
 /**
- * The <samModal> component display a popover for user interaction
+ * The <sam-modal> component display a popover for user interaction
  */
 @Component({
-  selector: 'samModal',
+  selector: 'sam-modal',
   templateUrl: './modal.template.html'
 })
 export class SamModalComponent implements OnInit, AfterViewChecked {

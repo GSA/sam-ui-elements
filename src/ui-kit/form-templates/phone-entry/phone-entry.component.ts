@@ -6,7 +6,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, Valid
  * The <samPhoneInput> component is a Phone entry portion of a form
  */
 @Component( {
-  selector: 'samPhoneEntry',
+  selector: 'sam-phone-entry',
   templateUrl: 'phone-entry.template.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

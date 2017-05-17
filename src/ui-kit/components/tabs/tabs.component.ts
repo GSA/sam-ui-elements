@@ -1,10 +1,10 @@
 import { Component, AfterContentInit, ContentChildren, QueryList, Input, Output, EventEmitter } from '@angular/core';
 
 /**
- * The <samTab> component contains the content for a tab
+ * The <sam-tab> component contains the content for a tab
  */
 @Component({
-  selector: 'samTab',
+  selector: 'sam-tab',
   template: `
     <div [class.hide]="!active" class="usa-tabs-content">
       <ng-content></ng-content>

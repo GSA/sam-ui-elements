@@ -2,7 +2,7 @@ import {Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges} fr
 import * as moment from 'moment/moment';
 
 /**
- * The <samTime> component provides a time input form control
+ * The <sam-time> component provides a time input form control
  *
  * @Input value: string - Sets the time value 
  * @Input disabled: boolean - Sets the disabled attribute
@@ -10,7 +10,7 @@ import * as moment from 'moment/moment';
  * @Output valueChange: boolean - Emits event when value change
  */
 @Component({
-  selector: 'samTime',
+  selector: 'sam-time',
   templateUrl: 'time.template.html',
 })
 export class SamTimeComponent implements OnInit, OnChanges {

@@ -2,7 +2,7 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { AbstractControl } from "@angular/forms";
 
 @Component({
-  selector: 'labelWrapper',
+  selector: 'sam-label-wrapper',
   templateUrl: 'label-wrapper.template.html',
 })
 export class LabelWrapper {

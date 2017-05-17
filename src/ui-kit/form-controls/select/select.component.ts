@@ -11,10 +11,10 @@ const MY_VALUE_ACCESSOR: any = {
 };
 
 /**
- * The <samSelect> component is a select/options group form control
+ * The <sam-select> component is a select/options group form control
  */
 @Component({
-  selector: 'samSelect',
+  selector: 'sam-select',
   templateUrl: 'select.template.html',
   providers: [MY_VALUE_ACCESSOR]
 })
@@ -70,7 +70,7 @@ export class SamSelectComponent implements ControlValueAccessor {
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error("<samSelect> requires a [name] parameter for 508 compliance");
+      throw new Error("<sam-select> requires a [name] parameter for 508 compliance");
     }
 
     if (!this.control) {

@@ -6,10 +6,10 @@ import { SidenavService } from '../services';
 import { MenuItem } from '../interfaces';
 
 /**
-* The <samSidenav> component builds a side navigation bar
+* The <sam-sidenav> component builds a side navigation bar
 */
 @Component({
-  selector: 'samSidenav',
+  selector: 'sam-sidenav',
   templateUrl: './sidenav.template.html'
 })
 export class SamSidenavComponent implements OnInit {

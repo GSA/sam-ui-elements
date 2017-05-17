@@ -1,10 +1,10 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 
 /**
- * The <samHeader> component contains navigational links to main sections of the site
+ * The <sam-header> component contains navigational links to main sections of the site
  */
 @Component({
-  selector: 'samHeader',
+  selector: 'sam-header',
   templateUrl: 'header.template.html',
 })
 export class SamHeaderComponent {
