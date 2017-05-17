@@ -374,7 +374,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   }
 
   setSelected(value: any) {
-    if (!this.config.isCategorySelectable && this.isCategory(value)) {
+    if (this.config && this.config.categoryProperty && !this.config.isCategorySelectable && this.isCategory(value)) {
       return;
     }
     let displayValue = value;
