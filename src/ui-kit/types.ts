@@ -299,3 +299,23 @@ export interface IBreadcrumb {
   url: string;
   breadcrumb: string;
 }
+
+
+export interface NameEntryType{
+  /**
+  * Sets the first name field
+  */
+  firstName: string;
+  /**
+  * Sets the middle name field
+  */
+  middleName: string;
+  /**
+  * Sets the last name field
+  */
+  lastName: string;
+  /**
+  * Sets the suffix field
+  */
+  suffix: string;  
+}
