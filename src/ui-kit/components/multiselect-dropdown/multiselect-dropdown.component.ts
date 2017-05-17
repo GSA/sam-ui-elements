@@ -3,10 +3,10 @@ import { ViewChild, ElementRef, OnChanges } from '@angular/core';
 import { OptionsType } from '../../types';
 
 /**
- * The <samMultiSelectDropdown> component provides a form control to multiselect a list
+ * The <sam-multiselect-dropdown> component provides a form control to multiselect a list
  */
 @Component({
-    selector: 'samMultiSelectDropdown',
+    selector: 'sam-multiselect-dropdown',
     templateUrl: 'multiselect-dropdown.template.html'
 })
 export class SamMultiSelectDropdownComponent implements OnChanges {

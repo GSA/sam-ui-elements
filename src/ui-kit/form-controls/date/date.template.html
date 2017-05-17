@@ -1,4 +1,4 @@
-<fieldset-wrapper [label]="label" [errorMessage]="errorMessage" [hint]="hint">
+<sam-fieldset-wrapper [label]="label" [errorMessage]="errorMessage" [hint]="hint">
   <div class="usa-date-of-birth date-group" style="overflow:auto;">
     <div class="usa-form-group usa-form-group-month">
       <label [attr.for]="monthName()">Month</label>
@@ -13,4 +13,4 @@
       <input [attr.id]="yearName()" #year (blur)="onBlur($event)" [(ngModel)]="model.year" (ngModelChange)="onChangeHandler()" class="usa-input-inline" aria-describedby="dobHint" class="usa-form-control" name="date_of_birth_3" pattern="[0-9]{4}" type="number" min="1900" max="3000" maxlength="4" [disabled]="disabled">
     </div>
   </div>
-</fieldset-wrapper>
+</sam-fieldset-wrapper>

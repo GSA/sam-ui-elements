@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { AbstractControl } from "@angular/forms";
 
 @Component({
-  selector: 'fieldset-wrapper',
+  selector: 'sam-fieldset-wrapper',
   templateUrl: 'fieldset-wrapper.template.html',
 })
 export class FieldsetWrapper {

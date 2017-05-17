@@ -3,10 +3,10 @@ import * as moment from 'moment/moment';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators} from "@angular/forms";
 
 /**
- * The <samDate> component is a Date entry portion of a form
+ * The <sam-date> component is a Date entry portion of a form
  */
 @Component({
-  selector: 'samDate',
+  selector: 'sam-date',
   templateUrl: 'date.template.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,
