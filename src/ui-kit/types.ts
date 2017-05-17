@@ -57,6 +57,10 @@ export interface HistoryNodeType {
    */
   url?: string;
   /**
+   * Optional query params
+   */
+  queryParams?: any;
+  /**
    * Title value for node
    */
   title: string; 
