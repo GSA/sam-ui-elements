@@ -5,7 +5,7 @@ import { LabelWrapper } from '../../wrappers/label-wrapper';
  * The <samPhoneInput> component is a Phone entry portion of a form
  */
 @Component( {
-  selector: 'samPhoneEntry',
+  selector: 'sam-phone-entry',
   templateUrl: 'phone-entry.template.html',
 })
 export class SamPhoneEntryComponent implements OnInit {

@@ -9,10 +9,10 @@ export const TEXT_VALUE_ACCESSOR: any = {
 };
 
 /**
- * The <samTextArea> component provides a textarea input form control
+ * The <sam-text-area> component provides a textarea input form control
  */
 @Component({
-  selector: 'samTextArea',
+  selector: 'sam-text-area',
   templateUrl: 'textarea.template.html',
   providers: [ TEXT_VALUE_ACCESSOR ]
 })
@@ -75,7 +75,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error("<samTextArea> requires a [name] parameter for 508 compliance");
+      throw new Error("<sam-text-area> requires a [name] parameter for 508 compliance");
     }
 
     if (!this.control) {

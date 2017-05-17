@@ -1,4 +1,4 @@
-<fieldset-wrapper [label]="label" [errorMessage]="errorMessage" [hint]="hint">
-  <samDate #dateComponent [(value)]="date" (valueChange)="onInputChange($event)" [name]='name+"_date"' [disabled]="disabled"></samDate>
-  <samTime #timeComponent [(value)]="time" (valueChange)="onInputChange($event)" [name]='name+"_time"' [disabled]="disabled"></samTime>
-</fieldset-wrapper>
+<sam-fieldset-wrapper [label]="label" [errorMessage]="errorMessage" [hint]="hint">
+  <sam-date #dateComponent [(value)]="date" (valueChange)="onInputChange($event)" [name]='name+"_date"' [disabled]="disabled"></sam-date>
+  <sam-time #timeComponent [(value)]="time" (valueChange)="onInputChange($event)" [name]='name+"_time"' [disabled]="disabled"></sam-time>
+</sam-fieldset-wrapper>

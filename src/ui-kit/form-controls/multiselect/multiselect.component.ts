@@ -2,10 +2,10 @@ import { Component, Input, Output, ViewChild, EventEmitter  } from '@angular/cor
 import { OptionsType } from '../../types';
 
 /**
- * The <samMultiSelect> component is a multi-select/options group compliant
+ * The <sam-multiselect> component is a multi-select/options group compliant
  */
 @Component({
-  selector: 'samMultiSelect',
+  selector: 'sam-multiselect',
   templateUrl: 'multiselect.template.html'
 })
 export class SamMultiSelectComponent {
