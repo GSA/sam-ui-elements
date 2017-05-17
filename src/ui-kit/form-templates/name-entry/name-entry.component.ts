@@ -12,7 +12,7 @@ import {NG_VALUE_ACCESSOR, NG_VALIDATORS, Validator, ControlValueAccessor, FormC
  * @Input prefix: string - Prefix name/id attribute values
  */
 @Component({
-  selector: 'samNameEntry',
+  selector: 'sam-name-entry',
   templateUrl: 'name-entry.template.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

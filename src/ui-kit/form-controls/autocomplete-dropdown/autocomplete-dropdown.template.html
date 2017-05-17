@@ -2,11 +2,11 @@
   <label *ngIf="label">{{label}}</label>
   <div>
     <div class="sam-autocomplete-dropdown-list">
-      <samSelect [(model)]="selectedOption"
+      <sam-select [(model)]="selectedOption"
                   [name]="name + 'fetch method list'"
                   [options]="options"
                   (modelChange)="detectSelection($event)">
-      </samSelect>
+      </sam-select>
     </div>
     <div class="sam-autocomplete-dropdown-input">
       <sam-autocomplete [name]="name + 'autocomplete input'"

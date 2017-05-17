@@ -12,11 +12,11 @@ export const TEXT_VALUE_ACCESSOR: any = {
  *
  */
 @Component({
-  selector: 'samNumber',
+  selector: 'sam-number',
   template: `
-      <labelWrapper [label]="label" [name]="name" [hint]="hint" [errorMessage]="errorMessage" [required]="required">
+      <sam-label-wrapper [label]="label" [name]="name" [hint]="hint" [errorMessage]="errorMessage" [required]="required">
         <input type="number" [attr.min]="min ? min : null" [attr.max]="max ? max : null" [value]="value" [attr.id]="name" [disabled]="disabled" (change)="onInputChange($event.target.value)">
-      </labelWrapper>
+      </sam-label-wrapper>
   `,
   providers: [ TEXT_VALUE_ACCESSOR ]
 })
@@ -46,7 +46,7 @@ export class SamNumberComponent implements ControlValueAccessor {
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error("<samNumber> requires a [name] parameter for 508 compliance");
+      throw new Error("<sam-number> requires a [name] parameter for 508 compliance");
     }
 
     if (!this.control) {

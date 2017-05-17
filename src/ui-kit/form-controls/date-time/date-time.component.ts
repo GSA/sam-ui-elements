@@ -13,10 +13,10 @@ const MY_VALUE_ACCESSOR: any = {
 };
 
 /**
- * The <samDateTime> component is a DateTime entry portion of a form
+ * The <sam-date-time> component is a DateTime entry portion of a form
  */
 @Component({
-  selector: 'samDateTime',
+  selector: 'sam-date-time',
   templateUrl: 'date-time.template.html',
   providers: [ MY_VALUE_ACCESSOR ]
 })
@@ -78,7 +78,7 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
         this.time = m.format(this.timeComponent.OUTPUT_FORMAT);
         this.date = m.format(this.dateComponent.OUTPUT_FORMAT);
       } else {
-        console.error('[value] for samDateTime is invalid');
+        console.error('[value] for sam-date-time is invalid');
       }
     }
   }

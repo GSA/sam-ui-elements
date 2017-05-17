@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 /**
- * The <samAlert> component keeps users informed of important and (optionally) time-sensitive changes
+ * The <sam-alert> component keeps users informed of important and (optionally) time-sensitive changes
  */
 @Component({
-  selector: 'samAlert',
+  selector: 'sam-alert',
   templateUrl: './alert.template.html'
 })
 export class SamAlertComponent {
