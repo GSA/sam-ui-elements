@@ -1,6 +1,6 @@
 <i class="fa fa-minus" aria-hidden="true"></i>
 <ul>
-  <li *ngFor="let item of data; let i = index;" [ngClass]="'history-item-'+i" [class.current]="item.id == currentId" [attr.aria-label]=" item.id == currentId ? 'Current Opportunity' : '' ">
+  <li *ngFor="let item of data; let i = index;" [ngClass]="'history-item-'+i" [class.current]="item.id == currentId" [attr.aria-label]=" item.id == currentId && item.ariaLabel ? item.ariaLabel : '' ">
     <span>  
       <strong>{{item.date}}</strong>
       <a *ngIf="item.url" [routerLink]='item.url.split("/")' [queryParams]="item.qParams">{{ item.title }}</a>
