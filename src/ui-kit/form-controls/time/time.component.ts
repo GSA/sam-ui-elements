@@ -20,7 +20,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, Valid
   }]
 })
 export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor {
-  INPUT_FORMAT: string = "HH:mm";
+  INPUT_FORMAT: string = "H:m";
   OUTPUT_FORMAT: string = "HH:mm";
   
   /**
