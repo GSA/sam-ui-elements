@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 /**
- * The <samPagination> allows users to select a page
+ * The <sam-pagination> allows users to select a page
  */
 @Component({
-  selector: 'samPagination',
+  selector: 'sam-pagination',
   templateUrl: 'pagination.template.html',
 })
 export class SamPaginationComponent {

@@ -3,7 +3,7 @@ import * as moment from 'moment/moment';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn } from "@angular/forms";
 
 /**
- * The <samTime> component provides a time input form control
+ * The <sam-time> component provides a time input form control
  *
  * @Input value: string - Sets the time value 
  * @Input disabled: boolean - Sets the disabled attribute
@@ -11,7 +11,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, Valid
  * @Output valueChange: boolean - Emits event when value change
  */
 @Component({
-  selector: 'samTime',
+  selector: 'sam-time',
   templateUrl: 'time.template.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

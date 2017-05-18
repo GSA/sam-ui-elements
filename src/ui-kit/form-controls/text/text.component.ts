@@ -9,10 +9,10 @@ export const TEXT_VALUE_ACCESSOR: any = {
 };
 
 /**
- * The <samText> component provides a text input form control
+ * The <sam-text> component provides a text input form control
  */
 @Component({
-  selector: 'samText',
+  selector: 'sam-text',
   templateUrl: 'text.template.html',
   providers: [ TEXT_VALUE_ACCESSOR ]
 })
@@ -72,7 +72,7 @@ export class SamTextComponent implements ControlValueAccessor {
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error("<samText> requires a [name] parameter for 508 compliance");
+      throw new Error("<sam-text> requires a [name] parameter for 508 compliance");
     }
 
     if (!this.control) {

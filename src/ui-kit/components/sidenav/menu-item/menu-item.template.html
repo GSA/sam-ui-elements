@@ -4,10 +4,10 @@
       [ngClass]="{'usa-current': isSelected($index)}">
       {{child.label}}
     </a>
-    <samMenuItem *ngIf="isSelected($index)"
+    <sam-menu-item *ngIf="isSelected($index)"
                  [nodeDepth]="nodeDepth + 1"
                  [children]="child.children"
                  (data)="emitSelectedChild($event)">
-    </samMenuItem>
+    </sam-menu-item>
   </li>
 </ul>
