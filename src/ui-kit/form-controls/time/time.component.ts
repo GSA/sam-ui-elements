@@ -1,5 +1,6 @@
-import {Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges} from '@angular/core';
+import {Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, forwardRef } from '@angular/core';
 import * as moment from 'moment/moment';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn } from "@angular/forms";
 
 /**
  * The <sam-time> component provides a time input form control
@@ -12,10 +13,15 @@ import * as moment from 'moment/moment';
 @Component({
   selector: 'sam-time',
   templateUrl: 'time.template.html',
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => SamTimeComponent),
+    multi: true
+  }]
 })
-export class SamTimeComponent implements OnInit, OnChanges {
+export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor {
   INPUT_FORMAT: string = "H:m";
-  OUTPUT_FORMAT: string = "HH:mm:ss";
+  OUTPUT_FORMAT: string = "HH:mm";
   
   /**
   * Sets the time value 
@@ -78,7 +84,12 @@ export class SamTimeComponent implements OnInit, OnChanges {
   }
 
   onInputChange() {
+    this.onChange(this.toString());
     this.valueChange.emit(this.toString());
+  }
+  
+  setTouched(){
+    this.onTouched();
   }
 
   isValid() {
@@ -134,4 +145,23 @@ export class SamTimeComponent implements OnInit, OnChanges {
     return `${this.name}_am_pm`;
   }
 
+  onChange: any = () => { };
+  onTouched: any = () => { };
+  
+  registerOnChange(fn) {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn) {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(disabled) {
+    this.disabled = disabled;
+  }
+
+  writeValue(value) {
+    this.value = value;
+    this.parseValueString();
+  }
 }
