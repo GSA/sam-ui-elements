@@ -72,6 +72,11 @@ export interface HistoryNodeType {
    * Optional tagged value for node
    */
   isTagged?: boolean;
+
+  /**
+   * Optional aria label value for node
+   */
+  ariaLabel?: string;
 }
 
 // Autocomplete Config Interfaces
