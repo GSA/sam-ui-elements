@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, forwardRef,
          ViewChild, ElementRef, Optional, OnChanges } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { AutocompleteConfig } from '../../types';
@@ -24,6 +24,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   @ViewChild('resultsListKV') resultsListKV: ElementRef;
   @ViewChild('input') input: ElementRef;
   @ViewChild('srOnly') srOnly: ElementRef;
+  @ViewChild('wrapper') wrapper;
 
   /**
   * Sets the name attribute
@@ -37,6 +38,10 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   * Sets the label text
   */
   @Input() public labelText: string;
+  /**
+  * Sets the hint text
+  */
+  @Input() public hint: string;
   /**
   * Define autocomplete options
   */
@@ -59,10 +64,15 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
    */
   @Input() public categories: any = [];
   /**
+  * Sets the form control 
+  */
+  @Input() public control: FormControl;
+  /**
    * Emitted only when the user selects an item from the dropdown list, or when the user clicks enter and the mode is
    * allowAny. This is useful if you do not want to respond to onChange events when the input is blurred.
    */
   @Output() public enterEvent: EventEmitter<any> = new EventEmitter();
+  
 
   public results: Array<string>;
   public innerValue: any = '';
@@ -100,6 +110,15 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
 
   ngOnChanges() {
 
+  }
+
+  ngOnInit(){
+    if(!this.control){
+      return;
+    }
+    this.control.valueChanges.subscribe(()=>{
+      this.wrapper.formatErrors(this.control);
+    });
   }
 
   onChange() {
@@ -458,6 +477,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   }
 
   inputFocusHandler(evt){
+    this.onTouchedCallback();
     this.hasFocus = true;
     if(evt.target.value || (this.config && this.config.showOnEmptyInput)){
       this.onKeyup(evt);
