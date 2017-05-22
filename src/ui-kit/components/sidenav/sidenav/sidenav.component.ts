@@ -49,7 +49,7 @@ export class SamSidenavComponent implements OnInit {
       this.setSelection();
     }
   }
-  
+
   setSelection(){
     for(var i = 1; i <= this.selection.length; i++){
       var idx = this.selection[i-1];
@@ -78,7 +78,7 @@ export class SamSidenavComponent implements OnInit {
 @NgModule({
   imports: [ CommonModule ],
   declarations: [ SamSidenavComponent, SamMenuItemComponent],
-  exports: [ SamSidenavComponent ],
+  exports: [ SamSidenavComponent, SamMenuItemComponent ],
   providers: [ SidenavService ]
 })
 export class SamSidenavModule { }
