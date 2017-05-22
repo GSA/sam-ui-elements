@@ -28,10 +28,7 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
     day: null,
     year: null
   }
-  /**
-  * Sets the name attribute for component
-  */
-  @Input() name: string = "";
+
   /**
   * Sets the label text
   */
@@ -63,11 +60,7 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
 
   constructor() { }
 
-  ngOnInit() {
-    if (!this.name) {
-      throw new Error('SamDateRangeComponent required a name for 508 compliance');
-    }
-  }
+  ngOnInit() { }
 
   ngOnChanges() {
     this.parseValueString();
