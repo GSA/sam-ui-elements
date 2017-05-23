@@ -67,7 +67,7 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
   }
 
   focusHandler(){
-      this.onTouched();
+    this.onTouched();
   }
 
   parseValueString() {
