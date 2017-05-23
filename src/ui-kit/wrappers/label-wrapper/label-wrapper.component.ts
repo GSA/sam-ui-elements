@@ -19,6 +19,7 @@ export class LabelWrapper implements AfterViewChecked{
   private showToggle: boolean = false;
   private toggleOpen: boolean = false;
   private lineSize: number;
+  private lineLimit: number = 2;
   private checkMore = false;//semaphore
   constructor(private cdr: ChangeDetectorRef) { }
   ngOnChanges(c){
@@ -46,7 +47,7 @@ export class LabelWrapper implements AfterViewChecked{
   calcToggle(){
     if(this.hintContainer){
       let numOfLines = this.calculateNumberOfLines(this.hintContainer.nativeElement);
-      if(numOfLines>2){
+      if(numOfLines>this.lineLimit){
         this.showToggle = true;
       } else {
         this.showToggle = false;
