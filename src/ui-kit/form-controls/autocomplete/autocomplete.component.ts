@@ -150,12 +150,8 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       if(!this.innerValue) {
         this.results = null;
         this.filteredKeyValuePairs = null;
-
       }
-      if(this.inputValue == "") {
-        this.innerValue = null;
-        this.propogateChange(null);
-      }
+      this.value = null;
     }
 
     if ((this.lastSearchedValue !== event.target.value) && (event.target.value !== '')) {
