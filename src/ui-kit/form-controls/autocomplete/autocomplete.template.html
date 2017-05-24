@@ -1,6 +1,6 @@
 <div class="sam-autocomplete" sam-click-outside (clickOutside)="checkForFocus($event)" sam-tab-outside (tabOutside)="checkForFocus($event)">
   <!-- Text input -->
-  <label *ngIf="labelText || labelText" [attr.for]="id">{{labelText}}<span class="usa-sr-only">&nbsp;autocomplete</span></label>
+  <sam-label-wrapper #wrapper [label]="labelText" [hint]="hint" [name]="name" [required]="required">
   <div class="input-container">
     <input [attr.id]="id" #input autocomplete="off" [attr.placeholder]="config?.placeholder" [attr.name]="name" type="text" (focus)="inputFocusHandler($event)" (change)="onChange()" (keydown)="onKeydown($event)" (keyup)="onKeyup($event)" [(ngModel)]="inputValue">
     <span *ngIf="showClearButton" class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}"><i class="fa fa-times-circle" (click)="clearInput()" (keyup.enter)="clearInput()" tabindex="0"></i></span>
@@ -22,4 +22,5 @@
       <ul #srOnly class="usa-sr-only" role="status" aria-live="assertive" aria-relevant="additions"></ul>
     </div>
   </div>
+  </sam-label-wrapper>
 </div>
