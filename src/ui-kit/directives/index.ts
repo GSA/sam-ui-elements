@@ -4,18 +4,21 @@ import { CommonModule } from '@angular/common';
 import { SamClickOutsideDirective } from './click-outside/click-outside.directive';
 import { SamStickyComponent } from './sticky/sticky.component';
 import { SamTabOutsideDirective } from './tab-outside/taboutside.directive';
+import { SamFocusDirective } from './focus/focus.directive';
 
 @NgModule({
   imports: [ CommonModule ],
   declarations: [
     SamStickyComponent,
     SamClickOutsideDirective,
-    SamTabOutsideDirective
+    SamTabOutsideDirective,
+    SamFocusDirective
   ],
   exports: [
     SamStickyComponent,
     SamClickOutsideDirective,
-    SamTabOutsideDirective
+    SamTabOutsideDirective,
+    SamFocusDirective
   ]
 
 })

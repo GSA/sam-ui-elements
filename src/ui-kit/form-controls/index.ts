@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SamDirectivesModule } from '../directives';
 import { SamAutocompleteModule } from './autocomplete';
 import { SamAutocompleteDropdownModule } from './autocomplete-dropdown';
 import { SamWrapperModule } from '../wrappers';
 import { SamCheckboxModule } from './checkbox';
 import { SamDateComponent } from './date';
 import { SamDateTimeComponent } from './date-time';
+import { SamDateRangeComponent } from './date-range';
 //import { SamInputAutocompleteModule } from './input-autocomplete';
 import { SamListModule } from './list';
 import { SamMultiSelectModule } from './multiselect';
@@ -24,6 +26,7 @@ import { SamSelectResizableComponent } from './select-resizable';
   imports: [
     CommonModule,
     FormsModule,
+    SamDirectivesModule,
     SamListModule,
     SamWrapperModule,
     SamMultiSelectModule,
@@ -35,6 +38,7 @@ import { SamSelectResizableComponent } from './select-resizable';
   declarations: [
     SamDateComponent,
     SamDateTimeComponent,
+    SamDateRangeComponent,
     SamNumberComponent,
     SamRadioButtonComponent,
     SamTimeComponent,
@@ -46,6 +50,7 @@ import { SamSelectResizableComponent } from './select-resizable';
     SamCheckboxModule,
     SamDateComponent,
     SamDateTimeComponent,
+    SamDateRangeComponent,
     SamListModule,
     SamMultiSelectModule,
     SamNumberComponent,
