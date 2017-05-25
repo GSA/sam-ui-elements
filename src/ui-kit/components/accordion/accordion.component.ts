@@ -118,6 +118,12 @@ export class SamAccordionComponent implements OnInit {
     });
   }
 
+  collapseAll() {
+    this.sections.forEach(s => {
+      s.collapse();
+    });
+  }
+
   setExpandIndex(index) {
     this.expandIndex = index;
     this.sections.forEach((section, i) => {
