@@ -106,7 +106,8 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     if (this.allowAny) {
       this.propogateChange(this.inputValue);
     } else {
-      this.propogateChange(this.innerValue);
+      //this is already fired on setSelected
+      //this.propogateChange(this.innerValue);
     }
   }
 
