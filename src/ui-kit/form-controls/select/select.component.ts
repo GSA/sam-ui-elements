@@ -80,6 +80,8 @@ export class SamSelectComponent implements ControlValueAccessor {
     this.control.valueChanges.subscribe(()=>{
       this.wrapper.formatErrors(this.control);
     });
+    
+    this.wrapper.formatErrors(this.control);
   }
 
   onSelectChange(val) {
