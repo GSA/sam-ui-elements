@@ -123,6 +123,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     this.control.valueChanges.subscribe(()=>{
       this.wrapper.formatErrors(this.control);
     });
+    this.wrapper.formatErrors(this.control);
   }
 
   onChange() {
