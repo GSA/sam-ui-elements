@@ -1,8 +1,11 @@
-<div class='sam-fieldset-wrapper' [class.usa-input-error]="!!errorMessage">
+<div class='sam-fieldset-wrapper' [class.hint-toggle]="showToggle && !toggleOpen">
   <fieldset class="usa-fieldset-inputs usa-sans">
     <legend [class.usa-input-error-label]="!!errorMessage">{{label}}<span *ngIf="required" class="usa-additional_text">Required</span></legend>
-    <span *ngIf="errorMessage" class="usa-input-error-message">{{errorMessage}}</span>
-    <span *ngIf="hint" class="usa-form-hint">{{hint}}</span>
-    <ng-content></ng-content>
+    <span #hintContainer *ngIf="hint" class="usa-form-hint">{{hint}}</span>
+    <div *ngIf="showToggle" class="usa-form-hint-showmore-toggler"><a (click)="toggleHint(toggleOpen)" class="">{{ toggleOpen?"less":"more"}}</a></div>
+    <div [class.usa-input-error]="!!errorMessage">
+      <span *ngIf="errorMessage" class="usa-input-error-message">{{errorMessage}}</span>
+      <ng-content></ng-content>
+    </div>
   </fieldset>
 </div>
