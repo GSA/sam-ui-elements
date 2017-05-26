@@ -106,7 +106,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   set value(val: any) {
     if (val !== this.innerValue) {
       this.innerValue = val;
-      this.propogateChange(JSON.stringify(val));
+      this.propogateChange(val);
     }
   }
 
@@ -153,7 +153,9 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
         this.results = null;
         this.filteredKeyValuePairs = null;
       }
-      this.value = null;
+      if(this.inputValue === ""){
+        this.value = null;
+      }
     }
 
     if ((this.lastSearchedValue !== event.target.value) && (event.target.value !== '')) {
@@ -521,6 +523,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       } else {
         this.inputValue = value;
       }
+      this.selectedInputValue = this.inputValue;
       this.innerValue = value;
     }
   }
