@@ -28,7 +28,11 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
     day: null,
     year: null
   }
-
+  
+  /**
+  * Sets the label text
+  */
+  @Input() stacked: boolean = false;
   /**
   * Sets the label text
   */
