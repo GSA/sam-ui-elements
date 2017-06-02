@@ -1,5 +1,5 @@
 <div #labelDiv class='label-wrapper' [class.hint-toggle]="showToggle && !toggleOpen">
-  <label *ngIf="!!label" [attr.for]="name" [class.usa-input-error-label]="errorMessage">{{ label || '' }}<span *ngIf="required" class="usa-additional_text">Required</span></label>
+  <label *ngIf="!!label" [attr.for]="name" [class.usa-input-error-label]="errorMessage">{{ label || '' }}<span *ngIf="required" class="usa-additional_text">Required</span><ng-content select="[label-right]"></ng-content></label>
   <span #hintContainer *ngIf="hint" class="usa-form-hint">{{hint}}</span>
   <div *ngIf="showToggle" class="usa-form-hint-showmore-toggler"><a (click)="toggleHint(toggleOpen)" class="">{{ toggleOpen?"less":"more"}}</a></div>
   <div [class.usa-input-error]="!!errorMessage">
