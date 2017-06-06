@@ -16,10 +16,10 @@
       </ul>
       <!-- Lists data if array of objects with key/value pair is passed to component -->
       <ul id="sam-autocomplete-results-kv" #resultsListKV *ngIf="filteredKeyValuePairs && filteredKeyValuePairs.length > 0 && hasFocus">
-        <li *ngFor="let obj of filteredKeyValuePairs" [class.multiple-values]="config?.keyValueConfig?.secondaryValueProperty" [ngClass]="{'category': obj.isCategory}" (click)="setSelected(obj)">
+        <li *ngFor="let obj of filteredKeyValuePairs" [class.multiple-values]="config?.keyValueConfig?.subheadProperty" [ngClass]="{'category': obj.isCategory}" (click)="setSelected(obj)">
           {{obj[config.keyValueConfig.valueProperty]}}
-          <ng-container *ngIf="obj[config.keyValueConfig.secondaryValueProperty]">
-            <br/><span class="secondary-value">{{obj[config.keyValueConfig.secondaryValueProperty]}}</span>
+          <ng-container *ngIf="obj[config.keyValueConfig.subheadProperty]">
+            <br/><span class="secondary-value">{{obj[config.keyValueConfig.subheadProperty]}}</span>
           </ng-container>
         </li>
       </ul>
