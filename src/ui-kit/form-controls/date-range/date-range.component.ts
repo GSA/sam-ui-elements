@@ -1,6 +1,21 @@
 import {Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, forwardRef} from '@angular/core';
 import * as moment from 'moment/moment';
-import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators} from "@angular/forms";
+import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn, AbstractControl} from "@angular/forms";
+
+function dateRangeValidation(c:AbstractControl){
+  if(c.value && c.value.startDate && c.value.endDate){
+    let startDateM = moment(c.value.startDate);
+    let endDateM = moment(c.value.endDate);
+    if(endDateM.diff(startDateM) < 0){
+      return {
+        dateRangeError: {
+          message: "Invalid date range"
+        }
+      }
+    }
+  }
+  return null;
+}
 
 /**
  * The <sam-date> component is a Date entry portion of a form
@@ -61,10 +76,25 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
   @ViewChild('endControl') endControl;
   private startDateValue;
   private endDateValue;
+  @ViewChild('wrapper') wrapper;
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    if(!this.control){
+      return;
+    }
+    let validators: ValidatorFn[] = [];
+    if(this.control.validator){
+      validators.push(this.control.validator);
+    }
+    validators.push(dateRangeValidation);
+    this.control.setValidators(validators);
+    this.control.valueChanges.subscribe(()=>{
+      this.wrapper.formatErrors(this.control);
+    });
+    this.wrapper.formatErrors(this.control);
+  }
 
   ngOnChanges() {
     this.parseValueString();
