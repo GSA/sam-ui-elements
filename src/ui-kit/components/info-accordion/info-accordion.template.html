@@ -1,58 +1,58 @@
 <div class="sam-ui vertically padded grid info-accordion">
-  
+
   <div class="twelve wide column" *ngFor="let row of data; let i = index">
-    
-    <div class="sam-ui" [ngClass]="spacing + ' grid'">  
+
+    <div class="sam-ui" [ngClass]="spacing + ' grid'">
       <div class="stretched row">
 
         <ng-container *ngFor="let item of row; let j = index">
           <div class="column" [ngClass]="item.columns ? item.columns + ' wide' : 'four wide'">
-            
+
             <div class="sam-ui basic segment" *ngIf="!item.content">
               <h4 [innerHTML]="item.title"></h4>
             </div>
-            
+
             <!-- Segment -->
-            <div  *ngIf="item.content" 
+            <div  *ngIf="item.content"
                   class="sam-ui segment"
-                  (mouseenter)='over(item)' 
-                  (mouseleave)='over(item)' 
-                  [@overState]="item.state ? item.state : 'inactive'" 
-                  (keyup.enter)="selectDetail(i,j,$event)" 
-                  (click)="selectDetail(i,j,$event)"  
+                  (mouseenter)='over(item)'
+                  (mouseleave)='over(item)'
+                  [@overState]="item.state ? item.state : 'inactive'"
+                  (keyup.enter)="selectDetail(i,j,$event)"
+                  (click)="selectDetail(i,j,$event)"
                   [ngClass]="getActiveClass(i,j)"
                   tabindex="0" >
-              
+
               <h4>{{item.title}}</h4>
-              
-              <i  class="fa fa-plus" 
+
+              <i  class="fa fa-plus"
                   [ngClass]="getItemClass(i,j)">
               </i>
-              
+
               <img  *ngIf="(item.img && !item.imgActive) || item.imgActive && (getActiveClass(i,j) === 'inverted cool blue')"
-                    [src]="item.img" 
-                    alt="{{item.title}}" 
+                    [src]="item.img"
+                    alt="{{item.title}}"
                     [ngStyle]="{'max-width': item.imgWidth ? item.imgWidth: '100%'}">
-              
-              <img  *ngIf="item.imgActive && (getActiveClass(i,j) === 'basic lightest blue')" 
-                    [src]="item.imgActive" 
-                    alt="{{item.title}}" 
-                    [ngStyle]="{'max-width': item.imgWidth ? item.imgWidth: '100%'}"> 
-              
+
+              <img  *ngIf="item.imgActive && (getActiveClass(i,j) === 'basic lightest blue')"
+                    [src]="item.imgActive"
+                    alt="{{item.title}}"
+                    [ngStyle]="{'max-width': item.imgWidth ? item.imgWidth: '100%'}">
+
             </div>
-            
+
             <!--Triangle div to point out which topic detail is currently showing-->
             <div class="sam-ui pointing" [ngClass]="{'grey' : item.contentType === 'table'}" [@pointingInOut]="fadeSegmentInOut"></div>
-            
+
           </div>
         </ng-container>
       </div>
     </div>
-    
+
     <!-- Content -->
     <div class="sam-ui grid" [@slideInOut]="'in'" *ngIf="toggleDetail(i)">
       <div class="column" [ngSwitch]="detailObj.item.contentType">
-        
+
         <!-- Table -->
         <table  *ngSwitchCase="'table'"
                 [@fadeInOut]="fadeSegmentInOut"
@@ -72,7 +72,7 @@
             </tr>
           </tbody>
         </table>
-        
+
         <!-- Grid -->
         <div *ngSwitchCase="'grid'" class="sam-ui clearing padded segment" [@fadeInOut]="fadeSegmentInOut">
           <div class="sam-ui equal width grid">
@@ -83,29 +83,29 @@
             </div>
           </div>
         </div>
-        
+
         <!-- Default -->
         <div *ngSwitchDefault class="sam-ui clearing padded segment" [@fadeInOut]="fadeSegmentInOut">
-          
+
           <h3 class="sam-ui header" *ngIf="showDetailTitle">
             {{detailObj.item.title}}
           </h3>
-          
+
           <p *ngIf="!isReleaseDetail">
             {{detailObj.item.content}}
           </p>
-          
-          <a  class="sam-ui small right floated primary button" 
-              href="{{detailObj.item.url}}" 
+
+          <a  class="sam-ui small right floated primary button"
+              href="{{detailObj.item.url}}"
               target="{{detailObj.item.title}}">
-            <i *ngIf="getLinkClass()" class="icon fa fa-external-link" aria-hidden="true"></i>  
-            {{detailObj.item.link}}
+            {{detailObj.item.link}}&nbsp;
+            <i *ngIf="getLinkClass()" class="icon fa fa-external-link" aria-hidden="true"></i>
           </a>
-          
+
         </div>
       </div>
     </div>
-  
+
   </div>
-  
+
 </div>
