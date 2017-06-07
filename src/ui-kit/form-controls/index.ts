@@ -21,6 +21,7 @@ import { SamTimeComponent } from './time';
 import { SamToggleSwitchComponent } from './toggle-switch';
 import { SamListDisplayComponent } from './list-display';
 import { SamSelectResizableComponent } from './select-resizable';
+import { SamAutocompleteMultiselectModule } from './autocomplete-multiselect';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { SamSelectResizableComponent } from './select-resizable';
     SamSelectModule,
     SamTextInputModule,
     SamAutocompleteDropdownModule,
+    SamAutocompleteMultiselectModule
   ],
   declarations: [
     SamDateComponent,
@@ -64,6 +66,7 @@ import { SamSelectResizableComponent } from './select-resizable';
     SamAutocompleteDropdownModule,
     SamListDisplayComponent,
     SamSelectResizableComponent,
+    SamAutocompleteMultiselectModule
   ],
   providers: []
 })
