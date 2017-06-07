@@ -21,10 +21,6 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   @Input() label: string;
   @Input() hint: string;
   @Input() name: string;
-<<<<<<< HEAD
-  
-=======
->>>>>>> 7e6c1951de9d38a26718640a955a7bcbe14a2344
 
   public searchText: string;
 
