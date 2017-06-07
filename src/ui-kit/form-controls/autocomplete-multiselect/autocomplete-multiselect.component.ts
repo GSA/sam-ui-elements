@@ -19,6 +19,9 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   @Input() keyValueConfig: KeyValueConfig = { keyProperty: 'key', valueProperty: 'value' };
   @Input() required: boolean;
   @Input() label: string;
+  @Input() hint: string;
+  @Input() name: string;
+  
 
   public searchText: string;
 

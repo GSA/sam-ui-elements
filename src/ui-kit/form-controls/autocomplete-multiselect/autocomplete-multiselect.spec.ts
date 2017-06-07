@@ -9,7 +9,7 @@ import { SamUIKitModule } from '../../index';
 import { SamAutocompleteMultiselectComponent, KeyValueConfig } from './autocomplete-multiselect.component';
 import { AutocompleteService } from '../autocomplete/autocomplete.service';
 
-fdescribe('The Sam Autocomplete Multiselect Component', () => {
+describe('The Sam Autocomplete Multiselect Component', () => {
   let component: SamAutocompleteMultiselectComponent;
   let fixture: ComponentFixture<SamAutocompleteMultiselectComponent>;
 
