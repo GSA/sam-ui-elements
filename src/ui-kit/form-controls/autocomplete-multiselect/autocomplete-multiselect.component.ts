@@ -14,17 +14,13 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   @ViewChild('textArea') textArea: ElementRef;
   @ViewChild('hiddenText') hiddenText: ElementRef;
   @ViewChild('resultsList') resultsList: ElementRef;
-  
+
   @Input() options: Array<any> = [];
   @Input() keyValueConfig: KeyValueConfig = { keyProperty: 'key', valueProperty: 'value' };
   @Input() required: boolean;
   @Input() label: string;
   @Input() hint: string;
   @Input() name: string;
-<<<<<<< HEAD
-  
-=======
->>>>>>> 7e6c1951de9d38a26718640a955a7bcbe14a2344
 
   public searchText: string;
 
@@ -66,8 +62,8 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
 
   /**
    * Checks if event key code was `Enter`. If so, prevents default
-   * behavior. 
-   * 
+   * behavior.
+   *
    * For this component, the point is to stop the browser from
    * inserting a return character into the text area.
    */
@@ -81,7 +77,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
 
   /**
    * Checks if event key code was `Enter`. If so and text area has
-   * a value, procedure calls filterOptions and selects the first 
+   * a value, procedure calls filterOptions and selects the first
    * item that is returned.
    */
   selectOnEnter(event) {
@@ -96,29 +92,29 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
         this.clearSearch();
       }
     }
-    
+
     return event;
   }
 
   handleDownArrow(event) {
-    if ( (event.code === 'ArrowDown' || event.keyIdentified === 'Down') && 
+    if ( (event.code === 'ArrowDown' || event.keyIdentified === 'Down') &&
          this.resultsList.nativeElement.children.length > 0) {
       this.setSelectedChild(this.getSelectedChildIndex(this.resultsList.nativeElement),
                                  'Down',
                                  this.resultsList.nativeElement);
     }
-    
+
     return event;
   }
 
   handleUpArrow(event) {
-    if ( (event.code === 'ArrowUp' || event.keyIdentified === 'Up') && 
+    if ( (event.code === 'ArrowUp' || event.keyIdentified === 'Up') &&
          this.resultsList.nativeElement.children.length > 0) {
       this.setSelectedChild(this.getSelectedChildIndex(this.resultsList.nativeElement),
                                  'Up',
                                  this.resultsList.nativeElement);
     }
-    
+
     return event;
   }
 
@@ -139,9 +135,9 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     if (currentSelectedIndex !== -1) {
       list.children[currentSelectedIndex].classList.remove('selected');
     }
-    
+
     let indexToSelect;
-    
+
     if (direction === 'Down') {
       if (currentSelectedIndex === -1 || currentSelectedIndex === list.children.length - 1) {
         indexToSelect = 0;
@@ -182,18 +178,18 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
 
   /**
    * Takes the current content of the textarea, an HTMLElement,
-   * and checks if the combined content of the textarea and the 
-   * spans (selected items) is wider than the content area of 
+   * and checks if the combined content of the textarea and the
+   * spans (selected items) is wider than the content area of
    * the parent element.
-   * 
-   * Returns 100% -- to push textarea to a new line -- if true and 
+   *
+   * Returns 100% -- to push textarea to a new line -- if true and
    * initial -- to keep textarea on same line -- if false.
    */
   calculateTextAreaWidth(element: HTMLElement): string {
     // Width by default should be its `initial` value
     let widthValue = 'initial';
 
-    const totalContentWidth = this.getInternalElementWidth(this.hiddenText.nativeElement) + 
+    const totalContentWidth = this.getInternalElementWidth(this.hiddenText.nativeElement) +
                               this.getSelectedContentWidth(element);
 
     if (totalContentWidth > this.getParentContentWidth(element.parentElement)) {
@@ -204,25 +200,25 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   }
 
   /**
-   * Gets the width of the selected items displayed in 
+   * Gets the width of the selected items displayed in
    * the content area of the sam-autocomplete-multiselect.
    * The width in this case includes the entire box model:
    * margin, border, padding, content.
-   * 
+   *
    * Returns a float of the width
    */
   getSelectedContentWidth(element: HTMLElement): number {
     const elementChildren = element.parentElement.children;
 
     let width = 0;
-    // Cannot use forEach here since children is not a Javascript array 
+    // Cannot use forEach here since children is not a Javascript array
     // and its data structure does not provide forEach on its
     // prototype.
     for (let i = 0; i < elementChildren.length; i++) {
       if (elementChildren[i] !== element && !elementChildren[i].classList.contains('usa-sr-only')) {
         const childStyles = window.getComputedStyle(elementChildren[i]);
         let childWidth = parseFloat(childStyles.width);
-        width += ( childWidth + 
+        width += ( childWidth +
                    parseFloat(childStyles["margin-right"]) +
                    parseFloat(childStyles["margin-left"]) );
       }
@@ -233,7 +229,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
 
   /**
    * Takes an HTMLElement and returns the width of the content only.
-   * 
+   *
    * Returns the width as a float.
    */
   getParentContentWidth(element: HTMLElement): number {
@@ -242,14 +238,14 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
 
     if (styles['box-sizing'] === 'border-box') {
       width -= ( parseFloat(styles['border-left-width']) +
-                 parseFloat(styles['padding-left']) + 
+                 parseFloat(styles['padding-left']) +
                  parseFloat(styles['padding-right']) +
                  parseFloat(styles['border-right-width']) );
     }
 
     return width;
   }
-  
+
   /**
    * Takes an HTMLElement and calculates the internal width (content + padding)
    * Returns the width as a float
@@ -261,7 +257,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     /**
      * If the box-sizing is set to border-box, the width includes
      * everything in the box model except margins. This method
-     * specifically needs to have the border removed from the 
+     * specifically needs to have the border removed from the
      * calculation.
      */
     if (styles['box-sizing'] === 'border-box') {
@@ -299,7 +295,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       }
 
       return this.handleEmptyList(this.options.filter((option) => {
-        if ( option[this.keyValueConfig.keyProperty].toLowerCase().includes(searchString) || 
+        if ( option[this.keyValueConfig.keyProperty].toLowerCase().includes(searchString) ||
               option[this.keyValueConfig.valueProperty].toLowerCase().includes(searchString) ) {
           return option;
         }
