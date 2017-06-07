@@ -21,7 +21,10 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   @Input() label: string;
   @Input() hint: string;
   @Input() name: string;
+<<<<<<< HEAD
   
+=======
+>>>>>>> 7e6c1951de9d38a26718640a955a7bcbe14a2344
 
   public searchText: string;
 
@@ -339,6 +342,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * Procedure to add an item to list of selected items
    */
   selectItem(item): void {
+    console.log(item);
     if (item) {
       const tmpArray = this.value.slice();
       if (tmpArray.indexOf(item) === -1) {
@@ -372,6 +376,10 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
 
   focusTextArea() {
     this.textArea.nativeElement.focus();
+  }
+
+  checkForFocus(event) {
+    this.clearSearch();
   }
 
   /***************************************************************
