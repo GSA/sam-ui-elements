@@ -85,9 +85,11 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       if (event.target.value) {
         const selectedChildIndex = this.getSelectedChildIndex(this.resultsList.nativeElement);
         if (selectedChildIndex !== -1) {
-          this.selectItem(this.filterOptions(event.target.value)[selectedChildIndex]);
+          this.filterOptions(event.target.value);
+          this.selectItem(this.list[selectedChildIndex]);
         } else {
-          this.selectItem(this.getFirstFilteredItem(this.filterOptions(event.target.value)));
+          this.filterOptions(event.target.value);
+          this.selectItem(this.getFirstFilteredItem(this.list));
         }
         this.clearSearch();
       }
@@ -169,6 +171,9 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * as the content changes.
    */
   applyTextAreaWidth(event) {
+    if(event.key != "ArrowDown" && event.key != "ArrowUp"){
+      this.filterOptions(this.searchText);
+    }
     this.ref.detectChanges();
 
     event.target.style.width = event.target.value ? this.calculateTextAreaWidth(event.target) : 'initial';
@@ -271,18 +276,18 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   /***************************************************************
    * Logic for filtering options                                 *
    ***************************************************************/
-
+  list = [];
   /**
    * Filters `options` by returning items in array that include the
    * search term as a substring of the objects key or value
    */
-  filterOptions(searchString: string): any[] {
+  filterOptions(searchString: string) {
     if (searchString) {
       searchString = searchString.toLowerCase();
 
-      if (this.service) {
+      if (this.service && this.options.length == 0) {
         this.service.fetch(searchString, false).subscribe(
-          (data) => { return this.handleEmptyList(data); },
+          (data) => { this.list = this.handleEmptyList(data); },
           (err) => {
             const errorObject = {
               cannotBeSelected: true
@@ -292,16 +297,16 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
             return [errorObject];
           }
         )
+      } else {
+        this.list = this.handleEmptyList(this.options.filter((option) => {
+          if ( option[this.keyValueConfig.keyProperty].toLowerCase().includes(searchString) ||
+                option[this.keyValueConfig.valueProperty].toLowerCase().includes(searchString) ) {
+            return option;
+          }
+        }));
       }
-
-      return this.handleEmptyList(this.options.filter((option) => {
-        if ( option[this.keyValueConfig.keyProperty].toLowerCase().includes(searchString) ||
-              option[this.keyValueConfig.valueProperty].toLowerCase().includes(searchString) ) {
-          return option;
-        }
-      }));
     } else {
-      return [];
+      this.list = [];
     }
   }
 
@@ -338,14 +343,17 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * Procedure to add an item to list of selected items
    */
   selectItem(item): void {
-    console.log(item);
     if (item) {
       const tmpArray = this.value.slice();
-      if (tmpArray.indexOf(item) === -1) {
+      let findVal = tmpArray.find((el)=>{
+        return el == item;
+      });
+      if (!findVal) {
         tmpArray.push(item);
         this.value = tmpArray;
       }
     }
+    this.list = [];
   }
 
   /**
@@ -376,6 +384,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
 
   checkForFocus(event) {
     this.clearSearch();
+    this.list=[];
   }
 
   /***************************************************************
