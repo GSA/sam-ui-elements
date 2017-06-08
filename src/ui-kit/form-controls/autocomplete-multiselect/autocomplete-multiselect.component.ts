@@ -1,11 +1,14 @@
-import { Component, Input, ViewChild, ElementRef, ChangeDetectorRef, Optional } from '@angular/core';
-import { ControlValueAccessor } from '@angular/forms';
+import { Component, Input, ViewChild, ElementRef, ChangeDetectorRef, Optional, forwardRef} from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { AutocompleteService } from '../autocomplete/autocomplete.service';
 
 @Component({
   selector: 'sam-autocomplete-multiselect',
-  templateUrl: 'autocomplete-multiselect.template.html'
+  templateUrl: 'autocomplete-multiselect.template.html',
+  providers: [
+    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SamAutocompleteMultiselectComponent), multi: true}
+  ]
 })
 export class SamAutocompleteMultiselectComponent implements ControlValueAccessor {
   /**
