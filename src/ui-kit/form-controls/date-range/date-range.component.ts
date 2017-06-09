@@ -2,6 +2,7 @@ import {Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, fo
 import * as moment from 'moment/moment';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn, AbstractControl} from "@angular/forms";
 
+//to do: move these to appropriate locations after validations are figured out for the ui-kit
 function dateRangeValidation(c:AbstractControl){
   if(c.value && c.value.startDate && c.value.endDate){
     let startDateM = moment(c.value.startDate);
@@ -144,20 +145,16 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
     if (this.startDateValue) {
       // use the forgiving format (that doesn't need 0 padding) for inputs
       let m = moment(this.startDateValue, this.INPUT_FORMAT);
-      //if (m.isValid()) {
-        this.startModel.month = m.month() + 1;
-        this.startModel.day = m.date();
-        this.startModel.year = m.year();
-      //}
+      this.startModel.month = m.month() + 1;
+      this.startModel.day = m.date();
+      this.startModel.year = m.year();
     }
     if (this.endDateValue) {
       // use the forgiving format (that doesn't need 0 padding) for inputs
       let m = moment(this.endDateValue, this.INPUT_FORMAT);
-      //if (m.isValid()) {
-        this.endModel.month = m.month() + 1;
-        this.endModel.day = m.date();
-        this.endModel.year = m.year();
-      //}
+      this.endModel.month = m.month() + 1;
+      this.endModel.day = m.date();
+      this.endModel.year = m.year();
     }
   }
 
@@ -184,10 +181,8 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
         startDate: startDateString,
         endDate: endDateString
     };
-    //if(!this.startControl.pristine && !this.endControl.pristine){
-      this.onChange(output);
-      this.valueChange.emit(output);
-    //}
+    this.onChange(output);
+    this.valueChange.emit(output);
   }
   
   registerOnChange(fn) {
