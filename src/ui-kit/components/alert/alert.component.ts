@@ -34,19 +34,19 @@ export class SamAlertComponent {
   @Output() dismiss: EventEmitter<any> = new EventEmitter<any>();
 
   types:any = {
-    "success":"usa-alert-success",
-    "warning":"usa-alert-warning",
-    "error":"usa-alert-error",
-    "info":"usa-alert-info"
+    "success": { class: "usa-alert-success", sr: "success alert"},
+    "warning": { class: "usa-alert-warning", sr: "warning alert"},
+    "error": { class: "usa-alert-error", sr: "error alert"},
+    "info": { class: "usa-alert-info", sr: "info alert"}
   };
-  selectedType: string = this.types['success'];
+  selectedType: string = this.types['success'].class;
 
   constructor() {
   }
 
   ngOnInit(){
     if(!this.typeNotDefined()){
-      this.selectedType = this.types[this.type];
+      this.selectedType = this.types[this.type].class;
     }
     if(this.dismissTimer>0){
       setTimeout(()=>{
