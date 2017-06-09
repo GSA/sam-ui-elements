@@ -18,11 +18,35 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   @ViewChild('hiddenText') hiddenText: ElementRef;
   @ViewChild('resultsList') resultsList: ElementRef;
 
+  /**
+   * Options should be an array of objects that contain the key value pairs to be 
+   * used to select in the component.
+   */
   @Input() options: Array<any> = [];
+  /**
+   * Key Value Config is an object that sets which property on the options objects
+   * should be used to display the key, value, and subhead properties in the list.
+   */
   @Input() keyValueConfig: KeyValueConfig = { keyProperty: 'key', valueProperty: 'value' };
+  /**
+   * Used by labelWrapper. Makes field required and displays required on label.
+   * See labelWrapper for more detail.
+   */
   @Input() required: boolean;
+  /**
+   * Used by labelWrapper. Displays a label above input.
+   * See labelWrapper for more detail.
+   */
   @Input() label: string;
+  /**
+   * Used by labelWrapper. Provides a hint on how to use field.
+   * See labelWrapper for more detail.
+   */
   @Input() hint: string;
+  /**
+   * Used by labelWrapper. Provides a name for input and label.
+   * See labelWrapper for more detail.
+   */
   @Input() name: string;
 
   public searchText: string;
