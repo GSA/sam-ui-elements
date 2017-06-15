@@ -1,0 +1,30 @@
+<div class="sam-autocomplete-multiselect" >
+  <!-- Markup for input area -->
+  <sam-label-wrapper #wrapper [label]="label" [hint]="hint" [name]="name" [required]="required" tab sam-click-outside (clickOutside)="checkForFocus($event)" sam-tab-outside (tabOutside)="checkForFocus($event)">
+    <div class="sam-autocomplete-multiselect-input">
+        <span class="selected" *ngFor="let item of value" (click)="deselectItem(item)">{{keyValueConfig?item[keyValueConfig?.valueProperty]:item?.value}}&nbsp;<i class="fa fa-times-circle"></i></span>
+        <textarea #textArea rows="1" 
+                  [(ngModel)]="searchText" 
+                  (input)="applyTextAreaWidth($event)" 
+                  (keydown)="handleUpArrow(handleDownArrow(handleBackspaceEvent(handleEnterEvent($event))))"
+                  (keyup)="applyTextAreaWidth(selectOnEnter(handleEnterEvent($event)))"
+                  [disabled]="isDisabled"
+                  ></textarea>
+        
+        <!-- Hidden span used to approximate the width of the content in the text area.
+            This helps us calculate when the textArea should be on the same row as the
+            spans of selected content and when the textarea should be on a line by 
+            itself. -->
+        <span #hiddenText class="usa-sr-only measure text">{{searchText}}</span>
+    </div>
+    <button type="button" class="usa-button-link" 
+          (click)="focusTextArea(clearSearch(deselectAll()))">Clear All</button>
+    <!-- Markup for list display area -->
+    <ul #resultsList class="usa-unstyled-list">
+      <li *ngFor="let item of list" (click)="clearSearch(selectItem(item))">
+        <p>{{ item[keyValueConfig?.valueProperty] }}</p>  
+        <p class="subhead" *ngIf="item[keyValueConfig?.subheadProperty]">{{ item[keyValueConfig?.subheadProperty] }}</p>
+      </li>
+    </ul>
+  </sam-label-wrapper>
+</div>

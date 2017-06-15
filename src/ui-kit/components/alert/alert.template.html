@@ -3,6 +3,7 @@
     <a><i class="fa fa-times-circle" (click)="closeAlert()"></i></a>
   </span>
   <div class="usa-alert-body">
+    <span class="sr-only">{{this.types[this.type]?.sr}}</span>
     <h3 *ngIf="title" class="usa-alert-heading" [innerText]="title"></h3>
     <p class="usa-alert-text">
       {{description}}

@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { SamDirectivesModule } from '../directives';
 import { SamAutocompleteModule } from './autocomplete';
 import { SamAutocompleteDropdownModule } from './autocomplete-dropdown';
 import { SamWrapperModule } from '../wrappers';
 import { SamCheckboxModule } from './checkbox';
 import { SamDateComponent } from './date';
 import { SamDateTimeComponent } from './date-time';
+import { SamDateRangeComponent } from './date-range';
 //import { SamInputAutocompleteModule } from './input-autocomplete';
 import { SamListModule } from './list';
 import { SamMultiSelectModule } from './multiselect';
@@ -19,11 +21,13 @@ import { SamTimeComponent } from './time';
 import { SamToggleSwitchComponent } from './toggle-switch';
 import { SamListDisplayComponent } from './list-display';
 import { SamSelectResizableComponent } from './select-resizable';
+import { SamAutocompleteMultiselectModule } from './autocomplete-multiselect';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    SamDirectivesModule,
     SamListModule,
     SamWrapperModule,
     SamMultiSelectModule,
@@ -31,10 +35,12 @@ import { SamSelectResizableComponent } from './select-resizable';
     SamSelectModule,
     SamTextInputModule,
     SamAutocompleteDropdownModule,
+    SamAutocompleteMultiselectModule
   ],
   declarations: [
     SamDateComponent,
     SamDateTimeComponent,
+    SamDateRangeComponent,
     SamNumberComponent,
     SamRadioButtonComponent,
     SamTimeComponent,
@@ -46,6 +52,7 @@ import { SamSelectResizableComponent } from './select-resizable';
     SamCheckboxModule,
     SamDateComponent,
     SamDateTimeComponent,
+    SamDateRangeComponent,
     SamListModule,
     SamMultiSelectModule,
     SamNumberComponent,
@@ -59,6 +66,7 @@ import { SamSelectResizableComponent } from './select-resizable';
     SamAutocompleteDropdownModule,
     SamListDisplayComponent,
     SamSelectResizableComponent,
+    SamAutocompleteMultiselectModule
   ],
   providers: []
 })

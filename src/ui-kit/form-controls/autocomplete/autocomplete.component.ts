@@ -64,7 +64,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
    */
   @Input() public categories: any = [];
   /**
-  * Sets the form control 
+  * Sets the form control
   */
   @Input() public control: FormControl;
   /**
@@ -76,7 +76,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
    * allowAny. This is useful if you do not want to respond to onChange events when the input is blurred.
    */
   @Output() public enterEvent: EventEmitter<any> = new EventEmitter();
-  
+
 
   public results: Array<string>;
   public innerValue: any = '';
@@ -106,7 +106,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   set value(val: any) {
     if (val !== this.innerValue) {
       this.innerValue = val;
-      this.propogateChange(JSON.stringify(val));
+      this.propogateChange(val);
     }
   }
 
@@ -123,13 +123,15 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     this.control.valueChanges.subscribe(()=>{
       this.wrapper.formatErrors(this.control);
     });
+    this.wrapper.formatErrors(this.control);
   }
 
   onChange() {
     if (this.allowAny) {
       this.propogateChange(this.inputValue);
     } else {
-      this.propogateChange(this.innerValue);
+      //this is already fired on setSelected
+      //this.propogateChange(this.innerValue);
     }
   }
 
@@ -145,9 +147,15 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     if((event.code === 'Tab' || event.keyIdentifier === 'Tab') && !this.inputValue && (!this.config || this.config && !this.config.showOnEmptyInput)){
       return;
     }
-    if ((event.code === 'Backspace' || event.keyIdentifier === 'Backspace') && !this.innerValue) {
-      this.results = null;
-      this.filteredKeyValuePairs = null;
+    if ((event.code === 'Backspace' || event.keyIdentifier === 'Backspace')
+        || (event.code === 'Delete' || event.keyIdentifier === 'Delete')) {
+      if(!this.innerValue) {
+        this.results = null;
+        this.filteredKeyValuePairs = null;
+      }
+      if(this.inputValue === ""){
+        this.value = null;
+      }
     }
 
     if ((this.lastSearchedValue !== event.target.value) && (event.target.value !== '')) {
@@ -448,7 +456,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
          */
         if (curr[this.config.categoryProperty] && currentCategory !== curr[this.config.categoryProperty]) {
           /**
-           * Checks if the current item in the array has a category. If so, checks to see if 
+           * Checks if the current item in the array has a category. If so, checks to see if
            * this category is the current category. If not, it will push it to the returned array.
            * If it is the current category, it skips.
            */
@@ -515,6 +523,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       } else {
         this.inputValue = value;
       }
+      this.selectedInputValue = this.inputValue;
       this.innerValue = value;
     }
   }

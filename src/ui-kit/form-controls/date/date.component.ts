@@ -136,6 +136,10 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   yearName() {
     return `${this.name}_year`;
   }
+
+  triggerTouch(){
+    this.onTouched();
+  }
   
   registerOnChange(fn) {
     this.onChange = fn;

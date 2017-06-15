@@ -62,7 +62,7 @@ export class SamSelectComponent implements ControlValueAccessor {
 
   @ViewChild(LabelWrapper)
   public wrapper: LabelWrapper;
-  
+
   @ViewChild("select")
   public select: any;
 
@@ -77,13 +77,11 @@ export class SamSelectComponent implements ControlValueAccessor {
       return;
     }
 
-    let validators: any[] = [];
-
-    if (this.required) {
-      validators.push(Validators.required);
-    }
-
-    this.control.setValidators(validators);
+    this.control.valueChanges.subscribe(()=>{
+      this.wrapper.formatErrors(this.control);
+    });
+    
+    this.wrapper.formatErrors(this.control);
   }
 
   onSelectChange(val) {
@@ -92,7 +90,6 @@ export class SamSelectComponent implements ControlValueAccessor {
     }
     this.model = val;
     this.modelChange.emit(val);
-    this.wrapper.formatErrors(this.control);
   }
 
   setDisabledState(disabled) {

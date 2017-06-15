@@ -10,7 +10,7 @@ export interface OptionsType {
   /**
    * The machine readable description of the input
    */
-  name: string; 
+  name: string;
   /**
    * if true, the option is greyed out and not clickable
    */
@@ -63,7 +63,7 @@ export interface HistoryNodeType {
   /**
    * Title value for node
    */
-  title: string; 
+  title: string;
   /**
    * Optional description for node
    */
@@ -115,7 +115,7 @@ export interface AutocompleteConfig {
    */
   placeholder?: string;
   /**
-   * Passes value to the custom autocomplete service fetch method call 
+   * Passes value to the custom autocomplete service fetch method call
    */
   serviceOptions?: any;
   /**
@@ -153,7 +153,7 @@ export interface AutocompleteKeyValueConfig {
 //Download
 export interface DownloadPackageType {
   /**
-   * Sets a package id value 
+   * Sets a package id value
    */
   packageId: string;
   /**
@@ -301,7 +301,7 @@ export interface PointOfContactType{
 }
 
 export interface IBreadcrumb {
-  url: string;
+  url?: string;
   breadcrumb: string;
 }
 
@@ -322,5 +322,5 @@ export interface NameEntryType{
   /**
   * Sets the suffix field
   */
-  suffix: string;  
+  suffix: string;
 }
