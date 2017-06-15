@@ -29,7 +29,7 @@ export class SamAccordionSection implements OnInit {
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error("[name] is a required input for the <samAccordianSection> component");
+      throw new Error("[name] is a required input for the <sam-accordian-section> component");
     }
   }
 
@@ -59,10 +59,10 @@ export class SamAccordionSection implements OnInit {
 }
 
 /**
- * The <samAccordions> component can generate accordions component with provided data
+ * The <sam-accordion> component can generate accordions component with provided data
  */
 @Component({
-  selector: 'samAccordion',
+  selector: 'sam-accordion',
   template: `
     <ul class="accordion-list" [ngClass]="accordionClass">
       <ng-content></ng-content>             

@@ -26,7 +26,7 @@ export class SamTabComponent {
  * The <samTabs> component is a wrapper for navigating through and displaying tabs
  */
 @Component({
-  selector: 'samTabs',
+  selector: 'sam-tabs',
   template:`
     <ul class="usa-tabs">
       <li *ngFor="let tab of tabs" (click)="selectTab(tab)" [class.active]="tab.active">
