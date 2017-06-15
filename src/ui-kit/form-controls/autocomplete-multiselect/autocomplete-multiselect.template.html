@@ -30,7 +30,7 @@
         <ng-container>
           <ul *ngIf="list[i].length > 0" class="usa-unstyled-list item-list">
             <li *ngIf="category !== 'uncategorized'" class="category-name" [ngClass]="{'selectable': categoryIsSelectable}" (click)="clearSearch(selectItemByCategory(category))" [attr.data-category]="category">
-              {{ category }}&nbsp;({{ list[i].length }})
+              {{ category }}
             </li>
             <li class="category-item" *ngFor="let item of list[i]; let itemIndex = index" (click)="clearSearch(selectItem(item))" [attr.data-category]="i" [attr.data-index]="itemIndex">
               <p>{{ item[keyValueConfig?.valueProperty] }}</p>  
