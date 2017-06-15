@@ -482,7 +482,6 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * Procedure to add an item to list of selected items
    */
   selectItem(item): void {
-    console.log(item);
     if (item && !item.cannotBeSelected) {
       const tmpArray = this.value.slice();
       let findVal = tmpArray.find((el) => {
