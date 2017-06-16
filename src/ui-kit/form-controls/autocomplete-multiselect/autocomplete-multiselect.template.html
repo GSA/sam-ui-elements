@@ -6,7 +6,7 @@
             <div class="remove-button"><i class="fa fa-times-circle"></i></div>
             <div class="label">
             <p class="selected-item">{{ keyValueConfig ? item[keyValueConfig?.valueProperty] : item?.value }}&nbsp;</p>
-            <p class="selected-category">{{ item[keyValueConfig?.categoryProperty] }}</p>
+            <p *ngIf="item?.value !== item[keyValueConfig?.categoryProperty]" class="selected-category">{{ item[keyValueConfig?.categoryProperty] }}</p>
             </div>
         </div>
         <textarea #textArea rows="1" 
@@ -28,7 +28,7 @@
     <ul #resultsList class="usa-unstyled-list multiselect-parent-list" *ngIf="displayList()">
       <li *ngFor="let category of list.categories; let i = index;">
         <ng-container>
-          <ul *ngIf="list[i].length > 0" class="usa-unstyled-list item-list">
+          <ul *ngIf="displaySublist(category, i)" class="usa-unstyled-list item-list">
             <li *ngIf="category !== 'uncategorized'" class="category-name" [ngClass]="{'selectable': categoryIsSelectable}" (click)="clearSearch(selectItemByCategory(category))" [attr.data-category]="category">
               {{ category }}
             </li>
