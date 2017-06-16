@@ -45,14 +45,20 @@ describe('The Sam Autocomplete Multiselect Component', () => {
   it('Should display results when text is entered', () => {
     component.searchText = 'c';
     fixture.detectChanges();
-    expect(component.resultsList.nativeElement.children[0].innerHTML).toContain(options[0].value);
+    fixture.whenStable().then(() => {
+      const results = fixture.nativeElement.querySelectorAll('li.category-item, li.category-name');
+      expect(results[0].innerText).toContain(component.options[0].value);
+    });
   });
 
   it('Should display no results when no results are found', () => {
     component.searchText = 'zzzzzzzzzz';
     fixture.detectChanges();
-    expect(component.resultsList.nativeElement.children[0].innerHTML).toContain('No results found');
-  })
+    fixture.whenStable().then(() => {
+      const results = fixture.nativeElement.querySelectorAll('li.category-item, li.category-name');
+      expect(results[0].innerText).toContain('No results found');
+    });
+  });
 
   it('Should clear selected and input when clear all is clicked', () => {
     component.searchText = 'c';
@@ -72,7 +78,7 @@ describe('The Sam Autocomplete Multiselect Component', () => {
   it('Should add item to value when an item is selected', () => {
     component.searchText = 'c';
     fixture.detectChanges();
-    component.selectItem(component.filterOptions(component.searchText)[0]);
+    component.selectItem(component.filterOptions(component.searchText)[0][0]);
     fixture.detectChanges();
     expect(component.value[0]).toBe(component.options[0]);
   });
