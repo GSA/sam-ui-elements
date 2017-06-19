@@ -7,30 +7,30 @@ import {SamAccordionComponent, SamAccordionSection} from "./accordion.component"
 
 @Component({
   template: `
-    <samAccordion>
+    <sam-accordion>
       <sam-accordion-section name="aria-friendly-name">Content Goes Here</sam-accordion-section>
       <sam-accordion-section name="a-different-aria-friendly-name">More Content Goes Here</sam-accordion-section>
-    </samAccordion>
+    </sam-accordion>
 `
 })
 class AccordionDefault { }
 
 @Component({
   template: `
-    <samAccordion [bordered]="true">
+    <sam-accordion [bordered]="true">
       <sam-accordion-section name="aria-friendly-name">Content Goes Here</sam-accordion-section>
       <sam-accordion-section name="a-different-aria-friendly-name">More Content Goes Here</sam-accordion-section>
-    </samAccordion>
+    </sam-accordion>
 `
 })
 class AccordionBordered { }
 
 @Component({
   template: `
-    <samAccordion [expandIndex]="0">
+    <sam-accordion [expandIndex]="0">
       <sam-accordion-section name="aria-friendly-name">Content Goes Here</sam-accordion-section>
       <sam-accordion-section name="a-different-aria-friendly-name">More Content Goes Here</sam-accordion-section>
-    </samAccordion>
+    </sam-accordion>
 `
 })
 class AccordionInitialized { }

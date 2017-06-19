@@ -7,10 +7,10 @@ import {SamTabsComponent,SamTabComponent} from './tabs.component';
 
 @Component({
   template: `
-    <samTabs>
-      <samTab tabTitle="test1">Content Goes Here</samTab>
-      <samTab tabTitle="test2">More Content Goes Here</samTab>
-    </samTabs>
+    <sam-tabs>
+      <sam-tab tabTitle="test1">Content Goes Here</sam-tab>
+      <sam-tab tabTitle="test2">More Content Goes Here</sam-tab>
+    </sam-tabs>
 `
 })
 class TabsDefault { 
