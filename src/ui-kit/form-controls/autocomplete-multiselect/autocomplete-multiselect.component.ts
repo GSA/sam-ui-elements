@@ -633,7 +633,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    textAreaFocused = false;
    
    textAreaFocus(){
-     this.textAreaFocused = (this.list.length == 0) ? true : false;
+     this.textAreaFocused = !this.displayList() ? true : false;
    }
    textAreaBlur(){
      this.textAreaFocused = false;

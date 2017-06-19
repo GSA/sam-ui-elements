@@ -1,46 +1,81 @@
-<div class="sam-autocomplete-multiselect" >
+<div class="sam-autocomplete-multiselect">
   <!-- Markup for input area -->
-  <sam-label-wrapper #wrapper [label]="label" [hint]="hint" [name]="name" [required]="required" tab sam-click-outside (clickOutside)="checkForFocus($event)" sam-tab-outside (tabOutside)="checkForFocus($event)">
+  <sam-label-wrapper #wrapper 
+                    [label]="label" 
+                    [hint]="hint" 
+                    [name]="name" 
+                    [required]="required" 
+                    tab 
+                    sam-click-outside 
+                    (clickOutside)="checkForFocus($event)" 
+                    sam-tab-outside 
+                    (tabOutside)="checkForFocus($event)">
     
-    <div class="sam-autocomplete-multiselect-input">
+    <div class="sam-autocomplete-multiselect-input" 
+        [ngClass]="{ 'active': displayList(), 'focused': textAreaFocused }">
         
-        <div class="selected" *ngFor="let item of value" (click)="deselectItem(item)">
-            <div class="remove-button"><i class="fa fa-times-circle"></i></div>
+        <div class="sam-ui mini label" 
+            *ngFor="let item of value" 
+            [@label]=""
+            (click)="deselectItem(item)">
             <div class="label">
-            <p class="selected-item">{{ keyValueConfig ? item[keyValueConfig?.valueProperty] : item?.value }}&nbsp;</p>
-            <p *ngIf="item?.value !== item[keyValueConfig?.categoryProperty]" class="selected-category">{{ item[keyValueConfig?.categoryProperty] }}</p>
+              {{ keyValueConfig ? item[keyValueConfig?.valueProperty] : item?.value }}
+              <span *ngIf="item?.value !== item[keyValueConfig?.categoryProperty]" 
+                class="selected-category">
+                <br>{{ item[keyValueConfig?.categoryProperty] }}
+              </span>
             </div>
+            <i class="icon close fa fa-times"></i>
         </div>
         
         <textarea #textArea rows="1" 
                   [(ngModel)]="searchText" 
                   (input)="applyTextAreaWidth($event)" 
+                  (focus)="textAreaFocus()" 
+                  (blur)="textAreaBlur()" 
                   (keydown)="handleUpArrow(handleDownArrow(handleBackspaceEvent(handleEnterEvent($event))))"
                   (keyup)="applyTextAreaWidth(selectOnEnter(handleEnterEvent($event)))"
-                  [disabled]="isDisabled"
-                  >
+                  [disabled]="isDisabled">
         </textarea>
         
         <!-- Hidden span used to approximate the width of the content in the text area.
             This helps us calculate when the textArea should be on the same row as the
             spans of selected content and when the textarea should be on a line by 
             itself. -->
-        <span #hiddenText class="usa-sr-only measure text">{{searchText}}</span>
+        <span #hiddenText class="usa-sr-only measure text">
+          {{searchText}}
+        </span>
     </div>
     
-    <button type="button" class="usa-button-link" 
-          (click)="focusTextArea(clearSearch(deselectAll()))">Clear All</button>
+    <button type="button" 
+            class="usa-button-link" 
+            (click)="focusTextArea(clearSearch(deselectAll()))">
+            Clear All
+    </button>
     
-    <ul #resultsList class="usa-unstyled-list multiselect-parent-list" *ngIf="displayList()">
+    <ul #resultsList class="usa-unstyled-list multiselect-parent-list" 
+        *ngIf="displayList()" 
+        [@dropdown]="">
       <li *ngFor="let category of list.categories; let i = index;">
         <ng-container>
-          <ul *ngIf="displaySublist(category, i)" class="usa-unstyled-list item-list">
-            <li *ngIf="category !== 'uncategorized'" class="category-name" [ngClass]="{'selectable': categoryIsSelectable}" (click)="clearSearch(selectItemByCategory(category))" [attr.data-category]="category">
+          <ul *ngIf="displaySublist(category, i)" 
+              class="usa-unstyled-list item-list">
+            <li *ngIf="category !== 'uncategorized'" 
+                class="category-name" 
+                [ngClass]="{'selectable': categoryIsSelectable}" 
+                (click)="clearSearch(selectItemByCategory(category))" 
+                [attr.data-category]="category">
               {{ category }}
             </li>
-            <li class="category-item" *ngFor="let item of list[i]; let itemIndex = index" (click)="clearSearch(selectItem(item))" [attr.data-category]="i" [attr.data-index]="itemIndex">
+            <li class="category-item" 
+                *ngFor="let item of list[i]; let itemIndex = index" 
+                (click)="clearSearch(selectItem(item))" 
+                [attr.data-category]="i" 
+                [attr.data-index]="itemIndex">
               <p>{{ item[keyValueConfig?.valueProperty] }}</p>  
-              <p class="subhead" *ngIf="item[keyValueConfig?.subheadProperty]">{{ item[keyValueConfig?.subheadProperty] }}</p>
+              <p class="subhead" *ngIf="item[keyValueConfig?.subheadProperty]">
+                {{ item[keyValueConfig?.subheadProperty] }}
+              </p>
             </li>
           </ul>
         </ng-container>
