@@ -7,7 +7,7 @@ import { OnInit, Component, Input, Output, EventEmitter, ElementRef, ViewChild, 
   selector: 'sam-modal',
   templateUrl: './modal.template.html'
 })
-export class SamModalComponent implements OnInit, AfterViewChecked {
+export class SamModalComponent implements OnInit{
   /**
   * Sets ID html attribute of modal
   */
@@ -90,7 +90,7 @@ export class SamModalComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  ngAfterViewChecked() {
+  set508() {
     if (this.show) {
       this._allFocusableElements = document.querySelectorAll(this._focusableString);
       this._modalFocusableElements = this.hostElement.nativeElement.querySelectorAll(this._focusableString);
@@ -157,6 +157,7 @@ export class SamModalComponent implements OnInit, AfterViewChecked {
       document.body.className += " modal-open";
     }
     this._focusModalElement = true;
+    this.set508();
   }
 
   closeModal(){
