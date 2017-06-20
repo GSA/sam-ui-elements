@@ -73,7 +73,7 @@ export class FieldsetWrapper {
       let el = <HTMLElement>document.getElementsByTagName("body")[0];
       el.appendChild(other);
       this.lineSize = other.offsetHeight / 2;
-      other.remove();
+      el.removeChild(other);
     }
     let val = Math.floor(obj.offsetHeight /  this.lineSize);
     return val;
