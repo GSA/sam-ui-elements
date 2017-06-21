@@ -391,15 +391,15 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     } else {
       this.list = [];
     }
-    this.list = this.sortByCategory(this.list);
-    if (this.categoryIsSelectable) {
-      availableCategories.forEach((category) => {
-        if (this.list.categories.indexOf(category) === -1) {
-          this.list.categories.push(category);
-        }
-      });
-    }
-    this.list = this.handleEmptyList(this.list);
+    // this.list = this.sortByCategory(this.list);
+    // if (this.categoryIsSelectable) {
+    //   availableCategories.forEach((category) => {
+    //     if (this.list.categories.indexOf(category) === -1) {
+    //       this.list.categories.push(category);
+    //     }
+    //   });
+    // }
+    // this.list = this.handleEmptyList(this.list);
     return this.list;
   }
 
