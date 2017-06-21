@@ -80,7 +80,9 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     return this.innerValue;
   }
 
-  constructor(@Optional() private service: AutocompleteService, private ref: ChangeDetectorRef) { }
+  constructor(@Optional() private service: AutocompleteService, private ref: ChangeDetectorRef) {
+    console.log(this.service);
+   }
 
   ngOnInit() {
     this.list = this.sortByCategory(this.list);
