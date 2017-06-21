@@ -351,6 +351,8 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * search term as a substring of the objects key or value
    */
   filterOptions(searchString: string) {
+    console.log('i should be filtering')
+    console.log(this.service);
     const availableCategories = [];
     if (searchString) {
       searchString = searchString.toLowerCase();
