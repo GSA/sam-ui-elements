@@ -356,9 +356,16 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       searchString = searchString.toLowerCase();
 
       if (this.service && this.options.length === 0) {
+        console.log('in multiselect, about to call service')
         this.service.fetch(searchString, false).subscribe(
-          (data) => { this.list = this.handleEmptyList(this.sortByCategory(data)); },
+          (data) => { 
+            console.log('called service, was successful')
+            console.log(data);
+            this.list = this.handleEmptyList(this.sortByCategory(data));
+          },
           (err) => {
+            console.log('called service but it failed')
+            console.log(err)
             const errorObject = {
               cannotBeSelected: true
             }
