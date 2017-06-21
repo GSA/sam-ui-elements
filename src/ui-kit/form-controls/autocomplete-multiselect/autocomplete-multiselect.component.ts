@@ -1,5 +1,6 @@
 import { Component, Input, ViewChild, ElementRef, ChangeDetectorRef, Optional, forwardRef} from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import { LabelWrapper } from '../../wrappers/label-wrapper';
 
 import { AutocompleteService } from '../autocomplete/autocomplete.service';
 
@@ -17,6 +18,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   @ViewChild('textArea') textArea: ElementRef;
   @ViewChild('hiddenText') hiddenText: ElementRef;
   @ViewChild('resultsList') resultsList: ElementRef;
+  @ViewChild(LabelWrapper) wrapper: LabelWrapper;
 
   /**
    * Options should be an array of objects that contain the key value pairs to be 
@@ -28,6 +30,10 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * should be used to display the key, value, and subhead properties in the list.
    */
   @Input() keyValueConfig: KeyValueConfig = { keyProperty: 'key', valueProperty: 'value', parentCategoryProperty: 'category' };
+  /**
+   * Used when a service is used to get autocomplete options
+   */
+  @Input() serviceOptions: any;
   /**
    * Used by labelWrapper. Makes field required and displays required on label.
    * See labelWrapper for more detail.
@@ -48,6 +54,11 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * See labelWrapper for more detail.
    */
   @Input() name: string;
+  /**
+   * Used by labelWrapper. Passes in a Form Control to display error messages
+   * See labelWrapper for more detail.
+   */
+  @Input() control: FormControl;
   /**
    * Provides an array of categories for selection
    * when also setting categoryIsSelectable property
@@ -84,6 +95,14 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
 
   ngOnInit() {
     this.list = this.sortByCategory(this.list);
+    if(!this.control){
+      return;
+    }
+    this.control.valueChanges.subscribe(()=>{
+      this.wrapper.formatErrors(this.control);
+    });
+
+    this.wrapper.formatErrors(this.control);
   }
 
   /***************************************************************
@@ -354,9 +373,12 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     const availableCategories = [];
     if (searchString) {
       searchString = searchString.toLowerCase();
-
+      let options = null;
+      if (this.serviceOptions) {
+        options = this.serviceOptions || null;
+      }
       if (this.service && this.options.length === 0) {
-        this.service.fetch(searchString, false).subscribe(
+        this.service.fetch(searchString, false, options).subscribe(
           (data) => { this.list = this.handleEmptyList(this.sortByCategory(data)); },
           (err) => {
             const errorObject = {
@@ -367,6 +389,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
             return [errorObject];
           }
         )
+        return;
       } else {
         this.list = this.options.filter((option) => {
           if (this.categoryIsSelectable) {
@@ -567,6 +590,9 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    ***************************************************************/
 
   writeValue(value: any) {
+    if(!value){
+      value = [];
+    }
     this.value = value;
   }
 
