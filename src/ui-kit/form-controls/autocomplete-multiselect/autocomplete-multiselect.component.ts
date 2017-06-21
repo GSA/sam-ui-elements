@@ -359,6 +359,8 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
         this.service.fetch(searchString, false).subscribe(
           (data) => { 
             console.log('I got your data')
+            console.log(this.sortByCategory(data));
+            
             this.list = this.handleEmptyList(this.sortByCategory(data));
           },
           (err) => {
