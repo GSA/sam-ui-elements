@@ -358,7 +358,6 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       if (this.service && this.options.length === 0) {
         this.service.fetch(searchString, false).subscribe(
           (data) => { 
-            console.log("I was returned fromt he service", data)
             console.log(this.sortByCategory(data));
             
             this.list = this.handleEmptyList(this.sortByCategory(data));
@@ -387,19 +386,20 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
             return option;
           }
         });
+        this.list = this.sortByCategory(this.list);
+        if (this.categoryIsSelectable) {
+          availableCategories.forEach((category) => {
+            if (this.list.categories.indexOf(category) === -1) {
+              this.list.categories.push(category);
+            }
+          });
+        }
+        this.list = this.handleEmptyList(this.list);
       }
     } else {
-      this.list = [];
+      this.list = this.handleEmptyList(this.sortByCategory([]));
     }
-    // this.list = this.sortByCategory(this.list);
-    // if (this.categoryIsSelectable) {
-    //   availableCategories.forEach((category) => {
-    //     if (this.list.categories.indexOf(category) === -1) {
-    //       this.list.categories.push(category);
-    //     }
-    //   });
-    // }
-    // this.list = this.handleEmptyList(this.list);
+
     return this.list;
   }
 
@@ -434,7 +434,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
         return totalItems;
       }
     };
-    console.log('Results inside sort: ', results)
+
     return results.reduce((prev, curr) => {
       const category = this.keyValueConfig.categoryProperty;
       if (curr[category]) {
