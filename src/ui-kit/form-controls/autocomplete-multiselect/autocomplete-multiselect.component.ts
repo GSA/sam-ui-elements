@@ -80,9 +80,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     return this.innerValue;
   }
 
-  constructor(@Optional() private service: AutocompleteService, private ref: ChangeDetectorRef) {
-    console.log(this.service);
-   }
+  constructor(@Optional() private service: AutocompleteService, private ref: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.list = this.sortByCategory(this.list);
@@ -353,23 +351,17 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * search term as a substring of the objects key or value
    */
   filterOptions(searchString: string) {
-    console.log('i should be filtering')
-    console.log(this.service);
     const availableCategories = [];
     if (searchString) {
       searchString = searchString.toLowerCase();
 
       if (this.service && this.options.length === 0) {
-        console.log('in multiselect, about to call service')
         this.service.fetch(searchString, false).subscribe(
           (data) => { 
-            console.log('called service, was successful')
-            console.log(data);
+            console.log('I got your data')
             this.list = this.handleEmptyList(this.sortByCategory(data));
           },
           (err) => {
-            console.log('called service but it failed')
-            console.log(err)
             const errorObject = {
               cannotBeSelected: true
             }
