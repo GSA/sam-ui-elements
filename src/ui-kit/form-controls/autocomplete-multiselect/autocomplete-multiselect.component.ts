@@ -21,7 +21,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
 
   /**
-   * Options should be an array of objects that contain the key value pairs to be 
+   * Options should be an array of objects that contain the key value pairs to be
    * used to select in the component.
    */
   @Input() options: Array<any> = [];
@@ -63,7 +63,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * Provides an array of categories for selection
    * when also setting categoryIsSelectable property
    * to true.
-   * 
+   *
    * The array should be the object for the category
    * to be selected.
    */
@@ -393,7 +393,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       } else {
         this.list = this.options.filter((option) => {
           if (this.categoryIsSelectable) {
-            if (option[this.keyValueConfig.categoryProperty] && 
+            if (option[this.keyValueConfig.categoryProperty] &&
                 option[this.keyValueConfig.categoryProperty].toLowerCase().includes(searchString) &&
                 availableCategories.indexOf(option[this.keyValueConfig.categoryProperty]) === -1
                 ) {
@@ -422,19 +422,19 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   }
 
   /**
-   * Procedure to check this.list for categories 
+   * Procedure to check this.list for categories
    * and sort data by category
    */
   sortByCategory(results: Array<any>): Array<any> {
     /**
      * Initializes a data structure to sort data by categories.
-     * Object works like an associative array with additional 
+     * Object works like an associative array with additional
      * properties to support the ui layer and component logic.
-     * 
+     *
      * Each category is stored in the categories array property
      * and is given a corresponding property number to match
      * its position in the categories array.
-     * 
+     *
      * totalItems is a method that counts the total number of
      * items in each category in lieu of a length property
      * for the entire data structure.
@@ -593,7 +593,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     if(!value){
       value = [];
     }
-    this.value = value;
+    this.innerValue = value;
   }
 
   registerOnChange(fn: any) {
