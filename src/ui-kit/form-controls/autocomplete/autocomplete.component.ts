@@ -216,7 +216,6 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
         (err) => {
           this.results = ['An error occurred. Try a different value.'];
           let errorobj = {};
-          console.log(this.config.keyValueConfig);
           errorobj[this.config.keyValueConfig.keyProperty] = 'Error';
           errorobj[this.config.keyValueConfig.valueProperty] = 'An error occurred. Try a different value.';
           //key: 'Error', value: 'An error occurred. Try a different value.'
