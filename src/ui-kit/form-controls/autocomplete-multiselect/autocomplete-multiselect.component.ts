@@ -434,7 +434,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
         return totalItems;
       }
     };
-
+    console.log('Results inside sort: ', results)
     return results.reduce((prev, curr) => {
       const category = this.keyValueConfig.categoryProperty;
       if (curr[category]) {
