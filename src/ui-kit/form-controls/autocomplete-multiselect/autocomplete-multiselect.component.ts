@@ -79,6 +79,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   private isDisabled: boolean = false;
   private list: any = [];
   private cachingService: any;
+  private inputTimer: any;
 
   private onChangeCallback: (_: any) => void = (_: any) => {};
   private onTouchedCallback: () => void = () => {};
@@ -326,13 +327,20 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    */
   applyTextAreaWidth(event) {
     if(event.key != "ArrowDown" && event.key != "ArrowUp"){
-      this.filterOptions(this.searchText);
+      if (this.inputTimer) {
+        clearTimeout(this.inputTimer);
+      }
+      this.inputTimer = setTimeout(this.filterOptions(this.searchText), 250);
     }
     this.ref.detectChanges();
 
     event.target.style.width = event.target.value ? this.calculateTextAreaWidth(event.target) : 'initial';
 
     return event;
+  }
+
+  createTimer() {
+    setTimeout(() => {}, 250);
   }
 
   /**

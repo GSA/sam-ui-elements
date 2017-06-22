@@ -12,8 +12,8 @@
         <textarea #textArea rows="1" 
                   [(ngModel)]="searchText" 
                   (input)="applyTextAreaWidth($event)" 
-                  (keydown)="handleUpArrow(handleDownArrow(handleBackspaceEvent(handleEnterEvent(mainHandler($event)))))"
-                  (keyup)="applyTextAreaWidth(selectOnEnter(handleEnterEvent(mainHandler($event))))"
+                  (keydown)="handleUpArrow(handleDownArrow(handleBackspaceEvent(handleEnterEvent($event))))"
+                  (keyup)="applyTextAreaWidth(selectOnEnter(handleEnterEvent($event)))"
                   [disabled]="isDisabled"
                   ></textarea>
         
