@@ -134,9 +134,9 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     const shouldUseCachedResults = function (searchString) {
       if (cachedResults && searchString === lastSearchedString) {
         if (_currentIndex === _scrollEnd) {
-          return true;
+          return false;
         } else  {
-          return false
+          return true;
         }
       } else {
         return false;
