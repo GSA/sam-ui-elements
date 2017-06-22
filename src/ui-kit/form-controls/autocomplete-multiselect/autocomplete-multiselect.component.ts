@@ -327,9 +327,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    */
   applyTextAreaWidth(event) {
     if(event.key != "ArrowDown" && event.key != "ArrowUp"){
-      if (this.inputTimer) {
-        clearTimeout(this.inputTimer);
-      }
+      clearTimeout(this.inputTimer);
       this.inputTimer = setTimeout(this.filterOptions(this.searchText), 250);
     }
     this.ref.detectChanges();
