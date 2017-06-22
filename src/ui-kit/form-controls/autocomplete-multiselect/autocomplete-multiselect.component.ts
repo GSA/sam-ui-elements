@@ -78,6 +78,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   private innerValue: Array<any> = [];
   private isDisabled: boolean = false;
   private list: any = [];
+  private cachingService: any;
 
   private onChangeCallback: (_: any) => void = (_: any) => {};
   private onTouchedCallback: () => void = () => {};
@@ -91,7 +92,9 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     return this.innerValue;
   }
 
-  constructor(@Optional() private service: AutocompleteService, private ref: ChangeDetectorRef) {}
+  constructor(@Optional() private service: AutocompleteService, private ref: ChangeDetectorRef) {
+    this.cachingService = this.CachingService();
+  }
 
   ngOnInit() {
     this.list = this.sortByCategory(this.list);
@@ -105,9 +108,12 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     this.wrapper.formatErrors(this.control);
   }
 
-  cachingService(initialResults, initialSearchString) {
+  CachingService(initialResults?: any, initialSearchString?: any) {
     let cachedResults = initialResults || [];
     let lastSearchedString = initialSearchString || '';
+
+    const results = () => { return cachedResults };
+    const lastSearch = () => { return lastSearchedString; }
 
     const updateResults = function(results) {
       cachedResults = results;
@@ -125,7 +131,9 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     }
 
     return {
+      results: results,
       updateResults: updateResults,
+      lastSearch: lastSearch,
       updateSearchString: updateSearchString,
       shouldUseCachedResults: shouldUseCachedResults
     }
@@ -409,18 +417,27 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
         options = this.serviceOptions || null;
       }
       if (this.service && this.options.length === 0) {
-        this.service.fetch(searchString, false, options).subscribe(
-          (data) => { this.list = this.handleEmptyList(this.sortByCategory(data)); },
-          (err) => {
-            const errorObject = {
-              cannotBeSelected: true
+        this.cachingService.updateSearchString(searchString);
+        if (this.cachingService.shouldUseCachedResults()) {
+          return;
+        } else {
+          this.service.fetch(searchString, false, options).subscribe(
+            (data) => { 
+              this.list = this.handleEmptyList(this.sortByCategory(data));
+              this.cachingService.updateResults(this.list);
+              console.log('from cached', this.cachingService.results());
+            },
+            (err) => {
+              const errorObject = {
+                cannotBeSelected: true
+              }
+              errorObject[this.keyValueConfig.valueProperty] = 'An error occurred.';
+              errorObject[this.keyValueConfig.subheadProperty] = 'Please try again.';
+              return [errorObject];
             }
-            errorObject[this.keyValueConfig.valueProperty] = 'An error occurred.';
-            errorObject[this.keyValueConfig.subheadProperty] = 'Please try again.';
-            return [errorObject];
-          }
-        )
-        return;
+          )
+          return;
+        }
       } else {
         this.list = this.options.filter((option) => {
           if (this.categoryIsSelectable) {
