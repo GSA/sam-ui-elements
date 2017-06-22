@@ -241,9 +241,11 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   handleDownArrow(event) {
     if ( event.code === 'ArrowDown' || event.keyIdentified === 'Down' ) {
       const results = this.getResults();
-      this.setSelectedChild(this.getSelectedChildIndex(results),
+      const selectedIndex = this.getSelectedChildIndex(results);
+      this.setSelectedChild(selectedIndex,
                                 'Down',
                                 results);
+      this.updateCachingServiceIndices(selectedIndex, results.length);
     }
 
     return event;
@@ -252,12 +254,19 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   handleUpArrow(event) {
     if ( event.code === 'ArrowUp' || event.keyIdentified === 'Up' ) {
       const results = this.getResults();
-      this.setSelectedChild(this.getSelectedChildIndex(results),
+      const selectedIndex = this.getSelectedChildIndex(results);
+      this.setSelectedChild(selectedIndex,
                                  'Up',
                                  results);
+      this.updateCachingServiceIndices(selectedIndex, results.length);
     }
 
     return event;
+  }
+
+  updateCachingServiceIndices(selectedIndex, resultsLength) {
+    this.cachingService.setCurrentIndex(selectedIndex);
+    this.cachingService.setScrollEnd(resultsLength);
   }
 
   getResults() {
@@ -299,8 +308,6 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
         indexToSelect = currentSelectedIndex - 1;
       }
     }
-    this.cachingService.setCurrentIndex(indexToSelect);
-    this.cachingService.setScrollEnd(elements.length);
     this.addSelectedClass(elements, indexToSelect);
     return indexToSelect;
   }
