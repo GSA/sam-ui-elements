@@ -442,6 +442,10 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       }
       if (this.service && this.options.length === 0) {
         this.cachingService.updateSearchString(searchString);
+        console.log(
+          this.cachingService.currentIndex(),
+          this.cachingService.scrollEnd()
+        )
         if (this.cachingService.shouldUseCachedResults()) {
           return;
         } else {
