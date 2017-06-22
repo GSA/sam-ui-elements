@@ -159,14 +159,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   /***************************************************************
    * Handling key events                                         *
    ***************************************************************/
-  /**
-   * Generic handler for updating service calls and doing other 
-   * checks before passing event to other handlers
-   */
-  mainHandler(event) {
 
-    return event;
-  }
   /**
    * Checks if event code was `Backspace`. Procedure then removes
    * the last selected item if there is no user input in the text
@@ -326,10 +319,12 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * as the content changes.
    */
   applyTextAreaWidth(event) {
-    if(event.key != "ArrowDown" && event.key != "ArrowUp"){
+    if ((event.key !== "ArrowDown" || event.keyIdentified !== 'Down') && 
+       (event.key !== "ArrowUp" || event.keyIdentified !== 'Up')) {
       clearTimeout(this.inputTimer);
       this.inputTimer = setTimeout(this.filterOptions(this.searchText), 250);
     }
+
     this.ref.detectChanges();
 
     event.target.style.width = event.target.value ? this.calculateTextAreaWidth(event.target) : 'initial';
