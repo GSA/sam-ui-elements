@@ -111,9 +111,13 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   CachingService(initialResults?: any, initialSearchString?: any) {
     let cachedResults = initialResults || [];
     let lastSearchedString = initialSearchString || '';
+    let _scrollEnd: number;
+    let _currentIndex: number;
 
     const results = () => { return cachedResults };
-    const lastSearch = () => { return lastSearchedString; }
+    const lastSearch = () => { return lastSearchedString; };
+    const scrollEnd = () => { return _scrollEnd; };
+    const currentIndex = () => { return _currentIndex; };
 
     const updateResults = function(results) {
       cachedResults = results;
@@ -123,9 +127,17 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       lastSearchedString = newSearchString;
     };
 
+    const setScrollEnd = (num: number) => { return _scrollEnd = num; };
+
+    const setCurrentIndex = (num: number) => { return _currentIndex = num; };
+
     const shouldUseCachedResults = function (searchString) {
       if (cachedResults && searchString === lastSearchedString) {
-        return true;
+        if (_currentIndex === _scrollEnd) {
+          return true;
+        } else  {
+          return false
+        }
       } else {
         return false;
       }
@@ -136,14 +148,27 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       updateResults: updateResults,
       lastSearch: lastSearch,
       updateSearchString: updateSearchString,
-      shouldUseCachedResults: shouldUseCachedResults
+      shouldUseCachedResults: shouldUseCachedResults,
+      scrollEnd: scrollEnd,
+      currentIndex: currentIndex,
+      setScrollEnd: setScrollEnd,
+      setCurrentIndex: setCurrentIndex
     }
   }
 
   /***************************************************************
    * Handling key events                                         *
    ***************************************************************/
-
+  /**
+   * Generic handler for updating service calls and doing other 
+   * checks before passing event to other handlers
+   */
+  mainHandler(event) {
+    const results = this.getResults();
+    this.cachingService.setScrollEnd(results.length);
+    
+    return event;
+  }
   /**
    * Checks if event code was `Backspace`. Procedure then removes
    * the last selected item if there is no user input in the text
@@ -277,7 +302,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
         indexToSelect = currentSelectedIndex - 1;
       }
     }
-
+    this.cachingService.setCurrentIndex(indexToSelect);
     this.addSelectedClass(elements, indexToSelect);
     return indexToSelect;
   }
