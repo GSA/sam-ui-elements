@@ -319,8 +319,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   applyTextAreaWidth(event) {
     if ((event.key !== "ArrowDown" || event.keyIdentified !== 'Down') && 
        (event.key !== "ArrowUp" || event.keyIdentified !== 'Up')) {
-      clearTimeout(this.inputTimer);
-      this.inputTimer = setTimeout(this.filterOptions(this.searchText), 250);
+      this.filterOptions(this.searchText);
     }
 
     this.ref.detectChanges();
@@ -455,22 +454,24 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
         if (this.cachingService.shouldUseCachedResults()) {
           return;
         } else {
-          this.service.fetch(searchString, this.cachingService.hasReachedScrollEnd(), options).subscribe(
-            (data) => { 
-              this.list = this.handleEmptyList(this.sortByCategory(data));
-              this.cachingService.updateResults(this.list);
-            },
-            (err) => {
-              const errorObject = {
-                cannotBeSelected: true
-              }
-              errorObject[this.keyValueConfig.valueProperty] = 'An error occurred.';
-              errorObject[this.keyValueConfig.subheadProperty] = 'Please try again.';
-              this.list = this.handleEmptyList(this.sortByCategory([errorObject]));
-              this.cachingService.updateResults([]);
-              return [errorObject];
-            }
-          )
+          clearTimeout(this.inputTimer);
+          this.inputTimer = setTimeout(this.service.fetch(searchString, this.cachingService.hasReachedScrollEnd(), options)
+                            .subscribe(
+                              (data) => { 
+                                this.list = this.handleEmptyList(this.sortByCategory(data));
+                                this.cachingService.updateResults(this.list);
+                              },
+                              (err) => {
+                                const errorObject = {
+                                  cannotBeSelected: true
+                                }
+                                errorObject[this.keyValueConfig.valueProperty] = 'An error occurred.';
+                                errorObject[this.keyValueConfig.subheadProperty] = 'Please try again.';
+                                this.list = this.handleEmptyList(this.sortByCategory([errorObject]));
+                                this.cachingService.updateResults([]);
+                                return [errorObject];
+                              }
+                            ), 250);
           return;
             
         }
