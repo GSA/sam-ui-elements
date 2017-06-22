@@ -111,12 +111,9 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   CachingService(initialResults?: any, initialSearchString?: any) {
     let cachedResults = initialResults || [];
     let lastSearchedString = initialSearchString || '';
-    let timeTracker = Date.now();
-    let _elapsedTime = null;
 
     const results = () => { return cachedResults };
     const lastSearch = () => { return lastSearchedString; }
-    const elapsedTime = () => { return timeTracker; };
 
     const updateResults = function(results) {
       cachedResults = results;
@@ -124,9 +121,6 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
 
     const updateSearchString = function(newSearchString) {
       lastSearchedString = newSearchString;
-      const currentTime = Date.now();
-      _elapsedTime = currentTime - timeTracker;
-      timeTracker = currentTime;
     };
 
     const shouldUseCachedResults = function (searchString) {
@@ -142,8 +136,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       updateResults: updateResults,
       lastSearch: lastSearch,
       updateSearchString: updateSearchString,
-      shouldUseCachedResults: shouldUseCachedResults,
-      elapsedTime: elapsedTime
+      shouldUseCachedResults: shouldUseCachedResults
     }
   }
 
@@ -434,30 +427,28 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
           };
           loadingObject[this.keyValueConfig.valueProperty] = 'Loading...';
           loadingObject[this.keyValueConfig.keyProperty] = '';
-          setTimeout(() => {
-            if (Date.now() - this.cachingService.elapsedTime() > 250) {
-              this.list = this.handleEmptyList(this.sortByCategory([loadingObject]));
 
-              this.service.fetch(searchString, false, options).subscribe(
-                (data) => { 
-                  this.list = this.handleEmptyList(this.sortByCategory(data));
-                  this.cachingService.updateResults(this.list);
-                  console.log('from cached at: ' + Date.now());
-                },
-                (err) => {
-                  const errorObject = {
-                    cannotBeSelected: true
-                  }
-                  errorObject[this.keyValueConfig.valueProperty] = 'An error occurred.';
-                  errorObject[this.keyValueConfig.subheadProperty] = 'Please try again.';
-                  this.list = this.handleEmptyList(this.sortByCategory([errorObject]));
-                  this.cachingService.updateResults([]);
-                  return [errorObject];
-                }
-              )
-              return;
+          this.list = this.handleEmptyList(this.sortByCategory([loadingObject]));
+
+          this.service.fetch(searchString, false, options).subscribe(
+            (data) => { 
+              this.list = this.handleEmptyList(this.sortByCategory(data));
+              this.cachingService.updateResults(this.list);
+              console.log('from cached at: ' + Date.now());
+            },
+            (err) => {
+              const errorObject = {
+                cannotBeSelected: true
+              }
+              errorObject[this.keyValueConfig.valueProperty] = 'An error occurred.';
+              errorObject[this.keyValueConfig.subheadProperty] = 'Please try again.';
+              this.list = this.handleEmptyList(this.sortByCategory([errorObject]));
+              this.cachingService.updateResults([]);
+              return [errorObject];
             }
-          }, 0);
+          )
+          return;
+            
         }
       } else {
         this.list = this.options.filter((option) => {
