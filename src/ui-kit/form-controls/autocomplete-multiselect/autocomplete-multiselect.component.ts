@@ -235,11 +235,10 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   handleDownArrow(event) {
     if ( event.code === 'ArrowDown' || event.keyIdentified === 'Down' ) {
       const results = this.getResults();
-      const selectedIndex = this.getSelectedChildIndex(results);
-      this.setSelectedChild(selectedIndex,
+      this.setSelectedChild(this.getSelectedChildIndex(results),
                                 'Down',
                                 results);
-      this.updateCachingServiceIndices(selectedIndex, results.length);
+      this.updateCachingServiceIndices(this.getSelectedChildIndex(results), results.length);
     }
 
     return event;
@@ -248,11 +247,10 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   handleUpArrow(event) {
     if ( event.code === 'ArrowUp' || event.keyIdentified === 'Up' ) {
       const results = this.getResults();
-      const selectedIndex = this.getSelectedChildIndex(results);
-      this.setSelectedChild(selectedIndex,
+      this.setSelectedChild(this.getSelectedChildIndex(results),
                                  'Up',
                                  results);
-      this.updateCachingServiceIndices(selectedIndex, results.length);
+      this.updateCachingServiceIndices(this.getSelectedChildIndex(results), results.length);
     }
 
     return event;
