@@ -86,6 +86,32 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     this.list = this.sortByCategory(this.list);
   }
 
+  cachingService(initialResults, initialSearchString) {
+    let cachedResults = initialResults || [];
+    let lastSearchedString = initialSearchString || '';
+
+    const updateResults = function(results) {
+      cachedResults = results;
+    };
+    const updateSearchString = function(newSearchString) {
+      lastSearchedString = newSearchString;
+    };
+
+    const shouldUseCachedResults = function (searchString) {
+      if (cachedResults && searchString === lastSearchedString) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    return {
+      updateResults: updateResults,
+      updateSearchString: updateSearchString,
+      shouldUseCachedResults: shouldUseCachedResults
+    }
+  }
+
   /***************************************************************
    * Handling key events                                         *
    ***************************************************************/
@@ -354,12 +380,9 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     const availableCategories = [];
     if (searchString) {
       searchString = searchString.toLowerCase();
-
       if (this.service && this.options.length === 0) {
         this.service.fetch(searchString, false).subscribe(
           (data) => { 
-            console.log(this.sortByCategory(data));
-            
             this.list = this.handleEmptyList(this.sortByCategory(data));
           },
           (err) => {
