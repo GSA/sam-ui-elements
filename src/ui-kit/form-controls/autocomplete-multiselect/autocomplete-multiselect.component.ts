@@ -457,7 +457,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
               )
               return;
             }
-          }, 250);
+          }, 0);
         }
       } else {
         this.list = this.options.filter((option) => {
