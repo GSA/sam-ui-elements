@@ -422,14 +422,6 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
         if (this.cachingService.shouldUseCachedResults()) {
           return;
         } else {
-          const loadingObject = {
-            cannotBeSelected: true
-          };
-          loadingObject[this.keyValueConfig.valueProperty] = 'Loading...';
-          loadingObject[this.keyValueConfig.keyProperty] = '';
-
-          this.list = this.handleEmptyList(this.sortByCategory([loadingObject]));
-
           this.service.fetch(searchString, false, options).subscribe(
             (data) => { 
               this.list = this.handleEmptyList(this.sortByCategory(data));
@@ -592,7 +584,6 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   selectItem(item): void {
     if (item && !item.cannotBeSelected) {
       const tmpArray = this.value.slice();
-      console.log('Value of tmpArray: ', tmpArray);
       let findVal = tmpArray.find((el) => {
         return el == item;
       });
