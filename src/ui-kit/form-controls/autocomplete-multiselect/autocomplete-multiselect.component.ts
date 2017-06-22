@@ -421,11 +421,17 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
         if (this.cachingService.shouldUseCachedResults()) {
           return;
         } else {
+          const loadingObject = {};
+          loadingObject[this.keyValueConfig.valueProperty] = 'Loading...';
+          loadingObject[this.keyValueConfig.keyProperty] = '';
+
+          this.list = this.handleEmptyList(this.sortByCategory([loadingObject]));
+
           this.service.fetch(searchString, false, options).subscribe(
             (data) => { 
               this.list = this.handleEmptyList(this.sortByCategory(data));
               this.cachingService.updateResults(this.list);
-              console.log('from cached', this.cachingService.results());
+              console.log('from cached at: ' + Date.now());
             },
             (err) => {
               const errorObject = {
@@ -433,6 +439,8 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
               }
               errorObject[this.keyValueConfig.valueProperty] = 'An error occurred.';
               errorObject[this.keyValueConfig.subheadProperty] = 'Please try again.';
+              this.list = this.handleEmptyList(this.sortByCategory([errorObject]));
+              this.cachingService.updateResults([]);
               return [errorObject];
             }
           )
