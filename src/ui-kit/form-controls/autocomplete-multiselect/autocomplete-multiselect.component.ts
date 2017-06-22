@@ -1,5 +1,6 @@
 import { Component, Input, ViewChild, ElementRef, ChangeDetectorRef, Optional, forwardRef} from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import { LabelWrapper } from '../../wrappers/label-wrapper';
 
 import { AutocompleteService } from '../autocomplete/autocomplete.service';
 
@@ -17,9 +18,10 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   @ViewChild('textArea') textArea: ElementRef;
   @ViewChild('hiddenText') hiddenText: ElementRef;
   @ViewChild('resultsList') resultsList: ElementRef;
+  @ViewChild(LabelWrapper) wrapper: LabelWrapper;
 
   /**
-   * Options should be an array of objects that contain the key value pairs to be 
+   * Options should be an array of objects that contain the key value pairs to be
    * used to select in the component.
    */
   @Input() options: Array<any> = [];
@@ -28,6 +30,10 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * should be used to display the key, value, and subhead properties in the list.
    */
   @Input() keyValueConfig: KeyValueConfig = { keyProperty: 'key', valueProperty: 'value', parentCategoryProperty: 'category' };
+  /**
+   * Used when a service is used to get autocomplete options
+   */
+  @Input() serviceOptions: any;
   /**
    * Used by labelWrapper. Makes field required and displays required on label.
    * See labelWrapper for more detail.
@@ -49,10 +55,15 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    */
   @Input() name: string;
   /**
+   * Used by labelWrapper. Passes in a Form Control to display error messages
+   * See labelWrapper for more detail.
+   */
+  @Input() control: FormControl;
+  /**
    * Provides an array of categories for selection
    * when also setting categoryIsSelectable property
    * to true.
-   * 
+   *
    * The array should be the object for the category
    * to be selected.
    */
@@ -84,6 +95,14 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
 
   ngOnInit() {
     this.list = this.sortByCategory(this.list);
+    if(!this.control){
+      return;
+    }
+    this.control.valueChanges.subscribe(()=>{
+      this.wrapper.formatErrors(this.control);
+    });
+
+    this.wrapper.formatErrors(this.control);
   }
 
   cachingService(initialResults, initialSearchString) {
@@ -380,11 +399,18 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     const availableCategories = [];
     if (searchString) {
       searchString = searchString.toLowerCase();
+      // if (this.service && this.options.length === 0) {
+      //   this.service.fetch(searchString, false).subscribe(
+      //     (data) => { 
+      //       this.list = this.handleEmptyList(this.sortByCategory(data));
+      //     },
+      let options = null;
+      if (this.serviceOptions) {
+        options = this.serviceOptions || null;
+      }
       if (this.service && this.options.length === 0) {
-        this.service.fetch(searchString, false).subscribe(
-          (data) => { 
-            this.list = this.handleEmptyList(this.sortByCategory(data));
-          },
+        this.service.fetch(searchString, false, options).subscribe(
+          (data) => { this.list = this.handleEmptyList(this.sortByCategory(data)); },
           (err) => {
             const errorObject = {
               cannotBeSelected: true
@@ -394,10 +420,11 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
             return [errorObject];
           }
         )
+        return;
       } else {
         this.list = this.options.filter((option) => {
           if (this.categoryIsSelectable) {
-            if (option[this.keyValueConfig.categoryProperty] && 
+            if (option[this.keyValueConfig.categoryProperty] &&
                 option[this.keyValueConfig.categoryProperty].toLowerCase().includes(searchString) &&
                 availableCategories.indexOf(option[this.keyValueConfig.categoryProperty]) === -1
                 ) {
@@ -427,19 +454,19 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   }
 
   /**
-   * Procedure to check this.list for categories 
+   * Procedure to check this.list for categories
    * and sort data by category
    */
   sortByCategory(results: Array<any>): Array<any> {
     /**
      * Initializes a data structure to sort data by categories.
-     * Object works like an associative array with additional 
+     * Object works like an associative array with additional
      * properties to support the ui layer and component logic.
-     * 
+     *
      * Each category is stored in the categories array property
      * and is given a corresponding property number to match
      * its position in the categories array.
-     * 
+     *
      * totalItems is a method that counts the total number of
      * items in each category in lieu of a length property
      * for the entire data structure.
@@ -596,7 +623,10 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    ***************************************************************/
 
   writeValue(value: any) {
-    this.value = value;
+    if(!value){
+      value = [];
+    }
+    this.innerValue = value;
   }
 
   registerOnChange(fn: any) {
