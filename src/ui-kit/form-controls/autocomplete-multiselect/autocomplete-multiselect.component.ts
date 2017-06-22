@@ -130,14 +130,12 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     const setScrollEnd = (num: number) => { return _scrollEnd = num; };
 
     const setCurrentIndex = (num: number) => { return _currentIndex = num; };
+    
+    const hasReachedScrollEnd = (): boolean => { return _scrollEnd === _currentIndex; }
 
     const shouldUseCachedResults = function (searchString) {
       if (cachedResults && searchString === lastSearchedString) {
-        if (_currentIndex === _scrollEnd) {
-          return false;
-        } else  {
-          return true;
-        }
+        return true;
       } else {
         return false;
       }
@@ -149,6 +147,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       lastSearch: lastSearch,
       updateSearchString: updateSearchString,
       shouldUseCachedResults: shouldUseCachedResults,
+      hasReachedScrollEnd: hasReachedScrollEnd,
       scrollEnd: scrollEnd,
       currentIndex: currentIndex,
       setScrollEnd: setScrollEnd,
@@ -168,7 +167,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       const results = this.getResults();
       this.cachingService.setScrollEnd(results.length);
     }
-    
+
     return event;
   }
   /**
@@ -449,11 +448,10 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
         if (this.cachingService.shouldUseCachedResults()) {
           return;
         } else {
-          this.service.fetch(searchString, false, options).subscribe(
+          this.service.fetch(searchString, this.cachingService.hasReachedScrollEnd(), options).subscribe(
             (data) => { 
               this.list = this.handleEmptyList(this.sortByCategory(data));
               this.cachingService.updateResults(this.list);
-              console.log('from cached at: ' + Date.now());
             },
             (err) => {
               const errorObject = {
