@@ -164,8 +164,10 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * checks before passing event to other handlers
    */
   mainHandler(event) {
-    const results = this.getResults();
-    this.cachingService.setScrollEnd(results.length);
+    if (this.resultsList) {
+      const results = this.getResults();
+      this.cachingService.setScrollEnd(results.length);
+    }
     
     return event;
   }
