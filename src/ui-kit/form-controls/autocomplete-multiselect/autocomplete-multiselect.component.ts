@@ -458,7 +458,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
                                 this.cachingService.updateResults([]);
                                 return [errorObject];
                               }
-                            ), 250);
+                            ), 400);
           return;
             
         }
