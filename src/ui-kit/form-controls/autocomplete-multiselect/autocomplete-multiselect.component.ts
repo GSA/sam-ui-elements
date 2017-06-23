@@ -317,7 +317,8 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * as the content changes.
    */
   applyTextAreaWidth(event) {
-    if ( event.key != "ArrowDown" || event.key != "ArrowUp" ) {
+    
+    if ( event.key !== "ArrowDown" || event.key !== "ArrowUp" ) {
       console.log('Key: ', event.key);
       this.filterOptions(this.searchText);
     }
