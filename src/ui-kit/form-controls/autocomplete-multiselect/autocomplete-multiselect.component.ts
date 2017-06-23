@@ -319,6 +319,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   applyTextAreaWidth(event) {
     if ((event.key !== "ArrowDown" || event.keyIdentified !== 'Down') || 
        (event.key !== "ArrowUp" || event.keyIdentified !== 'Up')) {
+      console.log(this.resultsList);
       this.filterOptions(this.searchText);
     }
 
@@ -327,10 +328,6 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     event.target.style.width = event.target.value ? this.calculateTextAreaWidth(event.target) : 'initial';
 
     return event;
-  }
-
-  createTimer() {
-    setTimeout(() => {}, 250);
   }
 
   /**
@@ -436,11 +433,6 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     const availableCategories = [];
     if (searchString) {
       searchString = searchString.toLowerCase();
-      // if (this.service && this.options.length === 0) {
-      //   this.service.fetch(searchString, false).subscribe(
-      //     (data) => { 
-      //       this.list = this.handleEmptyList(this.sortByCategory(data));
-      //     },
       let options = null;
       if (this.serviceOptions) {
         options = this.serviceOptions || null;
