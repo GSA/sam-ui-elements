@@ -604,10 +604,12 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   selectItem(item): void {
     if (item && !item.cannotBeSelected) {
       const tmpArray = this.value.slice();
-      let findVal = tmpArray.find((el) => {
-        return el == item;
-      });
-      if (!findVal) {
+      const filteredItems = this.value.filter((selectedItem) => {
+        if (selectedItem[this.keyValueConfig.keyProperty] === item[this.keyValueConfig.keyProperty]) {
+          return item;
+        }
+      })
+      if (filteredItems.length === 0) {
         tmpArray.push(item);
         this.value = tmpArray;
       }
