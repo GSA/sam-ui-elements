@@ -1,4 +1,4 @@
-import {Component, Input, Output, ViewChild, EventEmitter, forwardRef} from '@angular/core';
+import {Component, Input, Output, ViewChild, EventEmitter, forwardRef, AfterViewInit} from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { OptionsType } from '../../types';
 import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor, Validators} from "@angular/forms";
@@ -18,7 +18,7 @@ const MY_VALUE_ACCESSOR: any = {
   templateUrl: 'select.template.html',
   providers: [MY_VALUE_ACCESSOR]
 })
-export class SamSelectComponent implements ControlValueAccessor {
+export class SamSelectComponent implements ControlValueAccessor, AfterViewInit {
   /**
   * Sets the bound value of the component
   */
@@ -77,11 +77,13 @@ export class SamSelectComponent implements ControlValueAccessor {
       return;
     }
 
-    this.control.valueChanges.subscribe(()=>{
+    this.control.statusChanges.subscribe(()=>{
       this.wrapper.formatErrors(this.control);
     });
-    
-    this.wrapper.formatErrors(this.control);
+
+    setTimeout(() => {
+      this.wrapper.formatErrors(this.control);
+    });
   }
 
   onSelectChange(val) {
