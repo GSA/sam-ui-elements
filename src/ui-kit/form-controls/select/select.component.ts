@@ -1,7 +1,7 @@
-import {Component, Input, Output,ChangeDetectorRef, ViewChild, EventEmitter, forwardRef, AfterViewInit} from '@angular/core';
+import { Component, Input, Output,ChangeDetectorRef, ViewChild, EventEmitter, forwardRef, AfterViewInit } from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { OptionsType } from '../../types';
-import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor, Validators} from "@angular/forms";
+import { FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 
 const noop = () => {};
 const MY_VALUE_ACCESSOR: any = {

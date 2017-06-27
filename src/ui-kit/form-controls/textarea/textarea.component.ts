@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, forwardRef, Output, EventEmitter } from '@angular/core';
+import { Component, Input, ViewChild, forwardRef, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, Validators, FormControl } from "@angular/forms";
 
@@ -69,7 +69,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
 
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
 
-  constructor() {
+  constructor(private cdr: ChangeDetectorRef) {
 
   }
 
@@ -96,7 +96,14 @@ export class SamTextareaComponent implements ControlValueAccessor {
     this.control.statusChanges.subscribe(() => {
       this.wrapper.formatErrors(this.control);
     });
+  }
+
+  ngAfterViewInit(){
+    if (!this.control) {
+      return;
+    }
     this.wrapper.formatErrors(this.control);
+    this.cdr.detectChanges();
   }
 
   onFocus($event) {

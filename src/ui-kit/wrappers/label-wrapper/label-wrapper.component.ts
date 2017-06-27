@@ -83,7 +83,6 @@ export class LabelWrapper implements AfterViewChecked{
   }
 
   formatErrors(control: AbstractControl) {
-    console.log('formatting');
     if (!control) {
       return;
     }
@@ -113,14 +112,11 @@ export class LabelWrapper implements AfterViewChecked{
             } else {
               this.errorMessage = 'Invalid';
             }
-            console.log(this.errorMessage, control);
             return;
         }
       }
     } else if (control.valid) {
       this.errorMessage = '';
     }
-
-    console.log(this.errorMessage, 'formatting end');
   }
 }
