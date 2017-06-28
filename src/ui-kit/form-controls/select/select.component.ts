@@ -1,7 +1,7 @@
-import {Component, Input, Output, ViewChild, EventEmitter, forwardRef} from '@angular/core';
+import { Component, Input, Output,ChangeDetectorRef, ViewChild, EventEmitter, forwardRef, AfterViewInit } from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { OptionsType } from '../../types';
-import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor, Validators} from "@angular/forms";
+import { FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 
 const noop = () => {};
 const MY_VALUE_ACCESSOR: any = {
@@ -18,7 +18,7 @@ const MY_VALUE_ACCESSOR: any = {
   templateUrl: 'select.template.html',
   providers: [MY_VALUE_ACCESSOR]
 })
-export class SamSelectComponent implements ControlValueAccessor {
+export class SamSelectComponent implements ControlValueAccessor, AfterViewInit {
   /**
   * Sets the bound value of the component
   */
@@ -66,7 +66,7 @@ export class SamSelectComponent implements ControlValueAccessor {
   @ViewChild("select")
   public select: any;
 
-  constructor() { }
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     if (!this.name) {
@@ -77,11 +77,17 @@ export class SamSelectComponent implements ControlValueAccessor {
       return;
     }
 
-    this.control.valueChanges.subscribe(()=>{
+    this.control.statusChanges.subscribe(()=>{
       this.wrapper.formatErrors(this.control);
     });
-    
+  }
+
+  ngAfterViewInit(){
+    if (!this.control) {
+      return;
+    }
     this.wrapper.formatErrors(this.control);
+    this.cdr.detectChanges();
   }
 
   onSelectChange(val) {
