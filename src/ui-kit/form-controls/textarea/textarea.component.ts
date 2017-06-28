@@ -87,7 +87,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
     if(this.control.validator){
       validators.push(this.control.validator);
     }
-    /*
+
     if (this.required) {
       validators.push(Validators.required);
     }
@@ -95,7 +95,6 @@ export class SamTextareaComponent implements ControlValueAccessor {
     if (this.maxlength) {
       validators.push(Validators.maxLength(this.maxlength));
     }
-    */
 
     this.control.setValidators(validators);
     this.control.statusChanges.subscribe(() => {
