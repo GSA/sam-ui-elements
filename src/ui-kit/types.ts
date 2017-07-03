@@ -77,6 +77,16 @@ export interface HistoryNodeType {
    * Optional aria label value for node
    */
   ariaLabel?: string;
+
+  /**
+   * Optional submitter value for node
+   */
+  submitter?: string;
+
+  /**
+   * Optional comment value for node
+   */
+  comment?: string;
 }
 
 // Autocomplete Config Interfaces
