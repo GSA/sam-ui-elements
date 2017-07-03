@@ -87,6 +87,11 @@ export interface HistoryNodeType {
    * Optional comment value for node
    */
   comment?: string;
+
+  /**
+   * Optional title change, number change or agency change value for node
+   */
+  titleNumberAgency?: string;
 }
 
 // Autocomplete Config Interfaces
