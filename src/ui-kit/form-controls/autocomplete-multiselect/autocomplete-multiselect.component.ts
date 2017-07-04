@@ -72,6 +72,15 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * Provides the option to allow categories to be selected
    */
   @Input() categoryIsSelectable: boolean = false;
+  /**
+   * Optional: Provides a default search string to use with service
+   * in lieu of sending an empty string. If not provided, value
+   * defaults to an empty string.
+   * 
+   * Example:
+   * this.autocompleteService.fetch(this.defaultSearchString, pageEnd, options)
+   */
+  @Input() defaultSearchString: string = '';
 
   public searchText: string;
 
@@ -430,63 +439,72 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    */
   filterOptions(searchString: string) {
     const availableCategories = [];
-      searchString = searchString.toLowerCase();
-      let options = null;
-      if (this.serviceOptions) {
-        options = this.serviceOptions || null;
-      }
-      if (this.service && this.options.length === 0) {
-        this.cachingService.updateSearchString(searchString);
-        if (this.cachingService.shouldUseCachedResults()) {
-          return;
-        } else {
-          clearTimeout(this.inputTimer);
-          this.inputTimer = setTimeout(this.service.fetch(searchString, this.cachingService.hasReachedScrollEnd(), options)
-                            .subscribe(
-                              (data) => { 
-                                this.list = this.handleEmptyList(this.sortByCategory(data));
-                                this.cachingService.updateResults(this.list);
-                              },
-                              (err) => {
-                                const errorObject = {
-                                  cannotBeSelected: true
-                                }
-                                errorObject[this.keyValueConfig.valueProperty] = 'An error occurred.';
-                                errorObject[this.keyValueConfig.subheadProperty] = 'Please try again.';
-                                this.list = this.handleEmptyList(this.sortByCategory([errorObject]));
-                                this.cachingService.updateResults([]);
-                                return [errorObject];
-                              }
-                            ), 400);
-          return;
-            
-        }
+    // Checks if searchString is empty
+    // If so, use defaultSearchString
+    // If value is unset, defaultSearchString
+    // is initialized to empty string
+    if (searchString === '') {
+      searchString = this.defaultSearchString;
+    }
+    // Sets strig to lowercase for case-insensitive
+    // matching in filter function.
+    searchString = searchString.toLowerCase();
+    
+    let options = null;
+    if (this.serviceOptions) {
+      options = this.serviceOptions || null;
+    }
+    if (this.service && this.options.length === 0) {
+      this.cachingService.updateSearchString(searchString);
+      if (this.cachingService.shouldUseCachedResults()) {
+        return;
       } else {
-        this.list = this.options.filter((option) => {
-          if (this.categoryIsSelectable) {
-            if (option[this.keyValueConfig.categoryProperty] &&
-                option[this.keyValueConfig.categoryProperty].toLowerCase().includes(searchString) &&
-                availableCategories.indexOf(option[this.keyValueConfig.categoryProperty]) === -1
-                ) {
-              availableCategories.push(option[this.keyValueConfig.categoryProperty]);
-            }
+        clearTimeout(this.inputTimer);
+        this.inputTimer = setTimeout(this.service.fetch(searchString, this.cachingService.hasReachedScrollEnd(), options)
+                          .subscribe(
+                            (data) => { 
+                              this.list = this.handleEmptyList(this.sortByCategory(data));
+                              this.cachingService.updateResults(this.list);
+                            },
+                            (err) => {
+                              const errorObject = {
+                                cannotBeSelected: true
+                              }
+                              errorObject[this.keyValueConfig.valueProperty] = 'An error occurred.';
+                              errorObject[this.keyValueConfig.subheadProperty] = 'Please try again.';
+                              this.list = this.handleEmptyList(this.sortByCategory([errorObject]));
+                              this.cachingService.updateResults([]);
+                              return [errorObject];
+                            }
+                          ), 400);
+        return;
+          
+      }
+    } else {
+      this.list = this.options.filter((option) => {
+        if (this.categoryIsSelectable) {
+          if (option[this.keyValueConfig.categoryProperty] &&
+              option[this.keyValueConfig.categoryProperty].toLowerCase().includes(searchString) &&
+              availableCategories.indexOf(option[this.keyValueConfig.categoryProperty]) === -1
+              ) {
+            availableCategories.push(option[this.keyValueConfig.categoryProperty]);
           }
-          if ( option[this.keyValueConfig.keyProperty].toLowerCase().includes(searchString) ||
-                option[this.keyValueConfig.valueProperty].toLowerCase().includes(searchString) ) {
-            return option;
+        }
+        if ( option[this.keyValueConfig.keyProperty].toLowerCase().includes(searchString) ||
+              option[this.keyValueConfig.valueProperty].toLowerCase().includes(searchString) ) {
+          return option;
+        }
+      });
+      this.list = this.sortByCategory(this.list);
+      if (this.categoryIsSelectable) {
+        availableCategories.forEach((category) => {
+          if (this.list.categories.indexOf(category) === -1) {
+            this.list.categories.push(category);
           }
         });
-        console.log(this.list);
-        this.list = this.sortByCategory(this.list);
-        if (this.categoryIsSelectable) {
-          availableCategories.forEach((category) => {
-            if (this.list.categories.indexOf(category) === -1) {
-              this.list.categories.push(category);
-            }
-          });
-        }
-        this.list = this.handleEmptyList(this.list);
       }
+      this.list = this.handleEmptyList(this.list);
+    }
 
     return this.list;
   }
