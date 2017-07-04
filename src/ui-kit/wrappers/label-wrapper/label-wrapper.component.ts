@@ -54,7 +54,7 @@ export class LabelWrapper implements AfterViewChecked{
       }
     }
   }
-  
+
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     //needs to be open to recalc correctly in ngAfterViewChecked

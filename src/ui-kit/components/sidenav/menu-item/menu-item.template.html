@@ -2,7 +2,7 @@
   <li *ngFor="let child of children; let $index = index;">
     <a tabindex="0" (click)="updateUI($index, $event)" (keyup.enter)="updateUI($index, $event)"
       [ngClass]="{'usa-current': isSelected($index)}">
-      {{child.label}}
+      {{child.label}} <ng-container *ngIf="child?.iconClass"> <i [ngClass]="child.iconClass"></i></ng-container>
     </a>
     <sam-menu-item *ngIf="isSelected($index)"
                  [nodeDepth]="nodeDepth + 1"
