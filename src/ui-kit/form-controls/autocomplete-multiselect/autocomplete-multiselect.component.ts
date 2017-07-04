@@ -430,7 +430,6 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    */
   filterOptions(searchString: string) {
     const availableCategories = [];
-    if (searchString) {
       searchString = searchString.toLowerCase();
       let options = null;
       if (this.serviceOptions) {
@@ -477,6 +476,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
             return option;
           }
         });
+        console.log(this.list);
         this.list = this.sortByCategory(this.list);
         if (this.categoryIsSelectable) {
           availableCategories.forEach((category) => {
@@ -487,9 +487,6 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
         }
         this.list = this.handleEmptyList(this.list);
       }
-    } else {
-      this.list = this.handleEmptyList(this.sortByCategory([]));
-    }
 
     return this.list;
   }
@@ -571,9 +568,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   }
 
   displayList(): boolean {
-    if (!this.searchText) {
-      return false;
-    } else if (this.list && this.list.categories) {
+    if (this.list && this.list.categories) {
       if (this.list.categories.length > 1) {
         return true;
       } else if (this.list.categories.length === 1 && (this.list[0] && this.list[0].length > 0)) {

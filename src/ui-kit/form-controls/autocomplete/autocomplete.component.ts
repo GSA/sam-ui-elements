@@ -494,9 +494,8 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   inputFocusHandler(evt){
     this.onTouchedCallback();
     this.hasFocus = true;
-    if(evt.target.value || (this.config && this.config.showOnEmptyInput)){
-      this.onKeyup(evt);
-    }
+    this.onKeyup(evt);
+    return evt;
   }
 
   clearInput(){
