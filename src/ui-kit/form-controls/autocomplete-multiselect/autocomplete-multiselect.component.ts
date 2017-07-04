@@ -77,6 +77,10 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * in lieu of sending an empty string. If not provided, value
    * defaults to an empty string.
    * 
+   * WARNING: If your service overrides or manipulates the value
+   * passed to the fetch method, providing a default search string
+   * on the component may not produce the expected results.
+   * 
    * Example:
    * this.autocompleteService.fetch(this.defaultSearchString, pageEnd, options)
    */
@@ -449,7 +453,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     // Sets strig to lowercase for case-insensitive
     // matching in filter function.
     searchString = searchString.toLowerCase();
-    
+
     let options = null;
     if (this.serviceOptions) {
       options = this.serviceOptions || null;
