@@ -12,7 +12,7 @@
                     (tabOutside)="checkForFocus($event)">
     
     <div class="sam-autocomplete-multiselect-input" 
-        [ngClass]="{ 'active': displayList(), 'focused': textAreaFocused }">
+        [ngClass]="{ 'active': displayList() }">
         
         <div class="sam-ui mini label" 
             *ngFor="let item of value" 
@@ -31,12 +31,12 @@
         <textarea #textArea rows="1" 
                   [(ngModel)]="searchText" 
                   (input)="applyTextAreaWidth($event)" 
-                  (focus)="textAreaFocus()" 
-                  (blur)="textAreaBlur()" 
                   (keydown)="handleUpArrow(handleDownArrow(handleBackspaceEvent(handleEnterEvent($event))))"
                   (keyup)="applyTextAreaWidth(selectOnEnter(handleEnterEvent($event)))"
-                  [disabled]="isDisabled">
+                  [disabled]="isDisabled"
+                  (focus)="filterOptions('')" >
         </textarea>
+
         
         <!-- Hidden span used to approximate the width of the content in the text area.
             This helps us calculate when the textArea should be on the same row as the
