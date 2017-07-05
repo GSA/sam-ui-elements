@@ -15,7 +15,7 @@
                   (keydown)="handleUpArrow(handleDownArrow(handleBackspaceEvent(handleEnterEvent($event))))"
                   (keyup)="applyTextAreaWidth(selectOnEnter(handleEnterEvent($event)))"
                   [disabled]="isDisabled"
-                  ></textarea>
+                  (focus)="filterOptions('')"></textarea>
         
         <!-- Hidden span used to approximate the width of the content in the text area.
             This helps us calculate when the textArea should be on the same row as the

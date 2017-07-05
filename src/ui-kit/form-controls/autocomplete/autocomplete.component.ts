@@ -68,6 +68,19 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   */
   @Input() public control: FormControl;
   /**
+   * Optional: Provides a default search string to use with service
+   * in lieu of sending an empty string. If not provided, value
+   * defaults to an empty string.
+   * 
+   * WARNING: If your service overrides or manipulates the value
+   * passed to the fetch method, providing a default search string
+   * on the component may not produce the expected results.
+   * 
+   * Example:
+   * this.autocompleteService.fetch(this.defaultSearchString, pageEnd, options)
+   */
+  @Input() public defaultSearchString: string = '';
+  /**
   * Sets the required text in the label wrapper
   */
   @Input() public required: boolean;
@@ -144,7 +157,13 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   }
 
   onKeyup(event: any) {
-    if((event.code === 'Tab' || event.keyIdentifier === 'Tab') && !this.inputValue && (!this.config || this.config && !this.config.showOnEmptyInput)){
+    // If event.target.name is an empty string, set search string to default search string
+    const searchString = event.target.name === '' ? this.defaultSearchString : event.target.value;
+
+    // if((event.code === 'Tab' || event.keyIdentifier === 'Tab') && !this.inputValue && (!this.config || this.config && !this.config.showOnEmptyInput)){
+    //   return;
+    // }
+    if((event.code === 'Tab' || event.keyIdentifier === 'Tab')){
       return;
     }
     if ((event.code === 'Backspace' || event.keyIdentifier === 'Backspace')
@@ -158,25 +177,25 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       }
     }
 
-    if ((this.lastSearchedValue !== event.target.value) && (event.target.value !== '')) {
+    if ((this.lastSearchedValue !== searchString)) {
       this.results = null;
       this.filteredKeyValuePairs = null;
       this.endOfList = true;
-      this.lastSearchedValue = event.target.value;
+      this.lastSearchedValue = searchString;
     }
 
     if (this.options && this.isKeyValuePair(this.options)) {
-      this.filteredKeyValuePairs = this.filterKeyValuePairs(event.target.value, this.options);
+      this.filteredKeyValuePairs = this.filterKeyValuePairs(searchString, this.options);
       this.pushSROnlyMessage(this.filteredKeyValuePairs.length + this.resultsAvailable);
     } else if (this.options && !this.isKeyValuePair(this.options)) {
-      this.results = this.filterResults(event.target.value, this.options);
+      this.results = this.filterResults(searchString, this.options);
       this.pushSROnlyMessage(this.results.length + this.resultsAvailable);
     } else if (this.endOfList) {
       let options = null;
       if (this.config) {
         options = this.config.serviceOptions || null;
       }
-      this.autocompleteService.fetch(event.target.value, this.endOfList, options).subscribe(
+      this.autocompleteService.fetch(searchString, this.endOfList, options).subscribe(
         (data) => {
           this.hasServiceError = false;
           if (this.isKeyValuePair(data)) {
@@ -494,9 +513,8 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   inputFocusHandler(evt){
     this.onTouchedCallback();
     this.hasFocus = true;
-    if(evt.target.value || (this.config && this.config.showOnEmptyInput)){
-      this.onKeyup(evt);
-    }
+    this.onKeyup(evt);
+    return evt;
   }
 
   clearInput(){
