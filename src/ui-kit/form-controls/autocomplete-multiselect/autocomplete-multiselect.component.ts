@@ -334,7 +334,6 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     if ( event.code !== "ArrowDown" && event.code !== "ArrowUp" ) {
       this.filterOptions(this.searchText);
     }
-
     this.ref.detectChanges();
 
     event.target.style.width = event.target.value ? this.calculateTextAreaWidth(event.target) : 'initial';
