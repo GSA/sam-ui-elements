@@ -248,10 +248,13 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   handleDownArrow(event) {
     if ( event.code === 'ArrowDown' || event.keyIdentified === 'Down' ) {
       const results = this.getResults();
-      this.setSelectedChild(this.getSelectedChildIndex(results),
+      const selectedIndex = this.setSelectedChild(this.getSelectedChildIndex(results),
                                 'Down',
                                 results);
       this.updateCachingServiceIndices(this.getSelectedChildIndex(results), results.length);
+
+
+      this.resultsList.nativeElement.scrollTop = (results[selectedIndex].offsetParent.offsetParent.offsetTop + results[selectedIndex].offsetTop) - this.resultsList.nativeElement.clientTop;
     }
 
     return event;
@@ -260,10 +263,12 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   handleUpArrow(event) {
     if ( event.code === 'ArrowUp' || event.keyIdentified === 'Up' ) {
       const results = this.getResults();
-      this.setSelectedChild(this.getSelectedChildIndex(results),
+      const selectedIndex = this.setSelectedChild(this.getSelectedChildIndex(results),
                                  'Up',
                                  results);
       this.updateCachingServiceIndices(this.getSelectedChildIndex(results), results.length);
+
+      this.resultsList.nativeElement.scrollTop = (results[selectedIndex].offsetParent.offsetParent.offsetTop + results[selectedIndex].offsetTop) - this.resultsList.nativeElement.clientTop;
     }
 
     return event;
