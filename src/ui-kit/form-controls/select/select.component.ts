@@ -1,4 +1,4 @@
-import { Component, Input, Output,ChangeDetectorRef, ViewChild, EventEmitter, forwardRef, AfterViewInit } from '@angular/core';
+import { Component, Input, Output,ChangeDetectorRef, Optional, ViewChild, EventEmitter, forwardRef, AfterViewInit } from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { OptionsType } from '../../types';
 import { FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
@@ -66,7 +66,7 @@ export class SamSelectComponent implements ControlValueAccessor, AfterViewInit {
   @ViewChild("select")
   public select: any;
 
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor(@Optional() private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     if (!this.name) {
