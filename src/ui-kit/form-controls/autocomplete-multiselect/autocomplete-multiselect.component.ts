@@ -4,11 +4,43 @@ import { LabelWrapper } from '../../wrappers/label-wrapper';
 
 import { AutocompleteService } from '../autocomplete/autocomplete.service';
 
+import { trigger, state, style, transition, animate, keyframes } from '@angular/core';
+
 @Component({
   selector: 'sam-autocomplete-multiselect',
   templateUrl: 'autocomplete-multiselect.template.html',
   providers: [
     { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SamAutocompleteMultiselectComponent), multi: true}
+  ],
+  animations: [
+    trigger('dropdown', [
+      transition('void => *', [
+        animate('.15s ease-in-out', keyframes([
+          style({filter:'blur(3px)', height: '0', opacity: '0.5',  offset: 0}),
+          style({filter:'blur(0px)', height: '*', opacity: '1',  offset: 1.0})
+        ]))
+      ]),
+      transition('* => void', [
+        animate('.1s ease-out', keyframes([
+          style({height: '*', opacity: '1', offset: 0}),
+          style({height: '0', opacity: '0', offset: 1.0})
+        ]))
+      ])
+    ]),
+    trigger('label', [
+      transition('void => *', [
+        animate('.15s ease-in-out', keyframes([
+          style({transform: 'scale(0)', filter:'blur(3px)', opacity: '0.5',  offset: 0}),
+          style({transform: 'scale(1)', filter:'blur(0px)', opacity: '1',  offset: 1.0})
+        ]))
+      ]),
+      transition('* => void', [
+        animate('.1s ease-out', keyframes([
+          style({filter:'blur(0px)', opacity: '1', offset: 0}),
+          style({filter:'blur(3px)', opacity: '0', offset: 1.0})
+        ]))
+      ])
+    ])
   ]
 })
 export class SamAutocompleteMultiselectComponent implements ControlValueAccessor {
@@ -341,7 +373,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     }
     this.ref.detectChanges();
 
-    event.target.style.width = event.target.value ? this.calculateTextAreaWidth(event.target) : 'initial';
+    event.target.style.width = this.calculateTextAreaWidth(event.target);
 
     return event;
   }
@@ -358,13 +390,20 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   calculateTextAreaWidth(element: HTMLElement): string {
     // Width by default should be its `initial` value
     let widthValue = 'initial';
-
-    const totalContentWidth = this.getInternalElementWidth(this.hiddenText.nativeElement) +
-                              this.getSelectedContentWidth(element);
-
-    if (totalContentWidth > this.getParentContentWidth(element.parentElement)) {
-      widthValue = '100%';
-    }
+    let containerWidth = this.getParentContentWidth(element.parentElement);
+    let elementsWidths = this.getSelectedContentWidth(element);
+    let enteredTextWidth = this.getInternalElementWidth(this.hiddenText.nativeElement)
+    let accumulatorRow = 0;
+    let spaceLeft = containerWidth;
+    
+    elementsWidths.forEach(function(element){
+      accumulatorRow += element;
+      if(accumulatorRow > containerWidth){ accumulatorRow = element; }
+      spaceLeft = ((containerWidth - accumulatorRow) - enteredTextWidth);
+    });
+    
+    // If there is 40px left move to the next line
+    widthValue = spaceLeft - 40 > 0 ? spaceLeft+'px' : '100%';
 
     return widthValue;
   }
@@ -377,10 +416,11 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    *
    * Returns a float of the width
    */
-  getSelectedContentWidth(element: HTMLElement): number {
+  getSelectedContentWidth(element: HTMLElement): Array<number> {    
     const elementChildren = element.parentElement.children;
 
     let width = 0;
+    let elementsWidths = [];
     // Cannot use forEach here since children is not a Javascript array
     // and its data structure does not provide forEach on its
     // prototype.
@@ -388,13 +428,12 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       if (elementChildren[i] !== element && !elementChildren[i].classList.contains('usa-sr-only')) {
         const childStyles = window.getComputedStyle(elementChildren[i]);
         let childWidth = parseFloat(childStyles.width);
-        width += ( childWidth +
+        elementsWidths.push(( childWidth +
                    parseFloat(childStyles["margin-right"]) +
-                   parseFloat(childStyles["margin-left"]) );
+                   parseFloat(childStyles["margin-left"]) ))
       }
     }
-
-    return width;
+    return elementsWidths;
   }
 
   /**
@@ -659,6 +698,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
         return item;
       }
     });
+    this.focusTextArea();
   }
 
   /**
@@ -703,6 +743,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   setDisabledState(isDisabled: boolean) {
     this.isDisabled = isDisabled;
   }
+   
 }
 
 export interface KeyValueConfig {
@@ -712,3 +753,4 @@ export interface KeyValueConfig {
   categoryProperty?: string;
   parentCategoryProperty?: string;
 }
+
