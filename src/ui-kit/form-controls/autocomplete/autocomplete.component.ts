@@ -158,7 +158,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
 
   onKeyup(event: any) {
     // If event.target.name is an empty string, set search string to default search string
-    const searchString = event.target.name === '' ? this.defaultSearchString : event.target.value;
+    const searchString = event.target.value === '' ? this.defaultSearchString : event.target.value;
 
     // if((event.code === 'Tab' || event.keyIdentifier === 'Tab') && !this.inputValue && (!this.config || this.config && !this.config.showOnEmptyInput)){
     //   return;
