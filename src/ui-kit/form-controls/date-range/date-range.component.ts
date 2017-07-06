@@ -1,6 +1,8 @@
 import {Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, forwardRef} from '@angular/core';
 import * as moment from 'moment/moment';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn, AbstractControl} from "@angular/forms";
+import { SamDateComponent } from "../date/date.component";
+import { SamDateTimeComponent } from "../date-time/date-time.component";
 
 //to do: move these to appropriate locations after validations are figured out for the ui-kit
 function dateRangeValidation(c:AbstractControl){
@@ -62,6 +64,8 @@ function dateRangeRequired(c:AbstractControl){
 export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAccessor {
   public INPUT_FORMAT: string = 'Y-M-D';
   public OUTPUT_FORMAT: string = 'YYYY-MM-DD';
+  public DT_INPUT_FORMAT: string = 'Y-M-DTH:m';
+  public T_OUTPUT_FORMAT: string = "HH:mm";
 
   startModel: any = {
     month: null,
@@ -98,6 +102,10 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
   * Passes in the Angular FormControl
   */
   @Input() control: FormControl;
+  /**
+  * Toggles date-time mode
+  */
+  @Input() type: string = "date";
   /**
   * Event emitted when value changes
   */
@@ -142,19 +150,27 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
   }
 
   parseValueString() {
+    let format = this.type!="date-time"? this.INPUT_FORMAT : this.DT_INPUT_FORMAT;
     if (this.startDateValue) {
       // use the forgiving format (that doesn't need 0 padding) for inputs
-      let m = moment(this.startDateValue, this.INPUT_FORMAT);
+      
+      let m = moment(this.startDateValue, format);
       this.startModel.month = m.month() + 1;
       this.startModel.day = m.date();
       this.startModel.year = m.year();
+      if(this.type=="date-time"){
+        this.startModel.time = m.format(this.T_OUTPUT_FORMAT);
+      }
     }
     if (this.endDateValue) {
       // use the forgiving format (that doesn't need 0 padding) for inputs
-      let m = moment(this.endDateValue, this.INPUT_FORMAT);
+      let m = moment(this.endDateValue, format);
       this.endModel.month = m.month() + 1;
       this.endModel.day = m.date();
       this.endModel.year = m.year();
+      if(this.type=="date-time"){
+        this.endModel.time = m.format(this.T_OUTPUT_FORMAT);
+      }
     }
   }
 
@@ -181,6 +197,12 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
         startDate: startDateString,
         endDate: endDateString
     };
+    if(this.type=="date-time"){
+      let startTimeString = this.startModel.time;
+      let endTimeString = this.endModel.time;
+      output['startTime'] = startTimeString;
+      output['endTime'] = endTimeString;
+    }
     this.onChange(output);
     this.valueChange.emit(output);
   }
