@@ -12,7 +12,7 @@
       <br *ngIf="item.submitter"/>
       <span class = "history-submitter" *ngIf="item.submitter">{{ item.submitter }}</span>
       <br *ngIf="item.comment"/>
-      <span class = "history-comment" *ngIf="item.comment">{{ item.comment }}</span>
+      <q class = "history-comment" *ngIf="item.comment"><em>{{ item.comment }}</em></q>
       <i *ngIf="item.isTagged" class="fa fa-certificate" aria-hidden="true"></i>
     </span>
   </li>
