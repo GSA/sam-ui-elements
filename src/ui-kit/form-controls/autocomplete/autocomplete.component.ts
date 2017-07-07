@@ -268,7 +268,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       }
 
       //ESC
-      if ((event.code === 'Escape' || event.keyIdentified === 'Escape') && (this.results && this.results.length > 0) && !this.hasServiceError) {
+      if ((event.code === 'Escape' || event.keyIdentified === 'Escape')) {
         this.clearDropdown();
       }
     } else if ((event.code === 'Enter' || event.keyIdentified === 'Enter') && this.allowAny ) {

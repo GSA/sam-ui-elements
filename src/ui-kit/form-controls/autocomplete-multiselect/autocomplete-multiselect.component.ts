@@ -221,6 +221,17 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   }
 
   /**
+   * Clears list when escape is pressed
+   */
+  handleEscapeEvent(event) {
+    if (event.code === 'Escape' || event.keyIdentified === 'Escape') {
+      this.clearSearch();
+      this.blurTextArea();
+    }
+
+    return event;
+  }
+  /**
    * Checks if event key code was `Enter`. If so, prevents default
    * behavior.
    *
@@ -242,13 +253,14 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    */
   selectOnEnter(event) {
     if (event.code === 'Enter' || event.keyIdentified === 'Enter') {
-      if (event.target.value) {
-        const results = this.getResults();
-        const selectedChildIndex = this.getSelectedChildIndex(results);
+      const results = this.getResults();
+      const selectedChildIndex = this.getSelectedChildIndex(results);
 
-        this.selectItem(this.getItem());
-        this.clearSearch();
-      }
+      this.selectItem(this.getItem());
+      this.clearSearch();
+      this.blurTextArea();
+
+      this.list = [];
     }
 
     return event;
@@ -495,7 +507,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     }
     // Sets strig to lowercase for case-insensitive
     // matching in filter function.
-    searchString = searchString.toLowerCase();
+    searchString = searchString ? searchString.toLowerCase() : '';
 
     let options = null;
     if (this.serviceOptions) {
@@ -504,6 +516,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     if (this.service && this.options.length === 0) {
       this.cachingService.updateSearchString(searchString);
       if (this.cachingService.shouldUseCachedResults()) {
+        clearTimeout(this.inputTimer);
         return;
       } else {
         clearTimeout(this.inputTimer);
@@ -687,6 +700,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
 
       this.selectItem(categoryObject);
     }
+    this.list = [];
   }
 
   /**
@@ -699,6 +713,17 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       }
     });
     this.focusTextArea();
+  }
+
+  deselectItemOnEnter(event, selectedItem): void {
+    if (event.code === 'Enter' || event.keyIdentified === 'Enter') {
+      this.value = this.value.filter((item) => {
+        if (item !== selectedItem) {
+          return item;
+        }
+      });
+      this.focusTextArea();
+    }
   }
 
   /**
@@ -714,6 +739,10 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
 
   focusTextArea() {
     this.textArea.nativeElement.focus();
+  }
+
+  blurTextArea() {
+    this.textArea.nativeElement.blur();
   }
 
   checkForFocus(event) {

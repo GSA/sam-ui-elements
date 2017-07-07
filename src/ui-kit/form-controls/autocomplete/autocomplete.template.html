@@ -7,15 +7,15 @@
     <span *ngIf="config && config.addOnIconClass" class="add-on"><i class="{{config.addOnIconClass}}"></i></span>
   
     <div class="sam-autocomplete-results">
-      <ul class="sam-autocomplete-no-results" *ngIf="((results && results.length == 0) && (filteredKeyValuePairs && filteredKeyValuePairs.length == 0))  && hasFocus">
+      <ul class="usa-unstyled-list sam-autocomplete-no-results" *ngIf="((results && results.length == 0) && (filteredKeyValuePairs && filteredKeyValuePairs.length == 0))  && hasFocus">
         <li>No results found</li>
       </ul>
       <!-- Lists data if array of strings is passed to component -->
-      <ul id="sam-autocomplete-results" #resultsList *ngIf="results && results.length > 0 && hasFocus">
+      <ul id="sam-autocomplete-results" class="usa-unstyled-list" #resultsList *ngIf="results && results.length > 0 && hasFocus">
         <li *ngFor="let result of results" (click)="setSelected(result)">{{result}}</li>
       </ul>
       <!-- Lists data if array of objects with key/value pair is passed to component -->
-      <ul id="sam-autocomplete-results-kv" #resultsListKV *ngIf="filteredKeyValuePairs && filteredKeyValuePairs.length > 0 && hasFocus">
+      <ul id="sam-autocomplete-results-kv" class="usa-unstyled-list" #resultsListKV *ngIf="filteredKeyValuePairs && filteredKeyValuePairs.length > 0 && hasFocus">
         <li *ngFor="let obj of filteredKeyValuePairs" [class.multiple-values]="config?.keyValueConfig?.subheadProperty" [ngClass]="{'category': obj.isCategory}" (click)="setSelected(obj)">
           {{obj[config.keyValueConfig.valueProperty]}}
           <ng-container *ngIf="obj[config.keyValueConfig.subheadProperty]">
