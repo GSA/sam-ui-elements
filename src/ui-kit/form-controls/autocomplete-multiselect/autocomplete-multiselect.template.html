@@ -14,10 +14,11 @@
     <div class="sam-autocomplete-multiselect-input" 
         [ngClass]="{ 'active': displayList() }">
         
-        <div class="sam-ui mini label" 
+        <div tabIndex="0" class="sam-ui mini label" 
             *ngFor="let item of value" 
             [@label]=""
-            (click)="deselectItem(item)">
+            (click)="deselectItem(item)"
+            (keydown)="deselectItemOnEnter($event,item)">
             <div class="label">
               {{ keyValueConfig ? item[keyValueConfig?.valueProperty] : item?.value }}
               <span *ngIf="item?.value !== item[keyValueConfig?.categoryProperty]" 
@@ -31,10 +32,10 @@
         <textarea #textArea rows="1" 
                   [(ngModel)]="searchText" 
                   (input)="applyTextAreaWidth($event)" 
-                  (keydown)="handleUpArrow(handleDownArrow(handleBackspaceEvent(handleEnterEvent($event))))"
-                  (keyup)="applyTextAreaWidth(selectOnEnter(handleEnterEvent($event)))"
+                  (keydown)="selectOnEnter(handleEscapeEvent(handleUpArrow(handleDownArrow(handleBackspaceEvent(handleEnterEvent($event))))))"
+                  (keyup)="applyTextAreaWidth(handleEnterEvent($event))"
                   [disabled]="isDisabled"
-                  (focus)="filterOptions('')" >
+                  (focus)="filterOptions('')">
         </textarea>
 
         

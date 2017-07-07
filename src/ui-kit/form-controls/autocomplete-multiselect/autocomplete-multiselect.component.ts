@@ -221,6 +221,17 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   }
 
   /**
+   * Clears list when escape is pressed
+   */
+  handleEscapeEvent(event) {
+    if (event.code === 'Escape' || event.keyIdentified === 'Escape') {
+      this.clearSearch();
+      this.blurTextArea();
+    }
+
+    return event;
+  }
+  /**
    * Checks if event key code was `Enter`. If so, prevents default
    * behavior.
    *
@@ -242,13 +253,14 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    */
   selectOnEnter(event) {
     if (event.code === 'Enter' || event.keyIdentified === 'Enter') {
-      if (event.target.value) {
-        const results = this.getResults();
-        const selectedChildIndex = this.getSelectedChildIndex(results);
+      const results = this.getResults();
+      const selectedChildIndex = this.getSelectedChildIndex(results);
 
-        this.selectItem(this.getItem());
-        this.clearSearch();
-      }
+      this.selectItem(this.getItem());
+      this.clearSearch();
+      this.blurTextArea();
+
+      this.list = [];
     }
 
     return event;
@@ -280,10 +292,13 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   handleDownArrow(event) {
     if ( event.code === 'ArrowDown' || event.keyIdentified === 'Down' ) {
       const results = this.getResults();
-      this.setSelectedChild(this.getSelectedChildIndex(results),
+      const selectedIndex = this.setSelectedChild(this.getSelectedChildIndex(results),
                                 'Down',
                                 results);
       this.updateCachingServiceIndices(this.getSelectedChildIndex(results), results.length);
+
+
+      this.resultsList.nativeElement.scrollTop = (results[selectedIndex].offsetParent.offsetParent.offsetTop + results[selectedIndex].offsetTop) - this.resultsList.nativeElement.clientTop;
     }
 
     return event;
@@ -292,10 +307,12 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   handleUpArrow(event) {
     if ( event.code === 'ArrowUp' || event.keyIdentified === 'Up' ) {
       const results = this.getResults();
-      this.setSelectedChild(this.getSelectedChildIndex(results),
+      const selectedIndex = this.setSelectedChild(this.getSelectedChildIndex(results),
                                  'Up',
                                  results);
       this.updateCachingServiceIndices(this.getSelectedChildIndex(results), results.length);
+
+      this.resultsList.nativeElement.scrollTop = (results[selectedIndex].offsetParent.offsetParent.offsetTop + results[selectedIndex].offsetTop) - this.resultsList.nativeElement.clientTop;
     }
 
     return event;
@@ -475,6 +492,26 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   /***************************************************************
    * Logic for filtering options                                 *
    ***************************************************************/
+  fetchFromService(searchString, options, context) {
+
+    return context.service.fetch(searchString, context.cachingService.hasReachedScrollEnd(), options)
+        .subscribe(
+          (data) => { 
+            context.list = context.handleEmptyList(context.sortByCategory(data));
+            context.cachingService.updateResults(context.list);
+          },
+          (err) => {
+            const errorObject = {
+              cannotBeSelected: true
+            }
+            errorObject[context.keyValueConfig.valueProperty] = 'An error occurred.';
+            errorObject[context.keyValueConfig.subheadProperty] = 'Please try again.';
+            context.list = context.handleEmptyList(context.sortByCategory([errorObject]));
+            context.cachingService.updateResults([]);
+            return [errorObject];
+          }
+        );
+  }
   /**
    * Filters `options` by returning items in array that include the
    * search term as a substring of the objects key or value
@@ -490,7 +527,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     }
     // Sets strig to lowercase for case-insensitive
     // matching in filter function.
-    searchString = searchString.toLowerCase();
+    searchString = searchString ? searchString.toLowerCase() : '';
 
     let options = null;
     if (this.serviceOptions) {
@@ -501,24 +538,8 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       if (this.cachingService.shouldUseCachedResults()) {
         return;
       } else {
-        clearTimeout(this.inputTimer);
-        this.inputTimer = setTimeout(this.service.fetch(searchString, this.cachingService.hasReachedScrollEnd(), options)
-                          .subscribe(
-                            (data) => { 
-                              this.list = this.handleEmptyList(this.sortByCategory(data));
-                              this.cachingService.updateResults(this.list);
-                            },
-                            (err) => {
-                              const errorObject = {
-                                cannotBeSelected: true
-                              }
-                              errorObject[this.keyValueConfig.valueProperty] = 'An error occurred.';
-                              errorObject[this.keyValueConfig.subheadProperty] = 'Please try again.';
-                              this.list = this.handleEmptyList(this.sortByCategory([errorObject]));
-                              this.cachingService.updateResults([]);
-                              return [errorObject];
-                            }
-                          ), 400);
+        window.clearTimeout(this.inputTimer);
+        this.inputTimer = window.setTimeout(this.fetchFromService, 250, searchString, options, this);
         return;
           
       }
@@ -682,6 +703,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
 
       this.selectItem(categoryObject);
     }
+    this.list = [];
   }
 
   /**
@@ -694,6 +716,17 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       }
     });
     this.focusTextArea();
+  }
+
+  deselectItemOnEnter(event, selectedItem): void {
+    if (event.code === 'Enter' || event.keyIdentified === 'Enter') {
+      this.value = this.value.filter((item) => {
+        if (item !== selectedItem) {
+          return item;
+        }
+      });
+      this.focusTextArea();
+    }
   }
 
   /**
@@ -709,6 +742,10 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
 
   focusTextArea() {
     this.textArea.nativeElement.focus();
+  }
+
+  blurTextArea() {
+    this.textArea.nativeElement.blur();
   }
 
   checkForFocus(event) {
