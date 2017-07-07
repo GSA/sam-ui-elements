@@ -536,13 +536,14 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       this.cachingService.updateSearchString(searchString);
       if (this.cachingService.shouldUseCachedResults()) {
         console.log('should be using results', this.inputTimer);
+        clearTimeout(this.inputTimer);
         return;
       } else {
         console.log('current timer', this.inputTimer)
         console.log('should clear timer')
-        clearTimeout(inputTimer);
+        clearTimeout(this.inputTimer);
         console.log('this should be empty', this.inputTimer);
-        var inputTimer = setTimeout(this.fetchFromService, 400, searchString, options);
+        this.inputTimer = setTimeout(this.fetchFromService, 400, searchString, options);
         return;
           
       }
