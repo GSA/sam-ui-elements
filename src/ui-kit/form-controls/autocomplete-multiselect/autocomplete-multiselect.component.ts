@@ -492,6 +492,25 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   /***************************************************************
    * Logic for filtering options                                 *
    ***************************************************************/
+  fetchFromService(searchString, options) {
+    this.service.fetch(searchString, this.cachingService.hasReachedScrollEnd(), options)
+        .subscribe(
+          (data) => { 
+            this.list = this.handleEmptyList(this.sortByCategory(data));
+            this.cachingService.updateResults(this.list);
+          },
+          (err) => {
+            const errorObject = {
+              cannotBeSelected: true
+            }
+            errorObject[this.keyValueConfig.valueProperty] = 'An error occurred.';
+            errorObject[this.keyValueConfig.subheadProperty] = 'Please try again.';
+            this.list = this.handleEmptyList(this.sortByCategory([errorObject]));
+            this.cachingService.updateResults([]);
+            return [errorObject];
+          }
+        );
+  }
   /**
    * Filters `options` by returning items in array that include the
    * search term as a substring of the objects key or value
@@ -517,30 +536,14 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       this.cachingService.updateSearchString(searchString);
       if (this.cachingService.shouldUseCachedResults()) {
         console.log('should be using results', this.inputTimer);
-        clearTimeout(this.inputTimer);
+        clearTimeout(inputTimer);
         return;
       } else {
         console.log('current timer', this.inputTimer)
         console.log('should clear timer')
-        clearTimeout(this.inputTimer);
+        clearTimeout(inputTimer);
         console.log('this should be empty', this.inputTimer);
-        this.inputTimer = setTimeout(this.service.fetch(searchString, this.cachingService.hasReachedScrollEnd(), options)
-                          .subscribe(
-                            (data) => { 
-                              this.list = this.handleEmptyList(this.sortByCategory(data));
-                              this.cachingService.updateResults(this.list);
-                            },
-                            (err) => {
-                              const errorObject = {
-                                cannotBeSelected: true
-                              }
-                              errorObject[this.keyValueConfig.valueProperty] = 'An error occurred.';
-                              errorObject[this.keyValueConfig.subheadProperty] = 'Please try again.';
-                              this.list = this.handleEmptyList(this.sortByCategory([errorObject]));
-                              this.cachingService.updateResults([]);
-                              return [errorObject];
-                            }
-                          ), 400);
+        var inputTimer = setTimeout(this.fetchFromService, 400, searchString, options);
         return;
           
       }
