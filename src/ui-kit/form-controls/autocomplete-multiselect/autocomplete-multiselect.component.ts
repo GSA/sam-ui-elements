@@ -493,7 +493,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * Logic for filtering options                                 *
    ***************************************************************/
   fetchFromService(searchString, options) {
-    this.service.fetch(searchString, this.cachingService.hasReachedScrollEnd(), options)
+    return this.service.fetch(searchString, this.cachingService.hasReachedScrollEnd(), options)
         .subscribe(
           (data) => { 
             this.list = this.handleEmptyList(this.sortByCategory(data));
@@ -540,9 +540,9 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       } else {
         console.log('current timer', this.inputTimer)
         console.log('should clear timer')
-        clearTimeout(this.inputTimer);
+        window.clearTimeout(this.inputTimer);
         console.log('this should be empty', this.inputTimer);
-        this.inputTimer = setTimeout(this.fetchFromService, 400, searchString, options);
+        this.inputTimer = window.setTimeout(this.fetchFromService, 400, searchString, options);
         return;
           
       }
