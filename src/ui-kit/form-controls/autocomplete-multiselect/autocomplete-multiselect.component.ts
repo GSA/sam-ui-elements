@@ -492,21 +492,22 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   /***************************************************************
    * Logic for filtering options                                 *
    ***************************************************************/
-  fetchFromService(searchString, options) {
-    return this.service.fetch(searchString, this.cachingService.hasReachedScrollEnd(), options)
+  fetchFromService(searchString, options, context) {
+
+    return context.service.fetch(searchString, context.cachingService.hasReachedScrollEnd(), options)
         .subscribe(
           (data) => { 
-            this.list = this.handleEmptyList(this.sortByCategory(data));
-            this.cachingService.updateResults(this.list);
+            context.list = context.handleEmptyList(context.sortByCategory(data));
+            context.cachingService.updateResults(context.list);
           },
           (err) => {
             const errorObject = {
               cannotBeSelected: true
             }
-            errorObject[this.keyValueConfig.valueProperty] = 'An error occurred.';
-            errorObject[this.keyValueConfig.subheadProperty] = 'Please try again.';
-            this.list = this.handleEmptyList(this.sortByCategory([errorObject]));
-            this.cachingService.updateResults([]);
+            errorObject[context.keyValueConfig.valueProperty] = 'An error occurred.';
+            errorObject[context.keyValueConfig.subheadProperty] = 'Please try again.';
+            context.list = context.handleEmptyList(context.sortByCategory([errorObject]));
+            context.cachingService.updateResults([]);
             return [errorObject];
           }
         );
@@ -542,7 +543,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
         console.log('should clear timer')
         window.clearTimeout(this.inputTimer);
         console.log('this should be empty', this.inputTimer);
-        this.inputTimer = window.setTimeout(this.fetchFromService, 400, searchString, options);
+        this.inputTimer = window.setTimeout(this.fetchFromService, 400, searchString, options, this);
         return;
           
       }
