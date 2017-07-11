@@ -1,0 +1,11 @@
+<article>
+  <header>
+    <p>
+      <span>Author: {{comment.username}}</span>
+      <span>Time:
+        <time pubdate datetime="comment.datetime">{{comment.datetime | date: 'mediumDate'}}</time>
+      </span>
+    </p>
+  </header>
+  <p>{{comment.text}}</p>
+</article>

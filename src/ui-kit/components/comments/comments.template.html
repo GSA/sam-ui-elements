@@ -1,0 +1,26 @@
+<section>
+  <h1>Comments</h1>
+  <!-- Each of the following will be a comment component-->
+  <p>
+    <button type="button">Show previous comments</button>
+  </p>
+  <p>
+    <button type="button">Hide previous comments</button>
+  </p>
+  <sam-comment *ngFor="let comment of comments;"
+               [comment]="comment">
+  </sam-comment>
+  <form [formGroup]="form" (ngSubmit)="saveComment(form)">
+    
+    <sam-text-area formControlName="comment"
+                   [label]="'Write Comment'"
+                   [name]="'Write comment'"
+                   [control]="comment"
+                   (valueChange)="setCurrentInputLength($event)">
+    </sam-text-area>
+    <p>
+      <span>{{charsRemaining()}} characters remaining</span>
+    </p>
+    <button type="submit" [disabled]="!form.valid">Submit</button>
+  </form>
+</section>
