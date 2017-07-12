@@ -58,6 +58,10 @@ export class SamTextareaComponent implements ControlValueAccessor {
   @Input() placeholder: string;
 
   @Output() focusEvent: EventEmitter<any> = new EventEmitter();
+  /**
+   * Emits event whenever input event is fired on the textarea
+   */
+  @Output() inputEvent: EventEmitter<any> = new EventEmitter();
 
   onChange: any = () => {
 
