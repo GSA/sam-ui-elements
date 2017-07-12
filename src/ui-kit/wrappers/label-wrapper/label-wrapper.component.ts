@@ -86,10 +86,10 @@ export class LabelWrapper implements AfterViewChecked{
     if (!control) {
       return;
     }
-    if(control.pristine){
-      this.errorMessage = "";
-      return;
-    }
+    // if(control.pristine){
+    //   this.errorMessage = "";
+    //   return;
+    // }
 
     if (control.invalid && control.errors) {
       for (let k in control.errors) {
@@ -118,5 +118,8 @@ export class LabelWrapper implements AfterViewChecked{
     } else if (control.valid) {
       this.errorMessage = '';
     }
+  }
+  clearError(){
+    this.errorMessage = '';
   }
 }
