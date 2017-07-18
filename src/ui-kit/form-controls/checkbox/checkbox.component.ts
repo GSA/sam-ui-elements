@@ -17,7 +17,7 @@ import { OptionsType } from '../../types';
 })
 export class SamCheckboxComponent implements ControlValueAccessor {
   /**
-  * Sets the bound value of the component
+  * Deprecated, Sets the bound value of the component
   */
   @Input() model: any = [];
   /**
@@ -53,7 +53,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   */
   @Input() control: FormControl;
   /**
-  * Event emitted when the model value changes
+  * Deprecated, Event emitted when the model value changes
   */
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
 
@@ -65,7 +65,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
    * This object allows us to efficiently determine if a value is before another value
    */
   private _ordering: any = {};
-  onChange: any = () => { };
+  onChange: any = (c) => { };
   onTouched: any = () => { };
   get value() {
     return this.model;
@@ -75,8 +75,17 @@ export class SamCheckboxComponent implements ControlValueAccessor {
     if(!Array.isArray(val)){
       val = [];
     }
+    //don't select options that are disabled
+    for(var idx in this.options){
+      let lookup = val.findIndex((value)=>{
+        return value == this.options[idx].value;
+      });
+      if(this.options[idx].disabled && lookup != -1){
+        val.splice(lookup,1);
+      }
+    }
     this.model = val;
-    this.onChange(val);
+    this.onChange(this.model);
     this.onTouched();
   }
   
@@ -93,15 +102,13 @@ export class SamCheckboxComponent implements ControlValueAccessor {
       this._ordering[val] = i;
     }
 
-    if(!this.control){
-      return;
-    }
+    if(this.control){
+      this.control.valueChanges.subscribe(()=>{
+        this.wrapper.formatErrors(this.control);
+      });
 
-    this.control.valueChanges.subscribe(()=>{
       this.wrapper.formatErrors(this.control);
-    });
-
-    this.wrapper.formatErrors(this.control);
+    }    
   }
 
   // Give the check all label a name for screen readers
@@ -114,13 +121,10 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   }
 
   onCheckChanged(value, isChecked) {
-    if(this.control){
-      this.control.markAsDirty();
-      this.control.markAsTouched();
-    }
+    this.onTouched();
     if (!isChecked) {
       // If the option was unchecked, remove it from the model
-      this.writeValue(this.model.filter(val => val !== value));
+      this.value = this.model.filter(val => val !== value);
     } else {
       // Else, insert the checked item into the model in the correct order
       let i = 0;
@@ -135,28 +139,22 @@ export class SamCheckboxComponent implements ControlValueAccessor {
       }
       let clone = this.model.slice(0);
       clone.splice(i, 0, value);
-      this.writeValue(clone);
+      this.value = clone;
     }
     this.emitModel();
   }
 
   onSelectAllChange(isSelectAllChecked) {
-    if(this.control){
-      this.control.markAsDirty();
-      this.control.markAsTouched();
-    }
+    this.onTouched();
     if (!isSelectAllChecked) {
-      this.writeValue([]);
+      this.value = [];
     } else {
-      this.writeValue(this.options.map(option => option.value));
+      this.value = this.options.map(option => option.value);
     }
     this.emitModel();
   }
   
   emitModel(){
-    if(this.control){
-      this.control.setValue(this.model);
-    }
     this.modelChange.emit(this.model);
   }
   
