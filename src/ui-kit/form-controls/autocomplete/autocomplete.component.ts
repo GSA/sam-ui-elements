@@ -71,11 +71,11 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
    * Optional: Provides a default search string to use with service
    * in lieu of sending an empty string. If not provided, value
    * defaults to an empty string.
-   * 
+   *
    * WARNING: If your service overrides or manipulates the value
    * passed to the fetch method, providing a default search string
    * on the component may not produce the expected results.
-   * 
+   *
    * Example:
    * this.autocompleteService.fetch(this.defaultSearchString, pageEnd, options)
    */
@@ -93,7 +93,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
 
   public results: Array<string>;
   public innerValue: any = '';
-  public inputValue: any;
+  public inputValue: any = '';
   public selectedInputValue: any;
   public selectedChild: HTMLElement;
   public hasFocus: boolean = false;
