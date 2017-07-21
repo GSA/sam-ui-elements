@@ -1,11 +1,13 @@
-<article>
+<article class="sam-comment">
   <header>
-    <p>
-      <span>Author: {{comment.username}}</span>
-      <span>Time:
-        <time pubdate datetime="comment.datetime">{{comment.datetime | date: 'mediumDate'}}</time>
-      </span>
-    </p>
+    <figure>
+      <i *ngIf="!comment.image" class="fa fa-2x fa-user"></i>
+      <img *ngIf="comment.image" [attr.src]="comment.image"/>
+    </figure>
+    <div class="comment-metadata">
+      <strong class="username">{{comment.username}}</strong>
+      <time pubdate datetime="comment.datetime">{{ comment.datetime | timeago }}</time>
+    </div>
   </header>
   <p>{{comment.text}}</p>
 </article>

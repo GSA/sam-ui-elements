@@ -5,21 +5,28 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SamCommentsComponent } from './comments.component';
 import { SamCommentComponent } from './comment';
 
+import { TimeAgoPipe } from './time-ago.pipe';
+
 import { SamTextAreaModule } from '../../form-controls/textarea';
+import { AccordionsModule } from '../accordion';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     ReactiveFormsModule,
-    SamTextAreaModule
+    SamTextAreaModule,
+    AccordionsModule
   ],
   declarations: [
     SamCommentsComponent,
-    SamCommentComponent
+    SamCommentComponent,
+    TimeAgoPipe
   ],
   exports: [
     SamCommentsComponent,
-    SamCommentComponent
+    SamCommentComponent,
+    TimeAgoPipe
   ],
   providers: []
 })

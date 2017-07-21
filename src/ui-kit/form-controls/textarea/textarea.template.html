@@ -4,11 +4,14 @@
                    [errorMessage]="errorMessage"
                    [required]="required">
   <textarea [value]="value"
+            [attr.class]="sam-text-area"
             [attr.id]="name"
             [attr.placeholder]="placeholder"
             [attr.maxlength]="maxlength ? maxlength : 524288"
             [disabled]="disabled"
             (change)="onInputChange($event.target.value)"
-            (focus)="onFocus($event)">
+            (focus)="onFocus($event)"
+            (blur)="onBlur($event)"
+            (input)="inputEventHandler($event)">
   </textarea>
 </sam-label-wrapper>

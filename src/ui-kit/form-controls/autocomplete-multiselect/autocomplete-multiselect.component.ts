@@ -143,7 +143,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   }
 
   ngOnInit() {
-    this.list = this.sortByCategory(this.list);
+    if (this.list.length >0) this.list = this.sortByCategory(this.list);
     if(!this.control){
       return;
     }
