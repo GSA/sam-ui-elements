@@ -8,3 +8,5 @@ import { SamAccordionSection, SamAccordionComponent } from './accordion.componen
   exports: [ SamAccordionComponent, SamAccordionSection ]
 })
 export class AccordionsModule { }
+
+export * from './accordion.component';

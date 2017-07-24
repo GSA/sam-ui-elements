@@ -56,22 +56,22 @@ export class SamTextareaComponent implements ControlValueAccessor {
    * Optional text to be displayed when the text area is empty
    */
   @Input() placeholder: string;
-
+  /**
+   * Emits focus event
+   */
   @Output() focusEvent: EventEmitter<any> = new EventEmitter();
+  /**
+   * Emits event whenever input event is fired on the textarea
+   */
+  @Output() inputEventChange: EventEmitter<any> = new EventEmitter();
 
-  onChange: any = () => {
+  onChange: any = (_) => {};
 
-  };
-
-  onTouched: any = () => {
-
-  };
+  onTouched: any = () => {};
 
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
 
-  constructor(private cdr: ChangeDetectorRef) {
-
-  }
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     if (!this.name) {
@@ -118,6 +118,10 @@ export class SamTextareaComponent implements ControlValueAccessor {
     this.value = value;
     this.onChange(value);
     this.valueChange.emit(value);
+  }
+
+  inputEventHandler(event) {
+    this.inputEventChange.emit(event);
   }
 
   registerOnChange(fn) {
