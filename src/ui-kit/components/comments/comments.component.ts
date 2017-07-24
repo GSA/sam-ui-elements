@@ -48,7 +48,7 @@ export class SamCommentsComponent implements OnInit {
    * Other private variables
    */
   private comments: Array<Comment> = [];
-  public form: FormGroup;
+  public form: any;
   private maxLength: number = 250;
 
   /**
