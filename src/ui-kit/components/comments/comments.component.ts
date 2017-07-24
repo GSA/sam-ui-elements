@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Optional, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ControlValueAccessor } from '@angular/forms';
 
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, Subject } from 'rxjs';
 import * as moment from 'moment';
 
 import { SamAccordionComponent } from '../accordion';
@@ -12,19 +12,16 @@ import { Comment } from './interfaces';
 @Component({
   selector: 'sam-comments',
   templateUrl: 'comments.template.html',
-  providers: [
-    { provide: CommentsService, useClass: CommentsService }
-  ]
 })
 export class SamCommentsComponent implements OnInit {
   @Input() public disabled: boolean = false
   /**
    * ViewChildren
    */
-  @ViewChild('showCommentsButton') private showCommentsButton: ElementRef;
-  @ViewChild('hideCommentsButton') private hideCommentsButton: ElementRef;
-  @ViewChild('cancelButton') private cancelButton: ElementRef;
-  @ViewChild('submitButton') private submitButton: ElementRef;
+  @ViewChild('showCommentsButton') public showCommentsButton: ElementRef;
+  @ViewChild('hideCommentsButton') public hideCommentsButton: ElementRef;
+  @ViewChild('cancelButton') public cancelButton: ElementRef;
+  @ViewChild('submitButton') public submitButton: ElementRef;
 
   /**
    * Observables created from DOM events
@@ -51,8 +48,13 @@ export class SamCommentsComponent implements OnInit {
    * Other private variables
    */
   private comments: Array<Comment> = [];
-  private form: FormGroup;
+  public form: FormGroup;
   private maxLength: number = 250;
+
+  /**
+   * Playground
+   */
+  private deleteStream: Subject<any> = new Subject<any>();
 
   constructor(private commentsService: CommentsService, private fb: FormBuilder) {}
 
@@ -115,6 +117,23 @@ export class SamCommentsComponent implements OnInit {
         }
       });
 
+    const sub = 
+      this.deleteStream
+      .flatMap((comment) => {
+        console.log(comment);
+        return this.commentsService.deleteComment(comment)
+               .catch(err => Observable.of(err));
+      })
+      .flatMap((event) => {
+        if (event instanceof Error) {
+          console.log(event);
+          return Observable.of(this.comments);
+        } else {
+        return this.commentsService.getComments()
+               .catch(err => Observable.of(err));
+        }
+      })
+  
     /**************************************************************************/
     /* Subscribe to mapped DOM events                                         */
     /**************************************************************************/
@@ -123,6 +142,7 @@ export class SamCommentsComponent implements OnInit {
       .merge(this.getCommentsStream) // Add comments stream
       .merge(this.collapseCommentsStream) // Add collapse stream
       .merge(this.submitStream) // Add submit stream
+      .merge(sub)
       .subscribe(
         (comments) => {
           this.comments = comments; 
@@ -145,6 +165,14 @@ export class SamCommentsComponent implements OnInit {
   ngOnDestroy() {
     this.commentsSubscription.unsubscribe();
     this.cancelSubscription.unsubscribe();
+  }
+
+  isDeletable(comment: Comment): boolean {
+    return this.commentsService.isCommentDeletable(comment);
+  }
+
+  onDelete(comment: Comment) {
+    this.deleteStream.next(comment);
   }
 
   isSubmitDisabled(form: FormGroup): boolean {

@@ -5,12 +5,14 @@
     <section class="sam-comments">
       <!-- List of comments -->
       <p class="button-row">
-        <button #showCommentsButton class="usa-button-link">Show previous comments</button>
+        <button #showCommentsButton class="usa-button-link show-button">Show previous comments</button>
         <button #hideCommentsButton class="usa-button-link hide-button">Hide previous comments</button>
       </p>
       <ul class="usa-unstyled-list">
         <li *ngFor="let comment of comments;">
-          <sam-comment [comment]="comment"></sam-comment>
+          <sam-comment [comment]="comment"
+                       [allowDelete]="isDeletable()"
+                       (onDelete)="onDelete($event)"></sam-comment>
         </li>
       </ul>
       <!-- New Comment Form -->

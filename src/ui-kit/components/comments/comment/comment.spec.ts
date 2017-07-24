@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import * as moment from 'moment';
 
 // Load the implementations that should be tested
@@ -27,32 +27,26 @@ describe('The Sam Comment component', () => {
     fixture = TestBed.createComponent(SamCommentComponent);
     component = fixture.componentInstance;
     component.comment = comment;
+    fixture.detectChanges();
   });
 
   it('Should display a username', function() {
-    fixture.detectChanges();
-    // let paginationItems = fixture.debugElement.queryAll(By.css('.usa-pagination li'));
-    // expect(paginationItems.length).toBe(9 + 2 + 2);
-    const username = fixture.debugElement.query(By.css('.username'));
-    expect(username).toContain(comment.username);
+    const usernameEl = fixture.debugElement.query(By.css('.username')).nativeElement;
+    expect(usernameEl.innerHTML).toContain(comment.username);
   });
 
   it('Should display a published time', () => {
-    fixture.detectChanges();
-    const time = fixture.debugElement.query(By.css('time'));
-
-    expect(time).toContain(moment(comment.datetime).fromNow);
+    const timeEl = fixture.debugElement.query(By.css('time')).nativeElement;
+    expect(timeEl.innerHTML).toContain(moment(comment.datetime).fromNow());
   });
 
   it('Should display a comment body', function() {
-    fixture.detectChanges();
-    const text = fixture.debugElement.query(By.css('p'));
-    expect(text).toContain(comment.text);
+    const textEl = fixture.debugElement.query(By.css('p')).nativeElement;
+    expect(textEl.innerHTML).toContain(comment.text);
   });
 
   it('Should display an image', function() {
-    fixture.detectChanges();
-    const image = fixture.debugElement.query(By.css('img'));
-    expect(image.src).toBe(comment.image);
+    const imageEl = fixture.debugElement.query(By.css('img')).nativeElement;
+    expect(imageEl.src).toBe(comment.image);
   });
 });

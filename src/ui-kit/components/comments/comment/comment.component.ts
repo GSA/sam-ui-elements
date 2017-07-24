@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { Comment } from '../interfaces';
 
@@ -8,4 +8,10 @@ import { Comment } from '../interfaces';
 })
 export class SamCommentComponent {
   @Input() comment: Comment;
+  @Input() allowDelete: Comment;
+  @Output() onDelete: EventEmitter<any> = new EventEmitter<any>();
+
+  emitClick(comment: Event) {
+    this.onDelete.emit(this.comment);
+  }
 }

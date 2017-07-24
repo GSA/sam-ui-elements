@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SamCommentsComponent } from './comments.component';
 import { SamCommentComponent } from './comment';
+import { CommentsService } from './comments.service';
 
 import { TimeAgoPipe } from './time-ago.pipe';
 
@@ -28,6 +29,5 @@ import { AccordionsModule } from '../accordion';
     SamCommentComponent,
     TimeAgoPipe
   ],
-  providers: []
 })
 export class SamCommentsModule {}
