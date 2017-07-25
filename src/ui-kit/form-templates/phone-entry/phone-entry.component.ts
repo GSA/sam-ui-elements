@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild, Output, EventEmitter, OnInit, forwardRef } from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn } from "@angular/forms";
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, AbstractControl, FormControl, Validators, ValidatorFn } from "@angular/forms";
 
 /**
  * The <samPhoneInput> component is a Phone entry portion of a form
@@ -40,10 +40,16 @@ export class SamPhoneEntryComponent implements OnInit,ControlValueAccessor {
   */
   @Input() numbersOnly: boolean;
   /**
+  * Input to pass in a formControl
+  */
+  @Input() control: AbstractControl;
+  /**
   * Event emitter when model changes, outputs a string
   */
   @Output() emitter = new EventEmitter<string>();
 
+  @ViewChild(LabelWrapper)
+  public wrapper: LabelWrapper;
   @ViewChild("phoneInput") phoneInput;
   errorMsg: string = "";
   
@@ -81,6 +87,15 @@ export class SamPhoneEntryComponent implements OnInit,ControlValueAccessor {
       }
       this.phoneNumberMirror = phoneNum;
       this.phoneNumber = phoneNum;
+    }
+
+    if(this.control){
+      this.control.valueChanges.subscribe(()=>{
+        console.log("FIRE!!");
+        this.wrapper.formatErrors(this.control);
+      });
+
+      this.wrapper.formatErrors(this.control);
     }
   }
   
