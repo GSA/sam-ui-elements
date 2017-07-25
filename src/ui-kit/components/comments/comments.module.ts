@@ -6,8 +6,7 @@ import { SamCommentsComponent } from './comments.component';
 import { SamCommentComponent } from './comment';
 import { CommentsService } from './comments.service';
 
-import { TimeAgoPipe } from './time-ago.pipe';
-
+import { SamPipesModule } from '../../pipes';
 import { SamTextAreaModule } from '../../form-controls/textarea';
 import { AccordionsModule } from '../accordion';
 
@@ -17,17 +16,16 @@ import { AccordionsModule } from '../accordion';
     FormsModule,
     ReactiveFormsModule,
     SamTextAreaModule,
-    AccordionsModule
+    AccordionsModule,
+    SamPipesModule
   ],
   declarations: [
     SamCommentsComponent,
     SamCommentComponent,
-    TimeAgoPipe
   ],
   exports: [
     SamCommentsComponent,
     SamCommentComponent,
-    TimeAgoPipe
   ],
 })
 export class SamCommentsModule {}
