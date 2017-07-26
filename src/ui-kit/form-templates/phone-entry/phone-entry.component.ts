@@ -67,6 +67,11 @@ export class SamPhoneEntryComponent implements OnInit,ControlValueAccessor {
       value = this.phoneNumberTemplate;
     }
     this.model = value;
+    if(this.numbersOnly){
+      this.model = this.formatWithTemplate(this.model);
+    }
+    this.phoneNumberMirror = this.model;
+    this.phoneNumber = this.model;
   };
 
   
@@ -91,7 +96,6 @@ export class SamPhoneEntryComponent implements OnInit,ControlValueAccessor {
 
     if(this.control){
       this.control.valueChanges.subscribe(()=>{
-        console.log("FIRE!!");
         this.wrapper.formatErrors(this.control);
       });
 
