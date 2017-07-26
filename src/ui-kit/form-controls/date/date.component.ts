@@ -157,6 +157,12 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     if(value){
       this.value = value;
       this.parseValueString();
+    } else {
+      this.model = {
+        month: null,
+        day: null,
+        year: null
+      };
     }
   }
 }
