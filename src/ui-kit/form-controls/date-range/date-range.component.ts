@@ -26,7 +26,7 @@ function dateRangeValidation(c:AbstractControl){
         }
       }
     }
-  } 
+  }
   if (c.value && c.value.endDate){
     let endDateM = moment(c.value.endDate);
     if(!endDateM.isValid() || c.value.endDate=="Invalid date"){
@@ -77,7 +77,7 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
     day: null,
     year: null
   }
-  
+
   /**
   * Sets the label text
   */
@@ -122,7 +122,7 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
 
   constructor() { }
 
-  ngOnInit() { 
+  ngOnInit() {
     if(!this.control){
       return;
     }
@@ -153,7 +153,7 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
     let format = this.type!="date-time"? this.INPUT_FORMAT : this.DT_INPUT_FORMAT;
     if (this.startDateValue) {
       // use the forgiving format (that doesn't need 0 padding) for inputs
-      
+
       let m = moment(this.startDateValue, format);
       this.startModel.month = m.month() + 1;
       this.startModel.day = m.date();
@@ -161,6 +161,11 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
       if(this.type=="date-time"){
         this.startModel.time = m.format(this.T_OUTPUT_FORMAT);
       }
+    }
+    else{
+      this.startModel.month = "";
+      this.startModel.day = "";
+      this.startModel.year = "";
     }
     if (this.endDateValue) {
       // use the forgiving format (that doesn't need 0 padding) for inputs
@@ -172,12 +177,17 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
         this.endModel.time = m.format(this.T_OUTPUT_FORMAT);
       }
     }
+    else{
+      this.endModel.month = "";
+      this.endModel.day = "";
+      this.endModel.year = "";
+    }
   }
 
   getDate(model) {
     return moment([model.year, model.month-1, model.day]);
   }
-  
+
   startDateChange(evt){
     this.startDateValue = evt;
     this.parseValueString();
@@ -206,7 +216,7 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
     this.onChange(output);
     this.valueChange.emit(output);
   }
-  
+
   registerOnChange(fn) {
     this.onChange = fn;
   }
@@ -223,6 +233,11 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
     if(value && typeof value == "object" && value['startDate'] && value['endDate']){
       this.startDateValue = value.startDate;
       this.endDateValue = value.endDate;
+      this.parseValueString();
+    }
+    else{
+      this.startDateValue = "";
+      this.endDateValue = "";
       this.parseValueString();
     }
   }
