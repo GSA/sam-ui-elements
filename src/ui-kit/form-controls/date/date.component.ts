@@ -89,6 +89,11 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
         this.model.year = m.year();
       }
     }
+    else{
+      this.model.month = "";
+      this.model.day = "";
+      this.model.year = "";
+    }
   }
 
   onBlur() {
@@ -140,7 +145,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   triggerTouch(){
     this.onTouched();
   }
-  
+
   registerOnChange(fn) {
     this.onChange = fn;
   }
@@ -163,6 +168,10 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
         day: null,
         year: null
       };
+    }
+    else{
+      this.value = "";
+      this.parseValueString();
     }
   }
 }
