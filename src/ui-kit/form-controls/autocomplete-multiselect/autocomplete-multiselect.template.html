@@ -28,8 +28,9 @@
             </div>
             <i class="icon close fa fa-times"></i>
         </div>
-        
+        <label [attr.for]="name+'-ac-textarea'" class="sr-only"></label>
         <textarea #textArea rows="1" 
+                  [attr.id]="name+'-ac-textarea'"
                   [(ngModel)]="searchText" 
                   (input)="applyTextAreaWidth($event)" 
                   (keydown)="selectOnEnter(handleEscapeEvent(handleUpArrow(handleDownArrow(handleBackspaceEvent(handleEnterEvent($event))))))"

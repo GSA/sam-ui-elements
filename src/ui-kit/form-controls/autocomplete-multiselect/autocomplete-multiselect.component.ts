@@ -691,6 +691,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       }
     }
     this.list = [];
+    this.focusTextArea();
   }
 
   selectItemByCategory(category: string): void {
@@ -726,6 +727,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
         }
       });
       this.focusTextArea();
+      event.preventDefault();
     }
   }
 
