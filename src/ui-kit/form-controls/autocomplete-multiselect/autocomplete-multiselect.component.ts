@@ -691,7 +691,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       }
     }
     this.list = [];
-    this.textArea.nativeElement.focus();
+    this.focusTextArea();
   }
 
   selectItemByCategory(category: string): void {
