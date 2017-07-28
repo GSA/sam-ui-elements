@@ -727,6 +727,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
         }
       });
       this.focusTextArea();
+      event.preventDefault();
     }
   }
 
