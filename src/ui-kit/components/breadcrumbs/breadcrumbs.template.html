@@ -1,7 +1,7 @@
 <ul class="sam-breadcrumbs">
     <li class="sam-crumb" *ngFor="let crumb of crumbs">
       <ng-container *ngIf="crumb.url">
-        <a [routerLink]="[crumb.url]">{{crumb.breadcrumb}}</a>
+        <a [routerLink]="[crumb.url]" (click)="crumbHandler(crumb.breadcrumb)">{{crumb.breadcrumb}}</a>
       </ng-container>
       <ng-container *ngIf="!crumb.url">
         <span>{{crumb.breadcrumb}}</span>
