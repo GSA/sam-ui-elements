@@ -20,6 +20,8 @@ import { SamListDisplayComponent } from './list-display';
 import { SamSelectResizableComponent } from './select-resizable';
 import { SamAutocompleteMultiselectModule } from './autocomplete-multiselect';
 
+import { SamImageModule } from './image';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -30,7 +32,8 @@ import { SamAutocompleteMultiselectModule } from './autocomplete-multiselect';
     SamSelectModule,
     SamTextInputModule,
     SamAutocompleteDropdownModule,
-    SamAutocompleteMultiselectModule
+    SamAutocompleteMultiselectModule,
+    SamImageModule
   ],
   declarations: [
     SamDateComponent,
@@ -59,7 +62,8 @@ import { SamAutocompleteMultiselectModule } from './autocomplete-multiselect';
     SamAutocompleteDropdownModule,
     SamListDisplayComponent,
     SamSelectResizableComponent,
-    SamAutocompleteMultiselectModule
+    SamAutocompleteMultiselectModule,
+    SamImageModule
   ],
   providers: []
 })
