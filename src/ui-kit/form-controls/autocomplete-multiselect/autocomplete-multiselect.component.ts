@@ -692,6 +692,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     }
     this.list = [];
     this.focusTextArea();
+    this.updateMarked();
   }
 
   selectItemByCategory(category: string): void {
@@ -717,6 +718,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       }
     });
     this.focusTextArea();
+    this.updateMarked();
   }
 
   deselectItemOnEnter(event, selectedItem): void {
@@ -727,6 +729,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
         }
       });
       this.focusTextArea();
+      this.updateMarked();
       event.preventDefault();
     }
   }
@@ -753,6 +756,29 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   checkForFocus(event) {
     this.clearSearch();
     this.list=[];
+  }
+  
+  updateMarked(){
+    if(this.service){
+      return;
+    }
+    let keys = Object.keys(this.list);
+    for(let key in keys){
+      if(!isNaN(parseInt(key))){
+        for(let listKey in this.list[key]){
+          if(!isNaN(parseInt(listKey))){
+            let x = this.value.find((obj)=>{
+              return obj[this.keyValueConfig.keyProperty] == this.list[key][listKey][this.keyValueConfig.keyProperty];
+            });
+            if(x){
+              this.list[key][listKey]._marked = true;
+            } else {
+              this.list[key][listKey]._marked = false;
+            }
+          }
+        }
+      }
+    }
   }
 
   /***************************************************************

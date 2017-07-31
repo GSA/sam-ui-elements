@@ -72,6 +72,7 @@
             <li class="category-item" 
                 *ngFor="let item of list[i]; let itemIndex = index" 
                 (click)="clearSearch(selectItem(item))" 
+                [ngClass]="{'marked':item._marked}"
                 [attr.data-category]="i" 
                 [attr.data-index]="itemIndex">
               <p>{{ item[keyValueConfig?.valueProperty] }}</p>  
