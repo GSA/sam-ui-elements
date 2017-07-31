@@ -317,6 +317,7 @@ export interface PointOfContactType{
 
 export interface IBreadcrumb {
   url?: string;
+  urlmock?: boolean;
   breadcrumb: string;
 }
 
