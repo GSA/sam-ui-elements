@@ -154,6 +154,12 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     this.wrapper.formatErrors(this.control);
   }
 
+  ngOnChanges(c){
+    if(c['options']){
+      this.updateMarked();
+    }
+  }
+
   CachingService(initialResults?: any, initialSearchString?: any) {
     let cachedResults = initialResults || [];
     let lastSearchedString = initialSearchString || '';
@@ -762,21 +768,14 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     if(this.service){
       return;
     }
-    let keys = Object.keys(this.list);
-    for(let key in keys){
-      if(!isNaN(parseInt(key))){
-        for(let listKey in this.list[key]){
-          if(!isNaN(parseInt(listKey))){
-            let x = this.value.find((obj)=>{
-              return obj[this.keyValueConfig.keyProperty] == this.list[key][listKey][this.keyValueConfig.keyProperty];
-            });
-            if(x){
-              this.list[key][listKey]._marked = true;
-            } else {
-              this.list[key][listKey]._marked = false;
-            }
-          }
-        }
+    for(let key in this.options){
+      let x = this.value.find((obj)=>{
+        return obj[this.keyValueConfig.keyProperty] == this.options[key][this.keyValueConfig.keyProperty];
+      });
+      if(x){
+        this.options[key]._marked = true;
+      } else {
+        this.options[key]._marked = false;
       }
     }
   }
@@ -790,6 +789,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       value = [];
     }
     this.innerValue = value;
+    this.updateMarked();
   }
 
   registerOnChange(fn: any) {
