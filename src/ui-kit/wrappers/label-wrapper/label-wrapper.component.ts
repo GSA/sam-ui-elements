@@ -86,12 +86,23 @@ export class LabelWrapper implements AfterViewChecked{
     if (!control) {
       return;
     }
-    if(control.pristine){
+    if(control.pristine) {
       this.errorMessage = "";
       return;
     }
 
     if (control.invalid && control.errors) {
+      for (let k in control.errors) {
+        let errorObject = control.errors[k];
+
+        if (errorObject.message) {
+          if(Object.prototype.toString.call(errorObject.message) === '[object String]') {
+            this.errorMessage = errorObject.message;
+            return;
+          }
+        }
+      }
+
       for (let k in control.errors) {
         let errorObject = control.errors[k];
         switch (k) {
@@ -101,20 +112,15 @@ export class LabelWrapper implements AfterViewChecked{
             this.errorMessage = `${actualLength} characters input but max length is ${requiredLength}`;
             return;
           case 'required':
-            this.errorMessage = 'This field cannot be empty';
+            this.errorMessage = 'This field is required';
             return;
           case 'isNotBeforeToday':
             this.errorMessage = "Date must not be before today";
             return;
-          default:
-            if (errorObject.message) {
-              this.errorMessage = errorObject.message;
-            } else {
-              this.errorMessage = 'Invalid';
-            }
-            return;
         }
       }
+
+      this.errorMessage = 'Invalid';
     } else if (control.valid) {
       this.errorMessage = '';
     }
