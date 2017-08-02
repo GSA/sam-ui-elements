@@ -154,6 +154,12 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     this.wrapper.formatErrors(this.control);
   }
 
+  ngOnChanges(c){
+    if(c['options']){
+      this.updateMarked();
+    }
+  }
+
   CachingService(initialResults?: any, initialSearchString?: any) {
     let cachedResults = initialResults || [];
     let lastSearchedString = initialSearchString || '';
@@ -691,6 +697,8 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       }
     }
     this.list = [];
+    this.focusTextArea();
+    this.updateMarked();
   }
 
   selectItemByCategory(category: string): void {
@@ -716,6 +724,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       }
     });
     this.focusTextArea();
+    this.updateMarked();
   }
 
   deselectItemOnEnter(event, selectedItem): void {
@@ -726,6 +735,8 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
         }
       });
       this.focusTextArea();
+      this.updateMarked();
+      event.preventDefault();
     }
   }
 
@@ -752,6 +763,22 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     this.clearSearch();
     this.list=[];
   }
+  
+  updateMarked(){
+    if(this.service){
+      return;
+    }
+    for(let key in this.options){
+      let x = this.value.find((obj)=>{
+        return obj[this.keyValueConfig.keyProperty] == this.options[key][this.keyValueConfig.keyProperty];
+      });
+      if(x){
+        this.options[key]._marked = true;
+      } else {
+        this.options[key]._marked = false;
+      }
+    }
+  }
 
   /***************************************************************
    * Implementation of ControlValueAccessor Methods              *
@@ -762,6 +789,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       value = [];
     }
     this.innerValue = value;
+    this.updateMarked();
   }
 
   registerOnChange(fn: any) {

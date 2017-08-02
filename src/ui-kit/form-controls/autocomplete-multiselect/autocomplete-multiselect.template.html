@@ -12,7 +12,8 @@
                     (tabOutside)="checkForFocus($event)">
     
     <div class="sam-autocomplete-multiselect-input" 
-        [ngClass]="{ 'active': displayList() }">
+      (click)="focusTextArea()"
+      [ngClass]="{ 'active': displayList() }">
         
         <div tabIndex="0" class="sam-ui mini label" 
             *ngFor="let item of value" 
@@ -28,8 +29,9 @@
             </div>
             <i class="icon close fa fa-times"></i>
         </div>
-        
+        <label [attr.for]="name+'-ac-textarea'" class="sr-only">textarea input</label>
         <textarea #textArea rows="1" 
+                  [attr.id]="name+'-ac-textarea'"
                   [(ngModel)]="searchText" 
                   (input)="applyTextAreaWidth($event)" 
                   (keydown)="selectOnEnter(handleEscapeEvent(handleUpArrow(handleDownArrow(handleBackspaceEvent(handleEnterEvent($event))))))"
@@ -71,6 +73,7 @@
             <li class="category-item" 
                 *ngFor="let item of list[i]; let itemIndex = index" 
                 (click)="clearSearch(selectItem(item))" 
+                [ngClass]="{'marked':item._marked}"
                 [attr.data-category]="i" 
                 [attr.data-index]="itemIndex">
               <p>{{ item[keyValueConfig?.valueProperty] }}</p>  
