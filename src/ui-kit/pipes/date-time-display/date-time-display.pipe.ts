@@ -16,9 +16,9 @@ export class DateTimeDisplayPipe implements PipeTransform {
     if(difference.asDays()<1){
         return m.format('HH:mm a');
     } else if (difference.asDays()>=1 && m.year() == now.year()){
-        return m.format('MMMM DD');
+        return m.format('MMM DD');
     } else {
-        return m.format('MMMM DD, YYYY');
+        return m.format('MMM DD, YYYY');
     }
   }
 }
