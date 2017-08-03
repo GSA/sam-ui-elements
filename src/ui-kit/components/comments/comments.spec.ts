@@ -96,7 +96,7 @@ export class CommentsDemoService implements CommentsService {
   }
 }
 
-fdescribe('The Sam Comments component', () => {
+describe('The Sam Comments component', () => {
   let component: SamCommentsComponent;
   let fixture: any;
   
