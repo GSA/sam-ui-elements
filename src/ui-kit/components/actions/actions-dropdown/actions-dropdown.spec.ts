@@ -4,7 +4,7 @@ import { DebugElement } from '@angular/core';
 
 import { SamActionsDropdownComponent } from './actions-dropdown.component';
 
-fdescribe('The Sam Actions Dropdown Component', () => {
+describe('The Sam Actions Dropdown Component', () => {
   let component: SamActionsDropdownComponent;
   let fixture: ComponentFixture<SamActionsDropdownComponent>;
   let de: DebugElement;

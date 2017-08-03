@@ -16,7 +16,7 @@ export class SamSelectResizableComponent implements ControlValueAccessor, AfterV
   private _selected: any;
 
   private onChangeCallback: (_: any) => void = (_: any) => {};
-  private onTouchedCallback: () => void = () => { console.log('i touched somebody')};
+  private onTouchedCallback: () => void = () => { };
 
   get value(): any {
     return this._selected;

@@ -3,4 +3,3 @@ export { SamCommentsComponent } from './comments.component';
 export { CommentsService } from './comments.service';
 export * from './comment';
 export * from './interfaces';
-export * from './time-ago.pipe';
