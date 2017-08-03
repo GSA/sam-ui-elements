@@ -7,7 +7,6 @@ import { AutocompleteConfig } from '../../types';
 
 import { AutocompleteService } from './autocomplete.service';
 
-
 const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamAutocompleteComponent),
@@ -84,6 +83,8 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   * Sets the required text in the label wrapper
   */
   @Input() public required: boolean;
+  @Input() public cb: (val: string, pageEnd?: boolean, serviceOptions?: any) => any;
+  @Input() obs: Observable<any>;
   /**
    * Emitted only when the user selects an item from the dropdown list, or when the user clicks enter and the mode is
    * allowAny. This is useful if you do not want to respond to onChange events when the input is blurred.
@@ -195,8 +196,21 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       if (this.config) {
         options = this.config.serviceOptions || null;
       }
-      this.autocompleteService.fetch(searchString, this.endOfList, options).subscribe(
+      let obs: any;
+      if (this.cb) {
+        console.log('cb');
+        obs = this.cb(searchString, this.endOfList, options);
+        console.log('cb done');
+      } else if (this.autocompleteService) {
+        console.log('service');
+        obs = this.autocompleteService.fetch(searchString, this.endOfList, options);
+      } else {
+        throw new Error("Autocomplete service not provided or a callback not set as input");
+      }
+      console.log('subscribe');
+      obs.subscribe(
         (data) => {
+          console.log(data);
           this.hasServiceError = false;
           if (this.isKeyValuePair(data)) {
             if (this.filteredKeyValuePairs) {
