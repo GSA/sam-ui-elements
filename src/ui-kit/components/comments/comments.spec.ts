@@ -149,7 +149,6 @@ describe('The Sam Comments component', () => {
     fixture.detectChanges()
 
     fixture.whenStable().then(()=>{
-      console.log(component.form.controls.text.value);
 
       // const submitButton = component.submitButton.nativeElement;
       // submitButton.click();

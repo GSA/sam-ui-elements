@@ -122,13 +122,11 @@ export class SamCommentsComponent implements OnInit {
     const sub = 
       this.deleteStream
       .flatMap((comment) => {
-        console.log(comment);
         return this.commentsService.deleteComment(comment)
                .catch(err => Observable.of(err));
       })
       .flatMap((event) => {
         if (event instanceof Error) {
-          console.log(event);
           return Observable.of(this.comments);
         } else {
         return Observable.of(event)
