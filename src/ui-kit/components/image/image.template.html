@@ -11,7 +11,8 @@
   <button #editButton
           type="button"
           class="usa-button-link edit-button"
-          [ngClass]="{ 'hide-button': hideEditButton() }">
+          [ngClass]="{ 'hide-button': hideEditButton() }"
+          [disabled]="hideEditButton()">
     Edit
   </button>
   <div [ngClass]="{ 'hide': !editMode }">

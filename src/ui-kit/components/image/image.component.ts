@@ -15,23 +15,23 @@ export class SamImageComponent implements OnInit {
   /**
    * A src string or dataURL for the image source.
    */
-  @Input() src: string;
+  @Input() public src: string;
   /**
    * A boolean that enables editing and changing a new image
    */
-  @Input() editable: boolean;
+  @Input() public editable: boolean = false;
   /**
    * An event emitter that emits the file that the user uplaoded.
    * 
    */
-  @Output() fileChange: EventEmitter<File> = new EventEmitter<File>();
+  @Output() public fileChange: EventEmitter<File> = new EventEmitter<File>();
 
-  @ViewChild('componentContainer') componentContainer: ElementRef;
-  @ViewChild('filePicker') filePicker: ElementRef;
-  @ViewChild('image') _image: ElementRef;
-  @ViewChild('editButton') editButton: ElementRef;
-  @ViewChild('cancelButton') cancelButton: ElementRef;
-  @ViewChild('saveButton') saveButton: ElementRef;
+  @ViewChild('componentContainer') private componentContainer: ElementRef;
+  @ViewChild('filePicker') private filePicker: ElementRef;
+  @ViewChild('image') private _image: ElementRef;
+  @ViewChild('editButton') private editButton: ElementRef;
+  @ViewChild('cancelButton') private cancelButton: ElementRef;
+  @ViewChild('saveButton') private saveButton: ElementRef;
 
   private fileChangeStream: Observable<any>;
   private editButtonStream: Observable<any>;
@@ -116,15 +116,15 @@ export class SamImageComponent implements OnInit {
       )
   }
 
-  hideEditButton() {
+  private hideEditButton() {
     return !this.editable || this.editMode;
   }
 
-  toggleEdit() {
+  private toggleEdit() {
     return this.editMode = !this.editMode;
   }
 
-  getFileName() {
+  private getFileName() {
     let fileName = '';
     if (this.tmpValue) {
       fileName = this.tmpValue.name;
@@ -132,7 +132,7 @@ export class SamImageComponent implements OnInit {
     return fileName;
   }
 
-  generateFilePickerLabelText() {
+  private generateFilePickerLabelText() {
     let labelString = this.getFileName();
     const labelText = labelString && labelString.length > 9 ? 
                         labelString.substr(0, 8).concat('...') :
@@ -140,30 +140,30 @@ export class SamImageComponent implements OnInit {
     return labelText || 'Select a file';
   }
 
-  generateDoneText() {
+  private generateDoneText() {
     return this.isImageTemporary() ? 'Save' : 'Done';
   }
 
-  generateSrc() {
+  private generateSrc() {
     return this.tmpSrc || this.src;
   }
 
-  isImageTemporary() {
+  private isImageTemporary() {
     return !!this.tmpValue;
   }
 
   // Drag and drop logic for later
-  onDragEnter(event) {
+  private onDragEnter(event) {
     event.stopPropagation();
     event.preventDefault();
   }
 
-  onDragOver(event) {
+  private onDragOver(event) {
     event.stopPropagation();
     event.preventDefault();
   }
 
-  onDropEvent(event) {
+  private onDropEvent(event) {
     event.stopPropagation();
     event.preventDefault();
     if (this.editMode) {
