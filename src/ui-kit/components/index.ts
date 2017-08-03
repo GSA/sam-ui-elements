@@ -28,6 +28,7 @@ import { SamTabsComponent,SamTabComponent } from './tabs';
 import { SamWrapperModule } from '../wrappers';
 import { SamCommentsModule } from './comments';
 import { SamImageModule } from './image';
+import { SamActionButton, SamActionsDropdownComponent } from './actions';
 
 @NgModule({
   imports: [ 
@@ -61,6 +62,8 @@ import { SamImageModule } from './image';
     SamSpinnerComponent,
     SamTabsComponent,
     SamTabComponent,
+    SamActionButton,
+    SamActionsDropdownComponent
   ],
   exports: [
     SamAlertComponent,
@@ -85,7 +88,9 @@ import { SamImageModule } from './image';
     SamTabComponent,
     AccordionsModule,
     SamCommentsModule,
-    SamImageModule
+    SamImageModule,
+    SamActionButton,
+    SamActionsDropdownComponent
   ]
 })
 export class SamComponentsModule {}
