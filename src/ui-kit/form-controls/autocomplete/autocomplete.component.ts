@@ -415,13 +415,13 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   }
 
   checkForFocus(event) {
-    if(!this.allowAny && this.selectedInputValue!=this.inputValue){
-      this.inputValue = "";
+    if(!this.allowAny && this.selectedInputValue!=this.inputValue && this.inputValue!=""){
+      this.inputValue = this.selectedInputValue;
     }
     if(this.inputValue==""){
       this.results = null;
       this.filteredKeyValuePairs = null;
-    }
+    } 
     this.hasFocus = false;
     this.srOnly.nativeElement.innerHTML = null;
   }

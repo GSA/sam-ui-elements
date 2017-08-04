@@ -264,7 +264,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
 
       this.selectItem(this.getItem());
       this.clearSearch();
-      this.blurTextArea();
+      //this.blurTextArea();
 
       this.list = [];
     }
