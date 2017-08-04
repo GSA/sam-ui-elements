@@ -112,7 +112,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
 
   public onTouchedCallback: () => void = () => {};
   public propogateChange: (_: any) => void = (_: any) => { };
-  private inputPipe: Subject<any> = new Subject();
+
 
   get value(): any {
     return this.innerValue;
@@ -127,11 +127,63 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
 
   constructor(@Optional() public autocompleteService: AutocompleteService) {}
 
-  ngOnChanges() {
-
+  ngOnChanges(changes) {
+    if (changes.sub) {
+      console.log('auto sub');
+      this.sub.subscribe(
+        (data) => {
+          console.log(data);
+          this.hasServiceError = false;
+          if (this.isKeyValuePair(data)) {
+            if (this.filteredKeyValuePairs) {
+              const currentResults = data.forEach((item) => {
+                return item[this.config.keyValueConfig.keyProperty];
+              });
+              if (JSON.stringify(currentResults) !== JSON.stringify(this.lastReturnedResults)) {
+                data.forEach((item) => {
+                  this.filteredKeyValuePairs.push(item);
+                });
+              }
+            } else {
+              this.filteredKeyValuePairs = data;
+            }
+            let len = !!this.filteredKeyValuePairs ? this.filteredKeyValuePairs.length : 0;
+            this.pushSROnlyMessage(len + this.resultsAvailable);
+            this.lastReturnedResults = data.forEach((item) => {
+              return item[this.config.keyValueConfig.keyProperty];
+            });
+          } else {
+            if (this.results) {
+              if (data.toString() !== this.lastReturnedResults.toString()) {
+                data.forEach((item) => {
+                  this.results.push(item);
+                });
+              }
+            } else {
+              this.results = data;
+            }
+            let len = !!this.results ? this.results.length : 0;
+            this.pushSROnlyMessage(len + this.resultsAvailable);
+            this.lastReturnedResults = data;
+          }
+          this.endOfList = false;
+        },
+        (err) => {
+          this.results = ['An error occurred. Try a different value.'];
+          let errorobj = {};
+          errorobj[this.config.keyValueConfig.keyProperty] = 'Error';
+          errorobj[this.config.keyValueConfig.valueProperty] = 'An error occurred. Try a different value.';
+          this.filteredKeyValuePairs = [errorobj];
+          this.hasServiceError = true;
+          this.pushSROnlyMessage(this.results[0]);
+        }
+      );
+    }
   }
 
   ngOnInit(){
+
+
     if(!this.control){
       return;
     }
@@ -140,54 +192,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     });
     this.wrapper.formatErrors(this.control);
 
-    this.inputPipe.flatMap(this.sub).subscribe(
-      (data) => {
-        console.log(data);
-        this.hasServiceError = false;
-        if (this.isKeyValuePair(data)) {
-          if (this.filteredKeyValuePairs) {
-            const currentResults = data.forEach((item) => {
-              return item[this.config.keyValueConfig.keyProperty];
-            });
-            if (JSON.stringify(currentResults) !== JSON.stringify(this.lastReturnedResults)) {
-              data.forEach((item) => {
-                this.filteredKeyValuePairs.push(item);
-              });
-            }
-          } else {
-            this.filteredKeyValuePairs = data;
-          }
-          let len = !!this.filteredKeyValuePairs ? this.filteredKeyValuePairs.length : 0;
-          this.pushSROnlyMessage(len + this.resultsAvailable);
-          this.lastReturnedResults = data.forEach((item) => {
-            return item[this.config.keyValueConfig.keyProperty];
-          });
-        } else {
-          if (this.results) {
-            if (data.toString() !== this.lastReturnedResults.toString()) {
-              data.forEach((item) => {
-                this.results.push(item);
-              });
-            }
-          } else {
-            this.results = data;
-          }
-          let len = !!this.results ? this.results.length : 0;
-          this.pushSROnlyMessage(len + this.resultsAvailable);
-          this.lastReturnedResults = data;
-        }
-        this.endOfList = false;
-      },
-      (err) => {
-        this.results = ['An error occurred. Try a different value.'];
-        let errorobj = {};
-        errorobj[this.config.keyValueConfig.keyProperty] = 'Error';
-        errorobj[this.config.keyValueConfig.valueProperty] = 'An error occurred. Try a different value.';
-        this.filteredKeyValuePairs = [errorobj];
-        this.hasServiceError = true;
-        this.pushSROnlyMessage(this.results[0]);
-      }
-    );
+
   }
 
   onChange() {
@@ -247,7 +252,8 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
         options = this.config.serviceOptions || null;
       }
 
-      this.inputPipe.next(searchString);
+      console.log('next');
+      this.sub.next(searchString);
       // let obs: any;
       // if (this.cb) {
       //   console.log('cb');
