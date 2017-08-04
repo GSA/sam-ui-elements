@@ -20,16 +20,14 @@ export class SamCommentsComponent implements OnInit {
    */
   @ViewChild('showCommentsButton') public showCommentsButton: ElementRef;
   @ViewChild('hideCommentsButton') public hideCommentsButton: ElementRef;
-  @ViewChild('cancelButton') public cancelButton: ElementRef;
-  @ViewChild('submitButton') public submitButton: ElementRef;
+  @ViewChild('textArea') public textArea: ElementRef;
 
   /**
    * Observables created from DOM events
    */
   private showButtonStream: Observable<any>;
   private hideCommentsStream: Observable<any>;
-  private cancelButtonStream: Observable<any>;
-  private submitButtonStream: Observable<any>;
+  private enterEventStream: Observable<any>;
 
   /**
    * Observables that map DOM events
@@ -42,7 +40,6 @@ export class SamCommentsComponent implements OnInit {
    * Subscriptions for Observables
    */
   private commentsSubscription: Subscription;
-  private cancelSubscription: Subscription;
 
   /**
    * Other private variables
@@ -80,8 +77,7 @@ export class SamCommentsComponent implements OnInit {
     /**************************************************************************/
     this.showButtonStream = Observable.fromEvent(this.showCommentsButton.nativeElement, 'click');
     this.hideCommentsStream = Observable.fromEvent(this.hideCommentsButton.nativeElement, 'click');
-    this.cancelButtonStream = Observable.fromEvent(this.cancelButton.nativeElement, 'click');
-    this.submitButtonStream = Observable.fromEvent(this.submitButton.nativeElement, 'click');
+    this.enterEventStream = Observable.fromEvent(this.textArea.nativeElement, 'keyup');
 
     /**************************************************************************/
     /* Map DOM events to actions                                              */
@@ -101,18 +97,24 @@ export class SamCommentsComponent implements OnInit {
       });
     
     this.submitStream = 
-      this.submitButtonStream
+      this.enterEventStream
       .flatMap(event => {
-        this.form.controls.datetime.setValue(Date.now());
-        return this.commentsService.postComment(this.form.value)
-              .catch(error => Observable.of(error));
+        if (event.key === 'Enter' || event.keyIdentified === 'Enter') {
+          this.form.controls.datetime.setValue(Date.now());
+          return this.commentsService.postComment(this.form.value)
+                .catch(error => Observable.of(error));
+        } else {
+          return Observable.of(null);
+        }
       })
       .flatMap(event => {
         if (event instanceof Error) {
           return Observable.of(this.comments);
+        } else if (event === null) {
+          return Observable.of(this.comments)
         } else {
           this.form.controls.text.setValue('');
-          return this.commentsService.getComments()
+          return Observable.of(event)
             .catch(error => Observable.of(error));
         }
       });
@@ -120,16 +122,14 @@ export class SamCommentsComponent implements OnInit {
     const sub = 
       this.deleteStream
       .flatMap((comment) => {
-        console.log(comment);
         return this.commentsService.deleteComment(comment)
                .catch(err => Observable.of(err));
       })
       .flatMap((event) => {
         if (event instanceof Error) {
-          console.log(event);
           return Observable.of(this.comments);
         } else {
-        return this.commentsService.getComments()
+        return Observable.of(event)
                .catch(err => Observable.of(err));
         }
       })
@@ -151,20 +151,10 @@ export class SamCommentsComponent implements OnInit {
           console.error(err);
         }
       );
-
-    this.cancelSubscription = 
-      this.cancelButtonStream
-      .subscribe(
-        (event) => {
-          this.form.controls.text.setValue(''); 
-        },
-        (err) => { console.error(err) }
-      );
   }
 
   ngOnDestroy() {
     this.commentsSubscription.unsubscribe();
-    this.cancelSubscription.unsubscribe();
   }
 
   isDeletable(comment: Comment): boolean {

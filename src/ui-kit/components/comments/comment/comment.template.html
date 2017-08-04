@@ -7,7 +7,7 @@
     </figure>
     <div class="comment-metadata">
       <strong class="username">{{comment?.username}}</strong>
-      <time pubdate datetime="comment.datetime">{{ comment?.datetime | timeago }}</time>
+      <time pubdate datetime="comment.datetime">{{ comment?.datetime | dateTimeDisplay }}</time>
     </div>
     <button class="usa-button-link remove-comment"
             *ngIf="allowDelete"

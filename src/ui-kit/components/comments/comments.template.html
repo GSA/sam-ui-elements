@@ -1,40 +1,31 @@
-<sam-accordion>
-  <sam-accordion-section [headerText]="'Comments'"
-                         [name]="'comments-section'"
-                         [isExpanded]="true">
-    <section class="sam-comments">
-      <!-- List of comments -->
-      <p class="button-row">
-        <button #showCommentsButton class="usa-button-link show-button">Show previous comments</button>
-        <button #hideCommentsButton class="usa-button-link hide-button">Hide previous comments</button>
-      </p>
-      <ul class="usa-unstyled-list">
-        <li *ngFor="let comment of comments;">
-          <sam-comment [comment]="comment"
-                       [allowDelete]="isDeletable()"
-                       (onDelete)="onDelete($event)"></sam-comment>
-        </li>
-      </ul>
-      <!-- New Comment Form -->
-      <form [formGroup]="form">
-        
-        <label for="comment-component-input">Write A Comment</label>
-        <textarea formControlName="text"
-                  name="comment"
-                  class="sam-text-area"
-                  id="comment-component-input">
-        </textarea>
+<section class="sam-comments">
+  <!-- List of comments -->
+  <p class="button-row">
+    <button #showCommentsButton class="usa-button-link show-button">Show previous comments</button>
+    <button #hideCommentsButton class="usa-button-link hide-button">Hide previous comments</button>
+  </p>
+  <ul class="usa-unstyled-list">
+    <li *ngFor="let comment of comments;">
+      <sam-comment [comment]="comment"
+                    [allowDelete]="isDeletable()"
+                    (onDelete)="onDelete($event)"></sam-comment>
+    </li>
+  </ul>
+  <!-- New Comment Form -->
+  <form [formGroup]="form">
+    
+    <label for="comment-component-input">Write A Comment</label>
+    <textarea #textArea
+              formControlName="text"
+              name="comment"
+              class="sam-text-area"
+              id="comment-component-input">
+    </textarea>
 
-        <p class="char-counter">
-          <span>{{ charsRemaining() }} characters remaining</span>
-        </p>
+    <p class="char-counter">
+      <span>{{ charsRemaining() }} characters remaining</span>
+    </p>
 
-        <div class="actions">
-          <button #cancelButton type="button">Cancel</button>
-          <button #submitButton type="submit" [disabled]="!form.valid">Submit</button>
-        </div>
+  </form>
+</section>
 
-      </form>
-    </section>
-  </sam-accordion-section>
-</sam-accordion>

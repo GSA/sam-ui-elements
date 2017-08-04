@@ -27,6 +27,8 @@ import { SamSpinnerComponent } from './spinner';
 import { SamTabsComponent,SamTabComponent } from './tabs';
 import { SamWrapperModule } from '../wrappers';
 import { SamCommentsModule } from './comments';
+import { SamImageModule } from './image';
+import { SamActionButton, SamActionsDropdownComponent } from './actions';
 
 @NgModule({
   imports: [ 
@@ -37,7 +39,8 @@ import { SamCommentsModule } from './comments';
     AccordionsModule,
     SamSidenavModule,
     SamWrapperModule,
-    SamCommentsModule
+    SamCommentsModule,
+    SamImageModule
   ],
   declarations: [
     SamAlertComponent,
@@ -59,6 +62,8 @@ import { SamCommentsModule } from './comments';
     SamSpinnerComponent,
     SamTabsComponent,
     SamTabComponent,
+    SamActionButton,
+    SamActionsDropdownComponent
   ],
   exports: [
     SamAlertComponent,
@@ -82,7 +87,10 @@ import { SamCommentsModule } from './comments';
     SamTabsComponent,
     SamTabComponent,
     AccordionsModule,
-    SamCommentsModule
+    SamCommentsModule,
+    SamImageModule,
+    SamActionButton,
+    SamActionsDropdownComponent
   ]
 })
 export class SamComponentsModule {}
