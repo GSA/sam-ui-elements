@@ -58,9 +58,7 @@ export class SamTextComponent implements ControlValueAccessor {
    */
   @Output() onBlur:EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  onChange: any = () => {
-    //this.wrapper.formatErrors(this.control);
-  };
+  onChange: any = (c) => { };
   onTouched: any = () => { };
   onLoseFocus: any = () => {this.onBlur.emit(true)};
 
@@ -93,7 +91,12 @@ export class SamTextComponent implements ControlValueAccessor {
       validators.push(Validators.maxLength(this.maxlength));
     }
     this.control.setValidators(validators);
-    //this.control.valueChanges.subscribe(this.onChange);
+    this.control.valueChanges.subscribe(()=>{
+      this.wrapper.formatErrors(this.control);
+    });
+    this.wrapper.formatErrors(this.control);
+    /*
+    maybe use a configuration to toggle between valueChanges subcribe and this service?
     this.samFormService.formEventsUpdated$.subscribe(evt=>{
       if(evt['eventType'] && evt['eventType']=='submit'){
         this.wrapper.formatErrors(this.control);
@@ -101,7 +104,7 @@ export class SamTextComponent implements ControlValueAccessor {
         this.wrapper.clearError();
       }
     });
-    //this.wrapper.formatErrors(this.control);
+    */
   }
 
   onInputChange(value) {

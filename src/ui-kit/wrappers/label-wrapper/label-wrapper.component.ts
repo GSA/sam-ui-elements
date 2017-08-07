@@ -125,7 +125,7 @@ export class LabelWrapper implements AfterViewChecked{
       this.errorMessage = '';
     }
   }
-  clearError(){
+  public clearError(){
     this.errorMessage = '';
   }
 }
