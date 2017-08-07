@@ -10,7 +10,7 @@ import { SamFormControlsModule } from './form-controls';
 import { SamFormTemplatesModule } from './form-templates';
 import { SamPipesModule } from './pipes';
 import { ServiceDirectivesModule } from './service-directives';
-
+import { SamFormService } from './form-service';
 
 @NgModule({
   imports: [
@@ -32,7 +32,8 @@ import { ServiceDirectivesModule } from './service-directives';
     SamFormTemplatesModule,
     SamPipesModule,
     ServiceDirectivesModule
-  ]
+  ],
+  providers: [SamFormService]
 })
 export class SamUIKitModule { }
 

@@ -1,7 +1,7 @@
 import {Component, Input, ViewChild, forwardRef, Output, EventEmitter} from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn} from "@angular/forms";
-
+import {SamFormService} from '../../form-service';
 export const TEXT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamTextComponent),
@@ -58,15 +58,13 @@ export class SamTextComponent implements ControlValueAccessor {
    */
   @Output() onBlur:EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  onChange: any = () => {
-    this.wrapper.formatErrors(this.control);
-  };
+  onChange: any = (c) => { };
   onTouched: any = () => { };
   onLoseFocus: any = () => {this.onBlur.emit(true)};
 
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
 
-  constructor() {
+  constructor(private samFormService:SamFormService) {
 
   }
 
@@ -93,9 +91,20 @@ export class SamTextComponent implements ControlValueAccessor {
       validators.push(Validators.maxLength(this.maxlength));
     }
     this.control.setValidators(validators);
-    this.control.valueChanges.subscribe(this.onChange);
-
+    this.control.valueChanges.subscribe(()=>{
+      this.wrapper.formatErrors(this.control);
+    });
     this.wrapper.formatErrors(this.control);
+    /*
+    maybe use a configuration to toggle between valueChanges subcribe and this service?
+    this.samFormService.formEventsUpdated$.subscribe(evt=>{
+      if(evt['eventType'] && evt['eventType']=='submit'){
+        this.wrapper.formatErrors(this.control);
+      } else if(evt['eventType'] && evt['eventType']=='reset'){
+        this.wrapper.clearError();
+      }
+    });
+    */
   }
 
   onInputChange(value) {
