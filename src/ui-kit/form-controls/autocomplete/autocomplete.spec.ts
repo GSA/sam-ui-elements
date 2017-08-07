@@ -109,4 +109,17 @@ describe('The Sam Autocomplete Component', () => {
     component.results = component.filterKeyValuePairs('zzzzzz', component.options);
     expect(component.results).toEqual([]);
   });
+
+  it('Should have public property `inputValue` that binds to search input value', () => {
+    let input = fixture.debugElement.query(By.css('input[type="text"]'));
+
+    expect(component.inputValue).toBeDefined();
+
+    fixture.detectChanges();
+    input.nativeElement.value = 'test search';
+    input.nativeElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    expect((<HTMLInputElement>input.nativeElement).value).toEqual(component.inputValue);
+  });
 });

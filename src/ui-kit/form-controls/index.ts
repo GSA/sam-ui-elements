@@ -30,7 +30,7 @@ import { SamAutocompleteMultiselectModule } from './autocomplete-multiselect';
     SamSelectModule,
     SamTextInputModule,
     SamAutocompleteDropdownModule,
-    SamAutocompleteMultiselectModule
+    SamAutocompleteMultiselectModule,
   ],
   declarations: [
     SamDateComponent,

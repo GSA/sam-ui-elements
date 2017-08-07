@@ -1,0 +1,7 @@
+<button type="button"
+        (click)="actionClicked()"
+        [disabled]="disabled"
+        class="usa-button sam-action-button">
+  <i [ngClass]="action?.icon"></i>&nbsp;
+  {{ action?.label }}
+</button>

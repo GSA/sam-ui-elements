@@ -8,7 +8,7 @@
       <br *ngIf="item.title && item.description"/>
       <em *ngIf="item.description">{{ item.description }}</em>
       <br *ngIf="item.titleNumberAgency"/>
-      <span class = "history-titleNumberAgency" *ngIf="item.titleNumberAgency">{{ item.titleNumberAgency }}</span>
+      <span class = "history-titleNumberAgency" *ngIf="item.titleNumberAgency" [innerHTML]="item.titleNumberAgency"></span>
       <br *ngIf="item.submitter"/>
       <span class = "history-submitter" *ngIf="item.submitter">{{ item.submitter }}</span>
       <br *ngIf="item.comment"/>

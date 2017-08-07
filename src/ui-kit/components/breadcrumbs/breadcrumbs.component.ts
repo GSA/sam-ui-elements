@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import { ActivatedRoute, NavigationEnd, UrlSegment } from '@angular/router';
 import { IBreadcrumb } from '../../types';
 
@@ -19,6 +19,8 @@ export class SamBreadcrumbsComponent {
      * The rootCrumb property takes a breadcrumb to be used for the root. It is only necessary to provide this if you are also using the listenToRouter property.
      */
     @Input() rootCrumb: IBreadcrumb = undefined;
+
+    @Output() public crumbActionHandler = new EventEmitter();
 
     private _routeSubscription: any;
     private count = 0;
@@ -80,7 +82,7 @@ export class SamBreadcrumbsComponent {
       if (route.children.length === 0) {
         return crumbs;
       }
-      
+
       // If route has children, recurse with child that is currently in the URL
       if (route.children.length > 0) {
         const currentChild: ActivatedRoute = this.getCurrentChild(route);
@@ -96,5 +98,8 @@ export class SamBreadcrumbsComponent {
         }
         return prev;
       }, undefined);
+    }
+    public crumbHandler(crumb: string) {
+      this.crumbActionHandler.emit(crumb);
     }
 }

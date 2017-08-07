@@ -2,7 +2,19 @@ import { Component, Input, forwardRef } from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import * as suffixes from './suffixes.json';
 import { NameEntryType } from '../../types';
-import {NG_VALUE_ACCESSOR, NG_VALIDATORS, Validator, ControlValueAccessor, FormControl, Validators, ValidatorFn} from "@angular/forms";
+import { NG_VALUE_ACCESSOR, NG_VALIDATORS, Validator, ControlValueAccessor, FormControl, Validators, ValidatorFn } from "@angular/forms";
+
+let suffixOptions = suffixes.map((item) => {
+  return {
+    label: item.suffix,
+    value: item.suffix
+  };
+});
+
+suffixOptions.unshift({
+  label: 'None',
+  value: ''
+});
 
 /**
  * The <samNameInput> component is a Name entry portion of a form
@@ -18,11 +30,16 @@ import {NG_VALUE_ACCESSOR, NG_VALIDATORS, Validator, ControlValueAccessor, FormC
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => SamNameEntryComponent),
     multi: true
-  },{ 
-    provide: NG_VALIDATORS, useExisting: forwardRef(() => SamNameEntryComponent), multi: true 
+  },{
+    provide: NG_VALIDATORS, useExisting: forwardRef(() => SamNameEntryComponent), multi: true
   }]
 })
-export class SamNameEntryComponent implements ControlValueAccessor, Validator{
+export class SamNameEntryComponent implements ControlValueAccessor, Validator {
+  private disabled = null;
+  private store = {
+    suffixes: suffixOptions
+  };
+
   /**
   * The bound value of the component
   */
@@ -45,10 +62,11 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator{
   mNameErrorMsg: string = "";
   lNameErrorMsg: string = "";
   suffixErrorMsg: string = "";
-  
+
   get value(){
     return this.model;
   };
+
   set value(value: NameEntryType){
     if(!value){
       value = {
@@ -61,21 +79,11 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator{
     this.model = value;
   };
 
-  private store = {
-    suffixes: suffixes.map((item) => {
-      return {
-        label: item.suffix,
-        value: item.suffix
-      };
-    })
-  };
-  private disabled = null;
-  
   setSubmitted() {
     this.validateFirstName();
     this.validateLastName();
   }
-  
+
   // validates the form, returns null when valid else the validation object
   // in this case we're checking if the json parsing has passed or failed from the onChange method
   public validate(c: FormControl) {
@@ -100,14 +108,14 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator{
     }
     return Object.keys(obj).length ? obj : null;
   }
-  
+
   getIdentifer(str){
     if(this.prefix.length>0){
       str = this.prefix + "-" + str;
     }
     return str;
   }
-  
+
   validateFirstName(){
     var error = false;
     if(/^[0-9]+$/.test(this.model.firstName)){
@@ -123,7 +131,7 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator{
     }
     return !error;
   }
-  
+
   validateMiddleName(){
     var error = false;
     if(/^[0-9]+$/.test(this.model.middleName)){
@@ -135,7 +143,7 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator{
     }
     return !error;
   }
-  
+
   validateLastName(){
     var error = false;
     if(/^[0-9]+$/.test(this.model.lastName)){
@@ -159,7 +167,7 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator{
 
   onChange: any = () => { };
   onTouched: any = () => { };
-  
+
   registerOnChange(fn) {
     this.onChange = fn;
   }
