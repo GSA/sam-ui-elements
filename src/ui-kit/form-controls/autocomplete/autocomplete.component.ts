@@ -126,7 +126,9 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     }
   }
 
-  constructor(@Optional() public autocompleteService: AutocompleteService) {}
+  constructor(@Optional() public autocompleteService: AutocompleteService) {
+
+  }
 
   ngOnChanges(changes) {
     if (changes.obs) {
@@ -254,7 +256,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       }
 
       console.log('next');
-      this.obs.(searchString);
+      //this.obs.(searchString);
       // let obs: any;
       // if (this.cb) {
       //   console.log('cb');
