@@ -86,6 +86,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   @Input() public cb: (val: string, pageEnd?: boolean, serviceOptions?: any) => any;
   @Input() sub: Subject<any>;
   @Input() obs: Observable<any>;
+  public sub2: Subject<any> = new Subject();
   /**
    * Emitted only when the user selects an item from the dropdown list, or when the user clicks enter and the mode is
    * allowAny. This is useful if you do not want to respond to onChange events when the input is blurred.
@@ -256,6 +257,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       }
 
       console.log('next');
+      this.sub2.next(searchString);
       //this.obs.(searchString);
       // let obs: any;
       // if (this.cb) {
