@@ -105,6 +105,10 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    */
   @Input() categoryIsSelectable: boolean = false;
   /**
+   * Allows any value typed in the input to be chosen
+   */
+  @Input() public allowAny: boolean = false;
+  /**
    * Optional: Provides a default search string to use with service
    * in lieu of sending an empty string. If not provided, value
    * defaults to an empty string.
@@ -259,10 +263,16 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    */
   selectOnEnter(event) {
     if (event.code === 'Enter' || event.keyIdentified === 'Enter') {
-      const results = this.getResults();
-      const selectedChildIndex = this.getSelectedChildIndex(results);
-
-      this.selectItem(this.getItem());
+      let lookedUpItem = this.getItem();
+      if(this.allowAny && lookedUpItem && lookedUpItem[this.keyValueConfig.keyProperty]==null){
+        let obj = {};
+        obj[this.keyValueConfig.keyProperty] = event.target.value;
+        obj[this.keyValueConfig.valueProperty] = event.target.value;
+        this.selectItem(obj);
+        //this.options.push(obj);
+      } else {
+        this.selectItem(lookedUpItem);
+      }
       this.clearSearch();
       //this.blurTextArea();
 
