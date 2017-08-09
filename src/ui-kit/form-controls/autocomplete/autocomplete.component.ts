@@ -122,6 +122,50 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     }
   }
 
+  /*
+   How do define custom http callbacks:
+
+   <sam-autocomplete
+       #autoComplete
+       [ngModelOptions]="{standalone: true}"
+       [allowAny]="false"
+       [(ngModel)]="dummySearchValue"
+       [labelText]="'Find User'"
+       [config]="userConfig"
+       (enterEvent)="onPersonChange($event)"
+       [httpRequest]="request"
+   ></sam-autocomplete>
+
+   class SomeComponent {
+     @ViewChild('autoComplete') autoComplete: SamAutocompleteComponent;
+
+     ngOnInit() {
+       this.request = this.autoComplete.keyEvents
+         .debounceTime(300)
+         .switchMap(
+          input => {
+             return this.accessService.getUserAutoComplete(input)
+                .catch(e => {
+                  return Observable.of([]);
+                });
+           }
+         )
+         .map(
+           users => {
+             if (!users) {
+              return [];
+             }
+             return users.map(user => {
+              return {
+                key: user.email,
+                value: `${user.firstName} ${user.lastName} (${user.email })`
+              };
+            });
+         }
+       );
+     }
+   }
+   */
   @Input() httpRequest: Observable<any>;
   public keyEvents: Subject<any> = new Subject();
 
