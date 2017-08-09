@@ -95,16 +95,15 @@ export class SamTextComponent implements ControlValueAccessor {
       this.wrapper.formatErrors(this.control);
     });
     this.wrapper.formatErrors(this.control);
-    /*
-    maybe use a configuration to toggle between valueChanges subcribe and this service?
-    this.samFormService.formEventsUpdated$.subscribe(evt=>{
-      if(evt['eventType'] && evt['eventType']=='submit'){
-        this.wrapper.formatErrors(this.control);
-      } else if(evt['eventType'] && evt['eventType']=='reset'){
-        this.wrapper.clearError();
-      }
-    });
-    */
+    
+    // maybe use a configuration to toggle between valueChanges subcribe and this service?
+    // this.samFormService.formEventsUpdated$.subscribe(evt=>{
+    //   if(((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+    //     this.wrapper.formatErrors(this.control);
+    //   } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+    //     this.wrapper.clearError();
+    //   }
+    // });
   }
 
   onInputChange(value) {

@@ -6,15 +6,16 @@ import {
 import 'rxjs/add/operator/map';
 import {Observable} from "rxjs";
 import { Subject }    from 'rxjs/Subject';
+import { AbstractControl }    from '@angular/forms';
 
 @Injectable()
 export class SamFormService {
     private formEvents = new Subject<Object>();
     formEventsUpdated$ = this.formEvents.asObservable();
-    fireSubmit(){
-        this.formEvents.next({eventType:'submit'});
+    fireSubmit(fg:AbstractControl=null){
+        this.formEvents.next({root:fg,eventType:'submit'});
     }
-    fireReset(){
-        this.formEvents.next({eventType:'reset'});
+    fireReset(fg:AbstractControl=null){
+        this.formEvents.next({root:fg,eventType:'reset'});
     }
 }
