@@ -1,12 +1,11 @@
 import { Component, Input, Output, EventEmitter, forwardRef,
          ViewChild, ElementRef, Optional, OnChanges } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import { AutocompleteConfig } from '../../types';
 
 import { AutocompleteService } from './autocomplete.service';
-
 
 const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -123,10 +122,109 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     }
   }
 
+  /*
+   How do define custom http callbacks:
+
+   <sam-autocomplete
+       #autoComplete
+       [ngModelOptions]="{standalone: true}"
+       [allowAny]="false"
+       [(ngModel)]="dummySearchValue"
+       [labelText]="'Find User'"
+       [config]="userConfig"
+       (enterEvent)="onPersonChange($event)"
+       [httpRequest]="request"
+   ></sam-autocomplete>
+
+   class SomeComponent {
+     @ViewChild('autoComplete') autoComplete: SamAutocompleteComponent;
+
+     ngOnInit() {
+       this.request = this.autoComplete.keyEvents
+         .debounceTime(300)
+         .switchMap(
+          input => {
+             return this.accessService.getUserAutoComplete(input)
+                .catch(e => {
+                  return Observable.of([]);
+                });
+           }
+         )
+         .map(
+           users => {
+             if (!users) {
+              return [];
+             }
+             return users.map(user => {
+              return {
+                key: user.email,
+                value: `${user.firstName} ${user.lastName} (${user.email })`
+              };
+            });
+         }
+       );
+     }
+   }
+   */
+  @Input() httpRequest: Observable<any>;
+  public keyEvents: Subject<any> = new Subject();
+
   constructor(@Optional() public autocompleteService: AutocompleteService) {}
 
-  ngOnChanges() {
+  ngOnChanges(changes) {
+    if (changes.httpRequest) {
+      this.httpRequest.subscribe(
+        (res) => this.requestSuccess(res),
+        (err) => this.requestError(err),
+      );
+    }
+  }
 
+  requestSuccess(data) {
+    this.hasServiceError = false;
+    if (this.isKeyValuePair(data)) {
+      if (this.filteredKeyValuePairs) {
+        const currentResults = data.forEach((item) => {
+          return item[this.config.keyValueConfig.keyProperty];
+        });
+        if (JSON.stringify(currentResults) !== JSON.stringify(this.lastReturnedResults)) {
+          data.forEach((item) => {
+            this.filteredKeyValuePairs.push(item);
+          });
+        }
+      } else {
+        this.filteredKeyValuePairs = data;
+      }
+      let len = !!this.filteredKeyValuePairs ? this.filteredKeyValuePairs.length : 0;
+      this.pushSROnlyMessage(len + this.resultsAvailable);
+      this.lastReturnedResults = data.forEach((item) => {
+        return item[this.config.keyValueConfig.keyProperty];
+      });
+    } else {
+      if (this.results) {
+        if (data.toString() !== this.lastReturnedResults.toString()) {
+          data.forEach((item) => {
+            this.results.push(item);
+          });
+        }
+      } else {
+        this.results = data;
+      }
+      let len = !!this.results ? this.results.length : 0;
+      this.pushSROnlyMessage(len + this.resultsAvailable);
+      this.lastReturnedResults = data;
+    }
+    this.endOfList = false;
+  }
+
+  requestError(err) {
+    this.results = ['An error occurred. Try a different value.'];
+    let errorobj = {};
+    errorobj[this.config.keyValueConfig.keyProperty] = 'Error';
+    errorobj[this.config.keyValueConfig.valueProperty] = 'An error occurred. Try a different value.';
+    this.filteredKeyValuePairs = [errorobj];
+    this.hasServiceError = true;
+    this.pushSROnlyMessage(this.results[0]);
   }
 
   ngOnInit(){
@@ -195,53 +293,17 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       if (this.config) {
         options = this.config.serviceOptions || null;
       }
-      this.autocompleteService.fetch(searchString, this.endOfList, options).subscribe(
-        (data) => {
-          this.hasServiceError = false;
-          if (this.isKeyValuePair(data)) {
-            if (this.filteredKeyValuePairs) {
-              const currentResults = data.forEach((item) => {
-                return item[this.config.keyValueConfig.keyProperty];
-              });
-              if (JSON.stringify(currentResults) !== JSON.stringify(this.lastReturnedResults)) {
-                data.forEach((item) => {
-                  this.filteredKeyValuePairs.push(item);
-                });
-              }
-            } else {
-              this.filteredKeyValuePairs = data;
-            }
-            let len = !!this.filteredKeyValuePairs ? this.filteredKeyValuePairs.length : 0;
-            this.pushSROnlyMessage(len + this.resultsAvailable);
-            this.lastReturnedResults = data.forEach((item) => {
-              return item[this.config.keyValueConfig.keyProperty];
-            });
-          } else {
-            if (this.results) {
-              if (data.toString() !== this.lastReturnedResults.toString()) {
-                data.forEach((item) => {
-                  this.results.push(item);
-                });
-              }
-            } else {
-              this.results = data;
-            }
-            let len = !!this.results ? this.results.length : 0;
-            this.pushSROnlyMessage(len + this.resultsAvailable);
-            this.lastReturnedResults = data;
-          }
-          this.endOfList = false;
-        },
-        (err) => {
-          this.results = ['An error occurred. Try a different value.'];
-          let errorobj = {};
-          errorobj[this.config.keyValueConfig.keyProperty] = 'Error';
-          errorobj[this.config.keyValueConfig.valueProperty] = 'An error occurred. Try a different value.';
-          this.filteredKeyValuePairs = [errorobj];
-          this.hasServiceError = true;
-          this.pushSROnlyMessage(this.results[0]);
-        }
-      );
+      if (this.autocompleteService) {
+        this.autocompleteService.fetch(searchString, this.endOfList, options).subscribe(
+          (res) => this.requestSuccess(res),
+          (err) => this.requestError(err),
+        );
+      } else if (this.httpRequest) {
+        this.keyEvents.next(searchString);
+      } else {
+        console.error('unable to fetch search results');
+      }
+
     }
   }
 
@@ -421,7 +483,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     if(this.inputValue==""){
       this.results = null;
       this.filteredKeyValuePairs = null;
-    } 
+    }
     this.hasFocus = false;
     this.srOnly.nativeElement.innerHTML = null;
   }
