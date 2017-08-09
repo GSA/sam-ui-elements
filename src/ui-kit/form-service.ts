@@ -12,10 +12,10 @@ import { AbstractControl }    from '@angular/forms';
 export class SamFormService {
     private formEvents = new Subject<Object>();
     formEventsUpdated$ = this.formEvents.asObservable();
-    fireSubmit(fg:AbstractControl=null){
-        this.formEvents.next({root:fg,eventType:'submit'});
+    fireSubmit(rootAbstractControl:AbstractControl=null){
+        this.formEvents.next({root:rootAbstractControl,eventType:'submit'});
     }
-    fireReset(fg:AbstractControl=null){
-        this.formEvents.next({root:fg,eventType:'reset'});
+    fireReset(rootAbstractControl:AbstractControl=null){
+        this.formEvents.next({root:rootAbstractControl,eventType:'reset'});
     }
 }
