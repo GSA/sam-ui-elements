@@ -1,10 +1,9 @@
 import { Component, Input, ViewChild, ElementRef, ChangeDetectorRef, Optional, forwardRef} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
-
 import { AutocompleteService } from '../autocomplete/autocomplete.service';
-
 import { trigger, state, style, transition, animate, keyframes } from '@angular/core';
+import {SamFormService} from '../../form-service';
 
 @Component({
   selector: 'sam-autocomplete-multiselect',
@@ -92,6 +91,10 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    */
   @Input() control: FormControl;
   /**
+  * Toggles validations to display with SamFormService events
+  */
+  @Input() useFormService: boolean;
+  /**
    * Provides an array of categories for selection
    * when also setting categoryIsSelectable property
    * to true.
@@ -138,7 +141,9 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     return this.innerValue;
   }
 
-  constructor(@Optional() private service: AutocompleteService, private ref: ChangeDetectorRef) {
+  constructor(@Optional() private service: AutocompleteService, 
+    private ref: ChangeDetectorRef,
+    private samFormService:SamFormService) {
     this.cachingService = this.CachingService();
   }
 
@@ -147,11 +152,21 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     if(!this.control){
       return;
     }
-    this.control.valueChanges.subscribe(()=>{
+    if(!this.useFormService){
+      this.control.statusChanges.subscribe(()=>{
+        this.wrapper.formatErrors(this.control);
+      });
       this.wrapper.formatErrors(this.control);
-    });
-
-    this.wrapper.formatErrors(this.control);
+    }
+    else {
+      this.samFormService.formEventsUpdated$.subscribe(evt=>{
+        if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+          this.wrapper.formatErrors(this.control);
+        } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+          this.wrapper.clearError();
+        }
+      });
+    }
   }
 
   ngOnChanges(c){

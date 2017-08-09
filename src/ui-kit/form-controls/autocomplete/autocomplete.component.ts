@@ -2,10 +2,9 @@ import { Component, Input, Output, EventEmitter, forwardRef,
          ViewChild, ElementRef, Optional, OnChanges } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-
 import { AutocompleteConfig } from '../../types';
-
 import { AutocompleteService } from './autocomplete.service';
+import {SamFormService} from '../../form-service';
 
 const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -57,7 +56,10 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
    * Allows any value typed in the input to be chosen
    */
   @Input() public allowAny: boolean = false;
-
+  /**
+  * Toggles validations to display with SamFormService events
+  */
+  @Input() useFormService: boolean;
   /**
    * Array of categories. Applies category class if labels match values.
    */
@@ -169,7 +171,8 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   @Input() httpRequest: Observable<any>;
   public keyEvents: Subject<any> = new Subject();
 
-  constructor(@Optional() public autocompleteService: AutocompleteService) {}
+  constructor(@Optional() public autocompleteService: AutocompleteService,
+    private samFormService:SamFormService) {}
 
   ngOnChanges(changes) {
     if (changes.httpRequest) {
@@ -231,10 +234,21 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     if(!this.control){
       return;
     }
-    this.control.valueChanges.subscribe(()=>{
+    if(!this.useFormService){
+      this.control.statusChanges.subscribe(()=>{
+        this.wrapper.formatErrors(this.control);
+      });
       this.wrapper.formatErrors(this.control);
-    });
-    this.wrapper.formatErrors(this.control);
+    }
+    else {
+      this.samFormService.formEventsUpdated$.subscribe(evt=>{
+        if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+          this.wrapper.formatErrors(this.control);
+        } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+          this.wrapper.clearError();
+        }
+      });
+    }
   }
 
   onChange() {

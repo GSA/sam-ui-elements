@@ -1,6 +1,7 @@
 import { Component, Input, ViewChild, forwardRef, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, Validators, FormControl } from "@angular/forms";
+import {SamFormService} from '../../form-service';
 
 export const TEXT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -57,6 +58,10 @@ export class SamTextareaComponent implements ControlValueAccessor {
    */
   @Input() placeholder: string;
   /**
+  * Toggles validations to display with SamFormService events
+  */
+  @Input() useFormService: boolean;
+  /**
    * Emits focus event
    */
   @Output() focusEvent: EventEmitter<any> = new EventEmitter();
@@ -71,7 +76,8 @@ export class SamTextareaComponent implements ControlValueAccessor {
 
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef,
+    private samFormService:SamFormService) {}
 
   ngOnInit() {
     if (!this.name) {
@@ -97,9 +103,21 @@ export class SamTextareaComponent implements ControlValueAccessor {
     }
 
     this.control.setValidators(validators);
-    this.control.statusChanges.subscribe(() => {
+    if(!this.useFormService){
+      this.control.statusChanges.subscribe(()=>{
+        this.wrapper.formatErrors(this.control);
+      });
       this.wrapper.formatErrors(this.control);
-    });
+    }
+    else {
+      this.samFormService.formEventsUpdated$.subscribe(evt=>{
+        if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+          this.wrapper.formatErrors(this.control);
+        } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+          this.wrapper.clearError();
+        }
+      });
+    }
   }
 
   ngAfterViewInit(){
