@@ -2,6 +2,7 @@ import { Component, forwardRef, Input, Output, EventEmitter, ViewChild } from '@
 import { FormControl,ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
 import { OptionsType } from '../../types';
+import {SamFormService} from '../../form-service';
 
 /**
  * The <sam-checkbox> component is a set of checkboxes 
@@ -53,6 +54,10 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   */
   @Input() control: FormControl;
   /**
+  * Toggles validations to display with SamFormService events
+  */
+  @Input() useFormService: boolean;
+  /**
   * Deprecated, Event emitted when the model value changes
   */
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
@@ -89,7 +94,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
     this.onTouched();
   }
   
-  constructor() {}
+  constructor(private samFormService:SamFormService) {}
 
   ngOnInit() {
     if (!this.name) {

@@ -4,6 +4,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AutocompleteService } from '../autocomplete/autocomplete.service';
 import { OptionsType, AutocompleteDropdownButton, AutocompleteDropdownButtonIcon } from '../../types';
 
+//candidate for deprecation?
 const AUTOCOMPLETE_DROPDOWN_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamAutocompleteDropdownComponent),

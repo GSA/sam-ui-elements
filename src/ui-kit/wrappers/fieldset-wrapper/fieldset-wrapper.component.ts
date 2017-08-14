@@ -122,4 +122,8 @@ export class FieldsetWrapper {
       this.errorMessage = '';
     }
   }
+
+  public clearError(){
+    this.errorMessage = '';
+  }
 }

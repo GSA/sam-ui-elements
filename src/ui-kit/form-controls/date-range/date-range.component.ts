@@ -3,6 +3,7 @@ import * as moment from 'moment/moment';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn, AbstractControl} from "@angular/forms";
 import { SamDateComponent } from "../date/date.component";
 import { SamDateTimeComponent } from "../date-time/date-time.component";
+import {SamFormService} from '../../form-service';
 
 //to do: move these to appropriate locations after validations are figured out for the ui-kit
 function dateRangeValidation(c:AbstractControl){
@@ -107,10 +108,14 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
   */
   @Input() type: string = "date";
   /**
+  * Toggles validations to display with SamFormService events
+  */
+  @Input() useFormService: boolean;
+  /**
   * Toggles default component validations
   */
   @Input() defaultValidations: boolean = true;
-  /** 
+  /**
   * Event emitted when value changes
   */
   @Output() valueChange = new EventEmitter<any>();
@@ -124,7 +129,7 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
   private endDateValue;
   @ViewChild('wrapper') wrapper;
 
-  constructor() { }
+  constructor(private samFormService:SamFormService) { }
 
   ngOnInit() {
     if(!this.control){
@@ -141,10 +146,21 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
       validators.push(dateRangeValidation);
     }
     this.control.setValidators(validators);
-    this.control.valueChanges.subscribe(()=>{
+    if(!this.useFormService){
+      this.control.statusChanges.subscribe(()=>{
+        this.wrapper.formatErrors(this.control);
+      });
       this.wrapper.formatErrors(this.control);
-    });
-    this.wrapper.formatErrors(this.control);
+    }
+    else {
+      this.samFormService.formEventsUpdated$.subscribe(evt=>{
+        if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+          this.wrapper.formatErrors(this.control);
+        } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+          this.wrapper.clearError();
+        }
+      });
+    }
   }
 
   ngOnChanges() {

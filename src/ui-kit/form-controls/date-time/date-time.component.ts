@@ -4,7 +4,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
 import { SamDateComponent } from '../date/date.component';
 import { SamTimeComponent } from '../time/time.component';
-
+import {SamFormService} from '../../form-service';
 
 const MY_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -48,6 +48,10 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
    * Something to do with formbuilder? This needs to be document and annotated
    */
   @Input() control;
+  /**
+  * Toggles validations to display with SamFormService events
+  */
+  @Input() useFormService: boolean;
 
   public time: string = null;
   public date: string = null;
@@ -56,13 +60,29 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
   @ViewChild('timeComponent') timeComponent: SamTimeComponent;
   @ViewChild(FieldsetWrapper) wrapper;
 
+  constructor(private samFormService:SamFormService) { }
+
   ngOnInit() {
     if (!this.name) {
       throw new Error('SamDateTimeComponent requires a [name] input for 508 compliance');
     }
 
     if (this.control) {
-      this.wrapper.formatErrors(this.control);
+      if(!this.useFormService){
+        this.control.statusChanges.subscribe(()=>{
+          this.wrapper.formatErrors(this.control);
+        });
+        this.wrapper.formatErrors(this.control);
+      }
+      else {
+        this.samFormService.formEventsUpdated$.subscribe(evt=>{
+          if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+            this.wrapper.formatErrors(this.control);
+          } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+            this.wrapper.clearError();
+          }
+        });
+      }
     }
   }
 

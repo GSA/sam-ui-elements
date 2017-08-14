@@ -1,10 +1,9 @@
 import { Component, Input, ViewChild, ElementRef, ChangeDetectorRef, Optional, forwardRef} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
-
 import { AutocompleteService } from '../autocomplete/autocomplete.service';
-
 import { trigger, state, style, transition, animate, keyframes } from '@angular/core';
+import {SamFormService} from '../../form-service';
 
 @Component({
   selector: 'sam-autocomplete-multiselect',
@@ -92,6 +91,10 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    */
   @Input() control: FormControl;
   /**
+  * Toggles validations to display with SamFormService events
+  */
+  @Input() useFormService: boolean;
+  /**
    * Provides an array of categories for selection
    * when also setting categoryIsSelectable property
    * to true.
@@ -104,6 +107,10 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * Provides the option to allow categories to be selected
    */
   @Input() categoryIsSelectable: boolean = false;
+  /**
+   * Allows any value typed in the input to be chosen
+   */
+  @Input() public allowAny: boolean = false;
   /**
    * Optional: Provides a default search string to use with service
    * in lieu of sending an empty string. If not provided, value
@@ -138,7 +145,9 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     return this.innerValue;
   }
 
-  constructor(@Optional() private service: AutocompleteService, private ref: ChangeDetectorRef) {
+  constructor(@Optional() private service: AutocompleteService, 
+    private ref: ChangeDetectorRef,
+    private samFormService:SamFormService) {
     this.cachingService = this.CachingService();
   }
 
@@ -147,11 +156,21 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     if(!this.control){
       return;
     }
-    this.control.valueChanges.subscribe(()=>{
+    if(!this.useFormService){
+      this.control.statusChanges.subscribe(()=>{
+        this.wrapper.formatErrors(this.control);
+      });
       this.wrapper.formatErrors(this.control);
-    });
-
-    this.wrapper.formatErrors(this.control);
+    }
+    else {
+      this.samFormService.formEventsUpdated$.subscribe(evt=>{
+        if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+          this.wrapper.formatErrors(this.control);
+        } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+          this.wrapper.clearError();
+        }
+      });
+    }
   }
 
   ngOnChanges(c){
@@ -259,10 +278,16 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    */
   selectOnEnter(event) {
     if (event.code === 'Enter' || event.keyIdentified === 'Enter') {
-      const results = this.getResults();
-      const selectedChildIndex = this.getSelectedChildIndex(results);
-
-      this.selectItem(this.getItem());
+      let lookedUpItem = this.getItem();
+      if(this.allowAny && lookedUpItem && lookedUpItem[this.keyValueConfig.keyProperty]==null){
+        let obj = {};
+        obj[this.keyValueConfig.keyProperty] = event.target.value;
+        obj[this.keyValueConfig.valueProperty] = event.target.value;
+        this.selectItem(obj);
+        //this.options.push(obj);
+      } else {
+        this.selectItem(lookedUpItem);
+      }
       this.clearSearch();
       //this.blurTextArea();
 

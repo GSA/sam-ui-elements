@@ -1,6 +1,7 @@
 import {Component, Input, ViewChild, forwardRef} from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper/label-wrapper.component';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators} from "@angular/forms";
+import {SamFormService} from '../../form-service';
 
 export const TEXT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -32,6 +33,10 @@ export class SamNumberComponent implements ControlValueAccessor {
   @Input() required: boolean;
   @Input() control: FormControl;
   @Input() maxlength: number;
+  /**
+  * Toggles validations to display with SamFormService events
+  */
+  @Input() useFormService: boolean;
 
   onChange: any = () => {
     this.wrapper.formatErrors(this.control);
@@ -40,9 +45,7 @@ export class SamNumberComponent implements ControlValueAccessor {
 
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
 
-  constructor() {
-
-  }
+  constructor(private samFormService:SamFormService) { }
 
   ngOnInit() {
     if (!this.name) {
@@ -64,9 +67,21 @@ export class SamNumberComponent implements ControlValueAccessor {
     }
 
     this.control.setValidators(validators);
-    this.control.valueChanges.subscribe(this.onChange);
-
-    this.wrapper.formatErrors(this.control);
+    if(!this.useFormService){
+      this.control.statusChanges.subscribe(()=>{
+        this.wrapper.formatErrors(this.control);
+      });
+      this.wrapper.formatErrors(this.control);
+    }
+    else {
+      this.samFormService.formEventsUpdated$.subscribe(evt=>{
+        if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+          this.wrapper.formatErrors(this.control);
+        } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+          this.wrapper.clearError();
+        }
+      });
+    }
   }
 
   onInputChange(value) {

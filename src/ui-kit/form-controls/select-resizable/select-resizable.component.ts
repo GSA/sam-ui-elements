@@ -1,6 +1,6 @@
 import { Component, forwardRef, ViewChild, ElementRef, ChangeDetectorRef, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-
+//candidate for deprecation?
 @Component({
   selector: 'sam-select-resizable',
   templateUrl: 'select-resizable.template.html',

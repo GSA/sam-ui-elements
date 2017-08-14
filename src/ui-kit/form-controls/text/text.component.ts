@@ -54,6 +54,10 @@ export class SamTextComponent implements ControlValueAccessor {
   */
   @Input() maxlength: number;
   /**
+  * Toggles validations to display with SamFormService events
+  */
+  @Input() useFormService: boolean;
+  /**
    * Lose focus event emit
    */
   @Output() onBlur:EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -64,9 +68,7 @@ export class SamTextComponent implements ControlValueAccessor {
 
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
 
-  constructor(private samFormService:SamFormService) {
-
-  }
+  constructor(private samFormService:SamFormService) {}
 
   ngOnInit() {
     if (!this.name) {
@@ -91,19 +93,22 @@ export class SamTextComponent implements ControlValueAccessor {
       validators.push(Validators.maxLength(this.maxlength));
     }
     this.control.setValidators(validators);
-    this.control.valueChanges.subscribe(()=>{
+
+    if(!this.useFormService){
+      this.control.statusChanges.subscribe(()=>{
+        this.wrapper.formatErrors(this.control);
+      });
       this.wrapper.formatErrors(this.control);
-    });
-    this.wrapper.formatErrors(this.control);
-    
-    // maybe use a configuration to toggle between valueChanges subcribe and this service?
-    // this.samFormService.formEventsUpdated$.subscribe(evt=>{
-    //   if(((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
-    //     this.wrapper.formatErrors(this.control);
-    //   } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
-    //     this.wrapper.clearError();
-    //   }
-    // });
+    }
+    else {
+      this.samFormService.formEventsUpdated$.subscribe(evt=>{
+        if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+          this.wrapper.formatErrors(this.control);
+        } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+          this.wrapper.clearError();
+        }
+      });
+    }
   }
 
   onInputChange(value) {
