@@ -2,6 +2,7 @@ import { Component, Input, Output,ChangeDetectorRef, Optional, ViewChild, EventE
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { OptionsType } from '../../types';
 import { FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
+import {SamFormService} from '../../form-service';
 
 const noop = () => {};
 const MY_VALUE_ACCESSOR: any = {
@@ -56,6 +57,10 @@ export class SamSelectComponent implements ControlValueAccessor, AfterViewInit {
   */
   @Input() control: FormControl;
   /**
+  * Toggles validations to display with SamFormService events
+  */
+  @Input() useFormService: boolean;
+  /**
   * Event emitted on modal value change
   */
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
@@ -66,7 +71,8 @@ export class SamSelectComponent implements ControlValueAccessor, AfterViewInit {
   @ViewChild("select")
   public select: any;
 
-  constructor(@Optional() private cdr: ChangeDetectorRef) { }
+  constructor(@Optional() private cdr: ChangeDetectorRef,
+    private samFormService:SamFormService) { }
 
   ngOnInit() {
     if (!this.name) {
@@ -77,9 +83,23 @@ export class SamSelectComponent implements ControlValueAccessor, AfterViewInit {
       return;
     }
 
-    this.control.statusChanges.subscribe(()=>{
-      this.wrapper.formatErrors(this.control);
-    });
+    if(this.control){
+      if(!this.useFormService){
+        this.control.statusChanges.subscribe(()=>{
+          this.wrapper.formatErrors(this.control);
+        });
+        this.wrapper.formatErrors(this.control);
+      }
+      else {
+        this.samFormService.formEventsUpdated$.subscribe(evt=>{
+          if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+            this.wrapper.formatErrors(this.control);
+          } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+            this.wrapper.clearError();
+          }
+        });
+      }
+    }
   }
 
   ngAfterViewInit(){

@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild, Output, EventEmitter, OnInit, forwardRef } from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, AbstractControl, FormControl, Validators, ValidatorFn } from "@angular/forms";
-
+import {SamFormService} from '../../form-service';
 /**
  * The <samPhoneInput> component is a Phone entry portion of a form
  */
@@ -44,6 +44,10 @@ export class SamPhoneEntryComponent implements OnInit,ControlValueAccessor {
   */
   @Input() control: AbstractControl;
   /**
+  * Toggles validations to display with SamFormService events
+  */
+  @Input() useFormService: boolean;
+  /**
   * Event emitter when model changes, outputs a string
   */
   @Output() emitter = new EventEmitter<string>();
@@ -74,6 +78,7 @@ export class SamPhoneEntryComponent implements OnInit,ControlValueAccessor {
     this.phoneNumber = this.model;
   };
 
+  constructor(private samFormService:SamFormService){ }
   
   ngOnInit() {
     this.phoneNumber = this.phoneNumberTemplate;
@@ -95,11 +100,21 @@ export class SamPhoneEntryComponent implements OnInit,ControlValueAccessor {
     }
 
     if(this.control){
-      this.control.valueChanges.subscribe(()=>{
+      if(!this.useFormService){
+        this.control.statusChanges.subscribe(()=>{
+          this.wrapper.formatErrors(this.control);
+        });
         this.wrapper.formatErrors(this.control);
-      });
-
-      this.wrapper.formatErrors(this.control);
+      }
+      else {
+        this.samFormService.formEventsUpdated$.subscribe(evt=>{
+          if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+            this.wrapper.formatErrors(this.control);
+          } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+            this.wrapper.clearError();
+          }
+        });
+      }
     }
   }
   

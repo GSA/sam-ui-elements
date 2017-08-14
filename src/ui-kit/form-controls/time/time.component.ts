@@ -1,6 +1,8 @@
 import {Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, forwardRef } from '@angular/core';
 import * as moment from 'moment/moment';
+import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn } from "@angular/forms";
+import {SamFormService} from '../../form-service';
 
 /**
  * The <sam-time> component provides a time input form control
@@ -36,19 +38,44 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
   */
   @Input() name: string;
   /**
+  * Passes in the Angular FormControl
+  */
+  @Input() control: FormControl;
+  /**
+  * Toggles validations to display with SamFormService events
+  */
+  @Input() useFormService: boolean;
+  /**
   * Emits event when value change
   */
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
-
+  @ViewChild(LabelWrapper) wrapper: LabelWrapper;
   hours: number = null;
   minutes: number = null;
   amPm: string = 'am';
 
-  constructor() { }
+  constructor(private samFormService:SamFormService) { }
 
   ngOnInit() {
     if (!this.name) {
       throw new Error('SamTimeComponent required a [name] for 508 compliance');
+    }
+    if(this.control){
+      if(!this.useFormService){
+        this.control.statusChanges.subscribe(()=>{
+          this.wrapper.formatErrors(this.control);
+        });
+        this.wrapper.formatErrors(this.control);
+      }
+      else {
+        this.samFormService.formEventsUpdated$.subscribe(evt=>{
+          if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+            this.wrapper.formatErrors(this.control);
+          } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+            this.wrapper.clearError();
+          }
+        });
+      }
     }
   }
 

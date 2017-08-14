@@ -1,6 +1,7 @@
 import {Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, forwardRef} from '@angular/core';
 import * as moment from 'moment/moment';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators} from "@angular/forms";
+import {SamFormService} from '../../form-service';
 
 /**
  * The <sam-date> component is a Date entry portion of a form
@@ -52,6 +53,10 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   */
   @Input() control: FormControl;
   /**
+  * Toggles validations to display with SamFormService events
+  */
+  @Input() useFormService: boolean;
+  /**
   * Event emitted when value changes
   */
   @Output() valueChange = new EventEmitter<any>();
@@ -66,12 +71,30 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   @ViewChild('month') month;
   @ViewChild('day') day;
   @ViewChild('year') year;
+  @ViewChild('wrapper') wrapper;
 
-  constructor() { }
+  constructor(private samFormService:SamFormService) { }
 
   ngOnInit() {
     if (!this.name) {
       throw new Error('SamTimeComponent required a name for 508 compliance');
+    }
+    if(this.control){
+      if(!this.useFormService){
+        this.control.statusChanges.subscribe(()=>{
+          this.wrapper.formatErrors(this.control);
+        });
+        this.wrapper.formatErrors(this.control);
+      }
+      else {
+        this.samFormService.formEventsUpdated$.subscribe(evt=>{
+          if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+            this.wrapper.formatErrors(this.control);
+          } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+            this.wrapper.clearError();
+          }
+        });
+      }
     }
   }
 
