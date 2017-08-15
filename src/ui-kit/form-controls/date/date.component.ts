@@ -37,6 +37,10 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   */
   @Input() label: string = "";
   /**
+  * Sets the required text
+  */
+  @Input() required: string = "";
+  /**
   * Sets the helpful hint text
   */
   @Input() hint: string = "";
