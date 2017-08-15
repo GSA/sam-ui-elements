@@ -263,7 +263,7 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
   }
 
   writeValue(value) {
-    if(value && typeof value == "object" && value['startDate'] && value['endDate']){
+    if(value && typeof value == "object" && (value['startDate'] || value['endDate'])){
       this.startDateValue = value.startDate;
       this.endDateValue = value.endDate;
       this.parseValueString();
