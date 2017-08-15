@@ -1,8 +1,11 @@
-import {Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges} from '@angular/core';
+import {Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, forwardRef } from '@angular/core';
 import * as moment from 'moment/moment';
+import { LabelWrapper } from '../../wrappers/label-wrapper';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn } from "@angular/forms";
+import {SamFormService} from '../../form-service';
 
 /**
- * The <samTime> component provides a time input form control
+ * The <sam-time> component provides a time input form control
  *
  * @Input value: string - Sets the time value 
  * @Input disabled: boolean - Sets the disabled attribute
@@ -10,12 +13,17 @@ import * as moment from 'moment/moment';
  * @Output valueChange: boolean - Emits event when value change
  */
 @Component({
-  selector: 'samTime',
+  selector: 'sam-time',
   templateUrl: 'time.template.html',
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => SamTimeComponent),
+    multi: true
+  }]
 })
-export class SamTimeComponent implements OnInit, OnChanges {
+export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor {
   INPUT_FORMAT: string = "H:m";
-  OUTPUT_FORMAT: string = "HH:mm:ss";
+  OUTPUT_FORMAT: string = "HH:mm";
   
   /**
   * Sets the time value 
@@ -30,19 +38,44 @@ export class SamTimeComponent implements OnInit, OnChanges {
   */
   @Input() name: string;
   /**
+  * Passes in the Angular FormControl
+  */
+  @Input() control: FormControl;
+  /**
+  * Toggles validations to display with SamFormService events
+  */
+  @Input() useFormService: boolean;
+  /**
   * Emits event when value change
   */
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
-
+  @ViewChild(LabelWrapper) wrapper: LabelWrapper;
   hours: number = null;
   minutes: number = null;
   amPm: string = 'am';
 
-  constructor() { }
+  constructor(private samFormService:SamFormService) { }
 
   ngOnInit() {
     if (!this.name) {
       throw new Error('SamTimeComponent required a [name] for 508 compliance');
+    }
+    if(this.control){
+      if(!this.useFormService){
+        this.control.statusChanges.subscribe(()=>{
+          this.wrapper.formatErrors(this.control);
+        });
+        this.wrapper.formatErrors(this.control);
+      }
+      else {
+        this.samFormService.formEventsUpdated$.subscribe(evt=>{
+          if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+            this.wrapper.formatErrors(this.control);
+          } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+            this.wrapper.clearError();
+          }
+        });
+      }
     }
   }
 
@@ -78,7 +111,12 @@ export class SamTimeComponent implements OnInit, OnChanges {
   }
 
   onInputChange() {
+    this.onChange(this.toString());
     this.valueChange.emit(this.toString());
+  }
+  
+  setTouched(){
+    this.onTouched();
   }
 
   isValid() {
@@ -134,4 +172,23 @@ export class SamTimeComponent implements OnInit, OnChanges {
     return `${this.name}_am_pm`;
   }
 
+  onChange: any = () => { };
+  onTouched: any = () => { };
+  
+  registerOnChange(fn) {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn) {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(disabled) {
+    this.disabled = disabled;
+  }
+
+  writeValue(value) {
+    this.value = value;
+    this.parseValueString();
+  }
 }

@@ -1,4 +1,5 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn } from "@angular/forms";
 
 /**
  * SAM Toggle Switch Component
@@ -8,8 +9,13 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
 @Component({
   selector: 'sam-toggle-switch',
   templateUrl: 'toggle-switch.template.html',
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => SamToggleSwitchComponent),
+    multi: true
+  }]
 })
-export class SamToggleSwitchComponent{
+export class SamToggleSwitchComponent implements ControlValueAccessor{
   /**
    * Boolean value to set whether switch is disabled or not
    */
@@ -24,9 +30,30 @@ export class SamToggleSwitchComponent{
   @Output() switchStatusChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   onSwitchClick(val: boolean): void {
-    this.isSwitchOn = val;
-    this.switchStatusChange.emit(val);
+    this.onTouched();
+    if(!this.disableSwitch){
+      this.isSwitchOn = val;
+      this.onChange(val);
+      this.switchStatusChange.emit(val);
+    }
+  }
+  
+  onChange: any = () => { };
+  onTouched: any = () => { };
+  
+  registerOnChange(fn) {
+    this.onChange = fn;
   }
 
+  registerOnTouched(fn) {
+    this.onTouched = fn;
+  }
 
+  setDisabledState(disabled) {
+    this.disableSwitch = disabled;
+  }
+
+  writeValue(value:boolean) {
+    this.isSwitchOn = value;
+  }
 }

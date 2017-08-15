@@ -1,6 +1,7 @@
-import { Component, Input, ViewChild, forwardRef, Output, EventEmitter } from '@angular/core';
+import { Component, Input, ViewChild, forwardRef, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, Validators, FormControl } from "@angular/forms";
+import {SamFormService} from '../../form-service';
 
 export const TEXT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -9,10 +10,10 @@ export const TEXT_VALUE_ACCESSOR: any = {
 };
 
 /**
- * The <samTextArea> component provides a textarea input form control
+ * The <sam-text-area> component provides a textarea input form control
  */
 @Component({
-  selector: 'samTextArea',
+  selector: 'sam-text-area',
   templateUrl: 'textarea.template.html',
   providers: [ TEXT_VALUE_ACCESSOR ]
 })
@@ -20,13 +21,13 @@ export class SamTextareaComponent implements ControlValueAccessor {
   /**
   * Sets the text input value
   */
-  @Input() value: string;
+  @Input() value: string = '';
   /**
   * Sets the label text
   */
   @Input() label: string;
   /**
-  * Sets the name attribute 
+  * Sets the name attribute
   */
   @Input() name: string;
   /**
@@ -52,23 +53,35 @@ export class SamTextareaComponent implements ControlValueAccessor {
   @Input() control: FormControl;
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
 
-  onChange: any = () => {
-    this.wrapper.formatErrors(this.control);
-  };
+  /**
+   * Optional text to be displayed when the text area is empty
+   */
+  @Input() placeholder: string;
+  /**
+  * Toggles validations to display with SamFormService events
+  */
+  @Input() useFormService: boolean;
+  /**
+   * Emits focus event
+   */
+  @Output() focusEvent: EventEmitter<any> = new EventEmitter();
+  /**
+   * Emits event whenever input event is fired on the textarea
+   */
+  @Output() inputEventChange: EventEmitter<any> = new EventEmitter();
 
-  onTouched: any = () => {
+  onChange: any = (_) => {};
 
-  };
+  onTouched: any = () => {};
 
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
 
-  constructor() {
-
-  }
+  constructor(private cdr: ChangeDetectorRef,
+    private samFormService:SamFormService) {}
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error("<samTextArea> requires a [name] parameter for 508 compliance");
+      throw new Error("<sam-text-area> requires a [name] parameter for 508 compliance");
     }
 
     if (!this.control) {
@@ -76,6 +89,10 @@ export class SamTextareaComponent implements ControlValueAccessor {
     }
 
     let validators: any[] = [];
+
+    if(this.control.validator){
+      validators.push(this.control.validator);
+    }
 
     if (this.required) {
       validators.push(Validators.required);
@@ -86,14 +103,43 @@ export class SamTextareaComponent implements ControlValueAccessor {
     }
 
     this.control.setValidators(validators);
-    this.control.valueChanges.subscribe(this.onChange);
+    if(!this.useFormService){
+      this.control.statusChanges.subscribe(()=>{
+        this.wrapper.formatErrors(this.control);
+      });
+      this.wrapper.formatErrors(this.control);
+    }
+    else {
+      this.samFormService.formEventsUpdated$.subscribe(evt=>{
+        if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+          this.wrapper.formatErrors(this.control);
+        } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+          this.wrapper.clearError();
+        }
+      });
+    }
+  }
+
+  ngAfterViewInit(){
+    if (!this.control) {
+      return;
+    }
     this.wrapper.formatErrors(this.control);
+    this.cdr.detectChanges();
+  }
+
+  onFocus($event) {
+    this.focusEvent.emit($event);
   }
 
   onInputChange(value) {
     this.value = value;
     this.onChange(value);
     this.valueChange.emit(value);
+  }
+
+  inputEventHandler(event) {
+    this.inputEventChange.emit(event);
   }
 
   registerOnChange(fn) {

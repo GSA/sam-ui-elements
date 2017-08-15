@@ -1,17 +1,24 @@
-import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, forwardRef, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { FormControl,ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
 import { OptionsType } from '../../types';
+import {SamFormService} from '../../form-service';
 
 /**
- * The <samCheckbox> component is a set of checkboxes 
+ * The <sam-checkbox> component is a set of checkboxes 
  */
 @Component({
-  selector: 'samCheckbox',
+  selector: 'sam-checkbox',
   templateUrl: 'checkbox.template.html',
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => SamCheckboxComponent),
+    multi: true
+  }]
 })
-export class SamCheckboxComponent {
+export class SamCheckboxComponent implements ControlValueAccessor {
   /**
-  * Sets the bound value of the component
+  * Deprecated, Sets the bound value of the component
   */
   @Input() model: any = [];
   /**
@@ -31,6 +38,10 @@ export class SamCheckboxComponent {
   */
   @Input() hint: string;
   /**
+  * Sets required text on component
+  */
+  @Input() required: boolean = false;
+  /**
   * Sets the form control error message
   */
   @Input() errorMessage: string;
@@ -39,24 +50,55 @@ export class SamCheckboxComponent {
   */
   @Input() hasSelectAll: boolean;
   /**
-  * Event emitted when the model value changes
+  * Sets the angular FormControl
+  */
+  @Input() control: FormControl;
+  /**
+  * Toggles validations to display with SamFormService events
+  */
+  @Input() useFormService: boolean;
+  /**
+  * Deprecated, Event emitted when the model value changes
   */
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild(FieldsetWrapper)
   public wrapper: FieldsetWrapper;
-
+  private disabled = null;
   /*
    * We want our model to list the checked items in the order that they appear in the options list
    * This object allows us to efficiently determine if a value is before another value
    */
   private _ordering: any = {};
+  onChange: any = (c) => { };
+  onTouched: any = () => { };
+  get value() {
+    return this.model;
+  }
 
-  constructor() {}
+  set value(val) {
+    if(!Array.isArray(val)){
+      val = [];
+    }
+    //don't select options that are disabled
+    for(var idx in this.options){
+      let lookup = val.findIndex((value)=>{
+        return value == this.options[idx].value;
+      });
+      if(this.options[idx].disabled && lookup != -1){
+        val.splice(lookup,1);
+      }
+    }
+    this.model = val;
+    this.onChange(this.model);
+    this.onTouched();
+  }
+  
+  constructor(private samFormService:SamFormService) {}
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error("<samCheckbox> requires a [name] parameter for 508 compliance");
+      throw new Error("<sam-checkbox> requires a [name] parameter for 508 compliance");
     }
 
     // initialize the order lookup map
@@ -64,6 +106,14 @@ export class SamCheckboxComponent {
       let val = this.options[i].value;
       this._ordering[val] = i;
     }
+
+    if(this.control){
+      this.control.valueChanges.subscribe(()=>{
+        this.wrapper.formatErrors(this.control);
+      });
+
+      this.wrapper.formatErrors(this.control);
+    }    
   }
 
   // Give the check all label a name for screen readers
@@ -76,9 +126,10 @@ export class SamCheckboxComponent {
   }
 
   onCheckChanged(value, isChecked) {
+    this.onTouched();
     if (!isChecked) {
       // If the option was unchecked, remove it from the model
-      this.model = this.model.filter(val => val !== value);
+      this.value = this.model.filter(val => val !== value);
     } else {
       // Else, insert the checked item into the model in the correct order
       let i = 0;
@@ -91,17 +142,43 @@ export class SamCheckboxComponent {
         }
         i++;
       }
-      this.model.splice(i, 0, value);
+      let clone = this.model.slice(0);
+      clone.splice(i, 0, value);
+      this.value = clone;
     }
-    this.modelChange.emit(this.model);
+    this.emitModel();
   }
 
   onSelectAllChange(isSelectAllChecked) {
+    this.onTouched();
     if (!isSelectAllChecked) {
-      this.model = [];
+      this.value = [];
     } else {
-      this.model = this.options.map(option => option.value);
+      this.value = this.options.map(option => option.value);
     }
+    this.emitModel();
+  }
+  
+  emitModel(){
     this.modelChange.emit(this.model);
+  }
+  
+  registerOnChange(fn) {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn) {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(disabled) {
+    this.disabled = disabled;
+  }
+
+  writeValue(value) {
+    if(!value){
+      value = [];
+    }
+    this.value = value;
   }
 }

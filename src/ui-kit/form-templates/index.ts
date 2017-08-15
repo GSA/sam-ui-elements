@@ -5,11 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { SamNameEntryComponent } from './name-entry';
 import { SamPhoneEntryComponent } from './phone-entry';
 import { SamWrapperModule } from '../wrappers';
+import { SamFormControlsModule } from '../form-controls';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    SamFormControlsModule,
     SamWrapperModule
   ],
   declarations: [

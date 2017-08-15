@@ -1,0 +1,13 @@
+<div>
+  <ng-content></ng-content>
+  <div>
+    <ul class="usa-unstyled-list">
+      <li *ngFor="let item of selectedItems; let i = index">
+        <button class="usa-button-link" (click)="removeItem(i)">
+          <span class="usa-sr-only">Click button to delete</span>
+          <i class="fa fa-times"></i><span>{{ config?.keyValueConfig?.valueProperty ? item[config.keyValueConfig.valueProperty] : item }}</span><span *ngIf="isNewItem(item) && config.showNewIndicator" class="{{config.newItemIndicator.class}}">{{config.newItemIndicator.label}}</span>
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>

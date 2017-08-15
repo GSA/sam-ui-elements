@@ -43,6 +43,7 @@
     "e2e": "npm run protractor",
     "e2e:live": "npm run e2e -- --elementExplorer",
     "test": "karma start",
+    "test:no-lint":"karma start --no-lint",
     "ci": "npm run lint && npm test && npm run e2e",
     "docs": "npm run typedoc -- --options typedoc.json --exclude '**/*.spec.ts' ./src/",
     "start": "npm run server:dev",

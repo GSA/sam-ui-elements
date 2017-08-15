@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 // Load the implementations that should be tested
 import { SamTimeComponent } from './time.component';
-import { SamUIKitModule } from 'samUIKit';
+import { SamUIKitModule } from '../../index';
 
 describe('The Sam Time component', () => {
   let component: SamTimeComponent;
@@ -45,12 +45,12 @@ describe('The Sam Time component', () => {
     component.minutes = 24;
     component.amPm = 'am';
     let time = component.toString();
-    expect(time).toEqual('00:24:00');
+    expect(time).toEqual('00:24');
 
     component.hours = 2;
     component.minutes = 24;
     component.amPm = 'pm';
     time = component.toString();
-    expect(time).toEqual("14:24:00");
+    expect(time).toEqual("14:24");
   });
 });

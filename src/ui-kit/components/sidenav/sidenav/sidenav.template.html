@@ -1,12 +1,12 @@
 <aside>
   <ul class="usa-sidenav-list">
     <li *ngFor="let child of model.children; let $index = index">
-      <a [ngClass]="{'usa-current': isSelected($index)}"(click)="updateUI($index, $event)">{{child.label}}</a>
-      <samMenuItem *ngIf="isSelected($index)"
+      <a tabindex="0" [ngClass]="{'usa-current': isSelected($index)}" (keyup.enter)="updateUI($index, $event)" (click)="updateUI($index, $event)">{{child.label}}<ng-container *ngIf="child?.iconClass"> <i [ngClass]="child.iconClass"></i></ng-container></a>
+      <sam-menu-item *ngIf="isSelected($index)"
                     [nodeDepth]="1"
                     [children]="model.children[$index].children"
                     (data)="emitChildData($event)">
-      </samMenuItem>
+      </sam-menu-item>
     </li>
   </ul>
 </aside>

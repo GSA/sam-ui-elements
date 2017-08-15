@@ -1,10 +1,10 @@
 import { Component, AfterContentInit, ContentChildren, QueryList, Input, Output, EventEmitter } from '@angular/core';
 
 /**
- * The <samTab> component contains the content for a tab
+ * The <sam-tab> component contains the content for a tab
  */
 @Component({
-  selector: 'samTab',
+  selector: 'sam-tab',
   template: `
     <div [class.hide]="!active" class="usa-tabs-content">
       <ng-content></ng-content>
@@ -26,7 +26,7 @@ export class SamTabComponent {
  * The <samTabs> component is a wrapper for navigating through and displaying tabs
  */
 @Component({
-  selector: 'samTabs',
+  selector: 'sam-tabs',
   template:`
     <ul class="usa-tabs">
       <li *ngFor="let tab of tabs" (click)="selectTab(tab)" [class.active]="tab.active">

@@ -1,14 +1,20 @@
-import { Component, Input, ViewChild,Output, EventEmitter,OnInit } from '@angular/core';
+import { Component, Input, ViewChild, Output, EventEmitter, OnInit, forwardRef } from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
-
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, AbstractControl, FormControl, Validators, ValidatorFn } from "@angular/forms";
+import {SamFormService} from '../../form-service';
 /**
  * The <samPhoneInput> component is a Phone entry portion of a form
  */
 @Component( {
-  selector: 'samPhoneEntry',
+  selector: 'sam-phone-entry',
   templateUrl: 'phone-entry.template.html',
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => SamPhoneEntryComponent),
+    multi: true
+  }]
 })
-export class SamPhoneEntryComponent implements OnInit {
+export class SamPhoneEntryComponent implements OnInit,ControlValueAccessor {
   /**
   * The label text to appear above the input
   */
@@ -34,10 +40,20 @@ export class SamPhoneEntryComponent implements OnInit {
   */
   @Input() numbersOnly: boolean;
   /**
+  * Input to pass in a formControl
+  */
+  @Input() control: AbstractControl;
+  /**
+  * Toggles validations to display with SamFormService events
+  */
+  @Input() useFormService: boolean;
+  /**
   * Event emitter when model changes, outputs a string
   */
   @Output() emitter = new EventEmitter<string>();
 
+  @ViewChild(LabelWrapper)
+  public wrapper: LabelWrapper;
   @ViewChild("phoneInput") phoneInput;
   errorMsg: string = "";
   
@@ -45,9 +61,28 @@ export class SamPhoneEntryComponent implements OnInit {
   phoneNumberMirror = this.phoneNumberTemplate;
   phoneNumber = this.phoneNumberTemplate;
   badIndex = [];
-  constructor() {}
+  private disabled = null;
+  
+  get value(){
+    return this.model;
+  };
+  set value(value: string){
+    if(!value){
+      value = this.phoneNumberTemplate;
+    }
+    this.model = value;
+    if(this.numbersOnly){
+      this.model = this.formatWithTemplate(this.model);
+    }
+    this.phoneNumberMirror = this.model;
+    this.phoneNumber = this.model;
+  };
 
+  constructor(private samFormService:SamFormService){ }
+  
   ngOnInit() {
+    this.phoneNumber = this.phoneNumberTemplate;
+    this.phoneNumberMirror = this.phoneNumberTemplate;
     this.phoneNumberTemplateLength = this.phoneNumberTemplate.length;
     for(var i = 0; i < this.phoneNumberTemplate.length; i++){
       if(this.phoneNumberTemplate.charAt(i)!="_"){
@@ -62,6 +97,24 @@ export class SamPhoneEntryComponent implements OnInit {
       }
       this.phoneNumberMirror = phoneNum;
       this.phoneNumber = phoneNum;
+    }
+
+    if(this.control){
+      if(!this.useFormService){
+        this.control.statusChanges.subscribe(()=>{
+          this.wrapper.formatErrors(this.control);
+        });
+        this.wrapper.formatErrors(this.control);
+      }
+      else {
+        this.samFormService.formEventsUpdated$.subscribe(evt=>{
+          if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+            this.wrapper.formatErrors(this.control);
+          } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+            this.wrapper.clearError();
+          }
+        });
+      }
     }
   }
   
@@ -146,7 +199,12 @@ export class SamPhoneEntryComponent implements OnInit {
     } else {
       this.model = updateModel;
     }
+    this.onChange(this.model);//controlemitter
     this.emitter.emit(this.model);
+  }
+
+  setTouched(){
+    this.onTouched();
   }
 
   getPositionIncrement(pos) {
@@ -181,5 +239,24 @@ export class SamPhoneEntryComponent implements OnInit {
 
   replaceAt(index, character, str) {
     return str.substr(0, index) + character + str.substr(index+character.length);
+  }
+  
+  onChange: any = () => { };
+  onTouched: any = () => { };
+  
+  registerOnChange(fn) {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn) {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(disabled) {
+    this.disabled = disabled;
+  }
+
+  writeValue(value) {
+    this.value = value;
   }
 }

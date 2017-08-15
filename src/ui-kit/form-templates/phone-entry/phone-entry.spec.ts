@@ -2,7 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser/index';
 // Load the implementations that should be tested
 import { SamPhoneEntryComponent } from './phone-entry.component';
-import { SamUIKitModule } from 'samUIKit';
+import { SamUIKitModule } from '../../index';
 
 describe('The Sam Phone Entry component', () => {
   let component: SamPhoneEntryComponent;
@@ -19,7 +19,8 @@ describe('The Sam Phone Entry component', () => {
 
     fixture = TestBed.createComponent(SamPhoneEntryComponent);
     component = fixture.componentInstance;
-    component.phoneNumber = "1+(234)213-4213";
+    component.model = "1+(234)213-4213";
+    component.ngOnInit();
   });
 
   it('Phone Num Check', function () {

@@ -1,7 +1,7 @@
-import {Component, Input, ViewChild, forwardRef} from '@angular/core';
+import {Component, Input, ViewChild, forwardRef, Output, EventEmitter} from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
-import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators} from "@angular/forms";
-
+import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn} from "@angular/forms";
+import {SamFormService} from '../../form-service';
 export const TEXT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamTextComponent),
@@ -9,10 +9,10 @@ export const TEXT_VALUE_ACCESSOR: any = {
 };
 
 /**
- * The <samText> component provides a text input form control
+ * The <sam-text> component provides a text input form control
  */
 @Component({
-  selector: 'samText',
+  selector: 'sam-text',
   templateUrl: 'text.template.html',
   providers: [ TEXT_VALUE_ACCESSOR ]
 })
@@ -20,13 +20,13 @@ export class SamTextComponent implements ControlValueAccessor {
   /**
   * Sets the text input value
   */
-  @Input() value: string;
+  @Input() value: string = '';
   /**
   * Sets the label text
   */
   @Input() label: string;
   /**
-  * Sets the name attribute 
+  * Sets the name attribute
   */
   @Input() name: string;
   /**
@@ -45,33 +45,45 @@ export class SamTextComponent implements ControlValueAccessor {
   * Sets the required attribute
   */
   @Input() required: boolean;
+  /**
+  * Passes in the Angular FormControl
+  */
   @Input() control: FormControl;
   /**
   * Sets the maxlength attribute
   */
   @Input() maxlength: number;
+  /**
+  * Toggles validations to display with SamFormService events
+  */
+  @Input() useFormService: boolean;
+  /**
+   * Lose focus event emit
+   */
+  @Output() onBlur:EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  onChange: any = () => {
-    //this.wrapper.formatErrors(this.control);
-  };
+  onChange: any = (c) => { };
   onTouched: any = () => { };
+  onLoseFocus: any = () => {this.onBlur.emit(true)};
 
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
 
-  constructor() {
-
-  }
+  constructor(private samFormService:SamFormService) {}
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error("<samText> requires a [name] parameter for 508 compliance");
+      throw new Error("<sam-text> requires a [name] parameter for 508 compliance");
     }
 
     if (!this.control) {
       return;
     }
 
-    let validators: any[] = [];
+    let validators: ValidatorFn[] = [];
+
+    if(this.control.validator){
+      validators.push(this.control.validator);
+    }
 
     if (this.required) {
       validators.push(Validators.required);
@@ -80,14 +92,31 @@ export class SamTextComponent implements ControlValueAccessor {
     if (this.maxlength) {
       validators.push(Validators.maxLength(this.maxlength));
     }
-
     this.control.setValidators(validators);
-    this.control.valueChanges.subscribe(this.onChange);
 
-    this.wrapper.formatErrors(this.control);
+    if(!this.useFormService){
+      this.control.statusChanges.subscribe(()=>{
+        this.wrapper.formatErrors(this.control);
+      });
+      this.wrapper.formatErrors(this.control);
+    }
+    else {
+      this.samFormService.formEventsUpdated$.subscribe(evt=>{
+        if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+          this.wrapper.formatErrors(this.control);
+        } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+          this.wrapper.clearError();
+        }
+      });
+    }
   }
 
   onInputChange(value) {
+    if(this.control){
+      this.control.markAsDirty();
+      this.control.markAsTouched();
+      this.control.setValue(value);
+    }
     this.value = value;
     this.onChange(value);
   }
