@@ -16,6 +16,10 @@ export class SamSidenavComponent implements OnInit {
   /**
   * Sets active selection in menu by matching to a label defined in the model
   */
+  @Input() type:string;
+  /**
+  * Sets active selection in menu by matching to a label defined in the model
+  */
   @Input() labelLookup:string;
   /**
   * Object that defines the sidenav labels, routes, and structure
