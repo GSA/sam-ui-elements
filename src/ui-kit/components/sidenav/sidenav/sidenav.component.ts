@@ -14,7 +14,7 @@ import { MenuItem } from '../interfaces';
 })
 export class SamSidenavComponent implements OnInit {
   /**
-  * Sets active selection in menu by matching to a label defined in the model
+  * Sets type of side navigation, currently there are two options 'default' & 'step'
   */
   @Input() type:string;
   /**
