@@ -1,7 +1,15 @@
-<aside>
+<aside *ngIf="type != 'step'">
   <ul class="usa-sidenav-list">
     <li *ngFor="let child of model.children; let $index = index">
-      <a tabindex="0" [ngClass]="{'usa-current': isSelected($index)}" (keyup.enter)="updateUI($index, $event)" (click)="updateUI($index, $event)">{{child.label}}<ng-container *ngIf="child?.iconClass"> <i [ngClass]="child.iconClass"></i></ng-container></a>
+      <a tabindex="0" 
+        [ngClass]="{'usa-current': isSelected($index)}" 
+        (keyup.enter)="updateUI($index, $event)" 
+        (click)="updateUI($index, $event)">
+          {{child.label}}
+          <ng-container *ngIf="child?.iconClass"> 
+            <i [ngClass]="child.iconClass"></i>
+          </ng-container>
+      </a>
       <sam-menu-item *ngIf="isSelected($index)"
                     [nodeDepth]="1"
                     [children]="model.children[$index].children"
@@ -10,3 +18,21 @@
     </li>
   </ul>
 </aside>
+
+<div *ngIf="type == 'step'" class="sam-ui vertical fluid ordered steps">
+  <ng-container *ngFor="let child of model.children; let $index = index">
+    <a tabindex="0"
+      class="step"
+      [ngClass]="{
+        'active': isSelected($index),
+        'completed': child.iconClass == 'completed',
+        'error': child.iconClass == 'error'
+      }" 
+      (keyup.enter)="updateUI($index, $event)" 
+      (click)="updateUI($index, $event)">
+      <div class="content">
+        <div class="title">{{child.label}}</div>
+      </div>
+    </a>
+  </ng-container>
+</div>
