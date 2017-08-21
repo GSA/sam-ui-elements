@@ -237,33 +237,6 @@ export interface DownloadResourceTypeInfoType{
   iconClass: string;
 }
 
-
-export interface ListDisplayConfig {
-  /**
-   * Toggles a new item indicator feature
-   */
-  showNewIndicator?: boolean;
-  /**
-   * Sets the new item indicator config
-   */
-  newItemIndicator?: NewItemIndicator;
-  /**
-   * Defines the key/value configuration
-   */
-  keyValueConfig?: AutocompleteKeyValueConfig;
-}
-
-export interface NewItemIndicator {
-  /**
-   * HTML class passed added onto the new item
-   */
-  class?: string;
-  /**
-   * Label value for the new item
-   */
-  label?: string;
-}
-
 export interface PointOfContactType{
   /**
    * Sets the full name property
@@ -320,7 +293,6 @@ export interface IBreadcrumb {
   urlmock?: boolean;
   breadcrumb: string;
 }
-
 
 export interface NameEntryType{
   /**
