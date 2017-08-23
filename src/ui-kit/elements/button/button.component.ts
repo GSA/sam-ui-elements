@@ -5,57 +5,73 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
  */
 @Component({
   selector: 'sam-button',
-  template: `<button id={{buttonId}} [ngClass]="btnClass" [disabled]="disabled" (click)="click($event)" type="button">{{buttonText}}</button>`,
+  template: `<button id={{buttonId}} class="sam-ui button" [ngClass]="btnClass" [disabled]="buttonDisabled" (click)="click($event)" type="button">{{buttonText}}</button>`,
 })
 export class SamButtonComponent {
   /**
   * Sets the id that will assign to the button element
   */
   @Input() buttonId:string;
+  
   /**
   * Sets the text content that will show on the button
   */
   @Input() buttonText:string;
+  
   /**
   * Sets the type of the button (default,alt,secondary,outline,gray,disabled,big)
   */
   @Input() buttonType:string;
+  
   /**
-  * Sets the button css class
+  * Sets the button size
+  */
+  @Input() buttonSize:string;
+  
+  /**
+  * Disables the button
+  */
+  @Input() buttonDisabled:boolean = false;
+  
+  /**
+  * Emmits event on click
+  */
+  @Output() onClick: EventEmitter<any> = new EventEmitter();
+  
+  /**
+  * Sets the button css class (Deprecated)
   */
   @Input() buttonClass:string = '';
-  
-  @Output() onClick: EventEmitter<any> = new EventEmitter();
 
   private btnClassMap: any = {
-    "default":"",
-    alt:"usa-button-primary-alt",
-    secondary:"usa-button-secondary",
-    gray:"usa-button-gray",
-    outline:"usa-button-outline",
-    inverted:"usa-button-outline-inverse",
-    disabled:"usa-button-disabled",
-    big:"usa-button-big"
+    default:"primary",
+    primary:"primary",
+    secondary:"secondary",
+    tertiary:"basic blue",
+    disabled:"disabled",
+    small:"tiny",
+    large:"large"
   };
-
-  disabled: boolean = false;
 
   get btnClass():String {
     let classMap = [];
-
+    
     if(this.btnClassMap.hasOwnProperty(this.buttonType)){
-      this.disabled = (this.buttonType === 'disabled');
       classMap.push(this.btnClassMap[this.buttonType]);
+    }else{
+      classMap.push(this.btnClassMap["default"]);
     }
-
-    if(this.buttonClass.length) {
-      classMap.push(this.buttonClass);
+    
+    if(this.btnClassMap.hasOwnProperty(this.buttonSize)){
+      classMap.push(this.btnClassMap[this.buttonSize]);
     }
 
     return classMap.join(' ');
   }
 
   click($event) {
-    this.onClick.emit($event);
+    if(!this.buttonDisabled){
+      this.onClick.emit($event);
+    }
   }
 }
