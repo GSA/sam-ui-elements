@@ -5,7 +5,16 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
  */
 @Component({
   selector: 'sam-button',
-  template: `<button id={{buttonId}} class="sam-ui button" [ngClass]="btnClass" [disabled]="buttonDisabled" (click)="click($event)" type="button">{{buttonText}}</button>`,
+  template: `
+    <button
+      id={{buttonId}} 
+      class="sam-ui button" 
+      [ngClass]="btnClass" 
+      [disabled]="buttonDisabled" 
+      (click)="click($event)" 
+      [type]="buttonType=='submit' ? 'submit' : 'button'">
+      {{buttonText}}
+    </button>`,
 })
 export class SamButtonComponent {
   /**
@@ -38,30 +47,37 @@ export class SamButtonComponent {
   */
   @Output() onClick: EventEmitter<any> = new EventEmitter();
   
+  
   /**
   * Sets the button css class (Deprecated)
   */
   @Input() buttonClass:string = '';
+  
 
   private btnClassMap: any = {
-    default:"primary",
-    primary:"primary",
-    secondary:"secondary",
-    tertiary:"basic blue",
-    disabled:"disabled",
-    small:"tiny",
-    large:"large"
+    // Types
+    default: "primary",
+    primary: "primary",
+    secondary: "secondary",
+    tertiary: "basic blue",
+    negative: "negative",
+    submit: "primary",
+    // Sizes
+    small: "tiny",
+    large: "large",
   };
 
   get btnClass():String {
     let classMap = [];
     
+    // Adds type css class
     if(this.btnClassMap.hasOwnProperty(this.buttonType)){
       classMap.push(this.btnClassMap[this.buttonType]);
     }else{
       classMap.push(this.btnClassMap["default"]);
     }
     
+    // Add size css class
     if(this.btnClassMap.hasOwnProperty(this.buttonSize)){
       classMap.push(this.btnClassMap[this.buttonSize]);
     }
