@@ -1,28 +1,29 @@
 <div class="sam-autocomplete-multiselect">
   <!-- Markup for input area -->
-  <sam-label-wrapper #wrapper 
-                    [label]="label" 
-                    [hint]="hint" 
-                    [name]="name" 
-                    [required]="required" 
-                    tab 
-                    sam-click-outside 
-                    (clickOutside)="checkForFocus($event)" 
-                    sam-tab-outside 
+  <sam-label-wrapper #wrapper
+                    [label]="label"
+                    [hint]="hint"
+                    [name]="name"
+                    [required]="required"
+                    [errorMessage]="errorMessage"
+                    tab
+                    sam-click-outside
+                    (clickOutside)="checkForFocus($event)"
+                    sam-tab-outside
                     (tabOutside)="checkForFocus($event)">
-    
-    <div class="sam-autocomplete-multiselect-input" 
+
+    <div class="sam-autocomplete-multiselect-input"
       (click)="focusTextArea()"
       [ngClass]="{ 'active': displayList() }">
-        
-        <div tabIndex="0" class="sam-ui mini label" 
-            *ngFor="let item of value" 
+
+        <div tabIndex="0" class="sam-ui mini label"
+            *ngFor="let item of value"
             [@label]=""
             (click)="deselectItem(item)"
             (keydown)="deselectItemOnEnter($event,item)">
             <div class="label">
               {{ keyValueConfig ? item[keyValueConfig?.valueProperty] : item?.value }}
-              <span *ngIf="item?.value !== item[keyValueConfig?.categoryProperty]" 
+              <span *ngIf="item?.value !== item[keyValueConfig?.categoryProperty]"
                 class="selected-category">
                 <br>{{ item[keyValueConfig?.categoryProperty] }}
               </span>
@@ -30,53 +31,53 @@
             <i class="icon close fa fa-times"></i>
         </div>
         <label [attr.for]="name+'-ac-textarea'" class="sr-only">textarea input</label>
-        <textarea #textArea rows="1" 
+        <textarea #textArea rows="1"
                   [attr.id]="name+'-ac-textarea'"
-                  [(ngModel)]="searchText" 
-                  (input)="applyTextAreaWidth($event)" 
+                  [(ngModel)]="searchText"
+                  (input)="applyTextAreaWidth($event)"
                   (keydown)="selectOnEnter(handleEscapeEvent(handleUpArrow(handleDownArrow(handleBackspaceEvent(handleEnterEvent($event))))))"
                   (keyup)="applyTextAreaWidth(handleEnterEvent($event))"
                   [disabled]="isDisabled"
                   (focus)="filterOptions('')">
         </textarea>
 
-        
+
         <!-- Hidden span used to approximate the width of the content in the text area.
             This helps us calculate when the textArea should be on the same row as the
-            spans of selected content and when the textarea should be on a line by 
+            spans of selected content and when the textarea should be on a line by
             itself. -->
         <span #hiddenText class="usa-sr-only measure text">
           {{searchText}}
         </span>
     </div>
-    
-    <button type="button" 
-            class="usa-button-link" 
+
+    <button type="button"
+            class="usa-button-link"
             (click)="focusTextArea(clearSearch(deselectAll()))">
             Clear All
     </button>
-    
-    <ul #resultsList class="usa-unstyled-list multiselect-parent-list" 
-        *ngIf="displayList()" 
+
+    <ul #resultsList class="usa-unstyled-list multiselect-parent-list"
+        *ngIf="displayList()"
         [@dropdown]="">
       <li *ngFor="let category of list.categories; let i = index;">
         <ng-container>
-          <ul *ngIf="displaySublist(category, i)" 
+          <ul *ngIf="displaySublist(category, i)"
               class="usa-unstyled-list item-list">
-            <li *ngIf="category !== 'uncategorized'" 
-                class="category-name" 
-                [ngClass]="{'selectable': categoryIsSelectable}" 
-                (click)="clearSearch(selectItemByCategory(category))" 
+            <li *ngIf="category !== 'uncategorized'"
+                class="category-name"
+                [ngClass]="{'selectable': categoryIsSelectable}"
+                (click)="clearSearch(selectItemByCategory(category))"
                 [attr.data-category]="category">
               {{ category }}
             </li>
-            <li class="category-item" 
-                *ngFor="let item of list[i]; let itemIndex = index" 
-                (click)="clearSearch(selectItem(item))" 
+            <li class="category-item"
+                *ngFor="let item of list[i]; let itemIndex = index"
+                (click)="clearSearch(selectItem(item))"
                 [ngClass]="{'marked':item._marked}"
-                [attr.data-category]="i" 
+                [attr.data-category]="i"
                 [attr.data-index]="itemIndex">
-              <p>{{ item[keyValueConfig?.valueProperty] }}</p>  
+              <p>{{ item[keyValueConfig?.valueProperty] }}</p>
               <p class="subhead" *ngIf="item[keyValueConfig?.subheadProperty]">
                 {{ item[keyValueConfig?.subheadProperty] }}
               </p>
@@ -85,7 +86,7 @@
         </ng-container>
       </li>
     </ul>
-    
+
   </sam-label-wrapper>
 </div>
 
