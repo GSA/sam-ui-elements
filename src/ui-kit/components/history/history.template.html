@@ -6,7 +6,7 @@
       <a *ngIf="item.url" [routerLink]='item.url.split("/")' [queryParams]="item.qParams">{{ item.title }}</a>
       <ng-container *ngIf="!item.url">{{ item.title }}</ng-container>
       <br *ngIf="item.title && item.description"/>
-      <em *ngIf="item.description">{{ item.description }}</em>
+      <em *ngIf="item.description" [innerHTML]="item.description"></em>
       <br *ngIf="item.titleNumberAgency"/>
       <span class = "history-titleNumberAgency" *ngIf="item.titleNumberAgency" [innerHTML]="item.titleNumberAgency"></span>
       <br *ngIf="item.submitter"/>
