@@ -71,7 +71,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    */
   @Input() required: boolean;
   /**
-   * Used by labelWrapper. Displays a label above input.
+   * Used by Wrapper. Displays a label above input.
    * See labelWrapper for more detail.
    */
   @Input() label: string;
@@ -115,17 +115,20 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * Optional: Provides a default search string to use with service
    * in lieu of sending an empty string. If not provided, value
    * defaults to an empty string.
-   * 
+   *
    * WARNING: If your service overrides or manipulates the value
    * passed to the fetch method, providing a default search string
    * on the component may not produce the expected results.
-   * 
+   *
    * Example:
    * this.autocompleteService.fetch(this.defaultSearchString, pageEnd, options)
    */
   @Input() defaultSearchString: string = '';
 
-  public searchText: string;
+  /** Red error message text **/
+  @Input() errorMessage: string = '';
+
+  public searchText: string = '';
 
   private innerValue: Array<any> = [];
   private isDisabled: boolean = false;
@@ -145,7 +148,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     return this.innerValue;
   }
 
-  constructor(@Optional() private service: AutocompleteService, 
+  constructor(@Optional() private service: AutocompleteService,
     private ref: ChangeDetectorRef,
     private samFormService:SamFormService) {
     this.cachingService = this.CachingService();
@@ -201,7 +204,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     const setScrollEnd = (num: number) => { return _scrollEnd = num; };
 
     const setCurrentIndex = (num: number) => { return _currentIndex = num; };
-    
+
     const hasReachedScrollEnd = (): boolean => { return _scrollEnd === _currentIndex; }
 
     const shouldUseCachedResults = function (searchString) {
@@ -438,13 +441,13 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     let enteredTextWidth = this.getInternalElementWidth(this.hiddenText.nativeElement)
     let accumulatorRow = 0;
     let spaceLeft = containerWidth;
-    
+
     elementsWidths.forEach(function(element){
       accumulatorRow += element;
       if(accumulatorRow > containerWidth){ accumulatorRow = element; }
       spaceLeft = ((containerWidth - accumulatorRow) - enteredTextWidth);
     });
-    
+
     // If there is 40px left move to the next line
     widthValue = spaceLeft - 40 > 0 ? spaceLeft+'px' : '100%';
 
@@ -459,7 +462,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    *
    * Returns a float of the width
    */
-  getSelectedContentWidth(element: HTMLElement): Array<number> {    
+  getSelectedContentWidth(element: HTMLElement): Array<number> {
     const elementChildren = element.parentElement.children;
 
     let width = 0;
@@ -527,7 +530,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
 
     return context.service.fetch(searchString, context.cachingService.hasReachedScrollEnd(), options)
         .subscribe(
-          (data) => { 
+          (data) => {
             context.list = context.handleEmptyList(context.sortByCategory(data));
             context.cachingService.updateResults(context.list);
           },
@@ -572,7 +575,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
         window.clearTimeout(this.inputTimer);
         this.inputTimer = window.setTimeout(this.fetchFromService, 250, searchString, options, this);
         return;
-          
+
       }
     } else {
       this.list = this.options.filter((option) => {
@@ -788,7 +791,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     this.clearSearch();
     this.list=[];
   }
-  
+
   updateMarked(){
     if(this.service){
       return;
@@ -828,7 +831,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   setDisabledState(isDisabled: boolean) {
     this.isDisabled = isDisabled;
   }
-   
+
 }
 
 export interface KeyValueConfig {
