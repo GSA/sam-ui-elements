@@ -71,7 +71,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    */
   @Input() required: boolean;
   /**
-   * Used by Wrapper. Displays a label above input.
+   * Used by labelWrapper. Displays a label above input.
    * See labelWrapper for more detail.
    */
   @Input() label: string;
