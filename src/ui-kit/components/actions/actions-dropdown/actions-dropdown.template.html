@@ -1,4 +1,4 @@
-<div class="sam-actions" 
+<div class="sam-actions"
      sam-click-outside
      (clickOutside)="hideActions()"
      sam-tab-outside
@@ -6,6 +6,7 @@
 
   <button class="usa-button"
           (click)="toggleActions()"
+          [ngClass]="buttonType === 'primary' ? 'usa-button-primary' : ''"
           [disabled]="disabled">
     Actions&nbsp;
     <i class="fa fa-chevron-down"></i>
@@ -14,7 +15,7 @@
   <ul class="usa-unstyled-list"
       *ngIf="showActions">
     <li *ngFor="let action of actions">
-      <button class="usa-button" 
+      <button class="usa-button"
               (click)="chooseAction(action)">
         <i [ngClass]="action?.icon"></i>&nbsp;
         <span>{{action?.label}}</span>
