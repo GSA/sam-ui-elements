@@ -10,7 +10,7 @@
     </div>
     <div class="usa-form-group usa-form-group-year">
       <label [attr.for]="yearName()">Year</label>
-      <input (focus)="triggerTouch()" [attr.id]="yearName()" #year (blur)="onBlur($event)" [(ngModel)]="model.year" (ngModelChange)="onChangeHandler()" class="usa-input-inline" aria-describedby="dobHint" class="usa-form-control" name="date_of_birth_3" pattern="[0-9]{4}" type="number" min="1900" max="3000" maxlength="4" [disabled]="disabled">
+      <input (focus)="triggerTouch()" [attr.id]="yearName()" #year (keypress)="onYearInput($event)" (blur)="onBlur($event)" [(ngModel)]="model.year" (ngModelChange)="onChangeHandler()" class="usa-input-inline" aria-describedby="dobHint" class="usa-form-control" name="date_of_birth_3" pattern="[0-9]{4}" type="number" min="1900" max="3000" maxlength="4" [disabled]="disabled">
     </div>
   </div>
 </sam-fieldset-wrapper>

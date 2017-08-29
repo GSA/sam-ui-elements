@@ -150,7 +150,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   onMonthInput(event){
     var inputNum = parseInt(event.key, 10);
     var possibleNum = (this.month.nativeElement.valueAsNumber * 10) + inputNum;
-    if(possibleNum > 12){
+    if(possibleNum > 12 || event.key === "-"){
       event.preventDefault();
     }
   }
@@ -158,7 +158,15 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   onDayInput(event){
     var inputNum = parseInt(event.key, 10);
     var possibleNum = (this.day.nativeElement.valueAsNumber * 10) + inputNum;
-    if(possibleNum > 31){
+    if(possibleNum > 31 || event.key === "-"){
+      event.preventDefault();
+    }
+  }
+
+  onYearInput(event){
+    var inputNum = parseInt(event.key, 10);
+    var possibleNum = (this.year.nativeElement.valueAsNumber * 10) + inputNum;
+    if(possibleNum > 9999 || event.key === "-"){
       event.preventDefault();
     }
   }
