@@ -127,8 +127,48 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
      this.blurEvent.emit();
   }
 
+  onMonthBlur(event){
+    var eventElemVal = event.srcElement.value;
+    var leadingZero = eventElemVal[0] === "0"
+    if(parseInt(eventElemVal, 10) < 10 && !leadingZero){
+      this.month.nativeElement.value = "0" + eventElemVal;
+    }
+  }
+
+  onDayBlur(event){
+    var eventElemVal = event.srcElement.value;
+    var leadingZero = eventElemVal[0] === "0"
+    if(parseInt(eventElemVal, 10) < 10 && !leadingZero){
+      this.day.nativeElement.value = "0" + eventElemVal;
+    }
+  }
+
   getDate() {
     return moment([this.model.year, this.model.month-1, this.model.day]);
+  }
+
+  onMonthInput(event){
+    var inputNum = parseInt(event.key, 10);
+    var possibleNum = (this.month.nativeElement.valueAsNumber * 10) + inputNum;
+    if(possibleNum > 12 || event.key === "-"){
+      event.preventDefault();
+    }
+  }
+
+  onDayInput(event){
+    var inputNum = parseInt(event.key, 10);
+    var possibleNum = (this.day.nativeElement.valueAsNumber * 10) + inputNum;
+    if(possibleNum > 31 || event.key === "-"){
+      event.preventDefault();
+    }
+  }
+
+  onYearInput(event){
+    var inputNum = parseInt(event.key, 10);
+    var possibleNum = (this.year.nativeElement.valueAsNumber * 10) + inputNum;
+    if(possibleNum > 9999 || event.key === "-"){
+      event.preventDefault();
+    }
   }
 
   onChangeHandler() {
@@ -170,6 +210,19 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   triggerTouch(){
+    this.onTouched();
+  }
+
+  triggerMonthTouch(event){
+    if(event.srcElement.value.substring(0,1) === "0"){
+      this.month.nativeElement.value = event.srcElement.value.substring(1);
+    }
+    this.onTouched();
+  }
+  triggerDayTouch(event){
+    if(event.srcElement.value.substring(0,1) === "0"){
+      this.day.nativeElement.value = event.srcElement.value.substring(1);
+    }
     this.onTouched();
   }
 
