@@ -10,7 +10,7 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
       id={{buttonId}} 
       class="sam-ui button" 
       [ngClass]="btnClass" 
-      [disabled]="buttonDisabled" 
+      [attr.disabled]="buttonDisabled ? '' : null" 
       (click)="click($event)" 
       [type]="buttonType=='submit' ? 'submit' : 'button'">
       {{buttonText}}
