@@ -773,6 +773,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    */
   deselectAll() {
     this.value = [];
+    this.updateMarked();
   }
 
   clearSearch() {
