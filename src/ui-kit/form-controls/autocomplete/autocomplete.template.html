@@ -1,11 +1,11 @@
 <div class="sam-autocomplete" sam-click-outside (clickOutside)="checkForFocus($event)" sam-tab-outside (tabOutside)="checkForFocus($event)">
   <!-- Text input -->
-  <sam-label-wrapper #wrapper [label]="labelText" [hint]="hint" [name]="name" [required]="required">
-  <div class="input-container">
-    <input [attr.id]="id" #input autocomplete="off" [attr.placeholder]="config?.placeholder" [attr.name]="name" type="text" (focus)="inputFocusHandler($event)" (change)="onChange()" (keydown)="onKeydown($event)" (keyup)="onKeyup($event)" [(ngModel)]="inputValue">
+  <sam-label-wrapper #wrapper [label]="labelText" [hint]="hint" [name]="id" [required]="required">
+  <!-- <div class="input-container"> -->
+    <input [attr.id]="id" #input autocomplete="off" [attr.placeholder]="config?.placeholder" [attr.name]="name" type="text" (focus)="inputFocusHandler($event)" (change)="onChange()" (keydown)="onKeydown($event)" (keyup)="onKeyup($event)" [(ngModel)]="inputValue" [attr.aria-label]="name">
     <span *ngIf="showClearButton" class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}"><i class="fa fa-times-circle" (click)="clearInput()" (keyup.enter)="clearInput()" tabindex="0"></i></span>
     <span *ngIf="config && config.addOnIconClass" class="add-on"><i class="{{config.addOnIconClass}}"></i></span>
-  
+
     <div class="sam-autocomplete-results">
       <ul class="usa-unstyled-list sam-autocomplete-no-results" *ngIf="((results && results.length == 0) && (filteredKeyValuePairs && filteredKeyValuePairs.length == 0))  && hasFocus">
         <li>No results found</li>
@@ -24,8 +24,8 @@
         </li>
       </ul>
       <!-- Screen Reader Only, reads results and selections -->
-      <ul #srOnly class="usa-sr-only" role="status" aria-live="assertive" aria-relevant="additions"></ul>
+      <ul #srOnly class="usa-sr-only" aria-live="assertive" aria-relevant="additions"></ul>
     </div>
-  </div>
+  <!-- </div> -->
   </sam-label-wrapper>
 </div>
