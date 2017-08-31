@@ -29,7 +29,7 @@
         'error': child.iconClass == 'error'
       }"
       (keyup.enter)="updateUI($index, $event)"
-      [title]="child.iconClass"
+      [title]="child.label + ' - ' + child.iconClass"
       (click)="updateUI($index, $event)">
       <div class="content">
         <div class="title">{{child.label}}</div>
