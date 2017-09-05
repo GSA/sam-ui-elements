@@ -76,6 +76,7 @@ export class SamPhoneEntryComponent implements OnInit,ControlValueAccessor {
     }
     this.phoneNumberMirror = this.model;
     this.phoneNumber = this.model;
+    this.phoneInput.nativeElement.value = this.phoneNumberMirror;
   };
 
   constructor(private samFormService:SamFormService){ }
