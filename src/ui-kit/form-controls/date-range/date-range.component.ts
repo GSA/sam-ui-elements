@@ -23,7 +23,7 @@ function dateRangeValidation(c:AbstractControl){
     if(!startDateM.isValid() || c.value.startDate=="Invalid date"){
       return {
         dateRangeError: {
-          message: "Invalid start date"
+          message: "Invalid From Date"
         }
       }
     }
@@ -33,7 +33,7 @@ function dateRangeValidation(c:AbstractControl){
     if(!endDateM.isValid() || c.value.endDate=="Invalid date"){
       return {
         dateRangeError: {
-          message: "Invalid end date"
+          message: "Invalid To Date"
         }
       }
     }
