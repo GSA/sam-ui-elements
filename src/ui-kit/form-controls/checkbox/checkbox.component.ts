@@ -58,13 +58,16 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   */
   @Input() useFormService: boolean;
   /**
+  * Sets disabled state
+  */
+  @Input() disabled: boolean;
+  /**
   * Deprecated, Event emitted when the model value changes
   */
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild(FieldsetWrapper)
   public wrapper: FieldsetWrapper;
-  private disabled = null;
   /*
    * We want our model to list the checked items in the order that they appear in the options list
    * This object allows us to efficiently determine if a value is before another value
