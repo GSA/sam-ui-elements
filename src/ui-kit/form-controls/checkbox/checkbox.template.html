@@ -1,11 +1,11 @@
 <sam-fieldset-wrapper [label]="label" [hint]="hint" [errorMessage]="errorMessage" [required]="required">
   <ul class="usa-unstyled-list">
     <li *ngIf="hasSelectAll">
-      <input [attr.disabled]="disabled?'':null" [attr.id]="checkAllLabelName()" type="checkbox" (change)="onSelectAllChange($event.target.checked)">
+      <input [attr.disabled]="disabled?'disabled':null" [attr.id]="checkAllLabelName()" type="checkbox" (change)="onSelectAllChange($event.target.checked)">
       <label [attr.for]="checkAllLabelName()">Select all</label>
     </li>
     <li *ngFor="let option of options; let i = index">
-      <input [attr.disabled]="disabled?'':null" [attr.id]="option.name" [disabled]='option.disabled' type="checkbox"
+      <input [disabled]="option.disabled || disabled?'disabled':null" [attr.id]="option.name" type="checkbox"
         (change)="onCheckChanged(option.value, $event.target.checked)" [checked]="isChecked(option.value)">
       <label [attr.for]="option.name">{{option.label}}</label>
     </li>
