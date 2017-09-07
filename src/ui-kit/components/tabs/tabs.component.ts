@@ -6,7 +6,7 @@ import { Component, AfterContentInit, ContentChildren, QueryList, Input, Output,
 @Component({
   selector: 'sam-tab',
   template: `
-    <div [class.hide]="!active" class="usa-tabs-content">
+    <div [class.hide]="!active">
       <ng-content></ng-content>
     </div>
   `
@@ -28,11 +28,11 @@ export class SamTabComponent {
 @Component({
   selector: 'sam-tabs',
   template:`
-    <ul class="usa-tabs">
-      <li *ngFor="let tab of tabs" (click)="selectTab(tab)" [class.active]="tab.active">
+    <div class="sam-ui secondary pointing large menu" *ngIf="tabs && tabs.length">
+      <a *ngFor="let tab of tabs" class="item" (click)="selectTab(tab)" [class.active]="tab.active">
         {{tab.title}}
-      </li>
-    </ul>
+      </a>
+    </div>
     <ng-content></ng-content>
   `
 })
@@ -41,18 +41,20 @@ export class SamTabsComponent implements AfterContentInit {
   /**
   * Event emitted on tab selection
   */
-  @Output() currentSelectedTab = new EventEmitter(); 
+  @Output() currentSelectedTab = new EventEmitter();
 
   ngAfterContentInit(){
-    let activeTabs = this.tabs.filter((tab)=>tab.active);
-
-    if(activeTabs.length === 0){
-      this.selectTab(this.tabs.first);
-    }
+    this.tabs.changes.subscribe(() => {
+      window.setTimeout(() => {
+        if (this.tabs.length >= 1) {
+          this.selectTab(this.tabs.first);
+        }
+      });
+    });
   }
 
   selectTab(tab: SamTabComponent){
-    this.tabs.toArray().forEach(tab => tab.active = false);
+    this.tabs.forEach(tab => tab.active = false);
     tab.active = true;
     this.currentSelectedTab.emit(tab);
   }
