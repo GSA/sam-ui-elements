@@ -228,6 +228,11 @@ export class SamPhoneEntryComponent implements OnInit,ControlValueAccessor {
     } else {
       this.model = updateModel;
     }
+    
+    
+  }
+
+  emit(){
     this.onChange(this.model);//controlemitter
     this.emitter.emit(this.model);
   }
