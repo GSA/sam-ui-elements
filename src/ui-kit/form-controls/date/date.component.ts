@@ -188,9 +188,9 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   isClean() {
-    return (isNaN(this.model.day) || this.model.day===null) &&
-      (isNaN(this.model.month) || this.model.month===null) &&
-      (isNaN(this.model.year) || this.model.year===null);
+    return (isNaN(this.model.day) || this.model.day === null || this.model.day === "" ) &&
+      (isNaN(this.model.month) || this.model.month === null || this.model.month === "") &&
+      (isNaN(this.model.year) || this.model.year === null || this.model.year === "");
   }
 
   isValid() {
