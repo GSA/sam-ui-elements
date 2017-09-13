@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, Output, EventEmitter, OnInit, forwardRef } from '@angular/core';
+import { Component, ChangeDetectorRef, Input, ViewChild, Output, EventEmitter, OnInit, forwardRef } from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, AbstractControl, FormControl, Validators, ValidatorFn } from "@angular/forms";
 import {SamFormService} from '../../form-service';
@@ -73,8 +73,10 @@ export class SamPhoneEntryComponent implements OnInit,ControlValueAccessor {
     return this.model;
   };
   set value(value: string){
-    if(!value){
+    if(!value && !this.numbersOnly){
       value = this.phoneNumberTemplate;
+    } else if (!value && this.numbersOnly){
+      value = "";
     }
     this.model = value;
     if(this.numbersOnly && value !=this.phoneNumberTemplate){
@@ -85,7 +87,8 @@ export class SamPhoneEntryComponent implements OnInit,ControlValueAccessor {
     this.phoneInput.nativeElement.value = this.phoneNumberMirror;
   };
 
-  constructor(private samFormService:SamFormService){ }
+  constructor(private samFormService:SamFormService,
+    private cdr: ChangeDetectorRef){ }
   
   ngOnInit() {
     this.phoneNumber = this.phoneNumberTemplate;
@@ -119,8 +122,8 @@ export class SamPhoneEntryComponent implements OnInit,ControlValueAccessor {
       if(!this.useFormService){
         this.control.statusChanges.subscribe(()=>{
           this.wrapper.formatErrors(this.control);
+          this.cdr.detectChanges();
         });
-        this.wrapper.formatErrors(this.control);
       }
       else {
         this.samFormService.formEventsUpdated$.subscribe(evt=>{
@@ -131,6 +134,13 @@ export class SamPhoneEntryComponent implements OnInit,ControlValueAccessor {
           }
         });
       }
+    }
+  }
+
+  ngAfterViewInit(){
+    if(this.control){
+      this.wrapper.formatErrors(this.control);
+      this.cdr.detectChanges();
     }
   }
   

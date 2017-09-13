@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild, forwardRef, Output, EventEmitter} from '@angular/core';
+import {Component, ChangeDetectorRef, Input, ViewChild, forwardRef, Output, EventEmitter} from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn} from "@angular/forms";
 import {SamFormService} from '../../form-service';
@@ -68,7 +68,7 @@ export class SamTextComponent implements ControlValueAccessor {
 
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
 
-  constructor(private samFormService:SamFormService) {}
+  constructor(private samFormService:SamFormService,private cdr:ChangeDetectorRef) {}
 
   ngOnInit() {
     if (!this.name) {
@@ -97,8 +97,8 @@ export class SamTextComponent implements ControlValueAccessor {
     if(!this.useFormService){
       this.control.statusChanges.subscribe(()=>{
         this.wrapper.formatErrors(this.control);
+        this.cdr.detectChanges();
       });
-      this.wrapper.formatErrors(this.control);
     }
     else {
       this.samFormService.formEventsUpdated$.subscribe(evt=>{
@@ -108,6 +108,13 @@ export class SamTextComponent implements ControlValueAccessor {
           this.wrapper.clearError();
         }
       });
+    }
+  }
+
+  ngAfterViewInit(){
+    if(this.control){
+      this.wrapper.formatErrors(this.control);
+      this.cdr.detectChanges();
     }
   }
 
