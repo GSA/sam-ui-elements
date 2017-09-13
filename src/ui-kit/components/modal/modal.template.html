@@ -13,8 +13,8 @@
 		  <p *ngIf="description">{{description}}</p>
 			<ng-content></ng-content>
 			<div *ngIf="cancelButtonLabel || submitButtonLabel" class="usa-modal-content-btn-area">
-				<button class="usa-button-outline usa-modal-content-cancel-btn" *ngIf="cancelButtonLabel" (click)="closeModal()">{{cancelButtonLabel}}</button>
-				<button class="usa-modal-content-submit-btn" *ngIf="submitButtonLabel" (click)="submitBtnClick()">{{submitButtonLabel}}</button>
+				<sam-button buttonType="tertiary" class="usa-button-outline usa-modal-content-cancel-btn" *ngIf="cancelButtonLabel" (click)="closeModal()" [buttonText]="cancelButtonLabel"></sam-button>
+				<sam-button class="usa-modal-content-submit-btn" *ngIf="submitButtonLabel" (click)="submitBtnClick()" [buttonText]="submitButtonLabel"></sam-button>
 			</div>
 		</div>
 	</div>
