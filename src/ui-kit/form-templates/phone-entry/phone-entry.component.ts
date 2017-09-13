@@ -191,8 +191,8 @@ export class SamPhoneEntryComponent implements OnInit,ControlValueAccessor {
       this.phoneNumber = updatedPhoneNumber.substr(0,this.phoneNumberTemplate.length);
       this.phoneInput.nativeElement.setSelectionRange(positionIncrement,positionIncrement);
     } 
-    //if backspace
-    else if(event.keyCode==8){
+    //if backspace or delete
+    else if(event.keyCode==8 || event.keyCode==46){
       let positionDecrement = this.getPositionDecrement(start);
       event.preventDefault();
       if(start!=end) {
