@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { SamFormControlsModule } from '../form-controls';
 import { SamDirectivesModule } from '../directives';
+import { SamElementsModule } from '../elements';
 
 import { AccordionsModule } from './accordion';
 import { SamAlertComponent } from './alert';
@@ -35,6 +36,7 @@ import { SamActionButton, SamActionsDropdownComponent } from './actions';
     RouterModule,
     SamFormControlsModule,
     SamDirectivesModule,
+    SamElementsModule,
     AccordionsModule,
     SamSidenavModule,
     SamWrapperModule,
