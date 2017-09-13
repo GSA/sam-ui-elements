@@ -26,7 +26,8 @@
       [ngClass]="{
         'active': isSelected($index),
         'completed': child.iconClass == 'completed',
-        'error': child.iconClass == 'error'
+        'error': child.iconClass == 'error',
+        'pending': child.iconClass == 'pending'
       }"
       (keyup.enter)="updateUI($index, $event)"
       [title]="child.label + ' - ' + child.iconClass"
