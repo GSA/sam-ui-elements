@@ -8,6 +8,7 @@ import { SamElementsModule } from '../elements';
 
 import { AccordionsModule } from './accordion';
 import { SamAlertComponent } from './alert';
+import { SamAlertFooterComponent,SamAlertFooterService } from './alert-footer';
 import { SamAlphabetSelectorComponent } from './alphabet-selector';
 import { SamBannerComponent } from './banner';
 import { SamBreadcrumbsComponent } from './breadcrumbs';
@@ -45,6 +46,7 @@ import { SamActionButton, SamActionsDropdownComponent } from './actions';
   ],
   declarations: [
     SamAlertComponent,
+    SamAlertFooterComponent,
     SamAlphabetSelectorComponent,
     SamBannerComponent,
     SamBreadcrumbsComponent,
@@ -67,6 +69,7 @@ import { SamActionButton, SamActionsDropdownComponent } from './actions';
   ],
   exports: [
     SamAlertComponent,
+    SamAlertFooterComponent,
     SamAlphabetSelectorComponent,
     SamBannerComponent,
     SamBreadcrumbsComponent,
