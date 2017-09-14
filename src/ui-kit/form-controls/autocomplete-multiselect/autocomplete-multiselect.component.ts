@@ -551,6 +551,9 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * search term as a substring of the objects key or value
    */
   filterOptions(searchString: string) {
+    if(searchString=="" && this.innerValue.length>0){
+      return;
+    }
     const availableCategories = [];
     // Checks if searchString is empty
     // If so, use defaultSearchString
