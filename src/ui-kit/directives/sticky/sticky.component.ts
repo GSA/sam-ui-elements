@@ -147,8 +147,7 @@ export class SamStickyComponent implements OnInit{
     // Start to make it sticky when:
     // 1.the element is scrolled to top
     // 2.the container's height is larger than the element height plus diffLimit
-
-    if(this.getScrollTop() + this.stickyTop > parentContainerToTop+ this.el.nativeElement.offsetTop
+    if((this.getScrollTop() !== 0) && this.getScrollTop() + this.stickyTop > parentContainerToTop+ this.el.nativeElement.offsetTop
       && this.el.nativeElement.offsetHeight + this.diffLimit < parentContainer[0].offsetHeight){
       this.setPosition("fixed");
       // Make the elem stick on top until the space is not enough to show the elem
