@@ -61,11 +61,6 @@ export class SamSelectComponent implements ControlValueAccessor, AfterViewInit {
   */
   @Input() useFormService: boolean;
   /**
-  * Sets the styles for dropdown
-  */
-  @Input() styles: any;
-
-  /**
   * Event emitted on modal value change
   */
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
