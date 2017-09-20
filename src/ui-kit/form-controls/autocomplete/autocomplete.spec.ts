@@ -2,6 +2,8 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { SamFormService } from '../../form-service';
+import { SamWrapperModule } from '../../wrappers'; 
 
 // Load the implementations that should be tested
 import { SamUIKitModule } from '../../index';
@@ -51,8 +53,10 @@ describe('The Sam Autocomplete Component', () => {
       imports: [
         CommonModule,
         FormsModule,
-        SamUIKitModule
+        SamWrapperModule
       ],
+      declarations: [SamAutocompleteComponent],
+      providers: [SamFormService]
     });
 
     fixture = TestBed.createComponent(SamAutocompleteComponent);

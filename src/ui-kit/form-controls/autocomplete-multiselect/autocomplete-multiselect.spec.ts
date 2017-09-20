@@ -2,12 +2,14 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Load the implementations that should be tested
 import { SamUIKitModule } from '../../index';
-
 import { SamAutocompleteMultiselectComponent, KeyValueConfig } from './autocomplete-multiselect.component';
 import { AutocompleteService } from '../autocomplete/autocomplete.service';
+import { SamFormService } from '../../form-service';
+import { SamWrapperModule } from '../../wrappers'; 
 
 describe('The Sam Autocomplete Multiselect Component', () => {
   let component: SamAutocompleteMultiselectComponent;
@@ -30,8 +32,11 @@ describe('The Sam Autocomplete Multiselect Component', () => {
       imports: [
         CommonModule,
         FormsModule,
-        SamUIKitModule
+        SamWrapperModule,
+        BrowserAnimationsModule,
       ],
+      declarations: [SamAutocompleteMultiselectComponent],
+      providers: [SamFormService]
     });
 
     fixture = TestBed.createComponent(SamAutocompleteMultiselectComponent);
@@ -44,6 +49,7 @@ describe('The Sam Autocomplete Multiselect Component', () => {
 
   it('Should display results when text is entered', () => {
     component.searchText = 'c';
+    component.filterOptions(component.searchText);
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       const results = fixture.nativeElement.querySelectorAll('li.category-item, li.category-name');
@@ -53,6 +59,7 @@ describe('The Sam Autocomplete Multiselect Component', () => {
 
   it('Should display no results when no results are found', () => {
     component.searchText = 'zzzzzzzzzz';
+    component.filterOptions(component.searchText);
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       const results = fixture.nativeElement.querySelectorAll('li.category-item, li.category-name');

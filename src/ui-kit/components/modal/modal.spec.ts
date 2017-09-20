@@ -3,6 +3,7 @@ import {By} from '@angular/platform-browser';
 
 // Load the implementations that should be tested
 import {SamModalComponent} from './modal.component';
+import {SamElementsModule} from '../../elements';
 
 describe('The Sam Modal component', () => {
   let component:SamModalComponent;
@@ -11,6 +12,7 @@ describe('The Sam Modal component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports:[SamElementsModule],
       declarations: [SamModalComponent]
     });
 

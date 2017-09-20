@@ -3,6 +3,7 @@ import { SamNumberComponent } from './number.component';
 import { LabelWrapper } from '../../wrappers/label-wrapper/label-wrapper.component';
 import { FormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
+import { SamFormService } from '../../form-service';
 
 describe('The Sam Number component', () => {
   let component: SamNumberComponent;
@@ -17,6 +18,9 @@ describe('The Sam Number component', () => {
         SamNumberComponent,
         LabelWrapper,
       ],
+      providers: [
+        SamFormService
+      ]
     });
 
     fixture = TestBed.createComponent(SamNumberComponent);

@@ -4,7 +4,7 @@ import {  By  } from '@angular/platform-browser';
 
 // Load the implementations that should be tested
 import { SamAlertFooterComponent } from './alert-footer.component';
-import { SamUIKitModule } from 'sam-ui-kit';
+import { SamAlertComponent } from '../alert/alert.component';
 import { SamAlertFooterService } from './alert-footer.service';
 
 
@@ -14,8 +14,8 @@ describe('The AlertFooter component', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ SamAlertFooterComponent ],
-      imports: [ SamUIKitModule ],
+      declarations: [ SamAlertFooterComponent,SamAlertComponent ],
+      imports: [ ],
       providers: [ SamAlertFooterService ]
     });
 

@@ -4,7 +4,7 @@ import { DebugElement } from '@angular/core';
 
 import { SamImageComponent } from './';
 
-fdescribe('The Sam Image Component', () => {
+describe('The Sam Image Component', () => {
   let fixture: ComponentFixture<SamImageComponent>;
   let component: SamImageComponent;
   let de: DebugElement;
