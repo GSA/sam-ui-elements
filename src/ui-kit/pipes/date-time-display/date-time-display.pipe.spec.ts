@@ -1,7 +1,7 @@
 import { DateTimeDisplayPipe } from './date-time-display.pipe';
 import * as moment from 'moment/moment';
 
-describe('src/app/app-pipes/date-time-display.pipe.spec.ts', () => {
+describe('DateTimeDisplayPipe test', () => {
   let pipe = new DateTimeDisplayPipe();
 
   it('FilterMultiArrayObjectPipe Test: Not found', () => {
@@ -11,11 +11,11 @@ describe('src/app/app-pipes/date-time-display.pipe.spec.ts', () => {
 
   it('FilterMultiArrayObjectPipe Test: Not nested: Single array', () => {
     let datetime = moment().subtract(1,"month");  
-    expect(pipe.transform(datetime.format("YYYY-MM-DD HH:ss"))).toEqual(datetime.format("MMMM DD"));
+    expect(pipe.transform(datetime.format("YYYY-MM-DD HH:ss"))).toEqual(datetime.format("MMM DD"));
   });
 
   it('FilterMultiArrayObjectPipe Test: Nested array', () => {
     let datetime = moment().subtract(1,"year");  
-    expect(pipe.transform(datetime.format("YYYY-MM-DD HH:ss"))).toEqual(datetime.format("MMMM DD, YYYY")); //second level
+    expect(pipe.transform(datetime.format("YYYY-MM-DD HH:ss"))).toEqual(datetime.format("MMM DD, YYYY")); //second level
   });
 });

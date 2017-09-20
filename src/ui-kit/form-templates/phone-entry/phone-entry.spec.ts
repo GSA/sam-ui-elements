@@ -2,6 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser/index';
 // Load the implementations that should be tested
 import { SamPhoneEntryComponent } from './phone-entry.component';
+import { SamComponentsModule } from '../../components';
 import { SamUIKitModule } from '../../index';
 
 describe('The Sam Phone Entry component', () => {
@@ -13,7 +14,7 @@ describe('The Sam Phone Entry component', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SamUIKitModule],
+      imports: [SamUIKitModule,SamComponentsModule],
       providers: [SamPhoneEntryComponent],
     });
 

@@ -21,7 +21,7 @@ describe('Sam Multiselect Dropdown Component', function() {
 
     beforeEach( () => {
         TestBed.configureTestingModule({
-            providers: [SamMultiSelectDropdownComponent],
+            declarations: [SamMultiSelectDropdownComponent],
             imports: [SamUIKitModule]
         });
 

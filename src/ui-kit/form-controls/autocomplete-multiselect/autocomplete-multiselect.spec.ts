@@ -2,6 +2,7 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Load the implementations that should be tested
 import { SamUIKitModule } from '../../index';
@@ -30,6 +31,7 @@ describe('The Sam Autocomplete Multiselect Component', () => {
       imports: [
         CommonModule,
         FormsModule,
+        BrowserAnimationsModule,
         SamUIKitModule
       ],
     });

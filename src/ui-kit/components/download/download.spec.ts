@@ -1,5 +1,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DebugElement } from '@angular/core';
 
 import { SamDownloadComponent } from './download.component';
@@ -13,6 +14,7 @@ describe('SamDownloadComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      imports: [BrowserAnimationsModule],
       declarations: [ SamDownloadComponent ]
     });
 
