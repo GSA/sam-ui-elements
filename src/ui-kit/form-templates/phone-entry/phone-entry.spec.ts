@@ -1,9 +1,12 @@
 import { TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser/index';
+import {FormsModule} from '@angular/forms';
 // Load the implementations that should be tested
 import { SamPhoneEntryComponent } from './phone-entry.component';
-import { SamComponentsModule } from '../../components';
+import { SamFormControlsModule } from '../../form-controls';
+import { SamWrapperModule } from '../../wrappers';
 import { SamUIKitModule } from '../../index';
+import { SamFormService } from '../../form-service';
 
 describe('The Sam Phone Entry component', () => {
   let component: SamPhoneEntryComponent;
@@ -14,8 +17,9 @@ describe('The Sam Phone Entry component', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SamUIKitModule,SamComponentsModule],
-      providers: [SamPhoneEntryComponent],
+      imports: [SamFormControlsModule,SamWrapperModule,FormsModule],
+      declarations: [SamPhoneEntryComponent],
+      providers: [SamFormService]
     });
 
     fixture = TestBed.createComponent(SamPhoneEntryComponent);

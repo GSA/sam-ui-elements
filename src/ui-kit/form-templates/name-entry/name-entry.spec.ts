@@ -3,6 +3,10 @@ import { TestBed, async } from '@angular/core/testing';
 // Load the implementations that should be tested
 import { SamNameEntryComponent } from './name-entry.component';
 import { SamUIKitModule } from '../../index';
+import { SamFormService } from '../../form-service';
+import { SamWrapperModule } from '../../wrappers'; 
+import { FormsModule } from '@angular/forms'; 
+import { SamFormControlsModule } from '../../form-controls';
 
 describe('The Sam Name Entry component', () => {
   let component: SamNameEntryComponent;
@@ -19,8 +23,9 @@ describe('The Sam Name Entry component', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SamUIKitModule],
-      providers: [SamNameEntryComponent],
+      imports: [SamWrapperModule,SamFormControlsModule,FormsModule],
+      declarations: [SamNameEntryComponent],
+      providers: [SamFormService]
     });
 
     fixture = TestBed.createComponent(SamNameEntryComponent);

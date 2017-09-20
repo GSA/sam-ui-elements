@@ -2,7 +2,8 @@ import { TestBed, async } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 // Load the implementations that should be tested
 import { SamDateComponent } from './date.component';
-import { SamUIKitModule } from '../../index';
+import { SamWrapperModule } from '../../wrappers';
+import {SamFormService } from '../../form-service';
 
 describe('The Sam Date component', () => {
   let component: SamDateComponent;
@@ -11,8 +12,9 @@ describe('The Sam Date component', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SamUIKitModule,FormsModule],
-      providers: [SamDateComponent],
+      imports: [SamWrapperModule,FormsModule],
+      declarations: [SamDateComponent],
+      providers: [SamFormService]
     });
 
     fixture = TestBed.createComponent(SamDateComponent);

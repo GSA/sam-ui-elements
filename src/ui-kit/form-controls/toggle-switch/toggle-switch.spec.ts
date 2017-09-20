@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 
 // Load the implementations that should be tested
 import { SamToggleSwitchComponent } from './toggle-switch.component';
@@ -12,8 +13,8 @@ describe('The Sam Toggle Switch component', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SamUIKitModule],
-      providers: [SamToggleSwitchComponent],
+      imports: [FormsModule],
+      declarations: [SamToggleSwitchComponent],
     });
 
     fixture = TestBed.createComponent(SamToggleSwitchComponent);
