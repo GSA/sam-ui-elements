@@ -1,5 +1,5 @@
 import { TestBed, async } from '@angular/core/testing';
-import { By } from '@angular/platform-browser/index';
+import { By } from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
 // Load the implementations that should be tested
 import { SamPhoneEntryComponent } from './phone-entry.component';
