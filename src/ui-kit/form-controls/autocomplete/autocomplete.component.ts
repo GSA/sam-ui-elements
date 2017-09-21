@@ -109,7 +109,6 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
 
   /*
    How do define custom http callbacks:
-
    <sam-autocomplete
        #autoComplete
        [ngModelOptions]="{standalone: true}"
