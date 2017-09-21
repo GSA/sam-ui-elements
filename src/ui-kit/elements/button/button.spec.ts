@@ -8,14 +8,11 @@ describe('The Sam Button component', () => {
   let component:SamButtonComponent;
   let fixture:any;
 
-  let defaultBtnConfig = {buttonType: 'default', buttonId: 'defaultBtn', buttonText: 'Default'};
-  let altBtnConfig = {buttonType: 'alt', buttonId: 'altBtn', buttonText: 'Alt'};
+  let primaryBtnConfig = {buttonType: 'primary', buttonId: 'primaryBtn', buttonText: 'Primary'};
   let secondaryBtnConfig = {buttonType: 'secondary', buttonId: 'secondaryBtn', buttonText: 'Secondary'};
-  let grayBtnConfig = {buttonType: 'gray', buttonId: 'grayBtn', buttonText: 'Gray'};
-  let outlineBtnConfig = {buttonType: 'outline', buttonId: 'outlineBtn', buttonText: 'Outline'};
-  let invertedBtnConfig = {buttonType: 'inverted', buttonId: 'invertedBtn', buttonText: 'Inverted'};
-  let disabledBtnConfig = {buttonType: 'disabled', buttonId: 'disabledBtn', buttonText: 'Disabled'};
-  let bigBtnConfig = {buttonType: 'big', buttonId: 'bigBtn', buttonText: 'Big'};
+  let tertiaryBtnConfig = {buttonType: 'tertiary', buttonId: 'tertiaryBtn', buttonText: 'Tertiary'};
+  let negativeBtnConfig = {buttonType: 'negative', buttonId: 'negativeBtn', buttonText: 'Negative'};
+
 
   let samBtnErrorConfig = {buttonType: 'notExist', buttonId: 'errorConfigBtn', buttonText: 'Wrong buttonType'};
 
@@ -30,30 +27,17 @@ describe('The Sam Button component', () => {
 
   });
 
-  it('should display a default sam button', function () {
+  it('should display a primary sam button', function () {
 
-    component.buttonType = defaultBtnConfig.buttonType;
-    component.buttonId = defaultBtnConfig.buttonId;
-    component.buttonText = defaultBtnConfig.buttonText;
+    component.buttonType = primaryBtnConfig.buttonType;
+    component.buttonId = primaryBtnConfig.buttonId;
+    component.buttonText = primaryBtnConfig.buttonText;
     fixture.detectChanges();
 
-    expect(component.btnClass).toBe("");
-    expect(component.disabled).toBe(false);
-    let btnElement = fixture.debugElement.query(By.css("#defaultBtn"));
-    expect(btnElement.nativeElement.innerHTML).toBe("Default");
-  });
-
-  it('should display a alt sam button', function () {
-
-    component.buttonType = altBtnConfig.buttonType;
-    component.buttonId = altBtnConfig.buttonId;
-    component.buttonText = altBtnConfig.buttonText;
-    fixture.detectChanges();
-
-    expect(component.btnClass).toBe("usa-button-primary-alt");
-    expect(component.disabled).toBe(false);
-    let btnElement = fixture.debugElement.query(By.css("#altBtn"));
-    expect(btnElement.nativeElement.innerHTML).toBe("Alt");
+    expect(component.btnClass).toContain("primary");
+    expect(component.buttonDisabled).toBe(false);
+    let btnElement = fixture.debugElement.query(By.css("#primaryBtn"));
+    expect(btnElement.nativeElement.innerHTML.trim()).toBe("Primary");
   });
 
   it('should display a secondary sam button', function () {
@@ -63,75 +47,36 @@ describe('The Sam Button component', () => {
     component.buttonText = secondaryBtnConfig.buttonText;
     fixture.detectChanges();
 
-    expect(component.btnClass).toBe("usa-button-secondary");
-    expect(component.disabled).toBe(false);
+    expect(component.btnClass).toContain("secondary");
+    expect(component.buttonDisabled).toBe(false);
     let btnElement = fixture.debugElement.query(By.css("#secondaryBtn"));
-    expect(btnElement.nativeElement.innerHTML).toBe("Secondary");
+    expect(btnElement.nativeElement.innerHTML.trim()).toBe("Secondary");
+  });
+
+  it('should display a tertiary sam button', function () {
+
+    component.buttonType = tertiaryBtnConfig.buttonType;
+    component.buttonId = tertiaryBtnConfig.buttonId;
+    component.buttonText = tertiaryBtnConfig.buttonText;
+    fixture.detectChanges();
+
+    expect(component.btnClass).toContain("basic blue");
+    expect(component.buttonDisabled).toBe(false);
+    let btnElement = fixture.debugElement.query(By.css("#tertiaryBtn"));
+    expect(btnElement.nativeElement.innerHTML.trim()).toBe("Tertiary");
   });
 
   it('should display a gray sam button', function () {
 
-    component.buttonType = grayBtnConfig.buttonType;
-    component.buttonId = grayBtnConfig.buttonId;
-    component.buttonText = grayBtnConfig.buttonText;
+    component.buttonType = negativeBtnConfig.buttonType;
+    component.buttonId = negativeBtnConfig.buttonId;
+    component.buttonText = negativeBtnConfig.buttonText;
     fixture.detectChanges();
 
-    expect(component.btnClass).toBe("usa-button-gray");
-    expect(component.disabled).toBe(false);
-    let btnElement = fixture.debugElement.query(By.css("#grayBtn"));
-    expect(btnElement.nativeElement.innerHTML).toBe("Gray");
-  });
-
-  it('should display a outline sam button', function () {
-
-    component.buttonType = outlineBtnConfig.buttonType;
-    component.buttonId = outlineBtnConfig.buttonId;
-    component.buttonText = outlineBtnConfig.buttonText;
-    fixture.detectChanges();
-
-    expect(component.btnClass).toBe("usa-button-outline");
-    expect(component.disabled).toBe(false);
-    let btnElement = fixture.debugElement.query(By.css("#outlineBtn"));
-    expect(btnElement.nativeElement.innerHTML).toBe("Outline");
-  });
-
-  it('should display a inverted sam button', function () {
-
-    component.buttonType = invertedBtnConfig.buttonType;
-    component.buttonId = invertedBtnConfig.buttonId;
-    component.buttonText = invertedBtnConfig.buttonText;
-    fixture.detectChanges();
-
-    expect(component.btnClass).toBe("usa-button-outline-inverse");
-    expect(component.disabled).toBe(false);
-    let btnElement = fixture.debugElement.query(By.css("#invertedBtn"));
-    expect(btnElement.nativeElement.innerHTML).toBe("Inverted");
-  });
-
-  it('should display a disabled sam button', function () {
-
-    component.buttonType = disabledBtnConfig.buttonType;
-    component.buttonId = disabledBtnConfig.buttonId;
-    component.buttonText = disabledBtnConfig.buttonText;
-    fixture.detectChanges();
-
-    expect(component.btnClass).toBe("usa-button-disabled");
-    expect(component.disabled).toBe(true);
-    let btnElement = fixture.debugElement.query(By.css("#disabledBtn"));
-    expect(btnElement.nativeElement.innerHTML).toBe("Disabled");
-  });
-
-  it('should display a big sam button', function () {
-
-    component.buttonType = bigBtnConfig.buttonType;
-    component.buttonId = bigBtnConfig.buttonId;
-    component.buttonText = bigBtnConfig.buttonText;
-    fixture.detectChanges();
-
-    expect(component.btnClass).toBe("usa-button-big");
-    expect(component.disabled).toBe(false);
-    let btnElement = fixture.debugElement.query(By.css("#bigBtn"));
-    expect(btnElement.nativeElement.innerHTML).toBe("Big");
+    expect(component.btnClass).toContain("negative");
+    expect(component.buttonDisabled).toBe(false);
+    let btnElement = fixture.debugElement.query(By.css("#negativeBtn"));
+    expect(btnElement.nativeElement.innerHTML.trim()).toBe("Negative");
   });
 
   it('should display a default sam button when the buttonType is not valid', function () {
@@ -141,9 +86,9 @@ describe('The Sam Button component', () => {
     component.buttonText = samBtnErrorConfig.buttonText;
     fixture.detectChanges();
 
-    expect(component.btnClass).toBe("");
-    expect(component.disabled).toBe(false);
+    expect(component.btnClass).toContain("primary");
+    expect(component.buttonDisabled).toBe(false);
     let btnElement = fixture.debugElement.query(By.css("#errorConfigBtn"));
-    expect(btnElement.nativeElement.innerHTML).toBe("Wrong buttonType");
+    expect(btnElement.nativeElement.innerHTML.trim()).toBe("Wrong buttonType");
   });
 });

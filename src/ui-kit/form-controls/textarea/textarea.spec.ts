@@ -3,6 +3,7 @@ import { SamTextareaComponent } from './textarea.component';
 import { LabelWrapper } from "../../wrappers/label-wrapper";
 import { FormsModule } from "@angular/forms";
 import { By } from "@angular/platform-browser";
+import {SamFormService} from '../../form-service';
 
 describe('The Sam Textarea component', () => {
   let component: SamTextareaComponent;
@@ -17,6 +18,9 @@ describe('The Sam Textarea component', () => {
         SamTextareaComponent,
         LabelWrapper,
       ],
+      providers: [
+        SamFormService
+      ]
     });
 
     fixture = TestBed.createComponent(SamTextareaComponent);

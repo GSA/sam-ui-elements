@@ -4,6 +4,8 @@ import { By } from '@angular/platform-browser';
 // Load the implementations that should be tested
 import { SamCheckboxComponent } from './checkbox.component';
 import { SamUIKitModule } from '../../index';
+import { SamFormService } from '../../form-service';
+import { SamWrapperModule } from '../../wrappers'; 
 
 describe('The Sam Checkboxes component', () => {
   let component: SamCheckboxComponent;
@@ -26,8 +28,9 @@ describe('The Sam Checkboxes component', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SamCheckboxComponent],
-      imports: [SamUIKitModule]
+      declarations: [SamCheckboxComponent],
+      imports: [SamWrapperModule],
+      providers: [SamFormService]
     });
 
     fixture = TestBed.createComponent(SamCheckboxComponent);
