@@ -98,22 +98,6 @@ export interface HistoryNodeType {
 
 export interface AutocompleteConfig {
   /**
-   * Optional name attribute
-   */
-  name?: string;
-  /**
-   * Optional id attribute
-   */
-  id?: string;
-  /**
-   * Optional label text
-   */
-  labelText?: string;
-  /**
-   * Adds a clear button in the input
-   */
-  showClearButton?: boolean;
-  /**
    * Adds an icon inside the input
    */
   addOnIconClass?: string;
@@ -133,18 +117,6 @@ export interface AutocompleteConfig {
    * Passes value to the custom autocomplete service fetch method call
    */
   serviceOptions?: any;
-  /**
-   * Sets a hard limit on number of items to render at a time
-   */
-  dropdownLimit?: number;
-  /**
-   * Clears input on selection
-   */
-  clearOnSelection?: boolean;
-  /**
-   * When input is empty, dropdown is still displayed on focus
-   */
-  showOnEmptyInput?: boolean;
   /**
    * Set value to be used to determine if an item is a category.
    */
