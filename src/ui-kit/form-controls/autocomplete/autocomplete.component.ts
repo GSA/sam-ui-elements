@@ -45,10 +45,6 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   */
   @Input() public options: Array<any>;
   /**
-  * Display a clear button for the text input
-  */
-  @Input() public showClearButton: boolean = false;
-  /**
    * Allows for a configuration object
    */
   @Input() public config: AutocompleteConfig;
@@ -68,19 +64,6 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   * Sets the form control
   */
   @Input() public control: FormControl;
-  /**
-   * Optional: Provides a default search string to use with service
-   * in lieu of sending an empty string. If not provided, value
-   * defaults to an empty string.
-   *
-   * WARNING: If your service overrides or manipulates the value
-   * passed to the fetch method, providing a default search string
-   * on the component may not produce the expected results.
-   *
-   * Example:
-   * this.autocompleteService.fetch(this.defaultSearchString, pageEnd, options)
-   */
-  @Input() public defaultSearchString: string = '';
   /**
   * Sets the required text in the label wrapper
   */
@@ -126,7 +109,6 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
 
   /*
    How do define custom http callbacks:
-
    <sam-autocomplete
        #autoComplete
        [ngModelOptions]="{standalone: true}"
@@ -270,11 +252,8 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
 
   onKeyup(event: any) {
     // If event.target.name is an empty string, set search string to default search string
-    const searchString = event.target.value === '' ? this.defaultSearchString : event.target.value;
+    const searchString = event.target.value || '';
 
-    // if((event.code === 'Tab' || event.keyIdentifier === 'Tab') && !this.inputValue && (!this.config || this.config && !this.config.showOnEmptyInput)){
-    //   return;
-    // }
     if((event.code === 'Tab' || event.keyIdentifier === 'Tab')){
       return;
     }
@@ -513,11 +492,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     const message = displayValue;
     this.innerValue = value;
     this.hasFocus = false;
-    if(this.config && this.config.clearOnSelection){
-      this.inputValue = "";
-    } else {
-      this.inputValue = message;
-    }
+    this.inputValue = message;
     this.selectedInputValue = this.inputValue;
     this.propogateChange(this.innerValue);
     this.srOnly.nativeElement.innerHTML = null;
@@ -534,9 +509,6 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     });
     if(!Array.isArray(reducedArr)){
       reducedArr = [];
-    }
-    if(this.config && this.config.dropdownLimit && reducedArr.length > this.config.dropdownLimit){
-      reducedArr.length = this.config.dropdownLimit
     }
     return reducedArr;
   }
@@ -574,9 +546,6 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       }
       return prev;
     }, []);
-    if(this.config && this.config.dropdownLimit && reducedArr.length > this.config.dropdownLimit){
-      reducedArr.length = this.config.dropdownLimit;
-    }
     return reducedArr;
   }
 
