@@ -14,7 +14,7 @@
 			<ng-content></ng-content>
 			<div *ngIf="cancelButtonLabel || submitButtonLabel" class="usa-modal-content-btn-area">
 				<sam-button buttonType="tertiary" class="usa-button-outline usa-modal-content-cancel-btn" *ngIf="cancelButtonLabel" (click)="closeModal()" [buttonText]="cancelButtonLabel"></sam-button>
-				<sam-button class="usa-modal-content-submit-btn" *ngIf="submitButtonLabel" (click)="submitBtnClick()" [buttonText]="submitButtonLabel"></sam-button>
+				<sam-button buttonType="secondary" class="usa-modal-content-submit-btn" *ngIf="submitButtonLabel" (click)="submitBtnClick()" [buttonText]="submitButtonLabel"></sam-button>
 			</div>
 		</div>
 	</div>
