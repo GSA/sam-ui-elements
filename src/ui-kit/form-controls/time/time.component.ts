@@ -50,6 +50,9 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
   */
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
+  @ViewChild('hour') hour_v;
+  @ViewChild('minute') minute_v;
+  @ViewChild('ampm') ampm_v;
   hours: number = null;
   minutes: number = null;
   amPm: string = 'am';
@@ -115,6 +118,20 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
     this.valueChange.emit(this.toString());
   }
   
+  hourTouched(event){
+    if(event.srcElement.value.substring(0,1) === "0"){
+      this.hour_v.nativeElement.value = event.srcElement.value.substring(1);
+    }
+    this.setTouched();
+  }
+
+  minuteTouched(event){
+    if(event.srcElement.value.substring(0,1) === "0"){
+      this.minute_v.nativeElement.value = event.srcElement.value.substring(1);
+    }
+    this.setTouched();
+  }
+
   setTouched(){
     this.onTouched();
   }
@@ -157,6 +174,48 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
       return 'Invalid Time';
     } else {
       return this.getTime().format(this.OUTPUT_FORMAT);
+    }
+  }
+  
+  hoursPress(event){
+    var inputNum = parseInt(event.key, 10);
+    var possibleNum = (this.hour_v.nativeElement.valueAsNumber * 10) + inputNum;
+    if(possibleNum > 12 || event.key === "-"){
+      event.preventDefault();
+      return;
+    }
+    if(event.target.value.length+1==2 && event.key.match(/[0-9]/)!=null){
+      this.minute_v.nativeElement.focus();
+    }
+  }
+
+  hoursBlur(event, override){
+    var eventElemVal = override ? override : event.srcElement.value;
+    var leadingZero = eventElemVal[0] === "0"
+    if(parseInt(eventElemVal, 10) < 10 && !leadingZero){
+      this.hour_v.nativeElement.value = "0" + eventElemVal;
+    }
+  }
+
+  minutesPress(event){
+    var inputNum = parseInt(event.key, 10);
+    var possibleNum = (this.minute_v.nativeElement.valueAsNumber * 10) + inputNum;
+    if(possibleNum > 59 || event.key === "-"){
+      event.preventDefault();
+      return;
+    }
+    if(event.target.value.length+1==2 && event.key.match(/[0-9]/)!=null){
+      this.minutes = possibleNum;
+      this.minutesBlur(event, possibleNum);
+      this.ampm_v.nativeElement.focus();
+    }
+  }
+
+  minutesBlur(event, override){
+    var eventElemVal = override ? override : event.srcElement.value;
+    var leadingZero = eventElemVal[0] === "0"
+    if(parseInt(eventElemVal, 10) < 10 && !leadingZero){
+      this.minute_v.nativeElement.value = "0" + eventElemVal;
     }
   }
 
