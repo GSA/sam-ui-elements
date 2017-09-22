@@ -51,11 +51,13 @@
         </span>
     </div>
 
-    <button type="button"
-            class="usa-button-link"
-            (click)="focusTextArea(clearSearch(deselectAll()))">
-            Clear All
-    </button>
+    <div class="clear-all-container">
+      <button type="button"
+              class="usa-button-link"
+              (click)="focusTextArea(clearSearch(deselectAll()))">
+              Clear All
+      </button>
+    </div>
 
     <ul #resultsList class="usa-unstyled-list multiselect-parent-list"
         *ngIf="displayList()"

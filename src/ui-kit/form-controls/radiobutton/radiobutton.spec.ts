@@ -3,7 +3,9 @@ import { By } from '@angular/platform-browser';
 
 // Load the implementations that should be tested
 import { SamRadioButtonComponent } from './radiobutton.component';
-import { SamUIKitModule } from '../../index';
+import { SamWrapperModule } from '../../wrappers';
+import {SamFormService } from '../../form-service';
+import { FormsModule } from '@angular/forms';
 
 describe('The Sam Radio Buttons component', () => {
   let component: SamRadioButtonComponent;
@@ -24,8 +26,9 @@ describe('The Sam Radio Buttons component', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SamRadioButtonComponent],
-      imports: [SamUIKitModule]
+      declarations: [SamRadioButtonComponent],
+      imports: [SamWrapperModule,FormsModule],
+      providers: [SamFormService]
     });
 
     fixture = TestBed.createComponent(SamRadioButtonComponent);

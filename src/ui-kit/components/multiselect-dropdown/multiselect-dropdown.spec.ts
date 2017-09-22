@@ -2,6 +2,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { SamMultiSelectDropdownComponent } from './multiselect-dropdown.component';
 import { SamUIKitModule } from '../../index';
+import { SamFormControlsModule } from '../../form-controls';
+import { SamFormService } from '../../form-service';
 
 describe('Sam Multiselect Dropdown Component', function() {
     let component: SamMultiSelectDropdownComponent;
@@ -21,8 +23,9 @@ describe('Sam Multiselect Dropdown Component', function() {
 
     beforeEach( () => {
         TestBed.configureTestingModule({
-            providers: [SamMultiSelectDropdownComponent],
-            imports: [SamUIKitModule]
+            declarations: [SamMultiSelectDropdownComponent],
+            imports: [SamFormControlsModule],
+            providers: [SamFormService]
         });
 
         fixture = TestBed.createComponent(SamMultiSelectDropdownComponent);

@@ -3,7 +3,6 @@ import { RouterTestingModule} from '@angular/router/testing';
 
 // Load the implementations that should be tested
 import { SamHeaderComponent } from './header.component';
-import { SamUIKitModule } from '../../index';
 
 
 describe('The Sam Header component', () => {
@@ -13,8 +12,8 @@ describe('The Sam Header component', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SamUIKitModule,RouterTestingModule],
-      providers: [SamHeaderComponent],
+      imports: [RouterTestingModule],
+      declarations: [SamHeaderComponent],
     });
     fixture = TestBed.createComponent(SamHeaderComponent);
     component = fixture.componentInstance;
