@@ -531,7 +531,6 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
            * If it is the current category, it skips.
            */
           currentCategory = curr[this.config.categoryProperty];
-          console.log('Current category: ', currentCategory);
           const filteredCategories = this.categories.filter((category) => {
             /**
              * Filters the category input array property for a matching category property.
@@ -547,7 +546,6 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       }
       return prev;
     }, []);
-    console.log(reducedArr);
     return reducedArr;
   }
 
