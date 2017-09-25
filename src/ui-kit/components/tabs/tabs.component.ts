@@ -38,12 +38,10 @@ export class SamTabComponent {
   template:`
     <div class="sam-ui menu" [ngClass]="[themes[theme],size]" *ngIf="tabs && tabs.length">
       <ng-container *ngFor="let tab of tabs">
-        <a class="item" (click)="selectTab(tab)" [ngClass]="{ active: tab.active, disabled: tab.disabled }" *ngIf="!tab.float; else buttonTemplate">
+        <a class="item" (click)="selectTab(tab)" [ngClass]="{ active: tab.active, disabled: tab.disabled }" *ngIf="!tab.float">
           {{tab.title}}
         </a>
-        <ng-template #buttonTemplate>
-          <button class="sam-ui button secondary tiny" [innerText]="tab.title" (click)="selectTab(tab)"></button>
-        </ng-template>
+        <button class="sam-ui button secondary tiny" [innerText]="tab.title" (click)="selectTab(tab)" *ngIf="tab.float"></button>
       </ng-container>
     </div>
     <ng-content></ng-content>
