@@ -1,0 +1,30 @@
+
+<div class="sam-ui hidden divider"></div>
+
+<div *ngIf="totalElements > 0" class="sam-ui equal width grid">
+  <div class="column middle aligned">
+    <!-- Showing text -->
+    <list-results-message [showing]="showing ? showing : 10"
+                          [currentPage]="currentPage"
+                          [total]="totalElements"
+                          [suffix]="listMessageSuffix">
+    </list-results-message>
+  </div>
+  <div class="column eight wide right aligned">
+    <!-- Sort -->
+    <ng-content select="sam-sort"></ng-content>
+    <ng-content select="[result-actions]"></ng-content>
+  </div>
+</div>
+
+<!-- Results -->
+<ng-content></ng-content>
+
+<div class="sam-ui hidden divider"></div>
+
+<!-- Pagination -->
+<sam-pagination *ngIf="totalPages > 1"
+                (pageChange)="pageChangeHandler($event)"
+                [currentPage]="currentPage"
+                [totalPages]="totalPages">
+</sam-pagination>
