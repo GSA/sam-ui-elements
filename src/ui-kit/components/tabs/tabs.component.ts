@@ -20,6 +20,14 @@ export class SamTabComponent {
   * Set tab active class, defaults to false
   */
   @Input() active: boolean = false;
+  /**
+  * Set tab disabled class, defaults to false
+  */
+  @Input() disabled: boolean = false;
+  /**
+  * Set if tab is a floating action button
+  */
+  @Input() float: boolean = false;
 }
 
 /**
@@ -28,20 +36,59 @@ export class SamTabComponent {
 @Component({
   selector: 'sam-tabs',
   template:`
-    <div class="sam-ui secondary pointing large menu" *ngIf="tabs && tabs.length">
-      <a *ngFor="let tab of tabs" class="item" (click)="selectTab(tab)" [class.active]="tab.active">
-        {{tab.title}}
-      </a>
+    <div class="sam-ui menu" [ngClass]="[themes[theme],size]" *ngIf="tabs && tabs.length">
+      <ng-container *ngFor="let tab of tabs">
+        <a class="item" (click)="selectTab(tab)" [ngClass]="{ active: tab.active, disabled: tab.disabled }" *ngIf="!tab.float">
+          {{tab.title}}
+        </a>
+        <button class="sam-ui button secondary tiny" [innerText]="tab.title" (click)="selectTab(tab)" *ngIf="tab.float"></button>
+      </ng-container>
     </div>
     <ng-content></ng-content>
   `
 })
 export class SamTabsComponent implements AfterContentInit {
+  private _size = 'large';
+  private _theme = 'default';
+  private themes = {
+    default: 'secondary pointing',
+    separate: 'separate tabular',
+  };
+
   @ContentChildren(SamTabComponent) tabs: QueryList<SamTabComponent>;
+
   /**
   * Event emitted on tab selection
   */
   @Output() currentSelectedTab = new EventEmitter();
+
+  /**
+  * Set tabs size
+  */
+  @Input()
+  set size(key: string) {
+    if(key.match(/(mini|tiny|small|default|large|huge|big)/)) {
+      this._size = (key == 'default') ? '' : '';
+    }
+  }
+
+  get size(): string {
+    return !this._size.length ? 'default' : this._size;
+  }
+
+  /**
+  * Set tabs theme
+  */
+  @Input()
+  set theme(key: string) {
+    if(this.themes[key]) {
+      this._theme = key;
+    }
+  }
+
+  get theme(): string {
+    return this._theme;
+  }
 
   ngAfterContentInit(){
     this.tabs.changes.subscribe(() => {
