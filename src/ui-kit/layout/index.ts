@@ -71,7 +71,8 @@ import { FormOnlyPageTemplateComponent } from "./form-only-page.component";
     FormStepComponent,
     GridDirective,
     RowDirective,
-    ColumnDirective
+    ColumnDirective,
+    TitleAndSectionComponent,
   ],
   providers: [
     PageService
