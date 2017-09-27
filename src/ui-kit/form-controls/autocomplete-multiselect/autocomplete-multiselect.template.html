@@ -3,7 +3,7 @@
   <sam-label-wrapper #wrapper
                     [label]="label"
                     [hint]="hint"
-                    [name]="name"
+                    [name]="name? name+'-ac-textarea': name"
                     [required]="required"
                     [errorMessage]="errorMessage"
                     tab
@@ -30,7 +30,7 @@
             </div>
             <i class="icon close fa fa-times"></i>
         </div>
-        <label [attr.for]="name+'-ac-textarea'" class="sr-only">textarea input</label>
+        <label *ngIf="!name" [attr.for]="name+'-ac-textarea'" class="sr-only">textarea input</label>
         <textarea #textArea rows="1"
                   [attr.id]="name+'-ac-textarea'"
                   [(ngModel)]="searchText"
