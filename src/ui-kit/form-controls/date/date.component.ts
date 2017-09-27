@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, forwardRef} from '@angular/core';
+import {Component, ChangeDetectorRef, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, forwardRef} from '@angular/core';
 import * as moment from 'moment/moment';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators} from "@angular/forms";
 import {SamFormService} from '../../form-service';
@@ -77,7 +77,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   @ViewChild('year') year;
   @ViewChild('wrapper') wrapper;
 
-  constructor(private samFormService:SamFormService) { }
+  constructor(private samFormService:SamFormService, private cdr:ChangeDetectorRef) { }
 
   ngOnInit() {
     if (!this.name) {
@@ -111,8 +111,10 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       // use the forgiving format (that doesn't need 0 padding) for inputs
       let m = moment(this.value, this.INPUT_FORMAT);
       if (m.isValid()) {
-        this.model.month = m.month() + 1;
-        this.model.day = m.date();
+        let monthVal = m.month() + 1;
+        let dateVal = m.date();
+        this.model.month = this._shouldPad(monthVal) ? "0"+monthVal : monthVal;
+        this.model.day = this._shouldPad(dateVal) ? "0"+dateVal : dateVal;
         this.model.year = m.year();
       }
     }
@@ -127,19 +129,22 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
      this.blurEvent.emit();
   }
 
-  onMonthBlur(event){
-    var eventElemVal = event.srcElement.value;
-    var leadingZero = eventElemVal[0] === "0"
-    if(parseInt(eventElemVal, 10) < 10 && !leadingZero){
-      this.month.nativeElement.value = "0" + eventElemVal;
+  onMonthBlur(value){
+    if(this._shouldPad(value)){
+      this.month.nativeElement.value = "0" + value;
     }
   }
 
-  onDayBlur(event){
-    var eventElemVal = event.srcElement.value;
-    var leadingZero = eventElemVal[0] === "0"
-    if(parseInt(eventElemVal, 10) < 10 && !leadingZero){
-      this.day.nativeElement.value = "0" + eventElemVal;
+  onDayBlur(value){
+    if(this._shouldPad(value)){
+      this.day.nativeElement.value = "0" + value;
+    }
+  }
+
+  _shouldPad(value){
+    var leadingZero = value[0] === "0"
+    if(parseInt(value, 10) < 10 && !leadingZero){
+      return true;
     }
   }
 

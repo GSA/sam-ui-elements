@@ -7,7 +7,7 @@
         [attr.id]="monthName()" 
         #month 
         (keypress)="onMonthInput($event)" 
-        (blur)="onMonthBlur($event)" 
+        (blur)="onMonthBlur($event.srcElement.value)" 
         [(ngModel)]="model.month" 
         (ngModelChange)="onChangeHandler()" 
         class="usa-input-inline" 
@@ -24,7 +24,7 @@
         [attr.id]="dayName()" 
         #day 
         (keypress)="onDayInput($event)" 
-        (blur)="onDayBlur($event)" 
+        (blur)="onDayBlur($event.srcElement.value)" 
         [(ngModel)]="model.day" 
         (ngModelChange)="onChangeHandler()" 
         class="usa-input-inline" 
