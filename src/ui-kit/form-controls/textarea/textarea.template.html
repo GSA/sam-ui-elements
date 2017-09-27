@@ -2,7 +2,7 @@
                    [name]="name"
                    [hint]="hint"
                    [errorMessage]="errorMessage"
-                   [required]="required">
+                   [required]="required || requiredFlag">
   <textarea [value]="value"
             [attr.class]="sam-text-area"
             [attr.id]="name"
