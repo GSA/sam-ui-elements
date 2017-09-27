@@ -49,7 +49,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   */
   @Input() disabled: boolean = false;
   /**
-  * Sets the current value of the form control
+  * Deprecated - Sets the current value of the form control
   */
   @Input() value: string;
   /**
@@ -61,16 +61,14 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   */
   @Input() useFormService: boolean;
   /**
-  * Event emitted when value changes
+  * Deprecated - Event emitted when value changes
   */
   @Output() valueChange = new EventEmitter<any>();
   /**
   * Event emitted when form control loses focus
   */
   @Output() blurEvent = new EventEmitter<any>();
-  onChange: any = () => {
-    //this.wrapper.formatErrors(this.control);
-  };
+  onChange: any = () => { };
   onTouched: any = () => { };
   @ViewChild('month') month;
   @ViewChild('day') day;
@@ -123,10 +121,6 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       this.model.day = "";
       this.model.year = "";
     }
-  }
-
-  onBlur() {
-     this.blurEvent.emit();
   }
 
   onMonthBlur(value){
@@ -240,6 +234,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     this.onTouched();
   }
 
+  //controlvalueaccessor methods
   registerOnChange(fn) {
     this.onChange = fn;
   }
