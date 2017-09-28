@@ -12,6 +12,7 @@ export class PageTemplateComponent implements OnInit{
   @Input() public section: any;
   @Input() public title: any;
   @Input() public type: string;
+  @Input() public typeLabel: string;
 
   @Output() public breadcrumbOut = new EventEmitter();
 
