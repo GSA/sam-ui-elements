@@ -13,12 +13,18 @@ import { Component, Input } from '@angular/core';
       </div>
       {{ title }}
     </h1>
+    <div *ngIf="type">
+    <h4>{{typeLabel}}: {{type}}</h4>
+    </div>
 `,
 })
 export class TitleAndSectionComponent {
   @Input() public section: string;
   @Input() public title: string;
   @Input() public badge: string;
+  @Input() public type: string;
+  @Input() public typeLabel: string;
+
 
   constructor(){}
 }
