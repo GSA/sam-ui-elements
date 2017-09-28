@@ -26,17 +26,29 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
   OUTPUT_FORMAT: string = "HH:mm";
   
   /**
-  * Sets the time value 
+  * Deprecated - Sets the time value 
   */
   @Input() value: string = null; // must be a 24 hour time and have the format HH:mm
+  /**
+  * Sets the required text
+  */
+  @Input() required: boolean = false;
   /**
   * Sets the disabled attribute
   */
   @Input() disabled: boolean = false;
   /**
+  * Sets the label
+  */
+  @Input() label: string;
+  /**
   * Sets the name attribute 
   */
   @Input() name: string;
+  /**
+  * Sets the hint text
+  */
+  @Input() hint: string;
   /**
   * Passes in the Angular FormControl
   */
@@ -53,9 +65,11 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
   @ViewChild('hour') hour_v;
   @ViewChild('minute') minute_v;
   @ViewChild('ampm') ampm_v;
-  hours: number = null;
-  minutes: number = null;
+  hours: string = null;
+  formattedHours: string = null;
+  minutes: string = null;
   amPm: string = 'am';
+  minuteBlurFlag = true;
 
   constructor(private samFormService:SamFormService) { }
 
@@ -83,7 +97,9 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   ngOnChanges(v) {
-    this.parseValueString();
+    if(v['value']){
+      this.parseValueString();
+    }
   }
 
   parseValueString() {
@@ -109,13 +125,39 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
       hours = 12;
     }
 
-    this.hours = hours;
-    this.minutes = minutes;
+    this.hours = this._shouldPad(""+hours) ? "0"+hours: ""+hours;
+    this.minutes = this._shouldPad(""+minutes) ? "0"+minutes: ""+minutes;
   }
 
-  onInputChange() {
-    this.onChange(this.toString());
-    this.valueChange.emit(this.toString());
+  formatHours(hours){
+    let hoursInt = parseInt(hours);
+    if(hoursInt==12){
+      hoursInt=0;
+    }
+    if(this.amPm=="pm"){
+      return hoursInt+12;
+    } else {
+      return hoursInt;
+    }
+  }
+
+  hourChange(evt){
+    this.hours = evt;
+    this.value = moment({hour: this.formatHours(this.hours), 
+      minute: this.minute_v.nativeElement.valueAsNumber}).format(this.OUTPUT_FORMAT);
+    this.onInputChange();
+  }
+
+  selectChange(){
+    //this.parseValueString();
+    this.value = moment({hour: this.formatHours(this.hours), 
+      minute: this.minute_v.nativeElement.valueAsNumber}).format(this.OUTPUT_FORMAT);
+    this.onInputChange();
+  }
+
+  onInputChange() { 
+    this.onChange(this.value);
+    this.valueChange.emit(this.value);
   }
   
   hourTouched(event){
@@ -137,10 +179,12 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   isValid() {
-    return !isNaN(this.hours) && !isNaN(this.minutes)
-        && typeof this.hours === 'number' && typeof this.minutes === 'number'
-        && this.hours >= 1 && this.hours <= 12
-        && this.minutes >= 0 && this.minutes <= 59;
+    let hours = parseInt(this.hours);
+    let minutes = parseInt(this.minutes);
+    return !isNaN(hours) && !isNaN(minutes)
+        && typeof hours === 'number' && typeof minutes === 'number'
+        && hours >= 1 && hours <= 12
+        && minutes >= 0 && minutes <= 59;
   }
 
   getTime(): any {
@@ -152,29 +196,29 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
 
     let hours = this.hours;
 
-    if (hours === 12) {
-      hours = 0;
+    if (hours === "12") {
+      hours = "00";
     }
 
     if (this.amPm === 'pm') {
-      hours += 12;
+      hours = ""+(parseInt(hours) + 12);
     }
 
     return moment({hour: hours, minute: this.minutes});
   }
 
-  isClean() {
-    return (isNaN(this.hours) || this.hours===null) && (isNaN(this.minutes) || this.minutes===null);
+  _shouldPad(value){
+    var leadingZero = value[0] === "0";
+    if(parseInt(value, 10) < 10 && !leadingZero){
+      return true;
+    }
   }
 
-  toString() {
-    if (this.isClean()) {
-      return null;
-    } else if (!this.isValid()) {
-      return 'Invalid Time';
-    } else {
-      return this.getTime().format(this.OUTPUT_FORMAT);
-    }
+  //used by date-time/date-range comps
+  isClean() {
+    let hours = parseInt(this.hours);
+    let minutes = parseInt(this.minutes);
+    return (isNaN(hours) || hours===null) && (isNaN(minutes) || this.minutes===null);
   }
   
   hoursPress(event){
@@ -199,19 +243,31 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
 
   minutesPress(event){
     var inputNum = parseInt(event.key, 10);
-    var possibleNum = (this.minute_v.nativeElement.valueAsNumber * 10) + inputNum;
-    if(possibleNum > 59 || event.key === "-"){
+    var possibleNum;
+    if(isNaN(this.minute_v.nativeElement.valueAsNumber) || !this.minute_v.nativeElement.valueAsNumber){ 
+      possibleNum = inputNum;
+    } else {
+      possibleNum = (this.minute_v.nativeElement.valueAsNumber * 10) + inputNum;
+    }
+    if(possibleNum > 59 || event.key === "-" || event.key === "e"){
       event.preventDefault();
       return;
     }
     if(event.target.value.length+1==2 && event.key.match(/[0-9]/)!=null){
-      this.minutes = possibleNum;
-      this.minutesBlur(event, possibleNum);
+      this.minute_v.nativeElement.value = possibleNum;
+      this.minuteBlurFlag = false;//do not trigger minutesBlur() after focus change to override it
       this.ampm_v.nativeElement.focus();
+      this.minuteBlurFlag = true;
+      this.minutesBlur(event, possibleNum);
     }
+    this.value = moment({hour: this.formatHours(this.hours), minute: possibleNum}).format(this.OUTPUT_FORMAT);
+    this.onInputChange();
   }
 
   minutesBlur(event, override){
+    if(!this.minuteBlurFlag){
+      return;
+    }
     var eventElemVal = override ? override : event.srcElement.value;
     var leadingZero = eventElemVal[0] === "0"
     if(parseInt(eventElemVal, 10) < 10 && !leadingZero){
@@ -247,6 +303,9 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   writeValue(value) {
+    if(!value){
+      return;
+    }
     this.value = value;
     this.parseValueString();
   }

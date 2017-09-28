@@ -1,6 +1,55 @@
 <sam-fieldset-wrapper #wrapper [label]="label" [hint]="hint" [class.stacked]="stacked">
-  <sam-date *ngIf="type=='date'" sam-focus (focus)="focusHandler()" #startControl="ngModel" [disabled]="disabled" [ngModel]="startDateValue" (ngModelChange)="startDateChange($event)" label="From Date" name="Start Date" class="start-date" [required]="required"></sam-date>
-  <sam-date *ngIf="type=='date'" sam-focus (focus)="focusHandler()" #endControl="ngModel" [disabled]="disabled" [ngModel]="endDateValue" (ngModelChange)="endDateChange($event)" label="To Date" name="End Date" class="end-date" [required]="required"></sam-date>
-  <sam-date-time *ngIf="type=='date-time'" sam-focus (focus)="focusHandler()" #startControl="ngModel" [disabled]="disabled" [ngModel]="startDateValue" (ngModelChange)="startDateChange($event)" label="From Date" name="Start Date" class="start-date" [required]="required"></sam-date-time>
-  <sam-date-time *ngIf="type=='date-time'" sam-focus (focus)="focusHandler()" #endControl="ngModel" [disabled]="disabled" [ngModel]="endDateValue" (ngModelChange)="endDateChange($event)" label="To Date" name="End Date" class="end-date" [required]="required"></sam-date-time>
+  <sam-date 
+    #startDate 
+    *ngIf="type=='date'" 
+    sam-focus 
+    (focus)="focusHandler()" 
+    (blurEvent)="dateBlur()"
+    #startControl="ngModel" 
+    [disabled]="disabled" 
+    [ngModel]="startDateValue" 
+    (ngModelChange)="startDateChange($event)" 
+    label="From Date" 
+    name="Start Date" 
+    class="start-date" 
+    [required]="required"></sam-date>
+  <sam-date 
+    #endDate 
+    *ngIf="type=='date'" 
+    sam-focus 
+    (focus)="focusHandler()" 
+    #endControl="ngModel" 
+    [disabled]="disabled" 
+    [ngModel]="endDateValue" 
+    (ngModelChange)="endDateChange($event)" 
+    label="To Date" 
+    name="End Date" 
+    class="end-date" 
+    [required]="required"></sam-date>
+  <sam-date-time 
+    #startDateTime 
+    *ngIf="type=='date-time'" 
+    sam-focus 
+    (focus)="focusHandler()" 
+    #startControl="ngModel" 
+    [disabled]="disabled" 
+    [ngModel]="startDateValue" 
+    (ngModelChange)="startDateChange($event)" 
+    label="From Date" 
+    name="Start Date" 
+    class="start-date" 
+    [required]="required"></sam-date-time>
+  <sam-date-time 
+    #endDateTime
+    *ngIf="type=='date-time'" 
+    sam-focus 
+    (focus)="focusHandler()" 
+    #endControl="ngModel" 
+    [disabled]="disabled" 
+    [ngModel]="endDateValue" 
+    (ngModelChange)="endDateChange($event)" 
+    label="To Date" 
+    name="End Date" 
+    class="end-date" 
+    [required]="required"></sam-date-time>
 </sam-fieldset-wrapper>
