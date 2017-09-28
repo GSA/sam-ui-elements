@@ -45,7 +45,11 @@ export class SamTextareaComponent implements ControlValueAccessor {
   /**
   * Sets the required attribute
   */
-  @Input() required: boolean;
+  @Input() required: boolean;//deprecated
+  /**
+  * Sets the required attribute
+  */
+  @Input() requiredFlag: boolean;
   /**
   * Sets the maxlength attribute
   */
@@ -94,7 +98,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
       validators.push(this.control.validator);
     }
 
-    if (this.required) {
+    if (this.required || this.requiredFlag) {
       validators.push(Validators.required);
     }
 

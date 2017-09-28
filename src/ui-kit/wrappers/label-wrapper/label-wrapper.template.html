@@ -6,7 +6,7 @@
     [attr.for]="name" 
     [class.usa-input-error-label]="errorMessage">
       {{ label || '' }}
-      <span *ngIf="required" class="usa-additional_text">Required</span>
+      <span *ngIf="required || requiredFlag" class="usa-additional_text">Required</span>
       <ng-content select="[label-right]"></ng-content>
   </label>
   

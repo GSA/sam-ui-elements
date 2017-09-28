@@ -4,6 +4,7 @@ import { PageService } from './page.service'
 @Component({
   selector: 'page',
   templateUrl: 'page.template.html',
+  providers: [PageService],
 })
 export class PageTemplateComponent implements OnInit{
 
@@ -13,6 +14,8 @@ export class PageTemplateComponent implements OnInit{
   @Input() public title: any;
   @Input() public type: string;
   @Input() public typeLabel: string;
+
+  @Input() public badge: string;
 
   @Output() public breadcrumbOut = new EventEmitter();
 
