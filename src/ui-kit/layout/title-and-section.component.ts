@@ -12,11 +12,16 @@ import { Component, Input } from '@angular/core';
       </div>
       {{ title }}
     </h1>
+    <div *ngIf="type">
+    <h4>{{type}}</h4>
+    </div>
 `,
 })
 export class TitleAndSectionComponent {
   @Input() public section: string;
   @Input() public title: string;
+  @Input() public type: string;
+
 
   constructor(){}
 }
