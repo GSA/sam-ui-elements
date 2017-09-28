@@ -9,7 +9,8 @@ export class LabelWrapper implements AfterViewChecked{
   @Input() label: string;
   @Input() name: string;
   @Input() hint: string;
-  @Input() required: boolean = false;
+  @Input() required: boolean = false;//deprecated
+  @Input() requiredFlag: boolean = false;
   @Input() errorMessage: string;
 
   @ViewChild('labelDiv')
