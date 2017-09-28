@@ -69,6 +69,10 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   */
   @Input() public required: boolean;
   /**
+  * Sets the general error message (For simplicity (we can enhance this it's needed): Only active when `useFormService` is false)
+  */
+  @Input() public errorMessage: string;
+  /**
    * Emitted only when the user selects an item from the dropdown list, or when the user clicks enter and the mode is
    * allowAny. This is useful if you do not want to respond to onChange events when the input is blurred.
    */
@@ -231,6 +235,10 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
         }
       });
     }
+  }
+
+  get errors() {
+    return !this.useFormService ? (this.errorMessage || '') : '';
   }
 
   onChange() {
