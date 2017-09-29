@@ -9,7 +9,9 @@ import {Component, Input, Output, EventEmitter, OnChanges, ChangeDetectorRef} fr
       (breadcrumbOut)="breadcrumbHandler($event)"
       theme="inside"
       [section]="sectionTitle" 
-      [title]="pageTitle">
+      [title]="pageTitle"
+      [type]="type"
+      [typeLabel]="typeLabel">
       
       <sidebar>
         <div sam-sticky limit=1200 container="page-content">
@@ -84,6 +86,8 @@ export class FormStepComponent implements OnChanges {
     @Input() numberOfSections: number;
     @Input() sectionTitle: string;
     @Input() pageTitle: string;
+    @Input() type: string;
+    @Input() typeLabel: string;
     @Input() statusBannerType:string = "error";
     @Input() statusBannerLeadingText: string;
     @Input() tabsComponent: any;
