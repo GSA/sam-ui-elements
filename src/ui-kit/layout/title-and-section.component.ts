@@ -13,8 +13,8 @@ import { Component, Input } from '@angular/core';
       </div>
       {{ title }}
     </h1>
-    <div *ngIf="type">
-    <h4>{{typeLabel}}: {{type}}</h4>
+    <div *ngIf="typeLabel">
+    <h4>{{typeLabel}}: <span *ngIf="type">{{type}}</span></h4>
     </div>
 `,
 })
