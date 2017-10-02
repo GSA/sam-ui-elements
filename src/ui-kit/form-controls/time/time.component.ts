@@ -204,7 +204,7 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
       hours = ""+(parseInt(hours) + 12);
     }
 
-    return moment({hour: hours, minute: this.minutes});
+    return moment({hour: parseInt(hours), minute: parseInt(this.minutes)});
   }
 
   _shouldPad(value){
