@@ -1,4 +1,15 @@
 <sam-fieldset-wrapper [label]="label" [errorMessage]="errorMessage" [hint]="hint">
-  <sam-date #dateComponent [(value)]="date" (valueChange)="onInputChange($event)" [name]='name+"_date"' [disabled]="disabled"></sam-date>
-  <sam-time #timeComponent [(value)]="time" (valueChange)="onInputChange($event)" [name]='name+"_time"' [disabled]="disabled"></sam-time>
+  <sam-date 
+    #dateComponent 
+    [(ngModel)]="date" 
+    (ngModelChange)="onInputChange($event)" 
+    (blurEvent)="dateBlur()"
+    [name]='name+"_date"' 
+    [disabled]="disabled"></sam-date>
+  <sam-time 
+    #timeComponent 
+    [(ngModel)]="time" 
+    (ngModelChange)="onInputChange($event)" 
+    [name]='name+"_time"' 
+    [disabled]="disabled"></sam-time>
 </sam-fieldset-wrapper>

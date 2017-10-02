@@ -177,6 +177,9 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       event.preventDefault();
       return
     }
+    if(event.target.value.length+1==4 && event.key.match(/[0-9]/)!=null){
+      this.blurEvent.emit();
+    }
   }
 
   onChangeHandler() {

@@ -1,31 +1,44 @@
-<div class="sam-time usa-date-of-birth">
-  <div class="usa-form-group usa-form-group-month">
-    <label [attr.for]="hourName()">Hour</label>
-    <input [attr.id]="hourName()" 
-    #hour
-    type="number" 
-    (focus)="hourTouched($event)" 
-    (blur)="hoursBlur($event)"
-    (keypress)="hoursPress($event)"
-    [(ngModel)]='hours' 
-    (ngModelChange)="onInputChange()" class="usa-form-control" [disabled]="disabled ? disabled : null">
+<sam-label-wrapper [label]="label" [name]="name" [hint]="hint" [required]="required">
+  <div class="sam-time usa-date-of-birth">
+    <div class="usa-form-group usa-form-group-month">
+      <label [attr.for]="hourName()">Hour</label>
+      <input 
+        [attr.id]="hourName()" 
+        #hour
+        type="number" 
+        (focus)="hourTouched($event)" 
+        (blur)="hoursBlur($event)"
+        (keypress)="hoursPress($event)"
+        [ngModel]="hours" 
+        (ngModelChange)="hourChange($event)" 
+        class="usa-form-control" 
+        [disabled]="disabled ? disabled : null">
+    </div>
+    <div class="usa-form-group usa-form-group-month">
+      <label [attr.for]="minuteName()">Minute</label>
+      <input 
+        [attr.id]="minuteName()" 
+        #minute
+        type="number" 
+        (focus)="minuteTouched($event)" 
+        (blur)="minutesBlur($event)"
+        (keypress)="minutesPress($event)"
+        [ngModel]="minutes" 
+        class="usa-form-control" 
+        [disabled]="disabled ? disabled : null">
+    </div>
+    <div class="usa-form-group usa-form-group-year">
+      <label [attr.for]="amPmName()">AM/PM</label>
+      <select 
+        [attr.id]="amPmName()" 
+        #ampm 
+        [(ngModel)]='amPm' 
+        (focus)="setTouched()" 
+        (ngModelChange)="selectChange()" 
+        [disabled]="disabled ? disabled : null">
+        <option value="am">AM</option>
+        <option value="pm">PM</option>
+      </select>
+    </div>
   </div>
-  <div class="usa-form-group usa-form-group-month">
-    <label [attr.for]="minuteName()">Minute</label>
-    <input [attr.id]="minuteName()" 
-    #minute
-    type="number" 
-    (focus)="minuteTouched($event)" 
-    (blur)="minutesBlur($event)"
-    (keypress)="minutesPress($event)"
-    [ngModel]="minutes" 
-    (ngModelChange)="onInputChange()" class="usa-form-control" [disabled]="disabled ? disabled : null">
-  </div>
-  <div class="usa-form-group usa-form-group-year">
-    <label [attr.for]="amPmName()">AM/PM</label>
-    <select [attr.id]="amPmName()" #ampm [(ngModel)]='amPm' (focus)="setTouched()" (ngModelChange)="onInputChange()" [disabled]="disabled ? disabled : null">
-      <option value="am">AM</option>
-      <option value="pm">PM</option>
-    </select>
-  </div>
-</div>
+</sam-label-wrapper>

@@ -125,6 +125,8 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
 
   @ViewChild('startControl') startControl;
   @ViewChild('endControl') endControl;
+  @ViewChild('startDate') startDateComp;
+  @ViewChild('endDate') endDateComp;
   private startDateValue;
   private endDateValue;
   @ViewChild('wrapper') wrapper;
@@ -248,6 +250,12 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
     return (model.day===""|| model.day===null) &&
       (model.month==="" || model.month===null) &&
       (model.year==="" || model.year===null);
+  }
+
+  dateBlur(){
+    if(this.type=="date"){
+      this.endDateComp.month.nativeElement.focus();
+    }
   }
 
   registerOnChange(fn) {

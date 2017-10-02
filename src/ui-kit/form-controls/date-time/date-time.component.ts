@@ -22,12 +22,6 @@ const MY_VALUE_ACCESSOR: any = {
 })
 export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAccessor {
   public INPUT_FORMAT: string = 'Y-M-DTH:m';
-
-  @Input() value: string = null;
-  /**
-   * Event emitted when value is changed
-   */
-  @Output() valueChange: EventEmitter<any> = new EventEmitter();
   /**
    * Sets starting value for input
    */
@@ -37,6 +31,10 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
    */
   @Input() name: string;
   /**
+   * Sets hint text
+   */
+  @Input() hint: string;
+  /**
    * Sets error message string to display for invalid values
    */
   @Input() errorMessage: string;
@@ -45,14 +43,14 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
    */
   @Input() disabled: boolean = false;  
   /**
-   * Something to do with formbuilder? This needs to be document and annotated
+   * Sets the formControl to check validations and update error messaged
    */
   @Input() control;
   /**
   * Toggles validations to display with SamFormService events
   */
   @Input() useFormService: boolean;
-
+  value;
   public time: string = null;
   public date: string = null;
 
@@ -109,7 +107,10 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
     if (this.onChange) {
       this.onChange(val);
     }
-    this.valueChange.emit(val);
+  }
+
+  dateBlur(){
+    this.timeComponent.hour_v.nativeElement.focus();
   }
 
   onInputChange(): void {
