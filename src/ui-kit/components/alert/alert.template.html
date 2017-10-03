@@ -10,12 +10,11 @@
       <ng-content></ng-content>
     </p>
     <ng-content select="[leading-content]"></ng-content>
-    <div *ngIf="showContent">
+    <div *ngIf="showMoreToggle">
       <ng-content select="[main-content]"></ng-content>
     </div>
-    <div *ngIf="showContent!==null" class="show-hide-toggle">
-      <a *ngIf="!showContent" (click)="showContent=true">Show Details</a>
-      <a *ngIf="showContent" (click)="showContent=false">Hide Details</a>
+    <div *ngIf="showMoreToggle!==null" class="show-hide-toggle">
+      <a (click)="toggleContent()">{{showMoreLinkText}}</a>
     </div>
   </div>
 </div>

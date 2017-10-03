@@ -43,7 +43,7 @@ export class SamAlertComponent {
     "info": { class: "usa-alert-info", sr: "info alert"}
   };
   selectedType: string = this.types['success'].class;
-
+  showMoreLinkText = "Show Details";
   constructor() {
   }
 
@@ -74,5 +74,10 @@ export class SamAlertComponent {
 
   closeAlert(){
    this.onDismissClick(); 
+  }
+
+  toggleContent(){
+     this.showMoreToggle = !this.showMoreToggle;
+     this.showMoreLinkText = this.showMoreToggle ? "Hide Details" : "Show Details"; 
   }
 }
