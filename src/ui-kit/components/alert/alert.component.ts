@@ -29,10 +29,13 @@ export class SamAlertComponent {
    */
   @Input() dismissTimer = 0;
   /**
+   * Give a boolean value to display show/hide toggle
+   */
+  @Input() showMoreToggle = null;
+  /**
    * Emitted event when an alert is dismissed
    */
   @Output() dismiss: EventEmitter<any> = new EventEmitter<any>();
-  @Input() showContent = null;
   types:any = {
     "success": { class: "usa-alert-success", sr: "success alert"},
     "warning": { class: "usa-alert-warning", sr: "warning alert"},
