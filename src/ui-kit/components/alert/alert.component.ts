@@ -32,7 +32,7 @@ export class SamAlertComponent {
    * Emitted event when an alert is dismissed
    */
   @Output() dismiss: EventEmitter<any> = new EventEmitter<any>();
-
+  @Input() showContent = null;
   types:any = {
     "success": { class: "usa-alert-success", sr: "success alert"},
     "warning": { class: "usa-alert-warning", sr: "warning alert"},
