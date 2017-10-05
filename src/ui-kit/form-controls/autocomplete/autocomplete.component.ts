@@ -599,6 +599,10 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       }
       this.selectedInputValue = this.inputValue;
       this.innerValue = value;
+    } else if (value === null) {
+      this.inputValue = '';
+      this.selectedInputValue = '';
+      this.innerValue = null;
     }
   }
 
