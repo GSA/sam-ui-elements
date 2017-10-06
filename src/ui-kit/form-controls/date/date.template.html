@@ -7,9 +7,8 @@
         [attr.id]="monthName()" 
         #month 
         (keypress)="onMonthInput($event)" 
-        (blur)="onMonthBlur($event.srcElement.value)" 
-        [(ngModel)]="model.month" 
-        (ngModelChange)="onChangeHandler()" 
+        (blur)="onMonthBlur($event.target.value)" 
+        [ngModel]="model.month" 
         class="usa-input-inline" 
         [attr.aria-label]="monthName()"
         class="usa-form-control"
@@ -24,9 +23,8 @@
         [attr.id]="dayName()" 
         #day 
         (keypress)="onDayInput($event)" 
-        (blur)="onDayBlur($event.srcElement.value)" 
-        [(ngModel)]="model.day" 
-        (ngModelChange)="onChangeHandler()" 
+        (blur)="onDayBlur($event.target.value)" 
+        [ngModel]="model.day" 
         class="usa-input-inline" 
         [attr.aria-label]="dayName()"
         class="usa-form-control" 
@@ -41,8 +39,7 @@
         [attr.id]="yearName()" 
         #year 
         (keypress)="onYearInput($event)" 
-        [(ngModel)]="model.year" 
-        (ngModelChange)="onChangeHandler()" 
+        [ngModel]="model.year" 
         class="usa-input-inline" 
         [attr.aria-label]="yearName()"
         class="usa-form-control" 
