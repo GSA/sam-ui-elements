@@ -38,14 +38,13 @@ describe('The Sam Date component', () => {
     });
   });
 
-  fit('should update', async(function () {
+  it('should update', function () {
     component.model.month = "1";
     fixture.detectChanges();
     fixture.whenStable().then(() => {
-      console.log(component.model,"---",component.month.nativeElement.value);
       expect(component.month.nativeElement.value).toBe("1");
       expect(component.day.nativeElement.value).toBe("29");
       expect(component.year.nativeElement.value).toBe("2016");
     });
-  }));
+  });
 });
