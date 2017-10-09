@@ -76,6 +76,13 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   @ViewChild('year') year;
   @ViewChild('wrapper') wrapper;
   allowChars = ["0","1","2","3","4","5","6","7","8","9","Backspace","ArrowLeft","ArrowRight","Tab","Delete"];
+  get inputModel(){
+    return {
+      day: this.day.nativeElement.value,
+      month: this.month.nativeElement.value,
+      year: this.year.nativeElement.value
+    };
+  }
 
   constructor(private samFormService:SamFormService, private cdr:ChangeDetectorRef) { }
 
@@ -159,11 +166,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     if(event.target.value.length+1==2 && event.key.match(/[0-9]/)!=null){
       this.month.nativeElement.value = possibleNum;
       this.day.nativeElement.focus();
-      let dupModel = {
-        day:this.day.nativeElement.value,
-        month:this.month.nativeElement.value,
-        year:this.year.nativeElement.value
-      };
+      let dupModel = this.inputModel;
       this.onChangeHandler(dupModel);
       event.preventDefault();
     }
@@ -179,11 +182,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     if(event.target.value.length+1==2 && event.key.match(/[0-9]/)!=null){
       this.day.nativeElement.value = possibleNum;
       this.year.nativeElement.focus();
-      let dupModel = {
-        day:this.day.nativeElement.value,
-        month:this.month.nativeElement.value,
-        year:this.year.nativeElement.value
-      };
+      let dupModel = this.inputModel;
       this.onChangeHandler(dupModel);
       event.preventDefault();
     }
@@ -199,11 +198,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     if(event.target.value.length+1==4 && event.key.match(/[0-9]/)!=null){
       this.year.nativeElement.value = possibleNum;
       this.blurEvent.emit();
-      let dupModel = {
-        day:this.day.nativeElement.value,
-        month:this.month.nativeElement.value,
-        year:this.year.nativeElement.value
-      };
+      let dupModel = this.inputModel;
       this.onChangeHandler(dupModel);
       event.preventDefault();
     }
@@ -226,11 +221,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   isClean(override=null) {
-    let dupModel = {
-      day:this.day.nativeElement.value,
-      month:this.month.nativeElement.value,
-      year:this.year.nativeElement.value
-    };
+    let dupModel = this.inputModel;
     if(override){
       dupModel = override;
     }
@@ -240,11 +231,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   isValid() {
-    let dupModel = {
-      day:this.day.nativeElement.value,
-      month:this.month.nativeElement.value,
-      year:this.year.nativeElement.value
-    };
+    let dupModel = this.inputModel;
     return this.getDate(dupModel).isValid();
   }
 
