@@ -211,7 +211,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
 
   onChangeHandler(override=null) {
     this.onTouched();
-    if (this.isClean()) {
+    if (this.isClean(override)) {
       this.onChange(null);
       this.valueChange.emit(null);
     } else if (!this.getDate(override).isValid()) {
@@ -225,14 +225,27 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     }
   }
 
-  isClean() {
-    return (isNaN(this.model.day) || this.model.day === null || this.model.day === "" ) &&
-      (isNaN(this.model.month) || this.model.month === null || this.model.month === "") &&
-      (isNaN(this.model.year) || this.model.year === null || this.model.year === "");
+  isClean(override=null) {
+    let dupModel = {
+      day:this.day.nativeElement.value,
+      month:this.month.nativeElement.value,
+      year:this.year.nativeElement.value
+    };
+    if(override){
+      dupModel = override;
+    }
+    return (isNaN(dupModel.day) || dupModel.day === null || dupModel.day === "" ) &&
+      (isNaN(dupModel.month) || dupModel.month === null || dupModel.month === "") &&
+      (isNaN(dupModel.year) || dupModel.year === null || dupModel.year === "");
   }
 
   isValid() {
-    return this.getDate().isValid();
+    let dupModel = {
+      day:this.day.nativeElement.value,
+      month:this.month.nativeElement.value,
+      year:this.year.nativeElement.value
+    };
+    return this.getDate(dupModel).isValid();
   }
 
   monthName() {
