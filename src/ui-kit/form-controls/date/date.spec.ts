@@ -30,19 +30,21 @@ describe('The Sam Date component', () => {
   });
 
   it('should match specified date', function () {
-    expect(component.model.month).toBe(12);
-    expect(component.model.day).toBe(29);
-    expect(component.model.year).toBe(2016);
-  });
-
-  it('should update', async(function () {
-    component.month.nativeElement.value = "1";
-    component.month.nativeElement.dispatchEvent(new Event('input'));//ngmodel needs this
     fixture.detectChanges();
     fixture.whenStable().then(() => {
-      expect(component.model.month).toBe(1);
-      expect(component.model.day).toBe(29);
-      expect(component.model.year).toBe(2016);
+      expect(component.month.nativeElement.value).toBe("12");
+      expect(component.day.nativeElement.value).toBe("29");
+      expect(component.year.nativeElement.value).toBe("2016");
     });
-  }));
+  });
+
+  it('should update', function () {
+    component.model.month = "1";
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(component.month.nativeElement.value).toBe("1");
+      expect(component.day.nativeElement.value).toBe("29");
+      expect(component.year.nativeElement.value).toBe("2016");
+    });
+  });
 });

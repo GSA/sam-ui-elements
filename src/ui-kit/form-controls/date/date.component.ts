@@ -24,6 +24,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     day: null,
     year: null
   };
+  
   /**
   * Sets the general error message for component
   */
@@ -74,6 +75,14 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   @ViewChild('day') day;
   @ViewChild('year') year;
   @ViewChild('wrapper') wrapper;
+  allowChars = ["0","1","2","3","4","5","6","7","8","9","Backspace","ArrowLeft","ArrowRight","Tab","Delete"];
+  get inputModel(){
+    return {
+      day: this.day.nativeElement.value,
+      month: this.month.nativeElement.value,
+      year: this.year.nativeElement.value
+    };
+  }
 
   constructor(private samFormService:SamFormService, private cdr:ChangeDetectorRef) { }
 
@@ -142,70 +151,88 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     }
   }
 
-  getDate() {
-    return moment([this.model.year, this.model.month-1, this.model.day]);
+  getDate(override=null) {
+    let obj = override ? override : this.model;
+    return moment([override.year, override.month-1, override.day]);
   }
-
+  
   onMonthInput(event){
     var inputNum = parseInt(event.key, 10);
-    var possibleNum = (this.month.nativeElement.valueAsNumber * 10) + inputNum;
-    if(possibleNum > 12 || event.key === "-"){
+    var possibleNum = (parseInt(this.month.nativeElement.value) * 10) + inputNum;
+    if(possibleNum > 12 || this.allowChars.indexOf(event.key)==-1){
       event.preventDefault();
       return;
     }
     if(event.target.value.length+1==2 && event.key.match(/[0-9]/)!=null){
+      this.month.nativeElement.value = possibleNum;
       this.day.nativeElement.focus();
+      let dupModel = this.inputModel;
+      this.onChangeHandler(dupModel);
+      event.preventDefault();
     }
   }
 
   onDayInput(event){
     var inputNum = parseInt(event.key, 10);
-    var possibleNum = (this.day.nativeElement.valueAsNumber * 10) + inputNum;
-    if(possibleNum > 31 || event.key === "-"){
+    var possibleNum = (parseInt(this.day.nativeElement.value) * 10) + inputNum;
+    if(possibleNum > 31 || this.allowChars.indexOf(event.key)==-1){
       event.preventDefault();
       return;
     }
     if(event.target.value.length+1==2 && event.key.match(/[0-9]/)!=null){
+      this.day.nativeElement.value = possibleNum;
       this.year.nativeElement.focus();
+      let dupModel = this.inputModel;
+      this.onChangeHandler(dupModel);
+      event.preventDefault();
     }
   }
 
   onYearInput(event){
     var inputNum = parseInt(event.key, 10);
-    var possibleNum = (this.year.nativeElement.valueAsNumber * 10) + inputNum;
-    if(possibleNum > 9999 || event.key === "-"){
+    var possibleNum = (parseInt(this.year.nativeElement.value) * 10) + inputNum;
+    if(possibleNum > 9999 || this.allowChars.indexOf(event.key)==-1){
       event.preventDefault();
       return
     }
     if(event.target.value.length+1==4 && event.key.match(/[0-9]/)!=null){
+      this.year.nativeElement.value = possibleNum;
       this.blurEvent.emit();
+      let dupModel = this.inputModel;
+      this.onChangeHandler(dupModel);
+      event.preventDefault();
     }
   }
 
-  onChangeHandler() {
+  onChangeHandler(override=null) {
     this.onTouched();
-    if (this.isClean()) {
+    if (this.isClean(override)) {
       this.onChange(null);
       this.valueChange.emit(null);
-    } else if (!this.getDate().isValid()) {
+    } else if (!this.getDate(override).isValid()) {
       this.onChange('Invalid Date');
       this.valueChange.emit('Invalid Date');
     } else {
       // use the strict format for outputs
-      let dateString = this.getDate().format(this.OUTPUT_FORMAT);
+      let dateString = this.getDate(override).format(this.OUTPUT_FORMAT);
       this.onChange(dateString);
       this.valueChange.emit(dateString);
     }
   }
 
-  isClean() {
-    return (isNaN(this.model.day) || this.model.day === null || this.model.day === "" ) &&
-      (isNaN(this.model.month) || this.model.month === null || this.model.month === "") &&
-      (isNaN(this.model.year) || this.model.year === null || this.model.year === "");
+  isClean(override=null) {
+    let dupModel = this.inputModel;
+    if(override){
+      dupModel = override;
+    }
+    return (isNaN(dupModel.day) || dupModel.day === null || dupModel.day === "" ) &&
+      (isNaN(dupModel.month) || dupModel.month === null || dupModel.month === "") &&
+      (isNaN(dupModel.year) || dupModel.year === null || dupModel.year === "");
   }
 
   isValid() {
-    return this.getDate().isValid();
+    let dupModel = this.inputModel;
+    return this.getDate(dupModel).isValid();
   }
 
   monthName() {
@@ -225,14 +252,14 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   triggerMonthTouch(event){
-    if(event.srcElement.value.substring(0,1) === "0"){
-      this.month.nativeElement.value = event.srcElement.value.substring(1);
+    if(event.target.value.substring(0,1) === "0"){
+      this.month.nativeElement.value = event.target.value.substring(1);
     }
     this.onTouched();
   }
   triggerDayTouch(event){
-    if(event.srcElement.value.substring(0,1) === "0"){
-      this.day.nativeElement.value = event.srcElement.value.substring(1);
+    if(event.target.value.substring(0,1) === "0"){
+      this.day.nativeElement.value = event.target.value.substring(1);
     }
     this.onTouched();
   }
