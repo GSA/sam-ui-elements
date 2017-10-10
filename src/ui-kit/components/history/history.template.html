@@ -3,17 +3,10 @@
   <li *ngFor="let item of data; let i = index;" [ngClass]="'history-item-'+i" [class.current]="item.id && item.id == currentId" [attr.aria-label]=" item.id == currentId && item.ariaLabel ? item.ariaLabel : '' ">
     <span>  
       <strong>{{item.date}}</strong>
-      <a *ngIf="item.url" [routerLink]='item.url.split("/")' [queryParams]="item.qParams">{{ item.title }}</a>
+      <a *ngIf="item.url" [routerLink]='item.url.split("/")' [queryParams]="item.queryParams">{{ item.title }}</a>
       <ng-container *ngIf="!item.url">{{ item.title }}</ng-container>
       <br *ngIf="item.title && item.description"/>
-      <em *ngIf="item.description" [innerHTML]="item.description"></em>
-      <br *ngIf="item.titleNumberAgency"/>
-      <span class = "history-titleNumberAgency" *ngIf="item.titleNumberAgency" [innerHTML]="item.titleNumberAgency"></span>
-      <br *ngIf="item.submitter"/>
-      <span class = "history-submitter" *ngIf="item.submitter">{{ item.submitter }}</span>
-      <br *ngIf="item.comment"/>
-      <em class = "history-comment" *ngIf="item.comment"><q>{{ item.comment }}</q></em>
-      <i *ngIf="item.isTagged" class="fa fa-certificate" aria-hidden="true"></i>
+      <p *ngIf="item.description" [innerHTML]="item.description"></p>
     </span>
   </li>
 </ul>
