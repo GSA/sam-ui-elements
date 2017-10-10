@@ -12,7 +12,6 @@ let historyData = [
     description: "Lorem Ipsum",
     id: "0564cc38f28e1a85ea66de2bb78dae29",
     index: "1",
-    isTagged: false,
     title: "Original Combined Synopsis/Solicitation",
     url: "/opportunities/0564cc38f28e1a85ea66de2bb78dae29",
   },
@@ -22,7 +21,6 @@ let historyData = [
     description: "",
     id: "1a610c814d73fc23a6b71decc9b4c548",
     index: "2",
-    isTagged: false,
     title: "Award Notice",
     url: "/opportunities/1a610c814d73fc23a6b71decc9b4c548",
   }
@@ -52,7 +50,7 @@ describe("The SAM History Component", ()=> {
     // Title
     expect(fixture.debugElement.query(By.css('ul li:nth-child(1) a')).nativeElement.innerHTML).toBe("Original Combined Synopsis/Solicitation");
     // Description
-    expect(fixture.debugElement.query(By.css('ul li:nth-child(1) em')).nativeElement.innerHTML).toBe("Lorem Ipsum");
+    expect(fixture.debugElement.query(By.css('ul li:nth-child(1) p')).nativeElement.innerHTML).toBe("Lorem Ipsum");
     // URL
     expect(fixture.debugElement.query(By.css('ul li:nth-child(1) a')).nativeElement.getAttribute("href")).toBe("/opportunities/0564cc38f28e1a85ea66de2bb78dae29");
   });

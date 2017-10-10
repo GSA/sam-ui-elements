@@ -8,6 +8,7 @@
             [attr.id]="name"
             [attr.placeholder]="placeholder"
             [attr.maxlength]="maxlength ? maxlength : 524288"
+            [attr.aria-label]="'Text Area'"
             [disabled]="disabled"
             (change)="onInputChange($event.target.value)"
             (focus)="onFocus($event)"
