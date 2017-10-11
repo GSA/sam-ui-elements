@@ -264,6 +264,12 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     this.onTouched();
   }
 
+  resetInput(){
+    this.day.nativeElement.value = "";
+    this.month.nativeElement.value = "";
+    this.year.nativeElement.value = "";
+  }
+
   //controlvalueaccessor methods
   registerOnChange(fn) {
     this.onChange = fn;
@@ -282,6 +288,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       this.value = value;
       this.parseValueString();
     } else {
+      this.resetInput();
       this.value = "";
       this.parseValueString();
     }
