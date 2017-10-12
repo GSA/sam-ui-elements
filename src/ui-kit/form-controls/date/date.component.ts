@@ -76,7 +76,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   @ViewChild('year') year;
   @ViewChild('wrapper') wrapper;
   allowChars = ["0","1","2","3","4","5","6","7","8","9","Backspace","ArrowLeft","ArrowRight","Tab","Delete"];
-  test = ["0","1","2","3","4","5","6","7","8","9","Backspace","Delete"];
+  test = ["0","1","2","3","4","5","6","7","8","9"];
   get inputModel(){
     return {
       day: this.day.nativeElement.value,
@@ -121,8 +121,8 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       if (m.isValid()) {
         let monthVal = m.month() + 1;
         let dateVal = m.date();
-        this.model.month = this._shouldPad(monthVal) ? "0"+monthVal : monthVal;
-        this.model.day = this._shouldPad(dateVal) ? "0"+dateVal : dateVal;
+        this.model.month = monthVal;
+        this.model.day = dateVal;
         this.model.year = m.year();
       }
     }
@@ -169,7 +169,11 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       event.preventDefault();
       return;
     }
-    if(event.target.value.length+1==2 && event.key.match(/[0-9]/)!=null){
+    if(event.key.match(/[0-9]/)!=null 
+      && (
+        event.target.value.length==1 || 
+        (event.target.value.length==0 && possibleNum > 3)
+      )){
       this.day.nativeElement.focus();
     }
     if(this.test.indexOf(event.key)!=-1){
@@ -192,9 +196,13 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       event.preventDefault();
       return;
     }
-    if(event.target.value.length+1==2 && event.key.match(/[0-9]/)!=null){
+    if(event.key.match(/[0-9]/)!=null 
+      && (
+        event.target.value.length==1 || 
+        (event.target.value.length==0 && possibleNum > 3)
+      )){
       this.year.nativeElement.focus();
-    }
+    } 
     if(this.test.indexOf(event.key)!=-1){
       this.day.nativeElement.value = possibleNum;
       let dupModel = this.inputModel;
@@ -206,6 +214,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   onYearInput(event){
     var inputNum = parseInt(event.key, 10);
     var possibleNum;
+    
     if(!isNaN(this.year.nativeElement.value) && this.year.nativeElement.value!=""){
       possibleNum = (parseInt(this.year.nativeElement.value) * 10) + inputNum;
     } else{
@@ -224,6 +233,11 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       this.onChangeHandler(dupModel);
       event.preventDefault();
     }
+  }
+
+  removalKeyHandler(){
+    let dupModel = this.inputModel;
+    this.onChangeHandler(dupModel);
   }
 
   onChangeHandler(override=null) {
