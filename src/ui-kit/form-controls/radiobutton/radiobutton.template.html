@@ -1,7 +1,7 @@
 <sam-fieldset-wrapper [label]="label" [hint]="hint" [errorMessage]="errorMessage" [required]="required">
   <ul class="usa-unstyled-list">
     <li *ngFor="let option of options; let i = index">
-      <input [attr.id]="option.name" type="radio" (change)="onRadioChange(option.value)" [attr.disabled]="disabled" [attr.name]="name" [checked]="model === option.value">
+      <input [attr.id]="option.name" aria-label="Radio Button" type="radio" (change)="onRadioChange(option.value)" [attr.disabled]="disabled" [attr.name]="name" [checked]="model === option.value">
       <label [attr.for]="option.name">{{option.label}}</label>
     </li>
   </ul>
