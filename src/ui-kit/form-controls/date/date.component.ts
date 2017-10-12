@@ -76,6 +76,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   @ViewChild('year') year;
   @ViewChild('wrapper') wrapper;
   allowChars = ["0","1","2","3","4","5","6","7","8","9","Backspace","ArrowLeft","ArrowRight","Tab","Delete"];
+  test = ["0","1","2","3","4","5","6","7","8","9","Backspace","Delete"];
   get inputModel(){
     return {
       day: this.day.nativeElement.value,
@@ -158,14 +159,21 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   
   onMonthInput(event){
     var inputNum = parseInt(event.key, 10);
-    var possibleNum = (parseInt(this.month.nativeElement.value) * 10) + inputNum;
+    var possibleNum;
+    if(!isNaN(this.month.nativeElement.value) && this.month.nativeElement.value!=""){
+      possibleNum = (parseInt(this.month.nativeElement.value) * 10) + inputNum;
+    } else{
+      possibleNum = inputNum;
+    }
     if(possibleNum > 12 || this.allowChars.indexOf(event.key)==-1){
       event.preventDefault();
       return;
     }
     if(event.target.value.length+1==2 && event.key.match(/[0-9]/)!=null){
-      this.month.nativeElement.value = possibleNum;
       this.day.nativeElement.focus();
+    }
+    if(this.test.indexOf(event.key)!=-1){
+      this.month.nativeElement.value = possibleNum;
       let dupModel = this.inputModel;
       this.onChangeHandler(dupModel);
       event.preventDefault();
@@ -174,14 +182,21 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
 
   onDayInput(event){
     var inputNum = parseInt(event.key, 10);
-    var possibleNum = (parseInt(this.day.nativeElement.value) * 10) + inputNum;
+    var possibleNum;
+    if(!isNaN(this.day.nativeElement.value) && this.day.nativeElement.value!=""){
+      possibleNum = (parseInt(this.day.nativeElement.value) * 10) + inputNum;
+    } else{
+      possibleNum = inputNum;
+    }
     if(possibleNum > 31 || this.allowChars.indexOf(event.key)==-1){
       event.preventDefault();
       return;
     }
     if(event.target.value.length+1==2 && event.key.match(/[0-9]/)!=null){
-      this.day.nativeElement.value = possibleNum;
       this.year.nativeElement.focus();
+    }
+    if(this.test.indexOf(event.key)!=-1){
+      this.day.nativeElement.value = possibleNum;
       let dupModel = this.inputModel;
       this.onChangeHandler(dupModel);
       event.preventDefault();
@@ -190,14 +205,21 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
 
   onYearInput(event){
     var inputNum = parseInt(event.key, 10);
-    var possibleNum = (parseInt(this.year.nativeElement.value) * 10) + inputNum;
+    var possibleNum;
+    if(!isNaN(this.year.nativeElement.value) && this.year.nativeElement.value!=""){
+      possibleNum = (parseInt(this.year.nativeElement.value) * 10) + inputNum;
+    } else{
+      possibleNum = inputNum;
+    }
     if(possibleNum > 9999 || this.allowChars.indexOf(event.key)==-1){
       event.preventDefault();
       return
     }
     if(event.target.value.length+1==4 && event.key.match(/[0-9]/)!=null){
-      this.year.nativeElement.value = possibleNum;
       this.blurEvent.emit();
+    }
+    if(this.test.indexOf(event.key)!=-1){
+      this.year.nativeElement.value = possibleNum;
       let dupModel = this.inputModel;
       this.onChangeHandler(dupModel);
       event.preventDefault();
