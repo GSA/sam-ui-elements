@@ -1,0 +1,43 @@
+<div class="sam-autocomplete">      
+  <sam-label-wrapper
+    sam-click-outside
+    (clickOutside)="_onBlurEvent.next($event)"
+    sam-tab-outside
+    (tabOutside)="_onBlurEvent.next($event)">
+      <div class="input-container">
+        <input type="text"
+              #input
+              (input)="_onInputEvent.next($event)"
+              (focus)="_onInputFocus.next($event)"
+              (keydown)="_onInputKeydown.next($event)"
+              (keyup)="_onInputKeyup.next($event)"
+              (change)="_onInputChange.next($event)"
+              [ngModel]="_inputValue">
+        <span class="reset-icon">
+          <button *ngIf="_displayClearButton()"
+            class="usa-button-link" (click)="_clearComponent()">
+            <i class="fa fa-times-circle"></i>
+          </button>
+          <i class="fa fa-spinner fa-pulse"></i>
+        </span>
+      </div>
+      <ul class="usa-unstyled-list results-list"
+        *ngIf="_displayList | async"
+        #list>
+        <li [class.multiple-values]="config?.keyValueConfig?.subheadProperty"
+            [ngClass]="{ 'category': obj?.isCategory }"
+            *ngFor="let option of _filteredOptions | async"
+            (click)="_updateComponentValue(option)">
+          {{ _displayOptionText(option) }}
+          <ng-container *ngIf="option && option[config?.keyValueConfig?.subheadProperty]">
+            <br/>
+            <span class="secondary-value">
+              {{ option[config?.keyValueConfig?.subheadProperty] }}
+            </span>
+          </ng-container>
+        </li>
+      </ul>
+      <!-- Screen reader -->
+      <ul #screenReaderEl class="usa-sr-only" aria-live="assertive" aria-relevant="additions"></ul>
+  </sam-label-wrapper>
+</div>
