@@ -76,6 +76,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   @ViewChild('year') year;
   @ViewChild('wrapper') wrapper;
   allowChars = ["0","1","2","3","4","5","6","7","8","9","Backspace","ArrowLeft","ArrowRight","Tab","Delete"];
+
   get inputModel(){
     return {
       day: this.day.nativeElement.value,
@@ -120,8 +121,8 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       if (m.isValid()) {
         let monthVal = m.month() + 1;
         let dateVal = m.date();
-        this.model.month = this._shouldPad(monthVal) ? "0"+monthVal : monthVal;
-        this.model.day = this._shouldPad(dateVal) ? "0"+dateVal : dateVal;
+        this.model.month = monthVal;
+        this.model.day = dateVal;
         this.model.year = m.year();
       }
     }
@@ -158,30 +159,48 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   
   onMonthInput(event){
     var inputNum = parseInt(event.key, 10);
-    var possibleNum = (parseInt(this.month.nativeElement.value) * 10) + inputNum;
+    var possibleNum;
+    if(!isNaN(this.month.nativeElement.value) && this.month.nativeElement.value!=""){
+      possibleNum = (parseInt(this.month.nativeElement.value) * 10) + inputNum;
+    } else{
+      possibleNum = inputNum;
+    }
     if(possibleNum > 12 || this.allowChars.indexOf(event.key)==-1){
       event.preventDefault();
       return;
     }
-    if(event.target.value.length+1==2 && event.key.match(/[0-9]/)!=null){
+    if(event.key.match(/[0-9]/)!=null){
+      if(event.target.value.length==1 || 
+        (event.target.value.length==0 && possibleNum > 3)){
+        this.day.nativeElement.focus();
+      }
       this.month.nativeElement.value = possibleNum;
-      this.day.nativeElement.focus();
       let dupModel = this.inputModel;
       this.onChangeHandler(dupModel);
       event.preventDefault();
+    }
+    if(event.key.match(/[0-9]/)!=null){
     }
   }
 
   onDayInput(event){
     var inputNum = parseInt(event.key, 10);
-    var possibleNum = (parseInt(this.day.nativeElement.value) * 10) + inputNum;
+    var possibleNum;
+    if(!isNaN(this.day.nativeElement.value) && this.day.nativeElement.value!=""){
+      possibleNum = (parseInt(this.day.nativeElement.value) * 10) + inputNum;
+    } else{
+      possibleNum = inputNum;
+    }
     if(possibleNum > 31 || this.allowChars.indexOf(event.key)==-1){
       event.preventDefault();
       return;
     }
-    if(event.target.value.length+1==2 && event.key.match(/[0-9]/)!=null){
+    if(event.key.match(/[0-9]/)!=null){ 
+      if(event.target.value.length==1 || 
+        (event.target.value.length==0 && possibleNum > 3)){
+        this.year.nativeElement.focus();
+      }
       this.day.nativeElement.value = possibleNum;
-      this.year.nativeElement.focus();
       let dupModel = this.inputModel;
       this.onChangeHandler(dupModel);
       event.preventDefault();
@@ -190,18 +209,31 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
 
   onYearInput(event){
     var inputNum = parseInt(event.key, 10);
-    var possibleNum = (parseInt(this.year.nativeElement.value) * 10) + inputNum;
+    var possibleNum;
+    
+    if(!isNaN(this.year.nativeElement.value) && this.year.nativeElement.value!=""){
+      possibleNum = (parseInt(this.year.nativeElement.value) * 10) + inputNum;
+    } else{
+      possibleNum = inputNum;
+    }
     if(possibleNum > 9999 || this.allowChars.indexOf(event.key)==-1){
       event.preventDefault();
       return
     }
-    if(event.target.value.length+1==4 && event.key.match(/[0-9]/)!=null){
+    if(event.key.match(/[0-9]/)!=null){
+      if(event.target.value.length+1==4){
+        this.blurEvent.emit();
+      }
       this.year.nativeElement.value = possibleNum;
-      this.blurEvent.emit();
       let dupModel = this.inputModel;
       this.onChangeHandler(dupModel);
       event.preventDefault();
     }
+  }
+
+  removalKeyHandler(){
+    let dupModel = this.inputModel;
+    this.onChangeHandler(dupModel);
   }
 
   onChangeHandler(override=null) {

@@ -10,7 +10,7 @@ function dateRangeValidation(c:AbstractControl){
   if(c.value && c.value.startDate && c.value.endDate){
     let startDateM = moment(c.value.startDate);
     let endDateM = moment(c.value.endDate);
-    if(startDateM.get('year')>1000 && endDateM.get('year')>1000 && endDateM.diff(startDateM) < 0){
+    if(endDateM.diff(startDateM) < 0){
       return {
         dateRangeError: {
           message: "Invalid date range"
