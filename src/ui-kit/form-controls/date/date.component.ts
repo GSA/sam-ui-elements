@@ -76,7 +76,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   @ViewChild('year') year;
   @ViewChild('wrapper') wrapper;
   allowChars = ["0","1","2","3","4","5","6","7","8","9","Backspace","ArrowLeft","ArrowRight","Tab","Delete"];
-  test = ["0","1","2","3","4","5","6","7","8","9"];
+
   get inputModel(){
     return {
       day: this.day.nativeElement.value,
@@ -169,18 +169,17 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       event.preventDefault();
       return;
     }
-    if(event.key.match(/[0-9]/)!=null 
-      && (
-        event.target.value.length==1 || 
-        (event.target.value.length==0 && possibleNum > 3)
-      )){
-      this.day.nativeElement.focus();
-    }
-    if(this.test.indexOf(event.key)!=-1){
+    if(event.key.match(/[0-9]/)!=null){
+      if(event.target.value.length==1 || 
+        (event.target.value.length==0 && possibleNum > 3)){
+        this.day.nativeElement.focus();
+      }
       this.month.nativeElement.value = possibleNum;
       let dupModel = this.inputModel;
       this.onChangeHandler(dupModel);
       event.preventDefault();
+    }
+    if(event.key.match(/[0-9]/)!=null){
     }
   }
 
@@ -196,14 +195,11 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       event.preventDefault();
       return;
     }
-    if(event.key.match(/[0-9]/)!=null 
-      && (
-        event.target.value.length==1 || 
-        (event.target.value.length==0 && possibleNum > 3)
-      )){
-      this.year.nativeElement.focus();
-    } 
-    if(this.test.indexOf(event.key)!=-1){
+    if(event.key.match(/[0-9]/)!=null){ 
+      if(event.target.value.length==1 || 
+        (event.target.value.length==0 && possibleNum > 3)){
+        this.year.nativeElement.focus();
+      }
       this.day.nativeElement.value = possibleNum;
       let dupModel = this.inputModel;
       this.onChangeHandler(dupModel);
@@ -224,10 +220,10 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       event.preventDefault();
       return
     }
-    if(event.target.value.length+1==4 && event.key.match(/[0-9]/)!=null){
-      this.blurEvent.emit();
-    }
-    if(this.test.indexOf(event.key)!=-1){
+    if(event.key.match(/[0-9]/)!=null){
+      if(event.target.value.length+1==4){
+        this.blurEvent.emit();
+      }
       this.year.nativeElement.value = possibleNum;
       let dupModel = this.inputModel;
       this.onChangeHandler(dupModel);
