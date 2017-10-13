@@ -14,19 +14,19 @@
   <ng-container *ngIf="packages && packages.length > 0">
     <div class="card download-container" *ngFor="let package of packages" [@intro]="fade">
       <!-- It's public -->
-      <div *ngIf="package.access === 'Public'" class="card-header {{ package.accordionState }}" (click)="toggleAccordion(package)" tabindex="0" (keyup.enter)="toggleAccordion(package)">
+      <div *ngIf="package.access.toLowerCase() === 'public'" class="card-header {{ package.accordionState }}" (click)="toggleAccordion(package)" tabindex="0" (keyup.enter)="toggleAccordion(package)">
         <h3>{{ package.name }} ({{ package.resources?.length }})</h3>
         <strong>Type: {{ package.type }}</strong>
       </div>
 
-      <span *ngIf="package.access === 'Public' && package.downloadUrl" class="download-button">
+      <span *ngIf="package.access.toLowerCase() === 'public' && package.downloadUrl" class="download-button">
         <a class="usa-button-small usa-button-gray" [attr.href]="package.downloadUrl">
           <i class="fa fa-cloud-download" aria-hidden="true"></i>
           <span>Download</span>
         </a>
       </span>
 
-      <ul *ngIf="package.access === 'Public'" [@accordion]="package.accordionState" class="usa-zebra-list">
+      <ul *ngIf="package.access.toLowerCase() === 'public'" [@accordion]="package.accordionState" class="usa-zebra-list">
         <li *ngFor="let resource of package.resources">
           <div class="download-info">
             <span class="download-info-icon">
@@ -48,12 +48,12 @@
       </ul>
 
       <!-- Its private -->
-      <div *ngIf="package.access === 'Private'" class="card-header-secure">
+      <div *ngIf="package.access.toLowerCase() === 'private'" class="card-header-secure">
         <h3>{{ package.name }} ({{ package.resources?.length }})</h3>
         <strong>Type: {{ package.type }}</strong>
       </div>
 
-      <div *ngIf="package.access === 'Private'" class="card-secure-content">
+      <div *ngIf="package.access.toLowerCase() === 'private'" class="card-secure-content">
         <p>
           <i class="fa fa-lock fa-3x fa-pull-left" aria-hidden="true"></i>
           <em>Secure/sensitive attachments are not currently available, please go to <a href="https://www.fbo.gov/">FBO.gov</a> to view this attachment.</em>
@@ -67,7 +67,7 @@
           <strong>Posted on {{ package.postedDate }}</strong>
         </div>
         <div class="label-container-inline" style="float: right;">
-          <i class="fa" [ngClass]="{'fa-unlock' : package.access === 'Public', 'fa-lock': package.access === 'Private'}" aria-hidden="true"></i>
+          <i class="fa" [ngClass]="{'fa-unlock' : package.access.toLowerCase() === 'public', 'fa-lock': package.access.toLowerCase() === 'private'}" aria-hidden="true"></i>
           <strong>{{isSecure(package.access)}}</strong>
         </div>
       </div>
