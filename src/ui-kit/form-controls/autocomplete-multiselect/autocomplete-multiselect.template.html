@@ -13,25 +13,33 @@
                     (tabOutside)="checkForFocus($event)">
 
     <div class="sam-autocomplete-multiselect-input"
-      (click)="focusTextArea()"
-      [ngClass]="{ 'active': displayList() }">
+         (click)="focusTextArea()"
+         [ngClass]="{ 'active': displayList() }">
 
-        <div tabIndex="0" class="sam-ui mini label"
-            *ngFor="let item of value"
-            [@label]=""
-            (click)="deselectItem(item)"
-            (keydown)="deselectItemOnEnter($event,item)">
+        <div tabIndex="0" 
+             class="sam-ui mini label"
+             *ngFor="let item of value"
+             [@label]=""
+             (click)="deselectItem(item)"
+             (keydown)="deselectItemOnEnter($event,item)">
+
             <div class="label">
               {{ keyValueConfig ? item[keyValueConfig?.valueProperty] : item?.value }}
               <span *ngIf="item?.value !== item[keyValueConfig?.categoryProperty]"
-                class="selected-category">
-                <br>{{ item[keyValueConfig?.categoryProperty] }}
+                    class="selected-category">
+                <br/>
+                {{ item[keyValueConfig?.categoryProperty] }}
               </span>
             </div>
             <i class="icon close fa fa-times"></i>
         </div>
-        <label *ngIf="name && !label" [attr.for]="name+'-ac-textarea'" class="sr-only">textarea input</label>
-        <textarea #textArea rows="1"
+        <label *ngIf="name && !label"
+               [attr.for]="name+'-ac-textarea'"
+               class="sr-only">
+               textarea input
+        </label>
+        <textarea #textArea
+                  rows="1"
                   [attr.id]="name+'-ac-textarea'"
                   [(ngModel)]="searchText"
                   (input)="applyTextAreaWidth($event)"
@@ -46,20 +54,26 @@
             This helps us calculate when the textArea should be on the same row as the
             spans of selected content and when the textarea should be on a line by
             itself. -->
-        <span #hiddenText class="usa-sr-only measure text">
-          {{searchText}}
+        <span #hiddenText 
+              class="usa-sr-only measure text">
+          {{ searchText }}
         </span>
+
+        <div class="clear-all-container">
+          <button type="button"
+                  *ngIf="displayClearAll()"
+                  class="usa-button-link"
+                  (click)="focusTextArea(clearSearch(deselectAll()))">
+                  <span class="sr-only">clear all</span>
+                  <i class="fa fa-times-circle"></i>
+          </button>
+          <i *ngIf="!displaySpinner" class="fa" [ngClass]="addOnIcon"></i>
+          <i *ngIf="displaySpinner" class="fa fa-spinner fa-pulse"></i>
+        </div>
     </div>
 
-    <div class="clear-all-container">
-      <button type="button"
-              class="usa-button-link"
-              (click)="focusTextArea(clearSearch(deselectAll()))">
-              Clear All
-      </button>
-    </div>
-
-    <ul #resultsList class="usa-unstyled-list multiselect-parent-list"
+    <ul #resultsList
+        class="usa-unstyled-list multiselect-parent-list"
         *ngIf="displayList()"
         [@dropdown]="">
       <li *ngFor="let category of list.categories; let i = index;">

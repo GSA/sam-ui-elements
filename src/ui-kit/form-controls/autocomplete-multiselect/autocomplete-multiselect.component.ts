@@ -3,7 +3,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/f
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { AutocompleteService } from '../autocomplete/autocomplete.service';
 import { trigger, state, style, transition, animate, keyframes } from '@angular/core';
-import {SamFormService} from '../../form-service';
+import { SamFormService } from '../../form-service';
 
 @Component({
   selector: 'sam-autocomplete-multiselect',
@@ -128,6 +128,11 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   /** Red error message text **/
   @Input() errorMessage: string = '';
 
+  /**
+   * Allow an add on icon to component
+   */
+  @Input() addOnIcon: string = "fa-chevron-down";
+
   public searchText: string = '';
 
   private innerValue: Array<any> = [];
@@ -135,6 +140,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   private list: any = [];
   private cachingService: any;
   private inputTimer: any;
+  private displaySpinner: boolean = false;
 
   private onChangeCallback: (_: any) => void = (_: any) => {};
   private onTouchedCallback: () => void = () => {};
@@ -155,21 +161,23 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   }
 
   ngOnInit() {
-    if (this.list.length >0) this.list = this.sortByCategory(this.list);
-    if(!this.control){
+    if (this.list.length > 0) this.list = this.sortByCategory(this.list);
+    if (!this.control) {
       return;
     }
-    if(!this.useFormService){
-      this.control.statusChanges.subscribe(()=>{
+    if (!this.useFormService) {
+      this.control.statusChanges.subscribe(() => {
         this.wrapper.formatErrors(this.control);
       });
       this.wrapper.formatErrors(this.control);
     }
     else {
-      this.samFormService.formEventsUpdated$.subscribe(evt=>{
-        if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+      this.samFormService.formEventsUpdated$.subscribe(evt => {
+        if( (!evt['root'] || evt['root']==this.control.root) &&
+            evt['eventType'] && evt['eventType']=='submit') {
           this.wrapper.formatErrors(this.control);
-        } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+        } else if ( (!evt['root'] || evt['root'] == this.control.root) &&
+                     evt['eventType'] && evt['eventType']=='reset') {
           this.wrapper.clearError();
         }
       });
@@ -177,7 +185,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   }
 
   ngOnChanges(c){
-    if(c['options']){
+    if (c['options']) {
       this.updateMarked();
     }
   }
@@ -527,14 +535,16 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * Logic for filtering options                                 *
    ***************************************************************/
   fetchFromService(searchString, options, context) {
-
+    context.displaySpinner = true;
     return context.service.fetch(searchString, context.cachingService.hasReachedScrollEnd(), options)
         .subscribe(
           (data) => {
+            context.displaySpinner = false;
             context.list = context.handleEmptyList(context.sortByCategory(data));
             context.cachingService.updateResults(context.list);
           },
           (err) => {
+            context.displaySpinner = false;
             const errorObject = {
               cannotBeSelected: true
             }
@@ -543,6 +553,9 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
             context.list = context.handleEmptyList(context.sortByCategory([errorObject]));
             context.cachingService.updateResults([]);
             return [errorObject];
+          },
+          () => {
+            context.displaySpinner = false;
           }
         );
   }
@@ -707,6 +720,10 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     }
   }
 
+  displayClearAll(): boolean {
+    return (this.value.length > 0) || !!this.searchText;
+  }
+
   /***************************************************************
    * Logic for selecting/deselecting options                     *
    ***************************************************************/
@@ -781,6 +798,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
 
   clearSearch() {
     this.searchText = "";
+    this.displaySpinner = false;
   }
 
   focusTextArea() {
@@ -797,14 +815,15 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   }
 
   updateMarked(){
-    if(this.service){
+    if (this.service) {
       return;
     }
-    for(let key in this.options){
-      let x = this.value.find((obj)=>{
+    for (let key in this.options) {
+      let x = this.value.find((obj) => {
         return obj[this.keyValueConfig.keyProperty] == this.options[key][this.keyValueConfig.keyProperty];
       });
-      if(x){
+
+      if (x) {
         this.options[key]._marked = true;
       } else {
         this.options[key]._marked = false;

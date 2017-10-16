@@ -5,7 +5,7 @@
     (clickOutside)="_onBlurEvent.next($event)"
     sam-tab-outside
     (tabOutside)="_onBlurEvent.next($event)"
-    [label]="labelText"
+    [label]="label || labelText"
     [hint]="hint"
     [name]="id"
     [required]="required"
