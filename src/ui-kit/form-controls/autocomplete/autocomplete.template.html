@@ -2,7 +2,17 @@
   <!-- Text input -->
   <sam-label-wrapper #wrapper [label]="labelText" [hint]="hint" [name]="id" [required]="required" [errorMessage]="errorMessage">
     <div class="input-container">
-      <input [attr.id]="id" #input autocomplete="off" [attr.placeholder]="config?.placeholder" [attr.name]="name" type="text" (focus)="inputFocusHandler($event)" aria-label="Autocomplete Input Box" (change)="onChange()" (keydown)="onKeydown($event)" (keyup)="onKeyup($event)" [(ngModel)]="inputValue" [attr.aria-label]="name">
+      <input [attr.id]="id"
+             #input autocomplete="off"
+             [attr.placeholder]="config?.placeholder"
+             [attr.name]="name"
+             type="text"
+             (focus)="inputFocusHandler($event)"
+             (change)="onChange()"
+             (keydown)="onKeydown($event)"
+             (keyup)="onKeyup($event)"
+             [(ngModel)]="inputValue"
+             [attr.aria-label]="name">
       <span class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}"><i class="fa fa-times-circle" (click)="clearInput()" (keyup.enter)="clearInput()" tabindex="0"></i></span>
       <span *ngIf="config && config.addOnIconClass" class="add-on"><i class="{{config.addOnIconClass}}"></i></span>
     </div>

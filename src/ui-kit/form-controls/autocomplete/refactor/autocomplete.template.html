@@ -1,0 +1,59 @@
+<div class="sam-autocomplete">      
+  <sam-label-wrapper
+    #wrapper
+    sam-click-outside
+    (clickOutside)="_onBlurEvent.next($event)"
+    sam-tab-outside
+    (tabOutside)="_onBlurEvent.next($event)"
+    [label]="labelText"
+    [hint]="hint"
+    [name]="id"
+    [required]="required"
+    [errorMessage]="errorMessage">
+    <div class="input-container">
+      <input type="text"
+            #input
+            (input)="_onInputEvent.next($event)"
+            (focus)="_onInputFocus.next($event)"
+            (keydown)="_onInputKeydown.next($event)"
+            (keyup)="_onInputKeyup.next($event)"
+            (change)="_onInputChange.next($event)"
+            [ngModel]="_inputValue"
+            [attr.id]="id"
+            autocomplete="off"
+            [attr.placeholder]="placeholder"
+            [attr.name]="name"
+            [attr.aria-label]="name"
+            [required]="required"
+            [disabled]="_disabled">
+      <span class="icon-container">
+        <button *ngIf="_displayClearButton()"
+                class="usa-button-link"
+                (click)="_clearComponent()">
+          <i class="fa fa-times-circle"></i>
+        </button>
+        <i *ngIf="_displaySpinner" class="fa fa-spinner fa-pulse"></i>
+        <i *ngIf="!_displaySpinner" class="fa" [ngClass]="_addOnIconClass"></i>
+      </span>
+    </div>
+    <ul class="usa-unstyled-list results-list"
+      *ngIf="_displayList | async"
+      #list>
+      <li [class.multiple-values]="config?.keyValueConfig?.subheadProperty"
+          *ngFor="let option of _filteredOptions | async"
+          class="one class two classess three classessess"
+          [ngClass]="{ 'category': option?.isCategory }"
+          (click)="_updateComponentValue(option)">
+        {{ _displayOptionText(option) }}
+        <ng-container *ngIf="option && option[config?.keyValueConfig?.subheadProperty]">
+          <br/>
+          <span class="secondary-value">
+            {{ option[config?.keyValueConfig?.subheadProperty] }}
+          </span>
+        </ng-container>
+      </li>
+    </ul>
+    <!-- Screen reader -->
+    <ul #screenReaderEl class="usa-sr-only" aria-live="assertive" aria-relevant="additions"></ul>
+  </sam-label-wrapper>
+</div>
