@@ -29,10 +29,13 @@ export class SamAlertComponent {
    */
   @Input() dismissTimer = 0;
   /**
+   * Give a boolean value to display show/hide toggle
+   */
+  @Input() showMoreToggle = null;
+  /**
    * Emitted event when an alert is dismissed
    */
   @Output() dismiss: EventEmitter<any> = new EventEmitter<any>();
-
   types:any = {
     "success": { class: "usa-alert-success", sr: "success alert"},
     "warning": { class: "usa-alert-warning", sr: "warning alert"},
@@ -40,7 +43,7 @@ export class SamAlertComponent {
     "info": { class: "usa-alert-info", sr: "info alert"}
   };
   selectedType: string = this.types['success'].class;
-
+  showMoreLinkText = "Show Details";
   constructor() {
   }
 
@@ -71,5 +74,10 @@ export class SamAlertComponent {
 
   closeAlert(){
    this.onDismissClick(); 
+  }
+
+  toggleContent(){
+     this.showMoreToggle = !this.showMoreToggle;
+     this.showMoreLinkText = this.showMoreToggle ? "Hide Details" : "Show Details"; 
   }
 }

@@ -69,29 +69,9 @@ export interface HistoryNodeType {
    */
   description?: string;
   /**
-   * Optional tagged value for node
-   */
-  isTagged?: boolean;
-
-  /**
    * Optional aria label value for node
    */
   ariaLabel?: string;
-
-  /**
-   * Optional submitter value for node
-   */
-  submitter?: string;
-
-  /**
-   * Optional comment value for node
-   */
-  comment?: string;
-
-  /**
-   * Optional title change, number change or agency change value for node
-   */
-  titleNumberAgency?: string;
 }
 
 // Autocomplete Config Interfaces

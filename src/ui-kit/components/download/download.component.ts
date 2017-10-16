@@ -57,7 +57,7 @@ export class SamDownloadComponent {
 
   public hasPublicPackages(){
     for(let pkg of this.packages){
-      if(pkg.access === "Public") { 
+      if(pkg.access.toLowerCase() === "public") {
         return true; 
       }
     }
@@ -69,7 +69,7 @@ export class SamDownloadComponent {
   }
   
   private isSecure(field: string){
-    if(field === "Public"){
+    if(field.toLowerCase() === "public"){
       return "Not Secure";
     } else {
       return "Secured"

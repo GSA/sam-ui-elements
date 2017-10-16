@@ -180,7 +180,7 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
 
   isValid() {
     let hours = parseInt(this.hours);
-    let minutes = parseInt(this.minutes);
+    let minutes = parseInt(this.minute_v.nativeElement.valueAsNumber);
     return !isNaN(hours) && !isNaN(minutes)
         && typeof hours === 'number' && typeof minutes === 'number'
         && hours >= 1 && hours <= 12
