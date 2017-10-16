@@ -15,16 +15,16 @@ import * as TypeCheckHelpers from '../../../type-check-helpers';
 
 const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => SamAutocompleteComponentRefactor),
+  useExisting: forwardRef(() => SamAutocompleteComponent),
   multi: true
 };
 
 @Component({
-selector: 'sam-autocomplete-refactor',
+selector: 'sam-autocomplete',
 templateUrl: 'autocomplete.template.html',
 providers: [ AUTOCOMPLETE_VALUE_ACCESSOR ]
 })
-export class SamAutocompleteComponentRefactor implements ControlValueAccessor, OnChanges, OnInit {
+export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges, OnInit {
   /**
    * UL list ViewChild for displaying autocomplete options
    */
@@ -40,6 +40,10 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    * items pushed into it as user interacts with component.
    */
   @ViewChild('screenReaderEl') private _screenReaderEl: ElementRef;
+  /**
+   * ViewChild for wrapper. Need this for our hacky label wrapper
+   */
+  @ViewChild('wrapper') private wrapper;
 
   /**
    * Provide name for input
@@ -54,13 +58,17 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    */
   @Input() public label: string;
   /**
-   * DEPRECATED: Provide a label for the input
+   * DEPRECATED: Provide a label for the input; Use label instead
    */
   @Input() public labelText: string;
   /**
    * Provide hint for labelWrapper
    */
   @Input() public hint: string;
+  /**
+   * Provides labelWrapper with error message to display on error
+   */
+  @Input() public errorMessage: string;
   /**
    * Provide placeholder for input
    */
@@ -69,7 +77,19 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    * Config oBject
    */
   @Input() public config: any;
-
+  /**
+   * If true, form validation
+   * will fail if field is left blank.
+   */
+  @Input() public required: boolean = false;
+  /**
+   * Pass in a form control for labelWrapper
+   */
+  @Input() public control: FormControl;
+  /**
+   * Toggles validations to display with SamFormService events
+   */
+  @Input() public useFormService: boolean
   /**
    * Pass custom querying and filtering callback
    * for result
@@ -84,6 +104,25 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    */
   @Input() public categories: any[] = [];
   /**
+   * Allow categories to be selected if true
+   * Otherwise, users cannot select categories and
+   * they are skipped when using keydown in the list
+   */
+  @Input() public isCategorySelectable?: boolean;
+  /**
+   * Allow the component to accept
+   * any user input as a valid value.
+   * 
+   * If false, the user may only 
+   * select a value from the list
+   * to be set as the input value.
+   */
+  @Input() public allowAny: boolean = false;
+  /**
+   * 
+   */
+  @Input() public addOnIconClass: string = "fa-chevron-down";
+  /**
    * Emitted only when the user selects an item from the dropdown list, or when the user clicks enter and the mode is
    * allowAny. This is useful if you do not want to respond to onChange events when the input is blurred.
    */
@@ -92,7 +131,7 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
   /**
    * Component State Variables
    */
-  private _disabled: boolean;
+  @Input('disabled') private _disabled: boolean;
   /**
    * Stores value that the user has
    * selected from the input.
@@ -125,31 +164,13 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    */
   private _selectedItem: any;
   /**
-   * Wh
-   */
-  private _focused: boolean;
-  private _showClearButton: boolean;
-  /**
    * Boolean that determines whether 
    * to display a spinner while results
    * are loading
    */
   private _showSpinner: boolean;
-  /**
-   * Allow the component to accept
-   * any user input as a valid value.
-   * 
-   * If false, the user may only 
-   * select a value from the list
-   * to be set as the input value.
-   */
-  private _allowAny: boolean;
-  /**
-   * If true, form validation
-   * will fail if field is left blank.
-   */
-  private _required: boolean;
-  private _endOfList: boolean; // If user reaches end of list, set to true for pagination
+
+  private _endOfList: boolean = true; // If user reaches end of list, set to true for pagination
 
   /**
    * Results of filter calls that are then
@@ -159,16 +180,15 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
   /**
    * Tracks the item that is currently highlighted in the list
    */
+  private _displaySpinner: boolean = false;
   private _highlightedItemIndex: number;
-  private _categories: any;
-  private _errorMessage: string;
-  private _addOnIconClass: string;
+  private _addOnIconClass: string = "fa-chevron-down";
   private _keyValueConfig: any;
   private _serviceOptions: any;
   private _categoryProperty: string;
-  private _isCategorySelectable?: boolean;
 
   private _screenreader: ScreenReaderPusher;
+  private _cache: any = {};
 
   private _filter: (...args) => Observable<any[]>;
   private onTouchedCallback: () => void = () => {};
@@ -187,6 +207,28 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
   private _blurSubscription: Subscription;
 
   ngOnInit() {
+
+    if (this.control) {
+      if (!this.useFormService) {
+        this.control.statusChanges.subscribe(() => {
+          this.wrapper.formatErrors(this.control);
+        });
+        this.wrapper.formatErrors(this.control);
+      } else {
+        this.samFormService.formEventsUpdated$.subscribe(evt => {
+          if( (!evt['root'] || evt['root'] == this.control.root) && 
+              evt['eventType'] &&
+              evt['eventType'] == 'submit' ) {
+            this.wrapper.formatErrors(this.control);
+          } else if ( (!evt['root']|| evt['root']==this.control.root) &&
+                      evt['eventType'] &&
+                      evt['eventType'] == 'reset' ) {
+            this.wrapper.clearError();
+          }
+        });
+      }
+    }
+
     this._filter = this._getFilterMethod();
 
     /**
@@ -213,16 +255,32 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
        */
       .switchMap(
        (event) => {
+        this._displaySpinner = true;
          /**
           * Call filter with value from input or empty string
           * Our business rules dictate that if the input has 
           * focus, a list of results should be displayed.
           */
+          const filterValue = (event && event.target && event.target.value) || '';
+          let returnValue: Observable<any>;
+
+          if (this._cache[filterValue] && this._endOfList === false) return Observable.of(this._cache[filterValue]);
+
           return this._filter(event && event.target && event.target.value || '', this._endOfList, this._serviceOptions)
-             .catch(error => {
-               console.error(error);
-               return Observable.of(['No results found']);
-             });
+                  .map(ev => {
+                    if (!this._cache[filterValue]) {
+                      this._cache[filterValue] = ev;
+                    } else {
+                      ev.forEach(item => this._cache[filterValue].push(item));
+                    }
+                    this._displaySpinner = false; 
+                    this._endOfList = false;
+                    return this._cache[filterValue]; 
+                  }) 
+                  .catch(error => {
+                    console.error(error);
+                    return Observable.of(['No results found']);
+                  });
         }
       )
 
@@ -231,15 +289,22 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
           event => event && event.target ? this._setInputValue(event.target.value) : null,
           err => console.error(err)
         )
+
+      this._onInputKeydown
+        .subscribe(
+          (event) => {
+            this._onInputEvent.next(this._inputValue);                
+          }
+        )
     
       /**
        * Stream of keydown events from input
        * Logic handles moving through the list with the up and down arrows
        * along with setting model value on enter.
        */
-      this._onInputKeydown
+      this._onInputKeyup
         .subscribe(
-          (event) => {
+          (event) => {            
             let keyCode = KeyEventHelpers.getKeyboardEventKey(event);
 
             if (KeyEventHelpers.isArrowDownKey(keyCode)) {
@@ -249,8 +314,10 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
             } else if (KeyEventHelpers.isEnterKey(keyCode)) {
               event.preventDefault();
               this._handleEnter(event);
-            }
-          }
+            } 
+
+          },
+          (err) => console.error(err)
         )
 
     /**
@@ -343,9 +410,17 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
         return;
     }
 
-    highlightedItem = list[this._highlightedItemIndex] as HTMLLIElement;    
-    this._addHighlightClass(highlightedItem);
-    this._screenreader.pushMessage(highlightedItem.innerText);
+    this._endOfList = this._highlightedItemIndex === list.length - 1 ? true : false;
+    
+    highlightedItem = list[this._highlightedItemIndex] as HTMLLIElement;
+
+    if (highlightedItem) {
+      this._addHighlightClass(highlightedItem);
+      if (this._screenreader) this._screenreader.pushMessage(highlightedItem.innerText);
+
+      this._list.nativeElement.scrollTop = highlightedItem.offsetTop - this._list.nativeElement.clientTop;      
+    }
+
     return;    
   }
 
@@ -353,8 +428,14 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    * Reset highlighted item index and removed selected class
    */
   private _resetListHighlighting(): void {
-    this._highlightedItemIndex = null;
+    // Blur input
     this._input.nativeElement.blur();
+    
+    // Set input value back to display text for input 
+    if (!this.allowAny) this._setInputValue(this._displayOptionText(this._value));
+
+    
+    this._highlightedItemIndex = null;    
     if (this._list) this._removeSelectedClassFromListItems(this._list.nativeElement.children);
   }
 
@@ -392,10 +473,24 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    * Returns 0 if null.
    */
   private _circularIncrement(index: number, length: number): number {
+    let returnIndex: number;
     if (index === null || index === undefined || index === length-1) {
-      return 0;
+      returnIndex = 0;
     } else {
-      return index + 1;
+      returnIndex = index + 1;
+    }
+
+    if (!this.isCategorySelectable &&
+        ( this._list &&
+          this._list.nativeElement &&
+          this._list.nativeElement.children &&
+          this._list.nativeElement.children[returnIndex] &&
+          this._list.nativeElement.children[returnIndex].classList &&
+          this._list.nativeElement.children[returnIndex].classList.value.includes('category') )) {
+        
+       return this._circularIncrement(returnIndex, length);
+    } else {
+      return returnIndex;
     }
   }
 
@@ -407,15 +502,25 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    * Returns length if null.
    */
   private _circularDecrement(index: number, length: number): number {
+    let returnIndex: number;
     if (!index || index === 0) {
-      return length - 1;
+      returnIndex = length - 1;
     } else {
-      return index - 1;
+      returnIndex = index - 1;
     }
-  }
 
-  private _displaySpinner?(): boolean {
-    return true;
+    if (!this.isCategorySelectable &&
+        ( this._list &&
+          this._list.nativeElement &&
+          this._list.nativeElement.children &&
+          this._list.nativeElement.children[returnIndex] &&
+          this._list.nativeElement.children[returnIndex].classList &&
+          this._list.nativeElement.children[returnIndex].classList.value.includes('category') )) {
+      
+      return this._circularDecrement(returnIndex, length);
+    } else {
+      return returnIndex;
+    }
   }
 
   /**
@@ -444,9 +549,15 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    * Precedence: filterCallback > autocomplete service > built-in filter
    */
   private _getFilterMethod(): (...args) => Observable<any[]> {
-    return this.filterCallback || 
-           (this._service && this._service.fetch) ||
-           this._getSimpleFilter();
+    let service: (...args) => any;
+    service = this._service && this._service.fetch ? this._service.fetch : null;
+    if (this.filterCallback) {
+      return this.filterCallback;
+    } else if (service) {
+      return service.bind(this._service);
+    } else {
+      return this._getSimpleFilter();
+    }
   }
 
   /**
@@ -486,28 +597,28 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    * Contains logic to sorting by category as well
    */
   private _objectsFilter(value: string): Observable<any[]> {
-   value = value.toLowerCase();
+    value = value.toLowerCase();
     const categories = [];
     let currentCategory = '';
     return Observable.of(this.options.reduce((prev, curr, index, arr) => {
       if (curr[this.config.keyValueConfig.keyProperty].toLowerCase().includes(value) ||
           curr[this.config.keyValueConfig.valueProperty].toLowerCase().includes(value)) {
         /**
-         * Check if the current item in the array contains the substring value in
-         * either the key or value property provided on the config input
+         * If item has a category and the item's category is not the stored current category,
+         * 
          */
-        if (curr[this.config.categoryProperty] && currentCategory !== curr[this.config.categoryProperty]) {
+        if (curr[this.config.keyValueConfig.categoryProperty] && (currentCategory !== curr[this.config.keyValueConfig.categoryProperty])) {
           /**
            * Checks if the current item in the array has a category. If so, checks to see if
            * this category is the current category. If not, it will push it to the returned array.
            * If it is the current category, it skips.
            */
-          currentCategory = curr[this.config.categoryProperty];
+          currentCategory = curr[this.config.keyValueConfig.categoryProperty];
           const filteredCategories = this.categories.filter((category) => {
             /**
              * Filters the category input array property for a matching category property.
              */
-            if (category[this.config.keyValueConfig.keyProperty] === curr[this.config.categoryProperty]) {
+            if (category[this.config.keyValueConfig.keyProperty] === curr[this.config.keyValueConfig.categoryProperty]) {
               category.isCategory = true;
               return category;
             }
@@ -522,7 +633,8 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
 
   constructor(@Optional() private _service: AutocompleteService,
               private _cdr: ChangeDetectorRef,
-              private _renderer: Renderer2) {}
+              private _renderer: Renderer2,
+              private samFormService: SamFormService) {}
 
   ngOnChanges() {}
 
@@ -542,16 +654,31 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    * Given a value, update the state
    */
   private _updateComponentValue(value: any): void {
+    /**
+     * Don't take any action if item is a category
+     * and isCategorySelectable flag set to false or ignored
+     */
+    if (!this.isCategorySelectable) {
+      if (this.categories && this.categories.indexOf(value) !== -1) {
+        return
+      }
+    }
+
+    /**
+     * Create pipeline to update value and modify ui variables
+     */
     const composedUpdate =
       this.pipe(
         this._setValue.bind(this),
         this._displayOptionText.bind(this),
         this._setInputValue.bind(this),
-        this._screenreader.pushMessage.bind(this._screenreader),
+        this._screenreader ? this._screenreader.pushMessage.bind(this._screenreader) : _ => _,
         this._resetListHighlighting.bind(this),
         this._onBlurEvent.next.bind(this._onBlurEvent),        
       );
+
     composedUpdate(value);
+
     return;
   }
 
@@ -571,8 +698,8 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    * 
    */
   private _setInputValue(value: string): string {
-    console.log(value);
     this._inputValue = value;
+    if (this.allowAny || value === "") this._value = this._inputValue;
     return value;
   }
 
