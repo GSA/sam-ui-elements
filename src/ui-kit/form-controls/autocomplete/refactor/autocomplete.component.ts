@@ -264,7 +264,10 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
           const filterValue = (event && event.target && event.target.value) || '';
           let returnValue: Observable<any>;
 
-          if (this._cache[filterValue] && this._endOfList === false) return Observable.of(this._cache[filterValue]);
+          if (this._cache[filterValue] && this._endOfList === false) {
+            this._displaySpinner = false;
+            return Observable.of(this._cache[filterValue]);
+          }
 
           return this._filter(event && event.target && event.target.value || '', this._endOfList, this._serviceOptions)
                   .map(ev => {
@@ -328,6 +331,15 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       this._onInputFocus
         .merge(this._onBlurEvent) // Hide list when component blurs
         .flatMap(evt => evt ? Observable.of(true) : Observable.of(false))
+
+    /**
+     * Register on touched event when input is focused
+     */    
+    this._onInputFocus
+        .subscribe(
+          (ev) => this.onTouchedCallback(),
+          (err) => console.error(err)
+        )
     
     /**
      * Stream of blur events
@@ -430,6 +442,9 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   private _resetListHighlighting(): void {
     // Blur input
     this._input.nativeElement.blur();
+
+    // Hide spinner
+    this._displaySpinner = false;
     
     // Set input value back to display text for input 
     if (!this.allowAny) this._setInputValue(this._displayOptionText(this._value));
@@ -691,6 +706,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
    */
   private _setValue<T>(value: T): T {
     this._value = value;
+    this.onChangeCallback(value);
     return this._value;
   }
 
