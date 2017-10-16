@@ -15,16 +15,16 @@ import * as TypeCheckHelpers from '../../../type-check-helpers';
 
 const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => SamAutocompleteComponent),
+  useExisting: forwardRef(() => SamAutocompleteComponentRefactor),
   multi: true
 };
 
 @Component({
-selector: 'sam-autocomplete',
+selector: 'sam-autocomplete-refactor',
 templateUrl: 'autocomplete.template.html',
 providers: [ AUTOCOMPLETE_VALUE_ACCESSOR ]
 })
-export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges, OnInit {
+export class SamAutocompleteComponentRefactor implements ControlValueAccessor, OnChanges, OnInit {
   /**
    * UL list ViewChild for displaying autocomplete options
    */
@@ -706,7 +706,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
    */
   private _setValue<T>(value: T): T {
     this._value = value;
-    this.onChangeCallback(value);
+    this.onChangeCallback(this._value);
     return this._value;
   }
 

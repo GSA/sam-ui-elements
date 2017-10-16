@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-// import { SamAutocompleteComponent } from './autocomplete.component';
+import { SamAutocompleteComponent } from './autocomplete.component';
 import { SamDirectivesModule } from '../../directives';
 import { SamWrapperModule } from '../../wrappers';
 
 /**
  * Refactor stuff
  */
-import { SamAutocompleteComponent } from './refactor/autocomplete.component';
+import { SamAutocompleteComponentRefactor } from './refactor/autocomplete.component';
 
 @NgModule({
   imports: [ 
@@ -19,9 +19,11 @@ import { SamAutocompleteComponent } from './refactor/autocomplete.component';
    ],
   declarations: [
     SamAutocompleteComponent,
+    SamAutocompleteComponentRefactor
   ],
   exports: [
     SamAutocompleteComponent,
+    SamAutocompleteComponentRefactor
   ]
 })
 export class SamAutocompleteModule {}
