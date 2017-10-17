@@ -287,6 +287,14 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
     return `${this.name}_am_pm`;
   }
 
+  resetInput(){
+    // this.hours = "";
+    // this.minutes = "";
+    this.hour_v.nativeElement.value = "";
+    this.minute_v.nativeElement.value = "";
+    this.ampm_v.nativeElement.value = "am";
+  }
+
   onChange: any = () => { };
   onTouched: any = () => { };
   
@@ -303,10 +311,12 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   writeValue(value) {
-    if(!value){
-      return;
+    if(value){
+      this.value = value;
+    }else{
+      this.value = "";
+      this.resetInput();
     }
-    this.value = value;
     this.parseValueString();
   }
 }

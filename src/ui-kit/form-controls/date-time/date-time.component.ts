@@ -123,6 +123,11 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
     }
   }
 
+  resetInput(){
+    this.date = "";
+    this.time = "";
+  }
+
   onChange: Function;
   onTouched: Function;
 
@@ -139,7 +144,12 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
   }
 
   writeValue(value) {
-    this.value = value;
+    if(value){
+      this.value = value;
+    }else{
+      this.value = "";
+      this.resetInput();
+    }
     this.parseValueString();
   }
 
