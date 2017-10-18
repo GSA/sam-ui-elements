@@ -1,4 +1,4 @@
-import { Component, AfterContentInit, ContentChildren, QueryList, Input, Output, EventEmitter } from '@angular/core';
+import { Component, ChangeDetectorRef, AfterContentInit, ContentChildren, QueryList, Input, Output, EventEmitter } from '@angular/core';
 
 /**
  * The <sam-tab> component contains the content for a tab
@@ -90,19 +90,56 @@ export class SamTabsComponent implements AfterContentInit {
     return this._theme;
   }
 
+  /**
+  * Sets the active tab
+  */
+  @Input()
+  set active(index: number){
+    let arr = this.tabs.toArray();
+    if(index >= 0 && index < arr.length){
+      this.tabs.forEach(tab => tab.active = false);
+      arr[index].active=true;
+      this.cdr.detectChanges();
+    } else {
+      console.warn("index " + index + " does not exist in tabs component");
+    }
+  }
+
+  get active(){
+    let index = -1;
+    this.tabs.forEach((tab,idx) => { 
+      if(tab.active) {
+        index = idx;
+      }
+    });
+    return index;
+  }
+
+  constructor(private cdr: ChangeDetectorRef){}
+
   ngAfterContentInit(){
-    this.tabs.changes.subscribe(() => {
-      window.setTimeout(() => {
-        if (this.tabs.length >= 1) {
-          this.selectTab(this.tabs.first);
+    if(this.active==-1 && this.tabs.length > 0){
+      let tabCheck = false;
+      this.tabs.forEach(tab => {
+        if(tab.active){
+          tabCheck = true;
         }
       });
+      if(!tabCheck){
+        this.active = 0;
+      }
+    }
+    this.tabs.changes.subscribe(() => {
+      if (this.tabs.length >= 1) {
+        this.selectTab(this.tabs.first);
+      }
     });
   }
 
   selectTab(tab: SamTabComponent){
     this.tabs.forEach(tab => tab.active = false);
     tab.active = true;
+    this.cdr.detectChanges();
     this.currentSelectedTab.emit(tab);
   }
 
