@@ -501,6 +501,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     this.innerValue = value;
     this.hasFocus = false;
     this.inputValue = message;
+    this.input.nativeElement.value = message;
     this.selectedInputValue = this.inputValue;
     this.propogateChange(this.innerValue);
     this.srOnly.nativeElement.innerHTML = null;
