@@ -162,6 +162,9 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   }
   
   onMonthInput(event){
+    if(event.key=="c"||event.key=='v'){
+      return;
+    }
     var inputNum = parseInt(event.key, 10);
     var possibleNum;
     if(!isNaN(this.month.nativeElement.value) && this.month.nativeElement.value!=""){
@@ -175,7 +178,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     }
     if(event.key.match(/[0-9]/)!=null){
       if(event.target.value.length==1 || 
-        (event.target.value.length==0 && possibleNum > 3)){
+        (event.target.value.length==0 && possibleNum > 1)){
         this.day.nativeElement.focus();
       }
       this.month.nativeElement.value = possibleNum;
@@ -188,20 +191,32 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   onDayInput(event){
+    if(event.key=="c"||event.key=='v'){
+      return;
+    }
     var inputNum = parseInt(event.key, 10);
     var possibleNum;
+    var maxDate = 31;
+    var numJumpThreshold = 3;
+    if([4,6,9,11].indexOf(this.month.nativeElement.value)){
+      maxDate = 30;
+    } 
+    if (this.month.nativeElement.value==2){
+      maxDate = 29;
+      numJumpThreshold = 2;
+    }
     if(!isNaN(this.day.nativeElement.value) && this.day.nativeElement.value!=""){
       possibleNum = (parseInt(this.day.nativeElement.value) * 10) + inputNum;
     } else{
       possibleNum = inputNum;
     }
-    if(possibleNum > 31 || this.allowChars.indexOf(event.key)==-1){
+    if(possibleNum > maxDate || this.allowChars.indexOf(event.key)==-1){
       event.preventDefault();
       return;
     }
     if(event.key.match(/[0-9]/)!=null){ 
       if(event.target.value.length==1 || 
-        (event.target.value.length==0 && possibleNum > 3)){
+        (event.target.value.length==0 && possibleNum > numJumpThreshold)){
         this.year.nativeElement.focus();
       }
       this.day.nativeElement.value = possibleNum;
@@ -212,6 +227,9 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   onYearInput(event){
+    if(event.key=="c"||event.key=='v'){
+      return;
+    }
     var inputNum = parseInt(event.key, 10);
     var possibleNum;
     
