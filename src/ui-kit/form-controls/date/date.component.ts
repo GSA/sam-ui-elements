@@ -137,34 +137,9 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     }
   }
 
-  onMonthBlur(value){
-    if(this._shouldPad(value)){
-      this.month.nativeElement.value = "0" + value;
-    }
-  }
-
-  onDayBlur(value){
-    if(this._shouldPad(value)){
-      this.day.nativeElement.value = "0" + value;
-    }
-  }
-
-  _shouldPad(value){
-    var leadingZero = value[0] === "0"
-    if(parseInt(value, 10) < 10 && !leadingZero){
-      return true;
-    }
-  }
-
   getDate(override=null) {
     let obj = override ? override : this.model;
     return moment([override.year, override.month-1, override.day]);
-  }
-
-  _checkCopyPasteChar(char){
-    if(char==="c"||char==="v"){
-      return true;
-    }
   }
   
   onMonthInput(event){
@@ -182,7 +157,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       event.preventDefault();
       return;
     }
-    if(event.key.match(/[0-9]/)!=null){
+    if(this._keyIsNumber(event.key)){
       if(event.target.value.length===1 || 
         (event.target.value.length===0 && possibleNum > 1)){
         this.day.nativeElement.focus();
@@ -218,7 +193,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       event.preventDefault();
       return;
     }
-    if(event.key.match(/[0-9]/)!=null){ 
+    if(this._keyIsNumber(event.key)){ 
       if(event.target.value.length===1 || 
         (event.target.value.length===0 && possibleNum > numJumpThreshold)){
         this.year.nativeElement.focus();
@@ -246,7 +221,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       event.preventDefault();
       return
     }
-    if(event.key.match(/[0-9]/)!=null){
+    if(this._keyIsNumber(event.key)){
       if(event.target.value.length+1==4){
         this.blurEvent.emit();
       }
@@ -326,6 +301,18 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     this.day.nativeElement.value = "";
     this.month.nativeElement.value = "";
     this.year.nativeElement.value = "";
+  }
+
+  _checkCopyPasteChar(char){
+    if(char==="c"||char==="v"){
+      return true;
+    }
+  }
+
+  _keyIsNumber(char){
+    if(char.match(/[0-9]/)!=null){
+      return true;
+    }
   }
 
   //controlvalueaccessor methods
