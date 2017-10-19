@@ -160,9 +160,15 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     let obj = override ? override : this.model;
     return moment([override.year, override.month-1, override.day]);
   }
+
+  _checkCopyPasteChar(char){
+    if(char==="c"||char==="v"){
+      return true;
+    }
+  }
   
   onMonthInput(event){
-    if(event.key=="c"||event.key=='v'){
+    if(this._checkCopyPasteChar(event.key)){
       return;
     }
     var inputNum = parseInt(event.key, 10);
@@ -172,13 +178,13 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     } else{
       possibleNum = inputNum;
     }
-    if(possibleNum > 12 || this.allowChars.indexOf(event.key)==-1){
+    if(possibleNum > 12 || this.allowChars.indexOf(event.key)===-1){
       event.preventDefault();
       return;
     }
     if(event.key.match(/[0-9]/)!=null){
-      if(event.target.value.length==1 || 
-        (event.target.value.length==0 && possibleNum > 1)){
+      if(event.target.value.length===1 || 
+        (event.target.value.length===0 && possibleNum > 1)){
         this.day.nativeElement.focus();
       }
       this.month.nativeElement.value = possibleNum;
@@ -186,12 +192,10 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       this.onChangeHandler(dupModel);
       event.preventDefault();
     }
-    if(event.key.match(/[0-9]/)!=null){
-    }
   }
 
   onDayInput(event){
-    if(event.key=="c"||event.key=='v'){
+    if(this._checkCopyPasteChar(event.key)){
       return;
     }
     var inputNum = parseInt(event.key, 10);
@@ -215,8 +219,8 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       return;
     }
     if(event.key.match(/[0-9]/)!=null){ 
-      if(event.target.value.length==1 || 
-        (event.target.value.length==0 && possibleNum > numJumpThreshold)){
+      if(event.target.value.length===1 || 
+        (event.target.value.length===0 && possibleNum > numJumpThreshold)){
         this.year.nativeElement.focus();
       }
       this.day.nativeElement.value = possibleNum;
@@ -227,7 +231,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   onYearInput(event){
-    if(event.key=="c"||event.key=='v'){
+    if(this._checkCopyPasteChar(event.key)){
       return;
     }
     var inputNum = parseInt(event.key, 10);
@@ -238,7 +242,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     } else{
       possibleNum = inputNum;
     }
-    if(possibleNum > 9999 || this.allowChars.indexOf(event.key)==-1){
+    if(possibleNum > 9999 || this.allowChars.indexOf(event.key)===-1){
       event.preventDefault();
       return
     }
