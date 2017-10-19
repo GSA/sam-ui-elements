@@ -16,7 +16,7 @@
          (click)="focusTextArea()"
          [ngClass]="{ 'active': displayList() }">
 
-        <div tabIndex="0" 
+        <div tabIndex="0"
              class="sam-ui mini label"
              *ngFor="let item of value"
              [@label]=""
@@ -63,7 +63,7 @@
           <button type="button"
                   *ngIf="displayClearAll()"
                   class="usa-button-link"
-                  (click)="focusTextArea(clearSearch(deselectAll()))">
+                  (click)="clearSearch(deselectAll())">
                   <span class="sr-only">clear all</span>
                   <i class="fa fa-times-circle"></i>
           </button>

@@ -799,6 +799,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   clearSearch() {
     this.searchText = "";
     this.displaySpinner = false;
+    setTimeout(this.checkForFocus.bind(this), 0);
   }
 
   focusTextArea() {
@@ -812,6 +813,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   checkForFocus(event) {
     this.clearSearch();
     this.list=[];
+    this.textArea.nativeElement.blur();
   }
 
   updateMarked(){
