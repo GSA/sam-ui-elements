@@ -146,8 +146,8 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     if(this._checkCopyPasteChar(event.key)){
       return;
     }
-    var inputNum = parseInt(event.key, 10);
-    var possibleNum;
+    let inputNum = parseInt(event.key, 10);
+    let possibleNum;
     if(!isNaN(this.month.nativeElement.value) && this.month.nativeElement.value!=""){
       possibleNum = (parseInt(this.month.nativeElement.value) * 10) + inputNum;
     } else{
@@ -173,10 +173,10 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     if(this._checkCopyPasteChar(event.key)){
       return;
     }
-    var inputNum = parseInt(event.key, 10);
-    var possibleNum;
-    var maxDate = 31;
-    var numJumpThreshold = 3;
+    let inputNum = parseInt(event.key, 10);
+    let possibleNum;
+    let maxDate = 31;
+    let numJumpThreshold = 3;
     if([4,6,9,11].indexOf(this.month.nativeElement.value)){
       maxDate = 30;
     } 
@@ -209,8 +209,8 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     if(this._checkCopyPasteChar(event.key)){
       return;
     }
-    var inputNum = parseInt(event.key, 10);
-    var possibleNum;
+    let inputNum = parseInt(event.key, 10);
+    let possibleNum;
     
     if(!isNaN(this.year.nativeElement.value) && this.year.nativeElement.value!=""){
       possibleNum = (parseInt(this.year.nativeElement.value) * 10) + inputNum;
