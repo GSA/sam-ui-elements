@@ -177,7 +177,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     let possibleNum;
     let maxDate = 31;
     let numJumpThreshold = 3;
-    if([4,6,9,11].indexOf(this.month.nativeElement.value)){
+    if([4,6,9,11].indexOf(parseInt(this.month.nativeElement.value))!=-1){
       maxDate = 30;
     } 
     if (this.month.nativeElement.value==2){
