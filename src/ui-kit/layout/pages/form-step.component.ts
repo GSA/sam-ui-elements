@@ -26,7 +26,10 @@ import {Component, Input, Output, EventEmitter, OnChanges, ChangeDetectorRef} fr
       </sidebar>
       
       <ng-container message>
-        <sam-status-banner [type]="statusBannerType" *ngIf="statusBannerLeadingText">
+        <sam-status-banner *ngIf="statusBannerLeadingText"
+                           [type]="statusBannerType"
+                           [(showContent)]="statusBannerExpanded"
+                           (showContentChange)="statusBannerExpandedChange.emit($event)">
           <div leading-content>{{statusBannerLeadingText}}</div>
           <div main-content>
             <ng-content select="[status-banner]"></ng-content>
@@ -90,11 +93,13 @@ export class FormStepComponent implements OnChanges {
     @Input() typeLabel: string;
     @Input() statusBannerType:string = "error";
     @Input() statusBannerLeadingText: string;
+    @Input() statusBannerExpanded: boolean = false;
     @Input() tabsComponent: any;
     @Input() hasErrors: any;
     @Output() action = new EventEmitter();
     @Output() sideNavOutput = new EventEmitter();
     @Output() public breadcrumbOut = new EventEmitter();
+    @Output() statusBannerExpandedChange = new EventEmitter();
 
     constructor(private cdr: ChangeDetectorRef) {
     }
