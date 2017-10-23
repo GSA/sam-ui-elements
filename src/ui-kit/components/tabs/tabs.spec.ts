@@ -37,6 +37,7 @@ describe('The Sam Tabs component', () => {
 
   it("should set active tab", function(){
     component.comp.active = 1;
+    component.comp._setActiveTab();
     fixture.detectChanges();
     expect(component.comp.tabs.toArray()[1].active).toBe(true);
   });
