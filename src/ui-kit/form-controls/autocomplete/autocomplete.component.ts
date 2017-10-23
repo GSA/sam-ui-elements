@@ -276,7 +276,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       }
     }
 
-    if ((this.lastSearchedValue !== searchString)) {
+    if ((this.lastSearchedValue !== searchString) || searchString==="") {
       this.results = null;
       this.filteredKeyValuePairs = null;
       this.endOfList = true;
