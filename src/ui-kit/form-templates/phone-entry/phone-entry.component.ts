@@ -83,11 +83,14 @@ export class SamPhoneEntryComponent implements OnInit,ControlValueAccessor {
       value = "";
     }
     this.model = value;
-    if(this.numbersOnly && value !=this.phoneNumberTemplate){
-      this.model = this.formatWithTemplate(this.model);
+    let modelCopy = this.model;
+    //for numbersOnly, inject numbers into template
+    if(this.numbersOnly && modelCopy!=this.phoneNumberTemplate){
+      modelCopy = this.formatWithTemplate(modelCopy);
     }
-    this.phoneNumberMirror = this.model;
-    this.phoneNumber = this.model;
+    //these are used to populate text input
+    this.phoneNumberMirror = modelCopy;
+    this.phoneNumber = modelCopy;
     this.phoneInput.nativeElement.value = this.phoneNumberMirror;
   };
 
