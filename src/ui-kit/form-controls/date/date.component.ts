@@ -143,12 +143,12 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   onMonthPaste(event){
-    if(event.clipboardData && event.clipboardData.getData("text")){
-      let val = event.clipboardData.getData("text");
-      if(val.length>2){
+    let text = this._getClipboardText(event);
+    if(text){
+      if(text.length>2){
         event.preventDefault();
       }
-      val = parseInt(val);
+      let val = parseInt(text);
       if(val<1 || val>12){
         event.preventDefault();
       }
@@ -156,12 +156,12 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   onDayPaste(event){
-    if(event.clipboardData && event.clipboardData.getData("text")){
-      let val = event.clipboardData.getData("text");
-      if(val.length>2){
+    let text = this._getClipboardText(event);
+    if(text){
+      if(text.length>2){
         event.preventDefault();
       }
-      val = parseInt(val);
+      let val = parseInt(text);
       if(val<1 || val>31){
         event.preventDefault();
       }
@@ -169,9 +169,9 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   onYearPaste(event){
-    if(event.clipboardData && event.clipboardData.getData("text")){
-      let val = event.clipboardData.getData("text");
-      if(val.length>4){
+    let text = this._getClipboardText(event);
+    if(text){
+      if(text.length>4){
         event.preventDefault();
       }
     }
@@ -347,6 +347,14 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   _keyIsNumber(char){
     if(char.match(/[0-9]/)!=null){
       return true;
+    }
+  }
+  
+  _getClipboardText(event){
+    if(event.clipboardData && event.clipboardData.getData("text")){
+      return event.clipboardData.getData("text");
+    } else if(window['clipboardData'] && window['clipboardData'].getData('text')){
+      return window['clipboardData'].getData('text');
     }
   }
 
