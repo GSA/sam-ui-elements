@@ -29,7 +29,6 @@ import {Component, Input, Output, EventEmitter, OnChanges, ChangeDetectorRef} fr
         <div *ngFor="let alert of alerts; let i = index">
             <sam-alert
                 [attr.id]="'program-alert-' + i"
-                labelname="alerts[i].labelname"
                 [type]="alerts[i].config.type"
                 [title]="alerts[i].config.title">
                 <div [innerHTML]="alerts[i].config.description"></div>
