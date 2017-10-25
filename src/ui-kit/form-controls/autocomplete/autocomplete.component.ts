@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, forwardRef,
-         ViewChild, ElementRef, Optional, OnChanges } from '@angular/core';
+         ViewChild, ElementRef, Optional, OnChanges, ChangeDetectorRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { AutocompleteConfig } from '../../types';
@@ -158,7 +158,8 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   public keyEvents: Subject<any> = new Subject();
 
   constructor(@Optional() public autocompleteService: AutocompleteService,
-    private samFormService:SamFormService) {}
+    private samFormService:SamFormService,
+    private cdr: ChangeDetectorRef) {}
 
   ngOnChanges(changes) {
     if (changes.httpRequest) {
@@ -223,8 +224,8 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     if(!this.useFormService){
       this.control.statusChanges.subscribe(()=>{
         this.wrapper.formatErrors(this.control);
+        this.cdr.detectChanges();
       });
-      this.wrapper.formatErrors(this.control);
     }
     else {
       this.samFormService.formEventsUpdated$.subscribe(evt=>{
@@ -234,6 +235,13 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
           this.wrapper.clearError();
         }
       });
+    }
+  }
+
+  ngAfterViewInit(){
+    if(this.control){
+      this.wrapper.formatErrors(this.control);
+      this.cdr.detectChanges();
     }
   }
 
