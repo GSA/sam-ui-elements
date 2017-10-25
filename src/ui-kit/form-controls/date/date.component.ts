@@ -141,7 +141,42 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     let obj = override ? override : this.model;
     return moment([override.year, override.month-1, override.day]);
   }
-  
+
+  onMonthPaste(event){
+    if(event.clipboardData && event.clipboardData.getData("text")){
+      let val = event.clipboardData.getData("text");
+      if(val.length>2){
+        event.preventDefault();
+      }
+      val = parseInt(val);
+      if(val<1 || val>12){
+        event.preventDefault();
+      }
+    }
+  }
+
+  onDayPaste(event){
+    if(event.clipboardData && event.clipboardData.getData("text")){
+      let val = event.clipboardData.getData("text");
+      if(val.length>2){
+        event.preventDefault();
+      }
+      val = parseInt(val);
+      if(val<1 || val>31){
+        event.preventDefault();
+      }
+    }
+  }
+
+  onYearPaste(event){
+    if(event.clipboardData && event.clipboardData.getData("text")){
+      let val = event.clipboardData.getData("text");
+      if(val.length>4){
+        event.preventDefault();
+      }
+    }
+  }
+
   onMonthInput(event){
     if(this._checkCopyPasteChar(event.key)){
       return;
