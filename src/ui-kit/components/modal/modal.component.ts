@@ -156,7 +156,6 @@ export class SamModalComponent implements OnInit{
     this.onOpen.emit(this.args);
     if(document && document.body){
       document.body.appendChild(this.backdropElement);
-      document.body.className += " modal-open"; 
     }
     this._focusModalElement = true;
     this.set508();
@@ -191,7 +190,6 @@ export class SamModalComponent implements OnInit{
   private removeBackdrop(){
     if(document && document.body){
       document.body.removeChild(this.backdropElement);
-      document.body.className = document.body.className.replace(/modal-open\b/, "");
     }
   }
 }
