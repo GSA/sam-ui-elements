@@ -25,6 +25,17 @@ import {Component, Input, Output, EventEmitter, OnChanges, ChangeDetectorRef} fr
         </div>
       </sidebar>
       
+      <ng-container *ngIf="alerts && alerts.length > 0">
+        <div *ngFor="let alert of alerts; let i = index">
+            <sam-alert
+                [attr.id]="'program-alert-' + i"
+                [type]="alerts[i].config.type"
+                [title]="alerts[i].config.title">
+                <div [innerHTML]="alerts[i].config.description"></div>
+            </sam-alert>
+        </div>
+       </ng-container>
+      
       <ng-container message>
         <sam-status-banner *ngIf="statusBannerLeadingText"
                            [type]="statusBannerType"
@@ -96,6 +107,7 @@ export class FormStepComponent implements OnChanges {
     @Input() statusBannerExpanded: boolean = false;
     @Input() tabsComponent: any;
     @Input() hasErrors: any;
+    @Input() alerts: any;
     @Output() action = new EventEmitter();
     @Output() sideNavOutput = new EventEmitter();
     @Output() public breadcrumbOut = new EventEmitter();

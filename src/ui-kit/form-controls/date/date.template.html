@@ -4,6 +4,7 @@
       <label [attr.for]="monthName()">Month</label>
       <input 
         (focus)="triggerMonthTouch($event)" 
+        (paste)="onMonthPaste($event)"
         [attr.id]="monthName()" 
         #month 
         (keydown)="onMonthInput($event)" 
@@ -20,6 +21,7 @@
       <label [attr.for]="dayName()">Day</label>
       <input 
         (focus)="triggerDayTouch($event)" 
+        (paste)="onDayPaste($event)"
         [attr.id]="dayName()" 
         #day 
         (keydown)="onDayInput($event)" 
@@ -36,6 +38,7 @@
       <label [attr.for]="yearName()">Year</label>
       <input 
         (focus)="triggerTouch()" 
+        (paste)="onYearPaste($event)"
         [attr.id]="yearName()" 
         #year 
         (keydown)="onYearInput($event)" 
