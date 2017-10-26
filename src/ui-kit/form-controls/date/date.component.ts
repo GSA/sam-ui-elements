@@ -141,7 +141,42 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     let obj = override ? override : this.model;
     return moment([override.year, override.month-1, override.day]);
   }
-  
+
+  onMonthPaste(event){
+    let text = this._getClipboardText(event);
+    if(text){
+      if(text.length>2){
+        event.preventDefault();
+      }
+      let val = parseInt(text);
+      if(val<1 || val>12){
+        event.preventDefault();
+      }
+    }
+  }
+
+  onDayPaste(event){
+    let text = this._getClipboardText(event);
+    if(text){
+      if(text.length>2){
+        event.preventDefault();
+      }
+      let val = parseInt(text);
+      if(val<1 || val>31){
+        event.preventDefault();
+      }
+    }
+  }
+
+  onYearPaste(event){
+    let text = this._getClipboardText(event);
+    if(text){
+      if(text.length>4){
+        event.preventDefault();
+      }
+    }
+  }
+
   onMonthInput(event){
     if(this._checkCopyPasteChar(event.key)){
       return;
@@ -312,6 +347,14 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   _keyIsNumber(char){
     if(char.match(/[0-9]/)!=null){
       return true;
+    }
+  }
+  
+  _getClipboardText(event){
+    if(event.clipboardData && event.clipboardData.getData("text")){
+      return event.clipboardData.getData("text");
+    } else if(window['clipboardData'] && window['clipboardData'].getData('text')){
+      return window['clipboardData'].getData('text');
     }
   }
 
