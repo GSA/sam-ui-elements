@@ -1,5 +1,5 @@
 import { OnInit, Component, Input, Output, EventEmitter, ElementRef, ViewChild, AfterViewChecked } from '@angular/core';
-
+import { ScrollHelpers } from '../../dom-helpers';
 /**
  * The <sam-modal> component display a popover for user interaction
  */
@@ -76,6 +76,8 @@ export class SamModalComponent implements OnInit{
 
   private _allFocusableElements: NodeListOf<Element>;
   private _modalFocusableElements: NodeListOf<Element>;
+  private _scrollHeight: number;
+  private _scrollHelpers: any;
 
   private args = null;
 
@@ -88,6 +90,9 @@ export class SamModalComponent implements OnInit{
     if(!this.typeNotDefined()){
       this.selectedType = this.types[this.type].class;
     }
+
+    this._scrollHelpers = ScrollHelpers(window);
+
   }
 
   set508() {
@@ -142,11 +147,8 @@ export class SamModalComponent implements OnInit{
     return false;
   }
 
-  private preventClosing(evt){
-    evt.stopPropagation();
-  }
-
   openModal(...args: any[]){
+    this._scrollHelpers.disableScroll();
     if(this.show)
       return;
     this.show = true;
@@ -154,13 +156,14 @@ export class SamModalComponent implements OnInit{
     this.onOpen.emit(this.args);
     if(document && document.body){
       document.body.appendChild(this.backdropElement);
-      document.body.className += " modal-open";
     }
     this._focusModalElement = true;
     this.set508();
+    
   }
 
   closeModal(){
+    this._scrollHelpers.enableScroll();
     this.show = false;
     this.onClose.emit(this.args);
     this.args = null;
@@ -187,7 +190,6 @@ export class SamModalComponent implements OnInit{
   private removeBackdrop(){
     if(document && document.body){
       document.body.removeChild(this.backdropElement);
-      document.body.className = document.body.className.replace(/modal-open\b/, "");
     }
   }
 }
