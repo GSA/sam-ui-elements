@@ -7,7 +7,7 @@ import { SamUIKitModule } from '../../index';
 import { SamFormService } from '../../form-service';
 import { SamWrapperModule } from '../../wrappers'; 
 
-fdescribe('The Sam Time component', () => {
+describe('The Sam Time component', () => {
   let component: SamTimeComponent;
   let fixture: any;
 

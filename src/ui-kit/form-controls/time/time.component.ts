@@ -65,9 +65,9 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
   @ViewChild('hour') hour_v;
   @ViewChild('minute') minute_v;
   @ViewChild('ampm') ampm_v;
-  hours: string = null;
+  hours: number = null;
   formattedHours: string = null;
-  minutes: string = null;
+  minutes: number = null;
   amPm: string = 'am';
   minuteBlurFlag = true;
   allowChars = ["0","1","2","3","4","5","6","7","8","9","Backspace","ArrowLeft","ArrowRight","Tab","Delete"];
@@ -126,8 +126,8 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
       hours = 12;
     }
 
-    this.hours = ""+hours;
-    this.minutes = ""+minutes;
+    this.hours = hours;
+    this.minutes = minutes;
   }
 
   formatHours(hours){
@@ -178,7 +178,7 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   isValid() {
-    let hours = parseInt(this.hours);
+    let hours = parseInt(this.hour_v.nativeElement.value);
     let minutes = parseInt(this.minute_v.nativeElement.value);
     return !isNaN(hours) && !isNaN(minutes)
         && typeof hours === 'number' && typeof minutes === 'number'
@@ -193,26 +193,26 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
 
     // convert from 12 hour to 24 hour times
 
-    let hours = this.hours;
+    let hours = this.hour_v.nativeElement.value;
 
-    if (hours === "12") {
-      hours = "00";
+    if (hours === 12) {
+      hours = 0;
     }
 
     if (this.amPm === 'pm') {
-      hours = ""+(parseInt(hours) + 12);
+      hours += 12;
     }
 
     return moment({
-      hour: parseInt(hours), 
-      minute: parseInt(this.minutes)
+      hour: hours, 
+      minute: this.minute_v.nativeElement.value
     });
   }
 
   //used by date-time/date-range comps
   isClean() {
-    let hours = parseInt(this.hours);
-    let minutes = parseInt(this.minutes);
+    let hours = this.hours;
+    let minutes = this.minutes;
     return (isNaN(hours) || hours===null) && (isNaN(minutes) || this.minutes===null);
   }
   
