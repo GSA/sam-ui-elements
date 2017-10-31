@@ -4,13 +4,13 @@
       <label [attr.for]="hourName()">Hour</label>
       <input 
         [attr.id]="hourName()" 
+        [attr.aria-label]="hourName()" 
         #hour
         type="number" 
         (focus)="hourTouched($event)" 
-        (blur)="hoursBlur($event)"
-        (keypress)="hoursPress($event)"
+        (keydown)="hoursPress($event)"
         [ngModel]="hours" 
-        (ngModelChange)="hourChange($event)" 
+        (ngModelChange)="removalKeyHandler()"
         class="usa-form-control" 
         [disabled]="disabled ? disabled : null">
     </div>
@@ -18,12 +18,13 @@
       <label [attr.for]="minuteName()">Minute</label>
       <input 
         [attr.id]="minuteName()" 
+        [attr.aria-label]="minuteName()" 
         #minute
         type="number" 
         (focus)="minuteTouched($event)" 
-        (blur)="minutesBlur($event)"
-        (keypress)="minutesPress($event)"
+        (keydown)="minutesPress($event)"
         [ngModel]="minutes" 
+        (ngModelChange)="removalKeyHandler()"
         class="usa-form-control" 
         [disabled]="disabled ? disabled : null">
     </div>
