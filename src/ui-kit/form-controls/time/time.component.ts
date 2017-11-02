@@ -65,11 +65,12 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
   @ViewChild('hour') hour_v;
   @ViewChild('minute') minute_v;
   @ViewChild('ampm') ampm_v;
-  hours: string = null;
+  hours: number = null;
   formattedHours: string = null;
-  minutes: string = null;
+  minutes: number = null;
   amPm: string = 'am';
   minuteBlurFlag = true;
+  allowChars = ["0","1","2","3","4","5","6","7","8","9","Backspace","ArrowLeft","ArrowRight","Tab","Delete"];
 
   constructor(private samFormService:SamFormService) { }
 
@@ -125,8 +126,8 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
       hours = 12;
     }
 
-    this.hours = this._shouldPad(""+hours) ? "0"+hours: ""+hours;
-    this.minutes = this._shouldPad(""+minutes) ? "0"+minutes: ""+minutes;
+    this.hours = hours;
+    this.minutes = minutes;
   }
 
   formatHours(hours){
@@ -141,23 +142,21 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
     }
   }
 
-  hourChange(evt){
-    this.hours = evt;
-    this.value = moment({hour: this.formatHours(this.hours), 
-      minute: this.minute_v.nativeElement.valueAsNumber}).format(this.OUTPUT_FORMAT);
-    this.onInputChange();
-  }
-
   selectChange(){
     //this.parseValueString();
-    this.value = moment({hour: this.formatHours(this.hours), 
-      minute: this.minute_v.nativeElement.valueAsNumber}).format(this.OUTPUT_FORMAT);
-    this.onInputChange();
+    let m = moment({
+      hour: this.formatHours(this.hour_v.nativeElement.value), 
+      minute: this.minute_v.nativeElement.value
+    }).format(this.OUTPUT_FORMAT);
+    this.onInputChange(m);
   }
 
-  onInputChange() { 
-    this.onChange(this.value);
-    this.valueChange.emit(this.value);
+  onInputChange(override) {
+    if(!override){
+      override = "Invalid Time";
+    } 
+    this.onChange(override);
+    this.valueChange.emit(override);
   }
   
   hourTouched(event){
@@ -179,8 +178,8 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   isValid() {
-    let hours = parseInt(this.hours);
-    let minutes = parseInt(this.minute_v.nativeElement.valueAsNumber);
+    let hours = parseInt(this.hour_v.nativeElement.value);
+    let minutes = parseInt(this.minute_v.nativeElement.value);
     return !isNaN(hours) && !isNaN(minutes)
         && typeof hours === 'number' && typeof minutes === 'number'
         && hours >= 1 && hours <= 12
@@ -194,84 +193,88 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
 
     // convert from 12 hour to 24 hour times
 
-    let hours = this.hours;
+    let hours = this.hour_v.nativeElement.value;
 
-    if (hours === "12") {
-      hours = "00";
+    if (hours === 12) {
+      hours = 0;
     }
 
     if (this.amPm === 'pm') {
-      hours = ""+(parseInt(hours) + 12);
+      hours += 12;
     }
 
-    return moment({hour: parseInt(hours), minute: parseInt(this.minutes)});
-  }
-
-  _shouldPad(value){
-    var leadingZero = value[0] === "0";
-    if(parseInt(value, 10) < 10 && !leadingZero){
-      return true;
-    }
+    return moment({
+      hour: hours, 
+      minute: this.minute_v.nativeElement.value
+    });
   }
 
   //used by date-time/date-range comps
   isClean() {
-    let hours = parseInt(this.hours);
-    let minutes = parseInt(this.minutes);
+    let hours = this.hours;
+    let minutes = this.minutes;
     return (isNaN(hours) || hours===null) && (isNaN(minutes) || this.minutes===null);
   }
   
   hoursPress(event){
+    if(this._checkCopyPasteChar(event.key)){
+      return;
+    }
     var inputNum = parseInt(event.key, 10);
-    var possibleNum = (this.hour_v.nativeElement.valueAsNumber * 10) + inputNum;
-    if(possibleNum > 12 || event.key === "-"){
+    var possibleNum;
+    if(!isNaN(this.hour_v.nativeElement.value) 
+      && this.hour_v.nativeElement.value!=""){
+      possibleNum = (parseInt(this.hour_v.nativeElement.value) * 10) + inputNum;
+    } else{
+      possibleNum = inputNum;
+    }
+    if(possibleNum > 12 || this.allowChars.indexOf(event.key)==-1){
       event.preventDefault();
       return;
     }
-    if(event.target.value.length+1==2 && event.key.match(/[0-9]/)!=null){
-      this.minute_v.nativeElement.focus();
-    }
-  }
-
-  hoursBlur(event, override){
-    var eventElemVal = override ? override : event.srcElement.value;
-    var leadingZero = eventElemVal[0] === "0"
-    if(parseInt(eventElemVal, 10) < 10 && !leadingZero){
-      this.hour_v.nativeElement.value = "0" + eventElemVal;
+    if(this._keyIsNumber(event.key)){
+      if(event.target.value.length===1 || 
+        (event.target.value.length===0 && possibleNum > 1)){
+        this.minute_v.nativeElement.focus();
+      }
+      this.hour_v.nativeElement.value = possibleNum;
+      let val = moment({
+        hour: this.formatHours(possibleNum), 
+        minute: this.minute_v.nativeElement.value
+      }).format(this.OUTPUT_FORMAT);
+      this.onInputChange(val);
+      event.preventDefault();
     }
   }
 
   minutesPress(event){
+    if(this._checkCopyPasteChar(event.key)){
+      return;
+    }
     var inputNum = parseInt(event.key, 10);
     var possibleNum;
-    if(isNaN(this.minute_v.nativeElement.valueAsNumber) || !this.minute_v.nativeElement.valueAsNumber){ 
-      possibleNum = inputNum;
+    if(!isNaN(parseInt(this.minute_v.nativeElement.value)) 
+      && this.minute_v.nativeElement.value!=""){ 
+      possibleNum = (parseInt(this.minute_v.nativeElement.value) * 10) + inputNum;
     } else {
-      possibleNum = (this.minute_v.nativeElement.valueAsNumber * 10) + inputNum;
+      possibleNum = inputNum;
     }
-    if(possibleNum > 59 || event.key === "-" || event.key === "e"){
+    if(possibleNum > 59 || this.allowChars.indexOf(event.key)==-1){
       event.preventDefault();
       return;
     }
-    if(event.target.value.length+1==2 && event.key.match(/[0-9]/)!=null){
+    if(this._keyIsNumber(event.key)){
+      if(event.target.value.length===1 || 
+        (event.target.value.length===0 && possibleNum > 5)){
+        this.ampm_v.nativeElement.focus();
+      }
       this.minute_v.nativeElement.value = possibleNum;
-      this.minuteBlurFlag = false;//do not trigger minutesBlur() after focus change to override it
-      this.ampm_v.nativeElement.focus();
-      this.minuteBlurFlag = true;
-      this.minutesBlur(event, possibleNum);
-    }
-    this.value = moment({hour: this.formatHours(this.hours), minute: possibleNum}).format(this.OUTPUT_FORMAT);
-    this.onInputChange();
-  }
-
-  minutesBlur(event, override){
-    if(!this.minuteBlurFlag){
-      return;
-    }
-    var eventElemVal = override ? override : event.srcElement.value;
-    var leadingZero = eventElemVal[0] === "0"
-    if(parseInt(eventElemVal, 10) < 10 && !leadingZero){
-      this.minute_v.nativeElement.value = "0" + eventElemVal;
+      let val = moment({
+        hour: this.formatHours(this.hour_v.nativeElement.value), 
+        minute: possibleNum
+      }).format(this.OUTPUT_FORMAT);
+      this.onInputChange(val);
+      event.preventDefault();
     }
   }
 
@@ -285,6 +288,34 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
 
   amPmName() {
     return `${this.name}_am_pm`;
+  }
+
+  _keyIsNumber(char){
+    if(char.match(/[0-9]/)!=null){
+      return true;
+    }
+  }
+
+  _shouldPad(value){
+    var leadingZero = value[0] === "0";
+    if(parseInt(value, 10) < 10 && !leadingZero){
+      return true;
+    }
+  }
+
+  _checkCopyPasteChar(char){
+    if(char==="c"||char==="v"){
+      return true;
+    }
+  }
+
+  removalKeyHandler(){
+    let m = moment({
+      hour: this.formatHours(this.hour_v.nativeElement.value), 
+      minute: this.minute_v.nativeElement.value
+    }).format(this.OUTPUT_FORMAT);
+    this.onChange(m);
+    this.valueChange.emit(m);
   }
 
   resetInput(){
