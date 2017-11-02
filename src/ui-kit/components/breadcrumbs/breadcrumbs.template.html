@@ -1,7 +1,7 @@
 <ul class="sam-breadcrumbs">
   <li class="sam-crumb" *ngFor="let crumb of crumbs">
     <ng-container *ngIf="crumb.url && !crumb.urlmock">
-      <a [routerLink]="[crumb.url]">{{crumb.breadcrumb}}</a>
+      <a [routerLink]="[crumb.url]" [queryParams]="crumb.queryParams">{{crumb.breadcrumb}}</a>
     </ng-container>
     <ng-container *ngIf="!crumb.url && !crumb.urlmock">
       <span>{{crumb.breadcrumb}}</span>
