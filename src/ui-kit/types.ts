@@ -63,7 +63,7 @@ export interface HistoryNodeType {
   /**
    * Title value for node
    */
-  title: string;
+  title?: string;
   /**
    * Optional description for node
    */
