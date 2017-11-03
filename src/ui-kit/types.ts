@@ -244,6 +244,7 @@ export interface IBreadcrumb {
   url?: string;
   urlmock?: boolean;
   breadcrumb: string;
+  queryParams?: object;
 }
 
 export interface NameEntryType{
