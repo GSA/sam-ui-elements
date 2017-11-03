@@ -1,10 +1,10 @@
 <i class="fa fa-minus" aria-hidden="true"></i>
 <ul>
   <li *ngFor="let item of data; let i = index;" [ngClass]="'history-item-'+i" [class.current]="item.id && item.id == currentId" [attr.aria-label]=" item.id == currentId && item.ariaLabel ? item.ariaLabel : '' ">
-    <span>  
+    <span>
       <strong>{{item.date}}</strong>
-      <a *ngIf="item.url" [routerLink]='item.url.split("/")' [queryParams]="item.queryParams">{{ item.title }}</a>
-      <ng-container *ngIf="!item.url">{{ item.title }}</ng-container>
+      <a *ngIf="item.url && item.title" [routerLink]='item.url.split("/")' [queryParams]="item.queryParams">{{ item.title }}</a>
+      <ng-container *ngIf="!item.url && item.title">{{ item.title }}</ng-container>
       <br *ngIf="item.title && item.description"/>
       <p *ngIf="item.description" [innerHTML]="item.description"></p>
     </span>
