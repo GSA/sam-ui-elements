@@ -1,54 +1,7 @@
-import {Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, forwardRef} from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
+import { AbstractControl, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ValidatorFn } from "@angular/forms";
 import * as moment from 'moment/moment';
-import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn, AbstractControl} from "@angular/forms";
-import { SamDateComponent } from "../date/date.component";
-import { SamDateTimeComponent } from "../date-time/date-time.component";
-import {SamFormService} from '../../form-service';
-
-//to do: move these to appropriate locations after validations are figured out for the ui-kit
-function dateRangeValidation(c:AbstractControl){
-  if(c.value && c.value.startDate && c.value.endDate){
-    let startDateM = moment(c.value.startDate);
-    let endDateM = moment(c.value.endDate);
-    if(endDateM.diff(startDateM) < 0){
-      return {
-        dateRangeError: {
-          message: "Invalid date range"
-        }
-      }
-    }
-  }
-  if (c.value && c.value.startDate){
-    let startDateM = moment(c.value.startDate);
-    if(!startDateM.isValid() || c.value.startDate=="Invalid date"){
-      return {
-        dateRangeError: {
-          message: "Invalid From Date"
-        }
-      }
-    }
-  }
-  if (c.value && c.value.endDate){
-    let endDateM = moment(c.value.endDate);
-    if(!endDateM.isValid() || c.value.endDate=="Invalid date"){
-      return {
-        dateRangeError: {
-          message: "Invalid To Date"
-        }
-      }
-    }
-  }
-  return null;
-}
-function dateRangeRequired(c:AbstractControl){
-  if(c.dirty && (!c.value || (!c.value.startDate && !c.value.endDate))){
-    return {
-      dateRangeError: {
-        message: "This field is required"
-      }
-    };
-  }
-}
+import { SamFormService } from '../../form-service';
 
 /**
  * The <sam-date> component is a Date entry portion of a form
@@ -77,7 +30,7 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
     month: null,
     day: null,
     year: null
-  }
+  };
 
   /**
   * Sets the label text
@@ -92,9 +45,26 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
   */
   @Input() hint: string = "";
   /**
-  * Sets the required text
+  * If set to true, a "required" designation is shown for both start and end date
+  * If default validations are enabled, also enables a validation checking that both start and end date are provided
+  *
+  * @see {defaultValidations}
   */
-  @Input() required: string = "";
+  @Input() required: boolean;
+  /**
+  * If set to true, a "required" designation is shown for start date
+  * If default validations are enabled, also enables a validation checking that start date is provided
+  *
+  * @see {defaultValidations}
+  */
+  @Input() fromRequired: boolean;
+  /**
+  * If set to true, a "required" designation is shown for end date
+  * If default validations are enabled, also enables a validation checking that end date is provided
+  *
+  * @see {defaultValidations}
+  */
+  @Input() toRequired: boolean;
   /**
   * Sets the disabled status of component, defaults to false
   */
@@ -143,9 +113,9 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
     }
     if(this.defaultValidations){
       if(this.required){
-        validators.push(dateRangeRequired);
+        validators.push(SamDateRangeComponent.dateRangeRequired(this));
       }
-      validators.push(dateRangeValidation);
+      validators.push(SamDateRangeComponent.dateRangeValidation);
     }
     this.control.setValidators(validators);
     if(!this.useFormService){
@@ -224,8 +194,8 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
   }
 
   dateChange(){
-    let startDateString = ""; 
-    let endDateString = ""; 
+    let startDateString = "";
+    let endDateString = "";
     if(!this.isClean(this.startModel)){
       startDateString = this.getDate(this.startModel).format(this.OUTPUT_FORMAT);
     }
@@ -258,6 +228,58 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
     }
   }
 
+  private static dateRangeValidation(c:AbstractControl){
+    let error = {
+      dateRangeError: {
+        message: ""
+      }
+    };
+
+    if(c.value && c.value.startDate && c.value.endDate){
+      let startDateM = moment(c.value.startDate);
+      let endDateM = moment(c.value.endDate);
+      if(endDateM.diff(startDateM) < 0) {
+        error.dateRangeError.message = "Invalid date range";
+        return error;
+      }
+    }
+    if (c.value && c.value.startDate){
+      let startDateM = moment(c.value.startDate);
+      if(!startDateM.isValid() || c.value.startDate=="Invalid date"){
+        error.dateRangeError.message = "Invalid From Date";
+        return error;
+      }
+    }
+    if (c.value && c.value.endDate){
+      let endDateM = moment(c.value.endDate);
+      if(!endDateM.isValid() || c.value.endDate=="Invalid date"){
+        error.dateRangeError.message = "Invalid To Date";
+        return error;
+      }
+    }
+    return null;
+  }
+
+  private static dateRangeRequired(instance:SamDateRangeComponent) {
+    // return the proper validator based on the instance's required inputs
+    let fromRequired = instance.fromRequired || instance.required;
+    let toRequired = instance.toRequired || instance.required;
+
+    return (c:AbstractControl) => {
+      // valid when fromRequired => startDate AND toRequired => endDate
+      let valid = (!fromRequired || c.value.startDate) && (!toRequired || c.value.endDate);
+      if (c.dirty && !valid) {
+        return {
+          dateRangeError: {
+            message: "This field is required"
+          }
+        };
+      }
+
+      return null;
+    };
+  }
+
   registerOnChange(fn) {
     this.onChange = fn;
   }
@@ -280,7 +302,7 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
         this.endDateValue = value.endDate;
       }
       this.parseValueString();
-      
+
     }
     else{
       this.startDateValue = "";

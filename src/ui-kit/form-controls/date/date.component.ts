@@ -24,7 +24,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     day: null,
     year: null
   };
-  
+
   /**
   * Sets the general error message for component
   */
@@ -38,9 +38,9 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   */
   @Input() label: string = "";
   /**
-  * Sets the required text
+  * Toggles whether a "required" designation is shown
   */
-  @Input() required: string = "";
+  @Input() required: boolean;
   /**
   * Sets the helpful hint text
   */
@@ -193,7 +193,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       return;
     }
     if(this._keyIsNumber(event.key)){
-      if(event.target.value.length===1 || 
+      if(event.target.value.length===1 ||
         (event.target.value.length===0 && possibleNum > 1)){
         this.day.nativeElement.focus();
       }
@@ -214,7 +214,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     let numJumpThreshold = 3;
     if([4,6,9,11].indexOf(parseInt(this.month.nativeElement.value))!==-1){
       maxDate = 30;
-    } 
+    }
     if (this.month.nativeElement.value==2){
       maxDate = 29;
       numJumpThreshold = 2;
@@ -228,8 +228,8 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       event.preventDefault();
       return;
     }
-    if(this._keyIsNumber(event.key)){ 
-      if(event.target.value.length===1 || 
+    if(this._keyIsNumber(event.key)){
+      if(event.target.value.length===1 ||
         (event.target.value.length===0 && possibleNum > numJumpThreshold)){
         this.year.nativeElement.focus();
       }
@@ -246,7 +246,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     }
     let inputNum = parseInt(event.key, 10);
     let possibleNum;
-    
+
     if(!isNaN(this.year.nativeElement.value) && this.year.nativeElement.value!=""){
       possibleNum = (parseInt(this.year.nativeElement.value) * 10) + inputNum;
     } else{
@@ -349,7 +349,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       return true;
     }
   }
-  
+
   _getClipboardText(event){
     if(event.clipboardData && event.clipboardData.getData("text")){
       return event.clipboardData.getData("text");
