@@ -16,7 +16,15 @@ export const TEXT_VALUE_ACCESSOR: any = {
   selector: 'sam-number',
   template: `
       <sam-label-wrapper [label]="label" [name]="name" [hint]="hint" [errorMessage]="errorMessage" [required]="required">
-        <input type="number" [attr.min]="min ? min : null" [attr.max]="max ? max : null" [value]="value" [attr.id]="name" [disabled]="disabled" (change)="onInputChange($event.target.value)">
+        <input 
+          type="number" 
+          [attr.min]="min ? min : null" 
+          [attr.max]="max ? max : null" 
+          [value]="value" 
+          [attr.id]="name" 
+          [disabled]="disabled" 
+          (keydown)="keyDownHandler($event)"
+          (change)="onInputChange($event.target.value)">
       </sam-label-wrapper>
   `,
   providers: [ TEXT_VALUE_ACCESSOR ]
@@ -44,7 +52,7 @@ export class SamNumberComponent implements ControlValueAccessor {
   onTouched: any = () => { };
 
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
-
+  invalidKeys = ["e",","]
   constructor(private samFormService:SamFormService,
     private cdr: ChangeDetectorRef) { }
 
@@ -89,6 +97,12 @@ export class SamNumberComponent implements ControlValueAccessor {
     if(this.control){
       this.wrapper.formatErrors(this.control);
       this.cdr.detectChanges();
+    }
+  }
+
+  keyDownHandler(event){
+    if(this.invalidKeys.indexOf(event.key)!==-1){
+      event.preventDefault();
     }
   }
 
