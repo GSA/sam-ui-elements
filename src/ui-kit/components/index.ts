@@ -9,6 +9,7 @@ import { SamElementsModule } from '../elements';
 import { AccordionsModule } from './accordion';
 import { SamAlertComponent } from './alert';
 import { SamAlertFooterComponent,SamAlertFooterService } from './alert-footer';
+import { SamBadgeComponent } from './badge';
 import { SamBannerComponent } from './banner';
 import { SamBreadcrumbsComponent } from './breadcrumbs';
 import { SamCollapsibleComponent } from './collapsible';
@@ -31,7 +32,7 @@ import { SamImageModule } from './image';
 import { SamActionButton, SamActionsDropdownComponent } from './actions';
 
 @NgModule({
-  imports: [ 
+  imports: [
     CommonModule,
     RouterModule,
     SamFormControlsModule,
@@ -46,6 +47,7 @@ import { SamActionButton, SamActionsDropdownComponent } from './actions';
   declarations: [
     SamAlertComponent,
     SamAlertFooterComponent,
+    SamBadgeComponent,
     SamBannerComponent,
     SamBreadcrumbsComponent,
     SamCollapsibleComponent,
@@ -68,6 +70,7 @@ import { SamActionButton, SamActionsDropdownComponent } from './actions';
   exports: [
     SamAlertComponent,
     SamAlertFooterComponent,
+    SamBadgeComponent,
     SamBannerComponent,
     SamBreadcrumbsComponent,
     SamCollapsibleComponent,

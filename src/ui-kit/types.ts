@@ -1,3 +1,6 @@
+export { BadgeConfig } from './components/badge';
+export { PageConfig } from './layout/types';
+
 export interface OptionsType {
   /**
    * The model value
