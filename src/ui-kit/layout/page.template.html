@@ -1,5 +1,5 @@
 <div style="display: flex;"
-    [style.background-color]="theme == 'inside' ? '#F9F9F9' : ''">
+     [style.background-color]="theme == 'inside' ? '#F9F9F9' : ''">
 
   <div grid class="container">
 
@@ -25,7 +25,13 @@
         <ng-content select="[message]"></ng-content>
 
         <!-- Page Title -->
-        <title-and-section [title]="title" [section]="section" [badge]="badge" [type]="type" [typeLabel]="typeLabel"></title-and-section>
+        <title-and-section [title]="title"
+                           [section]="section"
+                           [badge]="badge"
+                           [badgeOptions]="options.badge"
+                           [type]="type"
+                           [typeLabel]="typeLabel"
+                           [caption]="caption"></title-and-section>
 
         <ng-content></ng-content>
 

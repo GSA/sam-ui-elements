@@ -1,5 +1,6 @@
 import { Component, Input,  Output, EventEmitter, OnInit } from '@angular/core';
-import { PageService } from './page.service'
+import { PageService } from './page.service';
+import { PageConfig } from './types';
 
 @Component({
   selector: 'page',
@@ -12,10 +13,14 @@ export class PageTemplateComponent implements OnInit{
   @Input() public theme: string;
   @Input() public section: any;
   @Input() public title: any;
+  @Input() public badge: string;
   @Input() public type: string;
   @Input() public typeLabel: string;
+  @Input() public caption: string;
 
-  @Input() public badge: string;
+  @Input() public options: PageConfig = {
+    badge: null
+  };
 
   @Output() public breadcrumbOut = new EventEmitter();
 
