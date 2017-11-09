@@ -121,6 +121,8 @@ export interface AutocompleteKeyValueConfig {
   valueProperty: string;
 }
 //Download
+export type AccessType = "Public"|"Private";
+export type ExpansionType = "collapsed"|"expanded";
 export interface DownloadPackageType {
   /**
    * Sets a package id value
@@ -137,7 +139,7 @@ export interface DownloadPackageType {
   /**
    * Sets the packages access property
    */
-  access: "Public"|"Private";
+  access: AccessType;
   /**
    * Sets the posted date property
    */
@@ -149,7 +151,7 @@ export interface DownloadPackageType {
   /**
    * Sets the initial state of package accordion
    */
-  accordionState: "collapsed"|"expanded";
+  accordionState: ExpansionType;
   /**
    * Sets the download url for the whole package
    */

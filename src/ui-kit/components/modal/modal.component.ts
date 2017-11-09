@@ -139,7 +139,7 @@ export class SamModalComponent implements OnInit{
     if(!this.type || this.type.length==0){
       return true;
     }
-    if(!this.types[this.type].class){
+    if(!this.types[this.type]){
       return true;
     }
     return false;
