@@ -13,35 +13,78 @@ let defaultConfig = {
 };
 
 describe('The Sam Alert component', () => {
-  let component:SamAlertComponent;
-  let fixture:any;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [SamAlertComponent],
+  describe('isolated tests', ()=>{
+    let component:SamAlertComponent;
+    beforeEach(()=>{
+      component = new SamAlertComponent();
+    });
+    
+    it('should toggleContent',()=>{
+      component.showMoreToggle = false;
+      component.toggleContent();
+      expect(component.showMoreToggle).toBe(true);
+      expect(component.showMoreLinkText).toBe('Hide Details');
+      component.toggleContent();
+      expect(component.showMoreToggle).toBe(false);
+      expect(component.showMoreLinkText).toBe('Show Details');
+      
     });
 
-    fixture = TestBed.createComponent(SamAlertComponent);
-    component = fixture.componentInstance;
-    component.type = defaultConfig.type;
-    component.title = defaultConfig.title;
-    component.description = defaultConfig.description;
-    fixture.detectChanges();
-
-  });
-
-  it('title + description check', () => {
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      expect(fixture.debugElement.query(By.css('.usa-alert-heading')).nativeElement.textContent.trim()).toBe("i-am-a-title");
-      expect(fixture.debugElement.query(By.css('.usa-alert-text')).nativeElement.textContent.trim()).toBe("i-am-a-description");
+    it('should trigger dismiss on timer',()=>{
+      component.dismissTimer = 100;
+      component.dismiss.subscribe(()=>{
+        //should get here
+        expect(true).toBe(true);
+      });
+      component.ngOnInit();
+    });
+    it('should trigger dismiss on method', ()=>{
+      component.dismiss.subscribe(()=>{
+        expect(true).toBe(true);
+      });
+      component.closeAlert();
+    });
+    it('should check if type is defined', ()=>{
+      expect(component.typeNotDefined()).toBe(true);
+      component.type = 'notAValidType';
+      expect(component.typeNotDefined()).toBe(true);
+      component.type = 'success';
+      expect(component.typeNotDefined()).toBe(false);
+      component.ngOnInit();
+      expect(component.selectedType).toBe("usa-alert-success");
     });
   });
-  it('type check', () => {
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      expect(fixture.debugElement.query(By.css('.usa-alert')).nativeElement.className).toContain("usa-alert-success");
+  describe('rendered tests', ()=>{
+    let component:SamAlertComponent;
+    let fixture:any;
+  
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [RouterTestingModule],
+        declarations: [SamAlertComponent],
+      });
+  
+      fixture = TestBed.createComponent(SamAlertComponent);
+      component = fixture.componentInstance;
+      component.type = defaultConfig.type;
+      component.title = defaultConfig.title;
+      component.description = defaultConfig.description;
+      fixture.detectChanges();
+  
+    });
+  
+    it('title + description check', () => {
+      fixture.detectChanges();
+      fixture.whenStable().then(() => {
+        expect(fixture.debugElement.query(By.css('.usa-alert-heading')).nativeElement.textContent.trim()).toBe("i-am-a-title");
+        expect(fixture.debugElement.query(By.css('.usa-alert-text')).nativeElement.textContent.trim()).toBe("i-am-a-description");
+      });
+    });
+    it('type check', () => {
+      fixture.detectChanges();
+      fixture.whenStable().then(() => {
+        expect(fixture.debugElement.query(By.css('.usa-alert')).nativeElement.className).toContain("usa-alert-success");
+      });
     });
   });
 });

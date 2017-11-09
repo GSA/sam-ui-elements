@@ -15,8 +15,6 @@ export class SamAlertFooterComponent {
     this.refreshAlerts();
   }
 
-  ngOnDestroy() { }
-
   dismissFooterAlert(i){
     this.alertFooterService.dismissFooterAlert(i);
     this.refreshAlerts();
