@@ -296,13 +296,6 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
     }
   }
 
-  _shouldPad(value){
-    var leadingZero = value[0] === "0";
-    if(parseInt(value, 10) < 10 && !leadingZero){
-      return true;
-    }
-  }
-
   _checkCopyPasteChar(char){
     if(char==="c"||char==="v"){
       return true;
