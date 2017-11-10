@@ -7,7 +7,7 @@
     </figure>
     <div class="comment-metadata">
       <strong class="username">{{comment?.username}}</strong>
-      <time pubdate datetime="comment.datetime">{{ comment?.datetime | dateTimeDisplay }}</time>
+      <time pubdate datetime="comment.datetime">{{ comment?.datetime | shortDate }}</time>
     </div>
     <button class="usa-button-link remove-comment"
             *ngIf="allowDelete"
@@ -16,5 +16,9 @@
       <span class="usa-sr-only">Delete comment</span>
     </button>
   </header>
-  <p>{{comment?.text}}</p>
+  <p class="preserve-newline">{{comment?.text}}</p>
+  <p>
+    <!-- Used for additional system generated comments appended to the end. E.G. A field to show (Editted) -->
+    <ng-content></ng-content>
+  </p>
 </article>

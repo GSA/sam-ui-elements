@@ -3,16 +3,19 @@ import { CommonModule } from '@angular/common';
 
 import { DateTimeDisplayPipe } from './date-time-display';
 import { TimeAgoPipe } from './time-ago';
+import { ShortDatePipe } from "./short-date/short-date.pipe";
 
 @NgModule({
   imports: [ CommonModule ],
   declarations: [
     TimeAgoPipe,
-    DateTimeDisplayPipe
+    DateTimeDisplayPipe,
+    ShortDatePipe
   ],
   exports: [
     TimeAgoPipe,
-    DateTimeDisplayPipe
+    DateTimeDisplayPipe,
+    ShortDatePipe,
   ],
   providers: []
 })
