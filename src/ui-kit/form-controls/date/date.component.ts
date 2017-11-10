@@ -139,7 +139,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
 
   getDate(override=null) {
     let obj = override ? override : this.model;
-    return moment([override.year, override.month-1, override.day]);
+    return moment([obj.year, obj.month-1, obj.day]);
   }
 
   onMonthPaste(event){
