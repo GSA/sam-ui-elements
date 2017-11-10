@@ -38,12 +38,12 @@ export class SamBreadcrumbsComponent {
       }
     }
 
-    ngOnDestroy() {
-      // If using route to generate breadcrumbs, destroy subscription when component destroyed
-      if (this.listenToRouter) {
-        // this._routeSubscription.unsubscribe();
-      }
-    }
+    // ngOnDestroy() {
+    //   // If using route to generate breadcrumbs, destroy subscription when component destroyed
+    //   if (this.listenToRouter) {
+    //     // this._routeSubscription.unsubscribe();
+    //   }
+    // }
 
     // Recursive function that takes a route and returns an array of IBreacrumbs from the root to the lowest child
     getBreadcrumbs(route: ActivatedRoute, url: string = '', crumbs: Array<IBreadcrumb> = []): IBreadcrumb[] {

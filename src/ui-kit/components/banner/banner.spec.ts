@@ -15,12 +15,17 @@ describe('The Sam Banner component', () => {
 
     fixture = TestBed.createComponent(SamBannerComponent);
     component = fixture.componentInstance;
+    fixture.detectChanges();
 
   });
 
   it('should display banner', function () {
-    fixture.detectChanges();
     expect(component.showDetail).toBe(false);
+  });
+
+  it('should toggle', ()=>{
+    component.toggleDetails();
+    expect(component.showDetail).toBe(true);
   });
   
 
