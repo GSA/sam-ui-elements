@@ -228,7 +228,7 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
     }
   }
 
-  private static dateRangeValidation(c:AbstractControl){
+  static dateRangeValidation(c:AbstractControl){
     let error = {
       dateRangeError: {
         message: ""
@@ -260,7 +260,7 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
     return null;
   }
 
-  private static dateRangeRequired(instance:SamDateRangeComponent) {
+  static dateRangeRequired(instance:SamDateRangeComponent) {
     // return the proper validator based on the instance's required inputs
     let fromRequired = instance.fromRequired || instance.required;
     let toRequired = instance.toRequired || instance.required;
