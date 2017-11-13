@@ -8,7 +8,7 @@ export class SamFocusDirective {
     constructor(private _elementRef: ElementRef){}
 
     @HostListener('document:click', ['$event.target'])
-        public onClick(targetElement) {
+    public onClick(targetElement) {
         const clickedInside = this._elementRef.nativeElement.contains(targetElement);
         if(clickedInside){
             this.focus.emit(null);
