@@ -15,7 +15,7 @@
 
     <div row class="page-content">
       <!-- Sidebar -->
-      <div *ngIf="pageService.sidebar" [columns]="pageService.sidebarColumns" style="align-self: start;">
+      <div *ngIf="pageService.sidebar" [columns]="pageService.sidebarColumns" style="align-self: start; max-height: 99.9%;">
         <ng-content select="sidebar"></ng-content>
       </div>
 
