@@ -225,7 +225,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       this.control.statusChanges.subscribe(() => {
         setTimeout(() => {
           this.wrapper.formatErrors(this.control);
-        } , 300)
+        })
       });
     }
     else {
@@ -243,7 +243,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     if (this.control) {
       setTimeout(() => {
         this.wrapper.formatErrors(this.control);
-      } , 300)
+      })
     }
   }
 
