@@ -221,10 +221,11 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     if(!this.control){
       return;
     }
-    if(!this.useFormService){
-      this.control.statusChanges.subscribe(()=>{
-        this.wrapper.formatErrors(this.control);
-        this.cdr.detectChanges();
+    if (!this.useFormService) {
+      this.control.statusChanges.subscribe(() => {
+        setTimeout(() => {
+          this.wrapper.formatErrors(this.control);
+        })
       });
     }
     else {
@@ -237,11 +238,12 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       });
     }
   }
-
-  ngAfterViewInit(){
-    if(this.control){
-      this.wrapper.formatErrors(this.control);
-      this.cdr.detectChanges();
+  
+  ngAfterViewInit() {
+    if (this.control) {
+      setTimeout(() => {
+        this.wrapper.formatErrors(this.control);
+      })
     }
   }
 
