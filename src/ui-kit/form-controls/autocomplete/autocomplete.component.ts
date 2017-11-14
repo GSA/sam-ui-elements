@@ -610,6 +610,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       }
       this.selectedInputValue = this.inputValue;
       this.innerValue = value;
+      this.input.nativeElement.value = this.inputValue;//angular isn't populating this
     } else if (value === null) {
       this.inputValue = '';
       this.selectedInputValue = '';
