@@ -9,8 +9,8 @@ import { MenuItem } from '../interfaces';
 })
 export class SamMenuItemComponent {
   @Input() children: MenuItem[];
-  @Input() private nodeDepth: number;
-  @Output() private data: EventEmitter<any> = new EventEmitter<any>();
+  @Input() nodeDepth: number;
+  @Output() data: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private service: SidenavService) { }
 
