@@ -18,8 +18,9 @@ export class SamHeaderComponent {
   dropdownEventControl(value){
     this.headerDropdownControl.emit(value);
   }
-
+  //deprecated
   refreshPage(){
+    console.log("deprecating sam-header refreshPage method");
     window.location.reload();
   }
 

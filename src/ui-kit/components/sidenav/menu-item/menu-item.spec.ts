@@ -1,0 +1,56 @@
+import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { EventEmitter, ElementRef } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+
+import { SamMenuItemComponent } from './';
+import { SamSidenavModule } from "../";
+import { SidenavService } from '../services';
+import { SamUIKitModule } from '../../../index';
+
+import { data } from '../services/testdata';
+
+describe('The Sam MenuItem component', () => {
+  describe("isolated tests", ()=>{
+    let component:SamMenuItemComponent;
+    let service: SidenavService;
+    beforeEach(() => {
+        service = new SidenavService();
+        service.setModel(data);
+        component = new SamMenuItemComponent(service);
+    });
+
+    it("should support updateUI on changes",()=>{
+        component.data.subscribe(val=>{
+            expect(val["label"]).toBe("stuff");
+        });
+        component.updateUI(0, new Event("custom"));
+    });
+
+    it("should emit on selecting children", ()=>{
+        component.data.subscribe(val=>{
+            expect(val).toBe(true);
+        });
+        component.emitSelectedChild(true);
+    });
+  });
+  describe("rendered tests", ()=>{
+    let component:SamMenuItemComponent;
+    let fixture:any;
+  
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [SamSidenavModule],
+      });
+  
+      fixture = TestBed.createComponent(SamMenuItemComponent);
+      component = fixture.componentInstance;
+    });
+  
+    it('should compile', function () {
+      fixture.detectChanges();
+      expect(true).toBe(true);
+    });
+  });
+});
