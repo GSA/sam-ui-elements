@@ -133,6 +133,11 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    */
   @Input() addOnIcon: string = "fa-chevron-down";
 
+  /**
+   * Allow a placeholder to component
+   */
+  @Input() placeholder: string = '';
+
   public searchText: string = '';
 
   private innerValue: Array<any> = [];
