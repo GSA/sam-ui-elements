@@ -52,6 +52,7 @@
             </label>
             <textarea #textArea
                       rows="1"
+                      [attr.placeholder]="innerValue && innerValue.length==0 ? placeholder : ''"
                       [attr.id]="name+'-ac-textarea'"
                       [(ngModel)]="searchText"
                       (input)="applyTextAreaWidth($event)"
