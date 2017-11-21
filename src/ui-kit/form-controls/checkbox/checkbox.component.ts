@@ -145,7 +145,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
         }
         i++;
       }
-      let clone = this.model.slice(0);
+      let clone = this.model.indexOf("")>-1 ? this.model.slice(1) : this.model.slice(0);
       clone.splice(i, 0, value);
       this.value = clone;
     }
