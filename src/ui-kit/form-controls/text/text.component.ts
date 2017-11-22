@@ -64,7 +64,12 @@ export class SamTextComponent implements ControlValueAccessor {
 
   onChange: any = (c) => { };
   onTouched: any = () => { };
-  onLoseFocus: any = () => {this.onBlur.emit(true)};
+  onLoseFocus(){
+    if(this.value.trim()!=this.value){
+      this.onInputChange(this.value.trim());
+    }
+    this.onBlur.emit(true)
+  };
 
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
 
@@ -119,11 +124,7 @@ export class SamTextComponent implements ControlValueAccessor {
   }
 
   onInputChange(value) {
-    if(this.control){
-      this.control.markAsDirty();
-      this.control.markAsTouched();
-      this.control.setValue(value);
-    }
+    this.onTouched();
     this.value = value;
     this.onChange(value);
   }
