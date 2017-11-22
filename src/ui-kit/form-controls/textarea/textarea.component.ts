@@ -137,6 +137,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
   }
 
   onInputChange(value) {
+    this.onTouched();
     this.value = value;
     this.onChange(value);
     this.valueChange.emit(value);
