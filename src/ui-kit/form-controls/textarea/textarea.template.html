@@ -1,17 +1,19 @@
 <sam-label-wrapper [label]="label"
-                   [name]="name"
-                   [hint]="hint"
-                   [errorMessage]="errorMessage"
-                   [required]="required || requiredFlag">
-  <textarea [value]="value"
-            [attr.class]="sam-text-area"
-            [attr.id]="name"
-            [attr.placeholder]="placeholder"
-            [attr.maxlength]="maxlength ? maxlength : 524288"
-            [attr.aria-label]="'Text Area'"
-            [disabled]="disabled"
-            (change)="onInputChange($event.target.value)"
-            (focus)="onFocus($event)"
-            (input)="inputEventHandler($event)">
+  [name]="name"
+  [hint]="hint"
+  [errorMessage]="errorMessage"
+  [required]="required || requiredFlag">
+  <textarea 
+    [ngModel]="value"
+    [attr.class]="sam-text-area"
+    [attr.id]="name"
+    [attr.placeholder]="placeholder"
+    [attr.maxlength]="maxlength ? maxlength : 524288"
+    [attr.aria-label]="'Text Area'"
+    [disabled]="disabled"
+    (ngModelChange)="onInputChange($event)"
+    (focus)="onFocus($event)"
+    (blur)="onBlur()"
+    (input)="inputEventHandler($event)">
   </textarea>
 </sam-label-wrapper>

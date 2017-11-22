@@ -56,7 +56,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
   @Input() maxlength: number;
   @Input() control: FormControl;
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
-
+  
   /**
    * Optional text to be displayed when the text area is empty
    */
@@ -144,6 +144,12 @@ export class SamTextareaComponent implements ControlValueAccessor {
 
   inputEventHandler(event) {
     this.inputEventChange.emit(event);
+  }
+
+  onBlur(){
+    if(this.value.trim()!=this.value){
+      this.onInputChange(this.value.trim());
+    }
   }
 
   registerOnChange(fn) {
