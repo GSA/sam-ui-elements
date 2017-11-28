@@ -79,6 +79,11 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator {
     this.model = value;
   };
 
+  setSubmitted() {
+    this.validateFirstName();
+    this.validateLastName();
+  }
+
   // validates the form, returns null when valid else the validation object
   // in this case we're checking if the json parsing has passed or failed from the onChange method
   public validate(c: FormControl) {
