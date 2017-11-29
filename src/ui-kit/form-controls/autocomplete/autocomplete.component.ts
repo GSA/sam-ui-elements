@@ -47,7 +47,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   /**
    * Allows for a configuration object
    */
-  @Input() public config: AutocompleteConfig;
+  @Input() public config: AutocompleteConfig = { keyValueConfig: { keyProperty: 'key', valueProperty: 'value'} };
   /**
    * Allows any value typed in the input to be chosen
    */
@@ -238,7 +238,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       });
     }
   }
-  
+
   ngAfterViewInit() {
     if (this.control) {
       setTimeout(() => {
