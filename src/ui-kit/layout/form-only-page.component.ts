@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'form-only',
   template: `
-    <div style="display: flex; padding-top: 1em;" [style.background-color]="theme == 'inside' ? '#F9F9F9' : ''">
+    <div style="display: flex; padding-top: 1em;" class="occupy-page" [style.background-color]="theme == 'inside' ? '#F9F9F9' : ''">
       <div grid class="container">
         <div row>
           <div columns="2"></div>
