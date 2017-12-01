@@ -293,7 +293,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * item that is returned.
    */
   selectOnEnter(event) {
-    if (event.code === 'Enter' || event.keyIdentified === 'Enter') {
+    if (this.resultsList && this.resultsList.nativeElement && event.code === 'Enter' || event.keyIdentified === 'Enter') {
       let lookedUpItem = this.getItem();
       if(this.allowAny && lookedUpItem && lookedUpItem[this.keyValueConfig.keyProperty]==null && event.target.value !== ''){
         let obj = {};
