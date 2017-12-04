@@ -2,9 +2,9 @@
   <ul class="usa-sidenav-list">
     <li *ngFor="let child of model.children; let $index = index">
       <a tabindex="0"
-        [ngClass]="{'usa-current': isSelected($index)}"
-        (keyup.enter)="updateUI($index, $event)"
-        (click)="updateUI($index, $event)">
+        [ngClass]="{'usa-current': isSelected($index), 'disabled': child.disabled}"
+        (keyup.enter)="updateUI($index, $event, child)"
+        (click)="updateUI($index, $event, child)">
           {{child.label}}
           <ng-container *ngIf="child?.iconClass">
             <i [ngClass]="child.iconClass"></i>
