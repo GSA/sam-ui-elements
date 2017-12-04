@@ -28,7 +28,7 @@
             (click)="focusTextArea()"
             [ngClass]="{ 'active': displayList() }">
 
-            <div tabIndex="0" 
+            <div tabIndex="0"
                 class="sam-ui mini label"
                 *ngFor="let item of value"
                 [@label]=""
@@ -67,7 +67,7 @@
                 This helps us calculate when the textArea should be on the same row as the
                 spans of selected content and when the textarea should be on a line by
                 itself. -->
-            <span #hiddenText 
+            <span #hiddenText
                   class="usa-sr-only measure text">
               {{ searchText }}
             </span>
@@ -85,7 +85,7 @@
             <ng-container>
               <ul *ngIf="displaySublist(category, i)"
                   class="usa-unstyled-list item-list">
-                <li *ngIf="category !== 'uncategorized'"
+                <li *ngIf="category !== 'uncategorized' && displayCategory"
                     class="category-name"
                     [ngClass]="{'selectable': categoryIsSelectable}"
                     (click)="clearSearch(selectItemByCategory(category))"
@@ -98,10 +98,15 @@
                     [ngClass]="{'marked':item._marked}"
                     [attr.data-category]="i"
                     [attr.data-index]="itemIndex">
-                  <p>{{ item[keyValueConfig?.valueProperty] }}</p>
-                  <p class="subhead" *ngIf="item[keyValueConfig?.subheadProperty]">
-                    {{ item[keyValueConfig?.subheadProperty] }}
-                  </p>
+                  <ng-container *ngIf="!itemTemplate; else itemTemplateRef">
+                    <p>{{ item[keyValueConfig?.valueProperty] }}</p>
+                    <p class="subhead" *ngIf="item[keyValueConfig?.subheadProperty]">
+                      {{ item[keyValueConfig?.subheadProperty] }}
+                    </p>
+                  </ng-container>
+                  <ng-template #itemTemplateRef>
+                    <ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit:item}"></ng-container>
+                  </ng-template>
                 </li>
               </ul>
             </ng-container>
