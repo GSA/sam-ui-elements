@@ -79,10 +79,13 @@ export class SamAccordionComponent implements OnInit {
   */
   @Input() expandIndex = -1;
   /**
-  * The index of the accordion item that has been opened/closed
+  * (deprecated) The index of the accordion item that has been opened/closed
   */
   @Output() selectedIndexChange: EventEmitter<number> = new EventEmitter<number>();
-
+  /**
+   * The index of the accordion item that has been opened/closed
+   */
+  @Output() onSelectedIndexChange: EventEmitter<number> = new EventEmitter<number>();
   public accordionClass:string = "usa-accordion";
   public sections: SamAccordionSection[] = [];
 
@@ -108,6 +111,7 @@ export class SamAccordionComponent implements OnInit {
     this.expandIndex = section.isExpanded ? section.index() : -1;
     this.collapseOthers(section);
     this.selectedIndexChange.emit(this.expandIndex);
+    this.onSelectedIndexChange.emit(this.expandIndex);
   }
 
   collapseOthers(section: SamAccordionSection) {

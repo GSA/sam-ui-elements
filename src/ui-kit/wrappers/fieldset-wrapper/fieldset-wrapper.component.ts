@@ -6,9 +6,21 @@ import { AbstractControl } from "@angular/forms";
   templateUrl: 'fieldset-wrapper.template.html',
 })
 export class FieldsetWrapper {
+  /**
+   * sets the label text
+   */
   @Input() label: string;
+  /**
+   * sets the hint text
+   */
   @Input() hint: string;
+  /**
+   * set the error message
+   */
   @Input() errorMessage: string;
+  /**
+   * toggles the required text
+   */
   @Input() required: boolean = false;
   @ViewChild('hintContainer')
   public hintContainer: any;

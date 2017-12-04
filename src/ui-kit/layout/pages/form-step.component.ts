@@ -91,15 +91,45 @@ import {Component, Input, Output, EventEmitter, OnChanges, ChangeDetectorRef} fr
   `
 })
 export class FormStepComponent implements OnChanges {
+    /**
+     * Sets breadcrumbs model
+     */
     @Input() crumbs;
+    /**
+     * Sets sidenav model
+     */
     @Input() sideNavModel;
+    /**
+     * Sets sidenav selection
+     */
     @Input() sideNavSelection;
+    /**
+     * Sets sidenav image src
+     */
     @Input() sideNavImage;
+    /**
+     * Sets sidenav image alt
+     */
     @Input() sideNavImageAlt;
+    /**
+     * ... 
+     */
     @Input() sectionIndex: number;
+    /**
+     * Sets number of sections 
+     */
     @Input() numberOfSections: number;
+    /**
+     * Sets section title
+     */
     @Input() sectionTitle: string;
+    /**
+     * Sets page title
+     */
     @Input() pageTitle: string;
+    /**
+     * Sets form step type (...)
+     */
     @Input() type: string;
     @Input() typeLabel: string;
     @Input() statusBannerType:string = "error";

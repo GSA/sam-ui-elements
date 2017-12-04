@@ -66,9 +66,13 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   */
   @Output() valueChange = new EventEmitter<any>();
   /**
-  * Event emitted when form control loses focus
+  * (deprecated) Event emitted when form control loses focus
   */
   @Output() blurEvent = new EventEmitter<any>();
+  /**
+  * Event emitted when form control loses focus
+  */
+  @Output() onBlur = new EventEmitter<any>();
   onChange: any = () => { };
   onTouched: any = () => { };
   @ViewChild('month') month;
@@ -259,6 +263,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     if(this._keyIsNumber(event.key)){
       if(event.target.value.length+1==4){
         this.blurEvent.emit();
+        this.onBlur.emit();
       }
       this.year.nativeElement.value = possibleNum;
       let dupModel = this.inputModel;

@@ -33,9 +33,13 @@ export class SamAlertComponent {
    */
   @Input() showMoreToggle = null;
   /**
-   * Emitted event when an alert is dismissed
+   * (deprecated) Emitted event when an alert is dismissed
    */
   @Output() dismiss: EventEmitter<any> = new EventEmitter<any>();
+  /**
+   * Emitted event when an alert is dismissed
+   */
+  @Output() onDismiss: EventEmitter<any> = new EventEmitter<any>();
   types:any = {
     "success": { class: "usa-alert-success", sr: "success alert"},
     "warning": { class: "usa-alert-warning", sr: "warning alert"},
@@ -54,6 +58,7 @@ export class SamAlertComponent {
     if(this.dismissTimer>0){
       setTimeout(()=>{
         this.dismiss.emit();
+        this.onDismiss.emit();
       },this.dismissTimer);
     }
   }
@@ -70,6 +75,7 @@ export class SamAlertComponent {
 
   private onDismissClick(){
     this.dismiss.emit();
+    this.emitDismiss.emit();
   }
 
   closeAlert(){

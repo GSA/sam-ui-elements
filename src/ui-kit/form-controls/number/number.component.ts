@@ -30,17 +30,46 @@ export const TEXT_VALUE_ACCESSOR: any = {
   providers: [ TEXT_VALUE_ACCESSOR ]
 })
 export class SamNumberComponent implements ControlValueAccessor {
+  /**
+   * (deprecated) sets value 
+   */
   @Input() value: number;
+  /**
+   * sets the label wrapper text
+   */
   @Input() label: string;
+  /**
+   * sets the input name attribute value
+   */
   @Input() name: string;
+  /**
+   * sets the minimum allowed value
+   */
   @Input() min: number;
+  /**
+   * sets the maximum allowed value
+   */
   @Input() max: number;
+  /**
+   * sets the hint text
+   */
   @Input() hint: string;
+  /**
+   * deprecated, sets the error message manually
+   */
   @Input() errorMessage: string;
+  /**
+   * sets the disabled state
+   */
   @Input() disabled: boolean;
+  /**
+   * deprecated, toggles the required text in the label wrapper
+   */
   @Input() required: boolean;
+  /**
+   * sets the form control to trigger label wrapper messages
+   */
   @Input() control: FormControl;
-  @Input() maxlength: number;
   /**
   * Toggles validations to display with SamFormService events
   */
@@ -69,10 +98,6 @@ export class SamNumberComponent implements ControlValueAccessor {
 
     if (this.required) {
       validators.push(Validators.required);
-    }
-
-    if (this.maxlength) {
-      validators.push(Validators.maxLength(this.maxlength));
     }
 
     this.control.setValidators(validators);

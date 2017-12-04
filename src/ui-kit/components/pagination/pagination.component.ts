@@ -26,9 +26,13 @@ export class SamPaginationComponent {
   */
   @Input() totalPages: number;
   /**
-  * Event emitted when current page is changed
+  * (deprecated) Event emitted when current page is changed
   */
   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
+  /**
+  * Event emitted when current page is changed
+  */
+  @Output() onPageChange: EventEmitter<number> = new EventEmitter<number>();
 
   constructor() { }
 

@@ -54,7 +54,13 @@ export class SamTextareaComponent implements ControlValueAccessor {
   * Sets the maxlength attribute
   */
   @Input() maxlength: number;
+  /**
+   * sets the form control to update label messages
+   */
   @Input() control: FormControl;
+  /**
+   * deprecated, emits value change events
+   */
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
   
   /**
@@ -66,13 +72,21 @@ export class SamTextareaComponent implements ControlValueAccessor {
   */
   @Input() useFormService: boolean;
   /**
-   * Emits focus event
+   * (deprecated) Emits focus event
    */
   @Output() focusEvent: EventEmitter<any> = new EventEmitter();
   /**
-   * Emits event whenever input event is fired on the textarea
+   * Emits focus event
+   */
+  @Output() onFocus: EventEmitter<any> = new EventEmitter();
+  /**
+   * deprecated, Emits event whenever input event is fired on the textarea
    */
   @Output() inputEventChange: EventEmitter<any> = new EventEmitter();
+  /**
+   * Emits event whenever input event is fired on the textarea
+   */
+  @Output() onInputChange: EventEmitter<any> = new EventEmitter();
 
   onChange: any = (_) => {};
 
@@ -132,11 +146,12 @@ export class SamTextareaComponent implements ControlValueAccessor {
     this.cdr.detectChanges();
   }
 
-  onFocus($event) {
+  focusHandler($event) {
     this.focusEvent.emit($event);
+    this.onFocus.emit($event);
   }
 
-  onInputChange(value) {
+  onInputHandler(value) {
     this.onTouched();
     this.value = value;
     this.onChange(value);
@@ -145,11 +160,12 @@ export class SamTextareaComponent implements ControlValueAccessor {
 
   inputEventHandler(event) {
     this.inputEventChange.emit(event);
+    this.onInputChange.emit(event);
   }
 
   onBlur(){
     if(this.value.trim()!=this.value){
-      this.onInputChange(this.value.trim());
+      this.onInputHandler(this.value.trim());
     }
   }
 

@@ -79,20 +79,47 @@ import { trigger, state, style, transition, animate, keyframes } from '@angular/
   ]
 })
 export class SamInfoAccordionComponent {
-
+  /**
+   * (deprecated) sets active item
+   */
   @Input() name:string;
   
   defaultItemsPerRow = 3;
+  /**
+   * Configures number of items per row 
+   */
   @Input() itemsPerRow = [this.defaultItemsPerRow];
   
+  /**
+   * Sets additional spacing configuration ("very relaxed" and "relaxed")
+   */
   @Input() spacing:string = ""; //options: "very relaxed" and "relaxed"
   
+  /**
+   * Sets accordion data
+   */
   @Input() data:any;
+  /**
+   * Configures showing detail title
+   */
   @Input() showDetailTitle:boolean = true;
+  /**
+   * Configures external link indicator
+   */
   @Input() isExternalLink:boolean = true;
-
+  /**
+   * Passes in a string to close accordions for cases where there are multiple
+   * Info accordions on a page. 
+   */
   @Input() closeNotification:string = "";
+  /**
+   * (deprecated) Emits notification event
+   */
   @Output() updateNotification:EventEmitter<any> = new EventEmitter<any>();
+  /**
+   * Emits notification event
+   */
+  @Output() onNotification:EventEmitter<any> = new EventEmitter<any>();
 
   detailObj: any = {
     showDetail: false,
@@ -149,6 +176,7 @@ export class SamInfoAccordionComponent {
     }
     this.closeNotification = this.name;
     this.updateNotification.emit(this.closeNotification);
+    this.onNotification.emit(this.closeNotification);
     event.stopPropagation();
   }
 

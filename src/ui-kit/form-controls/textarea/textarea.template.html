@@ -11,8 +11,8 @@
     [attr.maxlength]="maxlength ? maxlength : 524288"
     [attr.aria-label]="'Text Area'"
     [disabled]="disabled"
-    (ngModelChange)="onInputChange($event)"
-    (focus)="onFocus($event)"
+    (ngModelChange)="onInputHandler($event)"
+    (focus)="focusHandler($event)"
     (blur)="onBlur()"
     (input)="inputEventHandler($event)">
   </textarea>

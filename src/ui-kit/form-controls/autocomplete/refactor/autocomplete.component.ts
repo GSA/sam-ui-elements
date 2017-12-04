@@ -119,7 +119,7 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    */
   @Input() public allowAny: boolean = false;
   /**
-   * 
+   * sets icon to indicate interaction
    */
   @Input() public addOnIconClass: string = "fa-chevron-down";
   /**

@@ -6,11 +6,29 @@ import { AbstractControl } from "@angular/forms";
   templateUrl: 'label-wrapper.template.html',
 })
 export class LabelWrapper implements AfterViewChecked{
+  /**
+   * sets the label text
+   */
   @Input() label: string;
+  /**
+   * sets the name attribute value
+   */
   @Input() name: string;
+  /**
+   * sets the hint text
+   */
   @Input() hint: string;
-  @Input() required: boolean = false;//deprecated
+  /**
+   * deprecated, toggles the required text
+   */
+  @Input() required: boolean = false;
+  /**
+   * toggles the required text
+   */
   @Input() requiredFlag: boolean = false;
+  /**
+   * set the error message
+   */
   @Input() errorMessage: string;
 
   @ViewChild('labelDiv')

@@ -19,8 +19,14 @@ export class SamBreadcrumbsComponent {
      * The rootCrumb property takes a breadcrumb to be used for the root. It is only necessary to provide this if you are also using the listenToRouter property.
      */
     @Input() rootCrumb: IBreadcrumb = undefined;
-
+    /**
+     * (deprecated) Emits when crumb action occurs
+     */
     @Output() public crumbActionHandler = new EventEmitter();
+    /**
+     * Emits when crumb action occurs
+     */
+    @Output() public onCrumbAction = new EventEmitter();
 
     private _routeSubscription: any;
     private count = 0;
@@ -101,5 +107,6 @@ export class SamBreadcrumbsComponent {
     }
     public crumbHandler(crumb: string) {
       this.crumbActionHandler.emit(crumb);
+      this.onCrumbAction.emit(crumb);
     }
 }
