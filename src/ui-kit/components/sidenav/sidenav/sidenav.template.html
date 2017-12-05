@@ -27,7 +27,8 @@
         'active': isSelected($index),
         'completed': child.iconClass == 'completed',
         'error': child.iconClass == 'error',
-        'pending': child.iconClass == 'pending'
+        'pending': child.iconClass == 'pending', 
+        'disabled': child.disabled
       }"
       (keyup.enter)="updateUI($index, $event)"
       [title]="child.label + ' - ' + child.iconClass"
