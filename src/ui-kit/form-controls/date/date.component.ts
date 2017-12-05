@@ -1,6 +1,9 @@
 import {Component, ChangeDetectorRef, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, forwardRef} from '@angular/core';
 import * as moment from 'moment/moment';
-import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators} from "@angular/forms";
+import {
+  NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn,
+  AbstractControl
+} from "@angular/forms";
 import {SamFormService} from '../../form-service';
 
 /**
@@ -40,7 +43,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   /**
   * Toggles whether a "required" designation is shown
   */
-  @Input() required: boolean;
+  @Input() required: boolean = false;
   /**
   * Sets the helpful hint text
   */
@@ -91,7 +94,17 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     if (!this.name) {
       throw new Error('SamTimeComponent required a name for 508 compliance');
     }
+
     if(this.control){
+      let validators: ValidatorFn[] = [];
+      if(this.control.validator){
+        validators.push(this.control.validator);
+      }
+      if(this.required){
+        validators.push(SamDateComponent.dateValidaions(this));
+      }
+      this.control.setValidators(validators);
+
       if(!this.useFormService){
         this.control.statusChanges.subscribe(()=>{
           this.wrapper.formatErrors(this.control);
@@ -357,6 +370,35 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       return window['clipboardData'].getData('text');
     }
   }
+
+  static dateValidaions(instance: SamDateComponent) {
+    return (c: AbstractControl) => {
+      let error = {
+        dateError: {
+          message: ""
+        }
+      };
+      if (c.dirty) {
+        if (!c.value) {
+          error.dateError.message = "This field is required";
+          return error;
+        } else {
+          let dateM = moment(c.value);
+          if (!dateM.isValid()) {
+            error.dateError.message = "Invalid date";
+            return error;
+          } else {
+            if(dateM.get('year') < 1000) {
+              error.dateError.message = "Please enter 4 digit year";
+              return error;
+            }
+          }
+        }
+      }
+      return null;
+    };
+  }
+
 
   //controlvalueaccessor methods
   registerOnChange(fn) {
