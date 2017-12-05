@@ -109,7 +109,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
         if(this.required){
           validators.push(SamDateComponent.dateRequired());
         }
-        validators.push(SamDateComponent.dateValidation);
+        validators.push(SamDateComponent.dateValidation());
       }
       this.control.setValidators(validators);
 
