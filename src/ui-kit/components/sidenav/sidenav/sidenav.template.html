@@ -30,7 +30,7 @@
         'pending': child.iconClass == 'pending', 
         'disabled': child.disabled
       }"
-      (keyup.enter)="updateUI($index, $event)"
+      (keyup.enter)="updateUI($index, $event, child)"
       [title]="child.label + ' - ' + child.iconClass"
       (click)="updateUI($index, $event)">
       <div class="content">
