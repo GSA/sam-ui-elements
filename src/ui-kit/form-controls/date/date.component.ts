@@ -57,6 +57,10 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   */
   @Input() value: string;
   /**
+   * Toggles default component validations
+   */
+  @Input() defaultValidations: boolean = false;
+  /**
   * Passes in the Angular FormControl
   */
   @Input() control: FormControl;
@@ -71,6 +75,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   /**
   * Event emitted when form control loses focus
   */
+
   @Output() blurEvent = new EventEmitter<any>();
   onChange: any = () => { };
   onTouched: any = () => { };
@@ -100,8 +105,11 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       if(this.control.validator){
         validators.push(this.control.validator);
       }
-      if(this.required){
-        validators.push(SamDateComponent.dateValidaions(this));
+      if(this.defaultValidations){
+        if(this.required){
+          validators.push(SamDateComponent.dateRequired());
+        }
+        validators.push(SamDateComponent.dateValidation);
       }
       this.control.setValidators(validators);
 
@@ -370,33 +378,39 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       return window['clipboardData'].getData('text');
     }
   }
-
-  static dateValidaions(instance: SamDateComponent) {
+  static dateRequired() {
+    return (c:AbstractControl) => {
+      if (c.dirty && !c.value) {
+        return {
+          dateRequiredError: {
+            message: "This field is required"
+          }
+        };
+      }
+      return null;
+    };
+  }
+  static dateValidation() {
     return (c: AbstractControl) => {
       let error = {
         dateError: {
           message: ""
         }
       };
-      if (c.dirty) {
-        if (!c.value) {
-          error.dateError.message = "This field is required";
-          return error;
-        } else {
+        if (c.dirty && (c.value && c.value !== null)) {
           let dateM = moment(c.value);
           if (!dateM.isValid()) {
             error.dateError.message = "Invalid date";
             return error;
           } else {
-            if(dateM.get('year') < 1000) {
+            if (dateM.get('year') < 1000) {
               error.dateError.message = "Please enter 4 digit year";
               return error;
             }
           }
         }
-      }
-      return null;
-    };
+        return null;
+    }
   }
 
 
