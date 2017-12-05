@@ -32,7 +32,7 @@
       }"
       (keyup.enter)="updateUI($index, $event, child)"
       [title]="child.label + ' - ' + child.iconClass"
-      (click)="updateUI($index, $event)">
+      (click)="updateUI($index, $event, child)">
       <div class="content">
         <div class="title">{{child.label}}</div>
       </div>
