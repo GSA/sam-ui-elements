@@ -92,7 +92,7 @@ export class SamSidenavComponent implements OnInit {
   }
 
   updateUI(index: number, event: Event, menuItem: MenuItem): void {
-    if(menuItem.disabled){
+    if(menuItem && menuItem.disabled){
       return;
     }
     this.service.updateData(0, index);
