@@ -91,7 +91,10 @@ export class SamSidenavComponent implements OnInit {
     return this.service.getData()[0] === index;
   }
 
-  updateUI(index: number, event: Event): void {
+  updateUI(index: number, event: Event, menuItem: MenuItem): void {
+    if(menuItem && menuItem.disabled){
+      return;
+    }
     this.service.updateData(0, index);
     this.data.emit(this.service.getSelectedModel());
     this.path.emit(this.service.getPath());
