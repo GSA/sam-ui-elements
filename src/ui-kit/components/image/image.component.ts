@@ -21,13 +21,9 @@ export class SamImageComponent implements OnInit {
    */
   @Input() public editable: boolean = false;
   /**
-   * (deprecated) An event emitter that emits the file that the user uploaded.
-   */
-  @Output() public fileChange: EventEmitter<File> = new EventEmitter<File>();
-  /**
    * An event emitter that emits the file that the user uploaded.
    */
-  @Output() public onFileChange: EventEmitter<File> = new EventEmitter<File>();
+  @Output() public fileChange: EventEmitter<File> = new EventEmitter<File>();
 
   @ViewChild('componentContainer') private componentContainer: ElementRef;
   @ViewChild('filePicker') private filePicker: ElementRef;
@@ -99,7 +95,6 @@ export class SamImageComponent implements OnInit {
             this.tmpValue = null;
             this.tmpSrc = null;
             this.fileChange.emit(this.value);
-            this.onFileChange.emit(this.value);
           }
         },
         (error) => { console.error(error); }

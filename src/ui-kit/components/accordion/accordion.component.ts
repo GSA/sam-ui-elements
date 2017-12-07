@@ -3,21 +3,27 @@ import { Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 /**
  * The <sam-accordion-section> component can generates content for a single accordion item
- *
- * @Input headerText: string - Accordion header text
- * @Input isExpanded: boolean - Defines whether accordion item should be expanded when loaded
- * @Input name: string - populates the 'name' attribute for the accordion item for 508 compliance
- * @Output isExpandedChange: object - The accordion section that has changed is emitted back to parent
  */
 @Component({
   selector: 'sam-accordion-section',
   templateUrl: 'accordion.template.html'
 })
 export class SamAccordionSection implements OnInit {
-  
+  /**
+   * Accordion header text
+   */
   @Input() headerText: string;
+  /**
+   * Defines whether accordion item should be expanded when loaded
+   */
   @Input() isExpanded: boolean;
+  /**
+   * Populates the 'name' attribute for the accordion item for 508 compliance
+   */
   @Input() name: string;
+  /**
+   * The accordion section that has changed is emitted back to parent
+   */
   @Output() isExpandedChange: EventEmitter<SamAccordionSection> = new EventEmitter<SamAccordionSection>();
 
   constructor(
@@ -79,13 +85,9 @@ export class SamAccordionComponent implements OnInit {
   */
   @Input() expandIndex = -1;
   /**
-  * (deprecated) The index of the accordion item that has been opened/closed
+  * The index of the accordion item that has been opened/closed
   */
   @Output() selectedIndexChange: EventEmitter<number> = new EventEmitter<number>();
-  /**
-   * The index of the accordion item that has been opened/closed
-   */
-  @Output() onSelectedIndexChange: EventEmitter<number> = new EventEmitter<number>();
   public accordionClass:string = "usa-accordion";
   public sections: SamAccordionSection[] = [];
 
@@ -111,7 +113,6 @@ export class SamAccordionComponent implements OnInit {
     this.expandIndex = section.isExpanded ? section.index() : -1;
     this.collapseOthers(section);
     this.selectedIndexChange.emit(this.expandIndex);
-    this.onSelectedIndexChange.emit(this.expandIndex);
   }
 
   collapseOthers(section: SamAccordionSection) {

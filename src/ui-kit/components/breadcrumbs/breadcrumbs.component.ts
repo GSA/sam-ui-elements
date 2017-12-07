@@ -26,7 +26,7 @@ export class SamBreadcrumbsComponent {
     /**
      * Emits when crumb action occurs
      */
-    @Output() public onCrumbAction = new EventEmitter();
+    @Output() public crumbAction = new EventEmitter();
 
     private _routeSubscription: any;
     private count = 0;
@@ -107,6 +107,6 @@ export class SamBreadcrumbsComponent {
     }
     public crumbHandler(crumb: string) {
       this.crumbActionHandler.emit(crumb);
-      this.onCrumbAction.emit(crumb);
+      this.crumbAction.emit(crumb);
     }
 }

@@ -5,14 +5,14 @@
   [required]="required || requiredFlag">
   <textarea 
     [ngModel]="value"
-    [attr.class]="sam-text-area"
+    [attr.class]="'sam-text-area'"
     [attr.id]="name"
     [attr.placeholder]="placeholder"
     [attr.maxlength]="maxlength ? maxlength : 524288"
     [attr.aria-label]="'Text Area'"
     [disabled]="disabled"
-    (ngModelChange)="onInputHandler($event)"
-    (focus)="focusHandler($event)"
+    (ngModelChange)="onInputChange($event)"
+    (focus)="onFocus($event)"
     (blur)="onBlur()"
     (input)="inputEventHandler($event)">
   </textarea>

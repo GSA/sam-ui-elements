@@ -113,13 +113,9 @@ export class SamInfoAccordionComponent {
    */
   @Input() closeNotification:string = "";
   /**
-   * (deprecated) Emits notification event
-   */
-  @Output() updateNotification:EventEmitter<any> = new EventEmitter<any>();
-  /**
    * Emits notification event
    */
-  @Output() onNotification:EventEmitter<any> = new EventEmitter<any>();
+  @Output() updateNotification:EventEmitter<any> = new EventEmitter<any>();
 
   detailObj: any = {
     showDetail: false,
@@ -176,7 +172,6 @@ export class SamInfoAccordionComponent {
     }
     this.closeNotification = this.name;
     this.updateNotification.emit(this.closeNotification);
-    this.onNotification.emit(this.closeNotification);
     event.stopPropagation();
   }
 

@@ -36,11 +36,11 @@ export class SamSidenavComponent implements OnInit {
   /**
   * Event emitted on interaction, returns the selected menu item's path value
   */
-  @Output() onPathSelection: EventEmitter<string> = new EventEmitter<string>();
+  @Output() pathChange: EventEmitter<string> = new EventEmitter<string>();
   /**
   * Event emitted on interaction, returns the selected menu item
   */
-  @Output() onSelection: EventEmitter<any> = new EventEmitter<any>();
+  @Output() selection: EventEmitter<any> = new EventEmitter<any>();
   constructor(private service: SidenavService) { }
 
   ngOnInit(): void {
@@ -106,16 +106,16 @@ export class SamSidenavComponent implements OnInit {
     this.service.updateData(0, index);
     this.data.emit(this.service.getSelectedModel());
     this.path.emit(this.service.getPath());
-    this.onSelection.emit(this.service.getSelectedModel());
-    this.onPathSelection.emit(this.service.getPath());
+    this.selection.emit(this.service.getSelectedModel());
+    this.pathChange.emit(this.service.getPath());
     return;
   }
 
   emitChildData(event: Event): void {
     this.data.emit(event);
     this.path.emit(this.service.getPath());
-    this.onSelection.emit(event);
-    this.onPathSelection.emit(this.service.getPath());
+    this.selection.emit(event);
+    this.pathChange.emit(this.service.getPath());
     return;
   }
 }

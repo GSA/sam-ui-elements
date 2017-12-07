@@ -101,7 +101,7 @@ export class SamTabsComponent implements AfterContentInit {
   /**
    * Event emitted on tab selection
    */
-  @Output() onTabSelection = new EventEmitter();
+  @Output() tabChange = new EventEmitter();
 
   constructor(private cdr: ChangeDetectorRef){}
 
@@ -151,7 +151,7 @@ export class SamTabsComponent implements AfterContentInit {
     this.cdr.detectChanges();
     this.activeChange.emit(this.active);
     this.currentSelectedTab.emit(tab);
-    this.onTabSelection.emit(tab);
+    this.tabChange.emit(tab);
   }
 
 }
