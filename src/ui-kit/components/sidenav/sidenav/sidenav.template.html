@@ -2,9 +2,9 @@
   <ul class="usa-sidenav-list">
     <li *ngFor="let child of model.children; let $index = index">
       <a tabindex="0"
-        [ngClass]="{'usa-current': isSelected($index)}"
-        (keyup.enter)="updateUI($index, $event)"
-        (click)="updateUI($index, $event)">
+        [ngClass]="{'usa-current': isSelected($index), 'disabled': child.disabled}"
+        (keyup.enter)="updateUI($index, $event, child)"
+        (click)="updateUI($index, $event, child)">
           {{child.label}}
           <ng-container *ngIf="child?.iconClass">
             <i [ngClass]="child.iconClass"></i>
@@ -27,11 +27,12 @@
         'active': isSelected($index),
         'completed': child.iconClass == 'completed',
         'error': child.iconClass == 'error',
-        'pending': child.iconClass == 'pending'
+        'pending': child.iconClass == 'pending', 
+        'disabled': child.disabled
       }"
-      (keyup.enter)="updateUI($index, $event)"
+      (keyup.enter)="updateUI($index, $event, child)"
       [title]="child.label + ' - ' + child.iconClass"
-      (click)="updateUI($index, $event)">
+      (click)="updateUI($index, $event, child)">
       <div class="content">
         <div class="title">{{child.label}}</div>
       </div>

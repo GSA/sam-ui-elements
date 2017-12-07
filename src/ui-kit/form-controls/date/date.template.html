@@ -1,16 +1,16 @@
-<sam-fieldset-wrapper [label]="label" [errorMessage]="errorMessage" [hint]="hint" [required]="required">
+<sam-fieldset-wrapper #wrapper [label]="label" [errorMessage]="errorMessage" [hint]="hint" [required]="required">
   <div class="usa-date-of-birth date-group" style="overflow:auto;">
     <div class="usa-form-group usa-form-group-month">
       <label [attr.for]="monthName()">Month</label>
-      <input 
-        (focus)="triggerMonthTouch($event)" 
+      <input
+        (focus)="triggerMonthTouch($event)"
         (paste)="onMonthPaste($event)"
-        [attr.id]="monthName()" 
-        #month 
-        (keydown)="onMonthInput($event)" 
-        [ngModel]="model.month" 
+        [attr.id]="monthName()"
+        #month
+        (keydown)="onMonthInput($event)"
+        [ngModel]="model.month"
         (ngModelChange)="removalKeyHandler()"
-        class="usa-input-inline" 
+        class="usa-input-inline"
         [attr.aria-label]="monthName()"
         class="usa-form-control"
         name="date_month"
@@ -19,35 +19,35 @@
     </div>
     <div class="usa-form-group usa-form-group-day">
       <label [attr.for]="dayName()">Day</label>
-      <input 
-        (focus)="triggerDayTouch($event)" 
+      <input
+        (focus)="triggerDayTouch($event)"
         (paste)="onDayPaste($event)"
-        [attr.id]="dayName()" 
-        #day 
-        (keydown)="onDayInput($event)" 
-        [ngModel]="model.day" 
+        [attr.id]="dayName()"
+        #day
+        (keydown)="onDayInput($event)"
+        [ngModel]="model.day"
         (ngModelChange)="removalKeyHandler()"
-        class="usa-input-inline" 
+        class="usa-input-inline"
         [attr.aria-label]="dayName()"
-        class="usa-form-control" 
-        name="date_day" 
+        class="usa-form-control"
+        name="date_day"
         type="number"
         [disabled]="disabled">
     </div>
     <div class="usa-form-group usa-form-group-year">
       <label [attr.for]="yearName()">Year</label>
-      <input 
-        (focus)="triggerTouch()" 
+      <input
+        (focus)="triggerTouch()"
         (paste)="onYearPaste($event)"
-        [attr.id]="yearName()" 
-        #year 
-        (keydown)="onYearInput($event)" 
-        [ngModel]="model.year" 
+        [attr.id]="yearName()"
+        #year
+        (keydown)="onYearInput($event)"
+        [ngModel]="model.year"
         (ngModelChange)="removalKeyHandler()"
-        class="usa-input-inline" 
+        class="usa-input-inline"
         [attr.aria-label]="yearName()"
-        class="usa-form-control" 
-        name="date_year" 
+        class="usa-form-control"
+        name="date_year"
         type="number"
         [disabled]="disabled">
     </div>

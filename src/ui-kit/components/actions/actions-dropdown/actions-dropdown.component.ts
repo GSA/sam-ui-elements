@@ -44,7 +44,9 @@ export class SamActionsDropdownComponent {
   chooseAction(action) {
     this.toggleActions();
     this.emitAction.emit(action);
-    this.emitCallback.emit(action.callback());
+    if (action.callback) {
+      this.emitCallback.emit(action.callback());
+    }
     return;
   }
 }
