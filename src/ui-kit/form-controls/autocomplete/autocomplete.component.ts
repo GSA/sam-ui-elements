@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, forwardRef,
-         ViewChild, ElementRef, Optional, OnChanges, ChangeDetectorRef } from '@angular/core';
+         ViewChild, ElementRef, Optional, OnChanges, ChangeDetectorRef, TemplateRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { AutocompleteConfig } from '../../types';
@@ -77,7 +77,10 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
    * allowAny. This is useful if you do not want to respond to onChange events when the input is blurred.
    */
   @Output() public enterEvent: EventEmitter<any> = new EventEmitter();
-
+  /**
+   * Allow to insert a customized template for suggestions to use
+   */
+  @Input() itemTemplate: TemplateRef<any>;
 
   public results: Array<string>;
   public innerValue: any = '';

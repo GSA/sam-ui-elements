@@ -141,7 +141,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   /**
    * Allow to insert a customized template for suggestions to use
    */
-  @Input() itemTemplate: TemplateRef;
+  @Input() itemTemplate: TemplateRef<any>;
 
   /**
    * Allow to control whether display the category option in the result list or not
