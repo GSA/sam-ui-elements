@@ -80,7 +80,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   /**
    * Allow to insert a customized template for suggestions to use
    */
-  @Input() itemTemplate: TemplateRef;
+  @Input() itemTemplate: TemplateRef<any>;
 
   public results: Array<string>;
   public innerValue: any = '';
