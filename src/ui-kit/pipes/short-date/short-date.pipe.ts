@@ -5,9 +5,9 @@ import * as moment from 'moment';
   name: 'shortDate'
 })
 export class ShortDatePipe implements PipeTransform {
-  public sameDayFormat: string = 'hh:mmA';
-  public sameYearFormat: string = 'MMM DD hh:mmA';
-  public differentYearFormat: string = 'MMM DD YYYY hh:mmA';
+  public sameDayFormat: string = 'h:mmA';
+  public sameYearFormat: string = 'MMM DD h:mmA';
+  public differentYearFormat: string = 'MMM DD YYYY h:mmA';
 
   // fake now is added for testability. It is difficult to test based on the clock of the system.
   transform(dateStr, fakeNow?): string {
