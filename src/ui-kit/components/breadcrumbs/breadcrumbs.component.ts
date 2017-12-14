@@ -8,15 +8,20 @@ import { IBreadcrumb } from '../../types';
 })
 export class SamBreadcrumbsComponent {
     /**
-     * The crumbs property expects an array of breadcrumbs. The last in the list will be set as active
+     * The crumbs property expects an array of breadcrumbs. The last in the list
+     * will be set as active
      */
     @Input() crumbs: Array<IBreadcrumb>;
     /**
-     * The listenToRouter property uses the current route to generate breadcrumbs automagically. If applying this property, it is not necessary to provide crumbs via the crumb property.
+     * The listenToRouter property uses the current route to generate
+     * breadcrumbs automagically. If applying this property, it is not necessary
+     * to provide crumbs via the crumb property.
      */
     @Input() listenToRouter: boolean = false;
     /**
-     * The rootCrumb property takes a breadcrumb to be used for the root. It is only necessary to provide this if you are also using the listenToRouter property.
+     * The rootCrumb property takes a breadcrumb to be used for the root. It is
+     * only necessary to provide this if you are also using the listenToRouter
+     * property.
      */
     @Input() rootCrumb: IBreadcrumb = undefined;
 
@@ -27,10 +32,15 @@ export class SamBreadcrumbsComponent {
     constructor(private route: ActivatedRoute) {}
 
     ngOnInit() {
-      // If listenToRouter is true, use internal function to generate breadcrumbs from routes
+      /**
+       * If listenToRouter is true, use internal function to generate breadcrumbs
+       * from routes
+       */
       if (this.listenToRouter) {
         this.route.url.subscribe((segments: UrlSegment[]) => {
-          // Requires setTimeout to load data from route config before running getBreadcrumbs
+          // Data load needs to be delayed 
+          // Requires setTimeout to load data from route config before running
+          // getBreadcrumbs
           setTimeout(() => {
             this.crumbs = this.getBreadcrumbs(this.route.root);
           });
@@ -46,10 +56,15 @@ export class SamBreadcrumbsComponent {
     // }
 
     // Recursive function that takes a route and returns an array of IBreacrumbs from the root to the lowest child
-    getBreadcrumbs(route: ActivatedRoute, url: string = '', crumbs: Array<IBreadcrumb> = []): IBreadcrumb[] {
+    getBreadcrumbs(
+      route: ActivatedRoute,
+      url: string = '',
+      crumbs: Array<IBreadcrumb> = []): IBreadcrumb[] {
       // Get url from route snapshot
       // Appends to url string of parent
-      url += route.snapshot.url.reduce((prev, curr) =>  {return prev = prev + '/' + curr }, '');
+      url += route.snapshot.url.reduce((prev, curr) =>  {
+        return prev = prev + '/' + curr
+      }, '');
 
       // Creates a crumb from route snapshot data
       // Breadcrumb property is set on the data property of the route

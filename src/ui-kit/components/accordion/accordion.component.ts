@@ -48,7 +48,7 @@ export class SamAccordionSection implements OnInit {
 
   index() {
     let index = -1;
-    for(var i = 0; i < this.parent.sections.length; i++) {
+    for(let i = 0; i < this.parent.sections.length; i++) {
       if(this.parent.sections[i] == this) {
         index = i;
         break;
@@ -85,10 +85,6 @@ export class SamAccordionComponent implements OnInit {
 
   public accordionClass:string = "usa-accordion";
   public sections: SamAccordionSection[] = [];
-
-  constructor() {
-
-  }
 
   ngOnInit() {
     if (this.bordered) {
