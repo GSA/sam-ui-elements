@@ -24,7 +24,7 @@ export class SamBadgeComponent {
   };
 
   get attached(): string {
-    let classes = [],
+    const classes = [],
         options = this._options;
 
     if(options.attached) {

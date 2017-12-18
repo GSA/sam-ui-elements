@@ -1,5 +1,13 @@
-import { Component, Inject, forwardRef } from '@angular/core';
-import { Input, Output, EventEmitter, OnInit } from '@angular/core';
+import {
+  Component,
+  Inject,
+  forwardRef,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit
+} from '@angular/core';
+
 
 /**
  * The <sam-accordion-section> component can generates content for a single accordion item
@@ -49,7 +57,7 @@ export class SamAccordionSection implements OnInit {
   index() {
     let index = -1;
     for(let i = 0; i < this.parent.sections.length; i++) {
-      if(this.parent.sections[i] == this) {
+      if(this.parent.sections[i] === this) {
         index = i;
         break;
       }

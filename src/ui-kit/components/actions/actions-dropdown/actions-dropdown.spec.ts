@@ -12,11 +12,11 @@ describe('The Sam Actions Dropdown Component', () => {
   let emittedAction: any;
   let emittedCallbackResult: any;
 
-  let callback = () => {
+  const callback = () => {
     return 'success';
   }
 
-  let actions: Array<any> = [
+  const actions: Array<any> = [
     { name: 'edit', label: 'Edit', icon: 'fa fa-pencil', callback: callback},
     { name: 'delete', label: 'Delete', icon: 'fa fa-trash', callback: callback },
     { name: 'save', label: 'Save', icon: 'fa fa-floppy-o', callback: callback }
@@ -54,16 +54,17 @@ describe('The Sam Actions Dropdown Component', () => {
     actionButton.click();
     fixture.detectChanges();
 
-    let numberOfButtons = de.queryAll(By.css('button')).length;
+    const numberOfButtons = de.queryAll(By.css('button')).length;
+    const expectedLength = 4;
 
-    expect(numberOfButtons).toBe(4);
+    expect(numberOfButtons).toBe(expectedLength);
   });
 
   it('should hide list of action buttons when container loses focus', () => {
     document.body.click();
     fixture.detectChanges();
 
-    let numberOfButtons = de.queryAll(By.css('button')).length;
+    const numberOfButtons = de.queryAll(By.css('button')).length;
 
     expect(numberOfButtons).toBe(1);
   });
@@ -72,8 +73,8 @@ describe('The Sam Actions Dropdown Component', () => {
     actionButton.click();
     fixture.detectChanges();
 
-    let buttons = de.queryAll(By.css('button'));
-    let buttonList: DebugElement[] = buttons.slice(1, buttons.length);
+    const buttons = de.queryAll(By.css('button'));
+    const buttonList: DebugElement[] = buttons.slice(1, buttons.length);
     
     buttonList[0].triggerEventHandler('click', component.actions[0]);
 
@@ -84,8 +85,8 @@ describe('The Sam Actions Dropdown Component', () => {
     actionButton.click();
     fixture.detectChanges();
 
-    let buttons = de.queryAll(By.css('button'));
-    let buttonList: DebugElement[] = buttons.slice(1, buttons.length);
+    const buttons = de.queryAll(By.css('button'));
+    const buttonList: DebugElement[] = buttons.slice(1, buttons.length);
 
     buttonList[0].triggerEventHandler('click', component.actions[0]);
 

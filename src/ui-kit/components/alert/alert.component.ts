@@ -31,21 +31,19 @@ export class SamAlertComponent {
   /**
    * Give a boolean value to display show/hide toggle
    */
-  @Input() showMoreToggle = null;
+  @Input() showMoreToggle = undefined;
   /**
    * Emitted event when an alert is dismissed
    */
   @Output() dismiss: EventEmitter<any> = new EventEmitter<any>();
   types:any = {
+    "error": { class: "usa-alert-error", sr: "error alert"},
+    "info": { class: "usa-alert-info", sr: "info alert"},
     "success": { class: "usa-alert-success", sr: "success alert"},
     "warning": { class: "usa-alert-warning", sr: "warning alert"},
-    "error": { class: "usa-alert-error", sr: "error alert"},
-    "info": { class: "usa-alert-info", sr: "info alert"}
   };
-  selectedType: string = this.types['success'].class;
+  selectedType: string = this.types.success.class;
   showMoreLinkText = "Show Details";
-  constructor() {
-  }
 
   ngOnInit(){
     if(!this.typeNotDefined()){
@@ -59,7 +57,7 @@ export class SamAlertComponent {
   }
 
   typeNotDefined(){
-    if(!this.type || this.type.length==0){
+    if(!this.type || this.type.length === 0){
       return true;
     }
     if(!this.types[this.type]){

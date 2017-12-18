@@ -1,4 +1,4 @@
-import {TestBed, async, ComponentFixtureAutoDetect, ComponentFixture} from '@angular/core/testing';
+import {async, ComponentFixtureAutoDetect, ComponentFixture, TestBed} from '@angular/core/testing';
 import {Component} from '@angular/core';
 import {By} from '@angular/platform-browser';
 
@@ -107,10 +107,16 @@ describe('The Sam Accordion component', () => {
   
     beforeEach( async(() => {
       TestBed.configureTestingModule({
+        declarations: [
+          AccordionBordered,          
+          AccordionDefault,
+          AccordionInitialized,
+          SamAccordionComponent,
+          SamAccordionSection
+        ],
         providers: [
           { provide: ComponentFixtureAutoDetect, useValue: true }
         ],
-        declarations: [AccordionDefault, AccordionBordered, AccordionInitialized, SamAccordionComponent, SamAccordionSection]
       }).compileComponents();
     }));
     //section
@@ -119,7 +125,7 @@ describe('The Sam Accordion component', () => {
       component = getComponent(fixture);
       component.ngOnInit();
       fixture.detectChanges();
-      let el = fixture.debugElement.query(By.css('.usa-accordion-button')).nativeElement;
+      const el = fixture.debugElement.query(By.css('.usa-accordion-button')).nativeElement;
       expect(component.sections[0].isExpanded).toBe(false);
       el.click();
       expect(component.sections[0].isExpanded).toBe(true);
@@ -130,7 +136,7 @@ describe('The Sam Accordion component', () => {
       fixture = TestBed.createComponent(AccordionBordered);
       component = getComponent(fixture);
       component.ngOnInit();
-      let el = fixture.debugElement.query(By.css('ul'));
+      const el = fixture.debugElement.query(By.css('ul'));
       expect(el.nativeElement.classList.contains('usa-accordion')).toBeFalsy();
       expect(el.nativeElement.classList.contains('usa-accordion-bordered')).toBeTruthy();
     });
@@ -140,7 +146,7 @@ describe('The Sam Accordion component', () => {
       fixture = TestBed.createComponent(AccordionDefault);
       component = getComponent(fixture);
       component.ngOnInit();
-      let el = fixture.debugElement.query(By.css('ul'));
+      const el = fixture.debugElement.query(By.css('ul'));
       expect(el.nativeElement.classList.contains('usa-accordion')).toBeTruthy();
       expect(el.nativeElement.classList.contains('usa-accordion-bordered')).toBeFalsy();
     });
@@ -150,7 +156,7 @@ describe('The Sam Accordion component', () => {
       component = getComponent(fixture);
       component.ngOnInit();
       expect(component.expandIndex).toEqual(-1);
-      let el = fixture.debugElement.query(By.css('button'));
+      const el = fixture.debugElement.query(By.css('button'));
       el.nativeElement.click();
       expect(component.expandIndex).toEqual(0);
     });
@@ -159,7 +165,7 @@ describe('The Sam Accordion component', () => {
       fixture = TestBed.createComponent(AccordionInitialized);
       component = getComponent(fixture);
       component.ngOnInit();
-      let el = fixture.debugElement.query(By.css('button'));
+      const el = fixture.debugElement.query(By.css('button'));
       el.nativeElement.click();
       expect(component.expandIndex).toEqual(-1);
     });

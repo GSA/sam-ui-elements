@@ -4,12 +4,6 @@ import { Component, Injectable } from '@angular/core';
 export class SamAlertFooterService {
 
   private alerts: any = [];
-  
-  constructor() {}
-
-  ngOnInit() {}
-
-  ngOnDestroy() {}
 
   getAlerts(){
     return this.alerts;
@@ -21,7 +15,7 @@ export class SamAlertFooterService {
 
   dismissFooterAlert(i){
     this.alerts = this.alerts.filter(function(obj,idx){
-      if(idx==i){
+      if(idx === i){
         return false;
       }
       return true;

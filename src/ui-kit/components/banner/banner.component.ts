@@ -10,10 +10,6 @@ import { Component, Output, EventEmitter} from '@angular/core';
 export class SamBannerComponent {
   showDetail:boolean = false;
 
-  constructor() {}
-
-  ngOnInit(){}
-
   toggleDetails(){
     this.showDetail = !this.showDetail;
   }

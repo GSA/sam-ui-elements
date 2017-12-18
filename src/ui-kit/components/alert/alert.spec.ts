@@ -6,10 +6,10 @@ import {SimpleChanges} from '@angular/core';
 // Load the implementations that should be tested
 import {SamAlertComponent} from './alert.component';
 
-let defaultConfig = {
-  type: 'success',
-  title: 'i-am-a-title',
+const defaultConfig = {
   description: 'i-am-a-description',
+  title: 'i-am-a-title',
+  type: 'success',
 };
 
 describe('The Sam Alert component', () => {
@@ -31,7 +31,8 @@ describe('The Sam Alert component', () => {
     });
 
     it('should trigger dismiss on timer',()=>{
-      component.dismissTimer = 100;
+      const dismissTime = 100;
+      component.dismissTimer = dismissTime;
       component.dismiss.subscribe(()=>{
         //should get here
         expect(true).toBe(true);
@@ -60,8 +61,8 @@ describe('The Sam Alert component', () => {
   
     beforeEach(() => {
       TestBed.configureTestingModule({
+        declarations: [SamAlertComponent],        
         imports: [RouterTestingModule],
-        declarations: [SamAlertComponent],
       });
   
       fixture = TestBed.createComponent(SamAlertComponent);

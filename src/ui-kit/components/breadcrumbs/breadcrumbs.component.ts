@@ -62,8 +62,9 @@ export class SamBreadcrumbsComponent {
       crumbs: Array<IBreadcrumb> = []): IBreadcrumb[] {
       // Get url from route snapshot
       // Appends to url string of parent
-      url += route.snapshot.url.reduce((prev, curr) =>  {
-        return prev = prev + '/' + curr
+      let updatedUrl = url;
+      updatedUrl += route.snapshot.url.reduce((prev, curr) =>  {
+        return prev + '/' + curr
       }, '');
 
       // Creates a crumb from route snapshot data
@@ -80,14 +81,14 @@ export class SamBreadcrumbsComponent {
       let crumb: IBreadcrumb
       if (route.root === route) {
         crumb = {
+          breadcrumb: this.rootCrumb.breadcrumb,          
           url: this.rootCrumb.url,
-          breadcrumb: this.rootCrumb.breadcrumb
         }
         crumbs.push(crumb);
       } else {
         crumb = {
-          url: url,
-          breadcrumb: crumbLabel || '!!! You must set a breadcrumb on the data property of your route !!!'
+          breadcrumb: crumbLabel || '!!! You must set a breadcrumb on the data property of your route !!!',          
+          url: updatedUrl,
         }
         crumbs.push(crumb);
       }
@@ -101,7 +102,7 @@ export class SamBreadcrumbsComponent {
       // If route has children, recurse with child that is currently in the URL
       if (route.children.length > 0) {
         const currentChild: ActivatedRoute = this.getCurrentChild(route);
-        return this.getBreadcrumbs(currentChild, url, crumbs);
+        return this.getBreadcrumbs(currentChild, updatedUrl, crumbs);
       }
     }
 
@@ -109,7 +110,7 @@ export class SamBreadcrumbsComponent {
     getCurrentChild(route: ActivatedRoute): ActivatedRoute {
       return route.children.reduce((prev, curr) => {
         if (curr.outlet === 'primary') {
-          prev = curr;
+          return curr;
         }
         return prev;
       }, undefined);
