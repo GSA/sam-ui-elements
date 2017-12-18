@@ -1,169 +1,202 @@
 {
   "rules": {
-    // Typescript specific
-    "adjacent-overload-signatures": true, // goal: true -> overloaded 
-                                           // signatures must have same order
-    "ban-comma-operator": false, // goal: false 
-
-    "ban-types": [], // list of banned types, I doubt we need this
-    "member-access": false, // requires explicity visibility declaration files
-                            // leave this off unless we want to make a .d.ts for
-                            // every file
-    "member-ordering": true, // require all members of a class to follow an order
-    "no-any": false, // disallows any
-    "no-empty-interface": true, // goal: true? disallows empty interfaces
-    "no-import-side-effect": true, // goal: true, but we can provide module exclusions
-                                    // disallows imports that aren't static
-    "no-inferrable-types": false, // goal: false --> let inference happen
-    // "no-internal-modules": true, // goal: true, don't create module inside modules,
-                                  // use namespace instead
-    "no-magic-numbers": true, // goal: true?, don't use number unless they have variables
-                               // This means you can't use array accessors also though,
-                               // We can provide an array of overrides, -1, 0, 1 are allowed
-                               // by default
-    "no-namespace": false, // goal: false, don't allow internal modules or namespaces
-    "no-non-null-assertion": true, // goal: true, cancels out null check rules
-    "no-parameter-reassignment": true, // goal: true?
-    "no-reference": true, // goal: true, forces devs to use es6 imports
-    "no-unnecessary-type-assertion": true, // goal: true, if it can be inferred, don't type
-    "no-var-requires": true, // goal: true, use es6 modules
-    "only-arrow-functions": false, // goal: false, this is stupid and bad, ask me why
-    "prefer-for-of": true, // goal: true since its a warning, this should not error
-    "promise-function-async": false, // ** goal: false?, concerned with es6 collisions 
-    "typedef": false, // ** goal: true?, if so, can't make types on the fly, have to 
-                      // create a formal declaration. Good for the long term, but 
-                      // annoying for prototyping
-    "typedef-whitespace": false, // ** goal: true, but we need a large JSON object
-                                 // to specify each possible parameter on the schema
-    "unified-signatures": true, // goal: true, warns if optional params could be unified
-
-    // Functionality
-    "await-promise": false, // ** goal: true?, warns if awaited value isn't promise
-                            // but not sure if that disallows Observables
-    "ban": null, // ** we can manually ban globals or methods
-    "curly": true, // goal: true, forces devs to use curly braces 
-    "forin": false, // ** goal: false, requires for...in to use an if for filtering
-    "import-blacklist": null, // ** we can manually blacklist some imports
-    "label-position": true, // this is an obscure JS feature that allows things
-                            // to be labelled for easier reference. This conf 
-                            // option restricts that to do/for/while/switch
-                            // statements, which is what the feature was intended for
-    "no-arg": true, // goal: true, Disallows arguments.callee, this is obscure
-    "no-bitwise": true, // goal: true
-    "no-conditional-assignment": false, // goal: false, this would force us to 
-                                        // create variables ahead of time instead
-                                        // of on the fly, so for (let i = 0; )
-                                        // would break. This option is intended
-                                        // to catch typos where people intended 
-                                        // to compare but assigned instead
-    "no-console": false, // goal: true, but determine which console methodsa re allowed
-    "no-construct": true, // goal: false, don't use constructors for Number, String, Boolean
-    "no-debugger": false, // ** goal: true?, but this is useful for developers
+    "adjacent-overload-signatures": true,
+    "ban-comma-operator": false,
+    "ban-types": [],
+    "member-access": false,
+    "member-ordering": [
+      true,
+      "public-before-private",
+      "static-before-instance",
+      "variables-before-functions"
+    ],
+    "no-any": false, 
+    "no-empty-interface": true,
+    "no-import-side-effect": true,
+    "no-inferrable-types": false,
+    "no-magic-numbers": true,
+    "no-namespace": false,
+    "no-non-null-assertion": true,
+    "no-parameter-reassignment": true,
+    "no-reference": true,
+    "no-unnecessary-type-assertion": true,
+    "no-var-requires": true,
+    "only-arrow-functions": false,
+    "prefer-for-of": false,
+    "promise-function-async": false,
+    "typedef": false,
+    "typedef-whitespace": [
+      true,
+      {
+        "call-signature": "nospace",
+        "index-signature": "nospace",
+        "parameter": "nospace",
+        "property-declaration": "nospace",
+        "variable-declaration": "nospace"
+      },
+      {
+        "call-signature": "space",
+        "index-signature": "space",
+        "parameter": "space",
+        "property-declaration": "space",
+        "variable-declaration": "space"
+      }
+    ],
+    "unified-signatures": true,
+    "await-promise": false,
+    "ban": null,
+    "curly": true,
+    "forin": false,
+    "import-blacklist": null,
+    "label-position": true,
+    "no-arg": true,
+    "no-bitwise": true,
+    "no-conditional-assignment": false,
+    "no-console": [
+      true,
+      "debug",
+      "info",
+      "time",
+      "timeEnd",
+      "trace"
+    ],
+    "no-construct": true,
+    "no-debugger": false,
     "no-duplicate-super": true,
-    // "no-duplicate-switch-case": true, // goal: true, can't use same case twice
-    "no-duplicate-variable": true, // goal: true
-    "no-empty": true, // goal: true, can't have empty code blocks
-    "no-eval": true, // goal: true, shouldn't use eval
-    "no-floating-promises": true, // goal: true, promises should be resolved as promises
-    "no-for-in-array": true, // goal: true, for...in should be reservered for objects
-    // "no-implicit-dependencies": true, // goal: true, can't import dependencies that aren't part of package.json
-    "no-inferred-empty-object-type": true, // ** goal: true? 
-    "no-invalid-template-strings": true, // goal: true, warns if try to use temp literal syntax in non template string
-    "no-misused-new": true, // goal: true, must use new keyword correctly with classe
-    "no-null-keyword": true, // goal: true, only use undefined, not null and undefined
-    "no-object-literal-type-assertion": false, // ** goal: true?, this is useful in prototyping
-    // "no-return-await": true, // goal: true, removes useless syntax
-    "no-shadowed-variable": false, // ** goal: true? I never have issues with this, but this might be useful for non-javascript pros
-    "no-sparse-arrays": true, // goal: true, can't have blank elements in array literals, e.g., [1,,,3,4]
-    "no-string-literal": true, // goal: true, forces . notation unless property cannot be accessed otherwise
-    "no-string-throw": true, // goal: true, use Error object when throwing, not string
-    "no-submodule-imports": false, // goal: true with whitelisted packages
-    "no-switch-case-fall-through": true, // goal: true
-    "no-this-assignment": true, // ** goal: true?, typically an indicator you don't understand JS scope
-    "no-unbound-method": false, // goal: true with "ignore-static"
-    // "no-unnecessary-class": true, // goal: true -> Users who come from a Java-style OO language may wrap their utility functions in an extra class, instead of putting them at the top level.
-    "no-unsafe-any": true, // goal: true, keeps people from using any when they should use dynamic types
-    "no-unsafe-finally": true, // goal: true
-    "no-unused-expression": true, // goal: true
-    "no-unused-variable": true, // goal: true,
-    "no-use-before-declare": true, // ** goal: true?, JS does hoisting, JS devs are used to this, probably not good though
-    "no-var-keyword": true, // goal: true
-    "no-void-expression": true, // goal: true
-    "prefer-conditional-expression": true, // goal: true, use expression in conditional rather than reassigning a var
-    "prefer-object-spread": true, // goal: true, use spread over object.assign (ES6 feature)
-    "radix": true, // goal: true, enforce passing radix to parseInt
-    "restrict-plus-operands": true, // goal: true, this limits coercion
-    "strict-boolean-expressions": true, // goal: true, 
-    "strict-type-predicates": true, // goal: true, warns if what you are doing is always true or false
-    "switch-default": true, // goal: true, all switches must have a default
-    "triple-equals": true, // goal: true
-    "typeof-compare": true, // goal true, checks that you are comparing to a defined type value
-    "use-default-type-parameter": true, // goal: true, type inference
-    "use-isnan": true, // goal: true, use isNaN rather comparing to type
-    
-    // Maintainability
-    "cyclomatic-complexity": [true, 10], // goal: true, complexity 4
-    "deprecation": true, // goal: true, warn if deprecated api is used
-    "eofline": true, // goal: true, end file with new line
-    "indent": [true, "spaces", 2], // goal: [true, "spaces", 2]
-    "linebreak-style": false, // goal: true with additional configuration options
-    "max-classes-per-file": [true, 3], // goal: true, but we should pick a number
-    "max-file-line-count": false, // goal: true, initial 500 line limit
-    "max-line-length": false, // goal: true, 80
-    "no-default-export": false, // goal: false, this stops es6 exports
-    "no-duplicate-imports": true, // goal: true
-    "no-mergeable-namespace": true, // goal: true
-    "no-require-imports": true, // goal: true
-    "object-literal-sort-keys": true, // ** goal: true?, checks that they are in abc order
-    "prefer-const": true, // goal: true, prefer const over let if possible
-    "trailing-comma": false, // goal: false
-
-    // Style
-    "align": false, // goal: true? with additional config options
-    "array-type": false, // goal: true, but we get JSON, so
-    "arrow-parens": false, // goal: false
-    "arrow-return-shorthand": false, // goal: true
-    "binary-expression-operand-order": false, // goal: true, 
-    "callable-types": false, // goal: false
-    "class-name": false, // goal: true, Enforces PascalCased class and interface names
-    "comment-format": false, // goal: true
-    "completed-docs": false, // goal: true with options, enforces documentation
-    "encoding": false, // goal: true, enforces utf-8
-    "file-header": false, // goal: false
-    "import-spacing": false, // goal: true with options
-    "interface-name": false, // goal: false? interface must begin with capital I
-    "interface-over-type-literal": false, // goal: true, Prefer delcaration over literal
-    "jsdoc-format": false, // goal: true, create rules for comments
-    "match-default-export-name": false, // goal: true
-    "newline-before-return": false, // goal: true
-    "new-parens": false, // goal: true, requires parens when using new
-    "no-angle-bracket-type-assertion": false, // goal: true, false is deprecated
-    "no-boolean-literal-compare": false, // goal: true
-    "no-consecutive-blank-lines": false, // goal: true
-    "no-irregular-whitespace": false, // goal: true
-    "no-parameter-properties": false, // goal: false (Angular issues)
-    "no-redundant-jsdoc": false, // goal: true, duplicates Typescript behavior
-    "no-reference-import": false, // goal: true, false is redudant
-    "no-trailing-whitespace": false, // goal: true
-    "no-unnecessary-callback-wrapper": false, // goal: false, requires deep understanding of functions
-    "no-unnecessary-qualifier": false, // goal: true
-    "number-literal-format": false, // goal: true, enforces decimals starting with 0
-    "object-literal-key-quotes": false, // goal: true with options
-    "object-literal-shorthand": false, // goal: true (prefer es6 syntax)
-    "one-line": false, // goal: false
-    "one-variable-per-declaration": false, // goal: false
-    "ordered-imports": false, // goal: true, requires abc order in imports
-    "prefer-method-signature": false, // goal: true
-    "prefer-switch": false, // goal: true for performance reasons
-    "prefer-template": false, // goal: true, prefer templates over concat'ing strings with +
-    "quotemark": false, // goal: true, single quotes
-    "return-undefined": false, // goal: true, prefer explicit return
-    "semicolon": false, // goal: true with options
-    "space-before-function-paren": false, // goal: false
-    "space-within-parens": false, // goal: false
-    "switch-final-break": false, // goal: true (switch should end in break or return)
-    "type-literal-delimiter": false, // goal: true
-    "variable-name": false, // goal: true with options
-    "whitespace": false // goal: true
+    "no-duplicate-variable": true,
+    "no-empty": true,
+    "no-eval": true,
+    "no-floating-promises": true,
+    "no-for-in-array": true,
+    "no-inferred-empty-object-type": true,
+    "no-invalid-template-strings": true,
+    "no-misused-new": true,
+    "no-null-keyword": true,
+    "no-object-literal-type-assertion": false,
+    "no-shadowed-variable": false,
+    "no-sparse-arrays": true,
+    "no-string-literal": true,
+    "no-string-throw": true,
+    "no-submodule-imports": false,
+    "no-switch-case-fall-through": true,
+    "no-this-assignment": true,
+    "no-unbound-method": false,
+    "no-unsafe-any": true,
+    "no-unsafe-finally": true,
+    "no-unused-expression": true,
+    "no-unused-variable": true,
+    "no-use-before-declare": true,
+    "no-var-keyword": true,
+    "no-void-expression": true,
+    "prefer-conditional-expression": true,
+    "prefer-object-spread": true,
+    "radix": true,
+    "restrict-plus-operands": true,
+    "strict-boolean-expressions": true,
+    "strict-type-predicates": true,
+    "switch-default": true,
+    "triple-equals": [
+      true,
+      "allow-null-check"
+    ],
+    "typeof-compare": true,
+    "use-default-type-parameter": true,
+    "use-isnan": true,
+    "cyclomatic-complexity": [true, 10],
+    "deprecation": true,
+    "eofline": true,
+    "indent": [true, "spaces", 2],
+    "linebreak-style": false,
+    "max-classes-per-file": [true, 3],
+    "max-file-line-count": false,
+    "max-line-length": [
+      true,
+      80
+    ],
+    "no-default-export": false, 
+    "no-duplicate-imports": true,
+    "no-mergeable-namespace": true,
+    "no-require-imports": true,
+    "object-literal-sort-keys": false,
+    "prefer-const": true,
+    "trailing-comma": [
+      true,
+      {
+        "multiline": false,
+        "singleline": "never"
+      }
+    ],
+    "align": false,
+    "array-type": false,
+    "arrow-parens": false,
+    "arrow-return-shorthand": false,
+    "binary-expression-operand-order": false,
+    "callable-types": false,
+    "class-name": false,
+    "comment-format": [
+      true,
+      "check-space"
+    ],
+    "completed-docs": false,
+    "encoding": false,
+    "file-header": false,
+    "import-spacing": false,
+    "interface-name": false,
+    "interface-over-type-literal": false,
+    "jsdoc-format": false,
+    "match-default-export-name": false,
+    "newline-before-return": false,
+    "new-parens": false,
+    "no-angle-bracket-type-assertion": false,
+    "no-boolean-literal-compare": false,
+    "no-consecutive-blank-lines": false,
+    "no-irregular-whitespace": false,
+    "no-parameter-properties": false,
+    "no-redundant-jsdoc": false,
+    "no-reference-import": false,
+    "no-trailing-whitespace": false,
+    "no-unnecessary-callback-wrapper": false,
+    "no-unnecessary-qualifier": false,
+    "number-literal-format": false,
+    "object-literal-key-quotes": false,
+    "object-literal-shorthand": false,
+    "one-line": [
+      true,
+      "check-open-brace",
+      "check-catch",
+      "check-else",
+      "check-finally",
+      "check-whitespace"
+    ],
+    "one-variable-per-declaration": false,
+    "ordered-imports": false,
+    "prefer-method-signature": false,
+    "prefer-switch": false,
+    "prefer-template": false,
+    "quotemark": [
+      true,
+      "single",
+      "avoid-escape"
+    ],
+    "return-undefined": false,
+    "semicolon": [true, "always"],
+    "space-before-function-paren": false,
+    "space-within-parens": false,
+    "switch-final-break": false,
+    "type-literal-delimiter": false,
+    "variable-name": [
+      true,
+      "check-format",
+      "allow-leading-underscore",
+      "ban-keywords"
+    ],
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-separator",
+      "check-type"
+    ]
   }
 }

@@ -1,5 +1,11 @@
-import { Component, OnInit, NgModule } from '@angular/core';
-import { Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  NgModule,
+  Input,
+  Output,
+  EventEmitter
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SamMenuItemComponent } from '../menu-item';
 import { SidenavService } from '../services';
@@ -14,13 +20,14 @@ import { MenuItem } from '../interfaces';
 })
 export class SamSidenavComponent implements OnInit {
   /**
-  * Sets type of side navigation, currently there are two options 'default' & 'step'
-  */
-  @Input() type:string;
+   * Sets type of side navigation, currently there are two options 
+   * 'default' & 'step'
+   */
+  @Input() type: string;
   /**
   * Sets active selection in menu by matching to a label defined in the model
   */
-  @Input() labelLookup:string;
+  @Input() labelLookup: string;
   /**
   * Object that defines the sidenav labels, routes, and structure
   */
@@ -37,42 +44,47 @@ export class SamSidenavComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.model || !this.model.label || !this.model.children) {
-      throw new Error('You must include a model which implements the MenuItem interface to use this component.');
+      throw new Error('You must include a model which implements the MenuItem \
+        interface to use this component.');
     }
     if (!this.path) {
-      console.warn('You will not have access to path without including a callback for path.');
+      console.warn('You will not have access to path without including a \
+        callback for path.');
     }
     if (!this.data) {
-      console.warn('You will not have access to the data of the selected item without including a callback for data.');
+      console.warn('You will not have access to the data of the selected item \
+        without including a callback for data.');
     }
     this.service.setModel(this.model);
     this.service.setChildren(this.model.children);
   }
   
-  ngOnChanges(c){
-    if(c['labelLookup'] && this.labelLookup){
-      let selection = this.lookupLabelInModel(this.model.children,this.labelLookup,[]);
-      if(selection){
+  ngOnChanges(c) {
+    if (c.labelLookup && this.labelLookup) {
+      const selection =
+        this.lookupLabelInModel(this.model.children, this.labelLookup, []);
+      if (selection) {
         this.setSelection(selection);
       } else {
-        console.warn("no sidenav menu item found for \""+this.labelLookup+"\"");
+        console.warn(`no sidenav menu item found for "${this.labelLookup}"`);
       }
     }
   }
 
-  //recursive label lookup
-  lookupLabelInModel(list,lookup,trail){
-    if(!list || list.length==0){
+  // recursive label lookup
+  lookupLabelInModel(list, lookup, trail) {
+    if (!list || list.length === 0) {
       return false;
     } else {
-      for(let idx in list){
-        if(lookup==list[idx].label){
-          trail.push(parseInt(idx));
+      for (const idx in list) {
+        if (lookup === list[idx].label) {
+          trail.push(parseInt(idx, undefined));
           return trail;
         } else {
-          let updatedTrail = this.lookupLabelInModel(list[idx]['children'],lookup,trail);
-          if(updatedTrail){
-            updatedTrail.unshift(parseInt(idx));
+          const updatedTrail =
+            this.lookupLabelInModel(list[idx].children, lookup, trail);
+          if (updatedTrail) {
+            updatedTrail.unshift(parseInt(idx, undefined));
             return updatedTrail;
           }
         }
@@ -80,10 +92,10 @@ export class SamSidenavComponent implements OnInit {
     }
   }
 
-  setSelection(selection){
-    for(var i = 1; i <= selection.length; i++){
-      var idx = selection[i-1];
-      this.service.overrideData(i-1,idx);
+  setSelection(selection) {
+    for (let i = 1; i <= selection.length; i++){
+      const idx = selection[i - 1];
+      this.service.overrideData(i - 1, idx);
     }
   }
 
@@ -92,7 +104,7 @@ export class SamSidenavComponent implements OnInit {
   }
 
   updateUI(index: number, event: Event, menuItem: MenuItem): void {
-    if(menuItem && menuItem.disabled){
+    if (menuItem && menuItem.disabled) {
       return;
     }
     this.service.updateData(0, index);

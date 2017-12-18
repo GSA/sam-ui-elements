@@ -21,9 +21,21 @@ describe('SamCollapsibleComponent', () => {
     component = fixture.componentInstance;
     component.label = 'Test';
 
-    element = fixture.debugElement.query(By.css('.sam-collapsible')).nativeElement;
-    toggleButton = fixture.debugElement.query(By.css('.usa-button-link')).nativeElement;
-    collapsibleSection = fixture.debugElement.query(By.css('.collapsible-content')).nativeElement;
+    element = fixture.debugElement
+      .query(
+        By.css('.sam-collapsible')
+      )
+      .nativeElement;
+    toggleButton = fixture.debugElement
+      .query(
+        By.css('.usa-button-link')
+      )
+      .nativeElement;
+    collapsibleSection = fixture.debugElement
+      .query(
+        By.css('.collapsible-content')
+      )
+      .nativeElement;
   });
 
   it('should display collapsible content when expand clicked', () => {
@@ -43,5 +55,5 @@ describe('SamCollapsibleComponent', () => {
     component.ngOnChanges();
     fixture.detectChanges();
     expect(collapsibleSection.className).toContain('open');
-  })
+  });
 });

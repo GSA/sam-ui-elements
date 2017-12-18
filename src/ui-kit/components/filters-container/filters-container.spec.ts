@@ -5,8 +5,8 @@ import {By} from '@angular/platform-browser';
 import {SamFiltersContainerComponent} from './filters-container.component';
 
 describe('The Sam Filters Container component', () => {
-  let component:SamFiltersContainerComponent;
-  let fixture:any;
+  let component: SamFiltersContainerComponent;
+  let fixture: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

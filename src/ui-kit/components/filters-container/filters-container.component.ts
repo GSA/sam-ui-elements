@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 /**
  * Sam Filter Container Component
  * Component is used as a container for collapsible filters.
- * Child components included in this tag will conform to the styles applied on the container.
+ * Child components included in this tag will conform to the styles
+ * applied on the container.
  */
 @Component({
   selector: 'sam-filters-container',

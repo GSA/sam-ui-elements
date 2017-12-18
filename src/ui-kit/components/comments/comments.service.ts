@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { Comment } from './'
+import { Comment } from './';
 
 export class CommentsService {
 
@@ -22,17 +22,18 @@ export class CommentsService {
 
   getComments(): Observable<Comment[]> {
     return Observable.of(this._comments);
-  };
+  }
 
   postComment(_: any): Observable<Comment[]> {
     return Observable.of(this._comments);
-  };
+  }
 
   deleteComment(comment: Comment): Observable<Comment[]> {
     return Observable.of(this._comments);
-  };
+  }
 
   getInitialState(): Observable<Comment[]> {
-    return Observable.of(this._comments.slice(-2));
+    const lastTwo = -2;
+    return Observable.of(this._comments.slice(lastTwo));
   }
 }

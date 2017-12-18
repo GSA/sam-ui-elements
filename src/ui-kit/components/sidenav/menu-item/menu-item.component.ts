@@ -1,5 +1,4 @@
-import { Component, Input, Output } from '@angular/core';
-import { EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { SidenavService } from '../services';
 import { MenuItem } from '../interfaces';
 

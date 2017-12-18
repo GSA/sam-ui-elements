@@ -1,9 +1,16 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ViewChild, ElementRef, OnChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+  OnChanges } from '@angular/core';
 import { OptionsType } from '../../types';
 
 /**
- * The <sam-multiselect-dropdown> component provides a form control to multiselect a list
+ * The <sam-multiselect-dropdown> component provides a form control to\
+ * multiselect a list
  */
 @Component({
     selector: 'sam-multiselect-dropdown',
@@ -51,8 +58,6 @@ export class SamMultiSelectDropdownComponent implements OnChanges {
 
   public elementLabel: string;
 
-  constructor( ) { }
-
   ngOnChanges( ) {
     this.updateLabel();
   }
@@ -62,17 +67,18 @@ export class SamMultiSelectDropdownComponent implements OnChanges {
       this.elementLabel = this.label;
     } else if (this.model.length === 1) {
       this.elementLabel = this.labelForValue(this.model[0]);
-    } else if (this.model.length > 1 && this.model.length === this.options.length) {
+    } else if (this.model.length > 1 &&
+        this.model.length === this.options.length) {
       this.elementLabel = 'All';
     } else if (this.model.length > 1) {
-      this.elementLabel = 'Multiple '+this.label+' Selected';
+      this.elementLabel = `Multiple ${this.label}+' Selected`;
     } else {
       throw new Error('Unable to display dropdown label');
     }
   }
 
   labelForValue(val) {
-      let option = this.options.find(o => o.value === val);
+      const option = this.options.find(o => o.value === val);
       if (option) {
         return option.label;
       }
@@ -80,14 +86,21 @@ export class SamMultiSelectDropdownComponent implements OnChanges {
 
   toggleItemList(event) {
       if (this.isEnterEvent(event)) {
-          let element = this.list.nativeElement;
-          element.style.visibility = element.style.visibility !== 'visible' ? 'visible' : 'hidden';
+          const element = this.list.nativeElement;
+          element.style.visibility =
+            element.style.visibility !== 'visible' ?
+            'visible' :
+            'hidden';
       }
   }
 
   isEnterEvent(event) {
+    const enterKey = 32;
+    const spaceKey = 13;
     // Returns true if event is click or key code is enter (32) or space (13)
-    return event.type === 'click' || event.keyCode === 32 || event.keyCode === 13;
+    return event.type === 'click' ||
+      event.keyCode === enterKey ||
+      event.keyCode === spaceKey;
   }
 
   onMoveOutside( ) {

@@ -1,19 +1,18 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { EventEmitter, ElementRef } from '@angular/core';
-import { Injectable } from '@angular/core';
+import { EventEmitter, ElementRef, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { SamMenuItemComponent } from './';
-import { SamSidenavModule } from "../";
+import { SamSidenavModule } from '../';
 import { SidenavService } from '../services';
 import { SamUIKitModule } from '../../../index';
 
 import { data } from '../services/testdata';
 
 describe('The Sam MenuItem component', () => {
-  describe("isolated tests", ()=>{
-    let component:SamMenuItemComponent;
+  describe('isolated tests', () => {
+    let component: SamMenuItemComponent;
     let service: SidenavService;
     beforeEach(() => {
         service = new SidenavService();
@@ -21,23 +20,23 @@ describe('The Sam MenuItem component', () => {
         component = new SamMenuItemComponent(service);
     });
 
-    it("should support updateUI on changes",()=>{
-        component.data.subscribe(val=>{
-            expect(val["label"]).toBe("stuff");
+    it('should support updateUI on changes', () => {
+        component.data.subscribe(val => {
+            expect(val.label).toBe('stuff');
         });
-        component.updateUI(0, new Event("custom"));
+        component.updateUI(0, new Event('custom'), undefined);
     });
 
-    it("should emit on selecting children", ()=>{
-        component.data.subscribe(val=>{
+    it('should emit on selecting children', () => {
+        component.data.subscribe(val => {
             expect(val).toBe(true);
         });
         component.emitSelectedChild(true);
     });
   });
-  describe("rendered tests", ()=>{
-    let component:SamMenuItemComponent;
-    let fixture:any;
+  describe('rendered tests', () => {
+    let component: SamMenuItemComponent;
+    let fixture: any;
   
     beforeEach(() => {
       TestBed.configureTestingModule({

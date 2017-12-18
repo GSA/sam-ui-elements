@@ -1,1 +1,1 @@
-export { SamHistoryComponent } from "./history.component";
+export { SamHistoryComponent } from './history.component';

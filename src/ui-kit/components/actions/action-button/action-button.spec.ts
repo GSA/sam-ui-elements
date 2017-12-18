@@ -22,11 +22,11 @@ describe('The SAM Action Button Component', () => {
 
     comp = fixture.componentInstance;
     comp.action = {
-      callback: () => { return 'success' },      
+      callback: () => { return 'success'; },
       icon: 'fa fa-plus',
       label: 'Add',
       name: 'add',
-    }
+    };
     comp.disabled = false;
     de = fixture.debugElement;
     fixture.detectChanges();

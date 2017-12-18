@@ -1,7 +1,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { EventEmitter, ElementRef } from '@angular/core';
-import { Injectable } from '@angular/core';
+import { EventEmitter, ElementRef, Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { SamSidenavModule, SamSidenavComponent } from './';
@@ -11,35 +10,37 @@ import { SamUIKitModule } from '../../../index';
 import { data } from '../services/testdata';
 
 describe('The Sam Sidenav component', () => {
-  describe("isolated tests", ()=>{
-    let component:SamSidenavComponent;
+  describe('isolated tests', () => {
+    let component: SamSidenavComponent;
 
     beforeEach(() => {
       component = new SamSidenavComponent(new SidenavService());
     });
 
-    it("should support label lookup",()=>{
+    it('should support label lookup', () => {
       component.model = data;
-      let val = component.lookupLabelInModel(component.model.children,"Grandchild 1",[]);
-      //console.log(val);
+      const val =
+        component.lookupLabelInModel(
+          component.model.children, 'Grandchild 1', []
+        );
       expect(val[0]).toBe(0);
       expect(val[1]).toBe(0);
       expect(val[2]).toBe(0);
     });
 
-    it("should trigger events", ()=>{
-      component.data.subscribe(evt=>{
+    it('should trigger events', () => {
+      component.data.subscribe(evt => {
         expect(evt.returnValue).toBe(true);
       });
-      component.path.subscribe(val=>{       
-        expect(val).toBe("");
+      component.path.subscribe(val => {       
+        expect(val).toBe('');
       });
-      component.emitChildData(new Event("custom"));
+      component.emitChildData(new Event('custom'));
     });
   });
-  describe("rendered tests", ()=>{
-    let component:SamSidenavComponent;
-    let fixture:any;
+  describe('rendered tests', () => {
+    let component: SamSidenavComponent;
+    let fixture: any;
   
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -59,23 +60,30 @@ describe('The Sam Sidenav component', () => {
   
     it('should output top level labels', function () {
       fixture.detectChanges();
-      const item1 = fixture.debugElement.query(By.css('.usa-sidenav-list > li')).children[0].nativeElement;
+      const item1 =
+        fixture.debugElement
+          .query(By.css('.usa-sidenav-list > li'))
+          .children[0]
+          .nativeElement;
       expect(item1.textContent.trim()).toContain(data.children[0].label);
     });
     
     it('should update UI when sidenav item is selected', () => {
         fixture.detectChanges();
-        const item1 = fixture.debugElement.query(By.css('.usa-sidenav-list > li'));
+        const item1 =
+          fixture.debugElement.query(By.css('.usa-sidenav-list > li'));
         item1.children[0].nativeElement.click();
         fixture.detectChanges();
-        const subitem1 = item1.query(By.css('.usa-sidenav-sub_list > li')).nativeElement;
-        expect(subitem1.textContent.trim()).toContain(data.children[0]['children'][0].label);
+        const subitem1 =
+          item1.query(By.css('.usa-sidenav-sub_list > li')).nativeElement;
+        expect(subitem1.textContent.trim())
+          .toContain((data.children[0] as any).children[0].label);
      });
 
-     it("should pass override to service", ()=>{
+     it('should pass override to service', () => {
       component.model = data;
       component.ngOnInit();
-      component.setSelection([0,1,0]);
+      component.setSelection([0, 1, 0]);
     });
   });
 });

@@ -1,1 +1,1 @@
-export { SamDownloadComponent } from "./download.component";
+export { SamDownloadComponent } from './download.component';

@@ -1,5 +1,12 @@
-import { Component, Input } from '@angular/core';
-import { trigger, state, style, transition, animate } from '@angular/core';
+import {
+  Component,
+  Input,
+  trigger,
+  state,
+  style,
+  transition,
+  animate 
+ } from '@angular/core';
 import { DownloadPackageType } from '../../types';
 
 /**
@@ -53,26 +60,26 @@ export class SamDownloadComponent {
   * sets download all url link
   */
   @Input() public downloadAllUrl: string;
-  constructor() {}
 
-  public hasPublicPackages(){
-    for(let pkg of this.packages){
-      if(pkg.access.toLowerCase() === "public") {
+  public hasPublicPackages() {
+    for (const pkg of this.packages){
+      if (pkg.access.toLowerCase() === 'public') {
         return true; 
       }
     }
     return false;
   }
   
-  public toggleAccordion(card){
-    card.accordionState = card.accordionState == 'expanded' ? 'collapsed' : 'expanded';
+  public toggleAccordion(card) {
+    card.accordionState =
+      card.accordionState === 'expanded' ? 'collapsed' : 'expanded';
   }
   
-  private isSecure(field: string){
-    if(field.toLowerCase() === "public"){
-      return "Not Secure";
+  private isSecure(field: string) {
+    if (field.toLowerCase() === 'public') {
+      return 'Not Secure';
     } else {
-      return "Secured"
+      return 'Secured';
     }
   }
 }

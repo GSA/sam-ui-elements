@@ -14,11 +14,12 @@ describe('The Sam Actions Dropdown Component', () => {
 
   const callback = () => {
     return 'success';
-  }
+  };
 
   const actions: Array<any> = [
     { name: 'edit', label: 'Edit', icon: 'fa fa-pencil', callback: callback},
-    { name: 'delete', label: 'Delete', icon: 'fa fa-trash', callback: callback },
+    { callback: callback, icon: 'fa fa-trash',
+      label: 'Delete', name: 'delete' },
     { name: 'save', label: 'Save', icon: 'fa fa-floppy-o', callback: callback }
   ];
 
@@ -34,7 +35,9 @@ describe('The Sam Actions Dropdown Component', () => {
     component.actions = actions;
     component.disabled = false;
     component.emitAction.subscribe((_: any) => { emittedAction = _; });
-    component.emitCallback.subscribe((_: any) => { emittedCallbackResult = _; });
+    component
+      .emitCallback
+      .subscribe((_: any) => { emittedCallbackResult = _; });
 
     de = fixture.debugElement;
 
@@ -50,7 +53,8 @@ describe('The Sam Actions Dropdown Component', () => {
     expect(actionButton.disabled).toBe(true);
   });
 
-  it('should display a list of action buttons when top level button is clicked', () => {
+  it('should display a list of action buttons when top level button is clicked',
+    () => {
     actionButton.click();
     fixture.detectChanges();
 

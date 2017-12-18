@@ -1,4 +1,4 @@
-import { TestBed,inject } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
 import { Observable } from 'rxjs';
 import {  By  } from '@angular/platform-browser';
 
@@ -7,7 +7,7 @@ import { SamAlertFooterComponent, SamAlertFooterService } from './index';
 import { SamAlertComponent } from '../alert/alert.component';
 
 describe('The AlertFooter component', () => {
-  describe('isolated tests', ()=>{
+  describe('isolated tests', () => {
     let component: SamAlertFooterComponent;
     let service: SamAlertFooterService;
     beforeEach(() => {
@@ -23,18 +23,18 @@ describe('The AlertFooter component', () => {
       });
     });
 
-    //service
-    it('set and get alerts',()=>{
+    // service
+    it('set and get alerts', () => {
       const alerts = service.getAlerts();
       const expectedNumAlerts = 2;
       expect(alerts.length).toBe(expectedNumAlerts);
       expect(alerts[1].description).toBe('hello');
     });
 
-    it('should dismiss alert by index', ()=>{
+    it('should dismiss alert by index', () => {
       const expectedNumAlerts = 2;
       const alertIndex = 2;
-      service.dismissFooterAlert(alertIndex)
+      service.dismissFooterAlert(alertIndex);
       let alerts = service.getAlerts(); 
       expect(alerts.length).toBe(expectedNumAlerts);
       service.dismissFooterAlert(0);
@@ -42,13 +42,13 @@ describe('The AlertFooter component', () => {
       expect(alerts.length).toBe(1);
     });
   });
-  describe('rendered tests', ()=>{
+  describe('rendered tests', () => {
     let component: SamAlertFooterComponent;
     let fixture: any;
   
     beforeEach(() => {
       TestBed.configureTestingModule({
-        declarations: [ SamAlertFooterComponent,SamAlertComponent ],
+        declarations: [ SamAlertFooterComponent, SamAlertComponent ],
         imports: [ ],
         providers: [ SamAlertFooterService ]
       });
@@ -58,18 +58,22 @@ describe('The AlertFooter component', () => {
     });
   
   
-    it('should show 1 alert', inject([SamAlertFooterService],(alertFooterService) => {
+    it('should show 1 alert',
+      inject([SamAlertFooterService], (alertFooterService) => {
       fixture.detectChanges();
       alertFooterService.registerFooterAlert({
-        description:"test",
-        timer:0,        
-        title:"test",
-        type:'success',
+        description: 'test',
+        timer: 0,        
+        title: 'test',
+        type: 'success',
       });
       component.refreshAlerts();
       fixture.detectChanges();
-      //console.log(fixture.nativeElement.querySelector("samalert"));
-      expect(fixture.nativeElement.querySelectorAll("sam-alert").length).toBe(1);
+      // console.log(fixture.nativeElement.querySelector("samalert"));
+      expect(
+        fixture.nativeElement.querySelectorAll('sam-alert').length
+      )
+      .toBe(1);
     }));
   });
 });

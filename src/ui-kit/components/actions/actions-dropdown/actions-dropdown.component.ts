@@ -1,10 +1,11 @@
-import { Component,
-         Input,
-         Output,
-         EventEmitter,
-         ViewChild,
-         ElementRef
-        } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 
 import { SamActionInterface } from '../';
 

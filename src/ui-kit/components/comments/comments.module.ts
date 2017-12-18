@@ -11,14 +11,6 @@ import { SamTextAreaModule } from '../../form-controls/textarea';
 import { AccordionsModule } from '../accordion';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    SamTextAreaModule,
-    AccordionsModule,
-    SamPipesModule
-  ],
   declarations: [
     SamCommentsComponent,
     SamCommentComponent,
@@ -26,6 +18,14 @@ import { AccordionsModule } from '../accordion';
   exports: [
     SamCommentsComponent,
     SamCommentComponent,
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SamTextAreaModule,
+    AccordionsModule,
+    SamPipesModule
   ],
 })
 export class SamCommentsModule {}
