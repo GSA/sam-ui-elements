@@ -14,7 +14,7 @@
     "no-empty-interface": true,
     "no-import-side-effect": true,
     "no-inferrable-types": false,
-    "no-magic-numbers": true,
+    "no-magic-numbers": [true, -1, 0, 1, 2],
     "no-namespace": false,
     "no-non-null-assertion": true,
     "no-parameter-reassignment": true,
