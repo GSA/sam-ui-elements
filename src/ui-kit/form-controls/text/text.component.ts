@@ -142,6 +142,6 @@ export class SamTextComponent implements ControlValueAccessor {
   }
 
   writeValue(value) {
-    this.value = value;
+    this.value = value || '';
   }
 }
