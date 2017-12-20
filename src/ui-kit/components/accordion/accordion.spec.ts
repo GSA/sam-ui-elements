@@ -1,15 +1,27 @@
-import {TestBed, async, ComponentFixtureAutoDetect, ComponentFixture} from '@angular/core/testing';
-import {Component} from '@angular/core';
-import {By} from '@angular/platform-browser';
+import {
+  async,
+  ComponentFixtureAutoDetect,
+  ComponentFixture,
+  TestBed
+} from '@angular/core/testing';
+import { Component } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 // Load the implementations that should be tested
-import {SamAccordionComponent, SamAccordionSection} from "./accordion.component";
+import {
+  SamAccordionComponent,
+  SamAccordionSection
+} from './accordion.component';
 
 @Component({
   template: `
     <sam-accordion>
-      <sam-accordion-section name="aria-friendly-name">Content Goes Here</sam-accordion-section>
-      <sam-accordion-section name="a-different-aria-friendly-name">More Content Goes Here</sam-accordion-section>
+      <sam-accordion-section name="aria-friendly-name">
+        Content Goes Here
+      </sam-accordion-section>
+      <sam-accordion-section name="a-different-aria-friendly-name">
+        More Content Goes Here
+      </sam-accordion-section>
     </sam-accordion>
 `
 })
@@ -18,8 +30,12 @@ class AccordionDefault { }
 @Component({
   template: `
     <sam-accordion [bordered]="true">
-      <sam-accordion-section name="aria-friendly-name">Content Goes Here</sam-accordion-section>
-      <sam-accordion-section name="a-different-aria-friendly-name">More Content Goes Here</sam-accordion-section>
+      <sam-accordion-section name="aria-friendly-name">
+        Content Goes Here
+      </sam-accordion-section>
+      <sam-accordion-section name="a-different-aria-friendly-name">
+        More Content Goes Here
+      </sam-accordion-section>
     </sam-accordion>
 `
 })
@@ -28,138 +44,163 @@ class AccordionBordered { }
 @Component({
   template: `
     <sam-accordion [expandIndex]="0">
-      <sam-accordion-section name="aria-friendly-name">Content Goes Here</sam-accordion-section>
-      <sam-accordion-section name="a-different-aria-friendly-name">More Content Goes Here</sam-accordion-section>
+      <sam-accordion-section name="aria-friendly-name">
+        Content Goes Here
+      </sam-accordion-section>
+      <sam-accordion-section name="a-different-aria-friendly-name">
+        More Content Goes Here
+      </sam-accordion-section>
     </sam-accordion>
 `
 })
 class AccordionInitialized { }
 
 function getComponent(fix: any) {
-  return fix.debugElement.query(By.directive(SamAccordionComponent)).componentInstance;
+  return fix
+    .debugElement
+    .query(
+      By.directive(SamAccordionComponent)
+    )
+    .componentInstance;
 }
 
 describe('The Sam Accordion component', () => {
   describe('isolated tests', () => {
-    let component:SamAccordionComponent;
-    let sectionComponent:SamAccordionSection;
-    let sectionComponent2:SamAccordionSection;
-    beforeEach(()=>{
+    let component: SamAccordionComponent;
+    let sectionComponent: SamAccordionSection;
+    let sectionComponent2: SamAccordionSection;
+    beforeEach(() => {
       component = new SamAccordionComponent();
       sectionComponent = new SamAccordionSection(component);
       sectionComponent2 = new SamAccordionSection(component);
     });
-    //section
-    it('should check for "name" prop and throw error', ()=>{
-      try{
+    // section
+    it('should check for "name" prop and throw error', () => {
+      try {
         sectionComponent.ngOnInit();
-        //shouldn't get here
+        // shouldn't get here
         expect(false).toBe(true);
-      } catch (e){
+      } catch (e) {
         expect(true).toBe(true);
       }
     });
-    
-    it('should return index', ()=>{
+
+    it('should return index', () => {
       expect(sectionComponent.index()).toBe(0);
     });
-    it('should expand section', ()=>{
+    it('should expand section', () => {
       sectionComponent.isExpanded = false;
       sectionComponent.expand();
       expect(sectionComponent.isExpanded).toBe(true);
     });
 
-    it('should collpase section', ()=>{
+    it('should collpase section', () => {
       sectionComponent.isExpanded = true;
       sectionComponent.collapse();
       expect(sectionComponent.isExpanded).toBe(false);
     });
 
-    //accordion
-    it('should collapse all sections', ()=>{
+    // accordion
+    it('should collapse all sections', () => {
       sectionComponent.expand();
       expect(sectionComponent.isExpanded).toBe(true);
       component.collapseAll();
       expect(sectionComponent.isExpanded).toBe(false);
     });
 
-    it('should add border class and set initial index', ()=>{
+    it('should add border class and set initial index', () => {
       component.bordered = true;
       component.expandIndex = 0;
       component.ngOnInit();
-      expect(component.accordionClass).toBe("usa-accordion-bordered");
+      expect(component.accordionClass).toBe('usa-accordion-bordered');
       expect(sectionComponent.isExpanded).toBe(true);
     });
 
-    it('should provide an output when a section expands', ()=>{
+    it('should provide an output when a section expands', () => {
       component.ngOnInit();
       sectionComponent.expand();
       component.expandedChanged(sectionComponent);
-      component.selectedIndexChange.subscribe(idx=>{
+      component.selectedIndexChange.subscribe(idx => {
         expect(idx).toBe(0);
       });
     });
   });
 
-  describe('integration tests', ()=> {
-    let component:SamAccordionComponent;
-    let fixture:any;
-  
+  describe('integration tests', () => {
+    let component: SamAccordionComponent;
+    let fixture: any;
+
     beforeEach( async(() => {
       TestBed.configureTestingModule({
+        declarations: [
+          AccordionBordered,
+          AccordionDefault,
+          AccordionInitialized,
+          SamAccordionComponent,
+          SamAccordionSection
+        ],
         providers: [
           { provide: ComponentFixtureAutoDetect, useValue: true }
         ],
-        declarations: [AccordionDefault, AccordionBordered, AccordionInitialized, SamAccordionComponent, SamAccordionSection]
       }).compileComponents();
     }));
-    //section
-    it('should toggle expanded', ()=>{
+    // section
+    it('should toggle expanded', () => {
       fixture = TestBed.createComponent(AccordionDefault);
       component = getComponent(fixture);
       component.ngOnInit();
       fixture.detectChanges();
-      let el = fixture.debugElement.query(By.css('.usa-accordion-button')).nativeElement;
+      const el = fixture
+        .debugElement
+        .query(
+          By.css('.usa-accordion-button')
+        )
+        .nativeElement;
       expect(component.sections[0].isExpanded).toBe(false);
       el.click();
       expect(component.sections[0].isExpanded).toBe(true);
     });
 
-    //accordion
+    // accordion
     it('should display an accordion with a border', () => {
       fixture = TestBed.createComponent(AccordionBordered);
       component = getComponent(fixture);
       component.ngOnInit();
-      let el = fixture.debugElement.query(By.css('ul'));
+      const el = fixture.debugElement.query(By.css('ul'));
       expect(el.nativeElement.classList.contains('usa-accordion')).toBeFalsy();
-      expect(el.nativeElement.classList.contains('usa-accordion-bordered')).toBeTruthy();
+      expect(
+        el.nativeElement.classList.contains('usa-accordion-bordered')
+      )
+      .toBeTruthy();
     });
-  
-  
+
     it('should display sam accordions without border', function () {
       fixture = TestBed.createComponent(AccordionDefault);
       component = getComponent(fixture);
       component.ngOnInit();
-      let el = fixture.debugElement.query(By.css('ul'));
+      const el = fixture.debugElement.query(By.css('ul'));
       expect(el.nativeElement.classList.contains('usa-accordion')).toBeTruthy();
-      expect(el.nativeElement.classList.contains('usa-accordion-bordered')).toBeFalsy();
+      expect(
+        el.nativeElement.classList.contains('usa-accordion-bordered')
+      )
+      .toBeFalsy();
     });
-  
+
     it('should expand the first section', function () {
       fixture = TestBed.createComponent(AccordionDefault);
       component = getComponent(fixture);
       component.ngOnInit();
       expect(component.expandIndex).toEqual(-1);
-      let el = fixture.debugElement.query(By.css('button'));
+      const el = fixture.debugElement.query(By.css('button'));
       el.nativeElement.click();
       expect(component.expandIndex).toEqual(0);
     });
-  
+
     it('should close a section', function () {
       fixture = TestBed.createComponent(AccordionInitialized);
       component = getComponent(fixture);
       component.ngOnInit();
-      let el = fixture.debugElement.query(By.css('button'));
+      const el = fixture.debugElement.query(By.css('button'));
       el.nativeElement.click();
       expect(component.expandIndex).toEqual(-1);
     });

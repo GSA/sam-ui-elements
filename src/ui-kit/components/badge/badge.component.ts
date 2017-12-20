@@ -21,13 +21,13 @@ export class SamBadgeComponent {
 
   @Input() set options(config: BadgeConfig) {
     this._options = pick(config, ['attached']);
-  };
+  }
 
   get attached(): string {
-    let classes = [],
+    const classes = [],
         options = this._options;
 
-    if(options.attached) {
+    if (options.attached) {
       classes.push(
         options.attached.replace(/-/g, ' '),
         'attached'

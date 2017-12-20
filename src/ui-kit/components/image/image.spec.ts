@@ -5,6 +5,9 @@ import { DebugElement } from '@angular/core';
 import { SamImageComponent } from './';
 
 describe('The Sam Image Component', () => {
+  const washingtonImg = 
+    'https://upload.wikimedia.org/wikipedia/commons/c/c6/Georgewashington.jpg';
+
   let fixture: ComponentFixture<SamImageComponent>;
   let component: SamImageComponent;
   let de: DebugElement;
@@ -23,19 +26,18 @@ describe('The Sam Image Component', () => {
     component.editable = true;
     component.fileChange.subscribe((file: File) => {
       emittedFile = file;
-    })
-    component.src = "https://upload.wikimedia.org/wikipedia/commons/c/c6/Georgewashington.jpg"
-
+    });
+    component.src = washingtonImg;
     fixture.detectChanges();
   });
 
   it('has an edit button that opens file upload', () => {
-    let buttonEl: DebugElement = de.query(By.css('button.edit-button'));
+    const buttonEl: DebugElement = de.query(By.css('button.edit-button'));
 
-    buttonEl.triggerEventHandler('click', null);
+    buttonEl.triggerEventHandler('click', undefined);
     fixture.detectChanges();
     
-    let fileInputEl: DebugElement = de.query(By.css('input[file]'));
+    const fileInputEl: DebugElement = de.query(By.css('input[file]'));
     expect(fileInputEl).toBeDefined();
   });
 
@@ -43,7 +45,8 @@ describe('The Sam Image Component', () => {
     component.editable = false;
     fixture.detectChanges();
 
-    let buttonEl: HTMLButtonElement = de.query(By.css('button.edit-button')).nativeElement;
+    const buttonEl: HTMLButtonElement =
+      de.query(By.css('button.edit-button')).nativeElement;
     expect(buttonEl.disabled).toBe(true);
   });
 });

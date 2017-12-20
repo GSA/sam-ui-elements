@@ -9,63 +9,66 @@ import { ActivatedRoute } from '@angular/router';
 import {SamBreadcrumbsComponent} from './breadcrumbs.component';
 
 describe('The Sam Breadcrumbs component', () => {
-  describe('isolated tests', ()=>{
-    let component:SamBreadcrumbsComponent;
-    let mock = {
-      url: new Subject(),
-      route:{
-        root:{
-          snapshot:{
+  describe('isolated tests', () => {
+    let component: SamBreadcrumbsComponent;
+    const mock = {
+      route: {
+        root: {
+          children: [],
+          snapshot: {
             url: {
-              reduce:(callback,str)=>{
-                return '/'
+              reduce: (callback, str) => {
+                return '/';
               }
             }
           },
-          url:null,
-          children:[]
+          url: undefined,
         }
-      }
+      },
+      url: new Subject(),
     };
     beforeEach(() => {
       component = new SamBreadcrumbsComponent(<any>mock);
     });
 
-    it('should emit events',()=>{
-      component.crumbActionHandler.subscribe(str=>{
+    it('should emit events', () => {
+      component.crumbActionHandler.subscribe(str => {
         expect(str).toBe('test string');
       });
       component.crumbHandler('test string');
     });
 
-    it('should listen to router', ()=>{
+    it('should listen to router', () => {
       component.listenToRouter = true;
       component.ngOnInit();
       mock.url.next({
-        root:'test'
+        root: 'test'
       });
       component.getBreadcrumbs(mock.route.root as ActivatedRoute);
     });
   });
-  describe('rendered tests', ()=>{
-    let component:SamBreadcrumbsComponent;
-    let fixture:any;
+  describe('rendered tests', () => {
+    let component: SamBreadcrumbsComponent;
+    let fixture: any;
   
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [RouterTestingModule],
         declarations: [SamBreadcrumbsComponent],
+        imports: [RouterTestingModule],
       });
   
       fixture = TestBed.createComponent(SamBreadcrumbsComponent);
       component = fixture.componentInstance;
-      component.crumbs = [{
+      component.crumbs = [
+        {
+          breadcrumb: 'test1',
           url: 'testlinks/test1',
-          breadcrumb: 'test1'
-      },{
+        },
+        {
+          breadcrumb: 'test2',
           url: 'testlinks/test1',
-          breadcrumb: 'test2'
-      }];
+        }
+      ];
     });
   
     it('should compile', function () {
@@ -75,9 +78,19 @@ describe('The Sam Breadcrumbs component', () => {
     
     it('should populate with crumbs', function () {
       fixture.detectChanges();
-      let el = fixture.debugElement.query(By.css('.sam-breadcrumbs li:nth-child(1)')).nativeElement;
+      
+      let el = fixture.debugElement
+        .query(
+          By.css('.sam-breadcrumbs li:nth-child(1)')
+        )
+        .nativeElement;
       expect(el.textContent.trim()).toBe('test1');
-      el = fixture.debugElement.query(By.css('.sam-breadcrumbs li:nth-child(2)')).nativeElement;
+
+      el = fixture.debugElement
+        .query(
+          By.css('.sam-breadcrumbs li:nth-child(2)')
+        )
+        .nativeElement;
       expect(el.textContent.trim()).toBe('test2');
     });
   });

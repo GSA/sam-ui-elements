@@ -5,10 +5,10 @@ import {By} from '@angular/platform-browser';
 import {SamPaginationComponent} from './pagination.component';
 
 describe('The Sam Pagination component', () => {
-  let component:SamPaginationComponent;
-  let fixture:any;
+  let component: SamPaginationComponent;
+  let fixture: any;
 
-  let defaultOptions: any = {
+  const defaultOptions: any = {
     totalPages: 20,
     currentPage: 10,
   };
@@ -24,53 +24,81 @@ describe('The Sam Pagination component', () => {
     component.currentPage = defaultOptions.currentPage;
   });
 
-  it('should show 3 pages before and after the current page, the first page, the last page, two ellipsis, the previous and next buttons', () => {
+  it('should show 3 pages before and after the current page, the first page, \
+    the last page, two ellipsis, the previous and next buttons', () => {
     fixture.detectChanges();
-    let paginationItems = fixture.debugElement.queryAll(By.css('.usa-pagination li'));
-    expect(paginationItems.length).toBe(9 + 2 + 2);
-    let ellipsis = fixture.debugElement.queryAll(By.css('.usa-pagination li span'));
-    expect(ellipsis.length).toBe(2);
-    let nextButton = fixture.debugElement.query(By.css('.page-next'));
+
+    const paginationItems = fixture.debugElement
+      .queryAll(By.css('.usa-pagination li'));
+    const expectedLen = 13;
+    expect(paginationItems.length).toBe(expectedLen);
+
+    const ellipsis = fixture.debugElement
+      .queryAll(By.css('.usa-pagination li span'));
+    const expectedLen2 = 2;
+    expect(ellipsis.length).toBe(expectedLen2);
+
+    const nextButton = fixture.debugElement.query(By.css('.page-next'));
     expect(nextButton).toBeTruthy();
-    let previousButton = fixture.debugElement.query(By.css('.page-previous'));
+
+    const previousButton = fixture.debugElement.query(By.css('.page-previous'));
     expect(previousButton).toBeTruthy();
-    let currentButton = fixture.debugElement.query(By.css('.usa-current'));
-    expect(currentButton.nativeElement.innerHTML).toBe("10");
+
+    const currentButton = fixture.debugElement.query(By.css('.usa-current'));
+    expect(currentButton.nativeElement.innerHTML).toBe('10');
   });
 
   /*
    * Ellipsis tests
    */
-  it('should hide the first and last ellipsis if the current page is 10 or fewer pages from the last page', () => {
-    component.totalPages = 10;
-    component.currentPage = 5;
+  it('should hide the first and last ellipsis if the current page is 10 or \
+    fewer pages from the last page', () => {
+    const totalPages = 10;
+    component.totalPages = totalPages;
+    const currPage = 5;
+    component.currentPage = currPage;
     fixture.detectChanges();
-    let paginationItems = fixture.debugElement.queryAll(By.css('.usa-pagination li'));
-    expect(paginationItems.length).toBe(10 + 2);
-    let lastEllipsis = fixture.debugElement.query(By.css('.last-ellipsis'));
+
+    const paginationItems =
+      fixture.debugElement.queryAll(By.css('.usa-pagination li'));
+    const expected = 12;
+    expect(paginationItems.length).toBe(expected);
+
+    const lastEllipsis = fixture.debugElement.query(By.css('.last-ellipsis'));
      expect(lastEllipsis).toBeFalsy();
-    let firstEllipsis = fixture.debugElement.query(By.css('.first-ellipsis'));
+
+    const firstEllipsis = fixture.debugElement.query(By.css('.first-ellipsis'));
     expect(firstEllipsis).toBeFalsy();
-    let currentButton = fixture.debugElement.query(By.css('.usa-current'));
-    expect(currentButton.nativeElement.innerHTML).toBe("5");
+
+    const currentButton = fixture.debugElement.query(By.css('.usa-current'));
+    expect(currentButton.nativeElement.innerHTML).toBe('5');
+
   });
 
-  it('should hide the first ellipsis if the current page is 5 or fewer pages from the first page', () => {
-    component.currentPage = 5;
+  it('should hide the first ellipsis if the current page is 5 or fewer pages \
+    from the first page', () => {
+    const currPage = 5;
+    component.currentPage = currPage;
     fixture.detectChanges();
-    let ellipsis = fixture.debugElement.query(By.css('.first-ellipsis'));
+
+    const ellipsis = fixture.debugElement.query(By.css('.first-ellipsis'));
     expect(ellipsis).toBeFalsy();
-    let currentButton = fixture.debugElement.query(By.css('.usa-current'));
-    expect(currentButton.nativeElement.innerHTML).toBe("5");
+
+    const currentButton = fixture.debugElement.query(By.css('.usa-current'));
+    expect(currentButton.nativeElement.innerHTML).toBe('5');
   });
 
-  it('should hide the last ellipsis if the current page is 5 pages away from from the last page', () => {
-    component.currentPage = 15;
+  it('should hide the last ellipsis if the current page is 5 pages away from \
+    from the last page', () => {
+    const currPage = 15;
+    component.currentPage = currPage;
     fixture.detectChanges();
-    let ellipsis = fixture.debugElement.query(By.css('.last-ellipsis'));
+
+    const ellipsis = fixture.debugElement.query(By.css('.last-ellipsis'));
     expect(ellipsis).toBeFalsy();
-    let currentButton = fixture.debugElement.query(By.css('.usa-current'));
-    expect(currentButton.nativeElement.innerHTML).toBe("15");
+
+    const currentButton = fixture.debugElement.query(By.css('.usa-current'));
+    expect(currentButton.nativeElement.innerHTML).toBe('15');
   });
 
   /*
@@ -79,13 +107,13 @@ describe('The Sam Pagination component', () => {
   it('should hide the previous button if the page is 1', () => {
     component.currentPage = 1;
     fixture.detectChanges();
-    let previousButton = fixture.debugElement.query(By.css('.page-previous'));
+    const previousButton = fixture.debugElement.query(By.css('.page-previous'));
     expect(previousButton).toBeFalsy();
   });
 
   it('should hide the next button if the page is the last page', () => {
     component.currentPage = defaultOptions.totalPages;
-    let nextButton = fixture.debugElement.query(By.css('.page-next'));
+    const nextButton = fixture.debugElement.query(By.css('.page-next'));
     expect(nextButton).toBeFalsy();
   });
 
@@ -96,30 +124,34 @@ describe('The Sam Pagination component', () => {
     component.currentPage = 1;
     component.totalPages = 1;
     fixture.detectChanges();
-    let pageButtons = fixture.debugElement.queryAll(By.css('.page-button'));
+    const pageButtons = fixture.debugElement.queryAll(By.css('.page-button'));
     expect(pageButtons.length).toBe(1);
-    let currentButton = fixture.debugElement.query(By.css('.usa-current'));
-    expect(currentButton.nativeElement.innerHTML).toBe("1");
+    const currentButton = fixture.debugElement.query(By.css('.usa-current'));
+    expect(currentButton.nativeElement.innerHTML).toBe('1');
   });
 
   it('should show two buttons if there are two pages', () => {
     component.currentPage = 1;
-    component.totalPages = 2;
+    const totalPages = 2;
+    component.totalPages = totalPages;
     fixture.detectChanges();
-    let pageButtons = fixture.debugElement.queryAll(By.css('.page-button'));
-    expect(pageButtons.length).toBe(2);
-    let currentButton = fixture.debugElement.query(By.css('.usa-current'));
-    expect(currentButton.nativeElement.innerHTML).toBe("1");
+
+    const pageButtons = fixture.debugElement.queryAll(By.css('.page-button'));
+    const expectedLength = 2;
+    expect(pageButtons.length).toBe(expectedLength);
+
+    const currentButton = fixture.debugElement.query(By.css('.usa-current'));
+    expect(currentButton.nativeElement.innerHTML).toBe('1');
   });
 
   it('should show ten buttons if there are ten pages', () => {
     component.currentPage = 1;
-    component.totalPages = 10;
+    const totalPages = 10;
+    component.totalPages = totalPages;
     fixture.detectChanges();
-    let pageButtons = fixture.debugElement.queryAll(By.css('.page-button'));
-    expect(pageButtons.length).toBe(10);
-    let currentButton = fixture.debugElement.query(By.css('.usa-current'));
-    expect(currentButton.nativeElement.innerHTML).toBe("1");
+    const pageButtons = fixture.debugElement.queryAll(By.css('.page-button'));
+    expect(pageButtons.length).toBe(totalPages);
+    const currentButton = fixture.debugElement.query(By.css('.usa-current'));
+    expect(currentButton.nativeElement.innerHTML).toBe('1');
   });
-
 });

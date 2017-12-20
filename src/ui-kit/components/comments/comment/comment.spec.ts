@@ -11,13 +11,15 @@ import { SamCommentComponent } from './';
 describe('The Sam Comment component', () => {
   let component: SamCommentComponent;
   let fixture: any;
+  const imgUrl =
+    'https://upload.wikimedia.org/wikipedia/commons/c/c6/Georgewashington.jpg';
 
   const comment: Comment = {
-    username: 'george-washington@gsa.gov',
-    text: "I did not chop down that cherry tree",
     datetime: new Date(),
-    image: 'https://upload.wikimedia.org/wikipedia/commons/c/c6/Georgewashington.jpg'
-  } 
+    image: imgUrl,
+    text: 'I did not chop down that cherry tree',
+    username: 'george-washington@gsa.gov',
+  };
   
   
   beforeEach(() => {
@@ -32,7 +34,11 @@ describe('The Sam Comment component', () => {
   });
 
   it('Should display a username', function() {
-    const usernameEl = fixture.debugElement.query(By.css('.username')).nativeElement;
+    const usernameEl = fixture.debugElement
+      .query(
+        By.css('.username')
+      )
+      .nativeElement;
     expect(usernameEl.innerHTML).toContain(comment.username);
   });
 

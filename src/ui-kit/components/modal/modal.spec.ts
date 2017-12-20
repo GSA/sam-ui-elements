@@ -7,35 +7,35 @@ import {SamModalComponent} from './modal.component';
 import {SamElementsModule} from '../../elements';
 
 describe('The Sam Modal component', () => {
-  describe('isolated tests', ()=>{
-    let component:SamModalComponent;
+  describe('isolated tests', () => {
+    let component: SamModalComponent;
     beforeEach(() => {
-      component = new SamModalComponent(null);
+      component = new SamModalComponent(undefined);
     });
 
-    it('should have a submit handler',()=>{
-      component.onSubmit.subscribe(()=>{
+    it('should have a submit handler', () => {
+      component.onSubmit.subscribe(() => {
         expect(true).toBe(true);
       });
       component.submitBtnClick();
     });
 
-    it('should take in a type',()=>{
-      component.type="notarealtype"
+    it('should take in a type', () => {
+      component.type = 'notarealtype';
       expect(component.typeNotDefined()).toBe(true);
-      component.type="success";
+      component.type = 'success';
       expect(component.typeNotDefined()).toBe(false);
       
     });
   });
 
-  describe('rendered tests', ()=>{
-    let component:SamModalComponent;
-    let fixture:any;
+  describe('rendered tests', () => {
+    let component: SamModalComponent;
+    let fixture: any;
   
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports:[SamElementsModule],
+        imports: [SamElementsModule],
         declarations: [SamModalComponent]
       });
   
@@ -46,15 +46,15 @@ describe('The Sam Modal component', () => {
     });
   
     it('should open and close modal', function () {
-      component.title = "test title";
-      component.type = "success";
+      component.title = 'test title';
+      component.type = 'success';
       component.openModal('test');
       fixture.detectChanges();
   
-      let el = fixture.debugElement.query(By.css(".usa-alert-heading"));
-      expect(el.nativeElement.innerHTML).toContain("test title");
+      const el = fixture.debugElement.query(By.css('.usa-alert-heading'));
+      expect(el.nativeElement.innerHTML).toContain('test title');
   
-      component.onClose.subscribe(val=>{
+      component.onClose.subscribe(val => {
         expect(val[0]).toBe('test');
         component.ngOnDestroy();
       });

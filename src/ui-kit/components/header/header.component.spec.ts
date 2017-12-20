@@ -6,22 +6,22 @@ import { SamHeaderComponent } from './header.component';
 
 
 describe('The Sam Header component', () => {
-  describe("rendered test", ()=>{
+  describe('rendered test', () => {
     let component: SamHeaderComponent;
     
-    beforeEach(()=>{
+    beforeEach(() => {
       component = new SamHeaderComponent();
     });
 
-    it("should emit event on dropdown", ()=>{
-      component.headerDropdownControl.subscribe(val=>{
+    it('should emit event on dropdown', () => {
+      component.headerDropdownControl.subscribe(val => {
         expect(val).toBe(true);
       });
       component.dropdownEventControl(true);
     });
   });
 
-  describe("rendered test", ()=>{
+  describe('rendered test', () => {
     let component: SamHeaderComponent;
     let fixture: any;
   

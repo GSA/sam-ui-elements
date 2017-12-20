@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 /**
- * The <sam-alert> component keeps users informed of important and (optionally) time-sensitive changes
+ * The <sam-alert> component keeps users informed of important and (optionally)
+ * time-sensitive changes
  */
 @Component({
   selector: 'sam-alert',
@@ -31,53 +32,53 @@ export class SamAlertComponent {
   /**
    * Give a boolean value to display show/hide toggle
    */
-  @Input() showMoreToggle = null;
+  @Input() showMoreToggle = undefined;
   /**
    * Emitted event when an alert is dismissed
    */
   @Output() dismiss: EventEmitter<any> = new EventEmitter<any>();
-  types:any = {
-    "success": { class: "usa-alert-success", sr: "success alert"},
-    "warning": { class: "usa-alert-warning", sr: "warning alert"},
-    "error": { class: "usa-alert-error", sr: "error alert"},
-    "info": { class: "usa-alert-info", sr: "info alert"}
+  types: any = {
+    'error': { class: 'usa-alert-error', sr: 'error alert'},
+    'info': { class: 'usa-alert-info', sr: 'info alert'},
+    'success': { class: 'usa-alert-success', sr: 'success alert'},
+    'warning': { class: 'usa-alert-warning', sr: 'warning alert'},
   };
-  selectedType: string = this.types['success'].class;
-  showMoreLinkText = "Show Details";
-  constructor() {
-  }
+  selectedType: string = this.types.success.class;
+  showMoreLinkText = 'Show Details';
 
-  ngOnInit(){
-    if(!this.typeNotDefined()){
+  public closeAlert() {
+    this.onDismissClick(); 
+   }
+ 
+   public toggleContent() {
+      this.showMoreToggle = !this.showMoreToggle;
+      this.showMoreLinkText = this.showMoreToggle ?
+        'Hide Details' :
+        'Show Details'; 
+   }
+
+  ngOnInit() {
+    if (!this.typeNotDefined()) {
       this.selectedType = this.types[this.type].class;
     }
-    if(this.dismissTimer>0){
-      setTimeout(()=>{
+    if (this.dismissTimer > 0) {
+      setTimeout(() => {
         this.dismiss.emit();
-      },this.dismissTimer);
+      }, this.dismissTimer);
     }
   }
 
-  typeNotDefined(){
-    if(!this.type || this.type.length==0){
+  typeNotDefined() {
+    if (!this.type || this.type.length === 0) {
       return true;
     }
-    if(!this.types[this.type]){
+    if (!this.types[this.type]) {
       return true;
     }
     return false;
   }
 
-  private onDismissClick(){
+  private onDismissClick() {
     this.dismiss.emit();
-  }
-
-  closeAlert(){
-   this.onDismissClick(); 
-  }
-
-  toggleContent(){
-     this.showMoreToggle = !this.showMoreToggle;
-     this.showMoreLinkText = this.showMoreToggle ? "Hide Details" : "Show Details"; 
   }
 }

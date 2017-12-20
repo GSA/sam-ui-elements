@@ -1,8 +1,8 @@
-import { Component, Input } from "@angular/core";
-import { HistoryNodeType } from "../../types";
+import { Component, Input } from '@angular/core';
+import { HistoryNodeType } from '../../types';
 @Component({
   selector: 'sam-history',
-  templateUrl:'history.template.html'
+  templateUrl: 'history.template.html'
 })
 export class SamHistoryComponent {
   /**

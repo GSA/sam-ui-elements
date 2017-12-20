@@ -1,4 +1,13 @@
-import { OnInit, Component, Input, Output, EventEmitter, ElementRef, ViewChild, AfterViewChecked } from '@angular/core';
+import {
+  OnInit,
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ElementRef,
+  ViewChild,
+  AfterViewChecked
+} from '@angular/core';
 import { ScrollHelpers } from '../../dom-helpers';
 
 /**
@@ -8,13 +17,14 @@ import { ScrollHelpers } from '../../dom-helpers';
   selector: 'sam-modal',
   templateUrl: './modal.template.html'
 })
-export class SamModalComponent implements OnInit{
+export class SamModalComponent implements OnInit {
   /**
    * Sets ID html attribute of modal
    */
-  @Input() id: string = "";
+  @Input() id: string = '';
   /**
-   * Sets type of modal, takes values of "success", "warning", "error", or "info"
+   * Sets type of modal, takes values of "success", "warning", "error", or
+   * "info"
    */
   @Input() type: string;
   /**
@@ -28,11 +38,11 @@ export class SamModalComponent implements OnInit{
   /**
    * Sets the cancel button text
    */
-  @Input() cancelButtonLabel: string = "";
+  @Input() cancelButtonLabel: string = '';
   /**
    * Sets the submit button text
    */
-  @Input() submitButtonLabel: string = "";
+  @Input() submitButtonLabel: string = '';
   /**
    * Show/hide the modal close button, defaults to true
    */
@@ -58,49 +68,54 @@ export class SamModalComponent implements OnInit{
    */
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild("modalRoot") public modalRoot: ElementRef;
-  @ViewChild("modalContent") public modalContent: ElementRef;
+  @ViewChild('modalRoot') public modalRoot: ElementRef;
+  @ViewChild('modalContent') public modalContent: ElementRef;
 
   public show = false;
-  public types:any = {
-    "success": { class:"usa-alert-success", sr:"success alert"},
-    "warning": { class:"usa-alert-warning", sr:"warning alert"},
-    "error": { class:"usa-alert-error", sr:"error alert"},
-    "info": { class:"usa-alert-info", sr:"information alert"}
+  public types: any = {
+    'success': { class: 'usa-alert-success', sr: 'success alert'},
+    'warning': { class: 'usa-alert-warning', sr: 'warning alert'},
+    'error': { class: 'usa-alert-error', sr: 'error alert'},
+    'info': { class: 'usa-alert-info', sr: 'information alert'}
   };
-  public selectedType: string = this.types['success'].class;
+  public selectedType: string = this.types.success.class;
 
   private backdropElement: HTMLElement;
   private internalId;
   private _focusModalElement: boolean = false;
-  private _focusableString: string = 'a[href], area, button, select, textarea, *[tabindex="0"], input:not([type="hidden"])';
+  private _focusableString: string =
+    'a[href], area, button, select, textarea, *[tabindex="0"], \
+    input:not([type="hidden"])';
 
   private _allFocusableElements: NodeListOf<Element>;
   private _modalFocusableElements: NodeListOf<Element>;
   private _scrollHelpers: any;
 
-  private args = null;
+  private args = undefined;
 
   constructor(private hostElement: ElementRef) {
     this.internalId = Date.now();
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this._scrollHelpers = ScrollHelpers(window);
     this.createBackdrop();
-    if(!this.typeNotDefined()){
+    if (!this.typeNotDefined()) {
       this.selectedType = this.types[this.type].class;
     }
   }
 
   set508() {
     if (this.show) {
-      this._allFocusableElements = document.querySelectorAll(this._focusableString);
-      this._modalFocusableElements = this.hostElement.nativeElement.querySelectorAll(this._focusableString);
+      this._allFocusableElements =
+        document.querySelectorAll(this._focusableString);
+      this._modalFocusableElements =
+        this.hostElement.nativeElement.querySelectorAll(this._focusableString);
 
       for (let i = 0; i < this._allFocusableElements.length; i++) {
-        if (!this.hostElement.nativeElement.contains(this._allFocusableElements[i])) {
-          this.removeTabbable(this._allFocusableElements[i])
+        if (!this.hostElement.nativeElement.contains(
+          this._allFocusableElements[i])) {
+          this.removeTabbable(this._allFocusableElements[i]);
         }
       }
 
@@ -111,7 +126,7 @@ export class SamModalComponent implements OnInit{
 
     if (this._focusModalElement) {
       const focusable = this._modalFocusableElements[1] as HTMLElement;
-      if(focusable){
+      if (focusable) {
         focusable.focus();
       }
       this._focusModalElement = false;
@@ -129,33 +144,30 @@ export class SamModalComponent implements OnInit{
     item.setAttribute('aria-hidden', 'false');
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     if (this.show) {
       this.removeBackdrop();
     }
   }
 
-  typeNotDefined(){
-    if(!this.type || this.type.length==0){
+  typeNotDefined() {
+    if (!this.type || this.type.length === 0) {
       return true;
     }
-    if(!this.types[this.type]){
+    if (!this.types[this.type]) {
       return true;
     }
     return false;
   }
 
-  private preventClosing(evt){
-    evt.stopPropagation();
-  }
-
-  openModal(...args: any[]){
-    if(this.show)
+  openModal(...args: any[]) {
+    if (this.show) {
       return;
+    }
     this.show = true;
     this.args = args;
     this.onOpen.emit(this.args);
-    if(document && document.body){
+    if (document && document.body) {
       this._scrollHelpers.disableScroll();      
       document.body.appendChild(this.backdropElement);
     }
@@ -163,11 +175,11 @@ export class SamModalComponent implements OnInit{
     this.set508();
   }
 
-  closeModal(){
+  closeModal() {
     this._scrollHelpers.enableScroll();          
     this.show = false;
     this.onClose.emit(this.args);
-    this.args = null;
+    this.args = undefined;
     this.removeBackdrop();
     for (let i = 0; i < this._allFocusableElements.length; i++) {
       this.reinsertTabbable(this._allFocusableElements[i]);
@@ -178,19 +190,22 @@ export class SamModalComponent implements OnInit{
     }
   }
 
-  submitBtnClick(){
+  submitBtnClick() {
     this.onSubmit.emit(this.args);
-    //if user needs modal to close, they should do it manually
   }
 
-  private createBackdrop(){
-    this.backdropElement = document.createElement("div");
-    this.backdropElement.classList.add("modal-backdrop");
+  private createBackdrop() {
+    this.backdropElement = document.createElement('div');
+    this.backdropElement.classList.add('modal-backdrop');
   }
 
-  private removeBackdrop(){
-    if(document && document.body){
+  private removeBackdrop() {
+    if (document && document.body) {
       document.body.removeChild(this.backdropElement);
     }
+  }
+
+  private preventClosing(evt) {
+    evt.stopPropagation();
   }
 }

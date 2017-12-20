@@ -49,13 +49,15 @@ export class SamImageComponent implements OnInit {
   private tmpValue: File;
   private tmpSrc: any;
 
-  constructor() {}
-
   ngOnInit() {
-    this.fileChangeStream = Observable.fromEvent(this.filePicker.nativeElement, 'change');
-    this.editButtonStream = Observable.fromEvent(this.editButton.nativeElement, 'click');
-    this.cancelButtonStream = Observable.fromEvent(this.cancelButton.nativeElement, 'click');
-    this.saveButtonStream = Observable.fromEvent(this.saveButton.nativeElement, 'click');
+    this.fileChangeStream =
+      Observable.fromEvent(this.filePicker.nativeElement, 'change');
+    this.editButtonStream =
+      Observable.fromEvent(this.editButton.nativeElement, 'click');
+    this.cancelButtonStream =
+      Observable.fromEvent(this.cancelButton.nativeElement, 'click');
+    this.saveButtonStream =
+      Observable.fromEvent(this.saveButton.nativeElement, 'click');
 
     this.reader.onload = (event: any) => {
       this.tmpSrc = event.target.result;
@@ -80,8 +82,8 @@ export class SamImageComponent implements OnInit {
       this.cancelButtonStream
       .subscribe(
         (event) => {
-          this.tmpValue = null;
-          this.tmpSrc = null;
+          this.tmpValue = undefined;
+          this.tmpSrc = undefined;
         },
         (error) => { console.error(error); }
       );
@@ -93,13 +95,13 @@ export class SamImageComponent implements OnInit {
           if (this.isImageTemporary()) {
             this.value = this.tmpValue;
             this.src = this.tmpSrc;
-            this.tmpValue = null;
-            this.tmpSrc = null;
+            this.tmpValue = undefined;
+            this.tmpSrc = undefined;
             this.fileChange.emit(this.value);
           }
         },
         (error) => { console.error(error); }
-      )
+      );
 
     this.fileChangeSubscription = 
       this.fileChangeStream
@@ -113,7 +115,7 @@ export class SamImageComponent implements OnInit {
         (error) => {
           console.error(error);
         }
-      )
+      );
   }
 
   private hideEditButton() {
@@ -133,9 +135,10 @@ export class SamImageComponent implements OnInit {
   }
 
   private generateFilePickerLabelText() {
-    let labelString = this.getFileName();
-    const labelText = labelString && labelString.length > 9 ? 
-                        labelString.substr(0, 8).concat('...') :
+    const labelString = this.getFileName();
+    const labelStrLen = 9;
+    const labelText = labelString && labelString.length > labelStrLen ? 
+                        labelString.substr(0, labelStrLen - 1).concat('...') :
                         labelString;
     return labelText || 'Select a file';
   }
@@ -174,5 +177,4 @@ export class SamImageComponent implements OnInit {
       this.reader.readAsDataURL(dt.files[0]);  
     }
   }
-
 }
