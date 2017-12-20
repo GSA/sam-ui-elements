@@ -14,7 +14,7 @@ import { AutocompleteService } from '../autocomplete/autocomplete.service';
 
 import { AutocompleteConfig } from '../../types';
 
-fdescribe('The Sam Autocomplete Component', () => {
+describe('The Sam Autocomplete Component', () => {
   let component: SamAutocompleteComponent;
   let fixture: ComponentFixture<SamAutocompleteComponent>;
 
@@ -71,7 +71,7 @@ fdescribe('The Sam Autocomplete Component', () => {
     component.value = {key: 'key', value: 'test'};
   });
 
-  fit('Should initialize with model', () => {
+  it('Should initialize with model', () => {
     fixture.detectChanges();
     expect(component.value).toEqual({key: 'key', value: 'test'});
   });
