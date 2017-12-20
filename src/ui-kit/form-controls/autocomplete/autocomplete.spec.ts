@@ -68,7 +68,7 @@ describe('The Sam Autocomplete Component', () => {
     component.options = options;
     component.config = config;
     component.allowAny = allowAny;
-    component.value = {key: 'key', value: 'test'};
+    component.writeValue({key: 'key', value: 'test'});
   });
 
   it('Should initialize with model', () => {
