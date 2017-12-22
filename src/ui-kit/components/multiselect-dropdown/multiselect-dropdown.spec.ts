@@ -60,7 +60,7 @@ describe('Sam Multiselect Dropdown Component', function() {
 
             const label =
                 fixture.nativeElement.getElementsByClassName('dropdown-title');
-            expect(label[0].innerHTML).toMatch(/Multiple Regions Selected/);
+            expect(label[0].innerHTML).toContain('Multiple Regions');
         });
 
         it ('Should display item name if only one item is selected', () => {

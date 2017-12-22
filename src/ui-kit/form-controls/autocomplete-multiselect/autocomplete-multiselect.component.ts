@@ -1,22 +1,46 @@
-import { Component, Input, ViewChild, ElementRef, ChangeDetectorRef, Optional, forwardRef, TemplateRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import {
+  Component,
+  Input,
+  ViewChild,
+  ElementRef,
+  ChangeDetectorRef,
+  Optional,
+  forwardRef,
+  TemplateRef,
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+  keyframes
+} from '@angular/core';
+import {
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+  FormControl
+} from '@angular/forms';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { AutocompleteService } from '../autocomplete/autocomplete.service';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/core';
+
 import { SamFormService } from '../../form-service';
 
 @Component({
   selector: 'sam-autocomplete-multiselect',
   templateUrl: 'autocomplete-multiselect.template.html',
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SamAutocompleteMultiselectComponent), multi: true}
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(
+        () => SamAutocompleteMultiselectComponent
+      ),
+      multi: true}
   ],
   animations: [
     trigger('dropdown', [
       transition('void => *', [
         animate('.15s ease-in-out', keyframes([
-          style({filter:'blur(3px)', height: '0', opacity: '0.5',  offset: 0}),
-          style({filter:'blur(0px)', height: '*', opacity: '1',  offset: 1.0})
+          style({filter: 'blur(3px)', height: '0', opacity: '0.5',  offset: 0}),
+          style({filter: 'blur(0px)', height: '*', opacity: '1',  offset: 1.0})
         ]))
       ]),
       transition('* => void', [
@@ -29,20 +53,31 @@ import { SamFormService } from '../../form-service';
     trigger('label', [
       transition('void => *', [
         animate('.15s ease-in-out', keyframes([
-          style({transform: 'scale(0)', filter:'blur(3px)', opacity: '0.5',  offset: 0}),
-          style({transform: 'scale(1)', filter:'blur(0px)', opacity: '1',  offset: 1.0})
+          style({
+            transform: 'scale(0)',
+            filter: 'blur(3px)',
+            opacity: '0.5',
+            offset: 0
+          }),
+          style({
+            transform: 'scale(1)',
+            filter: 'blur(0px)',
+            opacity: '1',
+            offset: 1.0
+          })
         ]))
       ]),
       transition('* => void', [
         animate('.1s ease-out', keyframes([
-          style({filter:'blur(0px)', opacity: '1', offset: 0}),
-          style({filter:'blur(3px)', opacity: '0', offset: 1.0})
+          style({filter: 'blur(0px)', opacity: '1', offset: 0}),
+          style({filter: 'blur(3px)', opacity: '0', offset: 1.0})
         ]))
       ])
     ])
   ]
 })
-export class SamAutocompleteMultiselectComponent implements ControlValueAccessor {
+export class SamAutocompleteMultiselectComponent
+  implements ControlValueAccessor {
   /**
    * Gets DOM element for the textarea used for input
    */
@@ -52,15 +87,20 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
 
   /**
-   * Options should be an array of objects that contain the key value pairs to be
-   * used to select in the component.
+   * Options should be an array of objects that contain the key value pairs
+   * to be used to select in the component.
    */
   @Input() options: Array<any> = [];
   /**
-   * Key Value Config is an object that sets which property on the options objects
-   * should be used to display the key, value, and subhead properties in the list.
+   * Key Value Config is an object that sets which property on the options
+   * objects should be used to display the key, value, and subhead properties 
+   * in the list.
    */
-  @Input() keyValueConfig: KeyValueConfig = { keyProperty: 'key', valueProperty: 'value', parentCategoryProperty: 'category' };
+  @Input() keyValueConfig: KeyValueConfig = {
+    keyProperty: 'key',
+    valueProperty: 'value',
+    parentCategoryProperty: 'category'
+  };
   /**
    * Used when a service is used to get autocomplete options
    */
@@ -131,7 +171,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   /**
    * Allow an add on icon to component
    */
-  @Input() addOnIcon: string = "fa-chevron-down";
+  @Input() addOnIcon: string = 'fa-chevron-down';
 
   /**
    * Allow a placeholder to component
@@ -144,7 +184,8 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   @Input() itemTemplate: TemplateRef<any>;
 
   /**
-   * Allow to control whether display the category option in the result list or not
+   * Allow to control whether display the category option in the result list or 
+   * not
    * @type {boolean}
    */
   @Input() displayCategory: boolean = true;
@@ -158,8 +199,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   private inputTimer: any;
   private displaySpinner: boolean = false;
 
-  private onChangeCallback: (_: any) => void = (_: any) => {};
-  private onTouchedCallback: () => void = () => {};
+  private debounceTime = 250;
 
   set value(val: any) {
     this.innerValue = val;
@@ -172,12 +212,14 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
 
   constructor(@Optional() private service: AutocompleteService,
     private ref: ChangeDetectorRef,
-    private samFormService:SamFormService) {
+    private samFormService: SamFormService) {
     this.cachingService = this.CachingService();
   }
 
   ngOnInit() {
-    if (this.list.length > 0) this.list = this.sortByCategory(this.list);
+    if (this.list.length > 0) {
+      this.list = this.sortByCategory(this.list);
+    }
     if (!this.control) {
       return;
     }
@@ -186,22 +228,21 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
         this.wrapper.formatErrors(this.control);
       });
       this.wrapper.formatErrors(this.control);
-    }
-    else {
-      this.samFormService.formEventsUpdated$.subscribe(evt => {
-        if( (!evt['root'] || evt['root']==this.control.root) &&
-            evt['eventType'] && evt['eventType']=='submit') {
+    } else {
+      this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
+        if ( (!evt.root || evt.root === this.control.root) &&
+            evt.eventType && evt.eventType === 'submit') {
           this.wrapper.formatErrors(this.control);
-        } else if ( (!evt['root'] || evt['root'] == this.control.root) &&
-                     evt['eventType'] && evt['eventType']=='reset') {
+        } else if ( (!evt.root || evt.root === this.control.root) &&
+                     evt.eventType && evt.eventType === 'reset') {
           this.wrapper.clearError();
         }
       });
     }
   }
 
-  ngOnChanges(c){
-    if (c['options']) {
+  ngOnChanges(c) {
+    if (c.options) {
       this.updateMarked();
     }
   }
@@ -212,7 +253,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     let _scrollEnd: number;
     let _currentIndex: number;
 
-    const results = () => { return cachedResults };
+    const results = () => { return cachedResults; };
     const lastSearch = () => { return lastSearchedString; };
     const scrollEnd = () => { return _scrollEnd; };
     const currentIndex = () => { return _currentIndex; };
@@ -229,7 +270,8 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
 
     const setCurrentIndex = (num: number) => { return _currentIndex = num; };
 
-    const hasReachedScrollEnd = (): boolean => { return _scrollEnd === _currentIndex; }
+    const hasReachedScrollEnd =
+      (): boolean => { return _scrollEnd === _currentIndex; };
 
     const shouldUseCachedResults = function (searchString) {
       if (cachedResults && searchString === lastSearchedString) {
@@ -237,7 +279,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       } else {
         return false;
       }
-    }
+    };
 
     return {
       results: results,
@@ -250,7 +292,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       currentIndex: currentIndex,
       setScrollEnd: setScrollEnd,
       setCurrentIndex: setCurrentIndex
-    }
+    };
   }
 
   /***************************************************************
@@ -264,7 +306,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    */
   handleBackspaceEvent(event) {
     if (event.code === 'Backspace' || event.keyIdentified === 'Backspace') {
-      if (event.target.value === "" && this.value.length > 0) {
+      if (event.target.value === '' && this.value.length > 0) {
         this.deselectItem(this.value[this.value.length - 1]);
       }
     }
@@ -304,19 +346,23 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    * item that is returned.
    */
   selectOnEnter(event) {
-    if (this.resultsList && this.resultsList.nativeElement && event.code === 'Enter' || event.keyIdentified === 'Enter') {
-      let lookedUpItem = this.getItem();
-      if(this.allowAny && lookedUpItem && lookedUpItem[this.keyValueConfig.keyProperty]==null && event.target.value !== ''){
-        let obj = {};
+    if (this.resultsList
+        && this.resultsList.nativeElement
+        && event.code === 'Enter'
+        || event.keyIdentified === 'Enter') {
+      const lookedUpItem = this.getItem();
+      if (this.allowAny
+          && lookedUpItem
+          && lookedUpItem[this.keyValueConfig.keyProperty] === null
+          && event.target.value !== '') {
+        const obj = {};
         obj[this.keyValueConfig.keyProperty] = event.target.value;
         obj[this.keyValueConfig.valueProperty] = event.target.value;
         this.selectItem(obj);
-        //this.options.push(obj);
       } else {
         this.selectItem(lookedUpItem);
       }
       this.clearSearch();
-      //this.blurTextArea();
 
       this.list = [];
     }
@@ -328,17 +374,25 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     const results = this.getResults();
     const selectedChildIndex = this.getSelectedChildIndex(results);
 
-    const selectedResultIndex: number = selectedChildIndex === -1 ? 0 : selectedChildIndex;
+    const selectedResultIndex: number =
+      selectedChildIndex === -1 ? 0 : selectedChildIndex;
 
     if (results[selectedResultIndex].classList.contains('category-name')) {
       return this.categories.filter((item) => {
-        if (item[this.keyValueConfig.parentCategoryProperty] === results[selectedResultIndex].attributes['data-category'].value) {
+        if (item[this.keyValueConfig.parentCategoryProperty]
+          === results[selectedResultIndex].attributes['data-category'].value) {
           return item;
         }
       })[0];
     } else {
-        const categoryIndex = parseInt(results[selectedResultIndex].attributes['data-category'].value);
-        const itemIndex = parseInt(results[selectedResultIndex].attributes['data-index'].value);
+        const categoryIndex = parseInt(
+          results[selectedResultIndex].attributes['data-category'].value,
+          undefined
+        );
+        const itemIndex = parseInt(
+          results[selectedResultIndex].attributes['data-index'].value,
+          undefined
+        );
         return this.getItemFromListByIndices(categoryIndex, itemIndex);
     }
   }
@@ -350,13 +404,21 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   handleDownArrow(event) {
     if ( event.code === 'ArrowDown' || event.keyIdentified === 'Down' ) {
       const results = this.getResults();
-      const selectedIndex = this.setSelectedChild(this.getSelectedChildIndex(results),
-                                'Down',
-                                results);
-      this.updateCachingServiceIndices(this.getSelectedChildIndex(results), results.length);
+      const selectedIndex = this.setSelectedChild(
+        this.getSelectedChildIndex(results),
+        'Down',
+        results
+      );
 
+      this.updateCachingServiceIndices(
+        this.getSelectedChildIndex(results),
+        results.length
+      );
 
-      this.resultsList.nativeElement.scrollTop = (results[selectedIndex].offsetParent.offsetParent.offsetTop + results[selectedIndex].offsetTop) - this.resultsList.nativeElement.clientTop;
+      this.resultsList.nativeElement.scrollTop =
+        (results[selectedIndex].offsetParent.offsetParent.offsetTop
+        + results[selectedIndex].offsetTop)
+        - this.resultsList.nativeElement.clientTop;
     }
 
     return event;
@@ -365,12 +427,22 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   handleUpArrow(event) {
     if ( event.code === 'ArrowUp' || event.keyIdentified === 'Up' ) {
       const results = this.getResults();
-      const selectedIndex = this.setSelectedChild(this.getSelectedChildIndex(results),
-                                 'Up',
-                                 results);
-      this.updateCachingServiceIndices(this.getSelectedChildIndex(results), results.length);
 
-      this.resultsList.nativeElement.scrollTop = (results[selectedIndex].offsetParent.offsetParent.offsetTop + results[selectedIndex].offsetTop) - this.resultsList.nativeElement.clientTop;
+      const selectedIndex = this.setSelectedChild(
+        this.getSelectedChildIndex(results),
+        'Up',
+        results
+      );
+
+      this.updateCachingServiceIndices(
+        this.getSelectedChildIndex(results),
+        results.length
+      );
+
+      this.resultsList.nativeElement.scrollTop =
+      (results[selectedIndex].offsetParent.offsetParent.offsetTop
+        + results[selectedIndex].offsetTop)
+        - this.resultsList.nativeElement.clientTop;
     }
 
     return event;
@@ -383,9 +455,11 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
 
   getResults() {
     if (this.categoryIsSelectable) {
-      return this.resultsList.nativeElement.querySelectorAll('li.category-item, li.category-name');
+      return this.resultsList.nativeElement
+        .querySelectorAll('li.category-item, li.category-name');
     } else {
-      return this.resultsList.nativeElement.querySelectorAll('li.category-item');
+      return this.resultsList.nativeElement
+        .querySelectorAll('li.category-item');
     }
   }
 
@@ -400,7 +474,8 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     return selectedIndex;
   }
 
-  setSelectedChild(currentSelectedIndex: number, direction: string, elements: any): number {
+  setSelectedChild(currentSelectedIndex: number,
+    direction: string, elements: any): number {
     if (currentSelectedIndex !== -1) {
       elements[currentSelectedIndex].classList.remove('selected');
     }
@@ -408,17 +483,15 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     let indexToSelect;
 
     if (direction === 'Down') {
-      if (currentSelectedIndex === -1 || currentSelectedIndex === elements.length - 1) {
-        indexToSelect = 0;
-      } else {
-        indexToSelect = currentSelectedIndex + 1;
-      }
+      indexToSelect = currentSelectedIndex === -1
+        || currentSelectedIndex === elements.length - 1
+          ? 0
+          : currentSelectedIndex + 1;
+
     } else if (direction === 'Up') {
-      if (currentSelectedIndex === -1 || currentSelectedIndex === 0) {
-        indexToSelect = elements.length - 1;
-      } else {
-        indexToSelect = currentSelectedIndex - 1;
-      }
+      indexToSelect = currentSelectedIndex === -1 || currentSelectedIndex === 0
+        ? elements.length - 1
+        : currentSelectedIndex - 1;
     }
     this.addSelectedClass(elements, indexToSelect);
     return indexToSelect;
@@ -438,7 +511,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    */
   applyTextAreaWidth(event) {
 
-    if ( event.code !== "ArrowDown" && event.code !== "ArrowUp" ) {
+    if ( event.code !== 'ArrowDown' && event.code !== 'ArrowUp' ) {
       this.filterOptions(this.searchText);
     }
     this.ref.detectChanges();
@@ -460,20 +533,24 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   calculateTextAreaWidth(element: HTMLElement): string {
     // Width by default should be its `initial` value
     let widthValue = 'initial';
-    let containerWidth = this.getParentContentWidth(element.parentElement);
-    let elementsWidths = this.getSelectedContentWidth(element);
-    let enteredTextWidth = this.getInternalElementWidth(this.hiddenText.nativeElement)
+    const containerWidth = this.getParentContentWidth(element.parentElement);
+    const elementsWidths = this.getSelectedContentWidth(element);
+    const enteredTextWidth =
+      this.getInternalElementWidth(this.hiddenText.nativeElement);
     let accumulatorRow = 0;
     let spaceLeft = containerWidth;
 
     elementsWidths.forEach(function(element){
       accumulatorRow += element;
-      if(accumulatorRow > containerWidth){ accumulatorRow = element; }
+      if (accumulatorRow > containerWidth) {
+        accumulatorRow = element;
+      }
       spaceLeft = ((containerWidth - accumulatorRow) - enteredTextWidth);
     });
 
     // If there is 40px left move to the next line
-    widthValue = spaceLeft - 40 > 0 ? spaceLeft+'px' : '100%';
+    const padding = 40;
+    widthValue = spaceLeft - padding > 0 ? spaceLeft + 'px' : '100%';
 
     return widthValue;
   }
@@ -489,18 +566,19 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   getSelectedContentWidth(element: HTMLElement): Array<number> {
     const elementChildren = element.parentElement.children;
 
-    let width = 0;
-    let elementsWidths = [];
+    const width = 0;
+    const elementsWidths = [];
     // Cannot use forEach here since children is not a Javascript array
     // and its data structure does not provide forEach on its
     // prototype.
     for (let i = 0; i < elementChildren.length; i++) {
-      if (elementChildren[i] !== element && !elementChildren[i].classList.contains('usa-sr-only')) {
+      if (elementChildren[i] !== element
+        && !elementChildren[i].classList.contains('usa-sr-only')) {
         const childStyles = window.getComputedStyle(elementChildren[i]);
-        let childWidth = parseFloat(childStyles.width);
+        const childWidth = parseFloat(childStyles.width);
         elementsWidths.push(( childWidth +
-                   parseFloat(childStyles["margin-right"]) +
-                   parseFloat(childStyles["margin-left"]) ))
+                   parseFloat(childStyles['margin-right']) +
+                   parseFloat(childStyles['margin-left']) ));
       }
     }
     return elementsWidths;
@@ -552,37 +630,43 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    ***************************************************************/
   fetchFromService(searchString, options, context) {
     context.displaySpinner = true;
-    return context.service.fetch(searchString, context.cachingService.hasReachedScrollEnd(), options)
-        .subscribe(
-          (data) => {
-            context.displaySpinner = false;
-            context.list = context.handleEmptyList(context.sortByCategory(data));
-            context.cachingService.updateResults(context.list);
-          },
-          (err) => {
-            context.displaySpinner = false;
-            const errorObject = {
-              cannotBeSelected: true
-            }
-            errorObject[context.keyValueConfig.valueProperty] = 'An error occurred.';
-            errorObject[context.keyValueConfig.subheadProperty] = 'Please try again.';
-            context.list = context.handleEmptyList(context.sortByCategory([errorObject]));
-            context.cachingService.updateResults([]);
-            return [errorObject];
-          },
-          () => {
-            context.displaySpinner = false;
-          }
-        );
+    return context.service
+      .fetch(searchString,
+        context.cachingService.hasReachedScrollEnd(),
+        options
+      )
+      .subscribe(
+        (data) => {
+          context.displaySpinner = false;
+          context.list = context.handleEmptyList(context.sortByCategory(data));
+          context.cachingService.updateResults(context.list);
+        },
+        (err) => {
+          context.displaySpinner = false;
+          const errorObject = {
+            cannotBeSelected: true
+          };
+          errorObject[context.keyValueConfig.valueProperty] =
+            'An error occurred.';
+          errorObject[context.keyValueConfig.subheadProperty] =
+            'Please try again.';
+          context.list = context.handleEmptyList(
+            context.sortByCategory([errorObject])
+          );
+          context.cachingService.updateResults([]);
+          return [errorObject];
+        },
+        () => {
+          context.displaySpinner = false;
+        }
+      );
   }
   /**
    * Filters `options` by returning items in array that include the
    * search term as a substring of the objects key or value
    */
-  filterOptions(searchString: string) {
-    if(searchString=="" && this.innerValue.length>0){
-      return;
-    }
+  filterOptions(str: string) {
+    let searchString = str;
     const availableCategories = [];
     // Checks if searchString is empty
     // If so, use defaultSearchString
@@ -595,32 +679,43 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     // matching in filter function.
     searchString = searchString ? searchString.toLowerCase() : '';
 
-    let options = null;
+    let options = undefined;
     if (this.serviceOptions) {
-      options = this.serviceOptions || null;
+      options = this.serviceOptions || undefined;
     }
     if (this.service && this.options.length === 0) {
       this.cachingService.updateSearchString(searchString);
       if (this.cachingService.shouldUseCachedResults()) {
         return;
       } else {
-        window.clearTimeout(this.inputTimer);
-        this.inputTimer = window.setTimeout(this.fetchFromService, 250, searchString, options, this);
-        return;
 
+        window.clearTimeout(this.inputTimer);
+        this.inputTimer = window.setTimeout(
+          this.fetchFromService,
+          this.debounceTime,
+          searchString,
+          options,
+          this
+        );
+        return;
       }
     } else {
       this.list = this.options.filter((option) => {
         if (this.categoryIsSelectable) {
-          if (option[this.keyValueConfig.categoryProperty] &&
-              option[this.keyValueConfig.categoryProperty].toLowerCase().includes(searchString) &&
-              availableCategories.indexOf(option[this.keyValueConfig.categoryProperty]) === -1
-              ) {
-            availableCategories.push(option[this.keyValueConfig.categoryProperty]);
+          if (option[this.keyValueConfig.categoryProperty]
+            && option[this.keyValueConfig.categoryProperty]
+                .toLowerCase().includes(searchString) 
+            && availableCategories
+              .indexOf(option[this.keyValueConfig.categoryProperty]) === -1) {
+            availableCategories.push(
+              option[this.keyValueConfig.categoryProperty]
+            );
           }
         }
-        if ( option[this.keyValueConfig.keyProperty].toLowerCase().includes(searchString) ||
-              option[this.keyValueConfig.valueProperty].toLowerCase().includes(searchString) ) {
+        if ( option[this.keyValueConfig.keyProperty]
+            .toLowerCase().includes(searchString)
+            || option[this.keyValueConfig.valueProperty]
+              .toLowerCase().includes(searchString) ) {
           return option;
         }
       });
@@ -634,7 +729,6 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       }
       this.list = this.handleEmptyList(this.list);
     }
-
     return this.list;
   }
 
@@ -698,10 +792,10 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
       const noResultsObject = {
         cannotBeSelected: true
       };
-      noResultsObject[this.keyValueConfig.keyProperty] = null;
+      noResultsObject[this.keyValueConfig.keyProperty] = undefined;
       noResultsObject[this.keyValueConfig.valueProperty] = 'No results found';
       object[0].push(noResultsObject);
-    };
+    }
 
     return object;
   }
@@ -718,7 +812,8 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     if (this.list && this.list.categories) {
       if (this.list.categories.length > 1) {
         return true;
-      } else if (this.list.categories.length === 1 && (this.list[0] && this.list[0].length > 0)) {
+      } else if (this.list.categories.length === 1
+        && (this.list[0] && this.list[0].length > 0)) {
         return true;
       } else {
         return false;
@@ -751,10 +846,11 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     if (item && !item.cannotBeSelected) {
       const tmpArray = this.value.slice();
       const filteredItems = this.value.filter((selectedItem) => {
-        if (selectedItem[this.keyValueConfig.keyProperty] === item[this.keyValueConfig.keyProperty]) {
+        if (selectedItem[this.keyValueConfig.keyProperty]
+            === item[this.keyValueConfig.keyProperty]) {
           return item;
         }
-      })
+      });
       if (filteredItems.length === 0) {
         tmpArray.push(item);
         this.value = tmpArray;
@@ -813,7 +909,7 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
   }
 
   clearSearch() {
-    this.searchText = "";
+    this.searchText = '';
     this.displaySpinner = false;
   }
 
@@ -827,23 +923,19 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
 
   checkForFocus(event) {
     this.clearSearch();
-    this.list=[];
+    this.list = [];
   }
 
-  updateMarked(){
+  updateMarked() {
     if (this.service) {
       return;
     }
-    for (let key in this.options) {
-      let x = this.value.find((obj) => {
-        return obj[this.keyValueConfig.keyProperty] == this.options[key][this.keyValueConfig.keyProperty];
+    for (const key in this.options) {
+      const x = this.value.find((obj) => {
+        return obj[this.keyValueConfig.keyProperty]
+          === this.options[key][this.keyValueConfig.keyProperty];
       });
-
-      if (x) {
-        this.options[key]._marked = true;
-      } else {
-        this.options[key]._marked = false;
-      }
+      this.options[key]._marked = !!x ? true : false;
     }
   }
 
@@ -852,10 +944,11 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
    ***************************************************************/
 
   writeValue(value: any) {
-    if(!value){
-      value = [];
+    let val = value;
+    if (!val) {
+      val = [];
     }
-    this.innerValue = value;
+    this.innerValue = val;
     this.updateMarked();
   }
 
@@ -871,6 +964,9 @@ export class SamAutocompleteMultiselectComponent implements ControlValueAccessor
     this.isDisabled = isDisabled;
   }
 
+  private onChangeCallback: (_: any) => void = (_: any) => {};
+  private onTouchedCallback: () => void = () => {};
+
 }
 
 export interface KeyValueConfig {
@@ -880,4 +976,3 @@ export interface KeyValueConfig {
   categoryProperty?: string;
   parentCategoryProperty?: string;
 }
-
