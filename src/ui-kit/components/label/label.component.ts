@@ -9,12 +9,12 @@ import { Component, Input } from '@angular/core';
 })
 export class SamLabelComponent {
   /**
-  * Sets size of label, takes value of 'small' or 'big'
-  */
+   * Sets size of label, takes value of 'small' or 'big'
+   */
   @Input() labelType: string;
   /**
-  * The text content that will show on the label
-  */
+   * The text content that will show on the label
+   */
   @Input() labelText: string;
 
   /**

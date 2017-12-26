@@ -32,7 +32,7 @@ describe('The Sam Sidenav component', () => {
       component.data.subscribe(evt => {
         expect(evt.returnValue).toBe(true);
       });
-      component.path.subscribe(val => {       
+      component.path.subscribe(val => {
         expect(val).toBe('');
       });
       component.emitChildData(new Event('custom'));
@@ -41,23 +41,23 @@ describe('The Sam Sidenav component', () => {
   describe('rendered tests', () => {
     let component: SamSidenavComponent;
     let fixture: any;
-  
+
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [SamSidenavModule],
         declarations: [],
       });
-  
+
       fixture = TestBed.createComponent(SamSidenavComponent);
       component = fixture.componentInstance;
       component.model = data;
     });
-  
+
     it('should compile', function () {
       fixture.detectChanges();
       expect(true).toBe(true);
     });
-  
+
     it('should output top level labels', function () {
       fixture.detectChanges();
       const item1 =
@@ -67,7 +67,7 @@ describe('The Sam Sidenav component', () => {
           .nativeElement;
       expect(item1.textContent.trim()).toContain(data.children[0].label);
     });
-    
+
     it('should update UI when sidenav item is selected', () => {
         fixture.detectChanges();
         const item1 =

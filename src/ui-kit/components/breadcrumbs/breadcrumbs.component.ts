@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, UrlSegment } from '@angular/router';
 import { IBreadcrumb } from '../../types';
 
@@ -76,7 +76,7 @@ export class SamBreadcrumbsComponent {
       let crumb: IBreadcrumb;
       if (route.root === route) {
         crumb = {
-          breadcrumb: this.rootCrumb.breadcrumb,          
+          breadcrumb: this.rootCrumb.breadcrumb,
           url: this.rootCrumb.url,
         };
         crumbs.push(crumb);

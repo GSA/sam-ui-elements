@@ -81,7 +81,7 @@ export class SamCommentsComponent implements OnInit {
             this.disabled),
           value: '',
         },
-        [ 
+        [
           Validators.required,
           Validators.maxLength(this.maxLength)
         ]
@@ -90,9 +90,7 @@ export class SamCommentsComponent implements OnInit {
 
     });
 
-    /**************************************************************************/
-    /* Register observables for 'click' events                                */
-    /**************************************************************************/
+    // Register observables for 'click' events
     this.showButtonStream =
       Observable.fromEvent(this.showCommentsButton.nativeElement, 'click');
     this.hideCommentsStream =
@@ -100,24 +98,22 @@ export class SamCommentsComponent implements OnInit {
     this.enterEventStream =
       Observable.fromEvent(this.textArea.nativeElement, 'keyup');
 
-    /**************************************************************************/
-    /* Map DOM events to actions                                              */
-    /**************************************************************************/
-    this.getCommentsStream = 
+    // Map DOM events to actions
+    this.getCommentsStream =
       this.showButtonStream
       .flatMap(event => {
         return this.commentsService.getComments()
               .catch(error => Observable.of(error));
       });
 
-    this.collapseCommentsStream = 
+    this.collapseCommentsStream =
       this.hideCommentsStream
       .flatMap(event => {
         return this.commentsService.getInitialState()
               .catch(error => Observable.of(error));
       });
-    
-    this.submitStream = 
+
+    this.submitStream =
       this.enterEventStream
       .flatMap(event => {
         if (event.key === 'Enter' || event.keyIdentified === 'Enter') {
@@ -140,7 +136,7 @@ export class SamCommentsComponent implements OnInit {
         }
       });
 
-    const sub = 
+    const sub =
       this.deleteStream
       .flatMap((comment) => {
         return this.commentsService.deleteComment(comment)
@@ -154,11 +150,9 @@ export class SamCommentsComponent implements OnInit {
                .catch(err => Observable.of(err));
         }
       });
-  
-    /**************************************************************************/
-    /* Subscribe to mapped DOM events                                         */
-    /**************************************************************************/
-    this.commentsSubscription = 
+
+    // Subscribe to mapped DOM events
+    this.commentsSubscription =
       this.commentsService
         .getInitialState() // Initialize stream with initial state
       .merge(this.getCommentsStream) // Add comments stream
@@ -167,7 +161,7 @@ export class SamCommentsComponent implements OnInit {
       .merge(sub)
       .subscribe(
         (comments) => {
-          this.comments = comments; 
+          this.comments = comments;
         },
         (err) => {
           console.error(err);

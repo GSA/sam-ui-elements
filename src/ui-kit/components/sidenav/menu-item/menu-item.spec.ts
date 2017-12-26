@@ -37,16 +37,16 @@ describe('The Sam MenuItem component', () => {
   describe('rendered tests', () => {
     let component: SamMenuItemComponent;
     let fixture: any;
-  
+
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [SamSidenavModule],
       });
-  
+
       fixture = TestBed.createComponent(SamMenuItemComponent);
       component = fixture.componentInstance;
     });
-  
+
     it('should compile', function () {
       fixture.detectChanges();
       expect(true).toBe(true);

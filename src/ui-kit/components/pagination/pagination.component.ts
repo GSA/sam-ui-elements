@@ -9,20 +9,20 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class SamPaginationComponent {
   /**
-  * Sets the disabled status of the component, defaults to false
-  */
+   * Sets the disabled status of the component, defaults to false
+   */
   @Input() disabled: boolean = false;
   /**
-  * Shows the current page number
-  */
+   * Shows the current page number
+   */
   @Input() currentPage: number;
   /**
-  * Shows the number of total pages
-  */
+   * Shows the number of total pages
+   */
   @Input() totalPages: number;
   /**
-  * Event emitted when current page is changed
-  */
+   * Event emitted when current page is changed
+   */
   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
 
   private maxPagesBeforeOrAfterCurrent: number = 3;

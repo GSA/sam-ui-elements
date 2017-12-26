@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 import * as moment from 'moment';
-import {By} from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
 
 // Load the implementations that should be tested
 import { SamCommentsModule } from '../';
@@ -20,8 +20,7 @@ describe('The Sam Comment component', () => {
     text: 'I did not chop down that cherry tree',
     username: 'george-washington@gsa.gov',
   };
-  
-  
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ SamCommentsModule ],

@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 import { SamImageComponent } from './';
 
 describe('The Sam Image Component', () => {
-  const washingtonImg = 
+  const washingtonImg =
     'https://upload.wikimedia.org/wikipedia/commons/c/c6/Georgewashington.jpg';
 
   let fixture: ComponentFixture<SamImageComponent>;
@@ -36,7 +36,7 @@ describe('The Sam Image Component', () => {
 
     buttonEl.triggerEventHandler('click', undefined);
     fixture.detectChanges();
-    
+
     const fileInputEl: DebugElement = de.query(By.css('input[file]'));
     expect(fileInputEl).toBeDefined();
   });

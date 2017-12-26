@@ -16,7 +16,7 @@ import {
   selector: 'sam-info-accordion',
   templateUrl: 'info-accordion.template.html',
   animations: [
-    
+
     trigger('fadeInOut', [
       state('in', style({opacity: '1'})),
       state('out', style({opacity: '1'})),
@@ -28,7 +28,7 @@ import {
         ]))
       ])
     ]),
-    
+
     trigger('pointingInOut', [
       state('in', style({opacity: '1', position: 'relative', top: '20px'})),
       state('out', style({opacity: '1', position: 'relative', top: '20px'})),
@@ -39,7 +39,7 @@ import {
         ]))
       ])
     ]),
-    
+
     trigger('slideInOut', [
       state('in', style({height: '*'})),
       transition('void => *', [
@@ -47,7 +47,7 @@ import {
           transform: 'translateY(-20%)',
           overflow: 'hidden',
           opacity: '0',
-          height: '0' 
+          height: '0'
         }),
         animate('.3s ease-in', style({
           transform: 'translateY(0%)',
@@ -66,11 +66,11 @@ import {
           transform: 'translateY(-20%)',
           overflow: 'hidden',
           opacity: '0',
-          height: '0' 
+          height: '0'
         }))
       ])
     ]),
-    
+
     trigger('overState', [
       state('inactive', style({
         transform: 'translateY(0%) scale(1)',
@@ -92,12 +92,12 @@ import {
 export class SamInfoAccordionComponent {
 
   @Input() name: string;
-  
+
   defaultItemsPerRow = 3;
   @Input() itemsPerRow = [this.defaultItemsPerRow];
-  
+
   @Input() spacing: string = ''; // options: "very relaxed" and "relaxed"
-  
+
   @Input() data: any;
   @Input() showDetailTitle: boolean = true;
   @Input() isExternalLink: boolean = true;
@@ -119,7 +119,7 @@ export class SamInfoAccordionComponent {
   ngOnInit() {
     this.formatData();
   }
-  
+
   over(item) {
     item.state = (item.state === 'active' ? 'inactive' : 'active');
   }
@@ -135,7 +135,7 @@ export class SamInfoAccordionComponent {
       const formatData = [];
       const tempData = this.data.slice(0);
       let row = 0;
-      
+
       while (tempData.length > 0) {
         formatData.push(
           tempData.splice(0, this.itemsPerRow[row] || this.defaultItemsPerRow)
@@ -182,10 +182,10 @@ export class SamInfoAccordionComponent {
     return 'inverted cool blue';
   }
 
-  private getLinkClass(): boolean { 
+  private getLinkClass(): boolean {
     return this.isExternalLink ? true : false;
   }
-  
+
   private toggleDetail(i): boolean {
     return this.detailObj.showDetail && this.detailObj.posX === i;
   }

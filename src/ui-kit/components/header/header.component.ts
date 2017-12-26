@@ -10,8 +10,8 @@ import { Component, Output, EventEmitter } from '@angular/core';
 })
 export class SamHeaderComponent {
   /**
-  * Emitted event from child dropdown component
-  */
+   * Emitted event from child dropdown component
+   */
   @Output() headerDropdownControl: EventEmitter<any> = new EventEmitter<any>();
 
   dropdownEventControl(value) {

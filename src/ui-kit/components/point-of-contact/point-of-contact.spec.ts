@@ -1,8 +1,8 @@
-import {TestBed, async, fakeAsync, tick} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
+import { TestBed, async, fakeAsync, tick } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 
 // Load the implementations that should be tested
-import {SamPointOfContactComponent} from './point-of-contact.component';
+import { SamPointOfContactComponent } from './point-of-contact.component';
 
 describe('The Sam Point of Contact component', () => {
   let component: SamPointOfContactComponent;
