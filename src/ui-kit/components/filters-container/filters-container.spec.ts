@@ -1,8 +1,8 @@
-import {TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
+import { TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 
 // Load the implementations that should be tested
-import {SamFiltersContainerComponent} from './filters-container.component';
+import { SamFiltersContainerComponent } from './filters-container.component';
 
 describe('The Sam Filters Container component', () => {
   let component: SamFiltersContainerComponent;
@@ -22,6 +22,6 @@ describe('The Sam Filters Container component', () => {
     fixture.detectChanges();
     expect(true).toBe(true);
   });
-  
+
 
 });

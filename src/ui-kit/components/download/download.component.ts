@@ -5,7 +5,7 @@ import {
   state,
   style,
   transition,
-  animate 
+  animate
  } from '@angular/core';
 import { DownloadPackageType } from '../../types';
 
@@ -49,32 +49,32 @@ import { DownloadPackageType } from '../../types';
 })
 export class SamDownloadComponent {
   /**
-  * model for populating downloads
-  */
+   * model for populating downloads
+   */
   @Input() public packages: DownloadPackageType[] = [];
   /**
-  * pass in an attachment error to trigger a message
-  */
+   * pass in an attachment error to trigger a message
+   */
   @Input() public attachmentError: boolean = false;
   /**
-  * sets download all url link
-  */
+   * sets download all url link
+   */
   @Input() public downloadAllUrl: string;
 
   public hasPublicPackages() {
     for (const pkg of this.packages){
       if (pkg.access.toLowerCase() === 'public') {
-        return true; 
+        return true;
       }
     }
     return false;
   }
-  
+
   public toggleAccordion(card) {
     card.accordionState =
       card.accordionState === 'expanded' ? 'collapsed' : 'expanded';
   }
-  
+
   private isSecure(field: string) {
     if (field.toLowerCase() === 'public') {
       return 'Not Secure';

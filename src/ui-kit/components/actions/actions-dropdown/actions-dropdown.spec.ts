@@ -79,7 +79,7 @@ describe('The Sam Actions Dropdown Component', () => {
 
     const buttons = de.queryAll(By.css('button'));
     const buttonList: DebugElement[] = buttons.slice(1, buttons.length);
-    
+
     buttonList[0].triggerEventHandler('click', component.actions[0]);
 
     expect(emittedAction).toBe(component.actions[0]);

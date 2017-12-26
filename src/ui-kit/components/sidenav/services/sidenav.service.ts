@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class SidenavService {
   // array of selected children from parent to deepest child
-  private indexArray: number[] = []; 
+  private indexArray: number[] = [];
   private path: string;
   private children: any[];
   private model: any;
@@ -29,7 +29,7 @@ export class SidenavService {
     }
     this.indexArray = this.indexArray.slice(0, nodeDepth + 1);
   }
-  
+
   overrideData(nodeDepth: number, index: number): void {
     if (this.indexArray[nodeDepth] === undefined) {
       this.indexArray.push(index);

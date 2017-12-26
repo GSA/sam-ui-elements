@@ -23,20 +23,20 @@ import {
 })
 export class SamTabComponent {
   /**
-  * Set tab text
-  */
+   * Set tab text
+   */
   @Input('tabTitle') title: string;
   /**
-  * Set tab active class, defaults to false
-  */
+   * Set tab active class, defaults to false
+   */
   @Input() active: boolean = false;
   /**
-  * Set tab disabled class, defaults to false
-  */
+   * Set tab disabled class, defaults to false
+   */
   @Input() disabled: boolean = false;
   /**
-  * Set if tab is a floating action button
-  */
+   * Set if tab is a floating action button
+   */
   @Input() float: boolean = false;
 }
 
@@ -70,13 +70,13 @@ export class SamTabsComponent implements AfterContentInit {
   @ContentChildren(SamTabComponent) tabs: QueryList<SamTabComponent>;
 
   /**
-  * Event emitted on tab selection
-  */
+   * Event emitted on tab selection
+   */
   @Output() currentSelectedTab = new EventEmitter();
 
   /**
-  * Set tabs size
-  */
+   * Set tabs size
+   */
   @Input()
   set size(key: string) {
     if (key.match(/(mini|tiny|small|default|large|huge|big)/)) {
@@ -89,8 +89,8 @@ export class SamTabsComponent implements AfterContentInit {
   }
 
   /**
-  * Set tabs theme
-  */
+   * Set tabs theme
+   */
   @Input()
   set theme(key: string) {
     if (this.themes[key]) {
@@ -103,8 +103,8 @@ export class SamTabsComponent implements AfterContentInit {
   }
 
   /**
-  * Sets the active tab
-  */
+   * Sets the active tab
+   */
   @Input() active: number = -1;
 
   /**
@@ -162,7 +162,7 @@ export class SamTabsComponent implements AfterContentInit {
   }
 
   selectTab(tab: SamTabComponent, index) {
-    this.tabs.forEach(tab => tab.active = false);
+    this.tabs.forEach(t => t.active = false);
     tab.active = true;
     this.active = index;
     this.cdr.detectChanges();

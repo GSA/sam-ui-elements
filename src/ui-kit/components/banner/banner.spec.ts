@@ -1,8 +1,8 @@
-import {TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
+import { TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 
 // Load the implementations that should be tested
-import {SamBannerComponent} from './banner.component';
+import { SamBannerComponent } from './banner.component';
 
 describe('The Sam Banner component', () => {
   let component: SamBannerComponent;
@@ -27,6 +27,4 @@ describe('The Sam Banner component', () => {
     component.toggleDetails();
     expect(component.showDetail).toBe(true);
   });
-  
-
 });

@@ -18,40 +18,40 @@ import { OptionsType } from '../../types';
 })
 export class SamMultiSelectDropdownComponent implements OnChanges {
   /**
-  * Sets the component model for active selections
-  */
+   * Sets the component model for active selections
+   */
   @Input() model: any = [];
   /**
-  * Set the dropdown option items
-  */
+   * Set the dropdown option items
+   */
   @Input() options: OptionsType[];
   /**
-  * Set form control label
-  */
+   * Set form control label
+   */
   @Input() label: string;
   /**
-  * Set form control name attribute
-  */
+   * Set form control name attribute
+   */
   @Input() name: string;
   /**
-  * Set form control hint
-  */
+   * Set form control hint
+   */
   @Input() hint: string;
   /**
-  * String for general error message
-  */
+   * String for general error message
+   */
   @Input() errorMessage: string;
   /**
-  * Configure if list should have a "Select All" option
-  */
+   * Configure if list should have a "Select All" option
+   */
   @Input() hasSelectAll: boolean;
   /**
-  * Sets the disabled attribute for component, defaults to false
-  */
+   * Sets the disabled attribute for component, defaults to false
+   */
   @Input() disabled: boolean = false;
   /**
-  * Event emitted when model changes
-  */
+   * Event emitted when model changes
+   */
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('optionsList') list: ElementRef;

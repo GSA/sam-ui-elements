@@ -45,11 +45,11 @@ describe('The SAM Action Button Component', () => {
   });
 
   it('Should disable button when disabled is set', () => {
-    const el: any = de.query(By.css('button')).nativeElement;
+    const element: any = de.query(By.css('button')).nativeElement;
     comp.disabled = true;
     fixture.detectChanges();
 
-    expect(el.disabled).toBe(true);
+    expect(element.disabled).toBe(true);
   });
 
   it('Should emit callback results on button click', () => {

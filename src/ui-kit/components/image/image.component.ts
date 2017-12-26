@@ -63,7 +63,7 @@ export class SamImageComponent implements OnInit {
       this.tmpSrc = event.target.result;
     };
 
-    this.editModeSubscription = 
+    this.editModeSubscription =
       this.editButtonStream
       .merge(this.cancelButtonStream)
       .merge(this.saveButtonStream)
@@ -77,7 +77,7 @@ export class SamImageComponent implements OnInit {
           console.error(error);
         }
       );
-    
+
     this.cancelButtonSubscription =
       this.cancelButtonStream
       .subscribe(
@@ -88,7 +88,7 @@ export class SamImageComponent implements OnInit {
         (error) => { console.error(error); }
       );
 
-    this.saveButtonSubscription = 
+    this.saveButtonSubscription =
       this.saveButtonStream
       .subscribe(
         (event) => {
@@ -103,7 +103,7 @@ export class SamImageComponent implements OnInit {
         (error) => { console.error(error); }
       );
 
-    this.fileChangeSubscription = 
+    this.fileChangeSubscription =
       this.fileChangeStream
       .subscribe(
         (event) => {
@@ -130,14 +130,14 @@ export class SamImageComponent implements OnInit {
     let fileName = '';
     if (this.tmpValue) {
       fileName = this.tmpValue.name;
-    } 
+    }
     return fileName;
   }
 
   private generateFilePickerLabelText() {
     const labelString = this.getFileName();
     const labelStrLen = 9;
-    const labelText = labelString && labelString.length > labelStrLen ? 
+    const labelText = labelString && labelString.length > labelStrLen ?
                         labelString.substr(0, labelStrLen - 1).concat('...') :
                         labelString;
     return labelText || 'Select a file';
@@ -174,7 +174,7 @@ export class SamImageComponent implements OnInit {
       if (dt.files && dt.files[0]) {
         this.tmpValue = dt.files[0];
       }
-      this.reader.readAsDataURL(dt.files[0]);  
+      this.reader.readAsDataURL(dt.files[0]);
     }
   }
 }

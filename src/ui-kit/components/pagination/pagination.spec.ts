@@ -1,8 +1,8 @@
-import {TestBed, async, fakeAsync, tick} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
+import { TestBed, async, fakeAsync, tick } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 
 // Load the implementations that should be tested
-import {SamPaginationComponent} from './pagination.component';
+import { SamPaginationComponent } from './pagination.component';
 
 describe('The Sam Pagination component', () => {
   let component: SamPaginationComponent;

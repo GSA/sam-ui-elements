@@ -1,12 +1,12 @@
-import {TestBed} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
-import {RouterTestingModule} from '@angular/router/testing';
+import { TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject'; 
+import { Subject } from 'rxjs/Subject';
 import { ActivatedRoute } from '@angular/router';
 
 // Load the implementations that should be tested
-import {SamBreadcrumbsComponent} from './breadcrumbs.component';
+import { SamBreadcrumbsComponent } from './breadcrumbs.component';
 
 describe('The Sam Breadcrumbs component', () => {
   describe('isolated tests', () => {
@@ -50,13 +50,13 @@ describe('The Sam Breadcrumbs component', () => {
   describe('rendered tests', () => {
     let component: SamBreadcrumbsComponent;
     let fixture: any;
-  
+
     beforeEach(() => {
       TestBed.configureTestingModule({
         declarations: [SamBreadcrumbsComponent],
         imports: [RouterTestingModule],
       });
-  
+
       fixture = TestBed.createComponent(SamBreadcrumbsComponent);
       component = fixture.componentInstance;
       component.crumbs = [
@@ -70,15 +70,15 @@ describe('The Sam Breadcrumbs component', () => {
         }
       ];
     });
-  
+
     it('should compile', function () {
       fixture.detectChanges();
       expect(true).toBe(true);
     });
-    
+
     it('should populate with crumbs', function () {
       fixture.detectChanges();
-      
+
       let el = fixture.debugElement
         .query(
           By.css('.sam-breadcrumbs li:nth-child(1)')

@@ -12,5 +12,5 @@ import { Component } from '@angular/core';
   styles: [`:host >>> .filters-container * {margin-bottom: 1rem;}`]
 })
 export class SamFiltersContainerComponent {
-  
+
 }

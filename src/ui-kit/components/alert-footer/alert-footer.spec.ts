@@ -14,11 +14,11 @@ describe('The AlertFooter component', () => {
       service = new SamAlertFooterService();
       component = new SamAlertFooterComponent(service);
       service.registerFooterAlert({
-        description: 'hello',        
+        description: 'hello',
         title: 'alert title',
       });
       service.registerFooterAlert({
-        description: 'hello 2',        
+        description: 'hello 2',
         title: 'alert title 2',
       });
     });
@@ -35,35 +35,35 @@ describe('The AlertFooter component', () => {
       const expectedNumAlerts = 2;
       const alertIndex = 2;
       service.dismissFooterAlert(alertIndex);
-      let alerts = service.getAlerts(); 
+      let alerts = service.getAlerts();
       expect(alerts.length).toBe(expectedNumAlerts);
       service.dismissFooterAlert(0);
-      alerts = service.getAlerts(); 
+      alerts = service.getAlerts();
       expect(alerts.length).toBe(1);
     });
   });
   describe('rendered tests', () => {
     let component: SamAlertFooterComponent;
     let fixture: any;
-  
+
     beforeEach(() => {
       TestBed.configureTestingModule({
         declarations: [ SamAlertFooterComponent, SamAlertComponent ],
         imports: [ ],
         providers: [ SamAlertFooterService ]
       });
-  
+
       fixture = TestBed.createComponent(SamAlertFooterComponent);
       component = fixture.componentInstance;
     });
-  
-  
+
+
     it('should show 1 alert',
       inject([SamAlertFooterService], (alertFooterService) => {
       fixture.detectChanges();
       alertFooterService.registerFooterAlert({
         description: 'test',
-        timer: 0,        
+        timer: 0,
         title: 'test',
         type: 'success',
       });

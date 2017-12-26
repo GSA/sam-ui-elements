@@ -9,7 +9,7 @@ import { PointOfContactType } from '../../types';
 })
 export class SamPointOfContactComponent {
   /**
-  * Populates the component with the provided data
-  */
+   * Populates the component with the provided data
+   */
   @Input() data: PointOfContactType;
 }
