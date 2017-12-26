@@ -164,13 +164,13 @@ describe('The Sam Comments component', () => {
       )
       .toBe(true);
     });
-    
+
     // component
   });
   describe('rendered tests', () => {
     let component: SamCommentsComponent;
     let fixture: any;
-    
+
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [ SamCommentsModule ],
@@ -178,12 +178,12 @@ describe('The Sam Comments component', () => {
           { provide: CommentsService, useClass: CommentsDemoService }
         ]
       });
-  
+
       fixture = TestBed.createComponent(SamCommentsComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
     });
-  
+
     it('Should show two comments by default if more than two \
       comments are available', function() {
       const mainCompEl =
@@ -192,7 +192,7 @@ describe('The Sam Comments component', () => {
       const arrLen = 2;
       expect(liArray.length).toBe(arrLen);
     });
-  
+
     it('Shoud have a previous button that\
       will show an additional five comments', function() {
       fixture.debugElement.query(By.css('.show-button')).nativeElement.click();
@@ -205,7 +205,7 @@ describe('The Sam Comments component', () => {
       const expected = 7;
       expect(liArray.length).toBe(expected);
     });
-  
+
     it('Should have a Less button that will hide \
       all except the original comments', function() {
       fixture.debugElement.query(By.css('.hide-button')).nativeElement.click();
@@ -216,14 +216,14 @@ describe('The Sam Comments component', () => {
       const expected = 2;
       expect(liArray.length).toBe(expected);
     });
-  
+
     it('Should have a textarea input for adding a comment', function() {
       expect(
         fixture.debugElement.query(By.css('textarea')).nativeElement
       )
       .toBeDefined();
     });
-  
+
     it('Should add a new comment when "Enter" is pressed', function() {
       const testString = 'I am a brand new comment for testing';
       component.textArea.nativeElement.value = testString;
@@ -235,7 +235,7 @@ describe('The Sam Comments component', () => {
     xit('Should allow adding new comments to be disabled', function() {
       component.disabled = true;
     });
-  
+
     xit('Should not allow users to input more than 250 characters', function() {
       const dummyText = 'A wonderful serenity has taken possession of my \
       entire soul, like these sweet mornings of spring which I enjoy with my \

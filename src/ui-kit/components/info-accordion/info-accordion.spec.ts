@@ -77,7 +77,7 @@ describe('SAM Info Accordion Component', () => {
     component.detailObj.posY = two;
     component.detailObj.item = component.data[0][two];
     fixture.detectChanges();
-    
+
     fixture.whenStable().then(() => {
       fixture.detectChanges();
 

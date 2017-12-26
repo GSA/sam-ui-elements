@@ -12,8 +12,8 @@ import { SidenavService } from '../services';
 import { MenuItem } from '../interfaces';
 
 /**
-* The <sam-sidenav> component builds a side navigation bar
-*/
+ * The <sam-sidenav> component builds a side navigation bar
+ */
 @Component({
   selector: 'sam-sidenav',
   templateUrl: './sidenav.template.html'
@@ -25,20 +25,20 @@ export class SamSidenavComponent implements OnInit {
    */
   @Input() type: string;
   /**
-  * Sets active selection in menu by matching to a label defined in the model
-  */
+   * Sets active selection in menu by matching to a label defined in the model
+   */
   @Input() labelLookup: string;
   /**
-  * Object that defines the sidenav labels, routes, and structure
-  */
+   * Object that defines the sidenav labels, routes, and structure
+   */
   @Input() model: MenuItem;
   /**
-  * Event emitted on interaction, returns the selected menu item's path value
-  */
+   * Event emitted on interaction, returns the selected menu item's path value
+   */
   @Output() path: EventEmitter<string> = new EventEmitter<string>();
   /**
-  * Event emitted on interaction, returns the selected menu item
-  */
+   * Event emitted on interaction, returns the selected menu item
+   */
   @Output() data: EventEmitter<any> = new EventEmitter<any>();
   constructor(private service: SidenavService) { }
 
@@ -58,7 +58,7 @@ export class SamSidenavComponent implements OnInit {
     this.service.setModel(this.model);
     this.service.setChildren(this.model.children);
   }
-  
+
   ngOnChanges(c) {
     if (c.labelLookup && this.labelLookup) {
       const selection =
@@ -93,7 +93,7 @@ export class SamSidenavComponent implements OnInit {
   }
 
   setSelection(selection) {
-    for (let i = 1; i <= selection.length; i++){
+    for (let i = 1; i <= selection.length; i++) {
       const idx = selection[i - 1];
       this.service.overrideData(i - 1, idx);
     }

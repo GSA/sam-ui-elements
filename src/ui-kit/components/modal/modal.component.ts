@@ -168,7 +168,7 @@ export class SamModalComponent implements OnInit {
     this.args = args;
     this.onOpen.emit(this.args);
     if (document && document.body) {
-      this._scrollHelpers.disableScroll();      
+      this._scrollHelpers.disableScroll();
       document.body.appendChild(this.backdropElement);
     }
     this._focusModalElement = true;
@@ -176,7 +176,7 @@ export class SamModalComponent implements OnInit {
   }
 
   closeModal() {
-    this._scrollHelpers.enableScroll();          
+    this._scrollHelpers.enableScroll();
     this.show = false;
     this.onClose.emit(this.args);
     this.args = undefined;

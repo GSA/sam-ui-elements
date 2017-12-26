@@ -14,7 +14,7 @@ export class SamMenuItemComponent {
   constructor(private service: SidenavService) { }
 
   updateUI(index: number, event: Event, menuItem: MenuItem): void {
-    if(menuItem && menuItem.disabled){
+    if (menuItem && menuItem.disabled) {
       return;
     }
     this.service.updateData(this.nodeDepth, index);

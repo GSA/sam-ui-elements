@@ -3,7 +3,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DebugElement } from '@angular/core';
-import {AccessType, ExpansionType} from '../../types';
+import { AccessType, ExpansionType } from '../../types';
 import { SamDownloadComponent } from './download.component';
 
 const mockArr = [
@@ -80,27 +80,27 @@ describe('SamDownloadComponent', () => {
     describe('rendered tests', () => {
         let component: SamDownloadComponent;
         let fixture: ComponentFixture<SamDownloadComponent>;
-    
+
         beforeEach(() => {
             TestBed.configureTestingModule({
             imports: [BrowserAnimationsModule],
             declarations: [ SamDownloadComponent ]
             });
-    
+
             fixture = TestBed.createComponent(SamDownloadComponent);
-    
+
             component = fixture.componentInstance;
             component.packages = mockArr;
             component.packages.push(additionalMock);
             component.downloadAllUrl = 'http://fakesite.com/download/1234';
             fixture.detectChanges();
         });
-    
+
         it('should compile', () => {
             fixture.detectChanges();
             expect(true).toEqual(true);
         });
-    
+
         it('download all url set', () => {
             fixture.detectChanges();
             expect(
@@ -111,7 +111,7 @@ describe('SamDownloadComponent', () => {
             )
             .toContain('http://fakesite.com/download/1234');
         });
-    
+
         it('check fields', () => {
             fixture.detectChanges();
             expect(
@@ -129,7 +129,7 @@ describe('SamDownloadComponent', () => {
                 .nativeElement.getAttribute('href')
             )
             .toContain('http://fakesite.com/download/3333');
-            
+
             expect(
                 fixture.debugElement.query(
                     By.css('.download-container .usa-zebra-list \

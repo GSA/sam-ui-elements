@@ -1,5 +1,5 @@
-import {TestBed, async} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
+import { TestBed, async } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { SamHistoryComponent } from './history.component';
@@ -30,7 +30,7 @@ const historyData = [
 describe('The SAM History Component', () => {
   let component: SamHistoryComponent;
   let fixture: any;
-  
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
@@ -42,7 +42,7 @@ describe('The SAM History Component', () => {
     component.data = historyData;
     component.currentId = historyCurrentId;
   });
-  
+
   it('check markup', () => {
     fixture.detectChanges();
     // Date
@@ -78,7 +78,7 @@ describe('The SAM History Component', () => {
     )
     .toBe('/opportunities/0564cc38f28e1a85ea66de2bb78dae29');
   });
-  
+
   it('check current class', () => {
     fixture.detectChanges();
     expect(
