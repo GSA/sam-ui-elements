@@ -33,11 +33,11 @@ export class SamSidenavComponent implements OnInit {
    */
   @Input() model: MenuItem;
   /**
-   * Event emitted on interaction, returns the selected menu item's path value
+   * (deprecated) Event emitted on interaction, returns the selected menu item's path value
    */
   @Output() path: EventEmitter<string> = new EventEmitter<string>();
   /**
-   * Event emitted on interaction, returns the selected menu item
+   * (deprecated) Event emitted on interaction, returns the selected menu item
    */
   @Output() data: EventEmitter<any> = new EventEmitter<any>();
   /**
