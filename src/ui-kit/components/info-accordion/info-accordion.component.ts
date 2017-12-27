@@ -90,19 +90,46 @@ import {
   ]
 })
 export class SamInfoAccordionComponent {
-
+  /**
+   * (deprecated) sets active item
+   */
   @Input() name: string;
-
+  
   defaultItemsPerRow = 3;
+  /**
+   * Configures number of items per row 
+   */
   @Input() itemsPerRow = [this.defaultItemsPerRow];
-
-  @Input() spacing: string = ''; // options: "very relaxed" and "relaxed"
-
+  
+  /**
+   * Sets additional spacing configuration ("very relaxed" and "relaxed")
+   */
+  @Input() spacing: string = '';
+  
+  /**
+   * Sets accordion data
+   */
   @Input() data: any;
+  
+  /**
+   * Configures showing detail title
+   */
   @Input() showDetailTitle: boolean = true;
+  
+  /**
+   * Configures external link indicator
+   */
   @Input() isExternalLink: boolean = true;
-
-  @Input() closeNotification: string = '';
+  
+  /**
+   * Passes in a string to close accordions for cases where there are multiple
+   * Info accordions on a page. 
+   */
+  @Input() closeNotification: string = "";
+  
+  /**
+   * Emits notification event
+   */
   @Output() updateNotification: EventEmitter<any> = new EventEmitter<any>();
 
   detailObj: any = {

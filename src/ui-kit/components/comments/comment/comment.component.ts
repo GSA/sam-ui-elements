@@ -7,11 +7,20 @@ import { Comment } from '../interfaces';
   templateUrl: 'comment.template.html'
 })
 export class SamCommentComponent {
+  /**
+   * Sets comment text
+   */
   @Input() comment: Comment;
+  /**
+   * Sets configuration to allow comment deletion
+   */
   @Input() allowDelete: Comment;
-  @Output() onDelete: EventEmitter<any> = new EventEmitter<any>();
+  /**
+   * Emits when delete action occurs
+   */
+  @Output() delete: EventEmitter<any> = new EventEmitter<any>();
 
   emitClick(comment: Event) {
-    this.onDelete.emit(this.comment);
+    this.delete.emit(this.comment);
   }
 }

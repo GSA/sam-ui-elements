@@ -24,8 +24,14 @@ export class SamBreadcrumbsComponent {
      * property.
      */
     @Input() rootCrumb: IBreadcrumb = undefined;
-
+    /**
+     * (deprecated) Emits when crumb action occurs
+     */
     @Output() public crumbActionHandler = new EventEmitter();
+    /**
+     * Emits when crumb action occurs
+     */
+    @Output() public crumbAction = new EventEmitter();
 
     private _routeSubscription: any;
     private count = 0;
@@ -112,5 +118,6 @@ export class SamBreadcrumbsComponent {
     }
     public crumbHandler(crumb: string) {
       this.crumbActionHandler.emit(crumb);
+      this.crumbAction.emit(crumb);
     }
 }

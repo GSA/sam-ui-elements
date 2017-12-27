@@ -70,13 +70,8 @@ export class SamTabsComponent implements AfterContentInit {
   @ContentChildren(SamTabComponent) tabs: QueryList<SamTabComponent>;
 
   /**
-   * Event emitted on tab selection
-   */
-  @Output() currentSelectedTab = new EventEmitter();
-
-  /**
-   * Set tabs size
-   */
+  * Set tabs size
+  */
   @Input()
   set size(key: string) {
     if (key.match(/(mini|tiny|small|default|large|huge|big)/)) {
@@ -111,6 +106,14 @@ export class SamTabsComponent implements AfterContentInit {
    * Emits change on active tab index
    */
   @Output() activeChange: EventEmitter<number> = new EventEmitter();
+  /**
+   * (deprecated) Event emitted on tab selection
+   */
+  @Output() currentSelectedTab = new EventEmitter();
+  /**
+   * Event emitted on tab selection
+   */
+  @Output() tabChange = new EventEmitter();
 
   private _size = 'large';
   private _theme = 'default';
@@ -168,5 +171,6 @@ export class SamTabsComponent implements AfterContentInit {
     this.cdr.detectChanges();
     this.activeChange.emit(this.active);
     this.currentSelectedTab.emit(tab);
+    this.tabChange.emit(tab);
   }
 }

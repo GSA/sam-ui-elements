@@ -19,15 +19,6 @@ import {SamFormService} from '../../form-service';
   }]
 })
 export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor {
-  public INPUT_FORMAT: string = 'Y-M-D';
-  public OUTPUT_FORMAT: string = 'YYYY-MM-DD';
-
-  model: any = {
-    month: null,
-    day: null,
-    year: null
-  };
-
   /**
   * Sets the general error message for component
   */
@@ -73,10 +64,14 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   */
   @Output() valueChange = new EventEmitter<any>();
   /**
+  * (deprecated) Event emitted when form control loses focus
+  */
+  @Output() blurEvent = new EventEmitter<any>();
+  /**
   * Event emitted when form control loses focus
   */
+  @Output() blur = new EventEmitter<any>();
 
-  @Output() blurEvent = new EventEmitter<any>();
   onChange: any = () => { };
   onTouched: any = () => { };
   @ViewChild('month') month;
@@ -84,7 +79,15 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   @ViewChild('year') year;
   @ViewChild('wrapper') wrapper;
   allowChars = ["0","1","2","3","4","5","6","7","8","9","Backspace","ArrowLeft","ArrowRight","Tab","Delete"];
+  model: any = {
+    month: null,
+    day: null,
+    year: null
+  };
+  public INPUT_FORMAT: string = 'Y-M-D';
+  public OUTPUT_FORMAT: string = 'YYYY-MM-DD';
 
+  
   get inputModel(){
     return {
       day: this.day.nativeElement.value,
@@ -280,6 +283,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     if(this._keyIsNumber(event.key)){
       if(event.target.value.length+1==4){
         this.blurEvent.emit();
+        this.blur.emit();
       }
       this.year.nativeElement.value = possibleNum;
       let dupModel = this.inputModel;

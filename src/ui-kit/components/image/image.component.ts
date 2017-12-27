@@ -21,8 +21,7 @@ export class SamImageComponent implements OnInit {
    */
   @Input() public editable: boolean = false;
   /**
-   * An event emitter that emits the file that the user uplaoded.
-   * 
+   * An event emitter that emits the file that the user uploaded.
    */
   @Output() public fileChange: EventEmitter<File> = new EventEmitter<File>();
 

@@ -86,7 +86,7 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
   */
   @Input() defaultValidations: boolean = true;
   /**
-  * Event emitted when value changes
+  * (deprecated) Event emitted when value changes
   */
   @Output() valueChange = new EventEmitter<any>();
 

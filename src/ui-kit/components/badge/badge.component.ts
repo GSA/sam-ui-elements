@@ -19,6 +19,9 @@ export class SamBadgeComponent {
     return this.options;
   }
 
+  /**
+   * Sets options for badge
+   */
   @Input() set options(config: BadgeConfig) {
     this._options = pick(config, ['attached']);
   }

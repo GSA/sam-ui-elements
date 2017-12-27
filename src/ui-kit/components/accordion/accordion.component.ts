@@ -10,28 +10,29 @@ import {
 
 
 /**
- * The <sam-accordion-section> component can generates content for a single 
- * accordion item;
- *
- * @Input headerText: string - Accordion header text
- * @Input isExpanded: boolean - Defines whether accordion item 
- * should be expanded when loaded
- * @Input name: string - populates the 'name' attribute for the accordion 
- * item for 508 compliance
- * @Output isExpandedChange: object - The accordion section that has changed is 
- * emitted back to parent
+ * The <sam-accordion-section> component can generates content for a single accordion item
  */
 @Component({
   selector: 'sam-accordion-section',
   templateUrl: 'accordion.template.html'
 })
 export class SamAccordionSection implements OnInit {
-
+  /**
+   * Accordion header text
+   */
   @Input() headerText: string;
+  /**
+   * Defines whether accordion item should be expanded when loaded
+   */
   @Input() isExpanded: boolean;
+  /**
+   * Populates the 'name' attribute for the accordion item for 508 compliance
+   */
   @Input() name: string;
-  @Output() isExpandedChange: EventEmitter<SamAccordionSection> =
-    new EventEmitter<SamAccordionSection>();
+  /**
+   * The accordion section that has changed is emitted back to parent
+   */
+  @Output() isExpandedChange: EventEmitter<SamAccordionSection> = new EventEmitter<SamAccordionSection>();
 
   constructor(
     @Inject(forwardRef(() => SamAccordionComponent))

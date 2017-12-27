@@ -26,7 +26,10 @@ import { Comment } from './interfaces';
   templateUrl: 'comments.template.html',
 })
 export class SamCommentsComponent implements OnInit {
-  @Input() public disabled: boolean = false;
+  /**
+   * Sets disabled state
+   */
+  @Input() public disabled: boolean = false
   /**
    * ViewChildren
    */
