@@ -1,5 +1,12 @@
-import { Component, Input } from '@angular/core';
-import { trigger, state, style, transition, animate } from '@angular/core';
+import {
+  Component,
+  Input,
+  trigger,
+  state,
+  style,
+  transition,
+  animate
+ } from '@angular/core';
 import { DownloadPackageType } from '../../types';
 
 /**
@@ -42,37 +49,37 @@ import { DownloadPackageType } from '../../types';
 })
 export class SamDownloadComponent {
   /**
-  * model for populating downloads
-  */
+   * model for populating downloads
+   */
   @Input() public packages: DownloadPackageType[] = [];
   /**
-  * pass in an attachment error to trigger a message
-  */
+   * pass in an attachment error to trigger a message
+   */
   @Input() public attachmentError: boolean = false;
   /**
-  * sets download all url link
-  */
+   * sets download all url link
+   */
   @Input() public downloadAllUrl: string;
-  constructor() {}
 
-  public hasPublicPackages(){
-    for(let pkg of this.packages){
-      if(pkg.access.toLowerCase() === "public") {
-        return true; 
+  public hasPublicPackages() {
+    for (const pkg of this.packages){
+      if (pkg.access.toLowerCase() === 'public') {
+        return true;
       }
     }
     return false;
   }
-  
-  public toggleAccordion(card){
-    card.accordionState = card.accordionState == 'expanded' ? 'collapsed' : 'expanded';
+
+  public toggleAccordion(card) {
+    card.accordionState =
+      card.accordionState === 'expanded' ? 'collapsed' : 'expanded';
   }
-  
-  private isSecure(field: string){
-    if(field.toLowerCase() === "public"){
-      return "Not Secure";
+
+  private isSecure(field: string) {
+    if (field.toLowerCase() === 'public') {
+      return 'Not Secure';
     } else {
-      return "Secured"
+      return 'Secured';
     }
   }
 }

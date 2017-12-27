@@ -1,5 +1,13 @@
-import { Component, Inject, forwardRef } from '@angular/core';
-import { Input, Output, EventEmitter, OnInit } from '@angular/core';
+import {
+  Component,
+  Inject,
+  forwardRef,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit
+} from '@angular/core';
+
 
 /**
  * The <sam-accordion-section> component can generates content for a single accordion item
@@ -28,34 +36,36 @@ export class SamAccordionSection implements OnInit {
 
   constructor(
     @Inject(forwardRef(() => SamAccordionComponent))
-    private parent:SamAccordionComponent
+    private parent: SamAccordionComponent
   ) {
     this.parent.addSection(this);
   }
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error("[name] is a required input for the <sam-accordian-section> component");
+      throw new Error(
+        '[name] is a required input for the <sam-accordian-section> component'
+      );
     }
   }
 
-  private toggle() {
+  public toggle() {
     this.isExpanded = !this.isExpanded;
     this.isExpandedChange.emit(this);
   }
 
-  collapse() {
+  public collapse() {
     this.isExpanded = false;
   }
 
-  expand() {
+  public expand() {
     this.isExpanded = true;
   }
 
-  index() {
+  public index() {
     let index = -1;
-    for(var i = 0; i < this.parent.sections.length; i++) {
-      if(this.parent.sections[i] == this) {
+    for (let i = 0; i < this.parent.sections.length; i++) {
+      if (this.parent.sections[i] === this) {
         index = i;
         break;
       }
@@ -65,39 +75,38 @@ export class SamAccordionSection implements OnInit {
 }
 
 /**
- * The <sam-accordion> component can generate accordions component with provided data
+ * The <sam-accordion> component can generate accordions component with provided
+ * data
  */
 @Component({
   selector: 'sam-accordion',
   template: `
-    <ul class="accordion-list" [ngClass]="accordionClass">
+    <ul class='accordion-list' [ngClass]='accordionClass'>
       <ng-content></ng-content>             
     </ul>
 `,
 })
 export class SamAccordionComponent implements OnInit {
   /**
-  * Control whether the accordion component has a border
-  */
-  @Input() bordered:boolean = false;
+   * Control whether the accordion component has a border
+   */
+  @Input() bordered: boolean = false;
   /**
-  * Index of an accordion item that should be expanded on load
-  */
+   * Index of an accordion item that should be expanded on load
+   */
   @Input() expandIndex = -1;
   /**
-  * The index of the accordion item that has been opened/closed
-  */
-  @Output() selectedIndexChange: EventEmitter<number> = new EventEmitter<number>();
-  public accordionClass:string = "usa-accordion";
+   * The index of the accordion item that has been opened/closed
+   */
+  @Output() selectedIndexChange: EventEmitter<number> =
+    new EventEmitter<number>();
+
+  public accordionClass: string = 'usa-accordion';
   public sections: SamAccordionSection[] = [];
-
-  constructor() {
-
-  }
 
   ngOnInit() {
     if (this.bordered) {
-      this.accordionClass = "usa-accordion-bordered";
+      this.accordionClass = 'usa-accordion-bordered';
     }
     this.setExpandIndex(this.expandIndex);
   }
@@ -106,7 +115,7 @@ export class SamAccordionComponent implements OnInit {
     this.sections.push(section);
     section.isExpandedChange.subscribe(s => {
       this.expandedChanged(s);
-    })
+    });
   }
 
   expandedChanged(section: SamAccordionSection) {

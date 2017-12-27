@@ -1,7 +1,8 @@
 import { Component, Output, EventEmitter } from '@angular/core';
 
 /**
- * The <sam-header> component contains navigational links to main sections of the site
+ * The <sam-header> component contains navigational links to main sections of 
+ * the site
  */
 @Component({
   selector: 'sam-header',
@@ -9,18 +10,16 @@ import { Component, Output, EventEmitter } from '@angular/core';
 })
 export class SamHeaderComponent {
   /**
-  * Emitted event from child dropdown component
-  */
+   * Emitted event from child dropdown component
+   */
   @Output() headerDropdownControl: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor() { }
-
-  dropdownEventControl(value){
+  dropdownEventControl(value) {
     this.headerDropdownControl.emit(value);
   }
-  //deprecated
-  refreshPage(){
-    console.log("deprecating sam-header refreshPage method");
+  // deprecated
+  refreshPage() {
+    console.log('deprecating sam-header refreshPage method');
     window.location.reload();
   }
 

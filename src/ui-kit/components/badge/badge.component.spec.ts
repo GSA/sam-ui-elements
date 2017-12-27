@@ -20,7 +20,8 @@ describe('The Sam Badge Component', () => {
   });
 
   it('@Input ~ `Attached`', function () {
-    let badge = fixture.debugElement.query(By.css('.sam-ui.label')).nativeElement;
+    const badge =
+      fixture.debugElement.query(By.css('.sam-ui.label')).nativeElement;
 
     component.options = {
       attached: 'top-left'

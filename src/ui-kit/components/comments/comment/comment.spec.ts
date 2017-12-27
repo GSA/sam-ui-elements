@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 import * as moment from 'moment';
-import {By} from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
 
 // Load the implementations that should be tested
 import { SamCommentsModule } from '../';
@@ -11,15 +11,16 @@ import { SamCommentComponent } from './';
 describe('The Sam Comment component', () => {
   let component: SamCommentComponent;
   let fixture: any;
+  const imgUrl =
+    'https://upload.wikimedia.org/wikipedia/commons/c/c6/Georgewashington.jpg';
 
   const comment: Comment = {
-    username: 'george-washington@gsa.gov',
-    text: "I did not chop down that cherry tree",
     datetime: new Date(),
-    image: 'https://upload.wikimedia.org/wikipedia/commons/c/c6/Georgewashington.jpg'
-  } 
-  
-  
+    image: imgUrl,
+    text: 'I did not chop down that cherry tree',
+    username: 'george-washington@gsa.gov',
+  };
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ SamCommentsModule ],
@@ -32,7 +33,11 @@ describe('The Sam Comment component', () => {
   });
 
   it('Should display a username', function() {
-    const usernameEl = fixture.debugElement.query(By.css('.username')).nativeElement;
+    const usernameEl = fixture.debugElement
+      .query(
+        By.css('.username')
+      )
+      .nativeElement;
     expect(usernameEl.innerHTML).toContain(comment.username);
   });
 

@@ -1,11 +1,22 @@
-import { Component, Input, HostListener, Output, EventEmitter } from '@angular/core';
-import { trigger, state, style, transition, animate, keyframes } from '@angular/core';
+import {
+  Component,
+  Input,
+  HostListener,
+  Output,
+  EventEmitter,
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+  keyframes
+} from '@angular/core';
 
 @Component({
   selector: 'sam-info-accordion',
   templateUrl: 'info-accordion.template.html',
   animations: [
-    
+
     trigger('fadeInOut', [
       state('in', style({opacity: '1'})),
       state('out', style({opacity: '1'})),
@@ -17,7 +28,7 @@ import { trigger, state, style, transition, animate, keyframes } from '@angular/
         ]))
       ])
     ]),
-    
+
     trigger('pointingInOut', [
       state('in', style({opacity: '1', position: 'relative', top: '20px'})),
       state('out', style({opacity: '1', position: 'relative', top: '20px'})),
@@ -28,7 +39,7 @@ import { trigger, state, style, transition, animate, keyframes } from '@angular/
         ]))
       ])
     ]),
-    
+
     trigger('slideInOut', [
       state('in', style({height: '*'})),
       transition('void => *', [
@@ -36,7 +47,7 @@ import { trigger, state, style, transition, animate, keyframes } from '@angular/
           transform: 'translateY(-20%)',
           overflow: 'hidden',
           opacity: '0',
-          height: '0' 
+          height: '0'
         }),
         animate('.3s ease-in', style({
           transform: 'translateY(0%)',
@@ -55,11 +66,11 @@ import { trigger, state, style, transition, animate, keyframes } from '@angular/
           transform: 'translateY(-20%)',
           overflow: 'hidden',
           opacity: '0',
-          height: '0' 
+          height: '0'
         }))
       ])
     ]),
-    
+
     trigger('overState', [
       state('inactive', style({
         transform: 'translateY(0%) scale(1)',
@@ -82,7 +93,7 @@ export class SamInfoAccordionComponent {
   /**
    * (deprecated) sets active item
    */
-  @Input() name:string;
+  @Input() name: string;
   
   defaultItemsPerRow = 3;
   /**
@@ -93,29 +104,33 @@ export class SamInfoAccordionComponent {
   /**
    * Sets additional spacing configuration ("very relaxed" and "relaxed")
    */
-  @Input() spacing:string = ""; //options: "very relaxed" and "relaxed"
+  @Input() spacing: string = '';
   
   /**
    * Sets accordion data
    */
-  @Input() data:any;
+  @Input() data: any;
+  
   /**
    * Configures showing detail title
    */
-  @Input() showDetailTitle:boolean = true;
+  @Input() showDetailTitle: boolean = true;
+  
   /**
    * Configures external link indicator
    */
-  @Input() isExternalLink:boolean = true;
+  @Input() isExternalLink: boolean = true;
+  
   /**
    * Passes in a string to close accordions for cases where there are multiple
    * Info accordions on a page. 
    */
-  @Input() closeNotification:string = "";
+  @Input() closeNotification: string = "";
+  
   /**
    * Emits notification event
    */
-  @Output() updateNotification:EventEmitter<any> = new EventEmitter<any>();
+  @Output() updateNotification: EventEmitter<any> = new EventEmitter<any>();
 
   detailObj: any = {
     showDetail: false,
@@ -128,30 +143,30 @@ export class SamInfoAccordionComponent {
 
   fadeSegmentInOut: string = '';
 
-  constructor() { }
-
-  ngOnInit(){
+  ngOnInit() {
     this.formatData();
   }
-  
+
   over(item) {
     item.state = (item.state === 'active' ? 'inactive' : 'active');
   }
 
-  ngOnChanges(){
-    if(this.closeNotification !== this.name){
+  ngOnChanges() {
+    if (this.closeNotification !== this.name) {
       this.closeReferenceDetail();
     }
   }
 
-  formatData(){
-    if(!this.formatted) {
-      let formatData = [];
-      let tempData = this.data.slice(0);
+  formatData() {
+    if (!this.formatted) {
+      const formatData = [];
+      const tempData = this.data.slice(0);
       let row = 0;
-      
-      while (tempData.length > 0){
-        formatData.push(tempData.splice(0, this.itemsPerRow[row] || this.defaultItemsPerRow));
+
+      while (tempData.length > 0) {
+        formatData.push(
+          tempData.splice(0, this.itemsPerRow[row] || this.defaultItemsPerRow)
+        );
         row++;
       }
 
@@ -160,10 +175,10 @@ export class SamInfoAccordionComponent {
     }
   }
 
-  selectDetail(i, j, event){
-    if(this.isCurrent(i,j) && this.detailObj.showDetail){
+  selectDetail(i, j, event) {
+    if (this.isCurrent(i, j) && this.detailObj.showDetail) {
       this.detailObj.showDetail = false;
-    }else{
+    } else {
       this.detailObj.showDetail = true;
       this.detailObj.posX = i;
       this.detailObj.posY = j;
@@ -175,34 +190,34 @@ export class SamInfoAccordionComponent {
     event.stopPropagation();
   }
 
-  private getItemClass(i,j){
-    if(this.isCurrent(i,j) && this.detailObj.showDetail){
-      return "fa-minus";
+  private getItemClass(i, j) {
+    if (this.isCurrent(i, j) && this.detailObj.showDetail) {
+      return 'fa-minus';
     }
-    return "fa-plus";
+    return 'fa-plus';
   }
 
-  private closeReferenceDetail(){
+  private closeReferenceDetail() {
     this.detailObj.showDetail = false;
     this.detailObj.item = {};
   }
 
-  private getActiveClass(i,j): string{
-    if(this.isCurrent(i,j) && this.detailObj.showDetail){
-      return "basic lightest blue";
+  private getActiveClass(i, j): string {
+    if (this.isCurrent(i, j) && this.detailObj.showDetail) {
+      return 'basic lightest blue';
     }
-    return "inverted cool blue";
+    return 'inverted cool blue';
   }
 
-  private getLinkClass(): boolean{
+  private getLinkClass(): boolean {
     return this.isExternalLink ? true : false;
   }
-  
-  private toggleDetail(i): boolean{
+
+  private toggleDetail(i): boolean {
     return this.detailObj.showDetail && this.detailObj.posX === i;
   }
 
-  private isCurrent(i,j):boolean{
+  private isCurrent(i, j): boolean {
     return i === this.detailObj.posX && j === this.detailObj.posY;
   }
 

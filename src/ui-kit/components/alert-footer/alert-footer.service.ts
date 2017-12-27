@@ -4,24 +4,18 @@ import { Component, Injectable } from '@angular/core';
 export class SamAlertFooterService {
 
   private alerts: any = [];
-  
-  constructor() {}
 
-  ngOnInit() {}
-
-  ngOnDestroy() {}
-
-  getAlerts(){
+  getAlerts() {
     return this.alerts;
   }
 
-  registerFooterAlert(data){
+  registerFooterAlert(data) {
     this.alerts.unshift(data);
   }
 
-  dismissFooterAlert(i){
-    this.alerts = this.alerts.filter(function(obj,idx){
-      if(idx==i){
+  dismissFooterAlert(i) {
+    this.alerts = this.alerts.filter(function(obj, idx){
+      if (idx === i) {
         return false;
       }
       return true;

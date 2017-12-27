@@ -8,7 +8,7 @@ import { SamElementsModule } from '../elements';
 
 import { AccordionsModule } from './accordion';
 import { SamAlertComponent } from './alert';
-import { SamAlertFooterComponent,SamAlertFooterService } from './alert-footer';
+import { SamAlertFooterComponent, SamAlertFooterService } from './alert-footer';
 import { SamBadgeComponent } from './badge';
 import { SamBannerComponent } from './banner';
 import { SamBreadcrumbsComponent } from './breadcrumbs';
@@ -25,7 +25,7 @@ import { SamPaginationComponent } from './pagination';
 import { SamPointOfContactComponent } from './point-of-contact';
 import { SamSidenavModule } from './sidenav';
 import { SamSpinnerComponent } from './spinner';
-import { SamTabsComponent,SamTabComponent } from './tabs';
+import { SamTabsComponent, SamTabComponent } from './tabs';
 import { SamWrapperModule } from '../wrappers';
 import { SamCommentsModule } from './comments';
 import { SamImageModule } from './image';

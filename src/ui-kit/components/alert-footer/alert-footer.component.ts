@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SamAlertFooterService } from "./alert-footer.service";
+import { SamAlertFooterService } from './alert-footer.service';
 
 @Component({
   selector: 'sam-alert-footer',
@@ -15,12 +15,12 @@ export class SamAlertFooterComponent {
     this.refreshAlerts();
   }
 
-  dismissFooterAlert(i){
+  dismissFooterAlert(i) {
     this.alertFooterService.dismissFooterAlert(i);
     this.refreshAlerts();
   }
 
-  refreshAlerts(){
+  refreshAlerts() {
     this.alerts = this.alertFooterService.getAlerts();
   }
 

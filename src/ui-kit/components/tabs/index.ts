@@ -1,1 +1,1 @@
-export { SamTabsComponent,SamTabComponent } from './tabs.component';
+export { SamTabsComponent, SamTabComponent } from './tabs.component';

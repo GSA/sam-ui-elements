@@ -48,19 +48,21 @@ export class SamImageComponent implements OnInit {
   private tmpValue: File;
   private tmpSrc: any;
 
-  constructor() {}
-
   ngOnInit() {
-    this.fileChangeStream = Observable.fromEvent(this.filePicker.nativeElement, 'change');
-    this.editButtonStream = Observable.fromEvent(this.editButton.nativeElement, 'click');
-    this.cancelButtonStream = Observable.fromEvent(this.cancelButton.nativeElement, 'click');
-    this.saveButtonStream = Observable.fromEvent(this.saveButton.nativeElement, 'click');
+    this.fileChangeStream =
+      Observable.fromEvent(this.filePicker.nativeElement, 'change');
+    this.editButtonStream =
+      Observable.fromEvent(this.editButton.nativeElement, 'click');
+    this.cancelButtonStream =
+      Observable.fromEvent(this.cancelButton.nativeElement, 'click');
+    this.saveButtonStream =
+      Observable.fromEvent(this.saveButton.nativeElement, 'click');
 
     this.reader.onload = (event: any) => {
       this.tmpSrc = event.target.result;
     };
 
-    this.editModeSubscription = 
+    this.editModeSubscription =
       this.editButtonStream
       .merge(this.cancelButtonStream)
       .merge(this.saveButtonStream)
@@ -74,33 +76,33 @@ export class SamImageComponent implements OnInit {
           console.error(error);
         }
       );
-    
+
     this.cancelButtonSubscription =
       this.cancelButtonStream
       .subscribe(
         (event) => {
-          this.tmpValue = null;
-          this.tmpSrc = null;
+          this.tmpValue = undefined;
+          this.tmpSrc = undefined;
         },
         (error) => { console.error(error); }
       );
 
-    this.saveButtonSubscription = 
+    this.saveButtonSubscription =
       this.saveButtonStream
       .subscribe(
         (event) => {
           if (this.isImageTemporary()) {
             this.value = this.tmpValue;
             this.src = this.tmpSrc;
-            this.tmpValue = null;
-            this.tmpSrc = null;
+            this.tmpValue = undefined;
+            this.tmpSrc = undefined;
             this.fileChange.emit(this.value);
           }
         },
         (error) => { console.error(error); }
-      )
+      );
 
-    this.fileChangeSubscription = 
+    this.fileChangeSubscription =
       this.fileChangeStream
       .subscribe(
         (event) => {
@@ -112,7 +114,7 @@ export class SamImageComponent implements OnInit {
         (error) => {
           console.error(error);
         }
-      )
+      );
   }
 
   private hideEditButton() {
@@ -127,14 +129,15 @@ export class SamImageComponent implements OnInit {
     let fileName = '';
     if (this.tmpValue) {
       fileName = this.tmpValue.name;
-    } 
+    }
     return fileName;
   }
 
   private generateFilePickerLabelText() {
-    let labelString = this.getFileName();
-    const labelText = labelString && labelString.length > 9 ? 
-                        labelString.substr(0, 8).concat('...') :
+    const labelString = this.getFileName();
+    const labelStrLen = 9;
+    const labelText = labelString && labelString.length > labelStrLen ?
+                        labelString.substr(0, labelStrLen - 1).concat('...') :
                         labelString;
     return labelText || 'Select a file';
   }
@@ -170,8 +173,7 @@ export class SamImageComponent implements OnInit {
       if (dt.files && dt.files[0]) {
         this.tmpValue = dt.files[0];
       }
-      this.reader.readAsDataURL(dt.files[0]);  
+      this.reader.readAsDataURL(dt.files[0]);
     }
   }
-
 }

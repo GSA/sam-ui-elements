@@ -71,10 +71,9 @@ describe('The Sam Textarea component', () => {
     });
   
     it('should allow an initial value to be set by the value input', () => {
-      component.onInputChange("ABC123");
+      component.writeValue('ABC123');
       fixture.detectChanges();
-      let input = fixture.debugElement.query(By.css('#my-text-component'));
-      expect(input.nativeElement.value).toBe("ABC123");
+      expect(component.value).toBe('ABC123');
     });
   
     it('should show a hint message', () => {
