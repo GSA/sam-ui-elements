@@ -6,7 +6,7 @@
     <!-- Breadcrumbs -->
     <div row *ngIf="breadcrumbs">
       <div columns="12">
-        <sam-breadcrumbs [crumbs]="breadcrumbs" (crumbActionHandler)="breadcrumbHandler($event)">
+        <sam-breadcrumbs [crumbs]="breadcrumbs" (crumbAction)="breadcrumbHandler($event)">
         </sam-breadcrumbs>
       </div>
     </div>
