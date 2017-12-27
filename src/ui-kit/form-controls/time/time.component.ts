@@ -5,12 +5,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, Valid
 import {SamFormService} from '../../form-service';
 
 /**
- * The <sam-time> component provides a time input form control
- *
- * @Input value: string - Sets the time value 
- * @Input disabled: boolean - Sets the disabled attribute
- * @Input name: string - Sets the name attribute 
- * @Output valueChange: boolean - Emits event when value change
+ * Provides a time input form control
  */
 @Component({
   selector: 'sam-time',
@@ -25,10 +20,6 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
   INPUT_FORMAT: string = "H:m";
   OUTPUT_FORMAT: string = "HH:mm";
   
-  /**
-  * Deprecated - Sets the time value 
-  */
-  @Input() value: string = null; // must be a 24 hour time and have the format HH:mm
   /**
   * Sets the required text
   */
@@ -57,14 +48,12 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
   * Toggles validations to display with SamFormService events
   */
   @Input() useFormService: boolean;
-  /**
-  * Emits event when value change
-  */
-  @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
+
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
   @ViewChild('hour') hour_v;
   @ViewChild('minute') minute_v;
   @ViewChild('ampm') ampm_v;
+  value: string = null;
   hours: number = null;
   formattedHours: string = null;
   minutes: number = null;
@@ -156,7 +145,6 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
       override = "Invalid Time";
     } 
     this.onChange(override);
-    this.valueChange.emit(override);
   }
   
   hourTouched(event){
@@ -308,7 +296,6 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
       minute: this.minute_v.nativeElement.value
     }).format(this.OUTPUT_FORMAT);
     this.onChange(m);
-    this.valueChange.emit(m);
   }
 
   resetInput(){

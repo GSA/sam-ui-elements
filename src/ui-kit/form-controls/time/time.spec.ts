@@ -74,7 +74,7 @@ describe('The Sam Time component', () => {
     });
   
     it('should parse hours and minutes', () => {
-      component.value = "14:44";
+      component.writeValue("14:44");
       component.parseValueString();
       fixture.detectChanges();
       fixture.whenStable().then(()=>{
@@ -84,35 +84,13 @@ describe('The Sam Time component', () => {
       });
     });
     it('should parse hours and minutes 2', () => {
-      component.value = "00:01";
+      component.writeValue("00:01");
       component.parseValueString();
       fixture.detectChanges();
       fixture.whenStable().then(()=>{
         expect(component.hour_v.nativeElement.value).toBe("12");
         expect(component.minute_v.nativeElement.value).toBe("1");
         expect(component.amPm).toBe('am');
-      });
-    });
-  
-    it('should convert hours and minutes to iso standard times', () => {
-      component.hours = 12;
-      component.minutes = 24;
-      component.amPm = 'am';
-      fixture.detectChanges();
-      component.selectChange();
-      component.valueChange.subscribe(val=>{
-        expect(val).toEqual('00:24');
-      });
-    });
-  
-    it('should convert hours and minutes to iso standard times(2)', () => {
-      component.hours = 2;
-      component.minutes = 24;
-      component.amPm = 'pm';
-      fixture.detectChanges();
-      component.selectChange();
-      component.valueChange.subscribe(val=>{
-        expect(val).toEqual("14:24");
       });
     });
 
