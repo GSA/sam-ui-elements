@@ -22,7 +22,7 @@ export class SamMenuItemComponent {
   /**
    * Emits when an item has been selected
    */
-  @Output() onSelection: EventEmitter<any> = new EventEmitter<any>();
+  @Output() selection: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private service: SidenavService) { }
 
@@ -41,7 +41,7 @@ export class SamMenuItemComponent {
 
   emitSelectedChild(event: any): void {
     this.data.emit(event);
-    this.onSelection.emit(event);
+    this.selection.emit(event);
     return;
   }
 }
