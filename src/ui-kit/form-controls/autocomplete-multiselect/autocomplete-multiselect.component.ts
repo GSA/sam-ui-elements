@@ -190,6 +190,12 @@ export class SamAutocompleteMultiselectComponent
    */
   @Input() displayCategory: boolean = true;
 
+  /**
+   * Hide textarea label, useful when a wrapper component's label is used 
+   * to target the textarea instead
+   */
+  @Input() hideTextareaLabel: boolean = false;
+
   public searchText: string = '';
 
   private innerValue: Array<any> = [];
