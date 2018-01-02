@@ -201,6 +201,12 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     }
   }
 
+  onMonthBlur(event){
+    if(this.month.nativeElement.value==="0"){
+      this.month.nativeElement.value = "";
+    }
+  }
+
   onMonthInput(event){
     if(this._checkCopyPasteChar(event.key)){
       return;
@@ -219,10 +225,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     if(this._keyIsNumber(event.key)){
       if(event.target.value.length===1 ||
         (event.target.value.length===0 && possibleNum > 1)){
-        if(this.day.nativeElement.value && 
-          (["4","6","9","11"].indexOf(possibleNum) && this.day.nativeElement.value=="31")
-          || possibleNum=="2" && ["30","31"].indexOf(this.day.nativeElement.value)
-        ){
+        if(this.day.nativeElement.value && this._shouldClearDayInput(possibleNum) ){
           this.day.nativeElement.value = "";
         }
         this.day.nativeElement.focus();
@@ -231,6 +234,12 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       let dupModel = this.inputModel;
       this.onChangeHandler(dupModel);
       event.preventDefault();
+    }
+  }
+
+  onDayBlur(event){
+    if(this.day.nativeElement.value==="0"){
+      this.day.nativeElement.value = "";
     }
   }
 
@@ -388,6 +397,14 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       return window['clipboardData'].getData('text');
     }
   }
+
+  _shouldClearDayInput(num){
+    if((["4","6","9","11"].indexOf(num) && this.day.nativeElement.value=="31")
+    || (num=="2" && ["30","31"].indexOf(this.day.nativeElement.value)!==-1)){
+      return true;
+    }
+  }
+
   static dateRequired() {
     return (c:AbstractControl) => {
       if (c.dirty && !c.value) {
