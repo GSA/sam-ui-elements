@@ -219,6 +219,12 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     if(this._keyIsNumber(event.key)){
       if(event.target.value.length===1 ||
         (event.target.value.length===0 && possibleNum > 1)){
+        if(this.day.nativeElement.value && 
+          (["4","6","9","11"].indexOf(possibleNum) && this.day.nativeElement.value=="31")
+          || possibleNum=="2" && ["30","31"].indexOf(this.day.nativeElement.value)
+        ){
+          this.day.nativeElement.value = "";
+        }
         this.day.nativeElement.focus();
       }
       this.month.nativeElement.value = possibleNum;
