@@ -281,6 +281,12 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     }
   }
 
+  onYearBlur(event){
+    if(this.year.nativeElement.value==="0"){
+      this.year.nativeElement.value = "";
+    }
+  }
+
   onYearInput(event){
     if(this._checkCopyPasteChar(event.key)){
       return;
