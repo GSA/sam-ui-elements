@@ -32,6 +32,7 @@ export class SamMenuItemComponent {
     }
     this.service.updateData(this.nodeDepth, index);
     this.data.emit(this.service.getSelectedModel());
+    this.selection.emit(this.service.getSelectedModel());
     return;
   }
 

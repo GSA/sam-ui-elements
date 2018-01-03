@@ -21,14 +21,14 @@ describe('The Sam MenuItem component', () => {
     });
 
     it('should support updateUI on changes', () => {
-        component.data.subscribe(val => {
+        component.selection.subscribe(val => {
             expect(val.label).toBe('stuff');
         });
         component.updateUI(0, new Event('custom'), undefined);
     });
 
     it('should emit on selecting children', () => {
-        component.data.subscribe(val => {
+        component.selection.subscribe(val => {
             expect(val).toBe(true);
         });
         component.emitSelectedChild(true);

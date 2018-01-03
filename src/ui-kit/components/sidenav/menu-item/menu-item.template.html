@@ -7,7 +7,7 @@
     <sam-menu-item *ngIf="isSelected($index)"
                  [nodeDepth]="nodeDepth + 1"
                  [children]="child.children"
-                 (data)="emitSelectedChild($event)">
+                 (selection)="emitSelectedChild($event)">
     </sam-menu-item>
   </li>
 </ul>

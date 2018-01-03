@@ -18,7 +18,7 @@ import {Component, Input, Output, EventEmitter, OnChanges, ChangeDetectorRef} fr
           <img *ngIf="sideNavImage" src="{{sideNavImage}}" alt="{{sideNavImageAlt}}"/>
           <sam-sidenav 
             type="step"
-            (data)="navHandler($event)" 
+            (selection)="navHandler($event)" 
             [labelLookup]="sideNavSelection" 
             [model]="sideNavModel">
           </sam-sidenav>
