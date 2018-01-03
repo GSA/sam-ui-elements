@@ -3,6 +3,7 @@
     <div class="usa-form-group usa-form-group-month">
       <label [attr.for]="monthName()">Month</label>
       <input
+        (blur)="onMonthBlur($event)"
         (focus)="triggerMonthTouch($event)"
         (paste)="onMonthPaste($event)"
         [attr.id]="monthName()"
@@ -20,6 +21,7 @@
     <div class="usa-form-group usa-form-group-day">
       <label [attr.for]="dayName()">Day</label>
       <input
+        (blur)="onDayBlur($event)"
         (focus)="triggerDayTouch($event)"
         (paste)="onDayPaste($event)"
         [attr.id]="dayName()"
@@ -37,6 +39,7 @@
     <div class="usa-form-group usa-form-group-year">
       <label [attr.for]="yearName()">Year</label>
       <input
+        (blur)="onYearBlur($event)"
         (focus)="triggerTouch()"
         (paste)="onYearPaste($event)"
         [attr.id]="yearName()"

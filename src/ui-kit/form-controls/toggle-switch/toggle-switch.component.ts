@@ -25,6 +25,10 @@ export class SamToggleSwitchComponent implements ControlValueAccessor{
    */
   @Input() isSwitchOn: boolean = false;
   /**
+   * String to pass to the label for 508 compliance
+   */
+  @Input() toggleSwitchText: string = "Toggle Switch";
+  /**
    * Event emitter to output the current state of the toggle switch
    */
   @Output() switchStatusChange: EventEmitter<boolean> = new EventEmitter<boolean>();

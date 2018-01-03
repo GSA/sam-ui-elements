@@ -1,4 +1,5 @@
 <label class="sam-toggle-switch">
   <input class="switch-input" type="checkbox" [(ngModel)]="isSwitchOn" (click)="onSwitchClick($event.target.checked)" [attr.disabled]="disableSwitch ? disableSwitch : null">
   <div class="switch-label"></div>
+  <span class="sr-only">{{toggleSwitchText}}</span>
 </label>

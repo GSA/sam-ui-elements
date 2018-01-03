@@ -33,7 +33,6 @@ import { WorkspaceTemplateComponent } from "./workspace/workspace-template.compo
  */
 // import { AppComponentsModule } from '../app-components/app-components.module';
 import { ListResultsMessageComponent } from "./list-results-message"
-import { SamStatusBannerComponent } from "./sam-status-banner"
 import { TitleAndSectionComponent } from "./title-and-section.component";
 import { FormOnlyPageTemplateComponent } from "./form-only-page.component";
 
@@ -53,8 +52,7 @@ import { FormOnlyPageTemplateComponent } from "./form-only-page.component";
     RowDirective,
     ColumnDirective,
     TitleAndSectionComponent,
-    ListResultsMessageComponent,
-    SamStatusBannerComponent
+    ListResultsMessageComponent
   ],
   imports: [
     CommonModule,

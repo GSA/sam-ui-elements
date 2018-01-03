@@ -140,7 +140,7 @@ export class LabelWrapper implements AfterViewChecked{
       }
 
       this.errorMessage = 'Invalid';
-    } else if (control.valid) {
+    } else if (!control.errors) {
       this.errorMessage = '';
     }
   }
