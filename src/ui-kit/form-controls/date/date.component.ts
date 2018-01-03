@@ -86,6 +86,8 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   };
   public INPUT_FORMAT: string = 'Y-M-D';
   public OUTPUT_FORMAT: string = 'YYYY-MM-DD';
+  private thirtyDayMonths = [4,6,9,11];
+  private nonFebruaryDays = [30,31];
 
   
   get inputModel(){
@@ -100,7 +102,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error('SamTimeComponent required a name for 508 compliance');
+      throw new Error('SamDateComponent required a name for 508 compliance');
     }
 
     if(this.control){
@@ -251,7 +253,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     let possibleNum;
     let maxDate = 31;
     let numJumpThreshold = 3;
-    if([4,6,9,11].indexOf(parseInt(this.month.nativeElement.value))!==-1){
+    if(this.thirtyDayMonths.indexOf(parseInt(this.month.nativeElement.value))!==-1){
       maxDate = 30;
     }
     if (this.month.nativeElement.value==2){
@@ -399,8 +401,8 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   _shouldClearDayInput(num){
-    if((["4","6","9","11"].indexOf(num) && this.day.nativeElement.value=="31")
-    || (num=="2" && ["30","31"].indexOf(this.day.nativeElement.value)!==-1)){
+    if((this.thirtyDayMonths.indexOf(parseInt(num))!==-1 && this.day.nativeElement.value=="31")
+    || (num=="2" && this.nonFebruaryDays.indexOf(parseInt(this.day.nativeElement.value))!==-1)){
       return true;
     }
   }
