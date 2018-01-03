@@ -58,6 +58,10 @@ export class SamTextComponent implements ControlValueAccessor {
   */
   @Input() useFormService: boolean;
   /**
+   * Optional text to be displayed when the text area is empty
+   */
+  @Input() placeholder: string;
+  /**
    * Lose focus event emit
    */
   @Output() onBlur:EventEmitter<boolean> = new EventEmitter<boolean>();
