@@ -86,6 +86,8 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   };
   public INPUT_FORMAT: string = 'Y-M-D';
   public OUTPUT_FORMAT: string = 'YYYY-MM-DD';
+  private thirtyDayMonths = [4,6,9,11];
+  private nonFebruaryDays = [30,31];
 
   
   get inputModel(){
@@ -100,7 +102,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error('SamTimeComponent required a name for 508 compliance');
+      throw new Error('SamDateComponent required a name for 508 compliance');
     }
 
     if(this.control){
@@ -201,6 +203,12 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     }
   }
 
+  onMonthBlur(event){
+    if(this.month.nativeElement.value==="0"){
+      this.month.nativeElement.value = "";
+    }
+  }
+
   onMonthInput(event){
     if(this._checkCopyPasteChar(event.key)){
       return;
@@ -219,12 +227,21 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     if(this._keyIsNumber(event.key)){
       if(event.target.value.length===1 ||
         (event.target.value.length===0 && possibleNum > 1)){
+        if(this.day.nativeElement.value && this._shouldClearDayInput(possibleNum) ){
+          this.day.nativeElement.value = "";
+        }
         this.day.nativeElement.focus();
       }
       this.month.nativeElement.value = possibleNum;
       let dupModel = this.inputModel;
       this.onChangeHandler(dupModel);
       event.preventDefault();
+    }
+  }
+
+  onDayBlur(event){
+    if(this.day.nativeElement.value==="0"){
+      this.day.nativeElement.value = "";
     }
   }
 
@@ -236,7 +253,7 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     let possibleNum;
     let maxDate = 31;
     let numJumpThreshold = 3;
-    if([4,6,9,11].indexOf(parseInt(this.month.nativeElement.value))!==-1){
+    if(this.thirtyDayMonths.indexOf(parseInt(this.month.nativeElement.value))!==-1){
       maxDate = 30;
     }
     if (this.month.nativeElement.value==2){
@@ -261,6 +278,12 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       let dupModel = this.inputModel;
       this.onChangeHandler(dupModel);
       event.preventDefault();
+    }
+  }
+
+  onYearBlur(event){
+    if(this.year.nativeElement.value==="0"){
+      this.year.nativeElement.value = "";
     }
   }
 
@@ -382,6 +405,14 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       return window['clipboardData'].getData('text');
     }
   }
+
+  _shouldClearDayInput(num){
+    if((this.thirtyDayMonths.indexOf(parseInt(num))!==-1 && this.day.nativeElement.value=="31")
+    || (num=="2" && this.nonFebruaryDays.indexOf(parseInt(this.day.nativeElement.value))!==-1)){
+      return true;
+    }
+  }
+
   static dateRequired() {
     return (c:AbstractControl) => {
       if (c.dirty && !c.value) {
