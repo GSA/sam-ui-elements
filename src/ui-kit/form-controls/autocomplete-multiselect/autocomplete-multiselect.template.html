@@ -45,7 +45,7 @@
                 </div>
                 <i class="icon close fa fa-times"></i>
             </div>
-            <label *ngIf="name && !label"
+            <label *ngIf="name && !label && !hideTextareaLabel"
                   [attr.for]="name+'-ac-textarea'"
                   class="sr-only">
                   textarea input
