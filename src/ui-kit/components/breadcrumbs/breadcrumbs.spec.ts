@@ -32,7 +32,7 @@ describe('The Sam Breadcrumbs component', () => {
     });
 
     it('should emit events', () => {
-      component.crumbActionHandler.subscribe(str => {
+      component.crumbAction.subscribe(str => {
         expect(str).toBe('test string');
       });
       component.crumbHandler('test string');

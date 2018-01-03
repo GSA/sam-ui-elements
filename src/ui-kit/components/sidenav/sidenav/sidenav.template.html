@@ -13,7 +13,7 @@
       <sam-menu-item *ngIf="isSelected($index)"
                     [nodeDepth]="1"
                     [children]="model.children[$index].children"
-                    (data)="emitChildData($event)">
+                    (selection)="emitChildData($event)">
       </sam-menu-item>
     </li>
   </ul>

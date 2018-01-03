@@ -29,10 +29,10 @@ describe('The Sam Sidenav component', () => {
     });
 
     it('should trigger events', () => {
-      component.data.subscribe(evt => {
+      component.selection.subscribe(evt => {
         expect(evt.returnValue).toBe(true);
       });
-      component.path.subscribe(val => {
+      component.pathChange.subscribe(val => {
         expect(val).toBe('');
       });
       component.emitChildData(new Event('custom'));
