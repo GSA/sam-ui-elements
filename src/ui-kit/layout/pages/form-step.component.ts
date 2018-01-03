@@ -37,15 +37,15 @@ import {Component, Input, Output, EventEmitter, OnChanges, ChangeDetectorRef} fr
        </ng-container>
       
       <ng-container message>
-        <sam-status-banner *ngIf="statusBannerLeadingText"
+        <sam-alert *ngIf="statusBannerLeadingText"
                            [type]="statusBannerType"
-                           [(showContent)]="statusBannerExpanded"
-                           (showContentChange)="statusBannerExpandedChange.emit($event)">
+                           [(showMoreToggle)]="statusBannerExpanded"
+                           (toggle)="statusBannerExpandedChange.emit($event)">
           <div leading-content>{{statusBannerLeadingText}}</div>
           <div main-content>
             <ng-content select="[status-banner]"></ng-content>
           </div>
-        </sam-status-banner>
+        </sam-alert>
       </ng-container>
 
       <ng-content select="[form-sections]">

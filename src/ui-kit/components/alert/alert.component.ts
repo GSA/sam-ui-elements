@@ -37,6 +37,11 @@ export class SamAlertComponent {
    * Emitted event when an alert is dismissed
    */
   @Output() dismiss: EventEmitter<any> = new EventEmitter<any>();
+  /**
+   * Emitted event when toggling content
+   */
+  @Output() toggle: EventEmitter<any> = new EventEmitter<any>();
+
   types: any = {
     'error': { class: 'usa-alert-error', sr: 'error alert'},
     'info': { class: 'usa-alert-info', sr: 'info alert'},
@@ -55,6 +60,7 @@ export class SamAlertComponent {
       this.showMoreLinkText = this.showMoreToggle ?
         'Hide Details' :
         'Show Details';
+      this.toggle.emit(this.showMoreToggle);
    }
 
   ngOnInit() {
