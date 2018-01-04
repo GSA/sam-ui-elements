@@ -10,7 +10,7 @@
     <div *ngIf="showMoreToggle">
       <ng-content select="[main-content]"></ng-content>
     </div>
-    <div *ngIf="showMoreToggle!==null" class="show-hide-toggle">
+    <div *ngIf="showMoreToggle!==undefined" class="show-hide-toggle">
       <a (click)="toggleContent()">{{showMoreLinkText}}</a>
     </div>
   </div>
