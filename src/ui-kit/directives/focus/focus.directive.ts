@@ -4,7 +4,10 @@ import { Directive, ElementRef, Output, EventEmitter, HostListener } from '@angu
     selector: '[sam-focus]', 
 })
 export class SamFocusDirective {
-    @Output() focus = new EventEmitter();;
+    /**
+     * Event emitter for focus event
+     */
+    @Output() focus = new EventEmitter();
     constructor(private _elementRef: ElementRef){}
 
     @HostListener('document:click', ['$event.target'])

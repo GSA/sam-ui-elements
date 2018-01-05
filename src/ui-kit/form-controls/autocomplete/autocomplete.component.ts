@@ -157,6 +157,9 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
      }
    }
    */
+  /**
+   * Passes in a observable for handling when keyEvents subject triggers updates
+   */
   @Input() httpRequest: Observable<any>;
   public keyEvents: Subject<any> = new Subject();
 
