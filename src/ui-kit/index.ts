@@ -1,24 +1,30 @@
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { SamComponentsModule } from './components';
 import { SamDirectivesModule } from './directives';
 import { SamElementsModule } from './elements';
 import { SamFormControlsModule } from './form-controls';
 import { SamFormTemplatesModule } from './form-templates';
+import { SamLayoutModule } from './layout';
 import { SamPipesModule } from './pipes';
-
+import { ServiceDirectivesModule } from './service-directives';
+import { SamFormService } from './form-service';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     SamComponentsModule,
     SamDirectivesModule,
     SamElementsModule,
     SamFormControlsModule,
     SamFormTemplatesModule,
-    SamPipesModule
+    SamLayoutModule,
+    SamPipesModule,
+    ServiceDirectivesModule
   ],
   exports: [
     SamComponentsModule,
@@ -26,10 +32,10 @@ import { SamPipesModule } from './pipes';
     SamElementsModule,
     SamFormControlsModule,
     SamFormTemplatesModule,
-    SamPipesModule
-  ]
+    SamLayoutModule,
+    SamPipesModule,
+    ServiceDirectivesModule
+  ],
+  providers: [SamFormService]
 })
 export class SamUIKitModule { }
-
-
-

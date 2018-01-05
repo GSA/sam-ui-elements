@@ -4,7 +4,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
 import { SamDateComponent } from '../date/date.component';
 import { SamTimeComponent } from '../time/time.component';
-
+import {SamFormService} from '../../form-service';
 
 const MY_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -13,21 +13,15 @@ const MY_VALUE_ACCESSOR: any = {
 };
 
 /**
- * The <samDateTime> component is a DateTime entry portion of a form
+ * The <sam-date-time> component is a DateTime entry portion of a form
  */
 @Component({
-  selector: 'samDateTime',
+  selector: 'sam-date-time',
   templateUrl: 'date-time.template.html',
   providers: [ MY_VALUE_ACCESSOR ]
 })
 export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAccessor {
   public INPUT_FORMAT: string = 'Y-M-DTH:m';
-
-  @Input() value: string = null;
-  /**
-   * Event emitted when value is changed
-   */
-  @Output() valueChange: EventEmitter<any> = new EventEmitter();
   /**
    * Sets starting value for input
    */
@@ -37,6 +31,10 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
    */
   @Input() name: string;
   /**
+   * Sets hint text
+   */
+  @Input() hint: string;
+  /**
    * Sets error message string to display for invalid values
    */
   @Input() errorMessage: string;
@@ -45,10 +43,14 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
    */
   @Input() disabled: boolean = false;  
   /**
-   * Something to do with formbuilder? This needs to be document and annotated
+   * Sets the formControl to check validations and update error messaged
    */
   @Input() control;
-
+  /**
+  * Toggles validations to display with SamFormService events
+  */
+  @Input() useFormService: boolean;
+  value;
   public time: string = null;
   public date: string = null;
 
@@ -56,13 +58,29 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
   @ViewChild('timeComponent') timeComponent: SamTimeComponent;
   @ViewChild(FieldsetWrapper) wrapper;
 
+  constructor(private samFormService:SamFormService) { }
+
   ngOnInit() {
     if (!this.name) {
       throw new Error('SamDateTimeComponent requires a [name] input for 508 compliance');
     }
 
     if (this.control) {
-      this.wrapper.formatErrors(this.control);
+      if(!this.useFormService){
+        this.control.statusChanges.subscribe(()=>{
+          this.wrapper.formatErrors(this.control);
+        });
+        this.wrapper.formatErrors(this.control);
+      }
+      else {
+        this.samFormService.formEventsUpdated$.subscribe(evt=>{
+          if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+            this.wrapper.formatErrors(this.control);
+          } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+            this.wrapper.clearError();
+          }
+        });
+      }
     }
   }
 
@@ -78,7 +96,7 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
         this.time = m.format(this.timeComponent.OUTPUT_FORMAT);
         this.date = m.format(this.dateComponent.OUTPUT_FORMAT);
       } else {
-        console.error('[value] for samDateTime is invalid');
+        console.error('[value] for sam-date-time is invalid');
       }
     }
   }
@@ -89,7 +107,10 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
     if (this.onChange) {
       this.onChange(val);
     }
-    this.valueChange.emit(val);
+  }
+
+  dateBlur(){
+    this.timeComponent.hour_v.nativeElement.focus();
   }
 
   onInputChange(): void {
@@ -100,6 +121,11 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
     } else {
       this.emitChanges('Invalid Date Time');
     }
+  }
+
+  resetInput(){
+    this.date = "";
+    this.time = "";
   }
 
   onChange: Function;
@@ -118,7 +144,12 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
   }
 
   writeValue(value) {
-    this.value = value;
+    if(value){
+      this.value = value;
+    }else{
+      this.value = "";
+      this.resetInput();
+    }
     this.parseValueString();
   }
 

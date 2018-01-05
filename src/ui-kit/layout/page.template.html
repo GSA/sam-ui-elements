@@ -1,0 +1,45 @@
+<div class="occupy-page" style="display: flex;"
+     [style.background-color]="theme == 'inside' ? '#F9F9F9' : ''">
+
+  <div grid class="container">
+
+    <!-- Breadcrumbs -->
+    <div row *ngIf="breadcrumbs">
+      <div columns="12">
+        <sam-breadcrumbs [crumbs]="breadcrumbs" (crumbAction)="breadcrumbHandler($event)">
+        </sam-breadcrumbs>
+      </div>
+    </div>
+
+    <div *ngIf="!breadcrumbs" class="sam-ui hidden divider"></div>
+
+    <div row class="page-content">
+      <!-- Sidebar -->
+      <div *ngIf="pageService.sidebar" [columns]="pageService.sidebarColumns" style="align-self: start; max-height: 99.9%;">
+        <ng-content select="sidebar"></ng-content>
+      </div>
+
+      <!-- Main Content -->
+      <div [columns]="pageService.mainContentColumns">
+
+        <ng-content select="[message]"></ng-content>
+
+        <!-- Page Title -->
+        <title-and-section [title]="title"
+                           [section]="section"
+                           [badge]="badge"
+                           [badgeOptions]="options.badge"
+                           [type]="type"
+                           [typeLabel]="typeLabel"
+                           [caption]="caption"></title-and-section>
+
+        <ng-content></ng-content>
+
+        <div class="sam-ui hidden divider"></div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>

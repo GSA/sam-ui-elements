@@ -1,0 +1,24 @@
+<article class="sam-comment">
+  <header>
+    <figure>
+      <i *ngIf="!comment?.image" class="fa fa-2x fa-user"></i>
+      <img *ngIf="comment?.image" [src]="comment?.image"/>
+      <figcaption class="usa-sr-only">Icon for user {{comment.username}}</figcaption>
+    </figure>
+    <div class="comment-metadata">
+      <strong class="username">{{comment?.username}}</strong>
+      <time pubdate datetime="comment.datetime">{{ comment?.datetime | shortDate }}</time>
+    </div>
+    <button class="usa-button-link remove-comment"
+            *ngIf="allowDelete"
+            (click)="emitClick()">
+      <i class="fa fa-times"></i>
+      <span class="usa-sr-only">Delete comment</span>
+    </button>
+  </header>
+  <p class="preserve-newline">{{comment?.text}}</p>
+  <p>
+    <!-- Used for additional system generated comments appended to the end. E.G. A field to show (Editted) -->
+    <ng-content></ng-content>
+  </p>
+</article>

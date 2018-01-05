@@ -1,7 +1,8 @@
-import {Component, Input, Output, ViewChild, EventEmitter, forwardRef} from '@angular/core';
+import { Component, Input, Output,ChangeDetectorRef, Optional, ViewChild, EventEmitter, forwardRef, AfterViewInit } from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { OptionsType } from '../../types';
-import {FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor, Validators} from "@angular/forms";
+import { FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
+import {SamFormService} from '../../form-service';
 
 const noop = () => {};
 const MY_VALUE_ACCESSOR: any = {
@@ -11,14 +12,14 @@ const MY_VALUE_ACCESSOR: any = {
 };
 
 /**
- * The <samSelect> component is a select/options group form control
+ * The <sam-select> component is a select/options group form control
  */
 @Component({
-  selector: 'samSelect',
+  selector: 'sam-select',
   templateUrl: 'select.template.html',
   providers: [MY_VALUE_ACCESSOR]
 })
-export class SamSelectComponent implements ControlValueAccessor {
+export class SamSelectComponent implements ControlValueAccessor, AfterViewInit {
   /**
   * Sets the bound value of the component
   */
@@ -56,34 +57,57 @@ export class SamSelectComponent implements ControlValueAccessor {
   */
   @Input() control: FormControl;
   /**
+  * Toggles validations to display with SamFormService events
+  */
+  @Input() useFormService: boolean;
+  /**
   * Event emitted on modal value change
   */
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild(LabelWrapper)
   public wrapper: LabelWrapper;
-  
+
   @ViewChild("select")
   public select: any;
 
-  constructor() { }
+  constructor(@Optional() private cdr: ChangeDetectorRef,
+    private samFormService:SamFormService) { }
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error("<samSelect> requires a [name] parameter for 508 compliance");
+      throw new Error("<sam-select> requires a [name] parameter for 508 compliance");
     }
 
     if (!this.control) {
       return;
     }
 
-    let validators: any[] = [];
-
-    if (this.required) {
-      validators.push(Validators.required);
+    if(this.control){
+      if(!this.useFormService){
+        this.control.statusChanges.subscribe(()=>{
+          this.wrapper.formatErrors(this.control);
+        });
+        this.wrapper.formatErrors(this.control);
+      }
+      else {
+        this.samFormService.formEventsUpdated$.subscribe(evt=>{
+          if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+            this.wrapper.formatErrors(this.control);
+          } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+            this.wrapper.clearError();
+          }
+        });
+      }
     }
+  }
 
-    this.control.setValidators(validators);
+  ngAfterViewInit(){
+    if (!this.control) {
+      return;
+    }
+    this.wrapper.formatErrors(this.control);
+    this.cdr.detectChanges();
   }
 
   onSelectChange(val) {
@@ -92,7 +116,6 @@ export class SamSelectComponent implements ControlValueAccessor {
     }
     this.model = val;
     this.modelChange.emit(val);
-    this.wrapper.formatErrors(this.control);
   }
 
   setDisabledState(disabled) {

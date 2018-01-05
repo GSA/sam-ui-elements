@@ -1,28 +1,43 @@
 import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule} from '@angular/router/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 // Load the implementations that should be tested
 import { SamHeaderComponent } from './header.component';
-import { SamUIKitModule } from 'samUIKit';
 
 
 describe('The Sam Header component', () => {
-  let component: SamHeaderComponent;
-  let fixture: any;
+  describe('rendered test', () => {
+    let component: SamHeaderComponent;
 
-  // provide our implementations or mocks to the dependency injector
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [SamUIKitModule,RouterTestingModule],
-      providers: [SamHeaderComponent],
+    beforeEach(() => {
+      component = new SamHeaderComponent();
     });
-    fixture = TestBed.createComponent(SamHeaderComponent);
-    component = fixture.componentInstance;
+
+    it('should emit event on dropdown', () => {
+      component.headerDropdownControl.subscribe(val => {
+        expect(val).toBe(true);
+      });
+      component.dropdownEventControl(true);
+    });
   });
 
-  it('should compile', function () {
-    fixture.detectChanges();
-    expect(true).toBe(true);
-  });
+  describe('rendered test', () => {
+    let component: SamHeaderComponent;
+    let fixture: any;
 
+    // provide our implementations or mocks to the dependency injector
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [RouterTestingModule],
+        declarations: [SamHeaderComponent],
+      });
+      fixture = TestBed.createComponent(SamHeaderComponent);
+      component = fixture.componentInstance;
+    });
+
+    it('should compile', function () {
+      fixture.detectChanges();
+      expect(true).toBe(true);
+    });
+  });
 });

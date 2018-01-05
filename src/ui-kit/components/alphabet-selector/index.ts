@@ -1,1 +1,0 @@
-export { SamAlphabetSelectorComponent } from './alphabet-selector.component';
