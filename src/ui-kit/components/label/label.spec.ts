@@ -1,19 +1,19 @@
-import {TestBed, async} from '@angular/core/testing';
-import {By} from '@angular/platform-browser';
+import { TestBed, async } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 
 // Load the implementations that should be tested
 import { SamLabelComponent } from '../label';
 
 describe('The Sam Label component', () => {
-  let component:SamLabelComponent;
-  let fixture:any;
+  let component: SamLabelComponent;
+  let fixture: any;
 
-  let smallLabelConfig = {
+  const smallLabelConfig = {
     labelType: 'small',
     labelText: 'test small'
   };
 
-  let bigLabelConfig = {
+  const bigLabelConfig = {
     labelType: 'big',
     labelText: 'test big'
   };
@@ -34,8 +34,8 @@ describe('The Sam Label component', () => {
     component.labelText = smallLabelConfig.labelText;
     fixture.detectChanges();
 
-    let labelElement = fixture.debugElement.query(By.css(".usa-label"));
-    expect(labelElement.nativeElement.innerHTML).toBe("test small");
+    const labelElement = fixture.debugElement.query(By.css('.usa-label'));
+    expect(labelElement.nativeElement.innerHTML).toBe('test small');
 
 
   });
@@ -45,9 +45,7 @@ describe('The Sam Label component', () => {
     component.labelText = bigLabelConfig.labelText;
     fixture.detectChanges();
 
-    let labelElement = fixture.debugElement.query(By.css(".usa-label-big"));
-    expect(labelElement.nativeElement.innerHTML).toBe("test big");
+    const labelElement = fixture.debugElement.query(By.css('.usa-label-big'));
+    expect(labelElement.nativeElement.innerHTML).toBe('test big');
   });
-
-
 });

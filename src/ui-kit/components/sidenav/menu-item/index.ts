@@ -1,1 +1,1 @@
-export { SamMenuItemComponent } from './menu-item.component.ts';
+export { SamMenuItemComponent } from './menu-item.component';

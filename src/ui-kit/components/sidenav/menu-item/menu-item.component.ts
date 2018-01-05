@@ -1,25 +1,38 @@
-import { Component, Input, Output } from '@angular/core';
-import { EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { SidenavService } from '../services';
 import { MenuItem } from '../interfaces';
 
 @Component({
-  selector: 'samMenuItem',
+  selector: 'sam-menu-item',
   templateUrl: './menu-item.template.html'
 })
 export class SamMenuItemComponent {
+  /**
+   * Sets additional children in menu item
+   */
   @Input() children: MenuItem[];
-  @Input() private nodeDepth: number;
-  @Output() private data: EventEmitter<any> = new EventEmitter<any>();
-
-  private path: string;
+  /**
+   * Indicates how deep this menu item is in the tree
+   */
+  @Input() nodeDepth: number;
+  /**
+   * (deprecated) Emits when an item has been selected
+   */
+  @Output() data: EventEmitter<any> = new EventEmitter<any>();
+  /**
+   * Emits when an item has been selected
+   */
+  @Output() selection: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private service: SidenavService) { }
 
-  updateUI(index: number, event: Event): void {
-    this.service.setSelected(event.target);
+  updateUI(index: number, event: Event, menuItem: MenuItem): void {
+    if (menuItem && menuItem.disabled) {
+      return;
+    }
     this.service.updateData(this.nodeDepth, index);
     this.data.emit(this.service.getSelectedModel());
+    this.selection.emit(this.service.getSelectedModel());
     return;
   }
 
@@ -27,12 +40,9 @@ export class SamMenuItemComponent {
     return this.service.getData()[this.nodeDepth] === index;
   }
 
-  isNodeSelected(node: EventTarget): boolean {
-    return this.service.getSelected() === node;
-  }
-
   emitSelectedChild(event: any): void {
     this.data.emit(event);
+    this.selection.emit(event);
     return;
   }
 }

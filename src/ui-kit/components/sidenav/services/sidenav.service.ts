@@ -3,11 +3,11 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class SidenavService {
-  private indexArray: number[] = []; // array of selected children from parent to deepest child
+  // array of selected children from parent to deepest child
+  private indexArray: number[] = [];
   private path: string;
   private children: any[];
   private model: any;
-  private selected: EventTarget;
 
   setChildren(children: any[]): any[] {
     return this.children = children;
@@ -30,11 +30,20 @@ export class SidenavService {
     this.indexArray = this.indexArray.slice(0, nodeDepth + 1);
   }
 
+  overrideData(nodeDepth: number, index: number): void {
+    if (this.indexArray[nodeDepth] === undefined) {
+      this.indexArray.push(index);
+    } else {
+      this.indexArray[nodeDepth] = index;
+    }
+  }
+
   getSelectedModel(): any {
     let model: any = this.model;
     this.indexArray.forEach((index) => {
       model = model.children[index];
     });
+    model.selection = this.indexArray;
     return model;
   }
 
@@ -44,21 +53,12 @@ export class SidenavService {
     this.indexArray.forEach((index) => {
       model = model.children[index];
       if (!model.route) {
-        console.warn(`Path contains undefined route on node with label ${model.label}.`
-                     + ' This could cause problems with your router.');
+        console.warn(`Path contains undefined route on node with label \
+          ${model.label}. This could cause problems with your router.`);
         path += '/';
       }
       path += model.route;
     });
     return path;
   }
-
-  setSelected(node: EventTarget): EventTarget {
-    return this.selected = node;
-  }
-
-  getSelected(): EventTarget {
-    return this.selected;
-  }
-
-};
+}

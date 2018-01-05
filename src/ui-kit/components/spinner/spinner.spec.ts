@@ -3,8 +3,8 @@ import { SamSpinnerComponent } from './spinner.component';
 
 
 describe('The Sam Spinner', () => {
-  let component:SamSpinnerComponent;
-  let fixture:any;
+  let component: SamSpinnerComponent;
+  let fixture: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

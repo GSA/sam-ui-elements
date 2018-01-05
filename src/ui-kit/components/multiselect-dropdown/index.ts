@@ -1,3 +1,3 @@
-export { SamMultiSelectDropdownComponent } from './multiselect-dropdown.component';
-
-
+export {
+  SamMultiSelectDropdownComponent
+} from './multiselect-dropdown.component';
