@@ -31,7 +31,7 @@
         'disabled': child.disabled
       }"
       (keyup.enter)="updateUI($index, $event, child)"
-      [title]="child.label + ' - ' + child.iconClass"
+      [title]="child.iconClass ? child.label + ' - ' + child.iconClass : child.label"
       (click)="updateUI($index, $event, child)">
       <div class="content">
         <div class="title">{{child.label}}</div>
