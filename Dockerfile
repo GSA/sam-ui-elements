@@ -1,4 +1,4 @@
-FROM dtr-1.prod-iae.bsp.gsa.gov/docker-datacenter/node-nginx:7
+FROM dtr-1.prod-iae.bsp.gsa.gov/docker-datacenter/node-nginx:8-alpine
 
 # Create app directory
 RUN mkdir -p /usr/src/app
