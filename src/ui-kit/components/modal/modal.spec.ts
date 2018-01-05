@@ -14,7 +14,7 @@ describe('The Sam Modal component', () => {
     });
 
     it('should have a submit handler', () => {
-      component.onSubmit.subscribe(() => {
+      component.submit.subscribe(() => {
         expect(true).toBe(true);
       });
       component.submitBtnClick();
@@ -54,7 +54,7 @@ describe('The Sam Modal component', () => {
       const el = fixture.debugElement.query(By.css('.usa-alert-heading'));
       expect(el.nativeElement.innerHTML).toContain('test title');
 
-      component.onClose.subscribe(val => {
+      component.close.subscribe(val => {
         expect(val[0]).toBe('test');
         component.ngOnDestroy();
       });

@@ -62,9 +62,13 @@ export class SamTextComponent implements ControlValueAccessor {
    */
   @Input() placeholder: string;
   /**
-   * Lose focus event emit
+   * (deprecated) Lose focus event emit
    */
   @Output() onBlur:EventEmitter<boolean> = new EventEmitter<boolean>();
+  /**
+   * Lose focus event emit
+   */
+  @Output() blur:EventEmitter<boolean> = new EventEmitter<boolean>();
 
   onChange: any = (c) => { };
   onTouched: any = () => { };
@@ -72,7 +76,8 @@ export class SamTextComponent implements ControlValueAccessor {
     if(this.value.trim()!=this.value){
       this.onInputChange(this.value.trim());
     }
-    this.onBlur.emit(true)
+    this.onBlur.emit(true);
+    this.blur.emit(true);
   };
 
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
