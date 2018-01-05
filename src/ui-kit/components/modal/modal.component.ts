@@ -56,17 +56,29 @@ export class SamModalComponent implements OnInit {
    */
   @Input() closeOnEscape: boolean = true;
   /**
-   * Emitted event when modal is opened
+   * (deprecated) Emitted event when modal is opened
    */
   @Output() onOpen: EventEmitter<any> = new EventEmitter<any>();
   /**
-   * Emitted event when modal is closed
+   * Emitted event when modal is opened
+   */
+  @Output() open: EventEmitter<any> = new EventEmitter<any>();
+  /**
+   * (deprecated) Emitted event when modal is closed
    */
   @Output() onClose: EventEmitter<any> = new EventEmitter<any>();
   /**
-   * Emitted event on modal submission
+   * Emitted event when modal is closed
+   */
+  @Output() close: EventEmitter<any> = new EventEmitter<any>();
+  /**
+   * (deprecated) Emitted event on modal submission
    */
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>();
+  /**
+   * Emitted event on modal submission
+   */
+  @Output() submit: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('modalRoot') public modalRoot: ElementRef;
   @ViewChild('modalContent') public modalContent: ElementRef;
@@ -167,6 +179,7 @@ export class SamModalComponent implements OnInit {
     this.show = true;
     this.args = args;
     this.onOpen.emit(this.args);
+    this.open.emit(this.args);
     if (document && document.body) {
       this._scrollHelpers.disableScroll();
       document.body.appendChild(this.backdropElement);
@@ -179,6 +192,7 @@ export class SamModalComponent implements OnInit {
     this._scrollHelpers.enableScroll();
     this.show = false;
     this.onClose.emit(this.args);
+    this.close.emit(this.args);
     this.args = undefined;
     this.removeBackdrop();
     for (let i = 0; i < this._allFocusableElements.length; i++) {
@@ -192,6 +206,7 @@ export class SamModalComponent implements OnInit {
 
   submitBtnClick() {
     this.onSubmit.emit(this.args);
+    this.submit.emit(this.args);
   }
 
   private createBackdrop() {
