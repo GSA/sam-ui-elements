@@ -186,7 +186,7 @@ export class SamPhoneEntryComponent implements OnInit,ControlValueAccessor {
     let end = this.phoneInput.nativeElement.selectionEnd;
 
     //if a number
-    if( (event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105) ) {
+    if(!event.shiftKey && (event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105) ) {
       let updatedPhoneNumber = this.phoneNumber;
       let positionIncrement = this.getPositionIncrement(start);
       let replacePos = start;
