@@ -22,6 +22,9 @@ export class SamActionsDropdownComponent {
    * Disable actions
    */
   @Input() public disabled: boolean = false;
+  /**
+   * Sets the class of the button (primary or default)
+   */
   @Input() public buttonType: 'primary'|'default' = 'default';
   /**
    * Emits event when action changes
