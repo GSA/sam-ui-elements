@@ -260,9 +260,6 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   onChange() {
     if (this.allowAny) {
       this.propogateChange(this.inputValue);
-    } else {
-      //this is already fired on setSelected
-      //this.propogateChange(this.innerValue);
     }
   }
 
@@ -278,16 +275,16 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     // If event.target.name is an empty string, set search string to default search string
     const searchString = event.target.value || '';
 
-    if((event.code === 'Tab' || event.keyIdentifier === 'Tab')){
+    if ((event.code === 'Tab' || event.keyIdentifier === 'Tab')){
       return;
     }
     if ((event.code === 'Backspace' || event.keyIdentifier === 'Backspace')
         || (event.code === 'Delete' || event.keyIdentifier === 'Delete')) {
-      if(!this.innerValue) {
+      if (!this.innerValue) {
         this.results = null;
         this.filteredKeyValuePairs = null;
       }
-      if(this.inputValue === ""){
+      if (this.inputValue === '') {
         this.value = null;
       }
     }
@@ -346,7 +343,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
         this.onEnterDown(list);
       }
 
-      //ESC
+      // ESC
       if ((event.code === 'Escape' || event.keyIdentified === 'Escape')) {
         this.clearDropdown();
       }
