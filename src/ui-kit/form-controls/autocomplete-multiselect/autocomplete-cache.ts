@@ -1,4 +1,4 @@
-class Cached {
+export class Cached {
   private contents: any[] = [];
   private _lastValue: any[] = [];
 

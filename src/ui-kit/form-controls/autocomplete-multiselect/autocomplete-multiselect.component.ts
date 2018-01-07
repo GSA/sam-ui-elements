@@ -413,7 +413,6 @@ export class SamAutocompleteMultiselectComponent
       === results.length ) {
       this.endOfList = true;
       this.filterOptions(event.target.value);
-      console.log('Event is', event);
     }
   }
 
@@ -595,7 +594,6 @@ export class SamAutocompleteMultiselectComponent
    ***************************************************************/
   public fetchFromService(searchString: string, options: any, context: this) {
     context.displaySpinner = true;
-    console.log('Search string is', searchString);
     return context.service
       .fetch(searchString,
         context.endOfList,
