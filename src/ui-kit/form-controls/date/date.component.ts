@@ -257,9 +257,9 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
       maxDate = 30;
     }
     if (this.month.nativeElement.value==2){
-      maxDate = 28;
-      if(this.year.nativeElement.value && this._isLeapYear(this.year.nativeElement.value)){
-        maxDate = 29;
+      maxDate = 29;
+      if(this.year.nativeElement.value && !this._isLeapYear(this.year.nativeElement.value)){
+        maxDate = 28;
       }
       numJumpThreshold = 2;
     }

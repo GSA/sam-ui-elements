@@ -35,7 +35,10 @@ describe('The Sam Date component', () => {
       expect(component.getDate(dateModel).format(component.OUTPUT_FORMAT)).toBe("2017-10-10");
     });
 
-    
+    it("should be able to check for leap years", ()=>{
+      expect(component._isLeapYear("2016")).toBe(true);
+      expect(component._isLeapYear("2017")).toBe(false);
+    });
   });
   describe('Rendered tests', ()=>{
     let component: SamDateComponent;
@@ -84,6 +87,16 @@ describe('The Sam Date component', () => {
         expect(component.month.nativeElement.value).toBe("1");
         expect(component.day.nativeElement.value).toBe("29");
         expect(component.year.nativeElement.value).toBe("2016");
+      });
+    });
+
+    it('should work with leap years', ()=>{
+      component.month.nativeElement.value = "2";
+      component.day.nativeElement.value = "29";
+      component.month.nativeElement.value = "2015";
+      fixture.detectChanges();
+      fixture.whenStable().then(() => {
+        expect(component.day.nativeElement.value).toBe("");
       });
     });
 
