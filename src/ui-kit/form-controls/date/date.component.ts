@@ -258,6 +258,9 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     }
     if (this.month.nativeElement.value==2){
       maxDate = 29;
+      if(this.year.nativeElement.value && !this._isLeapYear(this.year.nativeElement.value)){
+        maxDate = 28;
+      }
       numJumpThreshold = 2;
     }
     if(!isNaN(this.day.nativeElement.value) && this.day.nativeElement.value!=""){
@@ -284,6 +287,12 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   onYearBlur(event){
     if(this.year.nativeElement.value==="0"){
       this.year.nativeElement.value = "";
+    }
+    if(this.year.nativeElement.value 
+      && !this._isLeapYear(this.year.nativeElement.value)
+      && this.month.nativeElement.value === "2"
+      && this.day.nativeElement.value === "29"){
+      this.day.nativeElement.value = "";
     }
   }
 
@@ -411,6 +420,11 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     || (num=="2" && this.nonFebruaryDays.indexOf(parseInt(this.day.nativeElement.value))!==-1)){
       return true;
     }
+  }
+
+  _isLeapYear(year)
+  {
+    return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
   }
 
   static dateRequired() {
