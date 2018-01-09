@@ -93,11 +93,9 @@ describe('The Sam Date component', () => {
     it('should work with leap years', ()=>{
       component.month.nativeElement.value = "2";
       component.day.nativeElement.value = "29";
-      component.month.nativeElement.value = "2015";
-      fixture.detectChanges();
-      fixture.whenStable().then(() => {
-        expect(component.day.nativeElement.value).toBe("");
-      });
+      component.year.nativeElement.value = "2015";
+      component.onYearBlur(null);
+      expect(component.day.nativeElement.value).toBe("");
     });
 
     it('should update with key presses', function(){
