@@ -81,7 +81,7 @@ export class SamNumberComponent implements ControlValueAccessor {
   onTouched: any = () => { };
 
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
-  invalidKeys = ["e",","]
+  invalidKeys = ["e","E",","]
   constructor(private samFormService:SamFormService,
     private cdr: ChangeDetectorRef) { }
 
@@ -126,8 +126,7 @@ export class SamNumberComponent implements ControlValueAccessor {
   }
 
   keyDownHandler(event){
-    let key = String(event.key).toLowerCase();
-    if(this.invalidKeys.indexOf(key)!==-1){
+    if(this.invalidKeys.indexOf(event.key)!==-1){
       event.preventDefault();
     }
   }
