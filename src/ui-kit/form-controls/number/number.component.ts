@@ -126,7 +126,8 @@ export class SamNumberComponent implements ControlValueAccessor {
   }
 
   keyDownHandler(event){
-    if(this.invalidKeys.indexOf(event.key)!==-1){
+    let key = String(event.key);
+    if(this.invalidKeys.indexOf(key)!==-1){
       event.preventDefault();
     }
   }
