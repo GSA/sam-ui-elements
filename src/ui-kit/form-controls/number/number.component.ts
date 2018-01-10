@@ -81,7 +81,7 @@ export class SamNumberComponent implements ControlValueAccessor {
   onTouched: any = () => { };
 
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
-  invalidKeys = ["e",","]
+  invalidKeys = ["e","E",","]
   constructor(private samFormService:SamFormService,
     private cdr: ChangeDetectorRef) { }
 
