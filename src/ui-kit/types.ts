@@ -270,3 +270,27 @@ export interface NameEntryType{
   */
   suffix: string;
 }
+
+export interface AlertType{
+  /**
+   * Sets the alert title
+   */
+  title;
+  /**
+   * Sets the alert type
+   */
+  type;
+  /**
+   * Sets the alert body text
+   */
+  description;
+  /**
+   * Sets a timeout (in milliseconds) for the alert to dismiss itself. 0 is 
+   * infinite.
+   */
+  timer: number;
+  /**
+   * Explicity defines that user must dismiss alert
+   */
+  mustDismiss?: boolean;
+}

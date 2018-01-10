@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SamAlertFooterService } from './alert-footer.service';
+import { AlertType } from "../../types";
 
 @Component({
   selector: 'sam-alert-footer',
@@ -7,7 +8,7 @@ import { SamAlertFooterService } from './alert-footer.service';
 })
 export class SamAlertFooterComponent {
 
-  private alerts = [];
+  private alerts: AlertType[] = [];
 
   constructor(private alertFooterService: SamAlertFooterService) { }
 

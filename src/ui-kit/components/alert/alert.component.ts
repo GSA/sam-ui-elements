@@ -26,9 +26,15 @@ export class SamAlertComponent {
    */
   @Input() showClose: boolean = false;
   /**
-   * Assign a timeout to dismiss the alert
+   * Explicitly defines that the alert must be dismissed by the user. Overrides
+   * the dismiss timer. Defaults to 'false'
    */
-  @Input() dismissTimer = 0;
+  @Input() userMustDismiss: boolean = false;
+  /**
+   * Assign a timeout (in milliseconds) to dismiss the alert. 0 is the default
+   * and is an infinite wait.
+   */
+  @Input() dismissTimer: number = 0;
   /**
    * Give a boolean value to display show/hide toggle
    */
@@ -67,7 +73,7 @@ export class SamAlertComponent {
     if (!this.typeNotDefined()) {
       this.selectedType = this.types[this.type].class;
     }
-    if (this.dismissTimer > 0) {
+    if (this.dismissTimer > 0 && !this.userMustDismiss) {
       setTimeout(() => {
         this.dismiss.emit();
       }, this.dismissTimer);
