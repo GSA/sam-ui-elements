@@ -1,5 +1,5 @@
 import { Component, Injectable } from '@angular/core';
-
+import { AlertType } from "../../types";
 @Injectable()
 export class SamAlertFooterService {
 
@@ -9,7 +9,7 @@ export class SamAlertFooterService {
     return this.alerts;
   }
 
-  registerFooterAlert(data) {
+  registerFooterAlert(data: AlertType) {
     this.alerts.unshift(data);
   }
 

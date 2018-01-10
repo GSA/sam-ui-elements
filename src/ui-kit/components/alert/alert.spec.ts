@@ -39,6 +39,19 @@ describe('The Sam Alert component', () => {
       });
       component.ngOnInit();
     });
+    it('should NOT trigger dismiss on timer if userMustDismiss is true', () => {
+      const dismissTime = 100;
+      component.userMustDismiss = true;
+      component.dismissTimer = dismissTime;
+      component.dismiss.subscribe(() => {
+        // should not get here
+        fail();
+      });
+      component.ngOnInit();
+      setTimeout(()=>{
+        expect(true).toBe(true);
+      }, 300);
+    });
     it('should trigger dismiss on method', () => {
       component.dismiss.subscribe(() => {
         expect(true).toBe(true);
