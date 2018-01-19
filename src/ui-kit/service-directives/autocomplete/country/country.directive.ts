@@ -1,7 +1,9 @@
 import { Directive, Injectable, Inject, OpaqueToken } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AutocompleteService } from '../../../form-controls/autocomplete/autocomplete.service';
+import {
+  AutocompleteService
+} from '../../../form-controls/autocomplete/autocomplete.service';
 
 
 @Injectable()
@@ -9,13 +11,16 @@ export class CountryService implements AutocompleteService {
 
   constructor(@Inject('COUNTRIES') private countries: Array<Country>) {}
 
-  setFetchMethod() {}
+  setFetchMethod() {
+    return undefined;
+  }
 
   fetch(val: string, pageEnd: boolean, serviceOptions?: any): Observable<any> {
-    val = val.toLowerCase();
+    const returnVal =  val.toLowerCase();
 
     const filtered = this.countries.reduce((prev, curr) => {
-      if (curr.name.toLowerCase().includes(val) || curr.code.toLowerCase().includes(val)) {
+      if (curr.name.toLowerCase().includes(returnVal)
+        || curr.code.toLowerCase().includes(returnVal)) {
         prev.push(curr.name);
       }
       return prev;

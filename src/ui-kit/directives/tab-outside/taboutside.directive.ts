@@ -1,4 +1,10 @@
-import { Directive, ElementRef, Output, EventEmitter, HostListener } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  Output,
+  EventEmitter,
+  HostListener
+} from '@angular/core';
 
 
 @Directive({
@@ -16,7 +22,7 @@ export class SamTabOutsideDirective {
   public hasFocusChanged(target) {
     const isInsideHost = this._elementRef.nativeElement.contains(target);
     if (!isInsideHost) {
-      this.tabOutside.emit(null);
+      this.tabOutside.emit(undefined);
     }
   }
 }

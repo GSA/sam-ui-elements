@@ -1,10 +1,24 @@
-import { Component, Input, Output,ChangeDetectorRef, Optional, ViewChild, EventEmitter, forwardRef, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  ChangeDetectorRef,
+  Optional,
+  ViewChild,
+  EventEmitter,
+  forwardRef,
+  AfterViewInit
+} from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { OptionsType } from '../../types';
-import { FormControl, NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
+import {
+  FormControl,
+  NG_VALUE_ACCESSOR,
+  ControlValueAccessor
+} from '@angular/forms';
 import {SamFormService} from '../../form-service';
 
-const noop = () => {};
+const noop = () => undefined;
 const MY_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamSelectComponent),
@@ -23,78 +37,81 @@ export class SamSelectComponent implements ControlValueAccessor, AfterViewInit {
   /**
   * Sets the bound value of the component
   */
-  @Input() model: string|number|symbol;
+  @Input() public model: string|number|symbol;
   /**
   * Sets the array of option values and text (see OptionsType)
   */
-  @Input() options: OptionsType[];
+  @Input() public options: OptionsType[];
   /**
   * Sets the label text
   */
-  @Input() label: string;
+  @Input() public label: string;
   /**
   * Sets the semantic description for the component
   */
-  @Input() name: string;
+  @Input() public name: string;
   /**
   * Sets the helpful text for the using the component
   */
-  @Input() hint: string;
+  @Input() public hint: string;
   /**
   * Sets the general error message
   */
-  @Input() errorMessage: string;
+  @Input() public errorMessage: string;
   /**
   * Sets the general error message
   */
-  @Input() required: boolean;
+  @Input() public required: boolean;
   /**
   * Sets the general error message
   */
-  @Input() disabled: boolean;
+  @Input() public disabled: boolean;
   /**
   * Sets the general error message
   */
-  @Input() control: FormControl;
+  @Input() public control: FormControl;
   /**
   * Toggles validations to display with SamFormService events
   */
-  @Input() useFormService: boolean;
+  @Input() public useFormService: boolean;
   /**
   * Event emitted on modal value change
   */
-  @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() public modelChange: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild(LabelWrapper)
-  public wrapper: LabelWrapper;
+  @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
 
-  @ViewChild("select")
-  public select: any;
+  @ViewChild('select') public select: any;
+
+  private onChange: (_: any) => void;
+  private onTouched: () => void;
 
   constructor(@Optional() private cdr: ChangeDetectorRef,
-    private samFormService:SamFormService) { }
+    private samFormService: SamFormService) { }
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error("<sam-select> requires a [name] parameter for 508 compliance");
+      throw new Error('<sam-select> requires a [name]\
+       parameter for 508 compliance');
     }
 
     if (!this.control) {
       return;
     }
 
-    if(this.control){
-      if(!this.useFormService){
-        this.control.statusChanges.subscribe(()=>{
+    if (this.control) {
+      if (!this.useFormService) {
+        this.control.statusChanges.subscribe(() => {
           this.wrapper.formatErrors(this.control);
         });
         this.wrapper.formatErrors(this.control);
-      }
-      else {
-        this.samFormService.formEventsUpdated$.subscribe(evt=>{
-          if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+      } else {
+        this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
+          if ((!evt.root || evt.root === this.control.root)
+            && evt.eventType && evt.eventType === 'submit') {
             this.wrapper.formatErrors(this.control);
-          } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+          } else if ((!evt.root || evt.root === this.control.root)
+            && evt.eventType && evt.eventType === 'reset') {
             this.wrapper.clearError();
           }
         });
@@ -102,7 +119,7 @@ export class SamSelectComponent implements ControlValueAccessor, AfterViewInit {
     }
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     if (!this.control) {
       return;
     }
@@ -140,7 +157,4 @@ export class SamSelectComponent implements ControlValueAccessor, AfterViewInit {
   registerOnTouched(fn: any) {
     this.onTouched = fn;
   }
-
-  private onChange: (_: any) => void;
-  private onTouched: () => void;
 }

@@ -9,7 +9,9 @@ import { BadgeConfig } from '../components/badge';
       <h1 *ngIf="title || section"
           class="sam-ui header"
           style="font-size: 4rem;">
-        <sam-badge [options]="badgeOptions" *ngIf="badge">{{ badge }}</sam-badge>
+        <sam-badge [options]="badgeOptions"
+          *ngIf="badge">{{ badge }}
+        </sam-badge>
         <div class="sup header"
               style="font-weight: 300; font-size: 2.5rem;">
           {{ section }}
@@ -32,6 +34,4 @@ export class TitleAndSectionComponent {
   @Input() public caption: string;
 
   @Input() public badgeOptions: BadgeConfig = {};
-
-  constructor(){}
 }

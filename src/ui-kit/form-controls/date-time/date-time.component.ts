@@ -1,4 +1,13 @@
-import { Component, Input, ViewChild, Output, EventEmitter, OnInit, forwardRef, OnChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewChild,
+  Output,
+  EventEmitter,
+  OnInit,
+  forwardRef,
+  OnChanges
+} from '@angular/core';
 import * as moment from 'moment/moment';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
@@ -20,7 +29,8 @@ const MY_VALUE_ACCESSOR: any = {
   templateUrl: 'date-time.template.html',
   providers: [ MY_VALUE_ACCESSOR ]
 })
-export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAccessor {
+export class SamDateTimeComponent
+  implements OnInit, OnChanges, ControlValueAccessor {
   public INPUT_FORMAT: string = 'Y-M-DTH:m';
   /**
    * Sets starting value for input
@@ -50,33 +60,38 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
   * Toggles validations to display with SamFormService events
   */
   @Input() useFormService: boolean;
-  value;
-  public time: string = null;
-  public date: string = null;
+  public value;
+  public time: string = undefined;
+  public date: string = undefined;
 
-  @ViewChild('dateComponent') dateComponent: SamDateComponent;
-  @ViewChild('timeComponent') timeComponent: SamTimeComponent;
-  @ViewChild(FieldsetWrapper) wrapper;
+  @ViewChild('dateComponent') public dateComponent: SamDateComponent;
+  @ViewChild('timeComponent') public timeComponent: SamTimeComponent;
+  @ViewChild(FieldsetWrapper) public wrapper;
 
-  constructor(private samFormService:SamFormService) { }
+  public onChange: Function;
+  public onTouched: Function;
+
+  constructor(private samFormService: SamFormService) { }
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error('SamDateTimeComponent requires a [name] input for 508 compliance');
+      throw new Error('SamDateTimeComponent requires a\
+       [name] input for 508 compliance');
     }
 
     if (this.control) {
-      if(!this.useFormService){
-        this.control.statusChanges.subscribe(()=>{
+      if (!this.useFormService) {
+        this.control.statusChanges.subscribe(() => {
           this.wrapper.formatErrors(this.control);
         });
         this.wrapper.formatErrors(this.control);
-      }
-      else {
-        this.samFormService.formEventsUpdated$.subscribe(evt=>{
-          if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+      } else {
+        this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
+          if ((!evt.root || evt.root === this.control.root)
+            && evt.eventType && evt.eventType === 'submit') {
             this.wrapper.formatErrors(this.control);
-          } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+          } else if ((!evt.root || evt.root === this.control.root)
+            && evt.eventType && evt.eventType === 'reset') {
             this.wrapper.clearError();
           }
         });
@@ -91,7 +106,7 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
   parseValueString(): void {
     if (this.value) {
       // use the more forgiving format (that doesn't need 0 padding) for inputs
-      let m = moment(this.value, this.INPUT_FORMAT);
+      const m = moment(this.value, this.INPUT_FORMAT);
       if (m.isValid()) {
         this.time = m.format(this.timeComponent.OUTPUT_FORMAT);
         this.date = m.format(this.dateComponent.OUTPUT_FORMAT);
@@ -103,19 +118,20 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
 
   emitChanges(val: string): void {
     this.value = val;
-    // only when this component is used as a FormControl will change be registered
+    // only when this component is used as a FormControl will change be
+    // registered
     if (this.onChange) {
       this.onChange(val);
     }
   }
 
-  dateBlur(){
+  dateBlur() {
     this.timeComponent.hour_v.nativeElement.focus();
   }
 
   onInputChange(): void {
     if (this.dateComponent.isClean() && this.timeComponent.isClean()) {
-      this.emitChanges(null);
+      this.emitChanges(undefined);
     } else if (this.dateComponent.isValid() && this.timeComponent.isValid()) {
       this.emitChanges(`${this.date}T${this.time}`);
     } else {
@@ -123,13 +139,10 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
     }
   }
 
-  resetInput(){
-    this.date = "";
-    this.time = "";
+  resetInput() {
+    this.date = '';
+    this.time = '';
   }
-
-  onChange: Function;
-  onTouched: Function;
 
   registerOnChange(fn) {
     this.onChange = fn;
@@ -144,10 +157,10 @@ export class SamDateTimeComponent implements OnInit, OnChanges, ControlValueAcce
   }
 
   writeValue(value) {
-    if(value){
+    if (value) {
       this.value = value;
-    }else{
-      this.value = "";
+    } else {
+      this.value = '';
       this.resetInput();
     }
     this.parseValueString();

@@ -120,9 +120,9 @@ export interface AutocompleteKeyValueConfig {
    */
   valueProperty: string;
 }
-//Download
-export type AccessType = "Public"|"Private";
-export type ExpansionType = "collapsed"|"expanded";
+// Download
+export type AccessType = 'Public'|'Private';
+export type ExpansionType = 'collapsed'|'expanded';
 export interface DownloadPackageType {
   /**
    * Sets a package id value
@@ -183,7 +183,7 @@ export interface DownloadResourceType {
    */
   typeInfo: DownloadResourceTypeInfoType;
 }
-export interface DownloadResourceTypeInfoType{
+export interface DownloadResourceTypeInfoType {
   /**
    * Sets the resource type name
    */
@@ -194,7 +194,7 @@ export interface DownloadResourceTypeInfoType{
   iconClass: string;
 }
 
-export interface PointOfContactType{
+export interface PointOfContactType {
   /**
    * Sets the full name property
    */
@@ -252,7 +252,7 @@ export interface IBreadcrumb {
   queryParams?: object;
 }
 
-export interface NameEntryType{
+export interface NameEntryType {
   /**
   * Sets the first name field
   */
@@ -271,7 +271,7 @@ export interface NameEntryType{
   suffix: string;
 }
 
-export interface AlertType{
+export interface AlertType {
   /**
    * Sets the alert title
    */

@@ -7,7 +7,7 @@ import { PageConfig } from './types';
   templateUrl: 'page.template.html',
   providers: [PageService],
 })
-export class PageTemplateComponent implements OnInit{
+export class PageTemplateComponent implements OnInit {
 
   @Input() public breadcrumbs: any;
   @Input() public theme: string;
@@ -19,21 +19,20 @@ export class PageTemplateComponent implements OnInit{
   @Input() public caption: string;
 
   @Input() public options: PageConfig = {
-    badge: null
+    badge: undefined
   };
 
   @Output() public breadcrumbOut = new EventEmitter();
 
-  constructor(private pageService: PageService){}
+  constructor(private pageService: PageService) {}
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     // Reset sidebar
     this.pageService.sidebar = false;
     this.pageService.wideSidebar = false;
   }
 
-  breadcrumbHandler(evt){
+  breadcrumbHandler(evt) {
     this.breadcrumbOut.emit(evt);
   }
-
 }

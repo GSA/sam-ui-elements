@@ -1,6 +1,6 @@
-import {TestBed, async, fakeAsync, tick} from '@angular/core/testing';
-import { Component,ViewChild } from '@angular/core';
-import {By} from '@angular/platform-browser';
+import { TestBed, async, fakeAsync, tick } from '@angular/core/testing';
+import { Component, ViewChild } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 // Load the implementations that should be tested
 import {SamStickyComponent} from './sticky.component';
@@ -28,42 +28,49 @@ class TestComponent {
 }
 
 describe('The Sam Sticky directive', () => {
-  let directive:SamStickyComponent;
-  let component:TestComponent;
-  let fixture:any;
+  let directive: SamStickyComponent;
+  let component: TestComponent;
+  let fixture: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SamStickyComponent,TestComponent],
+      declarations: [SamStickyComponent, TestComponent],
     });
 
     fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    directive = fixture.debugElement.query(By.directive(SamStickyComponent)).injector.get(SamStickyComponent);
+    directive = fixture.debugElement
+      .query(
+        By.directive(SamStickyComponent)
+      )
+      .injector.get(SamStickyComponent);
   });
 
   it('should compile', () => {
-    let comp = fixture.debugElement.query(By.css('.test-comp'));
-    expect(comp.nativeElement.getAttribute("ng-reflect-limit")).toContain("1200");
+    const comp = fixture.debugElement.query(By.css('.test-comp'));
+
+    expect(comp.nativeElement.getAttribute('ng-reflect-limit'))
+      .toContain('1200');
   });
 
-  it('trigger on resize',()=>{
-    spyOn(directive,'resize');
+  it('trigger on resize', () => {
+    spyOn(directive, 'resize');
     window.dispatchEvent(new Event('resize'));
     fixture.detectChanges();
     expect(directive.resize).toHaveBeenCalled();
-    directive.resize(null);
+    directive.resize(undefined);
   });
-  it('trigger on scroll',()=>{;
-    spyOn(directive,'scroll');
+  it('trigger on scroll', () => {
+    const expectedLimit = 1400;
+    spyOn(directive, 'scroll');
     window.dispatchEvent(new Event('scroll'));
     fixture.detectChanges();
     expect(directive.scroll).toHaveBeenCalled();
-    directive.scroll(null);
+    directive.scroll(undefined);
     directive.makeSticky();
 
-    directive.limit = 1400;
+    directive.limit = expectedLimit;
     directive.makeSticky();
   });
 });

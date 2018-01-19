@@ -1,7 +1,20 @@
-import {Component, ChangeDetectorRef, Input, ViewChild, forwardRef} from '@angular/core';
-import { LabelWrapper } from '../../wrappers/label-wrapper/label-wrapper.component';
-import {NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators} from "@angular/forms";
-import {SamFormService} from '../../form-service';
+import {
+  Component,
+  ChangeDetectorRef,
+  Input,
+  ViewChild,
+  forwardRef
+} from '@angular/core';
+import {
+  LabelWrapper
+} from '../../wrappers/label-wrapper/label-wrapper.component';
+import {
+  NG_VALUE_ACCESSOR,
+  ControlValueAccessor,
+  FormControl,
+  Validators
+} from '@angular/forms';
+import { SamFormService } from '../../form-service';
 
 export const TEXT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -15,7 +28,12 @@ export const TEXT_VALUE_ACCESSOR: any = {
 @Component({
   selector: 'sam-number',
   template: `
-      <sam-label-wrapper [label]="label" [name]="name" [hint]="hint" [errorMessage]="errorMessage" [required]="required">
+      <sam-label-wrapper
+        [label]="label"
+        [name]="name"
+        [hint]="hint"
+        [errorMessage]="errorMessage"
+        [required]="required">
         <input 
           type="number" 
           [attr.min]="min ? min : null" 
@@ -75,58 +93,61 @@ export class SamNumberComponent implements ControlValueAccessor {
   */
   @Input() useFormService: boolean;
 
-  onChange: any = () => {
-    this.wrapper.formatErrors(this.control);
-  };
-  onTouched: any = () => { };
+  @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
+  public invalidKeys = ['e', 'E', ','];
 
-  @ViewChild(LabelWrapper) wrapper: LabelWrapper;
-  invalidKeys = ["e","E",","]
-  constructor(private samFormService:SamFormService,
+  public onChange: any = () => {
+    this.wrapper.formatErrors(this.control);
+  }
+  public onTouched: any = () => undefined;
+
+  constructor(private samFormService: SamFormService,
     private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error("<sam-number> requires a [name] parameter for 508 compliance");
+      throw new Error('<sam-number> requires a [name] parameter\
+       for 508 compliance');
     }
 
     if (!this.control) {
       return;
     }
 
-    let validators: any[] = [];
+    const validators: any[] = [];
 
     if (this.required) {
       validators.push(Validators.required);
     }
 
     this.control.setValidators(validators);
-    if(!this.useFormService){
-      this.control.statusChanges.subscribe(()=>{
+    if (!this.useFormService) {
+      this.control.statusChanges.subscribe(() => {
         this.wrapper.formatErrors(this.control);
         this.cdr.detectChanges();
       });
-    }
-    else {
-      this.samFormService.formEventsUpdated$.subscribe(evt=>{
-        if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+    } else {
+      this.samFormService.formEventsUpdated$.subscribe( (evt: any) => {
+        if ((!evt.root || evt.root === this.control.root)
+          && evt.eventType && evt.eventType === 'submit') {
           this.wrapper.formatErrors(this.control);
-        } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+        } else if ((!evt.root || evt.root === this.control.root)
+          && evt.eventType && evt.eventType === 'reset') {
           this.wrapper.clearError();
         }
       });
     }
   }
 
-  ngAfterViewInit(){
-    if(this.control){
+  ngAfterViewInit() {
+    if (this.control) {
       this.wrapper.formatErrors(this.control);
       this.cdr.detectChanges();
     }
   }
 
-  keyDownHandler(event){
-    if(this.invalidKeys.indexOf(event.key)!==-1){
+  keyDownHandler(event) {
+    if (this.invalidKeys.indexOf(event.key) !== -1) {
       event.preventDefault();
     }
   }

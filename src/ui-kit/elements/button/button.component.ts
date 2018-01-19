@@ -20,27 +20,28 @@ export class SamButtonComponent {
   /**
   * Sets the id that will assign to the button element
   */
-  @Input() buttonId:string;
+  @Input() buttonId: string;
   
   /**
   * Sets the text content that will show on the button
   */
-  @Input() buttonText:string;
-  
+  @Input() buttonText: string;
+
   /**
-  * Sets the type of the button (default,alt,secondary,outline,gray,disabled,big)
+  * Sets the type of the button
+  * (default,alt,secondary,outline,gray,disabled,big)
   */
-  @Input() buttonType:string;
+  @Input() buttonType: string;
   
   /**
   * Sets the button size
   */
-  @Input() buttonSize:string;
+  @Input() buttonSize: string;
   
   /**
   * Disables the button
   */
-  @Input() buttonDisabled:boolean = false;
+  @Input() buttonDisabled: boolean = false;
   
   /**
   * Emmits event on click
@@ -51,34 +52,34 @@ export class SamButtonComponent {
   /**
   * Sets the button css class (Deprecated)
   */
-  @Input() buttonClass:string = '';
+  @Input() buttonClass: string = '';
   
 
   private btnClassMap: any = {
     // Types
-    default: "primary",
-    primary: "primary",
-    secondary: "secondary",
-    tertiary: "basic blue",
-    negative: "negative",
-    submit: "primary",
+    default: 'primary',
+    primary: 'primary',
+    secondary: 'secondary',
+    tertiary: 'basic blue',
+    negative: 'negative',
+    submit: 'primary',
     // Sizes
-    small: "tiny",
-    large: "large",
+    small: 'tiny',
+    large: 'large',
   };
 
-  get btnClass():String {
-    let classMap = [];
+  get btnClass(): String {
+    const classMap = [];
     
     // Adds type css class
-    if(this.btnClassMap.hasOwnProperty(this.buttonType)){
+    if (this.btnClassMap.hasOwnProperty(this.buttonType)) {
       classMap.push(this.btnClassMap[this.buttonType]);
-    }else{
-      classMap.push(this.btnClassMap["default"]);
+    } else {
+      classMap.push(this.btnClassMap.default);
     }
     
     // Add size css class
-    if(this.btnClassMap.hasOwnProperty(this.buttonSize)){
+    if (this.btnClassMap.hasOwnProperty(this.buttonSize)) {
       classMap.push(this.btnClassMap[this.buttonSize]);
     }
 
@@ -86,7 +87,7 @@ export class SamButtonComponent {
   }
 
   click($event) {
-    if(!this.buttonDisabled){
+    if (!this.buttonDisabled) {
       this.onClick.emit($event);
     }
   }

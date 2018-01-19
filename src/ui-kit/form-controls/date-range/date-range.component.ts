@@ -1,5 +1,20 @@
-import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ValidatorFn } from "@angular/forms";
+import {
+  Component,
+  EventEmitter,
+  forwardRef,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormControl,
+  NG_VALUE_ACCESSOR,
+  ValidatorFn
+} from '@angular/forms';
 import * as moment from 'moment/moment';
 import { SamFormService } from '../../form-service';
 
@@ -15,22 +30,14 @@ import { SamFormService } from '../../form-service';
     multi: true
   }]
 })
-export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAccessor {
-  public INPUT_FORMAT: string = 'Y-M-D';
-  public OUTPUT_FORMAT: string = 'YYYY-MM-DD';
-  public DT_INPUT_FORMAT: string = 'Y-M-DTH:m';
-  public T_OUTPUT_FORMAT: string = "HH:mm";
+export class SamDateRangeComponent
+  implements OnInit, OnChanges, ControlValueAccessor {
 
-  startModel: any = {
-    month: null,
-    day: null,
-    year: null
-  };
-  endModel: any = {
-    month: null,
-    day: null,
-    year: null
-  };
+  @ViewChild('startControl') public startControl;
+  @ViewChild('endControl') public endControl;
+  @ViewChild('startDate') public startDateComp;
+  @ViewChild('endDate') public endDateComp;
+  @ViewChild('wrapper') public wrapper;
 
   /**
   * Sets the label text
@@ -39,28 +46,31 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
   /**
   * Sets the label text
   */
-  @Input() label: string = "";
+  @Input() label: string = '';
   /**
   * Sets the helpful hint text
   */
-  @Input() hint: string = "";
+  @Input() hint: string = '';
   /**
-  * If set to true, a "required" designation is shown for both start and end date
-  * If default validations are enabled, also enables a validation checking that both start and end date are provided
-  *
-  * @see {defaultValidations}
-  */
+   * If set to true, a 'required' designation is shown for both start and end
+   * date. If default validations are enabled, also enables a validation 
+   * checking that both start and end date are provided.
+   *
+   * @see {defaultValidations}
+   */
   @Input() required: boolean;
   /**
-  * If set to true, a "required" designation is shown for start date
-  * If default validations are enabled, also enables a validation checking that start date is provided
+  * If set to true, a 'required' designation is shown for start date
+  * If default validations are enabled, also enables a validation checking
+  * that start date is provided
   *
   * @see {defaultValidations}
   */
   @Input() fromRequired: boolean;
   /**
-  * If set to true, a "required" designation is shown for end date
-  * If default validations are enabled, also enables a validation checking that end date is provided
+  * If set to true, a 'required' designation is shown for end date
+  * If default validations are enabled, also enables a validation checking that
+  * end date is provided
   *
   * @see {defaultValidations}
   */
@@ -76,7 +86,7 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
   /**
   * Toggles date-time mode
   */
-  @Input() type: string = "date";
+  @Input() type: string = 'date';
   /**
   * Toggles validations to display with SamFormService events
   */
@@ -90,45 +100,57 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
   */
   @Output() valueChange = new EventEmitter<any>();
 
-  onChange: any = () => {};
-  onTouched: any = () => {};
+  public INPUT_FORMAT: string = 'Y-M-D';
+  public OUTPUT_FORMAT: string = 'YYYY-MM-DD';
+  public DT_INPUT_FORMAT: string = 'Y-M-DTH:m';
+  public T_OUTPUT_FORMAT: string = 'HH:mm';
 
-  @ViewChild('startControl') startControl;
-  @ViewChild('endControl') endControl;
-  @ViewChild('startDate') startDateComp;
-  @ViewChild('endDate') endDateComp;
+  public startModel: any = {
+    month: undefined,
+    day: undefined,
+    year: undefined
+  };
+  public endModel: any = {
+    month: undefined,
+    day: undefined,
+    year: undefined
+  };
+
   private startDateValue;
   private endDateValue;
-  @ViewChild('wrapper') wrapper;
 
-  constructor(private samFormService:SamFormService) { }
+  public onChange: any = () => undefined;
+  public onTouched: any = () => undefined;
+
+  constructor(private samFormService: SamFormService) { }
 
   ngOnInit() {
-    if(!this.control){
+    if (!this.control) {
       return;
     }
-    let validators: ValidatorFn[] = [];
-    if(this.control.validator){
+    const validators: ValidatorFn[] = [];
+    if (this.control.validator) {
       validators.push(this.control.validator);
     }
-    if(this.defaultValidations){
-      if(this.required){
+    if (this.defaultValidations) {
+      if (this.required) {
         validators.push(SamDateRangeComponent.dateRangeRequired(this));
       }
       validators.push(SamDateRangeComponent.dateRangeValidation);
     }
     this.control.setValidators(validators);
-    if(!this.useFormService){
-      this.control.statusChanges.subscribe(()=>{
+    if (!this.useFormService) {
+      this.control.statusChanges.subscribe(() => {
         this.wrapper.formatErrors(this.control);
       });
       this.wrapper.formatErrors(this.control);
-    }
-    else {
-      this.samFormService.formEventsUpdated$.subscribe(evt=>{
-        if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+    } else {
+      this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
+        if ((!evt.root || evt.root === this.control.root)
+          && evt.eventType && evt.eventType === 'submit') {
           this.wrapper.formatErrors(this.control);
-        } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+        } else if ((!evt.root || evt.root === this.control.root)
+          && evt.eventType && evt.eventType ==='reset'){
           this.wrapper.clearError();
         }
       });
@@ -144,21 +166,21 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
   }
 
   parseValueString() {
-    let format = this.type!="date-time"? this.INPUT_FORMAT : this.DT_INPUT_FORMAT;
+    let format = this.type!='date-time'? this.INPUT_FORMAT : this.DT_INPUT_FORMAT;
     if (this.startDateValue) {
       // use the forgiving format (that doesn't need 0 padding) for inputs
       let m = moment(this.startDateValue, format);
       this.startModel.month = m.month() + 1;
       this.startModel.day = m.date();
       this.startModel.year = m.year();
-      if(this.type=="date-time"){
+      if(this.type=='date-time'){
         this.startModel.time = m.format(this.T_OUTPUT_FORMAT);
       }
     }
     else{
-      this.startModel.month = "";
-      this.startModel.day = "";
-      this.startModel.year = "";
+      this.startModel.month = '';
+      this.startModel.day = '';
+      this.startModel.year = '';
     }
     if (this.endDateValue) {
       // use the forgiving format (that doesn't need 0 padding) for inputs
@@ -166,14 +188,14 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
       this.endModel.month = m.month() + 1;
       this.endModel.day = m.date();
       this.endModel.year = m.year();
-      if(this.type=="date-time"){
+      if(this.type=='date-time'){
         this.endModel.time = m.format(this.T_OUTPUT_FORMAT);
       }
     }
     else{
-      this.endModel.month = "";
-      this.endModel.day = "";
-      this.endModel.year = "";
+      this.endModel.month = '';
+      this.endModel.day = '';
+      this.endModel.year = '';
     }
   }
 
@@ -194,8 +216,8 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
   }
 
   dateChange(){
-    let startDateString = "";
-    let endDateString = "";
+    let startDateString = '';
+    let endDateString = '';
     if(!this.isClean(this.startModel)){
       startDateString = this.getDate(this.startModel).format(this.OUTPUT_FORMAT);
     }
@@ -206,7 +228,7 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
         startDate: startDateString,
         endDate: endDateString
     };
-    if(this.type=="date-time"){
+    if(this.type=='date-time'){
       let startTimeString = this.startModel.time;
       let endTimeString = this.endModel.time;
       output['startTime'] = startTimeString;
@@ -217,13 +239,13 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
   }
 
   isClean(model) {
-    return (model.day===""|| model.day===null) &&
-      (model.month==="" || model.month===null) &&
-      (model.year==="" || model.year===null);
+    return (model.day===''|| model.day===null) &&
+      (model.month==='' || model.month===null) &&
+      (model.year==='' || model.year===null);
   }
 
   dateBlur(){
-    if(this.type=="date"){
+    if(this.type=='date'){
       this.endDateComp.month.nativeElement.focus();
     }
   }
@@ -231,7 +253,7 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
   static dateRangeValidation(c:AbstractControl){
     let error = {
       dateRangeError: {
-        message: ""
+        message: ''
       }
     };
 
@@ -239,21 +261,21 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
       let startDateM = moment(c.value.startDate);
       let endDateM = moment(c.value.endDate);
       if(endDateM.diff(startDateM) < 0) {
-        error.dateRangeError.message = "Invalid date range";
+        error.dateRangeError.message = 'Invalid date range';
         return error;
       }
     }
     if (c.value && c.value.startDate){
       let startDateM = moment(c.value.startDate);
-      if(!startDateM.isValid() || c.value.startDate=="Invalid date"){
-        error.dateRangeError.message = "Invalid From Date";
+      if(!startDateM.isValid() || c.value.startDate=='Invalid date'){
+        error.dateRangeError.message = 'Invalid From Date';
         return error;
       }
     }
     if (c.value && c.value.endDate){
       let endDateM = moment(c.value.endDate);
-      if(!endDateM.isValid() || c.value.endDate=="Invalid date"){
-        error.dateRangeError.message = "Invalid To Date";
+      if(!endDateM.isValid() || c.value.endDate=='Invalid date'){
+        error.dateRangeError.message = 'Invalid To Date';
         return error;
       }
     }
@@ -271,7 +293,7 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
       if (c.dirty && !valid) {
         return {
           dateRangeError: {
-            message: "This field is required"
+            message: 'This field is required'
           }
         };
       }
@@ -293,10 +315,10 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
   }
 
   writeValue(value) {
-    if(value && typeof value == "object" && (value['startDate'] || value['endDate'])){
+    if(value && typeof value == 'object' && (value['startDate'] || value['endDate'])){
       if(this.type === 'date-time'){
-        this.startDateValue = value.startDate + " " + value.startTime;
-        this.endDateValue = value.endDate + " " + value.endTime;
+        this.startDateValue = value.startDate + ' ' + value.startTime;
+        this.endDateValue = value.endDate + ' ' + value.endTime;
       }else{
         this.startDateValue = value.startDate;
         this.endDateValue = value.endDate;
@@ -305,8 +327,8 @@ export class SamDateRangeComponent implements OnInit, OnChanges, ControlValueAcc
 
     }
     else{
-      this.startDateValue = "";
-      this.endDateValue = "";
+      this.startDateValue = '';
+      this.endDateValue = '';
       this.parseValueString();
     }
   }
