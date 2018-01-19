@@ -130,7 +130,7 @@ export class SamCommentsComponent implements OnInit {
       .flatMap(event => {
         if (event instanceof Error) {
           return Observable.of(this.comments);
-        } else if (event === null) {
+        } else if (event === null || event === undefined) {
           return Observable.of(this.comments);
         } else {
           this.form.controls.text.setValue('');
