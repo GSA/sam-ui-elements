@@ -5,7 +5,7 @@ import { OptionsType } from '../../types';
 import {SamFormService} from '../../form-service';
 
 /**
- * The <sam-checkbox> component is a set of checkboxes 
+ * The <sam-checkbox> component is a set of checkboxes
  */
 @Component({
   selector: 'sam-checkbox',
@@ -80,23 +80,11 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   }
 
   set value(val) {
-    if(!Array.isArray(val)){
-      val = [];
-    }
-    //don't select options that are disabled
-    for(var idx in this.options){
-      let lookup = val.findIndex((value)=>{
-        return value == this.options[idx].value;
-      });
-      if(this.options[idx].disabled && lookup != -1){
-        val.splice(lookup,1);
-      }
-    }
-    this.model = val;
+    this.setModelValue(val);
     this.onChange(this.model);
     this.onTouched();
   }
-  
+
   constructor(private samFormService:SamFormService) {}
 
   ngOnInit() {
@@ -116,7 +104,23 @@ export class SamCheckboxComponent implements ControlValueAccessor {
       });
 
       this.wrapper.formatErrors(this.control);
-    }    
+    }
+  }
+
+  setModelValue(val) {
+    if (!Array.isArray(val)) {
+      val = [];
+    }
+    //don't select options that are disabled
+    for (var idx in this.options) {
+      let lookup = val.findIndex((value)=>{
+        return value == this.options[idx].value;
+      });
+      if (this.options[idx].disabled && lookup != -1) {
+        val.splice(lookup,1);
+      }
+    }
+    this.model = val;
   }
 
   // Give the check all label a name for screen readers
@@ -161,11 +165,11 @@ export class SamCheckboxComponent implements ControlValueAccessor {
     }
     this.emitModel();
   }
-  
+
   emitModel(){
     this.modelChange.emit(this.model);
   }
-  
+
   registerOnChange(fn) {
     this.onChange = fn;
   }
@@ -179,9 +183,9 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   }
 
   writeValue(value) {
-    if(!value){
+    if (!value) {
       value = [];
     }
-    this.value = value;
+    this.setModelValue(value);
   }
 }
