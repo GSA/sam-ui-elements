@@ -302,7 +302,7 @@ export class SamTimeComponent
   }
 
   _keyIsNumber(char) {
-    if (char.match(/[0-9]/) !== undefined) {
+    if (char.match(/[0-9]/) !== null) {
       return true;
     }
   }
