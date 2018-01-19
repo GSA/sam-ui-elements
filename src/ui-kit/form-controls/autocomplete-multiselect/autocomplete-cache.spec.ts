@@ -1,6 +1,6 @@
 import { AutocompleteCache, Cached } from './autocomplete-cache';
 
-fdescribe('Sam Cached Class', () => {
+describe('Sam Cached Class', () => {
   let cached: Cached;
   const name = 'test';
   const initialValue = [{key: 1}, {key: 2}, {key: 3}, {key: 4}];
@@ -38,7 +38,7 @@ fdescribe('Sam Cached Class', () => {
 
 });
 
-fdescribe('Sam Autocomplete Cache Class', () => {
+describe('Sam Autocomplete Cache Class', () => {
   let cache: AutocompleteCache;
   const testKey = 'test';
   const testValue = [{key: 1}, {key: 2}, {key: 3}, {key: 4}];
