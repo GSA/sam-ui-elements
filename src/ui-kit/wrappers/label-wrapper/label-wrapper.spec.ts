@@ -13,7 +13,7 @@ import {LabelWrapper} from './label-wrapper.component';
 describe('The Sam Fieldset Wrapper component', () => {
   describe('isolated tests', () => {
     let component: LabelWrapper;
-    let cdr: ChangeDetectorRef;
+    const cdr: ChangeDetectorRef = undefined;
     beforeEach(() => {
       component = new LabelWrapper(cdr);
     });

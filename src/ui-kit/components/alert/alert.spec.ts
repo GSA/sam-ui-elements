@@ -48,7 +48,7 @@ describe('The Sam Alert component', () => {
         fail();
       });
       component.ngOnInit();
-      setTimeout(()=>{
+      setTimeout(() => {
         expect(true).toBe(true);
       }, 300);
     });

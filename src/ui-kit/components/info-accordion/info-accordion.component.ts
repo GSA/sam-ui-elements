@@ -125,7 +125,7 @@ export class SamInfoAccordionComponent {
    * Passes in a string to close accordions for cases where there are multiple
    * Info accordions on a page. 
    */
-  @Input() closeNotification: string = "";
+  @Input() closeNotification: string = '';
   
   /**
    * Emits notification event

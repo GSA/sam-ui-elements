@@ -19,35 +19,40 @@ describe('The Sam Autocomplete Component', () => {
   let fixture: ComponentFixture<SamAutocompleteComponent>;
 
   // Autocomplete Dropdown With Button
-  let name: string = 'MyComponent65491455';
-  let id: string = '12310923123';
-  let labelText: string = 'Test Component';
-  let options: any = [
+  const name: string = 'MyComponent65491455';
+  const id: string = '12310923123';
+  const labelText: string = 'Test Component';
+  const options: any = [
     'Alabama',
     'Alaska',
     'Arkansas',
     'Arizona'
   ];
-  let kvoptions: any = [{
-    name:"Al",
-    value:"Alabama"
-  },{
-    name:"AK",
-    value:"Alaska"
-  },{
-    name:"AR",
-    value:"Arkansas"
-  },{
-    name:"AZ",
-    value:"Arizona"
-  }];
-  let config: AutocompleteConfig = {
+  const kvoptions: any = [
+    {
+      name: 'Al',
+      value: 'Alabama'
+    },
+    {
+      name: 'AK',
+      value: 'Alaska'
+    },
+    {
+      name: 'AR',
+      value: 'Arkansas'
+    },
+    {
+      name: 'AZ',
+      value: 'Arizona'
+    }
+  ];
+  const config: AutocompleteConfig = {
     keyValueConfig: {
       keyProperty: 'name',
       valueProperty: 'value'
     }
-  }
-  let allowAny = false;
+  };
+  const allowAny = false;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -85,7 +90,8 @@ describe('The Sam Autocomplete Component', () => {
   it('Should have list for options', () => {
     component.hasFocus = true;
     fixture.detectChanges();
-    const list = fixture.debugElement.query(By.css('#sam-autocomplete-results'));
+    const list =
+      fixture.debugElement.query(By.css('#sam-autocomplete-results'));
     expect(list).toBeDefined();
   });
 
@@ -96,7 +102,7 @@ describe('The Sam Autocomplete Component', () => {
     expect(component.results).toEqual(['Alaska']);
   });
 
-  it('Should display "no results" message', () => {
+  it('Should display no results message', () => {
     component.hasFocus = true;
     fixture.detectChanges();
     component.results = component.filterResults('zzzzzz', component.options);
@@ -108,21 +114,26 @@ describe('The Sam Autocomplete Component', () => {
     fixture.detectChanges();
     component.hasFocus = true;
     fixture.detectChanges();
-    component.results = component.filterKeyValuePairs('Alaska', component.options);
-    expect(component.results[0]['name']).toEqual("AK");
+    component.results =
+      component.filterKeyValuePairs('Alaska', component.options);
+    expect((component as any).results[0].name).toEqual('AK');
   });
 
-  it('Should display "no results" message (key/value)', () => {
+  it('Should display no results message (key/value)', () => {
     component.options = kvoptions;
     fixture.detectChanges();
     component.hasFocus = true;
     fixture.detectChanges();
-    component.results = component.filterKeyValuePairs('zzzzzz', component.options);
+    component.results =
+      component.filterKeyValuePairs('zzzzzz', component.options);
     expect(component.results).toEqual([]);
   });
 
-  it('Should have public property `inputValue` that binds to search input value', () => {
-    let input = fixture.debugElement.query(By.css('input[type="text"]'));
+  it('Should have public property `inputValue` that binds to search input\
+    value', () => {
+    const input = fixture.debugElement.query(
+      By.css('input[type="text"]')
+    );
 
     expect(component.inputValue).toBeDefined();
 
@@ -131,6 +142,7 @@ describe('The Sam Autocomplete Component', () => {
     input.nativeElement.dispatchEvent(new Event('input'));
     fixture.detectChanges();
 
-    expect((<HTMLInputElement>input.nativeElement).value).toEqual(component.inputValue);
+    expect((<HTMLInputElement>input.nativeElement).value)
+      .toEqual(component.inputValue);
   });
 });

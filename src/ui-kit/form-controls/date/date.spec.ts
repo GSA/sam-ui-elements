@@ -10,7 +10,7 @@ import {SamFormService } from '../../form-service';
 describe('The Sam Date component', () => {
   describe('Isolated tests', () => {
     let component: SamDateComponent;
-    let cdr: ChangeDetectorRef;
+    const cdr: ChangeDetectorRef = undefined;
     beforeEach(() => {
       component = new SamDateComponent(new SamFormService(), cdr);
     });

@@ -9,7 +9,7 @@ import { ChangeDetectorRef } from '@angular/core';
 describe('The Sam Text component', () => {
   describe('isolated tests', () => {
     let component: SamTextComponent;
-    let cdr: ChangeDetectorRef;
+    const cdr: ChangeDetectorRef = undefined;
     beforeEach(() => {
       component = new SamTextComponent(new SamFormService(), cdr);
     });

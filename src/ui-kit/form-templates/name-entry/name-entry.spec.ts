@@ -30,8 +30,8 @@ describe('The Sam Name Entry component', () => {
       component.setDisabledState(false);
       component.onChange();
       component.onTouched();
-      component.registerOnChange((_) => {});
-      component.registerOnTouched(() => {});
+      component.registerOnChange((_) => undefined);
+      component.registerOnTouched(() => undefined);
       component.modelChange(); // triggers ontouched,onchanged
       const mockValue = {
         firstName: 'aaa',

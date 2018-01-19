@@ -10,7 +10,8 @@ import {
 
 
 /**
- * The <sam-accordion-section> component can generates content for a single accordion item
+ * The <sam-accordion-section> component can generates content for a single 
+ * accordion item
  */
 @Component({
   selector: 'sam-accordion-section',
@@ -32,7 +33,8 @@ export class SamAccordionSection implements OnInit {
   /**
    * The accordion section that has changed is emitted back to parent
    */
-  @Output() isExpandedChange: EventEmitter<SamAccordionSection> = new EventEmitter<SamAccordionSection>();
+  @Output() isExpandedChange: EventEmitter<SamAccordionSection> =
+    new EventEmitter<SamAccordionSection>();
 
   constructor(
     @Inject(forwardRef(() => SamAccordionComponent))

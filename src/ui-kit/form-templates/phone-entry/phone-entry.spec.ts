@@ -13,7 +13,7 @@ describe('The Sam Phone Entry component', () => {
   const maxLength = 11;
   describe('isolated tests', () => {
     let component: SamPhoneEntryComponent;
-    let cdr: ChangeDetectorRef;
+    const cdr: ChangeDetectorRef = undefined;
     beforeEach(() => {
       component = new SamPhoneEntryComponent(new SamFormService(), cdr);
     });

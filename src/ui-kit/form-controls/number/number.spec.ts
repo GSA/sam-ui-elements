@@ -11,7 +11,7 @@ import { ChangeDetectorRef } from '@angular/core';
 describe('The Sam Number component', () => {
   describe('isolated tests', () => {
     let component: SamNumberComponent;
-    let cdr: ChangeDetectorRef;
+    const cdr: ChangeDetectorRef = undefined;
 
     beforeEach(() => {
       component = new SamNumberComponent(new SamFormService(), cdr);

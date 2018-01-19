@@ -29,7 +29,7 @@ export class SamCommentsComponent implements OnInit {
   /**
    * Sets disabled state
    */
-  @Input() public disabled: boolean = false
+  @Input() public disabled: boolean = false;
   /**
    * ViewChildren
    */

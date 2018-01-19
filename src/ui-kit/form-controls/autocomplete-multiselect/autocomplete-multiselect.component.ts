@@ -927,8 +927,8 @@ export class SamAutocompleteMultiselectComponent
     this.isDisabled = isDisabled;
   }
 
-  private onChangeCallback: (_: any) => void = (_: any) => {};
-  private onTouchedCallback: () => void = () => {};
+  private onChangeCallback: (_: any) => void = (_: any) => undefined;
+  private onTouchedCallback: () => void = () => undefined;
 
 }
 

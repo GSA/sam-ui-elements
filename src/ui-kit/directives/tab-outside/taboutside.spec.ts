@@ -32,7 +32,7 @@ describe('The Sam Tab Outside directive', () => {
   
     beforeEach(() => {
       TestBed.configureTestingModule({
-        declarations: [SamTabOutsideDirective,TestComponent],
+        declarations: [SamTabOutsideDirective, TestComponent],
       });
   
       fixture = TestBed.createComponent(TestComponent);

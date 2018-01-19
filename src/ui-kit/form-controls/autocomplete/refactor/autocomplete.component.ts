@@ -1,10 +1,23 @@
-"use strict"
-
-import { Component, Input, Output, EventEmitter, forwardRef, ViewChild, ElementRef,
-         Optional, OnChanges, OnInit, ChangeDetectorRef, AfterViewChecked, Renderer2
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  forwardRef,
+  ViewChild,
+  ElementRef,
+  Optional,
+  OnInit,
+  ChangeDetectorRef,
+  AfterViewChecked,
+  Renderer2
 } from '@angular/core';
 
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
+import {
+  NG_VALUE_ACCESSOR,
+  ControlValueAccessor,
+  FormControl
+} from '@angular/forms';
 import { Observable, Subject, BehaviorSubject, Subscription } from 'rxjs';
 import { AutocompleteConfig } from '../../../types';
 import { AutocompleteService } from '../autocomplete.service';
@@ -24,27 +37,8 @@ selector: 'sam-autocomplete-refactor',
 templateUrl: 'autocomplete.template.html',
 providers: [ AUTOCOMPLETE_VALUE_ACCESSOR ]
 })
-export class SamAutocompleteComponentRefactor implements ControlValueAccessor, OnChanges, OnInit {
-  /**
-   * UL list ViewChild for displaying autocomplete options
-   */
-  @ViewChild('list') private _list: ElementRef;
-
-  /**
-   * Text input for filtering results
-   */
-  @ViewChild('input') private _input: ElementRef;
-
-  /**
-   * Hidden list element with aria assertive that reads
-   * items pushed into it as user interacts with component.
-   */
-  @ViewChild('screenReaderEl') private _screenReaderEl: ElementRef;
-  /**
-   * ViewChild for wrapper. Need this for our hacky label wrapper
-   */
-  @ViewChild('wrapper') private wrapper;
-
+export class SamAutocompleteComponentRefactor 
+  implements ControlValueAccessor, OnInit {
   /**
    * Provide name for input
    */
@@ -89,12 +83,12 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
   /**
    * Toggles validations to display with SamFormService events
    */
-  @Input() public useFormService: boolean
+  @Input() public useFormService: boolean;
   /**
    * Pass custom querying and filtering callback
    * for result
    */
-  @Input() public filterCallback: (input:string, ...args) => Observable<any[]>;
+  @Input() public filterCallback: (input: string, ...args) => Observable<any[]>;
   /**
    * List of options to display in list
    */
@@ -121,10 +115,11 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
   /**
    * sets icon to indicate interaction
    */
-  @Input() public addOnIconClass: string = "fa-chevron-down";
+  @Input() public addOnIconClass: string = 'fa-chevron-down';
   /**
-   * Emitted only when the user selects an item from the dropdown list, or when the user clicks enter and the mode is
-   * allowAny. This is useful if you do not want to respond to onChange events when the input is blurred.
+   * Emitted only when the user selects an item from the dropdown list, or when 
+   * the user clicks enter and the mode is allowAny. This is useful if you do 
+   * not want to respond to onChange events when the input is blurred.
    */
   @Output() public enterEvent: EventEmitter<any> = new EventEmitter();
 
@@ -132,6 +127,26 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    * Component State Variables
    */
   @Input('disabled') private _disabled: boolean;
+
+  /**
+   * UL list ViewChild for displaying autocomplete options
+   */
+  @ViewChild('list') private _list: ElementRef;
+
+  /**
+   * Text input for filtering results
+   */
+  @ViewChild('input') private _input: ElementRef;
+
+  /**
+   * Hidden list element with aria assertive that reads
+   * items pushed into it as user interacts with component.
+   */
+  @ViewChild('screenReaderEl') private _screenReaderEl: ElementRef;
+  /**
+   * ViewChild for wrapper. Need this for our hacky label wrapper
+   */
+  @ViewChild('wrapper') private wrapper;
   /**
    * Stores value that the user has
    * selected from the input.
@@ -169,8 +184,8 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    * are loading
    */
   private _showSpinner: boolean;
-
-  private _endOfList: boolean = true; // If user reaches end of list, set to true for pagination
+  // If user reaches end of list, set to true for pagination
+  private _endOfList: boolean = true; 
 
   /**
    * Results of filter calls that are then
@@ -182,7 +197,7 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    */
   private _displaySpinner: boolean = false;
   private _highlightedItemIndex: number;
-  private _addOnIconClass: string = "fa-chevron-down";
+  private _addOnIconClass: string = 'fa-chevron-down';
   private _keyValueConfig: any;
   private _serviceOptions: any;
   private _categoryProperty: string;
@@ -191,8 +206,6 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
   private _cache: any = {};
 
   private _filter: (...args) => Observable<any[]>;
-  private onTouchedCallback: () => void = () => {};
-  private onChangeCallback: (_: any) => void = (_: any) => { };
 
   /**
    * RxJS Streams Setup
@@ -206,8 +219,34 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
 
   private _blurSubscription: Subscription;
 
-  ngOnInit() {
+  constructor(@Optional() private _service: AutocompleteService,
+  private _cdr: ChangeDetectorRef,
+  private _renderer: Renderer2,
+  private samFormService: SamFormService) {}
 
+  public onTouchedCallback: () => void = () => undefined;
+  public onChangeCallback: (_: any) => void = (_: any) => undefined;
+
+  /**
+   * ControlValueAccessor Logic
+   */
+  public writeValue(value: any): void {
+    this._updateComponentValue(value);
+  }
+
+  public registerOnChange(fn: (...args) => any): void {
+    this.onChangeCallback = fn;
+  }
+
+  public registerOnTouched(fn: (...args) => any): void {
+    this.onTouchedCallback = fn;
+  }
+
+  public setDisabledState(isDisabled: boolean) {
+    this._disabled = isDisabled;
+  }
+
+  public ngOnInit() {
     if (this.control) {
       if (!this.useFormService) {
         this.control.statusChanges.subscribe(() => {
@@ -215,14 +254,14 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
         });
         this.wrapper.formatErrors(this.control);
       } else {
-        this.samFormService.formEventsUpdated$.subscribe(evt => {
-          if( (!evt['root'] || evt['root'] == this.control.root) && 
-              evt['eventType'] &&
-              evt['eventType'] == 'submit' ) {
+        this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
+          if ((!evt.root || evt.root === this.control.root) && 
+              evt.eventType &&
+              evt.eventType === 'submit' ) {
             this.wrapper.formatErrors(this.control);
-          } else if ( (!evt['root']|| evt['root']==this.control.root) &&
-                      evt['eventType'] &&
-                      evt['eventType'] == 'reset' ) {
+          } else if ( (!evt.root || evt.root === this.control.root) &&
+                      evt.eventType &&
+                      evt.eventType === 'reset' ) {
             this.wrapper.clearError();
           }
         });
@@ -261,44 +300,50 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
           * Our business rules dictate that if the input has 
           * focus, a list of results should be displayed.
           */
-          const filterValue = (event && event.target && event.target.value) || '';
-          let returnValue: Observable<any>;
+          const filterValue =
+            (event && event.target && event.target.value) || '';
 
           if (this._cache[filterValue] && this._endOfList === false) {
             this._displaySpinner = false;
             return Observable.of(this._cache[filterValue]);
           }
 
-          return this._filter(event && event.target && event.target.value || '', this._endOfList, this._serviceOptions)
-                  .map(ev => {
-                    if (!this._cache[filterValue]) {
-                      this._cache[filterValue] = ev;
-                    } else {
-                      ev.forEach(item => this._cache[filterValue].push(item));
-                    }
-                    this._displaySpinner = false; 
-                    this._endOfList = false;
-                    return this._cache[filterValue]; 
-                  }) 
-                  .catch(error => {
-                    console.error(error);
-                    return Observable.of(['No results found']);
-                  });
+          return this._filter(
+              event && event.target && event.target.value || '',
+              this._endOfList,
+              this._serviceOptions
+            )
+            .map(ev => {
+              if (!this._cache[filterValue]) {
+                this._cache[filterValue] = ev;
+              } else {
+                ev.forEach(item => this._cache[filterValue].push(item));
+              }
+              this._displaySpinner = false; 
+              this._endOfList = false;
+              return this._cache[filterValue]; 
+            }) 
+            .catch(error => {
+              console.error(error);
+              return Observable.of(['No results found']);
+            });
         }
-      )
+      );
 
       this._onInputEvent
         .subscribe(
-          event => event && event.target ? this._setInputValue(event.target.value) : null,
+          event => event && event.target
+            ? this._setInputValue(event.target.value)
+            : undefined,
           err => console.error(err)
-        )
+        );
 
       this._onInputKeydown
         .subscribe(
           (event) => {
             this._onInputEvent.next(this._inputValue);                
           }
-        )
+        );
     
       /**
        * Stream of keydown events from input
@@ -308,7 +353,7 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
       this._onInputKeyup
         .subscribe(
           (event) => {            
-            let keyCode = KeyEventHelpers.getKeyboardEventKey(event);
+            const keyCode = KeyEventHelpers.getKeyboardEventKey(event);
 
             if (KeyEventHelpers.isArrowDownKey(keyCode)) {
               this._handleDownArrow();
@@ -321,7 +366,7 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
 
           },
           (err) => console.error(err)
-        )
+        );
 
     /**
      * Stream of events that map to boolean
@@ -330,7 +375,7 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
     this._displayList = 
       this._onInputFocus
         .merge(this._onBlurEvent) // Hide list when component blurs
-        .flatMap(evt => evt ? Observable.of(true) : Observable.of(false))
+        .flatMap(evt => evt ? Observable.of(true) : Observable.of(false));
 
     /**
      * Register on touched event when input is focused
@@ -339,7 +384,7 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
         .subscribe(
           (ev) => this.onTouchedCallback(),
           (err) => console.error(err)
-        )
+        );
     
     /**
      * Stream of blur events
@@ -350,16 +395,31 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
         .subscribe(
           event => this._resetListHighlighting(),
           err => console.error(err)
-        )
+        );
   }
 
-  ngAfterContentInit() {
+  public ngAfterContentInit() {
     /**
      * Instantiate screen reader pusher with Renderer2 and ViewChild UL
      * In this lifecycle because it needs a reference to the HTML element
      * once the view has been checked. 
      */
-    this._screenreader = new ScreenReaderPusher(this._renderer, this._screenReaderEl.nativeElement);
+    this._screenreader = new ScreenReaderPusher(
+      this._renderer,
+      this._screenReaderEl.nativeElement
+    );
+  }
+
+    /**
+   * Takes any number of functions 
+   * and returns a function that is
+   * the composition of the passed
+   * functions.
+   */
+  public pipe(...functions): any {
+    return function (data) {
+      return functions.reduce((value, func) => func(value), data);
+    };
   }
 
   /**
@@ -373,33 +433,37 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
       .subscribe(
         item => this._updateComponentValue(item),
         err => console.error(err)
-      )
+      );
   }
 
   /**
    * Logic to handle down arrow keydown event
    */
   private _handleDownArrow(): void {
-    if (!this._list) return;
+    if (!this._list) {
+      return;
+    }
 
-    let list: HTMLUListElement = this._list.nativeElement;
+    const list: HTMLUListElement = this._list.nativeElement;
 
     this._removeSelectedClassFromListItems(list.children);
 
-    this._highlightNextListItem(list.children, "INCREMENT");
+    this._highlightNextListItem(list.children, 'INCREMENT');
   }
 
   /**
    * Logic to handle up arrow keydown event
    */
   private _handleUpArrow(): void {
-    if (!this._list) return;
+    if (!this._list) {
+      return;
+    }
 
-    let list: HTMLUListElement = this._list.nativeElement;
+    const list: HTMLUListElement = this._list.nativeElement;
 
     this._removeSelectedClassFromListItems(list.children);
 
-    this._highlightNextListItem(list.children, "DECREMENT");
+    this._highlightNextListItem(list.children, 'DECREMENT');
   }
 
   /**
@@ -411,26 +475,34 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
     let highlightedItem;
 
     switch (direction) {
-      case "INCREMENT":
-        this._highlightedItemIndex = this._circularIncrement(this._highlightedItemIndex, list.length);
+      case 'INCREMENT':
+        this._highlightedItemIndex =
+          this._circularIncrement(this._highlightedItemIndex, list.length);
         break;
-      case "DECREMENT":
-        this._highlightedItemIndex = this._circularDecrement(this._highlightedItemIndex, list.length);
+      case 'DECREMENT':
+        this._highlightedItemIndex =
+          this._circularDecrement(this._highlightedItemIndex, list.length);
         break;
       default:
-        console.warn("Direction parameter in _highlightItem function must be one of INCREMENT or DECREMENT");
+        console.warn('Direction parameter in _highlightItem function must be\
+         one of INCREMENT or DECREMENT');
         return;
     }
 
-    this._endOfList = this._highlightedItemIndex === list.length - 1 ? true : false;
+    this._endOfList = this._highlightedItemIndex === list.length - 1
+      ? true
+      : false;
     
     highlightedItem = list[this._highlightedItemIndex] as HTMLLIElement;
 
     if (highlightedItem) {
       this._addHighlightClass(highlightedItem);
-      if (this._screenreader) this._screenreader.pushMessage(highlightedItem.innerText);
+      if (this._screenreader) {
+        this._screenreader.pushMessage(highlightedItem.innerText);
+      }
 
-      this._list.nativeElement.scrollTop = highlightedItem.offsetTop - this._list.nativeElement.clientTop;      
+      this._list.nativeElement.scrollTop =
+        highlightedItem.offsetTop - this._list.nativeElement.clientTop;      
     }
 
     return;    
@@ -447,18 +519,24 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
     this._displaySpinner = false;
     
     // Set input value back to display text for input 
-    if (!this.allowAny) this._setInputValue(this._displayOptionText(this._value));
-
+    if (!this.allowAny) {
+      this._setInputValue(this._displayOptionText(this._value));
+    }
     
-    this._highlightedItemIndex = null;    
-    if (this._list) this._removeSelectedClassFromListItems(this._list.nativeElement.children);
+    this._highlightedItemIndex = undefined;    
+    if (this._list) {
+      this._removeSelectedClassFromListItems(this._list.nativeElement.children);
+    }
   }
 
   /**
    * Removes selected class from all items in list
    */
   private _removeSelectedClassFromListItems(list: HTMLCollection): void {
-    if (!list) return;
+    if (!list) {
+      return;
+    }
+
     Array.prototype.forEach.call(list, (li: HTMLLIElement) => {
       this._removeHighlightClass(li);
     });
@@ -468,16 +546,14 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    * Add class selected to list item
    */
   private _addHighlightClass(li: HTMLLIElement): void {
-    if (!li) return;
-    return li.classList.add('highlight');
+    return li ? li.classList.add('highlight') : undefined;
   }
 
   /**
    * Remove class selected from list itme
    */
   private _removeHighlightClass(li: HTMLLIElement): void {
-    if (!li) return;
-    return li.classList.remove('highlight');
+    return li ? li.classList.remove('highlight') : undefined;
   }
 
   /**
@@ -485,15 +561,12 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    * Increments the number up to its length,
    * but returns 0 if the index is the length
    * 
-   * Returns 0 if null.
+   * Returns 0 if undefined.
    */
   private _circularIncrement(index: number, length: number): number {
-    let returnIndex: number;
-    if (index === null || index === undefined || index === length-1) {
-      returnIndex = 0;
-    } else {
-      returnIndex = index + 1;
-    }
+    const returnIndex: number = index === undefined || index === length - 1
+      ?  0
+      : index + 1;
 
     if (!this.isCategorySelectable &&
         ( this._list &&
@@ -501,8 +574,8 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
           this._list.nativeElement.children &&
           this._list.nativeElement.children[returnIndex] &&
           this._list.nativeElement.children[returnIndex].classList &&
-          this._list.nativeElement.children[returnIndex].classList.value.includes('category') )) {
-        
+          this._list.nativeElement.children[returnIndex].classList
+          .value.includes('category') )) {
        return this._circularIncrement(returnIndex, length);
     } else {
       return returnIndex;
@@ -514,15 +587,12 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    * Decrements the number until reaching zero,
    * then returns length.
    * 
-   * Returns length if null.
+   * Returns length if undefined.
    */
   private _circularDecrement(index: number, length: number): number {
-    let returnIndex: number;
-    if (!index || index === 0) {
-      returnIndex = length - 1;
-    } else {
-      returnIndex = index - 1;
-    }
+    const returnIndex: number = !index || index === 0
+      ? length - 1
+      : index - 1;
 
     if (!this.isCategorySelectable &&
         ( this._list &&
@@ -530,8 +600,8 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
           this._list.nativeElement.children &&
           this._list.nativeElement.children[returnIndex] &&
           this._list.nativeElement.children[returnIndex].classList &&
-          this._list.nativeElement.children[returnIndex].classList.value.includes('category') )) {
-      
+          this._list.nativeElement.children[returnIndex].classList.value
+          .includes('category') )) {
       return this._circularDecrement(returnIndex, length);
     } else {
       return returnIndex;
@@ -565,7 +635,9 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    */
   private _getFilterMethod(): (...args) => Observable<any[]> {
     let service: (...args) => any;
-    service = this._service && this._service.fetch ? this._service.fetch : null;
+    service = this._service && this._service.fetch
+      ? this._service.fetch
+      : undefined;
     if (this.filterCallback) {
       return this.filterCallback;
     } else if (service) {
@@ -581,7 +653,9 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    * the correct data type.
    */
   private _getSimpleFilter(): (...args) => Observable<any[]> {
-    return this._isArrayOfStrings(this.options) ? this._stringFilter : this._objectsFilter;
+    return this._isArrayOfStrings(this.options)
+      ? this._stringFilter
+      : this._objectsFilter;
   }
 
   /**
@@ -589,8 +663,11 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    */
   private _isArrayOfStrings(array: any[]): boolean {
     return array.reduce((bool: boolean, item: any) => {
-      if (!TypeCheckHelpers.isString(item)) bool = false;
-      return bool;
+      let returnVal = bool;
+      if (!TypeCheckHelpers.isString(item)) {
+        returnVal = false;
+      }
+      return returnVal;
     }, true);
   }
 
@@ -600,8 +677,13 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    * value as a substring.
    */
   private _stringFilter(value: string): Observable<any[]> {
-    value = value.toLowerCase();
-    return Observable.of(this.options.filter(item => item.toLowerCase().includes(value)));
+    const returnVal = value.toLowerCase();
+    return Observable
+      .of(
+        this.options.filter(
+          item => item.toLowerCase().includes(returnVal)
+        )
+      );
   }
   
   /**
@@ -612,28 +694,35 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    * Contains logic to sorting by category as well
    */
   private _objectsFilter(value: string): Observable<any[]> {
-    value = value.toLowerCase();
+    const returnValue = value.toLowerCase();
     const categories = [];
     let currentCategory = '';
     return Observable.of(this.options.reduce((prev, curr, index, arr) => {
-      if (curr[this.config.keyValueConfig.keyProperty].toLowerCase().includes(value) ||
-          curr[this.config.keyValueConfig.valueProperty].toLowerCase().includes(value)) {
+      if (curr[this.config.keyValueConfig.keyProperty]
+          .toLowerCase().includes(returnValue) 
+        || curr[this.config.keyValueConfig.valueProperty]
+          .toLowerCase().includes(returnValue)) {
         /**
-         * If item has a category and the item's category is not the stored current category,
-         * 
+         * If item has a category and the item's category is not the stored 
+         * current category,
          */
-        if (curr[this.config.keyValueConfig.categoryProperty] && (currentCategory !== curr[this.config.keyValueConfig.categoryProperty])) {
+        if (curr[this.config.keyValueConfig.categoryProperty]
+          && (currentCategory
+            !== curr[this.config.keyValueConfig.categoryProperty])) {
           /**
-           * Checks if the current item in the array has a category. If so, checks to see if
-           * this category is the current category. If not, it will push it to the returned array.
-           * If it is the current category, it skips.
+           * Checks if the current item in the array has a category. If so, 
+           * checks to see if this category is the current category. If not, it 
+           * will push it to the returned array. If it is the current category, 
+           * it skips.
            */
           currentCategory = curr[this.config.keyValueConfig.categoryProperty];
           const filteredCategories = this.categories.filter((category) => {
             /**
-             * Filters the category input array property for a matching category property.
+             * Filters the category input array property for a matching 
+             * category property.
              */
-            if (category[this.config.keyValueConfig.keyProperty] === curr[this.config.keyValueConfig.categoryProperty]) {
+            if (category[this.config.keyValueConfig.keyProperty]
+              === curr[this.config.keyValueConfig.categoryProperty]) {
               category.isCategory = true;
               return category;
             }
@@ -646,25 +735,6 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
     }, []));
   }
 
-  constructor(@Optional() private _service: AutocompleteService,
-              private _cdr: ChangeDetectorRef,
-              private _renderer: Renderer2,
-              private samFormService: SamFormService) {}
-
-  ngOnChanges() {}
-
-  /**
-   * Takes any number of functions 
-   * and returns a function that is
-   * the composition of the passed
-   * functions.
-   */
-  pipe(...functions): any {
-    return function (data) {
-      return functions.reduce((value, func) => func(value), data)
-    }
-  }
-
   /**
    * Given a value, update the state
    */
@@ -675,7 +745,7 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
      */
     if (!this.isCategorySelectable) {
       if (this.categories && this.categories.indexOf(value) !== -1) {
-        return
+        return;
       }
     }
 
@@ -687,7 +757,9 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
         this._setValue.bind(this),
         this._displayOptionText.bind(this),
         this._setInputValue.bind(this),
-        this._screenreader ? this._screenreader.pushMessage.bind(this._screenreader) : _ => _,
+        this._screenreader
+          ? this._screenreader.pushMessage.bind(this._screenreader)
+          : _ => _,
         this._resetListHighlighting.bind(this),
         this._onBlurEvent.next.bind(this._onBlurEvent),        
       );
@@ -715,26 +787,9 @@ export class SamAutocompleteComponentRefactor implements ControlValueAccessor, O
    */
   private _setInputValue(value: string): string {
     this._inputValue = value;
-    if (this.allowAny || value === "") this._value = this._inputValue;
+    if (this.allowAny || value === '') {
+      this._value = this._inputValue;
+    }
     return value;
-  }
-
-  /**
-   * ControlValueAccessor Logic
-   */
-  writeValue(value: any): void {
-    this._updateComponentValue(value);
-  }
-
-  registerOnChange(fn: (...args) => any): void {
-    this.onChangeCallback = fn;
-  }
-
-  registerOnTouched(fn: (...args) => any): void {
-    this.onTouchedCallback = fn;
-  }
-
-  setDisabledState(isDisabled: boolean) {
-    this._disabled = isDisabled;
   }
 }

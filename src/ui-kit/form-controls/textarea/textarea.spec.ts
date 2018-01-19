@@ -9,7 +9,7 @@ import { ChangeDetectorRef } from '@angular/core';
 describe('The Sam Textarea component', () => {
   describe('isolated tests', () => {
     let component: SamTextareaComponent;
-    let cdr: ChangeDetectorRef;
+    const cdr: ChangeDetectorRef = undefined;
 
     beforeEach(() => {
       component = new SamTextareaComponent(cdr, new SamFormService());

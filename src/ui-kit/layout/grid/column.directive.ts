@@ -24,8 +24,7 @@ export class ColumnDirective {
     ]
   );
   
-  @Input('columns')
-  public set number(value: string) {
+  @Input('columns') public set number(value: string) {
     this._number = value;
 
     this.columnsClass = this._columnsMap.get(value);

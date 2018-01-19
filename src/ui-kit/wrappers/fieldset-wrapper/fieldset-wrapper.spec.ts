@@ -13,7 +13,7 @@ import {FieldsetWrapper} from './fieldset-wrapper.component';
 describe('The Sam Fieldset Wrapper component', () => {
   describe('isolated tests', () => {
     let component: FieldsetWrapper;
-    let cdr: ChangeDetectorRef;
+    const cdr: ChangeDetectorRef = undefined;
     beforeEach(() => {
       component = new FieldsetWrapper(cdr);
     });
