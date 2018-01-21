@@ -137,7 +137,7 @@ export class LabelWrapper implements AfterViewChecked {
         this.setInvalidErrors(k, errorObject);
       }
 
-      this.errorMessage = 'Invalid';
+      // this.errorMessage = 'Invalid';
     } else if (!control.errors) {
       this.errorMessage = '';
     }
@@ -152,8 +152,9 @@ export class LabelWrapper implements AfterViewChecked {
       case 'maxlength':
         const actualLength = errorObject.actualLength;
         const requiredLength = errorObject.requiredLength;
-        this.errorMessage = `${actualLength} characters input but max length is\
-         ${requiredLength}`;
+        this.errorMessage = actualLength
+          + ' characters input but max length is '
+          + requiredLength;
         return;
       case 'required':
         this.errorMessage = 'This field is required';
@@ -162,7 +163,7 @@ export class LabelWrapper implements AfterViewChecked {
         this.errorMessage = 'Date must not be before today';
         return;
       default:
-        return this.clearError();
+        return this.errorMessage = 'Invalid';
     }
   }
 }

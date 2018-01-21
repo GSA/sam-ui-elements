@@ -10,7 +10,7 @@ import { FormControl } from '@angular/forms';
 // Load the implementations that should be tested
 import {LabelWrapper} from './label-wrapper.component';
 
-describe('The Sam Fieldset Wrapper component', () => {
+describe('The Sam Label Wrapper component', () => {
   describe('isolated tests', () => {
     let component: LabelWrapper;
     const cdr: ChangeDetectorRef = undefined;

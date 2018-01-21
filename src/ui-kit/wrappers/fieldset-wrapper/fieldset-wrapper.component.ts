@@ -112,7 +112,7 @@ export class FieldsetWrapper {
     }
 
     if (control.invalid && control.errors) {
-      this.formatInvalidErrors(control);
+      return this.formatInvalidErrors(control);
     } else if (control.valid) {
       this.errorMessage = '';
     }
@@ -135,8 +135,6 @@ export class FieldsetWrapper {
       const errorObject = control.errors[k];
       this.setInvalidError(k, errorObject);
     }
-
-    this.errorMessage = 'Invalid';
   }
 
   private setInvalidError(error, errorObject) {
@@ -144,8 +142,9 @@ export class FieldsetWrapper {
       case 'maxlength':
         const actualLength = errorObject.actualLength;
         const requiredLength = errorObject.requiredLength;
-        this.errorMessage = `${actualLength} characters input but max length is\
-          ${requiredLength}`;
+        this.errorMessage = actualLength
+          + ' characters input but max length is '
+          + requiredLength;
         return;
       case 'required':
         this.errorMessage = 'This field is required';
@@ -154,7 +153,8 @@ export class FieldsetWrapper {
         this.errorMessage = 'Date must not be before today';
         return;
       default:
-        return this.clearError();
+        this.errorMessage = 'Invalid';
+        return;
     }
   }
 }

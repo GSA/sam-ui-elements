@@ -129,7 +129,7 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator {
     if (this.prefix.length > 0) {
       newString = this.prefix + '-' + newString;
     }
-    return str;
+    return newString;
   }
 
   public validateFirstName() {
