@@ -1,5 +1,5 @@
 import { Component, Injectable } from '@angular/core';
-import { AlertType } from "../../types";
+import { AlertType } from '../../types';
 @Injectable()
 export class SamAlertFooterService {
 

@@ -7,13 +7,13 @@ import { SamUIKitModule } from '../../index';
 import {By} from '@angular/platform-browser';
 
 describe('The Sam Toggle Switch component', () => {
-  describe("isolated tests", ()=>{
+  describe('isolated tests', () => {
     let component: SamToggleSwitchComponent;
     beforeEach(() => {
       component = new SamToggleSwitchComponent();
     });
 
-    it("should be able to toggle", ()=>{
+    it('should be able to toggle', () => {
       component.onSwitchClick(true);
       expect(component.isSwitchOn).toBe(true);
       component.onSwitchClick(false);
@@ -24,17 +24,17 @@ describe('The Sam Toggle Switch component', () => {
       expect(component.isSwitchOn).toBe(false);
     });
     
-    it("should implement controlvalueaccessor", ()=>{
+    it('should implement controlvalueaccessor', () => {
       component.onChange();
       component.onTouched();
-      component.registerOnChange((_)=>{});
-      component.registerOnTouched(()=>{});
+      component.registerOnChange((_) => undefined);
+      component.registerOnTouched(() => undefined);
       component.setDisabledState(false);
       component.writeValue(true);
       expect(true).toBe(true);
     });
   });
-  describe("rendered tests", ()=>{
+  describe('rendered tests', () => {
     let component: SamToggleSwitchComponent;
     let fixture: any;
   
@@ -59,7 +59,13 @@ describe('The Sam Toggle Switch component', () => {
       component.isSwitchOn = true;
       fixture.detectChanges();
       fixture.whenStable().then(() => {
-        expect(fixture.debugElement.query(By.css('.switch-input')).nativeElement.checked).toBe(true);
+        expect(
+          fixture.debugElement.query(
+            By.css('.switch-input')
+          )
+          .nativeElement.checked
+        )
+        .toBe(true);
       });
     });
   });

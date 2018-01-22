@@ -18,7 +18,7 @@ import { SamWrapperModule } from '../../wrappers';
 describe('The Sam Autocomplete Multiselect Component', () => {
   describe('Isolation tests', () => {
       let component: SamAutocompleteMultiselectComponent;
-      let cdr: ChangeDetectorRef;
+      const cdr: ChangeDetectorRef = undefined;
       beforeEach(() => {
           component = new SamAutocompleteMultiselectComponent(
               new AutocompleteService(), cdr, new SamFormService()
@@ -99,8 +99,8 @@ describe('The Sam Autocomplete Multiselect Component', () => {
       });
 
       it('should support controlValueAccessor', () => {
-          component.registerOnChange((_) => {});
-          component.registerOnTouched(() => {});
+          component.registerOnChange((_) => undefined);
+          component.registerOnTouched(() => undefined);
           component.setDisabledState(false);
       });
   });

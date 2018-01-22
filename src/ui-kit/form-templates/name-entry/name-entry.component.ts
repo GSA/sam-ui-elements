@@ -2,9 +2,17 @@ import { Component, Input, forwardRef } from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import * as suffixes from './suffixes.json';
 import { NameEntryType } from '../../types';
-import { NG_VALUE_ACCESSOR, NG_VALIDATORS, Validator, ControlValueAccessor, FormControl, Validators, ValidatorFn } from "@angular/forms";
+import {
+  NG_VALUE_ACCESSOR,
+  NG_VALIDATORS,
+  Validator,
+  ControlValueAccessor,
+  FormControl,
+  Validators,
+  ValidatorFn
+} from '@angular/forms';
 
-let suffixOptions = suffixes.map((item) => {
+const suffixOptions = (suffixes as any).map((item) => {
   return {
     label: item.suffix,
     value: item.suffix
@@ -26,161 +34,169 @@ suffixOptions.unshift({
 @Component({
   selector: 'sam-name-entry',
   templateUrl: 'name-entry.template.html',
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => SamNameEntryComponent),
-    multi: true
-  },{
-    provide: NG_VALIDATORS, useExisting: forwardRef(() => SamNameEntryComponent), multi: true
-  }]
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SamNameEntryComponent),
+      multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => SamNameEntryComponent),
+      multi: true
+    }
+  ]
 })
 export class SamNameEntryComponent implements ControlValueAccessor, Validator {
-  private disabled = null;
-  private store = {
-    suffixes: suffixOptions
-  };
-
   /**
   * The bound value of the component
   */
-  @Input() legend: string = "Name"
+  @Input() public legend: string = 'Name';
   /**
   * Label text for template
   */
-  @Input() model: NameEntryType = {
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    suffix: ""
+  @Input() public model: NameEntryType = {
+    firstName: '',
+    middleName: '',
+    lastName: '',
+    suffix: ''
   };
   /**
   * Prefix name/id attribute values
   */
-  @Input() prefix: string = "";
+  @Input() public prefix: string = '';
 
-  fNameErrorMsg: string = "";
-  mNameErrorMsg: string = "";
-  lNameErrorMsg: string = "";
-  suffixErrorMsg: string = "";
+  public fNameErrorMsg: string = '';
+  public mNameErrorMsg: string = '';
+  public lNameErrorMsg: string = '';
+  public suffixErrorMsg: string = '';
 
-  get value(){
+  public get value() {
     return this.model;
-  };
+  }
 
-  set value(value: NameEntryType){
-    if(!value){
-      value = {
-        firstName: "",
-        middleName: "",
-        lastName: "",
-        suffix: ""
+  public set value(value: NameEntryType) {
+    let val = value;
+    if (!val) {
+      val = {
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        suffix: ''
       };
     }
-    this.model = value;
+    this.model = val;
+  }
+
+  private disabled = undefined;
+  private store = {
+    suffixes: suffixOptions
   };
 
-  setSubmitted() {
+  public setSubmitted() {
     this.validateFirstName();
     this.validateLastName();
   }
 
   // validates the form, returns null when valid else the validation object
-  // in this case we're checking if the json parsing has passed or failed from the onChange method
+  // in this case we're checking if the json parsing has passed or failed from 
+  // the onChange method
   public validate(c: FormControl) {
-    var obj = {};
-    if(!this.validateFirstName()){
-      obj['firstName'] = {
+    const obj: any = {};
+    if (!this.validateFirstName()) {
+      obj.firstName = {
         errorMessage: this.fNameErrorMsg,
         valid: false
       };
     }
-    if(!this.validateMiddleName()){
-      obj['middleName'] = {
+    if (!this.validateMiddleName()) {
+      obj.middleName = {
         errorMessage: this.mNameErrorMsg,
         valid: false
       };
     }
-    if(!this.validateLastName()){
-      obj['lastName'] = {
+    if (!this.validateLastName()) {
+      obj.lastName = {
         errorMessage: this.lNameErrorMsg,
         valid: false
       };
     }
-    return Object.keys(obj).length ? obj : null;
+    return Object.keys(obj).length ? obj : undefined;
   }
 
-  getIdentifer(str){
-    if(this.prefix.length>0){
-      str = this.prefix + "-" + str;
+  public getIdentifer(str) {
+    let newString = str;
+    if (this.prefix.length > 0) {
+      newString = this.prefix + '-' + newString;
     }
-    return str;
+    return newString;
   }
 
-  validateFirstName(){
-    var error = false;
-    if(/^[0-9]+$/.test(this.model.firstName)){
+  public validateFirstName() {
+    let error = false;
+    if (/^[0-9]+$/.test(this.model.firstName)) {
       error = true;
-      this.fNameErrorMsg = "Please enter a valid name";
+      this.fNameErrorMsg = 'Please enter a valid name';
     }
-    if(this.model.firstName.length==0){
+    if (this.model.firstName.length === 0) {
       error = true;
-      this.fNameErrorMsg = "This field is required";
+      this.fNameErrorMsg = 'This field is required';
     }
-    if(!error){
-      this.fNameErrorMsg = "";
+    if (!error) {
+      this.fNameErrorMsg = '';
     }
     return !error;
   }
 
-  validateMiddleName(){
-    var error = false;
-    if(/^[0-9]+$/.test(this.model.middleName)){
+  public validateMiddleName() {
+    let error = false;
+    if (/^[0-9]+$/.test(this.model.middleName)) {
       error = true;
-      this.mNameErrorMsg = "Please enter a valid name";
+      this.mNameErrorMsg = 'Please enter a valid name';
     }
-    if(!error){
-      this.mNameErrorMsg = "";
+    if (!error) {
+      this.mNameErrorMsg = '';
     }
     return !error;
   }
 
-  validateLastName(){
-    var error = false;
-    if(/^[0-9]+$/.test(this.model.lastName)){
+  public validateLastName() {
+    let error = false;
+    if (/^[0-9]+$/.test(this.model.lastName)) {
       error = true;
-      this.lNameErrorMsg = "Please enter a valid name";
+      this.lNameErrorMsg = 'Please enter a valid name';
     }
-    if(this.model.lastName.length==0){
+    if (this.model.lastName.length === 0) {
       error = true;
-      this.lNameErrorMsg = "This field is required";
+      this.lNameErrorMsg = 'This field is required';
     }
-    if(!error){
-      this.lNameErrorMsg = "";
+    if (!error) {
+      this.lNameErrorMsg = '';
     }
     return !error;
   }
 
-  modelChange(){
+  public modelChange() {
     this.onTouched();
     this.onChange(this.model);
   }
 
-  onChange: any = () => { };
-  onTouched: any = () => { };
+  public onChange: any = () => undefined;
+  public onTouched: any = () => undefined;
 
-  registerOnChange(fn) {
+  public registerOnChange(fn) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn) {
+  public registerOnTouched(fn) {
     this.onTouched = fn;
   }
 
-  setDisabledState(disabled) {
+  public setDisabledState(disabled) {
     this.disabled = disabled;
   }
 
-  writeValue(value) {
+  public writeValue(value) {
     this.value = value;
   }
 }

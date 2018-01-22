@@ -16,14 +16,14 @@ describe('The Sam Date Time component', () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SamWrapperModule,FormsModule],
-      declarations: [SamDateTimeComponent,SamDateComponent,SamTimeComponent],
+      imports: [SamWrapperModule, FormsModule],
+      declarations: [SamDateTimeComponent, SamDateComponent, SamTimeComponent],
       providers: [SamFormService]
     });
 
     fixture = TestBed.createComponent(SamDateTimeComponent);
     component = fixture.componentInstance;
-    component.value = "2016-12-31T12:01";
+    component.value = '2016-12-31T12:01';
     component.name = 'test';
   });
 

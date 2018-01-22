@@ -1,7 +1,22 @@
-import {Component, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, forwardRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewChild,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnChanges,
+  forwardRef
+} from '@angular/core';
 import * as moment from 'moment/moment';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn } from "@angular/forms";
+import {
+  NG_VALUE_ACCESSOR,
+  ControlValueAccessor,
+  FormControl,
+  Validators,
+  ValidatorFn
+} from '@angular/forms';
 import {SamFormService} from '../../form-service';
 
 /**
@@ -16,69 +31,73 @@ import {SamFormService} from '../../form-service';
     multi: true
   }]
 })
-export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor {
-  INPUT_FORMAT: string = "H:m";
-  OUTPUT_FORMAT: string = "HH:mm";
+export class SamTimeComponent
+  implements OnInit, OnChanges, ControlValueAccessor {
+  INPUT_FORMAT: string = 'H:m';
+  OUTPUT_FORMAT: string = 'HH:mm';
   
   /**
   * Sets the required text
   */
-  @Input() required: boolean = false;
+  @Input() public required: boolean = false;
   /**
   * Sets the disabled attribute
   */
-  @Input() disabled: boolean = false;
+  @Input() public disabled: boolean = false;
   /**
   * Sets the label
   */
-  @Input() label: string;
+  @Input() public label: string;
   /**
   * Sets the name attribute 
   */
-  @Input() name: string;
+  @Input() public name: string;
   /**
   * Sets the hint text
   */
-  @Input() hint: string;
+  @Input() public hint: string;
   /**
   * Passes in the Angular FormControl
   */
-  @Input() control: FormControl;
+  @Input() public control: FormControl;
   /**
   * Toggles validations to display with SamFormService events
   */
-  @Input() useFormService: boolean;
+  @Input() public useFormService: boolean;
 
-  @ViewChild(LabelWrapper) wrapper: LabelWrapper;
-  @ViewChild('hour') hour_v;
-  @ViewChild('minute') minute_v;
-  @ViewChild('ampm') ampm_v;
-  value: string = null;
-  hours: number = null;
-  formattedHours: string = null;
-  minutes: number = null;
-  amPm: string = 'am';
-  minuteBlurFlag = true;
-  allowChars = ["0","1","2","3","4","5","6","7","8","9","Backspace","ArrowLeft","ArrowRight","Tab","Delete"];
+  @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
+  @ViewChild('hour') public hourV;
+  @ViewChild('minute') public minuteV;
+  @ViewChild('ampm') public ampmV;
 
-  constructor(private samFormService:SamFormService) { }
+  public value: string = undefined;
+  public hours: number = undefined;
+  public formattedHours: string = undefined;
+  public minutes: number = undefined;
+  public amPm: string = 'am';
+  public minuteBlurFlag = true;
+  public allowChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
+    'Backspace', 'ArrowLeft', 'ArrowRight', 'Tab', 'Delete'];
+
+  constructor(private samFormService: SamFormService) { }
 
   ngOnInit() {
     if (!this.name) {
       throw new Error('SamTimeComponent required a [name] for 508 compliance');
     }
-    if(this.control){
-      if(!this.useFormService){
-        this.control.statusChanges.subscribe(()=>{
+    if (this.control) {
+      if (!this.useFormService) {
+        this.control.statusChanges.subscribe(() => {
           this.wrapper.formatErrors(this.control);
         });
         this.wrapper.formatErrors(this.control);
-      }
-      else {
-        this.samFormService.formEventsUpdated$.subscribe(evt=>{
-          if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+      } else {
+        this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
+          if ((!evt.root || evt.root === this.control.root)
+            && evt.eventType && evt.eventType === 'submit') {
             this.wrapper.formatErrors(this.control);
-          } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+          } else if ((!evt.root || evt.root === this.control.root)
+            && evt.eventType && evt.eventType === 'reset') {
             this.wrapper.clearError();
           }
         });
@@ -87,20 +106,20 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   ngOnChanges(v) {
-    if(v['value']){
+    if (v.value) {
       this.parseValueString();
     }
   }
 
   parseValueString() {
-    let m = moment(this.value, this.INPUT_FORMAT);
+    const m = moment(this.value, this.INPUT_FORMAT);
 
     if (!m.isValid()) {
       return;
     }
 
     let hours = m.hours();
-    let minutes = m.minutes();
+    const minutes = m.minutes();
 
     // convert from 24 hour to 12 hour time
 
@@ -119,55 +138,56 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
     this.minutes = minutes;
   }
 
-  formatHours(hours){
-    let hoursInt = parseInt(hours);
-    if(hoursInt==12){
-      hoursInt=0;
+  formatHours(hours) {
+    let hoursInt = parseInt(hours, undefined);
+    if (hoursInt === 12) {
+      hoursInt = 0;
     }
-    if(this.amPm=="pm"){
-      return hoursInt+12;
+    if (this.amPm === 'pm') {
+      return hoursInt + 12;
     } else {
       return hoursInt;
     }
   }
 
-  selectChange(){
-    //this.parseValueString();
-    let m = moment({
-      hour: this.formatHours(this.hour_v.nativeElement.value), 
-      minute: this.minute_v.nativeElement.value
+  selectChange() {
+    // this.parseValueString();
+    const m = moment({
+      hour: this.formatHours(this.hourV.nativeElement.value), 
+      minute: this.minuteV.nativeElement.value
     }).format(this.OUTPUT_FORMAT);
     this.onInputChange(m);
   }
 
   onInputChange(override) {
-    if(!override){
-      override = "Invalid Time";
+    let returnVal = override;
+    if (!returnVal) {
+      returnVal = 'Invalid Time';
     } 
-    this.onChange(override);
+    this.onChange(returnVal);
   }
   
-  hourTouched(event){
-    if(event.srcElement.value.substring(0,1) === "0"){
-      this.hour_v.nativeElement.value = event.srcElement.value.substring(1);
+  hourTouched(event) {
+    if (event.srcElement.value.substring(0, 1) === '0') {
+      this.hourV.nativeElement.value = event.srcElement.value.substring(1);
     }
     this.setTouched();
   }
 
-  minuteTouched(event){
-    if(event.srcElement.value.substring(0,1) === "0"){
-      this.minute_v.nativeElement.value = event.srcElement.value.substring(1);
+  minuteTouched(event) {
+    if (event.srcElement.value.substring(0, 1) === '0') {
+      this.minuteV.nativeElement.value = event.srcElement.value.substring(1);
     }
     this.setTouched();
   }
 
-  setTouched(){
+  setTouched() {
     this.onTouched();
   }
 
   isValid() {
-    let hours = parseInt(this.hour_v.nativeElement.value);
-    let minutes = parseInt(this.minute_v.nativeElement.value);
+    const hours = parseInt(this.hourV.nativeElement.value, 10);
+    const minutes = parseInt(this.minuteV.nativeElement.value, 10);
     return !isNaN(hours) && !isNaN(minutes)
         && typeof hours === 'number' && typeof minutes === 'number'
         && hours >= 1 && hours <= 12
@@ -176,12 +196,12 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
 
   getTime(): any {
     if (!this.isValid()) {
-      return null;
+      return undefined;
     }
 
     // convert from 12 hour to 24 hour times
 
-    let hours = this.hour_v.nativeElement.value;
+    let hours = this.hourV.nativeElement.value;
 
     if (hours === 12) {
       hours = 0;
@@ -193,72 +213,75 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
 
     return moment({
       hour: hours, 
-      minute: this.minute_v.nativeElement.value
+      minute: this.minuteV.nativeElement.value
     });
   }
 
-  //used by date-time/date-range comps
+  // used by date-time/date-range comps
   isClean() {
-    let hours = this.hours;
-    let minutes = this.minutes;
-    return (isNaN(hours) || hours===null) && (isNaN(minutes) || this.minutes===null);
+    const hours = this.hours;
+    const minutes = this.minutes;
+    return (isNaN(hours) || hours === undefined)
+      && (isNaN(minutes) || this.minutes === undefined);
   }
   
-  hoursPress(event){
-    if(this._checkCopyPasteChar(event.key)){
+  hoursPress(event) {
+    if (this._checkCopyPasteChar(event.key)) {
       return;
     }
-    var inputNum = parseInt(event.key, 10);
-    var possibleNum;
-    if(!isNaN(this.hour_v.nativeElement.value) 
-      && this.hour_v.nativeElement.value!=""){
-      possibleNum = (parseInt(this.hour_v.nativeElement.value) * 10) + inputNum;
-    } else{
+    const inputNum = parseInt(event.key, 10);
+    let possibleNum;
+    if (!isNaN(this.hourV.nativeElement.value) 
+      && this.hourV.nativeElement.value !== '') {
+      possibleNum = (parseInt(this.hourV.nativeElement.value, 10) * 10)
+        + inputNum;
+    } else {
       possibleNum = inputNum;
     }
-    if(possibleNum > 12 || this.allowChars.indexOf(event.key)==-1){
+    if (possibleNum > 12 || this.allowChars.indexOf(event.key) === -1) {
       event.preventDefault();
       return;
     }
-    if(this._keyIsNumber(event.key)){
-      if(event.target.value.length===1 || 
-        (event.target.value.length===0 && possibleNum > 1)){
-        this.minute_v.nativeElement.focus();
+    if (this._keyIsNumber(event.key)) {
+      if (event.target.value.length === 1 || 
+        (event.target.value.length === 0 && possibleNum > 1)) {
+        this.minuteV.nativeElement.focus();
       }
-      this.hour_v.nativeElement.value = possibleNum;
-      let val = moment({
+      this.hourV.nativeElement.value = possibleNum;
+      const val = moment({
         hour: this.formatHours(possibleNum), 
-        minute: this.minute_v.nativeElement.value
+        minute: this.minuteV.nativeElement.value
       }).format(this.OUTPUT_FORMAT);
       this.onInputChange(val);
       event.preventDefault();
     }
   }
 
-  minutesPress(event){
-    if(this._checkCopyPasteChar(event.key)){
+  minutesPress(event) {
+    if (this._checkCopyPasteChar(event.key)) {
       return;
     }
-    var inputNum = parseInt(event.key, 10);
-    var possibleNum;
-    if(!isNaN(parseInt(this.minute_v.nativeElement.value)) 
-      && this.minute_v.nativeElement.value!=""){ 
-      possibleNum = (parseInt(this.minute_v.nativeElement.value) * 10) + inputNum;
+    const inputNum = parseInt(event.key, 10);
+    let possibleNum;
+    if (!isNaN(parseInt(this.minuteV.nativeElement.value, 10)) 
+      && this.minuteV.nativeElement.value !== '') { 
+      possibleNum = (parseInt(this.minuteV.nativeElement.value, 10) * 10)
+        + inputNum;
     } else {
       possibleNum = inputNum;
     }
-    if(possibleNum > 59 || this.allowChars.indexOf(event.key)==-1){
+    if (possibleNum > 59 || this.allowChars.indexOf(event.key) === -1) {
       event.preventDefault();
       return;
     }
-    if(this._keyIsNumber(event.key)){
-      if(event.target.value.length===1 || 
-        (event.target.value.length===0 && possibleNum > 5)){
-        this.ampm_v.nativeElement.focus();
+    if (this._keyIsNumber(event.key)) {
+      if (event.target.value.length === 1 || 
+        (event.target.value.length === 0 && possibleNum > 5)) {
+        this.ampmV.nativeElement.focus();
       }
-      this.minute_v.nativeElement.value = possibleNum;
-      let val = moment({
-        hour: this.formatHours(this.hour_v.nativeElement.value), 
+      this.minuteV.nativeElement.value = possibleNum;
+      const val = moment({
+        hour: this.formatHours(this.hourV.nativeElement.value), 
         minute: possibleNum
       }).format(this.OUTPUT_FORMAT);
       this.onInputChange(val);
@@ -278,36 +301,36 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
     return `${this.name}_am_pm`;
   }
 
-  _keyIsNumber(char){
-    if(char.match(/[0-9]/)!=null){
+  _keyIsNumber(char) {
+    if (char.match(/[0-9]/) !== null) {
       return true;
     }
   }
 
-  _checkCopyPasteChar(char){
-    if(char==="c"||char==="v"){
+  _checkCopyPasteChar(char) {
+    if (char === 'c' || char === 'v') {
       return true;
     }
   }
 
-  removalKeyHandler(){
-    let m = moment({
-      hour: this.formatHours(this.hour_v.nativeElement.value), 
-      minute: this.minute_v.nativeElement.value
+  removalKeyHandler() {
+    const m = moment({
+      hour: this.formatHours(this.hourV.nativeElement.value), 
+      minute: this.minuteV.nativeElement.value
     }).format(this.OUTPUT_FORMAT);
     this.onChange(m);
   }
 
-  resetInput(){
-    // this.hours = "";
-    // this.minutes = "";
-    this.hour_v.nativeElement.value = "";
-    this.minute_v.nativeElement.value = "";
-    this.ampm_v.nativeElement.value = "am";
+  resetInput() {
+    // this.hours = '';
+    // this.minutes = '';
+    this.hourV.nativeElement.value = '';
+    this.minuteV.nativeElement.value = '';
+    this.ampmV.nativeElement.value = 'am';
   }
 
-  onChange: any = () => { };
-  onTouched: any = () => { };
+  onChange: any = () => undefined;
+  onTouched: any = () => undefined;
   
   registerOnChange(fn) {
     this.onChange = fn;
@@ -322,10 +345,10 @@ export class SamTimeComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   writeValue(value) {
-    if(value){
+    if (value) {
       this.value = value;
-    }else{
-      this.value = "";
+    } else {
+      this.value = '';
       this.resetInput();
     }
     this.parseValueString();

@@ -1,34 +1,40 @@
-import {TestBed, async, ComponentFixtureAutoDetect, ComponentFixture} from '@angular/core/testing';
+import {
+    TestBed,
+    async,
+    ComponentFixtureAutoDetect,
+    ComponentFixture
+} from '@angular/core/testing';
 import {Component, ChangeDetectorRef} from '@angular/core';
 import {By} from '@angular/platform-browser';
-import { FormControl } from "@angular/forms";
+import { FormControl } from '@angular/forms';
 // Load the implementations that should be tested
-import {LabelWrapper} from "./label-wrapper.component";
+import {LabelWrapper} from './label-wrapper.component';
 
-describe('The Sam Fieldset Wrapper component', () => {
+describe('The Sam Label Wrapper component', () => {
   describe('isolated tests', () => {
-    let component:LabelWrapper;
-    let cdr: ChangeDetectorRef;
-    beforeEach(()=>{
+    let component: LabelWrapper;
+    const cdr: ChangeDetectorRef = undefined;
+    beforeEach(() => {
       component = new LabelWrapper(cdr);
     });
     
-    it('should display error messages with a form control', ()=>{
-        component.formatErrors(null);
+    it('should display error messages with a form control', () => {
+        component.formatErrors(undefined);
         
-        let control = new FormControl('');
+        const control = new FormControl('');
         component.formatErrors(control);
-        expect(component.errorMessage).toBe("");
+        expect(component.errorMessage).toBe('');
 
         control.markAsDirty();
         control.setErrors({
-            maxlength:{
-                actualLength:12,
-                requiredLength:10
+            maxlength: {
+                actualLength: 12,
+                requiredLength: 10
             }
         });
         component.formatErrors(control);
-        expect(component.errorMessage).toBe('12 characters input but max length is 10');
+        expect(component.errorMessage)
+            .toBe('12 characters input but max length is 10');
 
         control.setErrors({
             required: true
@@ -43,8 +49,8 @@ describe('The Sam Fieldset Wrapper component', () => {
         expect(component.errorMessage).toBe('Date must not be before today');
         
         control.setErrors({
-            dummyError:{
-                message:"test message"
+            dummyError: {
+                message: 'test message'
             }
         });
         component.formatErrors(control);
@@ -62,17 +68,17 @@ describe('The Sam Fieldset Wrapper component', () => {
         expect(component.errorMessage).toBe('');
     });
     
-    it('should clear error messages',()=>{
-      component.errorMessage = "abc";
+    it('should clear error messages', () => {
+      component.errorMessage = 'abc';
       component.clearError();
-      expect(component.errorMessage).toBe("");
+      expect(component.errorMessage).toBe('');
     });
     
   });
 
-  describe('integration tests', ()=> {
-    let component:LabelWrapper;
-    let fixture:any;
+  describe('integration tests', () => {
+    let component: LabelWrapper;
+    let fixture: any;
   
     beforeEach( () => {
       TestBed.configureTestingModule({
@@ -83,19 +89,27 @@ describe('The Sam Fieldset Wrapper component', () => {
       fixture.detectChanges();
     });
     
-    it('should have toggleable hints', ()=>{
-        component.hint = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.";
+    it('should have toggleable hints', () => {
+        component.hint = 'Lorem Ipsum is simply dummy text of the printing and\
+         typesetting industry. Lorem Ipsum has been the industry\'s standard\
+          dummy text ever since the 1500s, when an unknown printer took a \
+          galley of type and scrambled it to make a type specimen book. It has \
+          survived not only five centuries, but also the leap into electronic\
+           typesetting, remaining essentially unchanged.';
         component.ngOnChanges({
-            hint:{
+            hint: {
               previousValue: false,
               currentValue: true
             }
         });
         fixture.detectChanges();
-        expect(component.hintContainer.nativeElement.getAttribute('style')).toContain('overflow: hidden;');
+        expect(component.hintContainer.nativeElement.getAttribute('style'))
+            .toContain('overflow: hidden;');
+            
         component.toggleHint(false);
         fixture.detectChanges();
-        expect(component.hintContainer.nativeElement.getAttribute('style')).toBe('');
+        expect(component.hintContainer.nativeElement.getAttribute('style'))
+            .toBe('');
     });
   });
 });

@@ -1,23 +1,25 @@
 import { TestBed } from '@angular/core/testing';
 import { SamNumberComponent } from './number.component';
-import { LabelWrapper } from '../../wrappers/label-wrapper/label-wrapper.component';
-import { FormsModule,FormControl } from "@angular/forms";
-import { By } from "@angular/platform-browser";
+import {
+  LabelWrapper
+} from '../../wrappers/label-wrapper/label-wrapper.component';
+import { FormsModule, FormControl } from '@angular/forms';
+import { By } from '@angular/platform-browser';
 import { SamFormService } from '../../form-service';
-import { ChangeDetectorRef } from "@angular/core"; 
+import { ChangeDetectorRef } from '@angular/core'; 
 
 describe('The Sam Number component', () => {
-  describe("isolated tests",()=>{
+  describe('isolated tests', () => {
     let component: SamNumberComponent;
-    let cdr: ChangeDetectorRef;
+    const cdr: ChangeDetectorRef = undefined;
 
     beforeEach(() => {
       component = new SamNumberComponent(new SamFormService(), cdr);
     });
 
-    it("should implement controlvalueaccessor",()=>{
-      component.registerOnChange((_)=>{});
-      component.registerOnTouched(()=>{});
+    it('should implement controlvalueaccessor', () => {
+      component.registerOnChange((_) => undefined);
+      component.registerOnTouched(() => undefined);
       component.onChange();
       component.onTouched();
       component.setDisabledState(false);
@@ -26,7 +28,7 @@ describe('The Sam Number component', () => {
     });
   });
   
-  describe("rendered tests",()=>{
+  describe('rendered tests', () => {
     let component: SamNumberComponent;
     let fixture: any;
   
@@ -53,37 +55,36 @@ describe('The Sam Number component', () => {
     it('should allow an initial value to be set by the value input', () => {
       component.onInputChange(123);
       fixture.detectChanges();
-      let input = fixture.debugElement.query(By.css('#my-num-component'));
+      const input = fixture.debugElement.query(By.css('#my-num-component'));
       expect(input.nativeElement.value).toBe('123');
     });
   
     it('should show a hint message', () => {
-      let hint = "Life pro tip: eat vegetables";
+      const hint = 'Life pro tip: eat vegetables';
       component.hint = hint;
       fixture.detectChanges();
       expect(fixture.nativeElement.innerHTML).toContain(hint);
     });
   
     it('should show an error message', () => {
-      let errorMessage = "Uh-oh, something went wrong";
+      const errorMessage = 'Uh-oh, something went wrong';
       component.errorMessage = errorMessage;
       fixture.detectChanges();
       expect(fixture.nativeElement.innerHTML).toContain(errorMessage);
     });
   
     it('should show a label', () => {
-      let labelText = "Pick from the following options";
+      const labelText = 'Pick from the following options';
       component.label = labelText;
       fixture.detectChanges();
       expect(fixture.nativeElement.innerHTML).toContain(labelText);
     });
 
     it('should work with a form control', () => {
-      let c = new FormControl("", ()=>{ return null });
-      component.name = "test-name";
+      const c = new FormControl('', () => { return undefined; });
+      component.name = 'test-name';
       component.control = c;
       component.required = true;
-      component.maxlength = 10;
       component.ngOnInit();
       component.ngAfterViewInit();
       component.writeValue(11);

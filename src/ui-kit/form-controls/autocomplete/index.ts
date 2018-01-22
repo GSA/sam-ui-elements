@@ -8,7 +8,9 @@ import { SamWrapperModule } from '../../wrappers';
 /**
  * Refactor stuff
  */
-import { SamAutocompleteComponentRefactor } from './refactor/autocomplete.component';
+import {
+  SamAutocompleteComponentRefactor
+} from './refactor/autocomplete.component';
 
 @NgModule({
   imports: [ 

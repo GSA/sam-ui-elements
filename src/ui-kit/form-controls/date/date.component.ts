@@ -1,9 +1,19 @@
-import {Component, ChangeDetectorRef, Input, ViewChild, Output, EventEmitter, OnInit, OnChanges, forwardRef} from '@angular/core';
+import {
+  Component,
+  ChangeDetectorRef,
+  Input,
+  ViewChild,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnChanges,
+  forwardRef
+} from '@angular/core';
 import * as moment from 'moment/moment';
 import {
   NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn,
   AbstractControl
-} from "@angular/forms";
+} from '@angular/forms';
 import {SamFormService} from '../../form-service';
 
 /**
@@ -18,79 +28,81 @@ import {SamFormService} from '../../form-service';
     multi: true
   }]
 })
-export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor {
+export class SamDateComponent
+  implements OnInit, OnChanges, ControlValueAccessor {
   /**
   * Sets the general error message for component
   */
-  @Input() errorMessage: string = "";
+  @Input() public errorMessage: string = '';
   /**
   * Sets the name attribute for component
   */
-  @Input() name: string = "";
+  @Input() public name: string = '';
   /**
   * Sets the label text
   */
-  @Input() label: string = "";
+  @Input() public label: string = '';
   /**
   * Toggles whether a "required" designation is shown
   */
-  @Input() required: boolean = false;
+  @Input() public required: boolean = false;
   /**
   * Sets the helpful hint text
   */
-  @Input() hint: string = "";
+  @Input() public hint: string = '';
   /**
   * Sets the disabled status of component, defaults to false
   */
-  @Input() disabled: boolean = false;
+  @Input() public disabled: boolean = false;
   /**
   * Deprecated - Sets the current value of the form control
   */
-  @Input() value: string;
+  @Input() public value: string;
   /**
    * Toggles default component validations
    */
-  @Input() defaultValidations: boolean = false;
+  @Input() public defaultValidations: boolean = false;
   /**
   * Passes in the Angular FormControl
   */
-  @Input() control: FormControl;
+  @Input() public control: FormControl;
   /**
   * Toggles validations to display with SamFormService events
   */
-  @Input() useFormService: boolean;
+  @Input() public useFormService: boolean;
   /**
   * Deprecated - Event emitted when value changes
   */
-  @Output() valueChange = new EventEmitter<any>();
+  @Output() public valueChange = new EventEmitter<any>();
   /**
   * (deprecated) Event emitted when form control loses focus
   */
-  @Output() blurEvent = new EventEmitter<any>();
+  @Output() public blurEvent = new EventEmitter<any>();
   /**
   * Event emitted when form control loses focus
   */
-  @Output() blur = new EventEmitter<any>();
+  @Output() public blur = new EventEmitter<any>();
 
-  onChange: any = () => { };
-  onTouched: any = () => { };
-  @ViewChild('month') month;
-  @ViewChild('day') day;
-  @ViewChild('year') year;
-  @ViewChild('wrapper') wrapper;
-  allowChars = ["0","1","2","3","4","5","6","7","8","9","Backspace","ArrowLeft","ArrowRight","Tab","Delete"];
-  model: any = {
-    month: null,
-    day: null,
-    year: null
+  @ViewChild('month') public month;
+  @ViewChild('day') public day;
+  @ViewChild('year') public year;
+  @ViewChild('wrapper') public wrapper;
+
+  public allowChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
+    'Backspace', 'ArrowLeft', 'ArrowRight', 'Tab', 'Delete'];
+  public model: any = {
+    month: undefined,
+    day: undefined,
+    year: undefined
   };
   public INPUT_FORMAT: string = 'Y-M-D';
   public OUTPUT_FORMAT: string = 'YYYY-MM-DD';
-  private thirtyDayMonths = [4,6,9,11];
-  private nonFebruaryDays = [30,31];
+  private thirtyDayMonths = [4, 6, 9, 11];
+  private nonFebruaryDays = [30, 31];
+  private maxMonth = 12;
+  private maxDay = 31;
 
-  
-  get inputModel(){
+  get inputModel() {
     return {
       day: this.day.nativeElement.value,
       month: this.month.nativeElement.value,
@@ -98,37 +110,81 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     };
   }
 
-  constructor(private samFormService:SamFormService, private cdr:ChangeDetectorRef) { }
+  static dateRequired() {
+    return (c: AbstractControl) => {
+      if (c.dirty && !c.value) {
+        return {
+          dateRequiredError: {
+            message: 'This field is required'
+          }
+        };
+      }
+      return undefined;
+    };
+  }
+  
+  static dateValidation() {
+    // Does this code even run?!
+    // Where is c getting passed in?
+    const minYear = 1000;
+    return (c: AbstractControl) => {
+      const error = {
+        dateError: {
+          message: ''
+        }
+      };
+      if (c.dirty && (c.value && c.value !== undefined)) {
+        const dateM = moment(c.value);
+        if (!dateM.isValid()) {
+          error.dateError.message = 'Invalid date';
+          return error;
+        } else {
+          if (dateM.get('year') < minYear) {
+            error.dateError.message = 'Please enter 4 digit year';
+            return error;
+          }
+        }
+      }
+      return undefined;
+    };
+  }
+
+  onChange: any = () => undefined;
+  onTouched: any = () => undefined;
+
+  constructor(private samFormService: SamFormService,
+    private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     if (!this.name) {
       throw new Error('SamDateComponent required a name for 508 compliance');
     }
 
-    if(this.control){
-      let validators: ValidatorFn[] = [];
-      if(this.control.validator){
+    if (this.control) {
+      const validators: ValidatorFn[] = [];
+      if (this.control.validator) {
         validators.push(this.control.validator);
       }
-      if(this.defaultValidations){
-        if(this.required){
+      if (this.defaultValidations) {
+        if (this.required) {
           validators.push(SamDateComponent.dateRequired());
         }
         validators.push(SamDateComponent.dateValidation());
       }
       this.control.setValidators(validators);
 
-      if(!this.useFormService){
-        this.control.statusChanges.subscribe(()=>{
+      if (!this.useFormService) {
+        this.control.statusChanges.subscribe(() => {
           this.wrapper.formatErrors(this.control);
         });
         this.wrapper.formatErrors(this.control);
-      }
-      else {
-        this.samFormService.formEventsUpdated$.subscribe(evt=>{
-          if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+      } else {
+        this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
+          if ((!evt.root || evt.root === this.control.root)
+            && evt.eventType && evt.eventType === 'submit') {
             this.wrapper.formatErrors(this.control);
-          } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+          } else if ((!evt.root || evt.root === this.control.root)
+            && evt.eventType && evt.eventType === 'reset') {
             this.wrapper.clearError();
           }
         });
@@ -143,220 +199,251 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   parseValueString() {
     if (this.value) {
       // use the forgiving format (that doesn't need 0 padding) for inputs
-      let m = moment(this.value, this.INPUT_FORMAT);
+      const m = moment(this.value, this.INPUT_FORMAT);
       if (m.isValid()) {
-        let monthVal = m.month() + 1;
-        let dateVal = m.date();
+        const monthVal = m.month() + 1;
+        const dateVal = m.date();
         this.model.month = monthVal;
         this.model.day = dateVal;
         this.model.year = m.year();
       }
-    }
-    else{
-      this.model.month = "";
-      this.model.day = "";
-      this.model.year = "";
+    } else {
+      this.model.month = '';
+      this.model.day = '';
+      this.model.year = '';
 
-      this.month.nativeElement.value = "";
-      this.day.nativeElement.value = "";
-      this.year.nativeElement.value = "";
-    }
-  }
-
-  getDate(override=null) {
-    let obj = override ? override : this.model;
-    return moment([obj.year, obj.month-1, obj.day]);
-  }
-
-  onMonthPaste(event){
-    let text = this._getClipboardText(event);
-    if(text){
-      if(text.length>2){
-        event.preventDefault();
-      }
-      let val = parseInt(text);
-      if(val<1 || val>12){
-        event.preventDefault();
-      }
+      this.month.nativeElement.value = '';
+      this.day.nativeElement.value = '';
+      this.year.nativeElement.value = '';
     }
   }
 
-  onDayPaste(event){
-    let text = this._getClipboardText(event);
-    if(text){
-      if(text.length>2){
+  getDate(override = undefined) {
+    const obj = override ? override : this.model;
+    return moment([obj.year, obj.month - 1, obj.day]);
+  }
+
+  onMonthPaste(event) {
+    const text = this._getClipboardText(event);
+    if (text) {
+      if (text.length > 2) {
         event.preventDefault();
       }
-      let val = parseInt(text);
-      if(val<1 || val>31){
+      const val = parseInt(text, undefined);
+      if (val < 1 || val > this.maxMonth) {
         event.preventDefault();
       }
     }
   }
 
-  onYearPaste(event){
-    let text = this._getClipboardText(event);
-    if(text){
-      if(text.length>4){
+  onDayPaste(event) {
+    const text = this._getClipboardText(event);
+    if (text) {
+      if (text.length > 2) {
+        event.preventDefault();
+      }
+      const val = parseInt(text, undefined);
+      if (val < 1 || val > this.maxDay) {
         event.preventDefault();
       }
     }
   }
 
-  onMonthBlur(event){
-    if(this.month.nativeElement.value==="0"){
-      this.month.nativeElement.value = "";
+  onYearPaste(event) {
+    const text = this._getClipboardText(event);
+    const validYearLength = 4;
+    if (text) {
+      if (text.length > validYearLength) {
+        event.preventDefault();
+      }
     }
   }
 
-  onMonthInput(event){
-    if(this._checkCopyPasteChar(event.key)){
+  onMonthBlur(event) {
+    if (this.month.nativeElement.value === '0') {
+      this.month.nativeElement.value = '';
+    }
+  }
+
+  onMonthInput(event: any) {
+    if (this._checkCopyPasteChar(event.key)) {
       return;
     }
-    let inputNum = parseInt(event.key, 10);
-    let possibleNum;
-    if(!isNaN(this.month.nativeElement.value) && this.month.nativeElement.value!=""){
-      possibleNum = (parseInt(this.month.nativeElement.value) * 10) + inputNum;
-    } else{
-      possibleNum = inputNum;
-    }
-    if(possibleNum > 12 || this.allowChars.indexOf(event.key)===-1){
+    const inputNum = parseInt(event.key, 10);
+    const possibleNum =
+      this.getPossibleNum(this.month.nativeElement.value, event.key);
+
+    if (possibleNum > this.maxMonth
+      || this.allowChars.indexOf(event.key) === -1) {
       event.preventDefault();
       return;
     }
-    if(this._keyIsNumber(event.key)){
-      if(event.target.value.length===1 ||
-        (event.target.value.length===0 && possibleNum > 1)){
-        if(this.day.nativeElement.value && this._shouldClearDayInput(possibleNum) ){
-          this.day.nativeElement.value = "";
+    if (this._keyIsNumber(event.key)) {
+      if (event.target.value.length === 1 ||
+        (event.target.value.length === 0 && possibleNum > 1)) {
+        if (this.day.nativeElement.value
+          && this._shouldClearDayInput(possibleNum)) {
+          this.day.nativeElement.value = '';
         }
         this.day.nativeElement.focus();
       }
       this.month.nativeElement.value = possibleNum;
-      let dupModel = this.inputModel;
+      const dupModel = this.inputModel;
       this.onChangeHandler(dupModel);
       event.preventDefault();
     }
   }
 
-  onDayBlur(event){
-    if(this.day.nativeElement.value==="0"){
-      this.day.nativeElement.value = "";
+  getPossibleNum(value, key): number {
+    let possibleNum;
+    const ten = 10; // What is this number?
+    const inputNum = parseInt(key, 10);
+    if (!isNaN(value)
+      && value !== '') {
+      possibleNum = (parseInt(value, undefined) * ten)
+        + inputNum;
+    } else {
+      possibleNum = inputNum;
+    }
+    return possibleNum;
+  }
+
+  onDayBlur(event) {
+    if (this.day.nativeElement.value === '0') {
+      this.day.nativeElement.value = '';
     }
   }
 
-  onDayInput(event){
-    if(this._checkCopyPasteChar(event.key)){
+  onDayInput(event) {
+    if (this._checkCopyPasteChar(event.key)) {
       return;
     }
-    let inputNum = parseInt(event.key, 10);
-    let possibleNum;
-    let maxDate = 31;
-    let numJumpThreshold = 3;
-    if(this.thirtyDayMonths.indexOf(parseInt(this.month.nativeElement.value))!==-1){
-      maxDate = 30;
-    }
-    if (this.month.nativeElement.value==2){
-      maxDate = 29;
-      if(this.year.nativeElement.value && !this._isLeapYear(this.year.nativeElement.value)){
-        maxDate = 28;
-      }
-      numJumpThreshold = 2;
-    }
-    if(!isNaN(this.day.nativeElement.value) && this.day.nativeElement.value!=""){
-      possibleNum = (parseInt(this.day.nativeElement.value) * 10) + inputNum;
-    } else{
-      possibleNum = inputNum;
-    }
-    if(possibleNum > maxDate || this.allowChars.indexOf(event.key)==-1){
+    const inputNum = parseInt(event.key, 10);
+    const possibleNum =
+      this.getPossibleNum(this.day.nativeElement.value, event.key);
+    const maxDate = this.getMaxDate();
+    const numJumpThreshold =
+      this.getNumJumpThreshold(this.month.nativeElement.value);
+
+    if (possibleNum > maxDate || this.allowChars.indexOf(event.key) === - 1) {
       event.preventDefault();
       return;
     }
-    if(this._keyIsNumber(event.key)){
-      if(event.target.value.length===1 ||
-        (event.target.value.length===0 && possibleNum > numJumpThreshold)){
+    if (this._keyIsNumber(event.key)) {
+      if (event.target.value.length === 1 ||
+        (event.target.value.length === 0 && possibleNum > numJumpThreshold)) {
         this.year.nativeElement.focus();
       }
       this.day.nativeElement.value = possibleNum;
-      let dupModel = this.inputModel;
+      const dupModel = this.inputModel;
       this.onChangeHandler(dupModel);
       event.preventDefault();
     }
   }
 
-  onYearBlur(event){
-    if(this.year.nativeElement.value==="0"){
-      this.year.nativeElement.value = "";
+  getMaxDate(): number {
+    const februaryLeap = 29;
+    const february = 28;
+    const thirty = 30;
+    let maxDate = 31;
+
+    if (this.thirtyDayMonths
+      .indexOf(parseInt(this.month.nativeElement.value, undefined)) !== -1 ) {
+      maxDate = thirty;
     }
-    if(this.year.nativeElement.value 
+
+    if (this.month.nativeElement.value === 2) {
+      maxDate = februaryLeap;
+      if (this.year.nativeElement.value
+        && !this._isLeapYear(this.year.nativeElement.value)) {
+        maxDate = february;
+      }
+    }
+    return maxDate;
+  }
+
+  getNumJumpThreshold(month) {
+    const three = 3; // What is numJumpThreshold and what is this const?
+    return month === 2 ? 2 : three;
+  }
+
+  onYearBlur(event) {
+    if (this.year.nativeElement.value === '0') {
+      this.year.nativeElement.value = '';
+    }
+    if (this.year.nativeElement.value 
       && !this._isLeapYear(this.year.nativeElement.value)
-      && this.month.nativeElement.value === "2"
-      && this.day.nativeElement.value === "29"){
-      this.day.nativeElement.value = "";
+      && this.month.nativeElement.value === '2'
+      && this.day.nativeElement.value === '29') {
+      this.day.nativeElement.value = '';
     }
   }
 
-  onYearInput(event){
-    if(this._checkCopyPasteChar(event.key)){
+  onYearInput(event) {
+    const maxValue = 9999;
+    if (this._checkCopyPasteChar(event.key)) {
       return;
     }
-    let inputNum = parseInt(event.key, 10);
-    let possibleNum;
+    const inputNum = parseInt(event.key, 10);
+    const possibleNum =
+      this.getPossibleNum(this.year.nativeElement.value, event.key);
 
-    if(!isNaN(this.year.nativeElement.value) && this.year.nativeElement.value!=""){
-      possibleNum = (parseInt(this.year.nativeElement.value) * 10) + inputNum;
-    } else{
-      possibleNum = inputNum;
-    }
-    if(possibleNum > 9999 || this.allowChars.indexOf(event.key)===-1){
+    if (possibleNum > maxValue || this.allowChars.indexOf(event.key) === -1) {
       event.preventDefault();
-      return
+      return;
     }
-    if(this._keyIsNumber(event.key)){
-      if(event.target.value.length+1==4){
+    if (this._keyIsNumber(event.key)) {
+      const four = 4; // Why 4?
+      if (event.target.value.length + 1 === four) {
         this.blurEvent.emit();
         this.blur.emit();
       }
       this.year.nativeElement.value = possibleNum;
-      let dupModel = this.inputModel;
+      const dupModel = this.inputModel;
       this.onChangeHandler(dupModel);
       event.preventDefault();
     }
   }
 
-  removalKeyHandler(){
-    let dupModel = this.inputModel;
+  removalKeyHandler() {
+    const dupModel = this.inputModel;
     this.onChangeHandler(dupModel);
   }
 
-  onChangeHandler(override=null) {
+  onChangeHandler(override = undefined) {
     this.onTouched();
     if (this.isClean(override)) {
-      this.onChange(null);
-      this.valueChange.emit(null);
+      this.onChange(undefined);
+      this.valueChange.emit(undefined);
     } else if (!this.getDate(override).isValid()) {
       this.onChange('Invalid Date');
       this.valueChange.emit('Invalid Date');
     } else {
       // use the strict format for outputs
-      let dateString = this.getDate(override).format(this.OUTPUT_FORMAT);
+      const dateString = this.getDate(override).format(this.OUTPUT_FORMAT);
       this.onChange(dateString);
       this.valueChange.emit(dateString);
     }
   }
 
-  isClean(override=null) {
+  isClean(override = undefined) {
     let dupModel = this.inputModel;
-    if(override){
+    if (override) {
       dupModel = override;
     }
-    return (isNaN(dupModel.day) || dupModel.day === null || dupModel.day === "" ) &&
-      (isNaN(dupModel.month) || dupModel.month === null || dupModel.month === "") &&
-      (isNaN(dupModel.year) || dupModel.year === null || dupModel.year === "");
+    return (isNaN(dupModel.day)
+      || dupModel.day === undefined
+      || dupModel.day === '' )
+    && (isNaN(dupModel.month)
+      || dupModel.month === undefined
+      || dupModel.month === '')
+    && (isNaN(dupModel.year)
+      || dupModel.year === undefined
+      || dupModel.year === '');
   }
 
   isValid() {
-    let dupModel = this.inputModel;
+    const dupModel = this.inputModel;
     return this.getDate(dupModel).isValid();
   }
 
@@ -372,98 +459,74 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
     return `${this.name}_year`;
   }
 
-  triggerTouch(){
+  triggerTouch() {
     this.onTouched();
   }
 
-  triggerMonthTouch(event){
-    if(event.target.value.substring(0,1) === "0"){
+  triggerMonthTouch(event) {
+    if (event.target.value.substring(0, 1) === '0') {
       this.month.nativeElement.value = event.target.value.substring(1);
     }
     this.onTouched();
   }
-  triggerDayTouch(event){
-    if(event.target.value.substring(0,1) === "0"){
+  triggerDayTouch(event) {
+    if (event.target.value.substring(0, 1) === '0') {
       this.day.nativeElement.value = event.target.value.substring(1);
     }
     this.onTouched();
   }
 
-  resetInput(){
-    this.day.nativeElement.value = "";
-    this.month.nativeElement.value = "";
-    this.year.nativeElement.value = "";
+  resetInput() {
+    this.day.nativeElement.value = '';
+    this.month.nativeElement.value = '';
+    this.year.nativeElement.value = '';
   }
 
-  _checkCopyPasteChar(char){
-    if(char==="c"||char==="v"){
+  _checkCopyPasteChar(char) {
+    if (char === 'c' || char === 'v') {
       return true;
     }
   }
 
-  _keyIsNumber(char){
-    if(char.match(/[0-9]/)!=null){
+  _keyIsNumber(char) {
+    if (char.match(/[0-9]/) !== undefined) {
       return true;
     }
   }
 
-  _getClipboardText(event){
-    if(event.clipboardData && event.clipboardData.getData("text")){
-      return event.clipboardData.getData("text");
-    } else if(window['clipboardData'] && window['clipboardData'].getData('text')){
-      return window['clipboardData'].getData('text');
+  _getClipboardText(event) {
+    // It is problematic to reference DOM elements in Angular components
+    // We should revisit that practice through our entire code base
+    const win: any = window;
+    if (event.clipboardData && event.clipboardData.getData('text')) {
+      return event.clipboardData.getData('text');
+    } else if (win.clipboardData
+      && win.clipboardData.getData('text')) {
+      return win.clipboardData.getData('text');
     }
   }
 
-  _shouldClearDayInput(num){
-    if((this.thirtyDayMonths.indexOf(parseInt(num))!==-1 && this.day.nativeElement.value=="31")
-    || (num=="2" && this.nonFebruaryDays.indexOf(parseInt(this.day.nativeElement.value))!==-1)){
+  _shouldClearDayInput(num) {
+    if ((this.thirtyDayMonths.indexOf(parseInt(num, undefined)) !== -1
+      && this.day.nativeElement.value === '31')
+      || (num === '2'
+      && this.nonFebruaryDays.indexOf(
+        parseInt(this.day.nativeElement.value, undefined)
+      ) !== -1)) {
       return true;
     }
   }
 
-  _isLeapYear(year)
-  {
-    return ((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0);
+  _isLeapYear(year) {
+    const quadrennial = 4;
+    const centennial = 100;
+    const quadricentennial = 400;
+    return ((year % quadrennial === 0)
+      && (year % centennial !== 0))
+      || (year % quadricentennial === 0);
   }
 
-  static dateRequired() {
-    return (c:AbstractControl) => {
-      if (c.dirty && !c.value) {
-        return {
-          dateRequiredError: {
-            message: "This field is required"
-          }
-        };
-      }
-      return null;
-    };
-  }
-  static dateValidation() {
-    return (c: AbstractControl) => {
-      let error = {
-        dateError: {
-          message: ""
-        }
-      };
-        if (c.dirty && (c.value && c.value !== null)) {
-          let dateM = moment(c.value);
-          if (!dateM.isValid()) {
-            error.dateError.message = "Invalid date";
-            return error;
-          } else {
-            if (dateM.get('year') < 1000) {
-              error.dateError.message = "Please enter 4 digit year";
-              return error;
-            }
-          }
-        }
-        return null;
-    }
-  }
-
-
-  //controlvalueaccessor methods
+  // controlvalueaccessor methods
   registerOnChange(fn) {
     this.onChange = fn;
   }
@@ -477,12 +540,12 @@ export class SamDateComponent implements OnInit, OnChanges, ControlValueAccessor
   }
 
   writeValue(value) {
-    if(value){
+    if (value) {
       this.value = value;
       this.parseValueString();
     } else {
       this.resetInput();
-      this.value = "";
+      this.value = '';
       this.parseValueString();
     }
   }

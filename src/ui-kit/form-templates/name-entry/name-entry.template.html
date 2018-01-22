@@ -14,11 +14,11 @@
   </sam-label-wrapper>
 
   <sam-select [(model)]="model.suffix"
-             (ngModelChange)="modelChange()"
-             [name]="getIdentifer('suffix')"
-             [options]="store.suffixes"
-             [errorMessage]="suffixErrorMsg"
-             [disabled]="disabled ? disabled : null"
-             label="Suffix">
+    (ngModelChange)="modelChange()"
+    [name]="getIdentifer('suffix')"
+    [options]="store.suffixes"
+    [errorMessage]="suffixErrorMsg"
+    [disabled]="disabled ? disabled : null"
+    label="Suffix">
   </sam-select>
 </fieldset>

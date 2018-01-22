@@ -1,7 +1,20 @@
-import { Component, Input, ViewChild, forwardRef, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewChild,
+  forwardRef,
+  Output,
+  EventEmitter,
+  ChangeDetectorRef
+} from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, Validators, FormControl } from "@angular/forms";
-import {SamFormService} from '../../form-service';
+import {
+  NG_VALUE_ACCESSOR,
+  ControlValueAccessor,
+  Validators,
+  FormControl
+} from '@angular/forms';
+import { SamFormService } from '../../form-service';
 
 export const TEXT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -44,8 +57,9 @@ export class SamTextareaComponent implements ControlValueAccessor {
   @Input() disabled: boolean;
   /**
   * Sets the required attribute
+
   */
-  @Input() required: boolean;//deprecated
+  @Input() required: boolean; // deprecated
   /**
   * Sets the required attribute
   */
@@ -88,27 +102,27 @@ export class SamTextareaComponent implements ControlValueAccessor {
    */
   @Output() inputChange: EventEmitter<any> = new EventEmitter();
 
-  onChange: any = (_) => {};
-
-  onTouched: any = () => {};
-
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
 
+  public onChange: any = (_) => undefined;
+  public onTouched: any = () => undefined;
+
   constructor(private cdr: ChangeDetectorRef,
-    private samFormService:SamFormService) {}
+    private samFormService: SamFormService) {}
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error("<sam-text-area> requires a [name] parameter for 508 compliance");
+      throw new Error('<sam-text-area> requires a [name]\
+       parameter for 508 compliance');
     }
 
     if (!this.control) {
       return;
     }
 
-    let validators: any[] = [];
+    const validators: any[] = [];
 
-    if(this.control.validator){
+    if (this.control.validator) {
       validators.push(this.control.validator);
     }
 
@@ -121,24 +135,25 @@ export class SamTextareaComponent implements ControlValueAccessor {
     }
 
     this.control.setValidators(validators);
-    if(!this.useFormService){
-      this.control.statusChanges.subscribe(()=>{
+    if (!this.useFormService) {
+      this.control.statusChanges.subscribe(() => {
         this.wrapper.formatErrors(this.control);
       });
       this.wrapper.formatErrors(this.control);
-    }
-    else {
-      this.samFormService.formEventsUpdated$.subscribe(evt=>{
-        if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+    } else {
+      this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
+        if ((!evt.root || evt.root === this.control.root)
+          && evt.eventType && evt.eventType === 'submit') {
           this.wrapper.formatErrors(this.control);
-        } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+        } else if ((!evt.root || evt.root === this.control.root)
+          && evt.eventType && evt.eventType === 'reset') {
           this.wrapper.clearError();
         }
       });
     }
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     if (!this.control) {
       return;
     }
@@ -163,8 +178,8 @@ export class SamTextareaComponent implements ControlValueAccessor {
     this.inputChange.emit(event);
   }
 
-  onBlur(){
-    if(this.value.trim()!=this.value){
+  onBlur() {
+    if (this.value.trim() !== this.value) {
       this.onInputChange(this.value.trim());
     }
   }

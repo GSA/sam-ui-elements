@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { SamAlertFooterService } from './alert-footer.service';
-import { AlertType } from "../../types";
+import { AlertType } from '../../types';
 
 @Component({
   selector: 'sam-alert-footer',

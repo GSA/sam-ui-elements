@@ -33,7 +33,7 @@ export class Cached {
   }
 
   public insert (val: any[]): any[] {
-    let deduped = this.dedupe(val);
+    const deduped = this.dedupe(val);
     this._lastValue = deduped;
     this.contents = [...this.contents, ...deduped];
     return this.value;
@@ -118,11 +118,13 @@ export class AutocompleteCache {
   }
 
   public static arraysEqual (arr1, arr2) {
-    if (arr1.length !== arr2.length)
+    if (arr1.length !== arr2.length) {
       return false;
+    }
     for (let i = arr1.length; i--; ) {
-      if (arr1[i] !== arr2[i])
-      return false;
+      if (arr1[i] !== arr2[i]) {
+        return false;
+      }
     }
     return true;
   }

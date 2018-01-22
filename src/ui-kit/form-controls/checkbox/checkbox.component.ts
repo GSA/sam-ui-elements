@@ -1,8 +1,19 @@
-import { Component, forwardRef, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { FormControl,ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  Component,
+  forwardRef,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild
+} from '@angular/core';
+import {
+  FormControl,
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR
+} from '@angular/forms';
 import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
 import { OptionsType } from '../../types';
-import {SamFormService} from '../../form-service';
+import { SamFormService } from '../../form-service';
 
 /**
  * The <sam-checkbox> component is a set of checkboxes
@@ -69,12 +80,13 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   @ViewChild(FieldsetWrapper)
   public wrapper: FieldsetWrapper;
   /*
-   * We want our model to list the checked items in the order that they appear in the options list
-   * This object allows us to efficiently determine if a value is before another value
+   * We want our model to list the checked items in the order that they appear 
+   * in the options list. This object allows us to efficiently determine if a 
+   * value is before another value
    */
   private _ordering: any = {};
-  onChange: any = (c) => { };
-  onTouched: any = () => { };
+  onChange: any = (c) => undefined;
+  onTouched: any = () => undefined;
   get value() {
     return this.model;
   }
@@ -85,21 +97,22 @@ export class SamCheckboxComponent implements ControlValueAccessor {
     this.onTouched();
   }
 
-  constructor(private samFormService:SamFormService) {}
+  constructor(private samFormService: SamFormService) {}
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error("<sam-checkbox> requires a [name] parameter for 508 compliance");
+      throw new Error('<sam-checkbox> requires a [name] parameter for 508 \
+      compliance');
     }
 
     // initialize the order lookup map
     for (let i = 0; i < this.options.length; i++) {
-      let val = this.options[i].value;
+      const val = this.options[i].value;
       this._ordering[val] = i;
     }
 
-    if(this.control){
-      this.control.valueChanges.subscribe(()=>{
+    if (this.control) {
+      this.control.valueChanges.subscribe(() => {
         this.wrapper.formatErrors(this.control);
       });
 
@@ -108,19 +121,20 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   }
 
   setModelValue(val) {
-    if (!Array.isArray(val)) {
-      val = [];
+    let returnVal = val;
+    if (!Array.isArray(returnVal)) {
+      returnVal = [];
     }
-    //don't select options that are disabled
-    for (var idx in this.options) {
-      let lookup = val.findIndex((value)=>{
-        return value == this.options[idx].value;
+    // don't select options that are disabled
+    for (const idx in this.options) {
+      const lookup = returnVal.findIndex((value) => {
+        return value === this.options[idx].value;
       });
-      if (this.options[idx].disabled && lookup != -1) {
-        val.splice(lookup,1);
+      if (this.options[idx].disabled && lookup !== -1) {
+        returnVal.splice(lookup, 1);
       }
     }
-    this.model = val;
+    this.model = returnVal;
   }
 
   // Give the check all label a name for screen readers
@@ -140,16 +154,19 @@ export class SamCheckboxComponent implements ControlValueAccessor {
     } else {
       // Else, insert the checked item into the model in the correct order
       let i = 0;
-      let thisOrder = this._ordering[value];
+      const thisOrder = this._ordering[value];
       while (i < this.model.length) {
-        let otherValue = this.model[i];
-        // If the item being inserted is after the current value, break and insert it
-        if (thisOrder <= this._ordering[otherValue]){
+        const otherValue = this.model[i];
+        // If the item being inserted is after the current value, break and 
+        // insert it.
+        if (thisOrder <= this._ordering[otherValue]) {
           break;
         }
         i++;
       }
-      let clone = this.model.indexOf("")>-1 ? this.model.slice(1) : this.model.slice(0);
+      const clone = this.model.indexOf('') > -1
+        ? this.model.slice(1)
+        : this.model.slice(0);
       clone.splice(i, 0, value);
       this.value = clone;
     }
@@ -158,15 +175,13 @@ export class SamCheckboxComponent implements ControlValueAccessor {
 
   onSelectAllChange(isSelectAllChecked) {
     this.onTouched();
-    if (!isSelectAllChecked) {
-      this.value = [];
-    } else {
-      this.value = this.options.map(option => option.value);
-    }
+    this.value = !isSelectAllChecked
+      ? []
+      : this.options.map(option => option.value);
     this.emitModel();
   }
 
-  emitModel(){
+  emitModel() {
     this.modelChange.emit(this.model);
   }
 
@@ -183,9 +198,11 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   }
 
   writeValue(value) {
-    if (!value) {
-      value = [];
+    let returnValue = value;
+    if (!returnValue) {
+      returnValue = [];
     }
-    this.setModelValue(value);
+
+    this.setModelValue(returnValue);
   }
 }

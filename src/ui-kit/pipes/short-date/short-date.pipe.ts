@@ -9,10 +9,11 @@ export class ShortDatePipe implements PipeTransform {
   public sameYearFormat: string = 'MMM DD h:mmA';
   public differentYearFormat: string = 'MMM DD YYYY h:mmA';
 
-  // fake now is added for testability. It is difficult to test based on the clock of the system.
+  // fake now is added for testability. It is difficult to test based on the
+  // clock of the system.
   transform(dateStr, fakeNow?): string {
-    let date = moment(dateStr);
-    let now = fakeNow || moment();
+    const date = moment(dateStr);
+    const now = fakeNow || moment();
 
     if (date.isSame(now, 'day')) {
       return date.format(this.sameDayFormat);

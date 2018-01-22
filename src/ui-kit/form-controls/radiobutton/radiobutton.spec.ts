@@ -5,50 +5,50 @@ import { By } from '@angular/platform-browser';
 import { SamRadioButtonComponent } from './radiobutton.component';
 import { SamWrapperModule } from '../../wrappers';
 import { SamFormService } from '../../form-service';
-import { FormsModule,FormControl } from '@angular/forms';
+import { FormsModule, FormControl } from '@angular/forms';
 
 describe('The Sam Radio Buttons component', () => {
-  describe("isolated tests",()=>{
+  describe('isolated tests', () => {
     let component: SamRadioButtonComponent;
-    beforeEach(()=>{
+    beforeEach(() => {
       component = new SamRadioButtonComponent();
     });
 
-    it("should implement controlvalueaccessor", ()=>{
+    it('should implement controlvalueaccessor', () => {
       component.onChange();
       component.onTouched();
-      component.registerOnChange((_)=>{});
-      component.registerOnTouched(()=>{});
+      component.registerOnChange((_) => undefined);
+      component.registerOnTouched(() => undefined);
       component.setDisabledState(false);
       component.writeValue('test');
-      expect(component.model).toBe("test");
+      expect(component.model).toBe('test');
     });
 
-    it("should process radio changes",()=>{
-      component.onRadioChange("newval");
-      expect(component.model).toBe("newval");
+    it('should process radio changes', () => {
+      component.onRadioChange('newval');
+      expect(component.model).toBe('newval');
     });
 
-    it("should pass 508", ()=>{
-      try{
+    it('should pass 508', () => {
+      try {
         component.ngOnInit();
         fail();
-      } catch(e){
+      } catch (e) {
         expect(true).toBe(true);
-      };
+      }
     });
   });
-  describe("rendered tests",()=>{
+  describe('rendered tests', () => {
     let component: SamRadioButtonComponent;
     let fixture: any;
   
-    let options : [any] = [
+    const options: [any] = [
       {value: 'dc', label: 'Washington DC', name: 'dc'},
       {value: 'ma', label: 'Maryland', name: 'dc'},
       {value: 'va', label: 'Virginia', name: 'virginia'},
     ];
   
-    let defaultOptions = {
+    const defaultOptions = {
       options: options,
       label: 'Radio buttons',
       name: 'my-radio-buttons'
@@ -58,7 +58,7 @@ describe('The Sam Radio Buttons component', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         declarations: [SamRadioButtonComponent],
-        imports: [SamWrapperModule,FormsModule],
+        imports: [SamWrapperModule, FormsModule],
         providers: [SamFormService]
       });
   
@@ -69,15 +69,22 @@ describe('The Sam Radio Buttons component', () => {
       component.name = defaultOptions.name;
     });
   
-    it('should display 3 radiobuttons if 3 options are specified by the config', function () {
+    it('should display 3 radiobuttons if 3 options are specified by the config',
+      function () {
       fixture.detectChanges();
-      expect(fixture.nativeElement.getElementsByTagName('input').length).toBe(options.length);
+
+      expect(fixture.nativeElement.getElementsByTagName('input').length)
+        .toBe(options.length);
     });
   
-    it('should allow an initial value to be set by the model input', async(() => {
+    it('should allow an initial value to be set by the model input', 
+      async(() => {
       component.model = 'ma';
       fixture.detectChanges();
-      let checkedElement = fixture.debugElement.query(By.css(':checked + label'));
+
+      const checkedElement =
+        fixture.debugElement.query(By.css(':checked + label'));
+
       expect(checkedElement.nativeElement.innerHTML).toContain('Maryland');
       expect(checkedElement.nativeElement.innerHTML).not.toContain('DC');
     }));
@@ -85,38 +92,46 @@ describe('The Sam Radio Buttons component', () => {
     it('should deselect one radio button when another is clicked', function () {
       component.model = 'ma';
       fixture.detectChanges();
-      let label1 = fixture.debugElement.query(By.css(':checked + label')).nativeElement.innerHTML;
+
+      const label1 = fixture.debugElement
+        .query(By.css(':checked + label'))
+        .nativeElement.innerHTML;
+
       component.model = 'dc';
       fixture.detectChanges();
-      let label2 = fixture.debugElement.query(By.css(':checked + label')).nativeElement.innerHTML;
+
+      const label2 = fixture.debugElement
+        .query(By.css(':checked + label'))
+        .nativeElement.innerHTML;
+
       expect(label1).not.toEqual(label2);
     });
   
     it('should show a hint message', function () {
-      let hint = "Life pro tip: eat vegetables";
+      const hint = 'Life pro tip: eat vegetables';
       component.hint = hint;
       fixture.detectChanges();
       expect(fixture.nativeElement.innerHTML).toContain(hint);
     });
   
     it('should show an error message', function () {
-      let errorMessage = "Uh-oh, something went wrong";
+      const errorMessage = 'Uh-oh, something went wrong';
       component.errorMessage = errorMessage;
       fixture.detectChanges();
       expect(fixture.nativeElement.innerHTML).toContain(errorMessage);
     });
   
     it('should show a label', function () {
-      let labelText = "Pick from the following options";
+      const labelText = 'Pick from the following options';
       component.label = labelText;
       fixture.detectChanges();
       expect(fixture.nativeElement.innerHTML).toContain(labelText);
     });
 
-    it("should work with a form control", ()=>{
-      let c = new FormControl("",()=>{ return null; });
+    it('should work with a form control', () => {
+      const c = new FormControl('', () => { return undefined; });
       component.control = c;
-      component.name = "test-name";
+      component.name = 'test-name';
       component.ngOnInit();
     });
   });

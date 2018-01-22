@@ -1,10 +1,35 @@
-import { Component, Input, Output, EventEmitter, forwardRef,
-         ViewChild, ElementRef, Optional, OnChanges, ChangeDetectorRef, TemplateRef } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  forwardRef,
+  ViewChild,
+  ElementRef,
+  Optional,
+  OnChanges,
+  ChangeDetectorRef,
+  TemplateRef
+} from '@angular/core';
+import {
+  NG_VALUE_ACCESSOR,
+  ControlValueAccessor,
+  FormControl
+} from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { AutocompleteConfig } from '../../types';
 import { AutocompleteService } from './autocomplete.service';
-import {SamFormService} from '../../form-service';
+import { SamFormService } from '../../form-service';
+
+import { 
+  isArrowDownKey,
+  getKeyboardEventKey,
+  isArrowUpKey,
+  isEnterKey,
+  isEscapeKey,
+  isBackspaceKey,
+  isTabKey
+} from '../../key-event-helpers';
 
 const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -17,7 +42,8 @@ const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
   templateUrl: 'autocomplete.template.html',
   providers: [ AUTOCOMPLETE_VALUE_ACCESSOR ]
 })
-export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges {
+export class SamAutocompleteComponent
+  implements ControlValueAccessor, OnChanges {
   @ViewChild('resultsList') resultsList: ElementRef;
   @ViewChild('resultsListKV') resultsListKV: ElementRef;
   @ViewChild('input') input: ElementRef;
@@ -47,7 +73,8 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   /**
    * Allows for a configuration object
    */
-  @Input() public config: AutocompleteConfig = { keyValueConfig: { keyProperty: 'key', valueProperty: 'value'} };
+  @Input() public config: AutocompleteConfig =
+    { keyValueConfig: { keyProperty: 'key', valueProperty: 'value'} };
   /**
    * Allows any value typed in the input to be chosen
    */
@@ -69,51 +96,20 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   */
   @Input() public required: boolean;
   /**
-  * Sets the general error message (For simplicity (we can enhance this it's needed): Only active when `useFormService` is false)
+  * Sets the general error message (For simplicity (we can enhance this it's 
+  * needed): Only active when `useFormService` is false)
   */
   @Input() public errorMessage: string;
   /**
-   * Emitted only when the user selects an item from the dropdown list, or when the user clicks enter and the mode is
-   * allowAny. This is useful if you do not want to respond to onChange events when the input is blurred.
+   * Emitted only when the user selects an item from the dropdown list, or when 
+   * the user clicks enter and the mode is allowAny. This is useful if you do 
+   * not want to respond to onChange events when the input is blurred.
    */
   @Output() public enterEvent: EventEmitter<any> = new EventEmitter();
   /**
    * Allow to insert a customized template for suggestions to use
    */
   @Input() itemTemplate: TemplateRef<any>;
-
-  public results: Array<string>;
-  public innerValue: any = '';
-  public inputValue: any = '';
-  public selectedInputValue: any;
-  public selectedChild: HTMLElement;
-  public hasFocus: boolean = false;
-  public hasServiceError: boolean = false;
-
-  public endOfList: boolean = true;
-  public lastSearchedValue: string;
-
-  public lastReturnedResults: Array<string>;
-
-  public keyValuePairs: any;
-  public filteredKeyValuePairs: any;
-
-  public resultsAvailable: string = ' results available. Use up and down arrows to scroll through results. Hit enter to select.';
-
-  public onTouchedCallback: () => void = () => {};
-  public propogateChange: (_: any) => void = (_: any) => { };
-
-  get value(): any {
-    return this.innerValue;
-  }
-
-  set value(val: any) {
-    if (val !== this.innerValue) {
-      this.innerValue = val;
-      this.propogateChange(val);
-    }
-  }
-
   /*
    How do define custom http callbacks:
    <sam-autocomplete
@@ -160,11 +156,45 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   /**
    * Passes in a observable for handling when keyEvents subject triggers updates
    */
-  @Input() httpRequest: Observable<any>;
+  @Input() public httpRequest: Observable<any>;
+
+  public results: Array<string>;
+  public innerValue: any = '';
+  public inputValue: any = '';
+  public selectedInputValue: any;
+  public selectedChild: HTMLElement;
+  public hasFocus: boolean = false;
+  public hasServiceError: boolean = false;
+
+  public endOfList: boolean = true;
+  public lastSearchedValue: string;
+
+  public lastReturnedResults: Array<string>;
+
+  public keyValuePairs: any;
+  public filteredKeyValuePairs: any;
+
+  public resultsAvailable: string = ' results available. Use up and down arrows\
+   to scroll through results. Hit enter to select.';
+
+  public get value(): any {
+    return this.innerValue;
+  }
+
+  public set value(val: any) {
+    if (val !== this.innerValue) {
+      this.innerValue = val;
+      this.propogateChange(val);
+    }
+  }
+
   public keyEvents: Subject<any> = new Subject();
 
+  public onTouchedCallback: () => void = () => undefined;
+  public propogateChange: (_: any) => void = (_: any) => undefined;
+
   constructor(@Optional() public autocompleteService: AutocompleteService,
-    private samFormService:SamFormService,
+    private samFormService: SamFormService,
     private cdr: ChangeDetectorRef) {}
 
   ngOnChanges(changes) {
@@ -183,7 +213,8 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
         const currentResults = data.forEach((item) => {
           return item[this.config.keyValueConfig.keyProperty];
         });
-        if (JSON.stringify(currentResults) !== JSON.stringify(this.lastReturnedResults)) {
+        if (JSON.stringify(currentResults)
+          !== JSON.stringify(this.lastReturnedResults)) {
           data.forEach((item) => {
             this.filteredKeyValuePairs.push(item);
           });
@@ -191,7 +222,9 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       } else {
         this.filteredKeyValuePairs = data;
       }
-      let len = !!this.filteredKeyValuePairs ? this.filteredKeyValuePairs.length : 0;
+      const len = !!this.filteredKeyValuePairs
+        ? this.filteredKeyValuePairs.length
+        : 0;
       this.pushSROnlyMessage(len + this.resultsAvailable);
       this.lastReturnedResults = data.forEach((item) => {
         return item[this.config.keyValueConfig.keyProperty];
@@ -206,7 +239,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
       } else {
         this.results = data;
       }
-      let len = !!this.results ? this.results.length : 0;
+      const len = !!this.results ? this.results.length : 0;
       this.pushSROnlyMessage(len + this.resultsAvailable);
       this.lastReturnedResults = data;
     }
@@ -215,30 +248,32 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
 
   requestError(err) {
     this.results = ['An error occurred. Try a different value.'];
-    let errorobj = {};
+    const errorobj = {};
     errorobj[this.config.keyValueConfig.keyProperty] = 'Error';
-    errorobj[this.config.keyValueConfig.valueProperty] = 'An error occurred. Try a different value.';
+    errorobj[this.config.keyValueConfig.valueProperty] =
+      'An error occurred. Try a different value.';
     this.filteredKeyValuePairs = [errorobj];
     this.hasServiceError = true;
     this.pushSROnlyMessage(this.results[0]);
   }
 
-  ngOnInit(){
-    if(!this.control){
+  ngOnInit() {
+    if (!this.control) {
       return;
     }
     if (!this.useFormService) {
       this.control.statusChanges.subscribe(() => {
         setTimeout(() => {
           this.wrapper.formatErrors(this.control);
-        })
+        });
       });
-    }
-    else {
-      this.samFormService.formEventsUpdated$.subscribe(evt=>{
-        if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='submit'){
+    } else {
+      this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
+        if ((!evt.root || evt.root === this.control.root)
+          && evt.eventType && evt.eventType === 'submit') {
           this.wrapper.formatErrors(this.control);
-        } else if((!evt['root']|| evt['root']==this.control.root) && evt['eventType'] && evt['eventType']=='reset'){
+        } else if ((!evt.root || evt.root === this.control.root)
+          && evt.eventType && evt.eventType === 'reset') {
           this.wrapper.clearError();
         }
       });
@@ -249,7 +284,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     if (this.control) {
       setTimeout(() => {
         this.wrapper.formatErrors(this.control);
-      })
+      });
     }
   }
 
@@ -272,198 +307,268 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   }
 
   onKeyup(event: any) {
-    // If event.target.name is an empty string, set search string to default search string
+    // If event.target.name is an empty string, set search string to default 
+    // search string
     const searchString = event.target.value || '';
-
-    if ((event.code === 'Tab' || event.keyIdentifier === 'Tab')){
+    const keyCode = getKeyboardEventKey(event);
+    if (isTabKey(keyCode)) {
       return;
     }
-    if ((event.code === 'Backspace' || event.keyIdentifier === 'Backspace')
-        || (event.code === 'Delete' || event.keyIdentifier === 'Delete')) {
-      if (!this.innerValue) {
-        this.results = null;
-        this.filteredKeyValuePairs = null;
-      }
-      if (this.inputValue === '') {
-        this.value = null;
-      }
+    if (isBackspaceKey(keyCode) || keyCode === 'Delete') {
+      this.handleBackspaceKeyup();
     }
 
-    if ((this.lastSearchedValue !== searchString) || searchString==="") {
-      this.results = null;
-      this.filteredKeyValuePairs = null;
-      this.endOfList = true;
-      this.lastSearchedValue = searchString;
-    }
+    this.checkLastSearch(searchString);
 
-    if (this.options && this.isKeyValuePair(this.options)) {
-      this.filteredKeyValuePairs = this.filterKeyValuePairs(searchString, this.options);
-      this.pushSROnlyMessage(this.filteredKeyValuePairs.length + this.resultsAvailable);
-    } else if (this.options && !this.isKeyValuePair(this.options)) {
+    if (this.options) {
+      this.onKeyUpWithOptions(searchString);
+    } else if (this.endOfList) {
+      this.onKeyUpUsingService(searchString);
+    }
+  }
+
+  onKeyUpWithOptions(searchString: string) {
+    if (this.isKeyValuePair(this.options)) {
+      this.filteredKeyValuePairs =
+        this.filterKeyValuePairs(searchString, this.options);
+      this.pushSROnlyMessage(
+        this.filteredKeyValuePairs.length + this.resultsAvailable
+      );
+    } else {
       this.results = this.filterResults(searchString, this.options);
       this.pushSROnlyMessage(this.results.length + this.resultsAvailable);
-    } else if (this.endOfList) {
-      let options = null;
-      if (this.config) {
-        options = this.config.serviceOptions || null;
-      }
-      if (this.autocompleteService) {
-        this.autocompleteService.fetch(searchString, this.endOfList, options).subscribe(
+    }
+  }
+
+  onKeyUpUsingService(searchString: string) {
+    let options = undefined;
+    if (this.config) {
+      options = this.config.serviceOptions || undefined;
+    }
+    if (this.autocompleteService) {
+      this.autocompleteService.fetch(searchString, this.endOfList, options)
+        .subscribe(
           (res) => this.requestSuccess(res),
           (err) => this.requestError(err),
         );
-      } else if (this.httpRequest) {
-        this.keyEvents.next(searchString);
-      } else {
-        console.error('unable to fetch search results');
-      }
+    } else if (this.httpRequest) {
+      this.keyEvents.next(searchString);
+    } else {
+      console.error('unable to fetch search results');
+    }
+  }
 
+  handleBackspaceKeyup() {
+    if (!this.innerValue) {
+      this.results = undefined;
+      this.filteredKeyValuePairs = undefined;
+    }
+    if (this.inputValue === '') {
+      this.value = undefined;
+    }
+  }
+
+  checkLastSearch(searchString: string): void {
+    if ((this.lastSearchedValue !== searchString) || searchString === '') {
+      this.results = undefined;
+      this.filteredKeyValuePairs = undefined;
+      this.endOfList = true;
+      this.lastSearchedValue = searchString;
     }
   }
 
   onKeydown(event: any) {
-    this.srOnly.nativeElement.innerHTML = null;
+    this.srOnly.nativeElement.innerHTML = undefined;
 
     const list: ElementRef = this.resultsList || this.resultsListKV;
+    const keyCode = getKeyboardEventKey(event);
 
     if (list) {
-
       // On down arrow press
-      if (event.code === 'ArrowDown' || event.keyIdentifier === 'Down') {
+      if (isArrowDownKey(keyCode)) {
         this.onDownArrowDown(list);
       }
 
       // On up arrow press
-      if (event.code === 'ArrowUp' || event.keyIdentifier === 'Up') {
+      if (isArrowUpKey(keyCode)) {
         this.onUpArrowDown(list);
       }
 
       // On enter press
-      if ((event.code === 'Enter' || event.keyIdentified === 'Enter') && !this.hasServiceError ){
+      if (isEnterKey(keyCode) && !this.hasServiceError ) {
         this.onEnterDown(list);
       }
 
       // ESC
-      if ((event.code === 'Escape' || event.keyIdentified === 'Escape')) {
+      if (isEscapeKey(keyCode)) {
         this.clearDropdown();
       }
-    } else if ((event.code === 'Enter' || event.keyIdentified === 'Enter') && this.allowAny ) {
+    } else if (isEnterKey(keyCode) && this.allowAny ) {
       this.setSelected(this.inputValue);
     }
   }
 
   onDownArrowDown(list: ElementRef) {
+    if (!this.listExists(list)) {
+      return;
+    }
+
     const children = list.nativeElement.children;
     let selectedChildIndex = this.getSelectedChildIndex(children);
     let message;
     let isFirstItemCategory: boolean = false;
+    this.setEndOfList(selectedChildIndex, children.length);
 
-    if (children && children.length > 0) {
-      /**
-       * Check if the list has children
-       */
-      if (selectedChildIndex === children.length - 2) {
-        /**
-         * If current item is second to last item in list,
-         * set endOfList flag to true. This was intended
-         * to be used for pagination purposes with the
-         * autocomplete service.
-         */
-        this.endOfList = true;
-      }
-      if (selectedChildIndex === children.length - 1) {
-        selectedChildIndex = 0;
-        if (this.categories.length > 0 && !this.config.isCategorySelectable) {
-          if (children[selectedChildIndex].classList.contains('category')) {
-            isFirstItemCategory = true;
-            selectedChildIndex++;
-          }
-        }
-        children[selectedChildIndex].classList.add('isSelected');
-        this.selectedChild = children[selectedChildIndex];
-        message = !!this.results ?
-                  this.results[selectedChildIndex] :
-                  this.filteredKeyValuePairs[selectedChildIndex][this.config.keyValueConfig.valueProperty];
-      } else {
-        if (this.categories.length > 0 && !this.config.isCategorySelectable) {
-          if (children[selectedChildIndex + 1].classList.contains('category')) {
-            if (selectedChildIndex + 1 === 0) {
-              isFirstItemCategory = true;
-            }
-            selectedChildIndex++;
-          }
-        }
-        children[selectedChildIndex + 1].classList.add('isSelected');
-        this.selectedChild = children[selectedChildIndex + 1];
-        message = !!this.results ?
-                    this.results[selectedChildIndex + 1] :
-                    this.filteredKeyValuePairs[selectedChildIndex + 1][this.config.keyValueConfig.valueProperty];
-      }
-
-      this.pushSROnlyMessage(message);
-      list.nativeElement.scrollTop = isFirstItemCategory ? this.selectedChild.offsetTop - (list.nativeElement.clientTop * 24) : this.selectedChild.offsetTop - list.nativeElement.clientTop;
+    if (selectedChildIndex === children.length - 1) {
+      selectedChildIndex = 
+        this.checkCategoryIndex(children[selectedChildIndex]);
+      // if (this.categories.length > 0 && !this.config.isCategorySelectable) {
+      //   if (children[selectedChildIndex].classList.contains('category')) {
+      //     isFirstItemCategory = true;
+      //     selectedChildIndex++;
+      //   }
+      // }
+     isFirstItemCategory = this.isFirstItemCategory(
+        children[selectedChildIndex],
+        selectedChildIndex
+      );
+      selectedChildIndex = selectedChildIndex
+        + this.incrementIfFirstCategory(isFirstItemCategory);
+      children[selectedChildIndex].classList.add('isSelected');
+      this.selectedChild = children[selectedChildIndex];
+      message = this.setMessage(selectedChildIndex);
+    } else {
+      isFirstItemCategory = this.isFirstItemCategory(
+        children[selectedChildIndex + 1],
+        selectedChildIndex + 1
+      );
+      selectedChildIndex = selectedChildIndex
+        + this.incrementIfFirstCategory(isFirstItemCategory);
+      children[selectedChildIndex + 1].classList.add('isSelected');
+      this.selectedChild = children[selectedChildIndex + 1];
+      message = this.setMessage(selectedChildIndex + 1);
     }
+
+    this.pushSROnlyMessage(message);
+    list.nativeElement.scrollTop = isFirstItemCategory
+      ? this.selectedChild.offsetTop - (list.nativeElement.clientTop * 24)
+      : this.selectedChild.offsetTop - list.nativeElement.clientTop;
+  }
+
+  listExists(list): boolean {
+    return !list.nativeElement.children
+      || !(list.nativeElement.children.length > 0)
+      ? false
+      : true;
+  }
+
+  incrementIfFirstCategory(isFirstCategory: boolean): number {
+    return isFirstCategory ? 1 : 0;
+  }
+
+  isFirstItemCategory(item, index): boolean {
+    let returnValue = false;
+    if (this.categories.length > 0 && !this.config.isCategorySelectable) {
+      if (item.classList.contains('category') && index === 0) {
+        returnValue = true;
+      }
+    }
+    return returnValue;
+  }
+
+  checkCategoryIndex(currentItem): number {
+    let selectedChildIndex = 0;
+    if (this.categories.length > 0 && !this.config.isCategorySelectable) {
+      if (currentItem.classList.contains('category')) {
+        // isFirstItemCategory = true;
+        selectedChildIndex++;
+      }
+    }
+    return selectedChildIndex;
+  }
+
+  setMessage(index): string {
+    return !!this.results
+      ? this.results[index]
+      : this.filteredKeyValuePairs[index]
+        [this.config.keyValueConfig.valueProperty];
   }
 
   onUpArrowDown(list) {
+    if (!this.listExists(list)) {
+      return;
+    }
     const children = list.nativeElement.children;
     let selectedChildIndex = this.getSelectedChildIndex(children);
     let message;
     let isFirstItemCategory: boolean = false;
 
 
-    if (children && children.length > 0) {
-      if (selectedChildIndex === 0 || selectedChildIndex === -1) {
-        this.endOfList = true;
-        children[children.length - 1].classList.add('isSelected');
-        this.selectedChild = children[children.length - 1];
-        message = !!this.results ?
-                  this.results[children.length - 1] :
-                  this.filteredKeyValuePairs[children.length -1][this.config.keyValueConfig.valueProperty];
-      } else {
-        if (this.categories.length > 0 && !this.config.isCategorySelectable) {
-          if (selectedChildIndex !== 1 && children[selectedChildIndex - 1].classList.contains('category')) {
-            selectedChildIndex--;
-          }
+    if (this.isFirstItem(selectedChildIndex)) {
+      this.endOfList = true;
+      children[children.length - 1].classList.add('isSelected');
+      this.selectedChild = children[children.length - 1];
+      message = this.setMessage(children.length - 1);
+    } else {
+      if (this.categories.length > 0 && !this.config.isCategorySelectable) {
 
-          if (selectedChildIndex === 2) {
-            isFirstItemCategory = true;
-          }
-
-          if (selectedChildIndex - 1 === 0 && children[selectedChildIndex - 1].classList.contains('category')) {
-            this.endOfList = true;
-            children[children.length - 1].classList.add('isSelected');
-            this.selectedChild = children[children.length - 1];
-            message = !!this.results ?
-                      this.results[children.length - 1] :
-                      this.filteredKeyValuePairs[children.length -1][this.config.keyValueConfig.valueProperty];
-            this.pushSROnlyMessage(message);
-            list.nativeElement.scrollTop = this.selectedChild.offsetTop - list.nativeElement.clientTop;
-            return;
-          }
+        if (selectedChildIndex !== 1
+          && children[selectedChildIndex - 1].classList
+          .contains('category')) {
+          selectedChildIndex--;
         }
-        children[selectedChildIndex - 1].classList.add('isSelected');
-        this.selectedChild = children[selectedChildIndex - 1];
-        message = !!this.results ?
-                  this.results[selectedChildIndex - 1] :
-                  this.filteredKeyValuePairs[selectedChildIndex -1][this.config.keyValueConfig.valueProperty];
+
+        if (selectedChildIndex === 2) {
+          isFirstItemCategory = true;
+        }
+
+        if (selectedChildIndex - 1 === 0
+          && children[selectedChildIndex - 1].classList
+          .contains('category')) {
+          this.endOfList = true;
+          children[children.length - 1].classList.add('isSelected');
+          this.selectedChild = children[children.length - 1];
+          message = this.setMessage(children.length - 1);
+          this.pushSROnlyMessage(message);
+          list.nativeElement.scrollTop = this.selectedChild.offsetTop
+            - list.nativeElement.clientTop;
+          return;
+        }
       }
-      this.pushSROnlyMessage(message);
-      list.nativeElement.scrollTop = isFirstItemCategory ? 0 : this.selectedChild.offsetTop - list.nativeElement.clientTop;
+      children[selectedChildIndex - 1].classList.add('isSelected');
+      this.selectedChild = children[selectedChildIndex - 1];
+      message = this.setMessage(selectedChildIndex - 1);
     }
+    this.pushSROnlyMessage(message);
+    list.nativeElement.scrollTop = this.setScrollTop(
+      isFirstItemCategory,
+      list
+    );
+  }
+
+  isFirstItem(index): boolean {
+    return index === 0 || index === -1
+      ? true
+      : false;
+  }
+
+  setScrollTop(isFirstItemCategory: boolean, list): number {
+    return isFirstItemCategory
+      ? 0
+      : this.selectedChild.offsetTop - list.nativeElement.clientTop;
   }
 
   onEnterDown(list) {
     const children = list.nativeElement.children;
     const selectedChild = this.getSelectedChildIndex(children);
-    let message;
 
     if (selectedChild !== -1) {
       if (this.results && this.results[selectedChild]) {
         this.setSelected(this.results[selectedChild]);
       }
 
-      if (this.filteredKeyValuePairs && this.filteredKeyValuePairs[selectedChild]) {
+      if (this.filteredKeyValuePairs
+        && this.filteredKeyValuePairs[selectedChild]) {
         this.setSelected(this.filteredKeyValuePairs[selectedChild]);
       }
     } else {
@@ -485,30 +590,35 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
   }
 
   pushSROnlyMessage(message: string) {
-    const srResults: HTMLElement = document.createElement("li");
+    const srResults: HTMLElement = document.createElement('li');
     srResults.innerText = message;
     this.srOnly.nativeElement.appendChild(srResults);
   }
 
   checkForFocus(event) {
-    if(!this.allowAny && this.selectedInputValue!=this.inputValue && this.inputValue!=""){
+    if (!this.allowAny
+      && this.selectedInputValue !== this.inputValue
+      && this.inputValue !== '') {
       this.inputValue = this.selectedInputValue;
     }
-    if(this.inputValue==""){
-      this.results = null;
-      this.filteredKeyValuePairs = null;
+    if (this.inputValue === '') {
+      this.results = undefined;
+      this.filteredKeyValuePairs = undefined;
     }
     this.hasFocus = false;
-    this.srOnly.nativeElement.innerHTML = null;
+    this.srOnly.nativeElement.innerHTML = undefined;
   }
 
   setSelected(value: any) {
-    if (this.config && this.config.categoryProperty && !this.config.isCategorySelectable && this.isCategory(value)) {
+    if (this.config && this.config.categoryProperty
+      && !this.config.isCategorySelectable
+      && this.isCategory(value)) {
       return;
     }
     let displayValue = value;
-    if(this.config && this.config.keyValueConfig && value[this.config.keyValueConfig.valueProperty]){
-      displayValue = value[this.config.keyValueConfig.valueProperty]
+    if (this.config && this.config.keyValueConfig
+      && value[this.config.keyValueConfig.valueProperty]) {
+      displayValue = value[this.config.keyValueConfig.valueProperty];
     }
     const message = displayValue;
     this.innerValue = value;
@@ -517,7 +627,7 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     this.input.nativeElement.value = message;
     this.selectedInputValue = this.inputValue;
     this.propogateChange(this.innerValue);
-    this.srOnly.nativeElement.innerHTML = null;
+    this.srOnly.nativeElement.innerHTML = undefined;
     this.input.nativeElement.blur();
     this.pushSROnlyMessage(`You chose ${message}`);
     this.enterEvent.emit(value);
@@ -529,35 +639,41 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
         return str;
       }
     });
-    if(!Array.isArray(reducedArr)){
+    if (!Array.isArray(reducedArr)) {
       reducedArr = [];
     }
     return reducedArr;
   }
 
   filterKeyValuePairs(subStr: string, keyValuePairs: any): any {
-    subStr = subStr.toLowerCase();
+    const lowerSubStr = subStr.toLowerCase();
     const categories = [];
     let currentCategory = '';
     const reducedArr = keyValuePairs.reduce((prev, curr, index, arr) => {
-      if (curr[this.config.keyValueConfig.keyProperty].toLowerCase().includes(subStr) ||
-          curr[this.config.keyValueConfig.valueProperty].toLowerCase().includes(subStr)) {
+      if (curr[this.config.keyValueConfig.keyProperty]
+            .toLowerCase().includes(lowerSubStr)
+          || curr[this.config.keyValueConfig.valueProperty]
+            .toLowerCase().includes(lowerSubStr)) {
         /**
-         * Check if the current item in the array contains the substring value in
-         * either the key or value property provided on the config input
+         * Check if the current item in the array contains the substring value 
+         * in either the key or value property provided on the config input
          */
-        if (curr[this.config.categoryProperty] && currentCategory !== curr[this.config.categoryProperty]) {
+        if (curr[this.config.categoryProperty] && currentCategory
+          !== curr[this.config.categoryProperty]) {
           /**
-           * Checks if the current item in the array has a category. If so, checks to see if
-           * this category is the current category. If not, it will push it to the returned array.
-           * If it is the current category, it skips.
+           * Checks if the current item in the array has a category. If so, 
+           * checks to see if this category is the current category. If not, it 
+           * will push it to the returned array. If it is the current category, 
+           * it skips.
            */
           currentCategory = curr[this.config.categoryProperty];
           const filteredCategories = this.categories.filter((category) => {
             /**
-             * Filters the category input array property for a matching category property.
+             * Filters the category input array property for a matching 
+             * category property.
              */
-            if (category[this.config.keyValueConfig.keyProperty] === curr[this.config.categoryProperty]) {
+            if (category[this.config.keyValueConfig.keyProperty] 
+              === curr[this.config.categoryProperty]) {
               category.isCategory = true;
               return category;
             }
@@ -571,28 +687,28 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
     return reducedArr;
   }
 
-  clearDropdown(){
+  clearDropdown() {
     this.input.nativeElement.blur();
     this.hasFocus = false;
-    this.srOnly.nativeElement.innerHTML = null;
+    this.srOnly.nativeElement.innerHTML = undefined;
   }
 
-  inputFocusHandler(evt){
+  inputFocusHandler(evt) {
     this.onTouchedCallback();
     this.hasFocus = true;
     this.onKeyup(evt);
     return evt;
   }
 
-  clearInput(){
-    if(!this.inputValue){
+  clearInput() {
+    if (!this.inputValue) {
       return;
     }
-    this.filteredKeyValuePairs = null;
-    this.results = null;
-    this.input.nativeElement.value = "";
-    this.innerValue = "";
-    this.propogateChange(null);
+    this.filteredKeyValuePairs = undefined;
+    this.results = undefined;
+    this.input.nativeElement.value = '';
+    this.innerValue = '';
+    this.propogateChange(undefined);
     this.clearDropdown();
   }
 
@@ -606,18 +722,17 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
 
   writeValue(value: any): void {
     if (value !== this.innerValue) {
-      if(value && this.config && this.config.keyValueConfig){
-        this.inputValue = value[this.config.keyValueConfig.valueProperty];
-      } else {
-        this.inputValue = value;
-      }
+      this.inputValue = value && this.config && this.config.keyValueConfig
+        ? this.inputValue = value[this.config.keyValueConfig.valueProperty]
+        : this.inputValue = value;
       this.selectedInputValue = this.inputValue;
       this.innerValue = value;
-      this.input.nativeElement.value = this.inputValue;//angular isn't populating this
-    } else if (value === null) {
+      // angular isn't populating this
+      this.input.nativeElement.value = this.inputValue; 
+    } else if (value === undefined) {
       this.inputValue = '';
       this.selectedInputValue = '';
-      this.innerValue = null;
+      this.innerValue = undefined;
     }
   }
 
@@ -631,5 +746,11 @@ export class SamAutocompleteComponent implements ControlValueAccessor, OnChanges
 
   setDisabledState(isDisabled: boolean) {
     this.input.nativeElement.disabled = isDisabled;
+  }
+
+  private setEndOfList(index, length) {
+    if (index === length - 2) {
+      this.endOfList = true;
+    }
   }
 }

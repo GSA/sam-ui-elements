@@ -1,4 +1,11 @@
-import {Component, Input, Output, EventEmitter, OnChanges, ChangeDetectorRef} from "@angular/core";
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+  ChangeDetectorRef
+} from '@angular/core';
 
 
 @Component ({
@@ -15,7 +22,9 @@ import {Component, Input, Output, EventEmitter, OnChanges, ChangeDetectorRef} fr
       
       <sidebar>
         <div sam-sticky limit=1200 container="page-content">
-          <img *ngIf="sideNavImage" src="{{sideNavImage}}" alt="{{sideNavImageAlt}}"/>
+          <img *ngIf="sideNavImage"
+            src="{{sideNavImage}}"
+            alt="{{sideNavImageAlt}}"/>
           <sam-sidenav 
             type="step"
             (selection)="navHandler($event)" 
@@ -132,7 +141,7 @@ export class FormStepComponent implements OnChanges {
      */
     @Input() type: string;
     @Input() typeLabel: string;
-    @Input() statusBannerType:string = "error";
+    @Input() statusBannerType: string = 'error';
     @Input() statusBannerLeadingText: string;
     @Input() statusBannerExpanded: boolean = false;
     @Input() tabsComponent: any;
@@ -150,15 +159,15 @@ export class FormStepComponent implements OnChanges {
       this.toggleButtons(this.hasErrors);
     }
 
-    breadcrumbHandler(evt){
+    breadcrumbHandler(evt) {
       this.breadcrumbOut.emit(evt);
     }
 
-    formAction(evtStr){
-      this.action.emit({event:evtStr});
+    formAction(evtStr) {
+      this.action.emit({event: evtStr});
     }
 
-    navHandler(evt){
+    navHandler(evt) {
       this.sideNavOutput.emit(evt);
     }
 
