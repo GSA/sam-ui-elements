@@ -97,7 +97,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
     this.onTouched();
   }
 
-  constructor(private samFormService:SamFormService) {}
+  constructor(private samFormService: SamFormService) {}
 
   ngOnInit() {
     if (!this.name) {
@@ -121,19 +121,20 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   }
 
   setModelValue(val) {
-    if (!Array.isArray(val)) {
-      val = [];
+    let returnVal = val;
+    if (!Array.isArray(returnVal)) {
+      returnVal = [];
     }
-    //don't select options that are disabled
-    for (var idx in this.options) {
-      let lookup = val.findIndex((value)=>{
-        return value == this.options[idx].value;
+    // don't select options that are disabled
+    for (const idx in this.options) {
+      const lookup = returnVal.findIndex((value) => {
+        return value === this.options[idx].value;
       });
-      if (this.options[idx].disabled && lookup != -1) {
-        val.splice(lookup,1);
+      if (this.options[idx].disabled && lookup !== -1) {
+        returnVal.splice(lookup, 1);
       }
     }
-    this.model = val;
+    this.model = returnVal;
   }
 
   // Give the check all label a name for screen readers
