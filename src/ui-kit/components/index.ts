@@ -14,6 +14,7 @@ import { SamBannerComponent } from './banner';
 import { SamBreadcrumbsComponent } from './breadcrumbs';
 import { SamCollapsibleComponent } from './collapsible';
 import { SamDownloadComponent } from './download';
+import { SamFilesComponent } from './files/files.component';
 import { SamFiltersContainerComponent } from './filters-container';
 import { SamHeaderComponent } from './header';
 import { SamHistoryComponent } from './history';
@@ -22,14 +23,19 @@ import { SamLabelComponent } from './label';
 import { SamModalComponent } from './modal';
 import { SamMultiSelectDropdownComponent } from './multiselect-dropdown';
 import { SamPaginationComponent } from './pagination';
+import { SamPipesModule } from '../pipes';
 import { SamPointOfContactComponent } from './point-of-contact';
+import { SamProgress } from './progress-bar/progress-bar.component';
 import { SamSidenavModule } from './sidenav';
 import { SamSpinnerComponent } from './spinner';
 import { SamTabsComponent, SamTabComponent } from './tabs';
+import { SamUploadComponent } from './upload/upload.component';
 import { SamWrapperModule } from '../wrappers';
 import { SamCommentsModule } from './comments';
 import { SamImageModule } from './image';
 import { SamActionButton, SamActionsDropdownComponent } from './actions';
+
+
 
 @NgModule({
   imports: [
@@ -39,10 +45,11 @@ import { SamActionButton, SamActionsDropdownComponent } from './actions';
     SamDirectivesModule,
     SamElementsModule,
     AccordionsModule,
+    SamPipesModule,
     SamSidenavModule,
     SamWrapperModule,
     SamCommentsModule,
-    SamImageModule
+    SamImageModule,
   ],
   declarations: [
     SamAlertComponent,
@@ -52,6 +59,7 @@ import { SamActionButton, SamActionsDropdownComponent } from './actions';
     SamBreadcrumbsComponent,
     SamCollapsibleComponent,
     SamDownloadComponent,
+    SamFilesComponent,
     SamFiltersContainerComponent,
     SamHeaderComponent,
     SamHistoryComponent,
@@ -61,13 +69,17 @@ import { SamActionButton, SamActionsDropdownComponent } from './actions';
     SamMultiSelectDropdownComponent,
     SamPaginationComponent,
     SamPointOfContactComponent,
+    SamProgress,
     SamSpinnerComponent,
     SamTabsComponent,
     SamTabComponent,
+    SamUploadComponent,
     SamActionButton,
-    SamActionsDropdownComponent
+    SamActionsDropdownComponent,
   ],
   exports: [
+    SamActionButton,
+    SamActionsDropdownComponent,
     SamAlertComponent,
     SamAlertFooterComponent,
     SamBadgeComponent,
@@ -75,6 +87,7 @@ import { SamActionButton, SamActionsDropdownComponent } from './actions';
     SamBreadcrumbsComponent,
     SamCollapsibleComponent,
     SamDownloadComponent,
+    SamFilesComponent,
     SamFiltersContainerComponent,
     SamHeaderComponent,
     SamHistoryComponent,
@@ -84,15 +97,15 @@ import { SamActionButton, SamActionsDropdownComponent } from './actions';
     SamMultiSelectDropdownComponent,
     SamPaginationComponent,
     SamPointOfContactComponent,
+    SamProgress,
     SamSidenavModule,
     SamSpinnerComponent,
     SamTabsComponent,
     SamTabComponent,
+    SamUploadComponent,
     AccordionsModule,
     SamCommentsModule,
     SamImageModule,
-    SamActionButton,
-    SamActionsDropdownComponent
   ]
 })
 export class SamComponentsModule {}
