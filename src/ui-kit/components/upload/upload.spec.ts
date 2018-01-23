@@ -56,7 +56,7 @@ describe('The Sam Upload component', () => {
 
   it('the model object should be in the Done state after upload', () => {
     const url = 'http://localhost/upload';
-    const file = new File([], 'sample.jpeg');
+    const file = { name: 'sample.jpeg', size: 1001 };
     const req = new HttpRequest('POST', url, file, { reportProgress: true });
     const list = { 0: file, length: 1, item: () => { return file; } };
 
@@ -72,7 +72,7 @@ describe('The Sam Upload component', () => {
 
   it('should delete the upload if the upload was a success and delete is clicked', () => {
     const url = 'http://localhost/upload';
-    const file = new File([], 'sample.jpeg');
+    const file = { name: 'sample.jpeg', size: 1001 };
     const request = new HttpRequest('POST', url, file, { reportProgress: true });
     const deleteRequest = new HttpRequest('DELETE', 'files/1');
     const list = { 0: file, length: 1, item: () => { return file; } };
