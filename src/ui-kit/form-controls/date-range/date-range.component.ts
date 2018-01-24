@@ -145,8 +145,8 @@ export class SamDateRangeComponent
 
     return (c: AbstractControl) => {
       // valid when fromRequired => startDate AND toRequired => endDate
-      const valid = (!fromRequired || c.value.startDate)
-        && (!toRequired || c.value.endDate);
+      const valid = (!fromRequired || (c.value && c.value.startDate))
+        && (!toRequired || (c.value && c.value.endDate));
       if (c.dirty && !valid) {
         return {
           dateRangeError: {
