@@ -272,30 +272,10 @@ export class SamAutocompleteComponentRefactor
     }
 
     if(this._service){
-      this.firstTimeFilter(true);
-      this._onInputEvent.first().subscribe(()=>{
-        this._filter = this._getFilterMethod();
-      });
+      this._filter = this._dummyFilter;
     } else {
-      this.firstTimeFilter(false);
+      this._filter = this._getFilterMethod();
     }
-    
-  }
-
-  public ngAfterContentInit() {
-    /**
-     * Instantiate screen reader pusher with Renderer2 and ViewChild UL
-     * In this lifecycle because it needs a reference to the HTML element
-     * once the view has been checked. 
-     */
-    this._screenreader = new ScreenReaderPusher(
-      this._renderer,
-      this._screenReaderEl.nativeElement
-    );
-  }
-
-  private firstTimeFilter(opt){
-    this._filter = opt? this._dummyFilter :this._getFilterMethod();
     
     /**
      * Emits event from user input in text input.
@@ -303,9 +283,15 @@ export class SamAutocompleteComponentRefactor
      */
     this._onInputEvent = new BehaviorSubject<any>(this._filter(''));
 
-    /**
-     * Stream of input events that filter results and push to 
-     */
+    if(this._service){
+      this._onInputEvent.first().subscribe(()=>{
+        this._filter = this._getFilterMethod();
+      });
+    }
+
+   /**
+    * Stream of input events that filter results and push to 
+    */
     this._filteredOptions =
       this._onInputEvent
       /**
@@ -425,7 +411,19 @@ export class SamAutocompleteComponentRefactor
         );
   }
 
+  public ngAfterContentInit() {
     /**
+     * Instantiate screen reader pusher with Renderer2 and ViewChild UL
+     * In this lifecycle because it needs a reference to the HTML element
+     * once the view has been checked. 
+     */
+    this._screenreader = new ScreenReaderPusher(
+      this._renderer,
+      this._screenReaderEl.nativeElement
+    );
+  }
+
+  /**
    * Takes any number of functions 
    * and returns a function that is
    * the composition of the passed
