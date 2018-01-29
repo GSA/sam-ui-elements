@@ -104,6 +104,10 @@ export class SamAutocompleteComponentRefactor
    */
   @Input() public isCategorySelectable?: boolean;
   /**
+   * Used when a service is used to get autocomplete options
+   */
+  @Input() public serviceOptions: any;
+  /**
    * Allow the component to accept
    * any user input as a valid value.
    * 
@@ -199,7 +203,6 @@ export class SamAutocompleteComponentRefactor
   private _highlightedItemIndex: number;
   private _addOnIconClass: string = 'fa-chevron-down';
   private _keyValueConfig: any;
-  private _serviceOptions: any;
   private _categoryProperty: string;
 
   private _screenreader: ScreenReaderPusher;
@@ -268,17 +271,41 @@ export class SamAutocompleteComponentRefactor
       }
     }
 
-    this._filter = this._getFilterMethod();
+    if(this._service){
+      this.firstTimeFilter(true);
+      this._onInputEvent.first().subscribe(()=>{
+        this._filter = this._getFilterMethod();
+      });
+    } else {
+      this.firstTimeFilter(false);
+    }
+    
+  }
 
+  public ngAfterContentInit() {
+    /**
+     * Instantiate screen reader pusher with Renderer2 and ViewChild UL
+     * In this lifecycle because it needs a reference to the HTML element
+     * once the view has been checked. 
+     */
+    this._screenreader = new ScreenReaderPusher(
+      this._renderer,
+      this._screenReaderEl.nativeElement
+    );
+  }
+
+  private firstTimeFilter(opt){
+    this._filter = opt? this._dummyFilter :this._getFilterMethod();
+    
     /**
      * Emits event from user input in text input.
      * Initialized with call to filter with an empty string
      */
     this._onInputEvent = new BehaviorSubject<any>(this._filter(''));
 
-   /**
-    * Stream of input events that filter results and push to 
-    */
+    /**
+     * Stream of input events that filter results and push to 
+     */
     this._filteredOptions =
       this._onInputEvent
       /**
@@ -311,7 +338,7 @@ export class SamAutocompleteComponentRefactor
           return this._filter(
               event && event.target && event.target.value || '',
               this._endOfList,
-              this._serviceOptions
+              this.serviceOptions
             )
             .map(ev => {
               if (!this._cache[filterValue]) {
@@ -396,18 +423,6 @@ export class SamAutocompleteComponentRefactor
           event => this._resetListHighlighting(),
           err => console.error(err)
         );
-  }
-
-  public ngAfterContentInit() {
-    /**
-     * Instantiate screen reader pusher with Renderer2 and ViewChild UL
-     * In this lifecycle because it needs a reference to the HTML element
-     * once the view has been checked. 
-     */
-    this._screenreader = new ScreenReaderPusher(
-      this._renderer,
-      this._screenReaderEl.nativeElement
-    );
   }
 
     /**
@@ -683,6 +698,13 @@ export class SamAutocompleteComponentRefactor
         this.options.filter(
           item => item.toLowerCase().includes(returnVal)
         )
+      );
+  }
+
+  private _dummyFilter(value: string): Observable<any[]> {
+    return Observable
+      .of(
+        []
       );
   }
   
