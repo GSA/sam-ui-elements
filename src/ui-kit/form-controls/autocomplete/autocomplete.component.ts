@@ -318,7 +318,11 @@ export class SamAutocompleteComponent
       this.handleBackspaceKeyup();
     }
 
-    this.checkLastSearch(searchString);
+    if(!isArrowDownKey(getKeyboardEventKey(event)) && 
+      !isArrowUpKey(getKeyboardEventKey(event)) &&
+      event.type!=="focus"){
+      this.checkLastSearch(searchString);
+    }
 
     if (this.options) {
       this.onKeyUpWithOptions(searchString);

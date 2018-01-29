@@ -104,6 +104,10 @@ export class SamAutocompleteComponentRefactor
    */
   @Input() public isCategorySelectable?: boolean;
   /**
+   * Used when a service is used to get autocomplete options
+   */
+  @Input() public serviceOptions: any;
+  /**
    * Allow the component to accept
    * any user input as a valid value.
    * 
@@ -199,7 +203,6 @@ export class SamAutocompleteComponentRefactor
   private _highlightedItemIndex: number;
   private _addOnIconClass: string = 'fa-chevron-down';
   private _keyValueConfig: any;
-  private _serviceOptions: any;
   private _categoryProperty: string;
 
   private _screenreader: ScreenReaderPusher;
@@ -268,13 +271,23 @@ export class SamAutocompleteComponentRefactor
       }
     }
 
-    this._filter = this._getFilterMethod();
-
+    if(this._service){
+      this._filter = this._dummyFilter;
+    } else {
+      this._filter = this._getFilterMethod();
+    }
+    
     /**
      * Emits event from user input in text input.
      * Initialized with call to filter with an empty string
      */
     this._onInputEvent = new BehaviorSubject<any>(this._filter(''));
+
+    if(this._service){
+      this._onInputEvent.first().subscribe(()=>{
+        this._filter = this._getFilterMethod();
+      });
+    }
 
    /**
     * Stream of input events that filter results and push to 
@@ -311,7 +324,7 @@ export class SamAutocompleteComponentRefactor
           return this._filter(
               event && event.target && event.target.value || '',
               this._endOfList,
-              this._serviceOptions
+              this.serviceOptions
             )
             .map(ev => {
               if (!this._cache[filterValue]) {
@@ -410,7 +423,7 @@ export class SamAutocompleteComponentRefactor
     );
   }
 
-    /**
+  /**
    * Takes any number of functions 
    * and returns a function that is
    * the composition of the passed
@@ -683,6 +696,13 @@ export class SamAutocompleteComponentRefactor
         this.options.filter(
           item => item.toLowerCase().includes(returnVal)
         )
+      );
+  }
+
+  private _dummyFilter(value: string): Observable<any[]> {
+    return Observable
+      .of(
+        []
       );
   }
   
