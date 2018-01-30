@@ -330,7 +330,23 @@ export class SamAutocompleteComponentRefactor
               if (!this._cache[filterValue]) {
                 this._cache[filterValue] = ev;
               } else {
-                ev.forEach(item => this._cache[filterValue].push(item));
+                //prevent existing items from going into cache 
+                let keys = [];
+                if(ev && ev.length>0 && TypeCheckHelpers.isObject(ev[0])){
+                  keys = this._cache[filterValue].map(obj=>{
+                    return obj[this.config.keyValueConfig.keyProperty];
+                  });
+                }
+                ev.forEach(item => {
+                  if (TypeCheckHelpers.isString(item) 
+                    && this._cache[filterValue].indexOf(item)===-1){
+                    this._cache[filterValue].push(item);
+                  } else if (TypeCheckHelpers.isObject(item)) {
+                    if(keys.indexOf(item[this.config.keyValueConfig.keyProperty])===-1){
+                      this._cache[filterValue].push(item);
+                    }
+                  }
+                });
               }
               this._displaySpinner = false; 
               this._endOfList = false;
@@ -354,7 +370,12 @@ export class SamAutocompleteComponentRefactor
       this._onInputKeydown
         .subscribe(
           (event) => {
-            this._onInputEvent.next(this._inputValue);                
+            //handler expects in this format
+            this._onInputEvent.next({
+              target:{
+                value:this._inputValue
+              }
+            });
           }
         );
     
@@ -577,7 +598,7 @@ export class SamAutocompleteComponentRefactor
    * Returns 0 if undefined.
    */
   private _circularIncrement(index: number, length: number): number {
-    const returnIndex: number = index === undefined || index === length - 1
+    const returnIndex: number = index === undefined || index >= length - 1
       ?  0
       : index + 1;
 
