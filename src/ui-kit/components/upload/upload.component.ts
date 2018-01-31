@@ -68,55 +68,44 @@ export namespace UploadValidator {
 })
 export class SamUploadComponent implements ControlValueAccessor {
 
-  /*
-    The request the gets called after a file has been selected for upload. Report progress must be true if you want
-    the progress bar.
-
-    Example:
-
-    // In host.template.html
-    <sam-upload [uploadRequest]=myRequest>
-
-    // In host.component.ts
-    private myRequest: RequestGenerator = (file: File) => {
-      return new HttpRequest('POST', `http://localhost:8989/upload`, file, { reportProgress: true });
-    }
-
+  /**
+   * The request the gets called after a file has been selected for upload. 
+   * Report progress must be true if you want the progress bar.
    */
   @Input() public uploadRequest: RequestGenerator;
 
-  /*
-    The request that gets called when the user click the (x). If the upload
-    is in progress, the upload is simply canceled. If delete fails, the file is removed from the list and no error is
-    presented to the user.
-
-    Example:
-
-    // In host.template.html
-    <sam-upload [deleteRequest]=myDeleteRequest>
-
-    // In host.component.ts
-    private myDeleteRequest: RequestGenerator = (file: File) => {
-      return new HttpRequest('DELETE', `http://localhost:8989/files/${file.name}`, { reportProgress: true });
-    }
-  */
+  /**
+   * The request that gets called when the user click the (x). If the upload 
+   * is in progress, the upload is simply canceled. If delete fails, the file 
+   * is removed from the list and no error is presented to the user.
+   */
   @Input() public deleteRequest: DeleteRequestGenerator;
 
-  /* Max number of files that can be uploaded. If a file is in the error status it does not count. 0 for infinite */
+  /**
+   * Max number of files that can be uploaded. If a file is in the error status 
+   * it does not count. 0 for infinite
+   */ 
   @Input() public maxFiles = 0;
 
-  /* Uploads will not start until the host calls component.startUpload() */
+  /**
+   * Uploads will not start until the host calls component.startUpload() 
+   */
   @Input() public uploadDeferred: boolean = false;
 
-  /* "accept" can be any value which is valid for input[accept]
-    (<input accept="file_extension|audio/*|video/*|image/*|media_type">)
+  /**
+   *  "accept" can be any value which is valid for input[accept]
+   * (<input accept="file_extension|audio/*|video/*|image/*|media_type">)
    */
   @Input() public accept: string;
 
-  /* Show an error if the file does match the regular expression */
+  /** 
+   * Show an error if the file does match the regular expression 
+   */
   @Input() public pattern: RegExp;
 
-  /* If maxFileSizeInBytes is exceeded, then display a warning */
+  /**
+   * If maxFileSizeInBytes is exceeded, then display a warning
+   */
   @Input() public maxFileSizeInBytes: number = 0;
 
   public dragState: DragState = DragState.NotDragging;

@@ -24,6 +24,12 @@ import { Component, Input } from '@angular/core';
   `]
 })
 export class SamProgress {
+  /**
+   * Sets the current progress value
+   */
   @Input() value: number = 0;
+  /**
+   * Sets the max progress value
+   */
   @Input() max: number = 1;
 }
