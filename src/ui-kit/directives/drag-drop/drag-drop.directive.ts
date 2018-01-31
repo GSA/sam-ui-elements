@@ -10,10 +10,22 @@ export const enum DragState {
   selector: '[sam-drag-drop]',
 })
 export class SamDragDropDirective {
-
+  /**
+   * Disables the effect 
+   */
   @Input() public disabled: boolean = false;
+  /**
+   * Sets the current drag state ('NotDragging', 'DraggingInTarget', 
+   * 'DraggingOutsideTarget')
+   */
   @Input() public dragState: DragState = DragState.NotDragging;
+  /**
+   * Event emitter for drag state changes
+   */
   @Output() public dragStateChange: EventEmitter<DragState> = new EventEmitter();
+  /**
+   * Emitter for drop events
+   */
   @Output() public dropEvent: EventEmitter<File[]> = new EventEmitter();
 
   constructor(private _elementRef: ElementRef) { }

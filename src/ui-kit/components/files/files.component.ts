@@ -14,9 +14,18 @@ const VALUE_ACCESSOR: any = {
   templateUrl: './files.template.html',
 })
 export class SamFilesComponent implements ControlValueAccessor {
+  /**
+   * Sets the disabled state
+   */
   @Input() public disabled: boolean = false;
+  /**
+   * Sets the id on the hidden input to restrict to one file when using the browser file picker
+   */
   @Input() public name: string = null;
-  @Input() public multiple = false; // restrict to one file when using the browser file picker
+  /**
+   * Allows for multiple file upload
+   */
+  @Input() public multiple = false;
   @ViewChild('file') private fileInput: ElementRef; // The hidden file input
 
   private _files: File[] = [];
