@@ -6,7 +6,9 @@ import { PageService } from './page.service';
   template: '<ng-content></ng-content>',
 })
 export class SidebarTemplateComponent implements OnInit {
-  
+  /**
+   * Toggles a wider sidebar in the page service
+   */
   @Input() public wide: boolean = false;
   
   constructor(private pageService: PageService) {

@@ -26,12 +26,32 @@ import { BadgeConfig } from '../components/badge';
 `,
 })
 export class TitleAndSectionComponent {
+  /**
+   * Sets the section text
+   */
   @Input() public section: string;
+  /**
+   * Sets the title text
+   */
   @Input() public title: string;
+  /**
+   * Sets the badge text
+   */
   @Input() public badge: string;
+  /**
+   * Sets the type text
+   */
   @Input() public type: string;
+  /**
+   * Sets the type label text
+   */
   @Input() public typeLabel: string;
+  /**
+   * Sets the caption text
+   */
   @Input() public caption: string;
-
+  /**
+   * Sets the badge component options
+   */
   @Input() public badgeOptions: BadgeConfig = {};
 }

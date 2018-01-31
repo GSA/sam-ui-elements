@@ -21,8 +21,16 @@ import { Component, Input } from '@angular/core';
 `,
 })
 export class FormOnlyPageTemplateComponent {
-
+  /**
+   * Sets the theme of the component
+   */
   @Input() public theme: 'inside'|'outside';
-  @Input() public section: any;
-  @Input() public title: any;
+  /**
+   * Sets the TitleAndSectionComponent section input
+   */
+  @Input() public section: string;
+  /**
+   * Sets the TitleAndSectionComponent title input
+   */
+  @Input() public title: string;
 }
