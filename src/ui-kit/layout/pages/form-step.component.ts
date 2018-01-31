@@ -121,7 +121,7 @@ export class FormStepComponent implements OnChanges {
      */
     @Input() sideNavImageAlt;
     /**
-     * ... 
+     * Used to toggle appearance of back/next buttons
      */
     @Input() sectionIndex: number;
     /**
@@ -137,19 +137,52 @@ export class FormStepComponent implements OnChanges {
      */
     @Input() pageTitle: string;
     /**
-     * Sets form step type (...)
+     * Sets form step type 
      */
     @Input() type: string;
+    /**
+     * Sets the page component typelabel input
+     */
     @Input() typeLabel: string;
+    /**
+     * Sets the banner alert type
+     */
     @Input() statusBannerType: string = 'error';
+    /**
+     * Sets the banner leading text
+     */
     @Input() statusBannerLeadingText: string;
+    /**
+     * Sets the state of the banner
+     */
     @Input() statusBannerExpanded: boolean = false;
+    /**
+     * Passes in a tab component 
+     */
     @Input() tabsComponent: any;
+    /**
+     * Override to toggle buttons on/off if there are external errors
+     */
     @Input() hasErrors: any;
+    /**
+     * Passes in an Alerts model
+     */
     @Input() alerts: any;
+    /**
+     * Emitter for general events
+     */
     @Output() action = new EventEmitter();
+    /**
+     * Emitter for sidenav events
+     */
     @Output() sideNavOutput = new EventEmitter();
+    /**
+     * Emitter for breadcrumb events
+     */
     @Output() public breadcrumbOut = new EventEmitter();
+    /**
+     * Emitter for status banner events
+     */
     @Output() statusBannerExpandedChange = new EventEmitter();
 
     constructor(private cdr: ChangeDetectorRef) {
