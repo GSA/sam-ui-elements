@@ -151,7 +151,7 @@ export class SamTextComponent implements ControlValueAccessor, OnDestroy {
   public ngAfterViewInit() {
     if (this.control) {
       this.wrapper.formatErrors(this.control);
-        this.cdr.detectChanges();
+      this.cdr.detectChanges();
     }
   }
 
