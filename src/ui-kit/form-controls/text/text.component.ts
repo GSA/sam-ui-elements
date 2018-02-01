@@ -5,7 +5,8 @@ import {
   ViewChild,
   forwardRef,
   Output,
-  EventEmitter
+  EventEmitter,
+  OnDestroy
 } from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import {
@@ -17,6 +18,7 @@ import {
 } from '@angular/forms';
 
 import { SamFormService } from '../../form-service';
+import { Subject } from 'rxjs';
 
 export const TEXT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -32,7 +34,7 @@ export const TEXT_VALUE_ACCESSOR: any = {
   templateUrl: 'text.template.html',
   providers: [ TEXT_VALUE_ACCESSOR ]
 })
-export class SamTextComponent implements ControlValueAccessor {
+export class SamTextComponent implements ControlValueAccessor, OnDestroy {
   /**
   * Sets the text input value
   */
@@ -92,6 +94,8 @@ export class SamTextComponent implements ControlValueAccessor {
   public onChange: any = (c) => undefined;
   public onTouched: any = () => undefined;
 
+  private ngUnsubscribe: Subject<any> = new Subject();
+
   constructor(private samFormService: SamFormService,
     private cdr: ChangeDetectorRef) {}
 
@@ -121,7 +125,7 @@ export class SamTextComponent implements ControlValueAccessor {
     this.control.setValidators(validators);
 
     if (!this.useFormService) {
-      this.control.statusChanges.subscribe(() => {
+      this.control.statusChanges.takeUntil(this.ngUnsubscribe).subscribe(() => {
         this.wrapper.formatErrors(this.control);
         this.cdr.detectChanges();
       });
@@ -136,6 +140,12 @@ export class SamTextComponent implements ControlValueAccessor {
         }
       });
     }
+  }
+
+  public ngOnDestroy(){
+    this.cdr.detach();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   public ngAfterViewInit() {
