@@ -47,9 +47,13 @@ export class PageTemplateComponent implements OnInit {
     badge: undefined
   };
   /**
-   * Emits breadcrumb events
+   * (deprecated) Emits breadcrumb events
    */
   @Output() public breadcrumbOut = new EventEmitter();
+  /**
+   * Emits breadcrumb events
+   */
+  @Output() public breadcrumbChange = new EventEmitter();
 
   constructor(private pageService: PageService) {}
 

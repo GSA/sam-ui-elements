@@ -13,7 +13,7 @@ import {
   template: `
     <page 
       [breadcrumbs]="crumbs" 
-      (breadcrumbOut)="breadcrumbHandler($event)"
+      (breadcrumbChange)="breadcrumbHandler($event)"
       theme="inside"
       [section]="sectionTitle" 
       [title]="pageTitle"
@@ -100,119 +100,129 @@ import {
   `
 })
 export class FormStepComponent implements OnChanges {
-    /**
-     * Sets breadcrumbs model
-     */
-    @Input() crumbs;
-    /**
-     * Sets sidenav model
-     */
-    @Input() sideNavModel;
-    /**
-     * Sets sidenav selection
-     */
-    @Input() sideNavSelection;
-    /**
-     * Sets sidenav image src
-     */
-    @Input() sideNavImage;
-    /**
-     * Sets sidenav image alt
-     */
-    @Input() sideNavImageAlt;
-    /**
-     * Used to toggle appearance of back/next buttons
-     */
-    @Input() sectionIndex: number;
-    /**
-     * Sets number of sections 
-     */
-    @Input() numberOfSections: number;
-    /**
-     * Sets section title
-     */
-    @Input() sectionTitle: string;
-    /**
-     * Sets page title
-     */
-    @Input() pageTitle: string;
-    /**
-     * Sets form step type 
-     */
-    @Input() type: string;
-    /**
-     * Sets the page component typelabel input
-     */
-    @Input() typeLabel: string;
-    /**
-     * Sets the banner alert type
-     */
-    @Input() statusBannerType: string = 'error';
-    /**
-     * Sets the banner leading text
-     */
-    @Input() statusBannerLeadingText: string;
-    /**
-     * Sets the state of the banner
-     */
-    @Input() statusBannerExpanded: boolean = false;
-    /**
-     * Passes in a tab component 
-     */
-    @Input() tabsComponent: any;
-    /**
-     * Override to toggle buttons on/off if there are external errors
-     */
-    @Input() hasErrors: any;
-    /**
-     * Passes in an Alerts model
-     */
-    @Input() alerts: any;
-    /**
-     * Emitter for general events
-     */
-    @Output() action = new EventEmitter();
-    /**
-     * Emitter for sidenav events
-     */
-    @Output() sideNavOutput = new EventEmitter();
-    /**
-     * Emitter for breadcrumb events
-     */
-    @Output() public breadcrumbOut = new EventEmitter();
-    /**
-     * Emitter for status banner events
-     */
-    @Output() statusBannerExpandedChange = new EventEmitter();
+  /**
+   * Sets breadcrumbs model
+   */
+  @Input() crumbs;
+  /**
+   * Sets sidenav model
+   */
+  @Input() sideNavModel;
+  /**
+   * Sets sidenav selection
+   */
+  @Input() sideNavSelection;
+  /**
+   * Sets sidenav image src
+   */
+  @Input() sideNavImage;
+  /**
+   * Sets sidenav image alt
+   */
+  @Input() sideNavImageAlt;
+  /**
+   * Used to toggle appearance of back/next buttons
+   */
+  @Input() sectionIndex: number;
+  /**
+   * Sets number of sections 
+   */
+  @Input() numberOfSections: number;
+  /**
+   * Sets section title
+   */
+  @Input() sectionTitle: string;
+  /**
+   * Sets page title
+   */
+  @Input() pageTitle: string;
+  /**
+   * Sets form step type 
+   */
+  @Input() type: string;
+  /**
+   * Sets the page component typelabel input
+   */
+  @Input() typeLabel: string;
+  /**
+   * Sets the banner alert type
+   */
+  @Input() statusBannerType: string = 'error';
+  /**
+   * Sets the banner leading text
+   */
+  @Input() statusBannerLeadingText: string;
+  /**
+   * Sets the state of the banner
+   */
+  @Input() statusBannerExpanded: boolean = false;
+  /**
+   * Passes in a tab component 
+   */
+  @Input() tabsComponent: any;
+  /**
+   * Override to toggle buttons on/off if there are external errors
+   */
+  @Input() hasErrors: any;
+  /**
+   * Passes in an Alerts model
+   */
+  @Input() alerts: any;
+  /**
+   * Emitter for general events
+   */
+  @Output() action = new EventEmitter();
+  /**
+   * (deprecated) Emitter for sidenav events
+   */
+  @Output() sideNavOutput = new EventEmitter();
+  /**
+   * Emitter for sidenav events
+   */
+  @Output() sideNavChange = new EventEmitter();
+  /**
+   * (deprecated) Emitter for breadcrumb events
+   */
+  @Output() public breadcrumbOut = new EventEmitter();
+  /**
+   * Emitter for breadcrumb events
+   */
+  @Output() public breadcrumbChange = new EventEmitter();
+  /**
+   * Emitter for status banner events
+   */
+  @Output() statusBannerExpandedChange = new EventEmitter();
 
-    constructor(private cdr: ChangeDetectorRef) {
-    }
+  constructor(private cdr: ChangeDetectorRef) {
+  }
 
-    ngOnChanges() {
-      this.toggleButtons(this.hasErrors);
-    }
+  ngOnChanges() {
+    this.toggleButtons(this.hasErrors);
+  }
 
-    breadcrumbHandler(evt) {
-      this.breadcrumbOut.emit(evt);
-    }
+  breadcrumbHandler(evt) {
+    this.breadcrumbOut.emit(evt);
+    this.breadcrumbChange.emit(evt);
+  }
 
-    formAction(evtStr) {
-      this.action.emit({event: evtStr});
-    }
+  formAction(evtStr) {
+    this.action.emit({event: evtStr});
+  }
 
-    navHandler(evt) {
-      this.sideNavOutput.emit(evt);
-    }
+  navHandler(evt) {
+    this.sideNavOutput.emit(evt);
+    this.sideNavChange.emit(evt);
+  }
 
   toggleButtons(hasErrors: boolean) {
-      if (hasErrors === true) {
-        this.tabsComponent.toggleButtonOnAccess = true;
-        this.tabsComponent.toggleButtonOnErrors = true;
-        this.cdr.detectChanges();
-      } else {
-        this.tabsComponent.toggleButtonOnAccess = true;
-        this.tabsComponent.toggleButtonOnErrors = false;
-        this.cdr.detectChanges();
-      }
+    if (hasErrors === true) {
+      this.tabsComponent.toggleButtonOnAccess = true;
+      this.tabsComponent.toggleButtonOnErrors = true;
+      this.cdr.detectChanges();
+    } else {
+      this.tabsComponent.toggleButtonOnAccess = true;
+      this.tabsComponent.toggleButtonOnErrors = false;
+      this.cdr.detectChanges();
     }
+  }
 }
