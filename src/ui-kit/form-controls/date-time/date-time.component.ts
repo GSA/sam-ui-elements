@@ -126,7 +126,7 @@ export class SamDateTimeComponent
   }
 
   dateBlur() {
-    this.timeComponent.hour_v.nativeElement.focus();
+    this.timeComponent.hourV.nativeElement.focus();
   }
 
   onInputChange(): void {
