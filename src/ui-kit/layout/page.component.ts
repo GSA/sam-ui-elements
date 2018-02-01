@@ -65,5 +65,6 @@ export class PageTemplateComponent implements OnInit {
 
   breadcrumbHandler(evt) {
     this.breadcrumbOut.emit(evt);
+    this.breadcrumbChange.emit(evt);
   }
 }
