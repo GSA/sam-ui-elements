@@ -11,7 +11,9 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   `
 })
 export class SamYoutubeComponent implements OnInit{
-  
+  /**
+  * YouTube video id
+  */
   @Input() public id: string;
 
   YouTubeVideoUrl: string;

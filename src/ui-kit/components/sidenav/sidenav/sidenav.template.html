@@ -1,8 +1,8 @@
 <aside *ngIf="type != 'step'">
-  <ul class="usa-sidenav-list">
+  <ul class="sam-ui side navigation">
     <li *ngFor="let child of model.children; let $index = index">
       <a tabindex="0"
-        [ngClass]="{'usa-current': isSelected($index), 'disabled': child.disabled}"
+        [ngClass]="{'active': isSelected($index) && noChildren(), 'disabled': child.disabled}"
         (keyup.enter)="updateUI($index, $event, child)"
         (click)="updateUI($index, $event, child)">
           {{child.label}}

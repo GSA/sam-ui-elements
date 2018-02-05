@@ -113,6 +113,10 @@ export class SamSidenavComponent implements OnInit {
     return this.service.getData()[0] === index;
   }
 
+  noChildren(): boolean{
+    return (this.service.getData()).length == 1;
+  }
+
   updateUI(index: number, event: Event, menuItem: MenuItem): void {
     if (menuItem && menuItem.disabled) {
       return;

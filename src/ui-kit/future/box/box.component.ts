@@ -9,7 +9,10 @@ import { Component, Input} from '@angular/core';
   `
 })
 export class SamBoxComponent{
-  
+  /**
+  * Options:
+  * default | primary | outline
+  */
   @Input() public type: string;
 
 }
