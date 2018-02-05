@@ -489,7 +489,8 @@ export class SamDateComponent
   }
 
   _keyIsNumber(char) {
-    if (char.match(/[0-9]/) !== undefined) {
+    // tslint:disable-next-line
+    if (char.match(/[0-9]/) != undefined) {
       return true;
     }
   }
