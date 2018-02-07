@@ -43,6 +43,6 @@ import { SamYoutubeComponent } from './youtube';
     SamYoutubeComponent
   ]
 })
-export class SamFutureModule { }
+export class SamExperimentalModule { }
 
 
