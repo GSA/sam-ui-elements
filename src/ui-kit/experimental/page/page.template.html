@@ -1,0 +1,18 @@
+<main class="sam-ui page" [ngClass]="{ 'sidebar': pageService.sidebar }">
+  
+  <div class="header-area">
+    <sam-heading *ngIf="title" [text]="title" [sup]="suptitle"  importance="highest"></sam-heading>
+  </div>
+  
+  <sam-breadcrumbs [crumbs]="breadcrumbs" (crumbAction)="breadcrumbHandler($event)">
+  </sam-breadcrumbs>
+  
+  <div class="sidebar-area" *ngIf="pageService.sidebar">
+    <ng-content select="sam-sidebar"></ng-content>
+  </div>
+  
+  <div class="content-area">
+    <ng-content></ng-content>
+  </div>
+  
+</main>
