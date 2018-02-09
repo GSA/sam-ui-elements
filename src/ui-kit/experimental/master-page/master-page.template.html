@@ -1,0 +1,20 @@
+<div class="sam-ui master-page">
+  <header class="master-page-header">
+    <a [routerLink]="['/patterns/latest/home']">
+      <sam-icon name="home"></sam-icon>
+      Patterns
+    </a>
+    <a [routerLink]="['/patterns/pages/page',{outlets:{'master-modal': masterpageservice.docLink }}]">
+      <sam-icon name="book"></sam-icon>
+      Documentation
+    </a>
+    <a [routerLink]="['/patterns/pages/page',{outlets:{'master-modal': masterpageservice.settingsLink }}]">
+      <sam-icon name="cog"></sam-icon>
+      Settings
+    </a>
+  </header>
+  <ng-content></ng-content>
+  <footer class="master-page-footer">Master Page Footer</footer>
+</div>
+
+<router-outlet name="master-modal"></router-outlet>

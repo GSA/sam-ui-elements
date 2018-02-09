@@ -204,7 +204,7 @@ export class SamAutocompleteMultiselectComponent
   private list: any = [];
   private inputTimer: any;
   private displaySpinner: boolean = false;
-
+  private textAreaMinHeight = 22;
   private debounceTime = 250;
   private cache: AutocompleteCache = new AutocompleteCache();
   private endOfList = true;
@@ -480,6 +480,7 @@ export class SamAutocompleteMultiselectComponent
     this.ref.detectChanges();
 
     event.target.style.width = this.calculateTextAreaWidth(event.target);
+    event.target.style.height = Math.max(event.target.scrollHeight, this.textAreaMinHeight) + "px";
 
     return event;
   }
@@ -872,6 +873,7 @@ export class SamAutocompleteMultiselectComponent
 
   public clearSearch() {
     this.searchText = '';
+    this.textArea.nativeElement.style.height = this.textAreaMinHeight+"px";
     this.displaySpinner = false;
   }
 

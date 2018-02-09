@@ -9,6 +9,7 @@ import { SamElementsModule } from './elements';
 import { SamFormControlsModule } from './form-controls';
 import { SamFormTemplatesModule } from './form-templates';
 import { SamLayoutModule } from './layout';
+import { SamExperimentalModule } from './experimental';
 import { SamPipesModule } from './pipes';
 import { ServiceDirectivesModule } from './service-directives';
 import { SamFormService } from './form-service';
@@ -33,6 +34,7 @@ import { SamFormService } from './form-service';
     SamFormControlsModule,
     SamFormTemplatesModule,
     SamLayoutModule,
+    SamExperimentalModule,
     SamPipesModule,
     ServiceDirectivesModule
   ],
