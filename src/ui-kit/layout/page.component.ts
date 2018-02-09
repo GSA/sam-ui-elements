@@ -49,7 +49,7 @@ export class PageTemplateComponent implements OnInit {
   /**
    * Sets additional header options if true, by default it is false
    */
-  @Input() public headeroptions: boolean = false;
+  @Input() public headerOptions: boolean = false;
   /**
    * (deprecated) Emits breadcrumb events
    */
