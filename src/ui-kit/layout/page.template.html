@@ -4,10 +4,13 @@
   <div grid class="container">
 
     <!-- Breadcrumbs -->
-    <div row *ngIf="breadcrumbs">
-      <div columns="12">
-        <sam-breadcrumbs [crumbs]="breadcrumbs" (crumbAction)="breadcrumbHandler($event)">
+    <div row>
+      <div columns="8">
+        <sam-breadcrumbs *ngIf="breadcrumbs" [crumbs]="breadcrumbs" (crumbAction)="breadcrumbHandler($event)">
         </sam-breadcrumbs>
+      </div>
+      <div columns="4">
+        <ng-content select="[id=watchlist]"></ng-content>
       </div>
     </div>
 
