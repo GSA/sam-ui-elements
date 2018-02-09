@@ -47,6 +47,10 @@ export class PageTemplateComponent implements OnInit {
     badge: undefined
   };
   /**
+   * Sets additional header options if true, by default it is false
+   */
+  @Input() public headeroptions: boolean = false;
+  /**
    * (deprecated) Emits breadcrumb events
    */
   @Output() public breadcrumbOut = new EventEmitter();

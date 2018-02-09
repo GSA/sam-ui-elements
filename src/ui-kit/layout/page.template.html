@@ -4,7 +4,13 @@
   <div grid class="container">
 
     <!-- Breadcrumbs -->
-    <div row>
+    <div row *ngIf="!headeroptions">
+      <div columns="12">
+        <sam-breadcrumbs *ngIf="breadcrumbs" [crumbs]="breadcrumbs" (crumbAction)="breadcrumbHandler($event)">
+        </sam-breadcrumbs>
+      </div>
+    </div>
+    <div row *ngIf="headeroptions">
       <div columns="8">
         <sam-breadcrumbs *ngIf="breadcrumbs" [crumbs]="breadcrumbs" (crumbAction)="breadcrumbHandler($event)">
         </sam-breadcrumbs>
@@ -12,6 +18,7 @@
       <div columns="4">
         <ng-content select="[id=watchlist]"></ng-content>
       </div>
+    </div>>
     </div>
 
     <div *ngIf="!breadcrumbs" class="sam-ui hidden divider"></div>
