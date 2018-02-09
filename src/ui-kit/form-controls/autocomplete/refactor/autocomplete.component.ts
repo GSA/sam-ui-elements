@@ -23,7 +23,7 @@ import { AutocompleteConfig } from '../../../types';
 import { AutocompleteService } from '../autocomplete.service';
 import { SamFormService } from '../../../form-service';
 import { ScreenReaderPusher } from './screenreader-pusher';
-import * as KeyEventHelpers from '../../../key-event-helpers';
+import { KeyHelper } from '../../../utilities/key-helper/key-helper';
 import * as TypeCheckHelpers from '../../../type-check-helpers';
 
 const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
@@ -387,13 +387,11 @@ export class SamAutocompleteComponentRefactor
       this._onInputKeyup
         .subscribe(
           (event) => {            
-            const keyCode = KeyEventHelpers.getKeyboardEventKey(event);
-
-            if (KeyEventHelpers.isArrowDownKey(keyCode)) {
+            if (KeyHelper.is('down', event)) {
               this._handleDownArrow();
-            } else if (KeyEventHelpers.isArrowUpKey(keyCode)) {
+            } else if (KeyHelper.is('up', event)) {
               this._handleUpArrow();
-            } else if (KeyEventHelpers.isEnterKey(keyCode)) {
+            } else if (KeyHelper.is('enter', event)) {
               event.preventDefault();
               this._handleEnter(event);
             } 
