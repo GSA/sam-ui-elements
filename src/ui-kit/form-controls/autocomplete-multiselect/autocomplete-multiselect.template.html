@@ -59,7 +59,8 @@
                       (keydown)="selectOnEnter(handleEscapeEvent(handleUpArrow(handleDownArrow(handleBackspaceEvent(handleEnterEvent($event))))))"
                       (keyup)="applyTextAreaWidth(handleEnterEvent($event))"
                       [disabled]="isDisabled"
-                      (focus)="filterOptions('')">
+                      (focus)="filterOptions('')"
+                      aria-label="autocomplete-multiselect">
             </textarea>
 
 
