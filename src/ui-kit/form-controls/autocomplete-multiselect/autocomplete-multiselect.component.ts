@@ -24,7 +24,7 @@ import { AutocompleteService } from '../autocomplete/autocomplete.service';
 import { AutocompleteCache } from './autocomplete-cache';
 
 import { SamFormService } from '../../form-service';
-
+import { KeyHelper } from '../../utilities/key-helper/key-helper';
 @Component({
   selector: 'sam-autocomplete-multiselect',
   templateUrl: 'autocomplete-multiselect.template.html',
@@ -264,7 +264,7 @@ export class SamAutocompleteMultiselectComponent
    * area.
    */
   public handleBackspaceEvent(event) {
-    if (event.code === 'Backspace' || event.keyIdentified === 'Backspace') {
+    if (KeyHelper.is('backspace', event)) {
       if (event.target.value === '' && this.value.length > 0) {
         this.deselectItem(this.value[this.value.length - 1]);
       }
@@ -277,7 +277,7 @@ export class SamAutocompleteMultiselectComponent
    * Clears list when escape is pressed
    */
   public handleEscapeEvent(event) {
-    if (event.code === 'Escape' || event.keyIdentified === 'Escape') {
+    if (KeyHelper.is('esc', event)) {
       this.clearSearch();
       this.blurTextArea();
     }
@@ -292,7 +292,7 @@ export class SamAutocompleteMultiselectComponent
    * inserting a return character into the text area.
    */
   public handleEnterEvent(event) {
-    if (event.code === 'Enter' || event.keyIdentified === 'Enter') {
+    if (KeyHelper.is('enter', event)) {
       event.preventDefault();
     }
 
@@ -307,8 +307,7 @@ export class SamAutocompleteMultiselectComponent
   public selectOnEnter(event) {
     if (this.resultsList
         && this.resultsList.nativeElement
-        && event.code === 'Enter'
-        || event.keyIdentified === 'Enter') {
+        && KeyHelper.is('enter', event)) {
       const lookedUpItem = this.getItem();
       if (this.allowAny
           && lookedUpItem
@@ -361,7 +360,7 @@ export class SamAutocompleteMultiselectComponent
   }
 
   public handleDownArrow(event) {
-    if ( event.code === 'ArrowDown' || event.keyIdentified === 'Down' ) {
+    if (KeyHelper.is('down', event)) {
       const results = this.getResults();
       const selectedIndex = this.setSelectedChild(
         this.getSelectedChildIndex(results),
@@ -381,7 +380,7 @@ export class SamAutocompleteMultiselectComponent
   }
 
   public handleUpArrow(event) {
-    if ( event.code === 'ArrowUp' || event.keyIdentified === 'Up' ) {
+    if (KeyHelper.is('up', event)) {
       const results = this.getResults();
 
       const selectedIndex = this.setSelectedChild(
@@ -475,7 +474,7 @@ export class SamAutocompleteMultiselectComponent
    */
   public applyTextAreaWidth(event) {
 
-    if ( event.code !== 'ArrowDown' && event.code !== 'ArrowUp' ) {
+    if ( !KeyHelper.is('down', event) && !KeyHelper.is('up', event) ) {
       this.filterOptions(this.searchText);
     }
     this.ref.detectChanges();
@@ -852,7 +851,7 @@ export class SamAutocompleteMultiselectComponent
   }
 
   public deselectItemOnEnter(event, selectedItem): void {
-    if (event.code === 'Enter' || event.keyIdentified === 'Enter') {
+    if (KeyHelper.is('enter', event)) {
       this.value = this.value.filter((item) => {
         if (item !== selectedItem) {
           return item;

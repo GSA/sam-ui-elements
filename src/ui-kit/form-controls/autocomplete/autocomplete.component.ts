@@ -21,15 +21,9 @@ import { AutocompleteConfig } from '../../types';
 import { AutocompleteService } from './autocomplete.service';
 import { SamFormService } from '../../form-service';
 
-import { 
-  isArrowDownKey,
-  getKeyboardEventKey,
-  isArrowUpKey,
-  isEnterKey,
-  isEscapeKey,
-  isBackspaceKey,
-  isTabKey
-} from '../../key-event-helpers';
+import { getKeyboardEventKey } from '../../key-event-helpers';
+
+import { KeyHelper } from '../../utilities/key-helper/key-helper';
 
 const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -311,15 +305,20 @@ export class SamAutocompleteComponent
     // search string
     const searchString = event.target.value || '';
     const keyCode = getKeyboardEventKey(event);
-    if (isTabKey(keyCode)) {
-      return;
+
+    if (KeyHelper.is('tab', event)) {
+      return
     }
-    if (isBackspaceKey(keyCode) || keyCode === 'Delete') {
+
+    if (KeyHelper.is('backspace', event)
+      || event.key === 'Delete'
+      || event.keyIdentifier === 'Delete'
+      || event.code === 'Delete') {
       this.handleBackspaceKeyup();
     }
 
-    if(!isArrowDownKey(getKeyboardEventKey(event)) && 
-      !isArrowUpKey(getKeyboardEventKey(event)) &&
+    if(!KeyHelper.is('down', event) && 
+      !KeyHelper.is('up', event) &&
       event.type!=="focus"){
       this.checkLastSearch(searchString);
     }
@@ -385,29 +384,28 @@ export class SamAutocompleteComponent
     this.srOnly.nativeElement.innerHTML = undefined;
 
     const list: ElementRef = this.resultsList || this.resultsListKV;
-    const keyCode = getKeyboardEventKey(event);
 
     if (list) {
       // On down arrow press
-      if (isArrowDownKey(keyCode)) {
+      if (KeyHelper.is('down', event)) {
         this.onDownArrowDown(list);
       }
 
       // On up arrow press
-      if (isArrowUpKey(keyCode)) {
+      if (KeyHelper.is('up', event)) {
         this.onUpArrowDown(list);
       }
 
       // On enter press
-      if (isEnterKey(keyCode) && !this.hasServiceError ) {
+      if (KeyHelper.is('enter', event) && !this.hasServiceError ) {
         this.onEnterDown(list);
       }
 
       // ESC
-      if (isEscapeKey(keyCode)) {
+      if (KeyHelper.is('esc', event)) {
         this.clearDropdown();
       }
-    } else if (isEnterKey(keyCode) && this.allowAny ) {
+    } else if (KeyHelper.is('enter', event) && this.allowAny ) {
       this.setSelected(this.inputValue);
     }
   }
