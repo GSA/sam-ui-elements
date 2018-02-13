@@ -10,8 +10,10 @@ import { Component, Input } from '@angular/core';
         <div row>
           <div columns="2"></div>
           <div columns="8">
-            <title-and-section [title]="title"
-              [section]="section"></title-and-section>
+            <div class="form-section">
+              <title-and-section [title]="title"
+                                 [section]="section"></title-and-section>
+            </div>
             <ng-content></ng-content>
           </div>
           <div columns="2"></div>
