@@ -57,26 +57,16 @@ export class SamAlertComponent {
   selectedType: string = this.types.success.class;
   showMoreLinkText = 'Show Details';
 
-  public closeAlert(event?: any) {
-    if(event && (event.keyCode === 9 || (event.shiftKey && event.keyCode === 9))) {
-      //tab or shift was down when tab was pressed
-      return;
-    } else if(event === undefined || event.keyCode === 13) {
+  public closeAlert() {
       this.onDismissClick();
-    }
    }
 
-   public toggleContent(event?: any) {
-     if(event && (event.keyCode === 9 || (event.shiftKey && event.keyCode === 9))) {
-       //tab or shift was down when tab was pressed
-       return;
-     } else if(event === undefined || event.keyCode === 13) {
+   public toggleContent() {
        this.showMoreToggle = !this.showMoreToggle;
        this.showMoreLinkText = this.showMoreToggle ?
          'Hide Details' :
          'Show Details';
        this.toggle.emit(this.showMoreToggle);
-     }
    }
 
   ngOnInit() {
