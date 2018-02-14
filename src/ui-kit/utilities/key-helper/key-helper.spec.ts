@@ -99,7 +99,7 @@ function testMicrosoft (key: string) {
   });
 }
 
-fdescribe('Sam KeyEvent Class', () => {
+describe('Sam KeyEvent Class', () => {
   validKeyParams.forEach(key => createTests(key));
 
   it('should return false if key does not match', () => {
