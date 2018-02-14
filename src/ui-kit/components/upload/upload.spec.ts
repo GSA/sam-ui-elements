@@ -54,35 +54,35 @@ describe('The Sam Upload component', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('the model object should be in the Done state after upload', () => {
-  //   const url = 'http://localhost/upload';
-  //   const file = { name: 'sample.jpeg', size: 1001 };
-  //   const req = new HttpRequest('POST', url, file, { reportProgress: true });
-  //   const list = { 0: file, length: 1, item: () => { return file; } };
+  it('the model object should be in the Done state after upload', () => {
+    const url = 'http://localhost/upload';
+    const file = { name: 'sample.jpeg', size: 1001 };
+    const req = new HttpRequest('POST', url, file, { reportProgress: true });
+    const list = { 0: file, length: 1, item: () => { return file; } };
 
-  //   component.uploadRequest = () => req;
-  //   component.onFilesChange(list);
-  //   let wasOneUpload = false;
-  //   component._model.forEach(uf => {
-  //     wasOneUpload = true;
-  //     expect(uf.upload.status).toEqual(UploadStatus.Done);
-  //   });
-  //   expect(wasOneUpload).toBe(true);
-  // });
+    component.uploadRequest = () => req;
+    component.onFilesChange(<any>list);
+    let wasOneUpload = false;
+    component._model.forEach(uf => {
+      wasOneUpload = true;
+      expect(uf.upload.status).toEqual(UploadStatus.Done);
+    });
+    expect(wasOneUpload).toBe(true);
+  });
 
-  // it('should delete the upload if the upload was a success and delete is clicked', () => {
-  //   const url = 'http://localhost/upload';
-  //   const file = { name: 'sample.jpeg', size: 1001 };
-  //   const request = new HttpRequest('POST', url, file, { reportProgress: true });
-  //   const deleteRequest = new HttpRequest('DELETE', 'files/1');
-  //   const list = { 0: file, length: 1, item: () => { return file; } };
+  it('should delete the upload if the upload was a success and delete is clicked', () => {
+    const url = 'http://localhost/upload';
+    const file = { name: 'sample.jpeg', size: 1001 };
+    const request = new HttpRequest('POST', url, file, { reportProgress: true });
+    const deleteRequest = new HttpRequest('DELETE', 'files/1');
+    const list = { 0: file, length: 1, item: () => { return file; } };
 
-  //   component.uploadRequest = () => request;
-  //   component.deleteRequest = () => deleteRequest;
-  //   component.onFilesChange(list);
-  //   const firstFile = component._model[0];
-  //   expect(firstFile).toBeTruthy();
-  //   component.onCloseClick(firstFile);
-  //   expect(component._model.length).toBe(0);
-  // });
+    component.uploadRequest = () => request;
+    component.deleteRequest = () => deleteRequest;
+    component.onFilesChange(<any>list);
+    const firstFile = component._model[0];
+    expect(firstFile).toBeTruthy();
+    component.onCloseClick(firstFile);
+    expect(component._model.length).toBe(0);
+  });
 });
