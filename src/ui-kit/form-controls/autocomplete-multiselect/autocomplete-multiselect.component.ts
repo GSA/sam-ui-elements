@@ -873,7 +873,9 @@ export class SamAutocompleteMultiselectComponent
 
   public clearSearch() {
     this.searchText = '';
-    this.textArea.nativeElement.style.height = this.textAreaMinHeight+"px";
+    if(this.textArea && this.textArea.nativeElement){
+      this.textArea.nativeElement.style.height = this.textAreaMinHeight+"px";
+    }
     this.displaySpinner = false;
   }
 
