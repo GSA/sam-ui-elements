@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { SamComponentsModule } from '../components';
 import { SamElementsModule } from '../elements';
+import { SamDirectivesModule } from '../directives';
 
 import { PageService } from './page.service';
 import { PageTemplateComponent } from './page.component';
@@ -58,6 +59,7 @@ import { FormOnlyPageTemplateComponent } from './form-only-page.component';
   imports: [
     CommonModule,
     SamComponentsModule,
+    SamDirectivesModule,
     SamElementsModule,
     RouterModule
   ],

@@ -16,10 +16,14 @@ describe('The AlertFooter component', () => {
       service.registerFooterAlert({
         description: 'hello',
         title: 'alert title',
+        type: "success",
+        timer: 0
       });
       service.registerFooterAlert({
         description: 'hello 2',
         title: 'alert title 2',
+        type: "success",
+        timer: 0
       });
     });
 

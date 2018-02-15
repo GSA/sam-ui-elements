@@ -61,7 +61,7 @@ describe('The Sam Upload component', () => {
     const list = { 0: file, length: 1, item: () => { return file; } };
 
     component.uploadRequest = () => req;
-    component.onFilesChange(list);
+    component.onFilesChange(<any>list);
     let wasOneUpload = false;
     component._model.forEach(uf => {
       wasOneUpload = true;
@@ -79,7 +79,7 @@ describe('The Sam Upload component', () => {
 
     component.uploadRequest = () => request;
     component.deleteRequest = () => deleteRequest;
-    component.onFilesChange(list);
+    component.onFilesChange(<any>list);
     const firstFile = component._model[0];
     expect(firstFile).toBeTruthy();
     component.onCloseClick(firstFile);

@@ -58,15 +58,15 @@ export class SamAlertComponent {
   showMoreLinkText = 'Show Details';
 
   public closeAlert() {
-    this.onDismissClick();
+      this.onDismissClick();
    }
 
    public toggleContent() {
-      this.showMoreToggle = !this.showMoreToggle;
-      this.showMoreLinkText = this.showMoreToggle ?
-        'Hide Details' :
-        'Show Details';
-      this.toggle.emit(this.showMoreToggle);
+       this.showMoreToggle = !this.showMoreToggle;
+       this.showMoreLinkText = this.showMoreToggle ?
+         'Hide Details' :
+         'Show Details';
+       this.toggle.emit(this.showMoreToggle);
    }
 
   ngOnInit() {
