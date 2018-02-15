@@ -24,6 +24,7 @@ import { SamFormService } from './form-service';
     SamFormControlsModule,
     SamFormTemplatesModule,
     SamLayoutModule,
+    SamExperimentalModule,
     SamPipesModule,
     ServiceDirectivesModule
   ],
