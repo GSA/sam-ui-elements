@@ -19,4 +19,6 @@ export class SamMasterPageService {
     return this._settingsLink;
   }
 
+  selectedDomain: string = 'All Award Data';
+
 }

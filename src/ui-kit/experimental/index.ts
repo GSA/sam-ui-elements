@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 
 import { SamComponentsModule } from '../components';
 
@@ -11,6 +12,7 @@ import { SamIconComponent } from './icon';
 import { SamListComponent } from './list';
 import { SamMasterPageComponent } from './master-page';
 import { SamPageComponent } from './page';
+import { SamSearchComponent } from './search';
 import { SamSidebarComponent } from './sidebar';
 import { SamYoutubeComponent } from './youtube';
 
@@ -18,7 +20,8 @@ import { SamYoutubeComponent } from './youtube';
   imports: [
     CommonModule,
     RouterModule,
-    SamComponentsModule
+    SamComponentsModule,
+    HttpClientModule
   ],
   declarations: [
     SamBoxComponent,
@@ -28,6 +31,7 @@ import { SamYoutubeComponent } from './youtube';
     SamListComponent,
     SamMasterPageComponent,
     SamPageComponent,
+    SamSearchComponent,
     SamSidebarComponent,
     SamYoutubeComponent
   ],
@@ -39,6 +43,7 @@ import { SamYoutubeComponent } from './youtube';
     SamListComponent,
     SamMasterPageComponent,
     SamPageComponent,
+    SamSearchComponent,
     SamSidebarComponent,
     SamYoutubeComponent
   ]
