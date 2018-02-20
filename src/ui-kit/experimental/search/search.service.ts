@@ -12,7 +12,11 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class PrototypeSearchService{
   
-  results = [
+  results:{
+    name: string,
+    domain: string,
+    title?: string
+  }[] = [
     {
       "name": "Department of Education",
       "domain": "Federal Hierarchy"
