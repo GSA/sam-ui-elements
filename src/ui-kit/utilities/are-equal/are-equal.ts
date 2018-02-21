@@ -76,6 +76,14 @@ export function areEqual (item1: any, item2: any): boolean {
     }
   }
 
+  /**
+   * Check if two non-array objects are equal
+   * 
+   * @param {*} array1 
+   * @param {*} array2 
+   * 
+   * @returns {boolean}
+   */
   function areNonArrayObjectsEqual (obj1, obj2): boolean {
     const keys1 = Object.keys(obj1),
           keys2 = Object.keys(obj2),

@@ -1,6 +1,6 @@
 import { areEqual } from './are-equal';
 
-fdescribe('Sam areEqual helper function', () => {
+describe('Sam areEqual helper function', () => {
 
   describe('Primitive Data', () => {
     const bool = true,
