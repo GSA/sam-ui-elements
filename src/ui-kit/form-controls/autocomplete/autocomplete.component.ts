@@ -90,13 +90,13 @@ export class SamAutocompleteComponent
   */
   @Input() public required: boolean;
   /**
-  * Sets the general error message (For simplicity (we can enhance this it's 
+  * Sets the general error message (For simplicity (we can enhance this it's
   * needed): Only active when `useFormService` is false)
   */
   @Input() public errorMessage: string;
   /**
-   * Emitted only when the user selects an item from the dropdown list, or when 
-   * the user clicks enter and the mode is allowAny. This is useful if you do 
+   * Emitted only when the user selects an item from the dropdown list, or when
+   * the user clicks enter and the mode is allowAny. This is useful if you do
    * not want to respond to onChange events when the input is blurred.
    */
   @Output() public enterEvent: EventEmitter<any> = new EventEmitter();
@@ -301,7 +301,7 @@ export class SamAutocompleteComponent
   }
 
   onKeyup(event: any) {
-    // If event.target.name is an empty string, set search string to default 
+    // If event.target.name is an empty string, set search string to default
     // search string
     const searchString = event.target.value || '';
     const keyCode = getKeyboardEventKey(event);
@@ -317,7 +317,7 @@ export class SamAutocompleteComponent
       this.handleBackspaceKeyup();
     }
 
-    if(!KeyHelper.is('down', event) && 
+    if(!KeyHelper.is('down', event) &&
       !KeyHelper.is('up', event) &&
       event.type!=="focus"){
       this.checkLastSearch(searchString);
@@ -422,7 +422,7 @@ export class SamAutocompleteComponent
     this.setEndOfList(selectedChildIndex, children.length);
 
     if (selectedChildIndex === children.length - 1) {
-      selectedChildIndex = 
+      selectedChildIndex =
         this.checkCategoryIndex(children[selectedChildIndex]);
       // if (this.categories.length > 0 && !this.config.isCategorySelectable) {
       //   if (children[selectedChildIndex].classList.contains('category')) {
@@ -657,24 +657,24 @@ export class SamAutocompleteComponent
           || curr[this.config.keyValueConfig.valueProperty]
             .toLowerCase().includes(lowerSubStr)) {
         /**
-         * Check if the current item in the array contains the substring value 
+         * Check if the current item in the array contains the substring value
          * in either the key or value property provided on the config input
          */
         if (curr[this.config.categoryProperty] && currentCategory
           !== curr[this.config.categoryProperty]) {
           /**
-           * Checks if the current item in the array has a category. If so, 
-           * checks to see if this category is the current category. If not, it 
-           * will push it to the returned array. If it is the current category, 
+           * Checks if the current item in the array has a category. If so,
+           * checks to see if this category is the current category. If not, it
+           * will push it to the returned array. If it is the current category,
            * it skips.
            */
           currentCategory = curr[this.config.categoryProperty];
           const filteredCategories = this.categories.filter((category) => {
             /**
-             * Filters the category input array property for a matching 
+             * Filters the category input array property for a matching
              * category property.
              */
-            if (category[this.config.keyValueConfig.keyProperty] 
+            if (category[this.config.keyValueConfig.keyProperty]
               === curr[this.config.categoryProperty]) {
               category.isCategory = true;
               return category;
@@ -730,7 +730,7 @@ export class SamAutocompleteComponent
       this.selectedInputValue = this.inputValue;
       this.innerValue = value;
       // angular isn't populating this
-      this.input.nativeElement.value = this.inputValue; 
+      this.input.nativeElement.value = this.inputValue;
     } else if (value === undefined) {
       this.inputValue = '';
       this.selectedInputValue = '';
@@ -748,6 +748,16 @@ export class SamAutocompleteComponent
 
   setDisabledState(isDisabled: boolean) {
     this.input.nativeElement.disabled = isDisabled;
+  }
+
+  itemClass(obj) {
+    const hasCategories = this.categories && this.categories.length;
+    const notCategory = !(obj && obj.isCategory);
+    return {
+      category: obj && obj.isCategory,
+      selectable: this.config.isCategorySelectable,
+      indented: hasCategories && notCategory,
+    };
   }
 
   private setEndOfList(index, length) {
