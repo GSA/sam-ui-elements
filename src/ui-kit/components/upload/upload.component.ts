@@ -69,26 +69,26 @@ export namespace UploadValidator {
 export class SamUploadComponent implements ControlValueAccessor {
 
   /**
-   * The request the gets called after a file has been selected for upload. 
+   * The request the gets called after a file has been selected for upload.
    * Report progress must be true if you want the progress bar.
    */
   @Input() public uploadRequest: RequestGenerator;
 
   /**
-   * The request that gets called when the user click the (x). If the upload 
-   * is in progress, the upload is simply canceled. If delete fails, the file 
+   * The request that gets called when the user click the (x). If the upload
+   * is in progress, the upload is simply canceled. If delete fails, the file
    * is removed from the list and no error is presented to the user.
    */
   @Input() public deleteRequest: DeleteRequestGenerator;
 
   /**
-   * Max number of files that can be uploaded. If a file is in the error status 
+   * Max number of files that can be uploaded. If a file is in the error status
    * it does not count. 0 for infinite
-   */ 
+   */
   @Input() public maxFiles = 0;
 
   /**
-   * Uploads will not start until the host calls component.startUpload() 
+   * Uploads will not start until the host calls component.startUpload()
    */
   @Input() public uploadDeferred: boolean = false;
 
@@ -98,8 +98,8 @@ export class SamUploadComponent implements ControlValueAccessor {
    */
   @Input() public accept: string;
 
-  /** 
-   * Show an error if the file does match the regular expression 
+  /**
+   * Show an error if the file does match the regular expression
    */
   @Input() public pattern: RegExp;
 
@@ -107,6 +107,11 @@ export class SamUploadComponent implements ControlValueAccessor {
    * If maxFileSizeInBytes is exceeded, then display a warning
    */
   @Input() public maxFileSizeInBytes: number = 0;
+
+  /*
+   * Input 508 identifier
+   */
+  @Input() public name = "upload";
 
   public dragState: DragState = DragState.NotDragging;
 
