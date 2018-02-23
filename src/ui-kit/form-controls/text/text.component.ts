@@ -91,8 +91,8 @@ export class SamTextComponent implements ControlValueAccessor, OnDestroy {
   @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
 
 
-  public onChange: any = (c) => undefined;
-  public onTouched: any = () => undefined;
+  public onChange: any = (c) => null;
+  public onTouched: any = () => null;
 
   private ngUnsubscribe: Subject<any> = new Subject();
 
@@ -182,7 +182,7 @@ export class SamTextComponent implements ControlValueAccessor, OnDestroy {
   }
 
   public writeValue(value) {
-    this.value = value !== undefined
+    this.value = value !== null
       ? '' + value
       : '';
   }
