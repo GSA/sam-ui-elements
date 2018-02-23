@@ -1,5 +1,4 @@
-import * as _ from 'lodash';
-
+import { areEqual } from '../../utilities/are-equal/are-equal';
 export class Cached {
   private contents: any[] = [];
   private _lastValue: any[] = [];
@@ -49,7 +48,7 @@ export class Cached {
       (item: any) => {
         let foundDupe = false;
         for (let i = 0; i < this.value.length; i++) {
-          if (this.isEquivalent(item, this.value[i])) {
+          if (areEqual(item, this.value[i])) {
             foundDupe = true;
           }
         }
@@ -58,32 +57,6 @@ export class Cached {
         }
       }
     );
-  }
-
-  private isEquivalent(a: any, b: any): boolean {
-    // Create arrays of property names
-    const aProps = Object.getOwnPropertyNames(a);
-    const bProps = Object.getOwnPropertyNames(b);
-
-    // If number of properties is different,
-    // objects are not equivalent
-    if (aProps.length !== bProps.length) {
-      return false;
-    }
-
-    for (let i = 0; i < aProps.length; i++) {
-      const propName = aProps[i];
-
-      // If values of same property are not equal,
-      // objects are not equivalent
-      if (a[propName] !== b[propName]) {
-        return false;
-      }
-    }
-
-    // If we made it this far, objects
-    // are considered equivalent
-    return true;
   }
 }
 
