@@ -56,7 +56,12 @@
                       [attr.id]="name+'-ac-textarea'"
                       [(ngModel)]="searchText"
                       (input)="applyTextAreaWidth($event)"
-                      (keydown)="selectOnEnter(handleEscapeEvent(handleUpArrow(handleDownArrow(handleBackspaceEvent(handleEnterEvent($event))))))"
+                      (keydown)="selectOnEnter(
+                        handleEscapeEvent(
+                          handleUpArrow(
+                            handleDownArrow(
+                              handleBackspaceEvent(
+                                handleEnterEvent($event))))))"
                       (keyup)="applyTextAreaWidth(handleEnterEvent($event))"
                       [disabled]="isDisabled"
                       (focus)="filterOptions('')"
