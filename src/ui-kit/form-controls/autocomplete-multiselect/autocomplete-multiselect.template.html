@@ -14,7 +14,8 @@
         <button type="button"
                 *ngIf="displayClearAll()"
                 class="usa-button-link"
-                (click)="clearSearch(deselectAll())">
+                (click)="clearSearch(deselectAll())"
+                [disabled]="isDisabled">
                 <span class="sr-only">clear all</span>
                 <i class="fa fa-times-circle"></i>
         </button>
