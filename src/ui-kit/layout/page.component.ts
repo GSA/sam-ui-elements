@@ -71,4 +71,16 @@ export class PageTemplateComponent implements OnInit {
     this.breadcrumbOut.emit(evt);
     this.breadcrumbChange.emit(evt);
   }
+
+  get sidebar(){
+    return this.pageService.sidebar;
+  }
+
+  get sidebarColumns(){
+    return this.pageService.sidebarColumns;
+  }
+
+  get mainContentColumns(){
+    return this.pageService.mainContentColumns;
+  }
 }
