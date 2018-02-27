@@ -40,7 +40,7 @@ export class LabelWrapper implements AfterViewChecked {
 
   @ViewChild('labelDiv') public labelDiv: any;
   @ViewChild('hintContainer') public hintContainer: any;
-  private showToggle: boolean = false;
+  public showToggle: boolean = false;
   private toggleOpen: boolean = false;
   private lineSize: number;
   private lineLimit: number = 2;

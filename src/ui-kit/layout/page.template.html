@@ -24,12 +24,12 @@
 
     <div row class="page-content">
       <!-- Sidebar -->
-      <div *ngIf="pageService.sidebar" [columns]="pageService.sidebarColumns" style="align-self: start; max-height: 99.9%;">
+      <div *ngIf="sidebar" [columns]="sidebarColumns" style="align-self: start; max-height: 99.9%;">
         <ng-content select="sidebar"></ng-content>
       </div>
 
       <!-- Main Content -->
-      <div [columns]="pageService.mainContentColumns">
+      <div [columns]="mainContentColumns">
 
         <ng-content select="[message]"></ng-content>
 

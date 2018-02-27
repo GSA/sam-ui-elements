@@ -88,8 +88,8 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator {
     this.model = val;
   }
 
-  private disabled = undefined;
-  private store = {
+  disabled = undefined;
+  store = {
     suffixes: suffixOptions
   };
 

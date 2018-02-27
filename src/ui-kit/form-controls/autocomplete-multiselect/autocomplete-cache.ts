@@ -1,5 +1,3 @@
-import * as _ from 'lodash';
-
 export class Cached {
   private contents: any[] = [];
   private _lastValue: any[] = [];

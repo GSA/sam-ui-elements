@@ -124,7 +124,7 @@ export class SamUploadComponent implements ControlValueAccessor {
 
   private onTouched: Function;
 
-  private disabled: boolean = false;
+  public disabled: boolean = false;
 
   /* The hidden file input dom element */
   @ViewChild('file') private fileInput: ElementRef;
