@@ -305,51 +305,78 @@ export class SamAutocompleteMultiselectComponent
    * item that is returned.
    */
   public selectOnEnter(event) {
+    const highlighted = this.getSelectedChildIndex(this.getResults());
+
+    if (event.target.value === '' 
+      && highlighted === -1) {
+      return;
+    }
+
     if (this.resultsList
         && this.resultsList.nativeElement
         && KeyHelper.is('enter', event)) {
-      const lookedUpItem = this.getItem();
-      if (this.allowAny
-          && lookedUpItem
-          && lookedUpItem[this.keyValueConfig.keyProperty] === null
-          && event.target.value !== '') {
-        const obj = {};
-        obj[this.keyValueConfig.keyProperty] = event.target.value;
-        obj[this.keyValueConfig.valueProperty] = event.target.value;
-        this.selectItem(obj);
-      } else {
-        this.selectItem(lookedUpItem);
-      }
-      this.clearSearch();
 
+      if (this.allowAny) {
+        this.selectWithAny(event, highlighted);
+      } else {
+        if (highlighted === -1) {
+          // Don't do anything if the user tries to enter without selecting \
+          // with the up/down keys
+          return;
+        }
+        this.selectItem(this.getItem());
+      }
+
+      this.clearSearch();
       this.list = [];
     }
 
     return event;
   }
 
+  private selectWithAny (event, highlighted) {
+    let returnValue;
+
+    const listItem = this.getItem();
+
+    if ((!listItem || listItem.value === 'No results found')
+      && highlighted === -1) {
+      returnValue = this.createReturnObject(event);
+    } else {
+      returnValue = listItem;
+    }
+
+    this.selectItem(returnValue);
+  }
+
+  private createReturnObject (event) {
+    const obj = {};
+    obj[this.keyValueConfig.keyProperty] = event.target.value;
+    obj[this.keyValueConfig.valueProperty] = event.target.value;
+    return obj;
+  }
+
   public getItem(): any {
     const results = this.getResults();
     const selectedChildIndex = this.getSelectedChildIndex(results);
-
     const selectedResultIndex: number =
       selectedChildIndex === -1 ? 0 : selectedChildIndex;
 
     if (results[selectedResultIndex].classList.contains('category-name')) {
       return this.categories.filter((item) => {
-        if (item[this.keyValueConfig.parentCategoryProperty]
-          === results[selectedResultIndex].attributes['data-category'].value) {
-          return item;
-        }
-      })[0];
+          if (item[this.keyValueConfig.parentCategoryProperty]
+            === results[selectedResultIndex].attributes['data-category'].value) {
+            return item;
+          }
+        })[0];
     } else {
         const categoryIndex = parseInt(
           results[selectedResultIndex].attributes['data-category'].value,
-          undefined
+          10
         );
         const itemIndex = parseInt(
           results[selectedResultIndex].attributes['data-index'].value,
-          undefined
+          10
         );
         return this.getItemFromListByIndices(categoryIndex, itemIndex);
     }
@@ -648,9 +675,9 @@ export class SamAutocompleteMultiselectComponent
     // matching in filter function.
     searchString = searchString ? searchString.toLowerCase() : '';
 
-    let options = undefined;
+    let options = null;
     if (this.serviceOptions) {
-      options = this.serviceOptions || undefined;
+      options = this.serviceOptions || null;
     }
     if (this.service && this.options.length === 0) {
       window.clearTimeout(this.inputTimer);
@@ -755,7 +782,7 @@ export class SamAutocompleteMultiselectComponent
       const noResultsObject = {
         cannotBeSelected: true
       };
-      noResultsObject[this.keyValueConfig.keyProperty] = undefined;
+      noResultsObject[this.keyValueConfig.keyProperty] = null;
       noResultsObject[this.keyValueConfig.valueProperty] = 'No results found';
       object[0].push(noResultsObject);
     }
@@ -767,7 +794,7 @@ export class SamAutocompleteMultiselectComponent
     if (array.length > 0 && !array[0].cannotBeSelected) {
       return array[0];
     } else {
-      return undefined;
+      return null;
     }
   }
 
@@ -930,8 +957,8 @@ export class SamAutocompleteMultiselectComponent
     this.isDisabled = isDisabled;
   }
 
-  private onChangeCallback: (_: any) => void = (_: any) => undefined;
-  private onTouchedCallback: () => void = () => undefined;
+  private onChangeCallback: (_: any) => void = (_: any) => null;
+  private onTouchedCallback: () => void = () => null;
 
 }
 

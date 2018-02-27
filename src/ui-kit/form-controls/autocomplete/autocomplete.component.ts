@@ -22,8 +22,8 @@ import { AutocompleteService } from './autocomplete.service';
 import { SamFormService } from '../../form-service';
 
 import { getKeyboardEventKey } from '../../key-event-helpers';
-
 import { KeyHelper } from '../../utilities/key-helper/key-helper';
+import { areEqual } from '../../utilities/are-equal/are-equal';
 
 const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -184,8 +184,8 @@ export class SamAutocompleteComponent
 
   public keyEvents: Subject<any> = new Subject();
 
-  public onTouchedCallback: () => void = () => undefined;
-  public propogateChange: (_: any) => void = (_: any) => undefined;
+  public onTouchedCallback: () => void = () => null;
+  public propogateChange: (_: any) => void = (_: any) => null;
 
   constructor(@Optional() public autocompleteService: AutocompleteService,
     private samFormService: SamFormService,
@@ -204,11 +204,7 @@ export class SamAutocompleteComponent
     this.hasServiceError = false;
     if (this.isKeyValuePair(data)) {
       if (this.filteredKeyValuePairs) {
-        const currentResults = data.forEach((item) => {
-          return item[this.config.keyValueConfig.keyProperty];
-        });
-        if (JSON.stringify(currentResults)
-          !== JSON.stringify(this.lastReturnedResults)) {
+        if (areEqual(data, this.lastReturnedResults)) {
           data.forEach((item) => {
             this.filteredKeyValuePairs.push(item);
           });
@@ -220,12 +216,10 @@ export class SamAutocompleteComponent
         ? this.filteredKeyValuePairs.length
         : 0;
       this.pushSROnlyMessage(len + this.resultsAvailable);
-      this.lastReturnedResults = data.forEach((item) => {
-        return item[this.config.keyValueConfig.keyProperty];
-      });
+      this.lastReturnedResults = data;
     } else {
       if (this.results) {
-        if (data.toString() !== this.lastReturnedResults.toString()) {
+        if (!areEqual(data, this.lastReturnedResults)) {
           data.forEach((item) => {
             this.results.push(item);
           });
@@ -344,12 +338,13 @@ export class SamAutocompleteComponent
   }
 
   onKeyUpUsingService(searchString: string) {
-    let options = undefined;
+    let options = null;
     if (this.config) {
-      options = this.config.serviceOptions || undefined;
+      options = this.config.serviceOptions || null;
     }
     if (this.autocompleteService) {
-      this.autocompleteService.fetch(searchString, this.endOfList, options)
+      this.autocompleteService
+      .fetch(searchString, this.endOfList, options)
         .subscribe(
           (res) => this.requestSuccess(res),
           (err) => this.requestError(err),
@@ -357,31 +352,31 @@ export class SamAutocompleteComponent
     } else if (this.httpRequest) {
       this.keyEvents.next(searchString);
     } else {
-      console.error('unable to fetch search results');
+      return;
     }
   }
 
   handleBackspaceKeyup() {
     if (!this.innerValue) {
-      this.results = undefined;
-      this.filteredKeyValuePairs = undefined;
+      this.results = null;
+      this.filteredKeyValuePairs = null;
     }
     if (this.inputValue === '') {
-      this.value = undefined;
+      this.value = null;
     }
   }
 
   checkLastSearch(searchString: string): void {
     if ((this.lastSearchedValue !== searchString) || searchString === '') {
-      this.results = undefined;
-      this.filteredKeyValuePairs = undefined;
+      this.results = null;
+      this.filteredKeyValuePairs = null;
       this.endOfList = true;
       this.lastSearchedValue = searchString;
     }
   }
 
   onKeydown(event: any) {
-    this.srOnly.nativeElement.innerHTML = undefined;
+    this.srOnly.nativeElement.innerHTML = null;
 
     const list: ElementRef = this.resultsList || this.resultsListKV;
 
@@ -422,14 +417,9 @@ export class SamAutocompleteComponent
     this.setEndOfList(selectedChildIndex, children.length);
 
     if (selectedChildIndex === children.length - 1) {
-      selectedChildIndex =
+      this.onKeyUpUsingService(this.inputValue);
+      selectedChildIndex = 
         this.checkCategoryIndex(children[selectedChildIndex]);
-      // if (this.categories.length > 0 && !this.config.isCategorySelectable) {
-      //   if (children[selectedChildIndex].classList.contains('category')) {
-      //     isFirstItemCategory = true;
-      //     selectedChildIndex++;
-      //   }
-      // }
      isFirstItemCategory = this.isFirstItemCategory(
         children[selectedChildIndex],
         selectedChildIndex
@@ -604,11 +594,11 @@ export class SamAutocompleteComponent
       this.inputValue = this.selectedInputValue;
     }
     if (this.inputValue === '') {
-      this.results = undefined;
-      this.filteredKeyValuePairs = undefined;
+      this.results = null;
+      this.filteredKeyValuePairs = null;
     }
     this.hasFocus = false;
-    this.srOnly.nativeElement.innerHTML = undefined;
+    this.srOnly.nativeElement.innerHTML = null;
   }
 
   setSelected(value: any) {
@@ -629,7 +619,7 @@ export class SamAutocompleteComponent
     this.input.nativeElement.value = message;
     this.selectedInputValue = this.inputValue;
     this.propogateChange(this.innerValue);
-    this.srOnly.nativeElement.innerHTML = undefined;
+    this.srOnly.nativeElement.innerHTML = null;
     this.input.nativeElement.blur();
     this.pushSROnlyMessage(`You chose ${message}`);
     this.enterEvent.emit(value);
@@ -692,7 +682,7 @@ export class SamAutocompleteComponent
   clearDropdown() {
     this.input.nativeElement.blur();
     this.hasFocus = false;
-    this.srOnly.nativeElement.innerHTML = undefined;
+    this.srOnly.nativeElement.innerHTML = null;
   }
 
   inputFocusHandler(evt) {
@@ -706,11 +696,11 @@ export class SamAutocompleteComponent
     if (!this.inputValue) {
       return;
     }
-    this.filteredKeyValuePairs = undefined;
-    this.results = undefined;
+    this.filteredKeyValuePairs = null;
+    this.results = null;
     this.input.nativeElement.value = '';
     this.innerValue = '';
-    this.propogateChange(undefined);
+    this.propogateChange(null);
     this.clearDropdown();
   }
 
@@ -730,11 +720,11 @@ export class SamAutocompleteComponent
       this.selectedInputValue = this.inputValue;
       this.innerValue = value;
       // angular isn't populating this
-      this.input.nativeElement.value = this.inputValue;
-    } else if (value === undefined) {
+      this.input.nativeElement.value = this.inputValue; 
+    } else if (value === null) {
       this.inputValue = '';
       this.selectedInputValue = '';
-      this.innerValue = undefined;
+      this.innerValue = null;
     }
   }
 

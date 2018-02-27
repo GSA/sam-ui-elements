@@ -14,7 +14,8 @@
         <button type="button"
                 *ngIf="displayClearAll()"
                 class="usa-button-link"
-                (click)="clearSearch(deselectAll())">
+                (click)="clearSearch(deselectAll())"
+                [disabled]="isDisabled">
                 <span class="sr-only">clear all</span>
                 <i class="fa fa-times-circle"></i>
         </button>
@@ -56,7 +57,12 @@
                       [attr.id]="name+'-ac-textarea'"
                       [(ngModel)]="searchText"
                       (input)="applyTextAreaWidth($event)"
-                      (keydown)="selectOnEnter(handleEscapeEvent(handleUpArrow(handleDownArrow(handleBackspaceEvent(handleEnterEvent($event))))))"
+                      (keydown)="selectOnEnter(
+                        handleEscapeEvent(
+                          handleUpArrow(
+                            handleDownArrow(
+                              handleBackspaceEvent(
+                                handleEnterEvent($event))))))"
                       (keyup)="applyTextAreaWidth(handleEnterEvent($event))"
                       [disabled]="isDisabled"
                       (focus)="filterOptions('')"
