@@ -130,7 +130,7 @@ export class SamAutocompleteComponentRefactor
   /**
    * Component State Variables
    */
-  @Input('disabled') private _disabled: boolean;
+  @Input('disabled') public disabled: boolean;
 
   /**
    * UL list ViewChild for displaying autocomplete options
@@ -171,12 +171,12 @@ export class SamAutocompleteComponentRefactor
    * the value that is set within
    * the autocomplete component.
    */
-  _inputValue: any;
+  public inputValue: any;
   /**
    * Observable subscription that triggers whether or not
    * to show the list of results.s
    */
-  _displayList: any;
+  public displayList: any;
   /**
    * Item that is currently highlighted
    * from user input. 
@@ -195,13 +195,12 @@ export class SamAutocompleteComponentRefactor
    * Results of filter calls that are then
    * displayed on the page
    */
-  private _filteredOptions: Observable<any[]>;
+  public filteredOptions: Observable<any[]>;
   /**
    * Tracks the item that is currently highlighted in the list
    */
-  private _displaySpinner: boolean = false;
+  public displaySpinner: boolean = false;
   private _highlightedItemIndex: number;
-  private _addOnIconClass: string = 'fa-chevron-down';
   private _keyValueConfig: any;
   private _categoryProperty: string;
 
@@ -213,12 +212,12 @@ export class SamAutocompleteComponentRefactor
   /**
    * RxJS Streams Setup
    */
-  _onInputEvent: Subject<any>;
-  _onInputFocus: Subject<any> = new Subject<any>();
-  _onInputKeydown: Subject<any> = new Subject<any>();
-  _onInputKeyup: Subject<any> = new Subject<any>();
-  _onInputChange: Subject<any> = new Subject<any>();
-  _onBlurEvent: Subject<any> = new Subject<any>();
+  public onInputEvent: Subject<any>;
+  public onInputFocus: Subject<any> = new Subject<any>();
+  public onInputKeydown: Subject<any> = new Subject<any>();
+  public onInputKeyup: Subject<any> = new Subject<any>();
+  public onInputChange: Subject<any> = new Subject<any>();
+  public onBlurEvent: Subject<any> = new Subject<any>();
 
   private _blurSubscription: Subscription;
 
@@ -234,7 +233,7 @@ export class SamAutocompleteComponentRefactor
    * ControlValueAccessor Logic
    */
   public writeValue(value: any): void {
-    this._updateComponentValue(value);
+    this.updateComponentValue(value);
   }
 
   public registerOnChange(fn: (...args) => any): void {
@@ -246,7 +245,7 @@ export class SamAutocompleteComponentRefactor
   }
 
   public setDisabledState(isDisabled: boolean) {
-    this._disabled = isDisabled;
+    this.disabled = isDisabled;
   }
 
   public ngOnInit() {
@@ -281,10 +280,10 @@ export class SamAutocompleteComponentRefactor
      * Emits event from user input in text input.
      * Initialized with call to filter with an empty string
      */
-    this._onInputEvent = new BehaviorSubject<any>(this._filter(''));
+    this.onInputEvent = new BehaviorSubject<any>(this._filter(''));
 
     if(this._service){
-      this._onInputEvent.first().subscribe(()=>{
+      this.onInputEvent.first().subscribe(()=>{
         this._filter = this._getFilterMethod();
       });
     }
@@ -292,8 +291,8 @@ export class SamAutocompleteComponentRefactor
    /**
     * Stream of input events that filter results and push to 
     */
-    this._filteredOptions =
-      this._onInputEvent
+    this.filteredOptions =
+      this.onInputEvent
       /**
        * Debounce results
        * Only emits one event every 300ms
@@ -307,7 +306,7 @@ export class SamAutocompleteComponentRefactor
        */
       .switchMap(
        (event) => {
-        this._displaySpinner = true;
+        this.displaySpinner = true;
          /**
           * Call filter with value from input or empty string
           * Our business rules dictate that if the input has 
@@ -317,7 +316,7 @@ export class SamAutocompleteComponentRefactor
             (event && event.target && event.target.value) || '';
 
           if (this._cache[filterValue] && this._endOfList === false) {
-            this._displaySpinner = false;
+            this.displaySpinner = false;
             return Observable.of(this._cache[filterValue]);
           }
 
@@ -348,7 +347,7 @@ export class SamAutocompleteComponentRefactor
                   }
                 });
               }
-              this._displaySpinner = false; 
+              this.displaySpinner = false; 
               this._endOfList = false;
               return this._cache[filterValue]; 
             }) 
@@ -359,7 +358,7 @@ export class SamAutocompleteComponentRefactor
         }
       );
 
-      this._onInputEvent
+      this.onInputEvent
         .subscribe(
           event => event && event.target
             ? this._setInputValue(event.target.value)
@@ -367,13 +366,13 @@ export class SamAutocompleteComponentRefactor
           err => console.error(err)
         );
 
-      this._onInputKeydown
+      this.onInputKeydown
         .subscribe(
           (event) => {
             //handler expects in this format
-            this._onInputEvent.next({
+            this.onInputEvent.next({
               target:{
-                value:this._inputValue
+                value:this.inputValue
               }
             });
           }
@@ -384,7 +383,7 @@ export class SamAutocompleteComponentRefactor
        * Logic handles moving through the list with the up and down arrows
        * along with setting model value on enter.
        */
-      this._onInputKeyup
+      this.onInputKeyup
         .subscribe(
           (event) => {            
             if (KeyHelper.is('down', event)) {
@@ -404,15 +403,15 @@ export class SamAutocompleteComponentRefactor
      * Stream of events that map to boolean
      * Used to trigger displaying the options list
      */
-    this._displayList = 
-      this._onInputFocus
-        .merge(this._onBlurEvent) // Hide list when component blurs
+    this.displayList = 
+      this.onInputFocus
+        .merge(this.onBlurEvent) // Hide list when component blurs
         .flatMap(evt => evt ? Observable.of(true) : Observable.of(false));
 
     /**
      * Register on touched event when input is focused
      */    
-    this._onInputFocus
+    this.onInputFocus
         .subscribe(
           (ev) => this.onTouchedCallback(),
           (err) => console.error(err)
@@ -423,7 +422,7 @@ export class SamAutocompleteComponentRefactor
      * Resets highlighting logic for list on blur
      */
     this._blurSubscription = 
-      this._onBlurEvent
+      this.onBlurEvent
         .subscribe(
           event => this._resetListHighlighting(),
           err => console.error(err)
@@ -459,11 +458,11 @@ export class SamAutocompleteComponentRefactor
    * Subscribes to 
    */
   private _handleEnter(event: KeyboardEvent): void {
-    this._filteredOptions
+    this.filteredOptions
       .flatMap((item) => Observable.from(item))
       .filter((item, index) => index === this._highlightedItemIndex)
       .subscribe(
-        item => this._updateComponentValue(item),
+        item => this.updateComponentValue(item),
         err => console.error(err)
       );
   }
@@ -548,11 +547,11 @@ export class SamAutocompleteComponentRefactor
     this._input.nativeElement.blur();
 
     // Hide spinner
-    this._displaySpinner = false;
+    this.displaySpinner = false;
     
     // Set input value back to display text for input 
     if (!this.allowAny) {
-      this._setInputValue(this._displayOptionText(this._value));
+      this._setInputValue(this.displayOptionText(this._value));
     }
     
     this._highlightedItemIndex = undefined;    
@@ -643,15 +642,15 @@ export class SamAutocompleteComponentRefactor
   /**
    * If input has focus, return true
    */
-  _displayClearButton?(): boolean {
-    return (this._inputValue || this._value);
+  public displayClearButton?(): boolean {
+    return (this.inputValue || this._value);
   }
 
   /**
    * Returns string representing option's value
    * after determining the type of option
    */
-  private _displayOptionText(option: any): string {
+  public displayOptionText(option: any): string {
     if (TypeCheckHelpers.isString(option)) {
       return option;
     } else if (TypeCheckHelpers.isObject(option)) {
@@ -777,7 +776,7 @@ export class SamAutocompleteComponentRefactor
   /**
    * Given a value, update the state
    */
-  private _updateComponentValue(value: any): void {
+  public updateComponentValue(value: any): void {
     /**
      * Don't take any action if item is a category
      * and isCategorySelectable flag set to false or ignored
@@ -794,13 +793,13 @@ export class SamAutocompleteComponentRefactor
     const composedUpdate =
       this.pipe(
         this._setValue.bind(this),
-        this._displayOptionText.bind(this),
+        this.displayOptionText.bind(this),
         this._setInputValue.bind(this),
         this._screenreader
           ? this._screenreader.pushMessage.bind(this._screenreader)
           : _ => _,
         this._resetListHighlighting.bind(this),
-        this._onBlurEvent.next.bind(this._onBlurEvent),        
+        this.onBlurEvent.next.bind(this.onBlurEvent),        
       );
 
     composedUpdate(value);
@@ -808,8 +807,8 @@ export class SamAutocompleteComponentRefactor
     return;
   }
 
-  private _clearComponent(): void {
-    return this._updateComponentValue('');
+  public clearComponent(): void {
+    return this.updateComponentValue('');
   } 
 
   /**
@@ -825,9 +824,9 @@ export class SamAutocompleteComponentRefactor
    * 
    */
   private _setInputValue(value: string): string {
-    this._inputValue = value;
+    this.inputValue = value;
     if (this.allowAny || value === '') {
-      this._value = this._inputValue;
+      this._value = this.inputValue;
     }
     return value;
   }

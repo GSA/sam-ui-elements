@@ -2,9 +2,9 @@
   <sam-label-wrapper
     #wrapper
     sam-click-outside
-    (clickOutside)="_onBlurEvent.next($event)"
+    (clickOutside)="onBlurEvent.next($event)"
     sam-tab-outside
-    (tabOutside)="_onBlurEvent.next($event)"
+    (tabOutside)="onBlurEvent.next($event)"
     [label]="label || labelText"
     [hint]="hint"
     [name]="id"
@@ -13,38 +13,38 @@
     <div class="input-container">
       <input type="text"
             #input
-            (input)="_onInputEvent.next($event)"
-            (focus)="_onInputFocus.next($event)"
-            (keydown)="_onInputKeydown.next($event)"
-            (keyup)="_onInputKeyup.next($event)"
-            (change)="_onInputChange.next($event)"
-            [ngModel]="_inputValue"
+            (input)="onInputEvent.next($event)"
+            (focus)="onInputFocus.next($event)"
+            (keydown)="onInputKeydown.next($event)"
+            (keyup)="onInputKeyup.next($event)"
+            (change)="onInputChange.next($event)"
+            [ngModel]="inputValue"
             [attr.id]="id"
             autocomplete="off"
             [attr.placeholder]="placeholder"
             [attr.name]="name"
             [attr.aria-label]="name"
             [required]="required"
-            [disabled]="_disabled">
+            [disabled]="disabled">
       <span class="icon-container">
-        <button *ngIf="_displayClearButton()"
+        <button *ngIf="displayClearButton()"
                 class="usa-button-link"
-                (click)="_clearComponent()">
+                (click)="clearComponent()">
           <i class="fa fa-times-circle"></i>
         </button>
-        <i *ngIf="_displaySpinner" class="fa fa-spinner fa-pulse"></i>
-        <i *ngIf="!_displaySpinner" class="fa" [ngClass]="_addOnIconClass"></i>
+        <i *ngIf="displaySpinner" class="fa fa-spinner fa-pulse"></i>
+        <i *ngIf="!displaySpinner" class="fa" [ngClass]="addOnIconClass"></i>
       </span>
     </div>
     <ul class="usa-unstyled-list results-list"
-      *ngIf="_displayList | async"
+      *ngIf="displayList | async"
       #list>
       <li [class.multiple-values]="config?.keyValueConfig?.subheadProperty"
-          *ngFor="let option of _filteredOptions | async"
+          *ngFor="let option of filteredOptions | async"
           class="one class two classess three classessess"
           [ngClass]="{ 'category': option?.isCategory }"
-          (click)="_updateComponentValue(option)">
-        {{ _displayOptionText(option) }}
+          (click)="updateComponentValue(option)">
+        {{ displayOptionText(option) }}
         <ng-container *ngIf="option && option[config?.keyValueConfig?.subheadProperty]">
           <br/>
           <span class="secondary-value">
