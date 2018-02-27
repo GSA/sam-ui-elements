@@ -20,7 +20,7 @@ export class SamLabelComponent {
   /**
    * Set up the SAMWDS class for the label according to the size of the label
    */
-  labelClass(): string {
+  public labelClass(): string {
     if (this.labelType === 'small') {
       return 'usa-label' ;
     } else if (this.labelType === 'big') {
