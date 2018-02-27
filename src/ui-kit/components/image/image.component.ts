@@ -44,7 +44,7 @@ export class SamImageComponent implements OnInit {
 
   private value: File;
   private reader: FileReader = new FileReader();
-  editMode: boolean = false;
+  public editMode: boolean = false;
   private tmpValue: File;
   private tmpSrc: any;
 
@@ -117,7 +117,7 @@ export class SamImageComponent implements OnInit {
       );
   }
 
-  hideEditButton() {
+  public hideEditButton() {
     return !this.editable || this.editMode;
   }
 
@@ -125,15 +125,15 @@ export class SamImageComponent implements OnInit {
     return this.editMode = !this.editMode;
   }
 
-  getFileName() {
+  public getFileName() {
     let fileName = '';
     if (this.tmpValue) {
-      fileName = this.tmpValue.name;
+      fileName = this.tmpValue.name;e
     }
     return fileName;
   }
 
-  generateFilePickerLabelText() {
+  public generateFilePickerLabelText() {
     const labelString = this.getFileName();
     const labelStrLen = 9;
     const labelText = labelString && labelString.length > labelStrLen ?
@@ -142,30 +142,30 @@ export class SamImageComponent implements OnInit {
     return labelText || 'Select a file';
   }
 
-  generateDoneText() {
+  public generateDoneText() {
     return this.isImageTemporary() ? 'Save' : 'Done';
   }
 
-  generateSrc() {
+  public generateSrc() {
     return this.tmpSrc || this.src;
   }
 
-  isImageTemporary() {
+  public isImageTemporary() {
     return !!this.tmpValue;
   }
 
   // Drag and drop logic for later
-  onDragEnter(event) {
+  public onDragEnter(event) {
     event.stopPropagation();
     event.preventDefault();
   }
 
-  onDragOver(event) {
+  public onDragOver(event) {
     event.stopPropagation();
     event.preventDefault();
   }
 
-  onDropEvent(event) {
+  public onDropEvent(event) {
     event.stopPropagation();
     event.preventDefault();
     if (this.editMode) {
