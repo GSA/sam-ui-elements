@@ -128,7 +128,7 @@ export class SamImageComponent implements OnInit {
   public getFileName() {
     let fileName = '';
     if (this.tmpValue) {
-      fileName = this.tmpValue.name;e
+      fileName = this.tmpValue.name;
     }
     return fileName;
   }
