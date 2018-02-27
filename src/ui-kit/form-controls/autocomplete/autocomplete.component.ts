@@ -219,7 +219,6 @@ export class SamAutocompleteComponent
       this.lastReturnedResults = data;
     } else {
       if (this.results) {
-        console.log(data, this.lastReturnedResults);
         if (!areEqual(data, this.lastReturnedResults)) {
           data.forEach((item) => {
             this.results.push(item);

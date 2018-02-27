@@ -675,9 +675,9 @@ export class SamAutocompleteMultiselectComponent
     // matching in filter function.
     searchString = searchString ? searchString.toLowerCase() : '';
 
-    let options = undefined;
+    let options = null;
     if (this.serviceOptions) {
-      options = this.serviceOptions || undefined;
+      options = this.serviceOptions || null;
     }
     if (this.service && this.options.length === 0) {
       window.clearTimeout(this.inputTimer);
@@ -782,7 +782,7 @@ export class SamAutocompleteMultiselectComponent
       const noResultsObject = {
         cannotBeSelected: true
       };
-      noResultsObject[this.keyValueConfig.keyProperty] = undefined;
+      noResultsObject[this.keyValueConfig.keyProperty] = null;
       noResultsObject[this.keyValueConfig.valueProperty] = 'No results found';
       object[0].push(noResultsObject);
     }
@@ -794,7 +794,7 @@ export class SamAutocompleteMultiselectComponent
     if (array.length > 0 && !array[0].cannotBeSelected) {
       return array[0];
     } else {
-      return undefined;
+      return null;
     }
   }
 
@@ -957,8 +957,8 @@ export class SamAutocompleteMultiselectComponent
     this.isDisabled = isDisabled;
   }
 
-  private onChangeCallback: (_: any) => void = (_: any) => undefined;
-  private onTouchedCallback: () => void = () => undefined;
+  private onChangeCallback: (_: any) => void = (_: any) => null;
+  private onTouchedCallback: () => void = () => null;
 
 }
 
