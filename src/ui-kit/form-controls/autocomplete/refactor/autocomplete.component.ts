@@ -171,12 +171,12 @@ export class SamAutocompleteComponentRefactor
    * the value that is set within
    * the autocomplete component.
    */
-  private _inputValue: any;
+  _inputValue: any;
   /**
    * Observable subscription that triggers whether or not
    * to show the list of results.s
    */
-  private _displayList: any;
+  _displayList: any;
   /**
    * Item that is currently highlighted
    * from user input. 
@@ -213,12 +213,12 @@ export class SamAutocompleteComponentRefactor
   /**
    * RxJS Streams Setup
    */
-  private _onInputEvent: Subject<any>;
-  private _onInputFocus: Subject<any> = new Subject<any>();
-  private _onInputKeydown: Subject<any> = new Subject<any>();
-  private _onInputKeyup: Subject<any> = new Subject<any>();
-  private _onInputChange: Subject<any> = new Subject<any>();
-  private _onBlurEvent: Subject<any> = new Subject<any>();
+  _onInputEvent: Subject<any>;
+  _onInputFocus: Subject<any> = new Subject<any>();
+  _onInputKeydown: Subject<any> = new Subject<any>();
+  _onInputKeyup: Subject<any> = new Subject<any>();
+  _onInputChange: Subject<any> = new Subject<any>();
+  _onBlurEvent: Subject<any> = new Subject<any>();
 
   private _blurSubscription: Subscription;
 
@@ -643,7 +643,7 @@ export class SamAutocompleteComponentRefactor
   /**
    * If input has focus, return true
    */
-  private _displayClearButton?(): boolean {
+  _displayClearButton?(): boolean {
     return (this._inputValue || this._value);
   }
 
