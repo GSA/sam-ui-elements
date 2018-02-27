@@ -124,4 +124,11 @@ export class SamMasterPageComponent{
       this.masterpageservice.selectedDomain = event;
     }
     
-  }
+    get docLink(){
+      return this.masterpageservice.docLink;
+    }
+
+    get settingsLink(){
+      return this.masterpageservice.settingsLink;
+    }
+}

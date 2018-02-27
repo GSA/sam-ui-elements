@@ -199,11 +199,11 @@ export class SamAutocompleteMultiselectComponent
 
   public searchText: string = '';
 
-  private innerValue: Array<any> = [];
-  private isDisabled: boolean = false;
+  public innerValue: Array<any> = [];
+  public isDisabled: boolean = false;
   private list: any = [];
   private inputTimer: any;
-  private displaySpinner: boolean = false;
+  public displaySpinner: boolean = false;
   private textAreaMinHeight = 22;
   private debounceTime = 250;
   private cache: AutocompleteCache = new AutocompleteCache();

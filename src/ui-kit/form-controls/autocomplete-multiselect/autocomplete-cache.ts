@@ -1,4 +1,5 @@
 import { areEqual } from '../../utilities/are-equal/are-equal';
+
 export class Cached {
   private contents: any[] = [];
   private _lastValue: any[] = [];
