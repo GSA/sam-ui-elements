@@ -145,7 +145,7 @@ export class SamUploadComponent implements ControlValueAccessor {
     this.disabled = disabled;
   }
 
-  writeValue(value: null|undefined) {
+  writeValue(value: null|undefined|any) {
     if (value && value.length) {
       this._model = value;
     } else {

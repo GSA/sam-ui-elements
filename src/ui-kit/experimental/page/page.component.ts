@@ -18,4 +18,11 @@ export class SamPageComponent{
   }
   constructor(private pageService: SamPageService){}
 
+  breadcrumbHandler(event){
+    //nothing
+  }
+
+  get sidebar(){
+    return this.pageService.sidebar
+  }
 }
