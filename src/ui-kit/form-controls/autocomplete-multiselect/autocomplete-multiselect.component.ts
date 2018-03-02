@@ -550,7 +550,7 @@ export class SamAutocompleteMultiselectComponent
 
     // If there is 40px left move to the next line
     const padding = 40;
-    widthValue = spaceLeft - padding > 0 && elementsWidths && elementsWidths.length > 1 ? spaceLeft + 'px' : '100%';
+    widthValue = spaceLeft - padding > 0 && elementsWidths && elementsWidths.length > 1 ? containerWidth-spaceLeft + 'px' : '100%';
 
     return widthValue;
   }
