@@ -16,6 +16,11 @@ import { KeyHelper } from '../../../utilities/key-helper/key-helper';
 })
 export class SamActionsDropdownComponent {
   /**
+   * identifier that gets set to the ID and aria label attributes for 508
+   * compliance
+   */
+  @Input() public name: string = "action_button";
+  /**
    * Takes an array of actions for the dropdown
    */
   @Input() public actions: Array<SamActionInterface> = [];
