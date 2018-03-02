@@ -51,6 +51,10 @@ export class PageTemplateComponent implements OnInit {
    */
   @Input() public headerOptions: boolean = false;
   /**
+   * Adds the stackable class on the grid
+   */
+  @Input() public stackable: boolean = true;
+  /**
    * (deprecated) Emits breadcrumb events
    */
   @Output() public breadcrumbOut = new EventEmitter();
