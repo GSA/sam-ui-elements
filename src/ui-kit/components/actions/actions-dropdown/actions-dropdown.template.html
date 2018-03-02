@@ -6,6 +6,7 @@
 
   <button class="usa-button"
           (click)="toggleActions()"
+          (keydown)="leadKeyDownHandler($event)"
           [ngClass]="buttonType === 'primary' ? 'usa-button-primary' : ''"
           [disabled]="disabled">
     Actions&nbsp;
@@ -15,8 +16,9 @@
   <ul class="usa-unstyled-list"
       *ngIf="showActions">
     <li *ngFor="let action of actions">
-      <button class="usa-button"
-              (click)="chooseAction(action)">
+      <button #actionsList class="usa-button"
+        (keydown)="keyDownHandler($event)"
+        (click)="chooseAction(action)">
         <i [ngClass]="action?.icon"></i>&nbsp;
         <span>{{action?.label}}</span>
       </button>
