@@ -7,12 +7,12 @@
   <input
     type="text"
     aria-label="Text Input"
-    [value]="value"
+    [(ngModel)]="value"
     [attr.maxlength]="maxlength ? maxlength : 524288"
     [attr.id]="name"
     [attr.placeholder]="placeholder"
     [disabled]="disabled"
-    (change)="onInputChange($event.target.value)"
+    (ngModelChange)="onInputChange()"
     (focus)="onTouched()"
     (blur)="onLoseFocus()">
 </sam-label-wrapper>
