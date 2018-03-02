@@ -38,7 +38,7 @@ export class SamActionsDropdownComponent {
 
   @ViewChildren('actionsList') public actionsList;
   private showActions = false;
-  private focusIndex = -1;
+  focusIndex = -1;
   hideActions() {
     return this.showActions = false;
   }

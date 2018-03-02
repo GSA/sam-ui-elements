@@ -11,6 +11,16 @@ describe('The Sam Actions Dropdown Component', () => {
   let actionButton: HTMLButtonElement;
   let emittedAction: any;
   let emittedCallbackResult: any;
+  let dummyUpEvent = {
+    key: "Up",
+    preventDefault: function(){},
+    stopPropagation: function(){}
+  };
+  let dummyDownEvent = {
+    key: "Down",
+    preventDefault: function(){},
+    stopPropagation: function(){}
+  };
 
   const callback = () => {
     return 'success';
@@ -95,5 +105,27 @@ describe('The Sam Actions Dropdown Component', () => {
     buttonList[0].triggerEventHandler('click', component.actions[0]);
 
     expect(emittedCallbackResult).toBe('success');
+  });
+
+  it('should process arrow up and down keypresses', () => {
+    //first down should toggle dropdown
+    component.leadKeyDownHandler(dummyDownEvent);
+    fixture.detectChanges();
+    const numberOfButtons = de.queryAll(By.css('button')).length;
+    expect(numberOfButtons).toBe(4);
+    //next one should go into dropdown list
+    component.leadKeyDownHandler(dummyDownEvent);
+    expect(component.focusIndex).toBe(0);
+    //pressing up should keep index at 0
+    component.keyDownHandler(dummyUpEvent);
+    expect(component.focusIndex).toBe(0);
+    //should go down the list
+    component.keyDownHandler(dummyDownEvent);
+    expect(component.focusIndex).toBe(1);
+    component.keyDownHandler(dummyDownEvent);
+    expect(component.focusIndex).toBe(2);
+    //shouldn't go farther than the full length
+    component.keyDownHandler(dummyDownEvent);
+    expect(component.focusIndex).toBe(2);
   });
 });
