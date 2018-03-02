@@ -444,6 +444,10 @@ export class SamAutocompleteMultiselectComponent
 
 
   public getResults() {
+    // If list hasn't rendered in HTML yet, return
+    if (!this.resultsList || !this.resultsList.nativeElement) {
+      return;
+    }
     if (this.categoryIsSelectable) {
       return this.resultsList.nativeElement
         .querySelectorAll('li.category-item, li.category-name');
