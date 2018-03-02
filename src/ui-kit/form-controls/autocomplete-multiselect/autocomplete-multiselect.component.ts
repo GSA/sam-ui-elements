@@ -446,7 +446,7 @@ export class SamAutocompleteMultiselectComponent
   public getResults() {
     // If list hasn't rendered in HTML yet, return
     if (!this.resultsList || !this.resultsList.nativeElement) {
-      return;
+      return [];
     }
     if (this.categoryIsSelectable) {
       return this.resultsList.nativeElement
@@ -459,6 +459,11 @@ export class SamAutocompleteMultiselectComponent
 
   public getSelectedChildIndex(elements: any): number {
     let selectedIndex = -1;
+    
+    if (elements.length === 0) {
+      return selectedIndex;
+    }
+
     for (let i = 0; i < elements.length; i++) {
       if (elements[i].classList.contains('selected')) {
         selectedIndex = i;
