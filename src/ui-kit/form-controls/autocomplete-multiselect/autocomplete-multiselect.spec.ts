@@ -40,9 +40,9 @@ describe('The Sam Autocomplete Multiselect Component', () => {
           };
           component.handleEmptyList(obj);
           expect(obj[0][0].cannotBeSelected).toBe(true);
-          expect(obj[0][0].key).toBe(undefined);
+          expect(obj[0][0].key).toBe(null);
           expect(obj[0][0].value).toBe('No results found');
-          expect(component.getFirstFilteredItem([])).toBe(undefined);
+          expect(component.getFirstFilteredItem([])).toBe(null);
           const output = component.getFirstFilteredItem(
               [{key: 'keytest', value: 'valuetest'}]
           );
