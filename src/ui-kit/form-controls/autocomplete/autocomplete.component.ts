@@ -43,7 +43,8 @@ export class SamAutocompleteComponent
   @ViewChild('input') input: ElementRef;
   @ViewChild('srOnly') srOnly: ElementRef;
   @ViewChild('wrapper') wrapper;
-
+  
+  @Input() public tabindex: number = 0;
   /**
   * Sets the name attribute
   */
