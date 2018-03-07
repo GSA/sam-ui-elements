@@ -34,6 +34,7 @@ const MY_VALUE_ACCESSOR: any = {
   providers: [MY_VALUE_ACCESSOR]
 })
 export class SamSelectComponent implements ControlValueAccessor, AfterViewInit {
+  
   /**
   * Sets the bound value of the component
   */
@@ -50,6 +51,10 @@ export class SamSelectComponent implements ControlValueAccessor, AfterViewInit {
   * Sets the semantic description for the component
   */
   @Input() public name: string;
+  /**
+   * Sets the tabindex attribute value
+   */
+  @Input() public tabIndex: number = 0;
   /**
   * Sets the helpful text for the using the component
   */
