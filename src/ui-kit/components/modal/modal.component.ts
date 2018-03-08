@@ -111,7 +111,6 @@ export class SamModalComponent implements OnInit {
 
   ngOnInit() {
     this._scrollHelpers = ScrollHelpers(window);
-    this.createBackdrop();
     if (!this.typeNotDefined()) {
       this.selectedType = this.types[this.type].class;
     }
@@ -181,6 +180,7 @@ export class SamModalComponent implements OnInit {
     this.onOpen.emit(this.args);
     this.open.emit(this.args);
     if (document && document.body) {
+      this.createBackdrop();
       this._scrollHelpers.disableScroll();
       document.body.appendChild(this.backdropElement);
     }
@@ -188,11 +188,13 @@ export class SamModalComponent implements OnInit {
     this.set508();
   }
 
-  closeModal() {
+  closeModal(emit: boolean = true) {
     this._scrollHelpers.enableScroll();
     this.show = false;
-    this.onClose.emit(this.args);
-    this.close.emit(this.args);
+    if(emit){
+      this.onClose.emit(this.args);
+      this.close.emit(this.args);
+    }
     this.args = undefined;
     this.removeBackdrop();
     for (let i = 0; i < this._allFocusableElements.length; i++) {
