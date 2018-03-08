@@ -72,10 +72,6 @@ export class SamModalComponent implements OnInit {
    */
   @Output() close: EventEmitter<any> = new EventEmitter<any>();
   /**
-   * Emitted event when modal is cancelled
-   */
-  @Output() cancel: EventEmitter<any> = new EventEmitter<any>();
-  /**
    * (deprecated) Emitted event on modal submission
    */
   @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>();
