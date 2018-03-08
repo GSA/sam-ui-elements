@@ -28,7 +28,7 @@ export class ColumnDirective {
     this._number = value;
 
     this.columnsClass = this._columnsMap.get(value);
-
+    this.reset();
     this.renderer
       .setElementClass(this.el.nativeElement, this.columnsClass, true);
     this.renderer
@@ -39,6 +39,17 @@ export class ColumnDirective {
 
   public get number() {
     return this._number;
+  }
+
+  private reset(){
+    for(let i=1; i<=12 ;i++){
+      let number = this._columnsMap.get(""+i);
+      this.renderer.setElementClass(this.el.nativeElement, number, false);
+    }
+    this.renderer
+      .setElementClass(this.el.nativeElement, 'wide', false);
+    this.renderer
+      .setElementClass(this.el.nativeElement, 'column', false);
   }
   
   constructor(private renderer: Renderer, public el: ElementRef ) {}
