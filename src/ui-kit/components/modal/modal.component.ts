@@ -6,7 +6,8 @@ import {
   EventEmitter,
   ElementRef,
   ViewChild,
-  AfterViewChecked
+  AfterViewChecked,
+  ChangeDetectorRef
 } from '@angular/core';
 import { ScrollHelpers } from '../../dom-helpers';
 
@@ -96,7 +97,7 @@ export class SamModalComponent implements OnInit {
   private internalId;
   private _focusModalElement: boolean = false;
   private _focusableString: string =
-    'a[href], area, button, select, textarea, *[tabindex="0"], \
+    'a[href], area, button, select, textarea, *[tabindex], \
     input:not([type="hidden"])';
 
   private _allFocusableElements: NodeListOf<Element>;
@@ -105,7 +106,7 @@ export class SamModalComponent implements OnInit {
 
   private args = undefined;
 
-  constructor(private hostElement: ElementRef) {
+  constructor(private hostElement: ElementRef, private cdr: ChangeDetectorRef) {
     this.internalId = Date.now();
   }
 
@@ -146,12 +147,20 @@ export class SamModalComponent implements OnInit {
   }
 
   removeTabbable(item: any) {
+    if(item.hasAttribute("tabindex")){
+      item.setAttribute('data-sam-tabindex',item.getAttribute('tabindex'));
+    }
     item.setAttribute('tabindex', '-1');
     item.setAttribute('aria-hidden', 'true');
   }
 
   reinsertTabbable(item: any) {
-    item.setAttribute('tabindex', '0');
+    if(item.hasAttribute('data-sam-tabindex')){
+      item.setAttribute('tabindex',item.getAttribute('data-sam-tabindex'));
+      item.removeAttribute('data-sam-tabindex');
+    } else {
+      item.setAttribute('tabindex', '0');
+    }
     item.setAttribute('aria-hidden', 'false');
   }
 
@@ -186,6 +195,7 @@ export class SamModalComponent implements OnInit {
     }
     this._focusModalElement = true;
     this.set508();
+    this.cdr.detectChanges();
   }
 
   closeModal(emit: boolean = true) {
@@ -204,6 +214,7 @@ export class SamModalComponent implements OnInit {
     for (let j = 0; j < this._modalFocusableElements.length; j++) {
       this.removeTabbable(this._modalFocusableElements[j]);
     }
+    this.cdr.detectChanges();
   }
 
   submitBtnClick() {
