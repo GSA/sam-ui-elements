@@ -21,7 +21,6 @@ import { AutocompleteConfig } from '../../types';
 import { AutocompleteService } from './autocomplete.service';
 import { SamFormService } from '../../form-service';
 
-import { getKeyboardEventKey } from '../../key-event-helpers';
 import { KeyHelper } from '../../utilities/key-helper/key-helper';
 import { areEqual } from '../../utilities/are-equal/are-equal';
 
@@ -302,7 +301,6 @@ export class SamAutocompleteComponent
     // If event.target.name is an empty string, set search string to default
     // search string
     const searchString = event.target.value || '';
-    const keyCode = getKeyboardEventKey(event);
 
     if (KeyHelper.is('tab', event)) {
       return

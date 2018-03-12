@@ -14,7 +14,6 @@ import { SamBannerComponent } from './banner';
 import { SamBreadcrumbsComponent } from './breadcrumbs';
 import { SamCollapsibleComponent } from './collapsible';
 import { SamDownloadComponent } from './download';
-import { SamFilesComponent } from './files/files.component';
 import { SamFiltersContainerComponent } from './filters-container';
 import { SamHeaderComponent } from './header';
 import { SamHistoryComponent } from './history';
@@ -59,7 +58,6 @@ import { SamActionButton, SamActionsDropdownComponent } from './actions';
     SamBreadcrumbsComponent,
     SamCollapsibleComponent,
     SamDownloadComponent,
-    SamFilesComponent,
     SamFiltersContainerComponent,
     SamHeaderComponent,
     SamHistoryComponent,
@@ -87,7 +85,6 @@ import { SamActionButton, SamActionsDropdownComponent } from './actions';
     SamBreadcrumbsComponent,
     SamCollapsibleComponent,
     SamDownloadComponent,
-    SamFilesComponent,
     SamFiltersContainerComponent,
     SamHeaderComponent,
     SamHistoryComponent,
