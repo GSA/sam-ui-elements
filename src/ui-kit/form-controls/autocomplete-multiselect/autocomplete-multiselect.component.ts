@@ -831,6 +831,9 @@ export class SamAutocompleteMultiselectComponent
   }
 
   public displayClearAll(): boolean {
+    if(this.isDisabled){
+      return false;
+    }
     return (this.value.length > 0) || !!this.searchText;
   }
 
@@ -877,6 +880,9 @@ export class SamAutocompleteMultiselectComponent
    * Procedure to remove an item from list of selected items
    */
   public deselectItem(selectedItem): void {
+    if(this.isDisabled){
+      return;
+    }
     this.value = this.value.filter((item) => {
       if (item !== selectedItem) {
         return item;
@@ -887,6 +893,9 @@ export class SamAutocompleteMultiselectComponent
   }
 
   public deselectItemOnEnter(event, selectedItem): void {
+    if(this.isDisabled){
+      return;
+    }
     if (KeyHelper.is('enter', event)) {
       this.value = this.value.filter((item) => {
         if (item !== selectedItem) {
