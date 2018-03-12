@@ -551,7 +551,7 @@ export class SamAutocompleteMultiselectComponent
     // If there is 40px left move to the next line
     const padding = 40;
     widthValue = spaceLeft - padding > 0 && elementsWidths && elementsWidths.length > 1 ? containerWidth-spaceLeft + 'px' : '100%';
-
+    
     return widthValue;
   }
 
@@ -573,7 +573,8 @@ export class SamAutocompleteMultiselectComponent
     // prototype.
     for (let i = 0; i < elementChildren.length; i++) {
       if (elementChildren[i] !== element
-        && !elementChildren[i].classList.contains('usa-sr-only')) {
+        && !elementChildren[i].classList.contains('usa-sr-only')
+        && !elementChildren[i].classList.contains('icon-container')) {
         const childStyles = window.getComputedStyle(elementChildren[i]);
         const childWidth = parseFloat(childStyles.width);
         elementsWidths.push(( childWidth +

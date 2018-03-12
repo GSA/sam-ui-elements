@@ -1,8 +1,7 @@
-import { Injectable, ChangeDetectorRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class PageService {
-  constructor(private cdr: ChangeDetectorRef){}
   _sidebar: boolean;
   _wideSidebar: boolean;
   sidebarColumns: string;
@@ -20,7 +19,6 @@ export class PageService {
       this.sidebarColumns = '';
       this.mainContentColumns = '12';
     }
-    this.cdr.detectChanges();
   }
 
   get sidebar() {
