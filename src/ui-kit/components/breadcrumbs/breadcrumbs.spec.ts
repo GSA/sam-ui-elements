@@ -11,24 +11,8 @@ import { SamBreadcrumbsComponent } from './breadcrumbs.component';
 describe('The Sam Breadcrumbs component', () => {
   describe('isolated tests', () => {
     let component: SamBreadcrumbsComponent;
-    const mock = {
-      route: {
-        root: {
-          children: [],
-          snapshot: {
-            url: {
-              reduce: (callback, str) => {
-                return '/';
-              }
-            }
-          },
-          url: undefined,
-        }
-      },
-      url: new Subject(),
-    };
     beforeEach(() => {
-      component = new SamBreadcrumbsComponent(<any>mock);
+      component = new SamBreadcrumbsComponent();
     });
 
     it('should emit events', () => {
@@ -36,15 +20,6 @@ describe('The Sam Breadcrumbs component', () => {
         expect(str).toBe('test string');
       });
       component.crumbHandler('test string');
-    });
-
-    it('should listen to router', () => {
-      component.listenToRouter = true;
-      component.ngOnInit();
-      mock.url.next({
-        root: 'test'
-      });
-      component.getBreadcrumbs(mock.route.root as ActivatedRoute);
     });
   });
   describe('rendered tests', () => {
