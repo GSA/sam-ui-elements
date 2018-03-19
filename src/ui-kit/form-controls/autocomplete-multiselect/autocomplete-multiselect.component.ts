@@ -926,6 +926,7 @@ export class SamAutocompleteMultiselectComponent
   }
 
   public focusTextArea() {
+    if(this.isDisabled) return;
     this.textArea.nativeElement.focus();
   }
 
