@@ -1,9 +1,15 @@
-import { Directive, ElementRef, HostListener, EventEmitter, Output, Input } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  HostListener,
+  EventEmitter,
+  Output,
+  Input } from '@angular/core';
 
-export const enum DragState {
-  NotDragging = 'NotDragging',
-  DraggingInTarget = 'DraggingInTarget',
-  DraggingOutsideTarget = 'DraggingOutsideTarget',
+export enum DragState {
+  NotDragging,
+  DraggingInTarget,
+  DraggingOutsideTarget,
 }
 
 @Directive({
@@ -22,7 +28,8 @@ export class SamDragDropDirective {
   /**
    * Event emitter for drag state changes
    */
-  @Output() public dragStateChange: EventEmitter<DragState> = new EventEmitter();
+  @Output() public dragStateChange: EventEmitter<DragState> =
+    new EventEmitter();
   /**
    * Emitter for drop events
    */
@@ -35,7 +42,9 @@ export class SamDragDropDirective {
   }
 
   _eventHasFiles(event) {
-    return event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length > 0;
+    return event.dataTransfer
+      && event.dataTransfer.files
+      && event.dataTransfer.files.length > 0;
   }
 
   _eventIsInTargetWithFiles(event: DragEvent) {
