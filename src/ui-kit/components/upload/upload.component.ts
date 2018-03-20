@@ -1,19 +1,23 @@
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { Component, ElementRef, Input, ViewChild, forwardRef } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpEventType, HttpHeaderResponse, HttpRequest } from '@angular/common/http';
+import { Component, ElementRef, Input, ViewChild,
+  forwardRef } from '@angular/core';
+import { HttpClient, HttpErrorResponse, HttpEventType, 
+  HttpHeaderResponse, HttpRequest } from '@angular/common/http';
 import { DragState } from '../../directives/drag-drop/drag-drop.directive';
 import { HttpEvent } from '@angular/common/http/src/response';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-export type RequestGenerator = (file: File) => HttpRequest<any> | Observable<HttpRequest<any>>;
-export type DeleteRequestGenerator = (uf: UploadFile) => HttpRequest<any> | Observable<HttpRequest<any>>;
+export type RequestGenerator =
+  (file: File) => HttpRequest<any> | Observable<HttpRequest<any>>;
+export type DeleteRequestGenerator =
+  (uf: UploadFile) => HttpRequest<any> | Observable<HttpRequest<any>>;
 
 export enum UploadStatus {
-  Initial = 'Initial',
-  Uploading = 'Uploading',
-  Done = 'Done',
-  Error = 'Error',
+  Initial,
+  Uploading,
+  Done,
+  Error
 }
 
 export class Upload {
@@ -111,20 +115,21 @@ export class SamUploadComponent implements ControlValueAccessor {
   /*
    * Input 508 identifier
    */
-  @Input() public name = "upload";
+  @Input() public name = 'upload';
 
   public dragState: DragState = DragState.NotDragging;
 
   public showMaxFilesError: boolean = false;
 
-  /* The list of visible files. Does not include deleted files. Does include files with errors */
+  public disabled: boolean = false;
+
+  /* The list of visible files. Does not include deleted 
+  files. Does include files with errors */
   public _model: Array<UploadFile> = [];
 
   private onChange: Function;
 
   private onTouched: Function;
-
-  public disabled: boolean = false;
 
   /* The hidden file input dom element */
   @ViewChild('file') private fileInput: ElementRef;
@@ -159,7 +164,7 @@ export class SamUploadComponent implements ControlValueAccessor {
     this.showMaxFilesError = false;
 
     // convert to array for the convience of the standard array functions
-    let asArray = toArray(files);
+    const asArray = toArray(files);
     const wouldBeTotal = asArray.length + this._model.length;
     if (this.maxFiles > 0 && wouldBeTotal > this.maxFiles) {
       this.showMaxFilesError = true;
@@ -263,8 +268,10 @@ export class SamUploadComponent implements ControlValueAccessor {
 
   deleteFile(uf: UploadFile) {
     const delete$ = this._getDeleteRequestForFile(uf);
-    // errors are intentionally ignored. In the case of an error, show it in the console, but don't annoy the user.
-    // There may be an extra file on the server, but that's not the user's problem
+    // errors are intentionally ignored. In the case of an 
+    // error, show it in the console, but don't annoy the user.
+    // There may be an extra file on the server, but that's 
+    // not the user's problem
     delete$.subscribe();
   }
 
@@ -308,7 +315,9 @@ export class SamUploadComponent implements ControlValueAccessor {
   }
 
   _numFilesValid() {
-    return this._model.filter(uf => uf.upload.status !== UploadStatus.Error).length;
+    return this._model
+      .filter(uf => uf.upload.status !== UploadStatus.Error)
+      .length;
   }
 
   _getDeleteRequestForFile(uf: UploadFile) {
@@ -341,7 +350,8 @@ export class SamUploadComponent implements ControlValueAccessor {
   }
 
   _clearInput() {
-    // clear the input's internal value, or it will not emit the change event if we select a file, deselect that file,
+    // clear the input's internal value, or it will not 
+    // emit the change event if we select a file, deselect that file,
     // and select the same file again
     this.fileInput.nativeElement.value = '';
   }
