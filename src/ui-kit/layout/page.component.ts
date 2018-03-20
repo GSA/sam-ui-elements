@@ -25,6 +25,10 @@ export class PageTemplateComponent implements OnInit {
    */
   @Input() public title: any;
   /**
+   * Sets the TitleAndSectionComponent id input
+   */
+  @Input() public titleId: string;
+  /**
    * Sets the TitleAndSectionComponent badge input
    */
   @Input() public badge: string;

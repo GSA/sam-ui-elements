@@ -6,7 +6,8 @@ import {
   EventEmitter,
   ElementRef,
   ViewChild,
-  AfterViewChecked
+  AfterViewChecked,
+  ChangeDetectorRef
 } from '@angular/core';
 import { ScrollHelpers } from '../../dom-helpers';
 
@@ -96,7 +97,7 @@ export class SamModalComponent implements OnInit {
   private internalId;
   private _focusModalElement: boolean = false;
   private _focusableString: string =
-    'a[href], area, button, select, textarea, *[tabindex="0"], \
+    'a[href], area, button, select, textarea, *[tabindex], \
     input:not([type="hidden"])';
 
   private _allFocusableElements: NodeListOf<Element>;
@@ -105,13 +106,12 @@ export class SamModalComponent implements OnInit {
 
   private args = undefined;
 
-  constructor(private hostElement: ElementRef) {
+  constructor(private hostElement: ElementRef, private cdr: ChangeDetectorRef) {
     this.internalId = Date.now();
   }
 
   ngOnInit() {
     this._scrollHelpers = ScrollHelpers(window);
-    this.createBackdrop();
     if (!this.typeNotDefined()) {
       this.selectedType = this.types[this.type].class;
     }
@@ -147,12 +147,20 @@ export class SamModalComponent implements OnInit {
   }
 
   removeTabbable(item: any) {
+    if(item.hasAttribute("tabindex")){
+      item.setAttribute('data-sam-tabindex',item.getAttribute('tabindex'));
+    }
     item.setAttribute('tabindex', '-1');
     item.setAttribute('aria-hidden', 'true');
   }
 
   reinsertTabbable(item: any) {
-    item.setAttribute('tabindex', '0');
+    if(item.hasAttribute('data-sam-tabindex')){
+      item.setAttribute('tabindex',item.getAttribute('data-sam-tabindex'));
+      item.removeAttribute('data-sam-tabindex');
+    } else {
+      item.setAttribute('tabindex', '0');
+    }
     item.setAttribute('aria-hidden', 'false');
   }
 
@@ -181,18 +189,22 @@ export class SamModalComponent implements OnInit {
     this.onOpen.emit(this.args);
     this.open.emit(this.args);
     if (document && document.body) {
+      this.createBackdrop();
       this._scrollHelpers.disableScroll();
       document.body.appendChild(this.backdropElement);
     }
     this._focusModalElement = true;
     this.set508();
+    this.cdr.detectChanges();
   }
 
-  closeModal() {
+  closeModal(emit: boolean = true) {
     this._scrollHelpers.enableScroll();
     this.show = false;
-    this.onClose.emit(this.args);
-    this.close.emit(this.args);
+    if(emit){
+      this.onClose.emit(this.args);
+      this.close.emit(this.args);
+    }
     this.args = undefined;
     this.removeBackdrop();
     for (let i = 0; i < this._allFocusableElements.length; i++) {
@@ -202,6 +214,7 @@ export class SamModalComponent implements OnInit {
     for (let j = 0; j < this._modalFocusableElements.length; j++) {
       this.removeTabbable(this._modalFocusableElements[j]);
     }
+    this.cdr.detectChanges();
   }
 
   submitBtnClick() {

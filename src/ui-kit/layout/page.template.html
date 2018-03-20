@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div *ngIf="!breadcrumbs" class="sam-ui hidden divider"></div>
+    <div *ngIf="!breadcrumbs && !headerOptions" class="sam-ui hidden divider"></div>
 
     <div row class="page-content">
       <!-- Sidebar -->
@@ -35,6 +35,7 @@
 
         <!-- Page Title -->
         <title-and-section [title]="title"
+                           [id]="titleId"
                            [section]="section"
                            [badge]="badge"
                            [badgeOptions]="options.badge"

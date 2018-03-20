@@ -551,7 +551,7 @@ export class SamAutocompleteMultiselectComponent
     // If there is 40px left move to the next line
     const padding = 40;
     widthValue = spaceLeft - padding > 0 && elementsWidths && elementsWidths.length > 1 ? containerWidth-spaceLeft + 'px' : '100%';
-
+    
     return widthValue;
   }
 
@@ -573,7 +573,8 @@ export class SamAutocompleteMultiselectComponent
     // prototype.
     for (let i = 0; i < elementChildren.length; i++) {
       if (elementChildren[i] !== element
-        && !elementChildren[i].classList.contains('usa-sr-only')) {
+        && !elementChildren[i].classList.contains('usa-sr-only')
+        && !elementChildren[i].classList.contains('icon-container')) {
         const childStyles = window.getComputedStyle(elementChildren[i]);
         const childWidth = parseFloat(childStyles.width);
         elementsWidths.push(( childWidth +
@@ -831,6 +832,9 @@ export class SamAutocompleteMultiselectComponent
   }
 
   public displayClearAll(): boolean {
+    if(this.isDisabled){
+      return false;
+    }
     return (this.value.length > 0) || !!this.searchText;
   }
 
@@ -877,6 +881,9 @@ export class SamAutocompleteMultiselectComponent
    * Procedure to remove an item from list of selected items
    */
   public deselectItem(selectedItem): void {
+    if(this.isDisabled){
+      return;
+    }
     this.value = this.value.filter((item) => {
       if (item !== selectedItem) {
         return item;
@@ -887,6 +894,9 @@ export class SamAutocompleteMultiselectComponent
   }
 
   public deselectItemOnEnter(event, selectedItem): void {
+    if(this.isDisabled){
+      return;
+    }
     if (KeyHelper.is('enter', event)) {
       this.value = this.value.filter((item) => {
         if (item !== selectedItem) {
@@ -916,6 +926,7 @@ export class SamAutocompleteMultiselectComponent
   }
 
   public focusTextArea() {
+    if(this.isDisabled) return;
     this.textArea.nativeElement.focus();
   }
 

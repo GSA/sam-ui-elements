@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class PageService {
-
   _sidebar: boolean;
   _wideSidebar: boolean;
   sidebarColumns: string;

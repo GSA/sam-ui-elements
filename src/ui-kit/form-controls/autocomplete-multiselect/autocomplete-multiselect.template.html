@@ -1,4 +1,4 @@
-<div class="sam-autocomplete-multiselect">
+<div class="sam-autocomplete-multiselect" [ngClass]="{'disabled':isDisabled}">
   <!-- Markup for input area -->
   <sam-label-wrapper #wrapper
                     class="label-wrapper"
@@ -44,7 +44,7 @@
                     {{ item[keyValueConfig?.categoryProperty] }}
                   </span>
                 </div>
-                <i class="icon close fa fa-times"></i>
+                <i *ngIf="!isDisabled" class="icon close fa fa-times"></i>
             </div>
             <label *ngIf="name && !label && !hideTextareaLabel"
                   [attr.for]="name+'-ac-textarea'"
@@ -64,8 +64,8 @@
                               handleBackspaceEvent(
                                 handleEnterEvent($event))))))"
                       (keyup)="applyTextAreaWidth(handleEnterEvent($event))"
-                      [disabled]="isDisabled"
-                      (focus)="filterOptions('')"
+                      *ngIf="!isDisabled"
+                      (focus)="filterOptions(searchText ? searchText : '')"
                       aria-label="autocomplete-multiselect">
             </textarea>
 

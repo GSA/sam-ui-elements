@@ -8,6 +8,7 @@ import { BadgeConfig } from '../components/badge';
     <div [ngClass]="badgeOptions?.attached ? 'sam-ui segment' : ''">
       <h1 *ngIf="title || section"
           class="sam-ui header"
+          [attr.id]="id"
           style="font-size: 4rem;">
         <sam-badge [options]="badgeOptions"
           *ngIf="badge">{{ badge }}
@@ -34,6 +35,10 @@ export class TitleAndSectionComponent {
    * Sets the title text
    */
   @Input() public title: string;
+  /**
+   * Sets the id attribute value
+   */
+  @Input() public id: string;
   /**
    * Sets the badge text
    */
