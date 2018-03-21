@@ -1,6 +1,6 @@
 {
   "name": "sam-ui-elements",
-  "version": "12.4.0",
+  "version": "13.2.0",
   "description": "SAM Client Side Implementation",
   "keywords": [
     "angular2",
@@ -43,7 +43,7 @@
     "e2e": "npm run protractor",
     "e2e:live": "npm run e2e -- --elementExplorer",
     "test": "karma start",
-    "test:no-lint":"karma start --no-lint",
+    "test:no-lint": "karma start --no-lint",
     "ci": "npm run lint && npm test && npm run e2e",
     "docs": "npm run typedoc -- --options typedoc.json --exclude '**/*.spec.ts' ./src/",
     "start": "exit 0",
@@ -52,7 +52,7 @@
     "version": "npm run build",
     "postversion": "git push && git push --tags"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@angular/animations": "4.3.3",
     "@angular/common": "4.3.3",
     "@angular/compiler": "4.3.3",
