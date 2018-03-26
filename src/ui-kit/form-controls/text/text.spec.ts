@@ -47,10 +47,12 @@ describe('The Sam Text component', () => {
     });
   
     it('should allow an initial value to be set by the value input', () => {
-      component.value = 'ABC123';
+      component.writeValue('ABC123');
+      const input = fixture.debugElement.query(By.css('input'));
       fixture.detectChanges();
-      const input = fixture.debugElement.query(By.css('#my-text-component'));
-      expect(input.nativeElement.value).toBe('ABC123');
+      fixture.whenStable().then(()=>{
+        expect(input.nativeElement.value).toBe('ABC123');
+      });
     });
   
     it('should show a hint message', () => {
@@ -72,19 +74,6 @@ describe('The Sam Text component', () => {
       component.label = labelText;
       fixture.detectChanges();
       expect(fixture.nativeElement.innerHTML).toContain(labelText);
-    });
-
-    it('should render with a control', () => {
-      const c = new FormControl('test', () => { return undefined; });
-      
-      component.name = 'test-name';
-      component.control = c;
-      component.required = true;
-      component.maxlength = 10;
-      component.ngOnInit();
-      component.ngAfterViewInit();
-      component.onInputChange('test2');
-      expect(component.value).toBe('test2');
     });
   });
 });
