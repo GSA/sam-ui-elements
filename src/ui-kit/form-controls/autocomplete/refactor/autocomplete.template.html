@@ -30,10 +30,10 @@
         <button *ngIf="displayClearButton()"
                 class="usa-button-link"
                 (click)="clearComponent()">
-          <i class="fa fa-times-circle"></i>
+          <span class="fa fa-times-circle"></span>
         </button>
-        <i *ngIf="displaySpinner" class="fa fa-spinner fa-pulse"></i>
-        <i *ngIf="!displaySpinner" class="fa" [ngClass]="addOnIconClass"></i>
+        <span *ngIf="displaySpinner" class="fa fa-spinner fa-pulse"></span>
+        <span *ngIf="!displaySpinner" class="fa" [ngClass]="addOnIconClass"></span>
       </span>
     </div>
     <ul class="usa-unstyled-list results-list"

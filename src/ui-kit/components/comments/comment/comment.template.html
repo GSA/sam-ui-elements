@@ -1,7 +1,7 @@
 <article class="sam-comment">
   <header>
     <figure>
-      <i *ngIf="!comment?.image" class="fa fa-2x fa-user"></i>
+      <span *ngIf="!comment?.image" class="fa fa-2x fa-user"></span>
       <img *ngIf="comment?.image" [src]="comment?.image"/>
       <figcaption class="usa-sr-only">Icon for user {{comment.username}}</figcaption>
     </figure>
@@ -12,7 +12,7 @@
     <button class="usa-button-link remove-comment"
             *ngIf="allowDelete"
             (click)="emitClick()">
-      <i class="fa fa-times"></i>
+      <span class="fa fa-times"></span>
       <span class="usa-sr-only">Delete comment</span>
     </button>
   </header>

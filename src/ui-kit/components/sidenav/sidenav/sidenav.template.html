@@ -7,7 +7,7 @@
         (click)="updateUI($index, $event, child)">
           {{child.label}}
           <ng-container *ngIf="child?.iconClass">
-            <i [ngClass]="child.iconClass"></i>
+            <span [ngClass]="child.iconClass"></span>
           </ng-container>
       </a>
       <sam-menu-item *ngIf="isSelected($index)"
