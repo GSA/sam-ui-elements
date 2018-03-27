@@ -14,7 +14,12 @@
              (keyup)="onKeyup($event)"
              [(ngModel)]="inputValue"
              [attr.aria-label]="name">
-      <span *ngIf="!input.disabled" [attr.tabindex]="tabIndex" class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}"><span class="fa fa-times-circle" (click)="clearInput()" (keyup.enter)="clearInput()"></span></span>
+      <ng-container *ngIf="!input.disabled">
+        <span [attr.tabindex]="tabIndex" class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}">
+          <span class="fa fa-times-circle" aria-hidden="true" (click)="clearInput()" (keyup.enter)="clearInput()"></span>
+        </span>
+        <span class="sr-only">Clear input.</span>
+      </ng-container>
       <span *ngIf="config && config.addOnIconClass" class="add-on"><span class="{{config.addOnIconClass}}"></span></span>
     </div>
     <div class="sam-autocomplete-results">
