@@ -25,9 +25,9 @@
 
               <h4>{{item.title}}</h4>
 
-              <i  class="fa fa-plus"
+              <span  class="fa fa-plus"
                   [ngClass]="getItemClass(i,j)">
-              </i>
+              </span>
 
               <img  *ngIf="(item.img && !item.imgActive) || item.imgActive && (getActiveClass(i,j) === 'inverted cool blue')"
                     [src]="item.img"
@@ -99,7 +99,7 @@
               href="{{detailObj.item.url}}"
               target="{{detailObj.item.title}}">
             {{detailObj.item.link}}&nbsp;
-            <i *ngIf="getLinkClass()" class="icon fa fa-external-link" aria-hidden="true"></i>
+            <span *ngIf="getLinkClass()" class="icon fa fa-external-link" aria-hidden="true"></span>
           </a>
 
         </div>

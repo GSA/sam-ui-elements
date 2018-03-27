@@ -8,9 +8,9 @@
     <ng-container *ngIf="data.state">{{data.state}} </ng-container>
     <ng-container *ngIf="data.zip">{{data.zip}}</ng-container><br>
   </ng-container>
-  <ng-container *ngIf="data.email"><strong><i class="fa fa-envelope-o" aria-hidden="true"></i></strong> <a href="mailto:{{data.email}}">{{data.email}}</a> <br></ng-container>
-  <ng-container *ngIf="data.phone"><strong><i class="fa fa-phone" aria-hidden="true"></i></strong> {{data.phone}}<br></ng-container>
-  <ng-container *ngIf="data.phone2"><strong><i class="fa fa-phone" aria-hidden="true"></i></strong> {{data.phone2}}<br></ng-container>
-  <ng-container *ngIf="data.fax"><strong><i class="fa fa-fax" aria-hidden="true"></i></strong> {{data.fax}}<br></ng-container>
-  <ng-container *ngIf="data.website"><strong><i class="fa fa-globe" aria-hidden="true"></i></strong> {{data.website}}<br></ng-container>
+  <ng-container *ngIf="data.email"><strong><span class="fa fa-envelope-o" aria-hidden="true"></span></strong> <a href="mailto:{{data.email}}">{{data.email}}</a> <br></ng-container>
+  <ng-container *ngIf="data.phone"><strong><span class="fa fa-phone" aria-hidden="true"></span></strong> {{data.phone}}<br></ng-container>
+  <ng-container *ngIf="data.phone2"><strong><span class="fa fa-phone" aria-hidden="true"></span></strong> {{data.phone2}}<br></ng-container>
+  <ng-container *ngIf="data.fax"><strong><span class="fa fa-fax" aria-hidden="true"></span></strong> {{data.fax}}<br></ng-container>
+  <ng-container *ngIf="data.website"><strong><span class="fa fa-globe" aria-hidden="true"></span></strong> {{data.website}}<br></ng-container>
 </div>

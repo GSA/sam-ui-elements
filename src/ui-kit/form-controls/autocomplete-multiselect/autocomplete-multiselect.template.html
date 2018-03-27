@@ -17,7 +17,7 @@
                 (click)="clearSearch(deselectAll())"
                 [disabled]="isDisabled">
                 <span class="sr-only">clear all</span>
-                <i class="fa fa-times-circle"></i>
+                <span class="fa fa-times-circle"></span>
         </button>
       </div>
       <div class="sam-autocomplete-multiselect-container"
@@ -44,7 +44,7 @@
                     {{ item[keyValueConfig?.categoryProperty] }}
                   </span>
                 </div>
-                <i *ngIf="!isDisabled" class="icon close fa fa-times"></i>
+                <span *ngIf="!isDisabled" class="icon close fa fa-times"></span>
             </div>
             <label *ngIf="name && !label && !hideTextareaLabel"
                   [attr.for]="name+'-ac-textarea'"
@@ -79,8 +79,8 @@
               {{ searchText }}
             </span>
             <div class="icon-container">
-              <i *ngIf="!displaySpinner" class="fa" [ngClass]="addOnIcon"></i>
-              <i *ngIf="displaySpinner" class="fa fa-spinner fa-pulse"></i>
+              <span *ngIf="!displaySpinner" class="fa" [ngClass]="addOnIcon"></span>
+              <span *ngIf="displaySpinner" class="fa fa-spinner fa-pulse"></span>
             </div>
         </div>
 
