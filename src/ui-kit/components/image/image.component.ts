@@ -24,7 +24,7 @@ export class SamImageComponent implements OnInit {
   /*
    * Function that is called when the image is not found
    */
-  @Input() public error: Function = () => { return; };
+  @Output() public error = new EventEmitter<any>();
   /**
    * An event emitter that emits the file that the user uploaded.
    */

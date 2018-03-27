@@ -5,7 +5,7 @@
      (drop)="onDropEvent($event)">
   <img id="image"
        #image
-       (error)="error()"
+       (error)="error.emit()"
        src="{{generateSrc()}}"
        alt="User uploaded image"
        title="User uploaded image">
