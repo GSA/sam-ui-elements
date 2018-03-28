@@ -9,7 +9,7 @@
              [attr.name]="name"
              type="text"
              (focus)="inputFocusHandler($event)"
-             (change)="onChange()"
+             (ngModelChange)="onChange()"
              (keydown)="onKeydown($event)"
              (keyup)="onKeyup($event)"
              [(ngModel)]="inputValue"
