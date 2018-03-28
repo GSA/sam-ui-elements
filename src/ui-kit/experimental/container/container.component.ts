@@ -1,25 +1,23 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: "sam-container",
   template: `
-    <ng-container *ngIf="gridLines">
-      <div class="grid-lines">
-        <div class="grid-line"></div>
-        <div class="grid-line"></div>
-        <div class="grid-line"></div>
-        <div class="grid-line"></div>
-        <div class="grid-line"></div>
-        <div class="grid-line"></div>
-      </div>
-    </ng-container>
-    <ng-content></ng-content>
+    <div [ngClass]="css_classes">
+      <ng-content></ng-content>
+    </div>
   `
 })
-export class SamContainerComponent{
-  /**
-  * Shows grid lines
-  */
-  @Input() public gridLines: boolean;
+export class SamContainerComponent implements OnInit{
+
+  @Input() public size: string;
+  @Input() public weight: string;
+
+  css_classes: string = 'sam container';
+
+  ngOnInit(){
+    this.css_classes += this.size ? ` ${this.size}` : '';
+    this.css_classes += this.weight ? ` ${this.weight}` : '';
+  }
 
 }

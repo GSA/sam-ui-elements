@@ -4,7 +4,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 @Component({
   selector: "sam-youtube",
   template: `
-  <div class="sam-ui embed video ratio16by9">
+  <div class="sam embed video ratio16by9">
     <iframe [src]="videoUrl" allow="autoplay; encrypted-media" allowfullscreen>
     </iframe>
   </div>
