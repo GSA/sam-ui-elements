@@ -43,7 +43,7 @@ export class SamAutocompleteComponent
   @ViewChild('input') input: ElementRef;
   @ViewChild('srOnly') srOnly: ElementRef;
   @ViewChild('wrapper') wrapper;
-  
+
   /**
   * Sets the name attribute
   */
@@ -342,7 +342,7 @@ export class SamAutocompleteComponent
       this.pushSROnlyMessage(this.results.length + this.resultsAvailable);
     }
   }
-  
+
   onKeyUpUsingService(searchString: string) {
     let options = null;
     if (this.config) {
@@ -358,7 +358,7 @@ export class SamAutocompleteComponent
               let len;
               this.hasServiceError = false;
               this.cache.insert(res,searchString);
-              if (this.isKeyValuePair(res)) {
+              if (this.config && this.config.keyValueConfig) {
                 this.filteredKeyValuePairs = this.cache.get(searchString);
                 len = !!this.filteredKeyValuePairs
                   ? this.filteredKeyValuePairs.length
@@ -445,7 +445,7 @@ export class SamAutocompleteComponent
 
     if (selectedChildIndex === children.length - 1) {
       this.onKeyUpUsingService(this.inputValue);
-      selectedChildIndex = 
+      selectedChildIndex =
         this.checkCategoryIndex(children[selectedChildIndex]);
      isFirstItemCategory = this.isFirstItemCategory(
         children[selectedChildIndex],
@@ -747,7 +747,7 @@ export class SamAutocompleteComponent
       this.selectedInputValue = this.inputValue;
       this.innerValue = value;
       // angular isn't populating this
-      this.input.nativeElement.value = this.inputValue; 
+      this.input.nativeElement.value = this.inputValue;
     } else if (value === null) {
       this.inputValue = '';
       this.selectedInputValue = '';
