@@ -9,10 +9,10 @@
              [attr.name]="name"
              type="text"
              (focus)="inputFocusHandler($event)"
-             (ngModelChange)="onChange()"
              (keydown)="onKeydown($event)"
              (keyup)="onKeyup($event)"
              [(ngModel)]="inputValue"
+             (ngModelChange)="onChange()"
              [attr.aria-label]="name">
       <ng-container *ngIf="!input.disabled">
         <span [attr.tabindex]="tabIndex" class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}">
