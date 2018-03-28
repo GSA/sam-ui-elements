@@ -1,50 +1,60 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
-
-import { SamComponentsModule } from '../components';
 
 import { SamBoxComponent } from './box';
 import { SamContainerComponent } from './container';
-import { SamHeadingComponent } from './heading';
 import { SamIconComponent } from './icon';
+import { SamLabelNextComponent } from './label';
+import { SamLayoutComponent } from './layout';
+import { SamLayoutContentComponent } from './layout';
+import { SamLayoutImgComponent } from './layout';
 import { SamListComponent } from './list';
+import { SamListItemComponent } from './list';
 import { SamMasterPageComponent } from './master-page';
 import { SamPageComponent } from './page';
 import { SamSearchComponent } from './search';
-import { SamSidebarComponent } from './sidebar';
+import { SamPageSidebarComponent } from './page';
+import { SamTitleComponent } from './title';
 import { SamYoutubeComponent } from './youtube';
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule,
-    SamComponentsModule,
-    HttpClientModule
+    RouterModule
   ],
   declarations: [
     SamBoxComponent,
     SamContainerComponent,
-    SamHeadingComponent,
     SamIconComponent,
+    SamLabelNextComponent,
+    SamLayoutComponent,
+    SamLayoutContentComponent,
+    SamLayoutImgComponent,
     SamListComponent,
+    SamListItemComponent,
     SamMasterPageComponent,
     SamPageComponent,
     SamSearchComponent,
-    SamSidebarComponent,
+    SamPageSidebarComponent,
+    SamTitleComponent,
     SamYoutubeComponent
   ],
   exports: [
     SamBoxComponent,
     SamContainerComponent,
-    SamHeadingComponent,
     SamIconComponent,
+    SamLabelNextComponent,
+    SamLayoutComponent,
+    SamLayoutContentComponent,
+    SamLayoutImgComponent,
     SamListComponent,
+    SamListItemComponent,
     SamMasterPageComponent,
     SamPageComponent,
     SamSearchComponent,
-    SamSidebarComponent,
+    SamPageSidebarComponent,
+    SamTitleComponent,
     SamYoutubeComponent
   ]
 })
