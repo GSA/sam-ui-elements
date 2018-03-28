@@ -42,7 +42,7 @@ export function areEqual (item1: any, item2: any): boolean {
 
     if (isArray1 && isArray2) {
       return areArraysEqual(item1, item2)
-    } else if (!isArray1 && !isArray1) {
+    } else if (!isArray1 && !isArray2) {
       return areNonArrayObjectsEqual(item1, item2);
     } else {
       return false;

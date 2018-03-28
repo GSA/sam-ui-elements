@@ -75,7 +75,7 @@ export class SamTabsComponent implements AfterContentInit {
   @Input()
   set size(key: string) {
     if (key.match(/(mini|tiny|small|default|large|huge|big)/)) {
-      this._size = (key === 'default') ? '' : '';
+      this._size = '';//(key === 'default') ? '' : '';
     }
   }
 
