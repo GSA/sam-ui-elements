@@ -166,7 +166,7 @@ describe('The Sam Accordion component', () => {
       fixture = TestBed.createComponent(AccordionBordered);
       component = getComponent(fixture);
       component.ngOnInit();
-      const el = fixture.debugElement.query(By.css('ul'));
+      const el = fixture.debugElement.query(By.css('sam-accordion > div'));
       expect(el.nativeElement.classList.contains('usa-accordion')).toBeFalsy();
       expect(
         el.nativeElement.classList.contains('usa-accordion-bordered')
@@ -178,7 +178,7 @@ describe('The Sam Accordion component', () => {
       fixture = TestBed.createComponent(AccordionDefault);
       component = getComponent(fixture);
       component.ngOnInit();
-      const el = fixture.debugElement.query(By.css('ul'));
+      const el = fixture.debugElement.query(By.css('sam-accordion > div'));
       expect(el.nativeElement.classList.contains('usa-accordion')).toBeTruthy();
       expect(
         el.nativeElement.classList.contains('usa-accordion-bordered')
