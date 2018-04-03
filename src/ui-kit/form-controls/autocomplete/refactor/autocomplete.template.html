@@ -1,4 +1,4 @@
-<div class="sam-autocomplete">      
+<div class="sam-autocomplete">
   <sam-label-wrapper
     #wrapper
     sam-click-outside
@@ -30,7 +30,8 @@
         <button *ngIf="displayClearButton()"
                 class="usa-button-link"
                 (click)="clearComponent()">
-          <span class="fa fa-times-circle"></span>
+          <span class="fa fa-times-circle" aria-hidden="true"></span>
+          <span class="sr-only">Clear input.</span>
         </button>
         <span *ngIf="displaySpinner" class="fa fa-spinner fa-pulse"></span>
         <span *ngIf="!displaySpinner" class="fa" [ngClass]="addOnIconClass"></span>
