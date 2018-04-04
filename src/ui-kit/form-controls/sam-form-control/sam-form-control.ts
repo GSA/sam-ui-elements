@@ -13,7 +13,8 @@ import {
   FormControl,
   ValidatorFn,
   AsyncValidatorFn,
-  NG_VALUE_ACCESSOR } from '@angular/forms';
+  NG_VALUE_ACCESSOR, 
+  NG_VALIDATORS} from '@angular/forms';
 
 import { SamFormService } from '../../form-service';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
@@ -21,6 +22,14 @@ import { LabelWrapper } from '../../wrappers/label-wrapper';
 export function AccessorToken (className) {
   return {
     provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => className),
+    multi: true
+  };
+}
+
+export function ValidatorToken (className) {
+  return {
+    provide: NG_VALIDATORS,
     useExisting: forwardRef(() => className),
     multi: true
   };
@@ -44,8 +53,8 @@ export class SamFormControl
 
   protected defaultValue: any = null;
   
-  private _value: any = null;
-  private _disabled: boolean;
+  protected _value: any = null;
+  protected _disabled: boolean;
 
   public onChange: (_?: any) => any = (_) => { return _; };
   public onTouched: () => any = () => { return; };
