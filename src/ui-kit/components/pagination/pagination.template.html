@@ -1,4 +1,4 @@
-  <ul class="usa-pagination usa-color-text usa-color-primary-darkest usa-color-text-white">
+  <ul class="usa-pagination usa-color-text usa-color-primary-darkest usa-color-text-white" [ngClass]="disabled && 'disabled'">
     <li *ngIf="showPrevious()"><a tabindex="0" class="page-previous" aria-label="previous" (click)="onPreviousClick()" (keyup.enter)="onPreviousClick()">&lsaquo; Prev</a></li>
     <li><a tabindex="0" class="page-button" [ngClass]="textDecoration(1)" (click)="onPageClick(1)" [attr.aria-label]="getAriaLabel(1)" (keyup.enter)="onPageClick(1)">1</a></li>
     <li *ngIf="showFirstEllipsis()"><span class="first-ellipsis">&hellip;</span></li>
