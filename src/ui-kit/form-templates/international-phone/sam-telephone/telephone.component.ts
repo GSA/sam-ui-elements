@@ -107,7 +107,7 @@ export class SamTelephone extends SamFormControl
     
     if (target) {
       this.inputValue =
-        this.templateToNumber(this.inputValue);
+        this.templateToNumber(target.value);
     }
   }
 

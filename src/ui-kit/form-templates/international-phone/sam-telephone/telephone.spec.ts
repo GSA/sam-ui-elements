@@ -1,5 +1,5 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectorRef, SimpleChange } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { FormsModule, FormControl } from '@angular/forms';
 // Load the implementations that should be tested
@@ -16,7 +16,7 @@ const mockEvent = {
 };
 
 
-describe('Sam Telephone Component', () => {
+fdescribe('Sam Telephone Component', () => {
 
   let component: SamTelephone;
 
@@ -51,10 +51,18 @@ describe('Sam Telephone Component', () => {
     is not 1', () => {
 
     const expected = '';
+    const newCountry = 44;
+    const changes = {
+      countryCode: new SimpleChange(
+        undefined,
+        newCountry,
+        false
+      )
+    };
 
-    component.countryCode = 44;
+    component.ngOnChanges(changes);
 
-    expect(component.template).toEqual('');
+    expect(component.template).toEqual(expected);
   });
 
   it('should use international validation if country code\
