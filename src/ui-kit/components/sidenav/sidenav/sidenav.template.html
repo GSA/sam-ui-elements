@@ -23,7 +23,9 @@
 <div *ngIf="type == 'step'" class="sam-ui vertical fluid ordered steps">
   <ng-container *ngFor="let child of model.children; let $index = index">
     <!-- TOOD: discuss whether to use <button> instead of <a>, if <a>, then need to implement event handler for space -->
-    <a role="button" tabindex="0"
+    <a role="button"
+      [attr.aria-label]="child.label"
+      tabindex="0"
       class="step"
       [ngClass]="{
         'active': isSelected($index),
