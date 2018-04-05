@@ -16,7 +16,7 @@ const mockEvent = {
 };
 
 
-fdescribe('Sam Telephone Component', () => {
+describe('Sam Telephone Component', () => {
 
   let component: SamTelephone;
 
@@ -92,51 +92,6 @@ fdescribe('Sam Telephone Component', () => {
       component.handleBlur(mockEvent);
   
       expect(component.inputValue).toEqual(expected);
-  });
-
-  it('should validate North American Numbers', () => {
-    const testValue1 = 1234;
-    const testValue2 = 1234567890;
-    const testValue3 = 12345678901;
-
-    const control = new FormControl();
-
-    // Test 1
-    control.setValidators(component.validate);
-    component.writeValue(testValue1);
-    control.setValue(component.value);
-    expect(control.valid).toBeFalsy();
-
-    // Test 2
-    control.setValidators(component.validate);
-    component.writeValue(testValue2);
-    control.setValue(component.value);
-    expect(control.valid).toBeTruthy();
-
-    // Test 3
-    control.setValidators(component.validate);
-    component.writeValue(testValue3);
-    control.setValue(component.value);
-    expect(control.valid).toBeFalsy();
-  });
-
-  it('should validate international numbers', () => {
-    const testValue1 = 123456789012345;
-    const testValue2 = 1234567890123456;
-
-    const control = new FormControl();
-
-    // Test 1
-    control.setValidators(component.validate);
-    component.writeValue(testValue1);
-    control.setValue(component.value);
-    expect(control.valid).toBeTruthy();
-
-    // Test 2
-    control.setValidators(component.validate);
-    component.writeValue(testValue2);
-    control.setValue(component.value);
-    expect(control.valid).toBeFalsy();
   });
 
 });

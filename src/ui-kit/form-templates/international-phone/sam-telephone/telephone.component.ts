@@ -128,7 +128,9 @@ export class SamTelephone extends SamFormControl
     const digits = numberStr
       .split('')
       .filter(digit => digit.match(/\d/g));
-    const blanks = this.template.split('');
+    const blanks = this.template
+      ? this.template.split('')
+      : [];
 
     return blanks
       .map(

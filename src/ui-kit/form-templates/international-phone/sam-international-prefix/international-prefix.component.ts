@@ -49,8 +49,8 @@ export class SamInternationalPrefix extends SamFormControl {
   }
 
   public inputChange (event) {
-    this.value = event.target.value 
-      ? event.target.value
+    this.value = event.currentTarget.value 
+      ? event.currentTarget.value
       : 1;
   }
 
