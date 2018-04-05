@@ -72,20 +72,19 @@ export class SamIntlPhoneGroup extends SamFieldset
   @Input() public disabled: boolean;
   @Input() public useFormService: boolean = true;
   @Input() public useDefaultValidations: boolean = true;
-  @Input() public prefixId: string;
-  @Input() public phoneId: string;
+  @Input() public phoneName: string;
+  @Input() public prefixName: string;
+  @Input() public phoneLabel = 'Phone';
+  @Input() public prefixLabel = 'Country Code';
 
   @ViewChild(FieldsetWrapper) public wrapper: FieldsetWrapper;
 
   public prefixControl: AbstractControl;
   public phoneControl: AbstractControl;
 
-  public prefixLabel = 'Country Code';
-  public prefixName: string = 'prefix';
-  public prefixHint =
+  public hint =
     'Country Code is 1 for USA and North America';
 
-  public phoneLabel: string = 'Phone';
   public countryCode: any;
 
   private phoneNumberTemplate: string = '(___)___-____';
@@ -109,6 +108,10 @@ export class SamIntlPhoneGroup extends SamFieldset
   }
 
   public ngOnInit () {
+    const msg = 'Phone and Prefix names required for 508 compliance';
+    if (!this.phoneName || !this.prefixName) {
+      throw new TypeError();
+    }
     this.prefixControl = this.group.controls.prefix;
     this.phoneControl = this.group.controls.phone;
 
