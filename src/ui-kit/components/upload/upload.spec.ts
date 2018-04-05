@@ -8,7 +8,6 @@ import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { SamFilesComponent } from '../files/files.component';
 
 class MockHttpClient {
   request() {
