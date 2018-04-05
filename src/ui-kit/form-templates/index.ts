@@ -12,7 +12,6 @@ import { SamInternationalPrefix } from './international-phone/';
 import {
   SamIntlPhoneGroup
 } from './international-phone/international.component';
-
 import {
   SamTelephone
 } from './international-phone/sam-telephone/telephone.component';
@@ -30,7 +29,7 @@ import {
 
     SamInternationalPrefix,
     SamIntlPhoneGroup,
-    SamTelephone
+    SamTelephone,
   ],
   exports: [
     SamNameEntryComponent,
@@ -38,9 +37,8 @@ import {
     SamWrapperModule,
 
     SamInternationalPrefix,
-
     SamIntlPhoneGroup,
-    SamTelephone
+    SamTelephone,
   ]
 })
 export class SamFormTemplatesModule {}
