@@ -10,7 +10,7 @@ describe('The Sam Modal component', () => {
   describe('isolated tests', () => {
     let component: SamModalComponent;
     beforeEach(() => {
-      component = new SamModalComponent(undefined);
+      component = new SamModalComponent(undefined, undefined);
     });
 
     it('should have a submit handler', () => {

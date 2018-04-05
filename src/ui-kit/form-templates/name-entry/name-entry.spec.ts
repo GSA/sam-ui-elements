@@ -9,7 +9,6 @@ import { FormsModule, FormControl } from '@angular/forms';
 import { SamFormControlsModule } from '../../form-controls';
 
 const modelMock = {
-  title: 'Mr.',
   firstName: 'John',
   middleName: '',
   lastName: 'Doe',
@@ -23,7 +22,7 @@ describe('The Sam Name Entry component', () => {
     beforeEach(() => {
       component = new SamNameEntryComponent();
       component.prefix = 'test';
-      (component.model as any) = {...modelMock};
+      component.model = {...modelMock};
     });
 
     it('should use formControlAccessor', () => {

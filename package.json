@@ -7,6 +7,11 @@
     "webpack",
     "typescript"
   ],
+  "files": [
+    "src/",
+    "LICENSE",
+    "README.md"
+  ],
   "scripts": {
     "rimraf": "rimraf",
     "tslint": "tslint",
