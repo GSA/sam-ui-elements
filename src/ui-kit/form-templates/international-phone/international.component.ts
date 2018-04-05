@@ -69,7 +69,6 @@ export class SamIntlPhoneGroup extends SamFieldset
   implements OnChanges, OnInit, OnDestroy {
 
   @Input() public name: string;
-  @Input() public disabled: boolean;
   @Input() public useFormService: boolean = true;
   @Input() public useDefaultValidations: boolean = true;
   @Input() public phoneName: string;
