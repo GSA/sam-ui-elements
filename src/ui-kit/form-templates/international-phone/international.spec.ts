@@ -18,22 +18,12 @@ import {
 import { SamFormControlsModule } from '../../form-controls';
 import { ChangeDetectorRef } from '@angular/core';
 
-const modelMock = {
-  title: 'Mr.',
-  firstName: 'John',
-  middleName: '',
-  lastName: 'Doe',
-  suffix: 'Sr.'
-};
-
-fdescribe('The Sam International Phone Group', () => {
+describe('The Sam International Phone Group', () => {
 
   describe('rendered tests', () => {
     let component: SamIntlPhoneGroup;
     let fixture: any;
   
-    const model = modelMock;
-
     const group = new FormGroup({
       prefix: new FormControl(1),
       phone: new FormControl(1234)
