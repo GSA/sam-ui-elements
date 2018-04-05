@@ -33,7 +33,7 @@ import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'sam-intl',
+  selector: 'sam-intl-telephone-group',
   encapsulation: ViewEncapsulation.None,
   styles: [
     `
