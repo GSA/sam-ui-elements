@@ -67,7 +67,7 @@ import { Subscription } from 'rxjs';
 })
 export class SamIntlPhoneGroup extends SamFieldset
   implements OnChanges, OnInit, OnDestroy {
-  @Input() public group: any;
+
   @Input() public name: string;
   @Input() public useFormService: boolean = true;
   @Input() public useDefaultValidations: boolean = true;
