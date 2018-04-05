@@ -59,6 +59,10 @@ export class PageTemplateComponent implements OnInit {
    */
   @Input() public stackable: boolean = true;
   /**
+   * Sets the target id for 508 skip navigation
+   */
+  @Input() public skipNavID: string = "primary-content";
+  /**
    * (deprecated) Emits breadcrumb events
    */
   @Output() public breadcrumbOut = new EventEmitter();
