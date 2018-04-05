@@ -11,7 +11,7 @@ import { Component, Input } from '@angular/core';
           <div columns="2"></div>
           <div columns="8">
             <div class="form-section">
-              <title-and-section [title]="title"
+              <title-and-section [attr.id]="skipNavID" [title]="title"
                                  [section]="section"></title-and-section>
             </div>
             <ng-content></ng-content>
@@ -35,4 +35,8 @@ export class FormOnlyPageTemplateComponent {
    * Sets the TitleAndSectionComponent title input
    */
   @Input() public title: string;
+  /**
+   * Sets the target id for 508 skip navigation
+   */
+  @Input() public skipNavID: string = "primary-content";
 }
