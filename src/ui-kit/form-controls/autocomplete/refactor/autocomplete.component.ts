@@ -605,6 +605,7 @@ export class SamAutocompleteComponentRefactor
           this._list.nativeElement.children &&
           this._list.nativeElement.children[returnIndex] &&
           this._list.nativeElement.children[returnIndex].classList &&
+          this._list.nativeElement.children[returnIndex].classList.value &&
           this._list.nativeElement.children[returnIndex].classList
           .value.includes('category') )) {
        return this._circularIncrement(returnIndex, length);
@@ -631,6 +632,7 @@ export class SamAutocompleteComponentRefactor
           this._list.nativeElement.children &&
           this._list.nativeElement.children[returnIndex] &&
           this._list.nativeElement.children[returnIndex].classList &&
+          this._list.nativeElement.children[returnIndex].classList.value &&
           this._list.nativeElement.children[returnIndex].classList.value
           .includes('category') )) {
       return this._circularDecrement(returnIndex, length);

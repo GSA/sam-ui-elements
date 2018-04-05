@@ -34,13 +34,13 @@ export const TEXT_VALUE_ACCESSOR: any = {
         [hint]="hint"
         [errorMessage]="errorMessage"
         [required]="required">
-        <input 
-          type="number" 
-          [attr.min]="min ? min : null" 
-          [attr.max]="max ? max : null" 
-          [value]="value" 
-          [attr.id]="name" 
-          [disabled]="disabled" 
+        <input
+          type="number"
+          [attr.min]="min ? min : null"
+          [attr.max]="max ? max : null"
+          [value]="value"
+          [attr.id]="name"
+          [disabled]="disabled"
           (keydown)="keyDownHandler($event)"
           (change)="onInputChange($event.target.value)">
       </sam-label-wrapper>
@@ -49,7 +49,7 @@ export const TEXT_VALUE_ACCESSOR: any = {
 })
 export class SamNumberComponent implements ControlValueAccessor {
   /**
-   * (deprecated) sets value 
+   * (deprecated) sets value
    */
   @Input() value: number;
   /**
@@ -115,6 +115,10 @@ export class SamNumberComponent implements ControlValueAccessor {
     }
 
     const validators: any[] = [];
+
+    if (this.control.validator) {
+      validators.push(this.control.validator);
+    }
 
     if (this.required) {
       validators.push(Validators.required);

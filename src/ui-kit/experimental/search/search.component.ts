@@ -21,8 +21,7 @@ import {
   stagger
 } from '@angular/animations';
 
-import { PrototypeSearchService } from './search.service'
-import { SamMasterPageService } from '../master-page';
+import { PrototypeSearchService } from './search.service';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
@@ -64,7 +63,7 @@ export class SamSearchComponent implements OnInit{
   @Output() selectedDomain: EventEmitter<any> = new EventEmitter();
   
   constructor(
-    private masterpageservice: SamMasterPageService, 
+    //private masterpageservice: SamMasterPageService, 
     private prototypedata:PrototypeSearchService
   ){}
   
@@ -130,7 +129,7 @@ export class SamSearchComponent implements OnInit{
   onSelectChange(event){
     this.selectedOption = event.target.value.trim();
     this.inputEl.nativeElement.focus();
-    this.masterpageservice.selectedDomain = this.selectedOption;
+    //this.masterpageservice.selectedDomain = this.selectedOption;
     //this.selectedDomain.emit(this.selectedOption);
     this.updateResultsWidth();
   }

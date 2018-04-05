@@ -1,4 +1,4 @@
-<nav class="sticky-banner">
+<div class="sticky-banner">
   <div class="m_L-1x">
 
     <img title="An official website of the United States Government" class="image-wrap"
@@ -6,7 +6,7 @@
 
                   <span>An official website of the United States Government &nbsp;
                     <a (click)="toggleDetails()">Here's how you
-                    know<i class="fa" [ngClass]="{'fa-angle-up': showDetail,'fa-angle-down': !showDetail} "></i></a></span>
+                    know<span class="fa" [ngClass]="{'fa-angle-up': showDetail,'fa-angle-down': !showDetail} "></span></a></span>
 
                   <span class="pull-right m_R-1x">This site is in beta and a work in progress &nbsp;
                   </span>
@@ -18,7 +18,7 @@
       <div class="usa-width-one-half">
         <div class="usa-width-one-fourth m_T-4x">
           <div class="span-circle-wrap pull-right blue-circle-wrap">
-            <span><i class="fa fa-bank"></i> </span>
+            <span><span class="fa fa-bank"></span> </span>
           </div>
         </div>
         <div class="usa-width-three-fourths m_T-4x">
@@ -33,7 +33,7 @@
       <div class="usa-width-one-half">
         <div class="usa-width-one-fourth m_T-4x">
           <div class="span-circle-wrap pull-right green-circle-wrap">
-            <span><i class="fa fa-lock"></i> </span>
+            <span><span class="fa fa-lock"></span> </span>
           </div>
         </div>
         <div class="usa-width-three-fourths m_T-4x">
@@ -47,8 +47,8 @@
       </div>
     </div>
     <div class="usa-width-one-whole centered">
-      <a (click)="toggleDetails()"><span><i class="fa fa-angle-double-up"></i> </span></a>
+      <a (click)="toggleDetails()"><span><span class="fa fa-angle-double-up"></span> </span></a>
     </div>
 
   </div>
-</nav>
+</div>

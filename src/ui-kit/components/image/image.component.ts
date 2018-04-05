@@ -20,6 +20,11 @@ export class SamImageComponent implements OnInit {
    * A boolean that enables editing and changing a new image
    */
   @Input() public editable: boolean = false;
+
+  /*
+   * Function that is called when the image is not found
+   */
+  @Output() public error = new EventEmitter<any>();
   /**
    * An event emitter that emits the file that the user uploaded.
    */

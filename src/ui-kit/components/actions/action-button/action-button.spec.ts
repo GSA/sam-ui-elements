@@ -33,7 +33,7 @@ describe('The SAM Action Button Component', () => {
   });
 
   it('Should display an action icon', () => {
-    el = de.query(By.css('i')).nativeElement;
+    el = de.query(By.css('.fa')).nativeElement;
 
     expect(el.className).toBe(comp.action.icon);
   });

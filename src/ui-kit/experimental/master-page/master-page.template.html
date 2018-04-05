@@ -1,40 +1,9 @@
-<div class="sam-ui master-page">
-  
-  <header class="master-page-header">
-    <a class="master-page-logo" 
-      [routerLink]="['/patterns/latest/home']">
-      Patterns
-    </a>
-    
-    <div class="master-page-menu">
-      <a (click)="toggleDrawer()">
-        <sam-icon name="search"></sam-icon>
-      </a>
-      <a [routerLink]="['/patterns/pages/page',
-        {outlets:{'master-modal': docLink }}]">
-        Implentation
-      </a>
-      <a [routerLink]="['/patterns/pages/page',
-        {outlets:{'master-modal': settingsLink }}]">
-        Settings
-      </a>
-    </div>
-  </header>
-  
-  <div class="master-page-drawer" 
-    (@drawerState.done)="searchFocus($event)"  
-    [@drawerState]="drawerState">
-    <sam-search (selectedDomain)="selectedDomain($event)" [focus]="searchInputFocus" [@search]="drawerState">
-    </sam-search>
-  </div>
-
-  <!-- Page Content -->
-  <ng-content></ng-content>
-  
-  <footer class="master-page-footer">
-    Master Page Footer
-  </footer>
-  
+<div class="sam master">
+	<div class="header">
+		Logo
+	</div>
+	<ng-content></ng-content>
+	<div class="footer">
+		Footer
+	</div>
 </div>
-
-<router-outlet name="master-modal"></router-outlet>

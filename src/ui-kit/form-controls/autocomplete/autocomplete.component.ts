@@ -23,6 +23,7 @@ import { SamFormService } from '../../form-service';
 
 import { KeyHelper } from '../../utilities/key-helper/key-helper';
 import { areEqual } from '../../utilities/are-equal/are-equal';
+import { AutocompleteCache } from '../autocomplete-multiselect/autocomplete-cache';
 
 const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -42,7 +43,7 @@ export class SamAutocompleteComponent
   @ViewChild('input') input: ElementRef;
   @ViewChild('srOnly') srOnly: ElementRef;
   @ViewChild('wrapper') wrapper;
-  
+
   /**
   * Sets the name attribute
   */
@@ -170,6 +171,9 @@ export class SamAutocompleteComponent
 
   public keyValuePairs: any;
   public filteredKeyValuePairs: any;
+  public debounceTime: number = 250;
+  public inputTimer;
+  public cache: AutocompleteCache = new AutocompleteCache();
 
   public resultsAvailable: string = ' results available. Use up and down arrows\
    to scroll through results. Hit enter to select.';
@@ -207,7 +211,7 @@ export class SamAutocompleteComponent
     this.hasServiceError = false;
     if (this.isKeyValuePair(data)) {
       if (this.filteredKeyValuePairs) {
-        if (areEqual(data, this.lastReturnedResults)) {
+        if (!areEqual(data, this.lastReturnedResults)) {
           data.forEach((item) => {
             this.filteredKeyValuePairs.push(item);
           });
@@ -321,7 +325,7 @@ export class SamAutocompleteComponent
 
     if (this.options) {
       this.onKeyUpWithOptions(searchString);
-    } else if (this.endOfList) {
+    } else if (this.autocompleteService || this.httpRequest) {
       this.onKeyUpUsingService(searchString);
     }
   }
@@ -345,12 +349,33 @@ export class SamAutocompleteComponent
       options = this.config.serviceOptions || null;
     }
     if (this.autocompleteService) {
-      this.autocompleteService
-      .fetch(searchString, this.endOfList, options)
-        .subscribe(
-          (res) => this.requestSuccess(res),
-          (err) => this.requestError(err),
-        );
+      window.clearTimeout(this.inputTimer);
+      this.inputTimer = window.setTimeout(()=>{
+        this.autocompleteService
+          .fetch(searchString, this.endOfList, options)
+          .subscribe(
+            (res) => {
+              let len;
+              this.hasServiceError = false;
+              this.cache.insert(res,searchString);
+              if (this.config && this.config.keyValueConfig) {
+                this.filteredKeyValuePairs = this.cache.get(searchString);
+                len = !!this.filteredKeyValuePairs
+                  ? this.filteredKeyValuePairs.length
+                  : 0;
+              } else {
+                this.results = this.cache.get(searchString);
+                len = !!this.results
+                  ? this.results.length
+                  : 0;
+              }
+              this.pushSROnlyMessage(len + this.resultsAvailable);
+              this.endOfList = false;
+            },
+            (err) => this.requestError(err),
+        )
+      }, this.debounceTime);
+      return;
     } else if (this.httpRequest) {
       this.keyEvents.next(searchString);
     } else {
@@ -420,7 +445,7 @@ export class SamAutocompleteComponent
 
     if (selectedChildIndex === children.length - 1) {
       this.onKeyUpUsingService(this.inputValue);
-      selectedChildIndex = 
+      selectedChildIndex =
         this.checkCategoryIndex(children[selectedChildIndex]);
      isFirstItemCategory = this.isFirstItemCategory(
         children[selectedChildIndex],
@@ -722,7 +747,7 @@ export class SamAutocompleteComponent
       this.selectedInputValue = this.inputValue;
       this.innerValue = value;
       // angular isn't populating this
-      this.input.nativeElement.value = this.inputValue; 
+      this.input.nativeElement.value = this.inputValue;
     } else if (value === null) {
       this.inputValue = '';
       this.selectedInputValue = '';

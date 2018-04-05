@@ -1,4 +1,4 @@
-<i class="fa fa-minus" aria-hidden="true"></i>
+<span class="fa fa-minus" aria-hidden="true"></span>
 <ul>
   <li *ngFor="let item of data; let i = index;" [ngClass]="'history-item-'+i" [class.current]="item.id && item.id == currentId" [attr.aria-label]=" item.id == currentId && item.ariaLabel ? item.ariaLabel : '' ">
     <span>
@@ -10,4 +10,4 @@
     </span>
   </li>
 </ul>
-<i class="fa fa-minus" aria-hidden="true"></i>
+<span class="fa fa-minus" aria-hidden="true"></span>
