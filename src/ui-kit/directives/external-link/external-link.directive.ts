@@ -20,7 +20,7 @@ export class SamExternalLinkDirective
       .length > 0;
   }
 
-  private get renderIcon (): boolean {
+  private get canRenderIcon (): boolean {
     return !(this.hasExternalIcon || this.hideIcon);
   }
 
@@ -30,8 +30,8 @@ export class SamExternalLinkDirective
 
   public ngAfterViewInit () {
 
-    if (this.renderIcon) {
-      this.render(this.createIcon());
+    if (this.canRenderIcon) {
+      this.renderIcon();
     }
 
     this.render(this.createSrText());
@@ -42,6 +42,19 @@ export class SamExternalLinkDirective
       this.el.nativeElement,
       el
     );
+  }
+
+  private renderIcon (): void {
+    this.render(this.createSpace());
+    this.render(this.createIcon());
+  }
+
+  private createSpace (): HTMLSpanElement {
+    const space = this.renderer.createElement('span');
+    space.innerText = " ";
+    space.setAttribute('aria-hidden', true);
+
+    return space;
   }
 
   private createIcon (): HTMLSpanElement {
