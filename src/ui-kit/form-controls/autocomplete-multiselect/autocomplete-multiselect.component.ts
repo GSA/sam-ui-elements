@@ -208,6 +208,7 @@ export class SamAutocompleteMultiselectComponent
   private debounceTime = 250;
   private cache: AutocompleteCache = new AutocompleteCache();
   private endOfList = true;
+  private selectedEl;
 
   set value(val: any) {
     this.innerValue = val;
@@ -395,7 +396,7 @@ export class SamAutocompleteMultiselectComponent
         results
       );
 
-      this.reachedEndOfList(results, event);
+      this.reachedEndOfList(results, event.target.value);
 
       this.resultsList.nativeElement.scrollTop =
         (results[selectedIndex].offsetParent.offsetParent.offsetTop
@@ -416,7 +417,7 @@ export class SamAutocompleteMultiselectComponent
         results
       );
 
-      this.reachedEndOfList(results, event);
+      this.reachedEndOfList(results, event.target.value);
 
       this.resultsList.nativeElement.scrollTop =
       (results[selectedIndex].offsetParent.offsetParent.offsetTop
@@ -429,16 +430,16 @@ export class SamAutocompleteMultiselectComponent
 
   /**
    * @param results - Results displayed in autocomplete list
-   * @param event - Keydown event target
+   * @param value - event target value
    * 
    * @description - If item selected in group is last item in list, 
    * fire filter function
    */
-  public reachedEndOfList(results, event) {
+  public reachedEndOfList(results, value) {
       if ( this.getSelectedChildIndex(results) + 1
       === results.length ) {
       this.endOfList = true;
-      this.filterOptions(event.target.value);
+      this.filterOptions(value);
     }
   }
 
@@ -498,6 +499,7 @@ export class SamAutocompleteMultiselectComponent
 
   public addSelectedClass(elements: any, index: number): void {
     elements[index].classList.add('selected');
+    this.selectedEl = elements[index];
   }
 
   /***************************************************************
@@ -950,6 +952,15 @@ export class SamAutocompleteMultiselectComponent
       });
       this.options[key]._marked = !!x ? true : false;
     }
+  }
+
+  public listItemHover(listIndex){
+    let elements = this.getResults();
+    if(this.selectedEl){
+      this.selectedEl.classList.remove('selected');
+    }
+    this.addSelectedClass(elements,listIndex);
+    this.reachedEndOfList(elements,this.searchText);
   }
 
   /***************************************************************
