@@ -8,6 +8,9 @@ import { SamStickyComponent } from './sticky/sticky.component';
 import { SamTabOutsideDirective } from './tab-outside/taboutside.directive';
 import { SamFocusDirective } from './focus/focus.directive';
 import { SamDragDropDirective } from './drag-drop/drag-drop.directive';
+import {
+  SamExternalLinkDirective
+} from './external-link/external-link.directive';
 
 @NgModule({
   imports: [ CommonModule ],
@@ -17,6 +20,7 @@ import { SamDragDropDirective } from './drag-drop/drag-drop.directive';
     SamTabOutsideDirective,
     SamFocusDirective,
     SamDragDropDirective,
+    SamExternalLinkDirective
   ],
   exports: [
     SamStickyComponent,
@@ -24,6 +28,7 @@ import { SamDragDropDirective } from './drag-drop/drag-drop.directive';
     SamTabOutsideDirective,
     SamFocusDirective,
     SamDragDropDirective,
+    SamExternalLinkDirective
   ]
 
 })
