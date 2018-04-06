@@ -28,11 +28,11 @@
       </ul>
       <!-- Lists data if array of strings is passed to component -->
       <ul id="sam-autocomplete-results" class="usa-unstyled-list" #resultsList *ngIf="results && results.length > 0 && hasFocus">
-        <li *ngFor="let result of results" (click)="setSelected(result)">{{result}}</li>
+        <li *ngFor="let result of results; let i = index" mouseenter)="listItemHover(i)" (click)="setSelected(result)">{{result}}</li>
       </ul>
       <!-- Lists data if array of objects with key/value pair is passed to component -->
       <ul id="sam-autocomplete-results-kv" class="usa-unstyled-list" #resultsListKV *ngIf="filteredKeyValuePairs && filteredKeyValuePairs.length > 0 && hasFocus">
-        <li *ngFor="let obj of filteredKeyValuePairs" [class.multiple-values]="config?.keyValueConfig?.subheadProperty" [ngClass]="itemClass(obj)" (click)="setSelected(obj)">
+        <li *ngFor="let obj of filteredKeyValuePairs; let i = index" (mouseenter)="listItemHover(i)" [class.multiple-values]="config?.keyValueConfig?.subheadProperty" [ngClass]="itemClass(obj)" (click)="setSelected(obj)">
           <ng-container *ngIf="!itemTemplate; else itemTemplateRef">
             <span *ngIf="obj">{{ obj[config?.keyValueConfig?.valueProperty] }}</span>
             <ng-container *ngIf="obj && obj[config?.keyValueConfig?.subheadProperty]">
