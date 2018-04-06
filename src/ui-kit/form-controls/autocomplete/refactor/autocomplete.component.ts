@@ -498,6 +498,40 @@ export class SamAutocompleteComponentRefactor
   }
 
   /**
+   * Logic to handle hover event
+   */
+  listItemHover(index){
+    if (!this._list) {
+      return;
+    }
+
+    const list: HTMLUListElement = this._list.nativeElement;
+
+    this._removeSelectedClassFromListItems(list.children);
+    this._highlightedItemIndex = index;
+    this._endOfList = this._highlightedItemIndex === list.children.length - 1
+      ? true
+      : false;
+    
+    let highlightedItem = list.children[this._highlightedItemIndex] as HTMLLIElement;
+
+    if (highlightedItem) {
+      this._addHighlightClass(highlightedItem);
+      if (this._screenreader) {
+        this._screenreader.pushMessage(highlightedItem.innerText);
+      } 
+    }
+
+    this.onInputEvent.next({
+      target:{
+        value:this.inputValue
+      }
+    });
+
+    return;   
+  }
+
+  /**
    * Takes a list and direction and highlights 
    * @param list Children of an HTMLUListElement
    * @param direction One of INCREMENT or DECREMENT
