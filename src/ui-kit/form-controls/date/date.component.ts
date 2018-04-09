@@ -9,12 +9,23 @@ import {
   OnChanges,
   forwardRef
 } from '@angular/core';
+
 import * as moment from 'moment/moment';
+
 import {
-  NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl, Validators, ValidatorFn,
+  NG_VALUE_ACCESSOR,
+  ControlValueAccessor,
+  FormControl,
+  Validators,
+  ValidatorFn,
   AbstractControl
 } from '@angular/forms';
-import {SamFormService} from '../../form-service';
+
+import { SamFormService } from '../../form-service';
+
+import {
+  KeyHelper
+} from '../../utilities/key-helper/key-helper';
 
 /**
  * The <sam-date> component is a Date entry portion of a form
@@ -88,8 +99,11 @@ export class SamDateComponent
   @ViewChild('year') public year;
   @ViewChild('wrapper') public wrapper;
 
-  public allowChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
-    'Backspace', 'ArrowLeft', 'ArrowRight', 'Tab', 'Delete'];
+  public allowChars = [
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
+    'Backspace', 'ArrowLeft', 'ArrowRight', 'Tab', 'Delete'
+  ];
+
   public model: any = {
     month: undefined,
     day: undefined,
@@ -266,19 +280,20 @@ export class SamDateComponent
   }
 
   onMonthInput(event: any) {
-    if (this._checkCopyPasteChar(event.key)) {
+    const key = KeyHelper.getKeyCode(event);
+    if (this._checkCopyPasteChar(key)) {
       return;
     }
-    const inputNum = parseInt(event.key, 10);
+    const inputNum = parseInt(key, 10);
     const possibleNum =
-      this.getPossibleNum(this.month.nativeElement.value, event.key);
+      this.getPossibleNum(this.month.nativeElement.value, key);
 
     if (possibleNum > this.maxMonth
-      || this.allowChars.indexOf(event.key) === -1) {
+      || this.allowChars.indexOf(key) === -1) {
       event.preventDefault();
       return;
     }
-    if (this._keyIsNumber(event.key)) {
+    if (this._keyIsNumber(key)) {
       if (event.target.value.length === 1 ||
         (event.target.value.length === 0 && possibleNum > 1)) {
         if (this.day.nativeElement.value
@@ -315,21 +330,22 @@ export class SamDateComponent
   }
 
   onDayInput(event) {
-    if (this._checkCopyPasteChar(event.key)) {
+    const key = KeyHelper.getKeyCode(event);
+    if (this._checkCopyPasteChar(key)) {
       return;
     }
-    const inputNum = parseInt(event.key, 10);
+    const inputNum = parseInt(key, 10);
     const possibleNum =
-      this.getPossibleNum(this.day.nativeElement.value, event.key);
+      this.getPossibleNum(this.day.nativeElement.value, key);
     const maxDate = this.getMaxDate();
     const numJumpThreshold =
       this.getNumJumpThreshold(this.month.nativeElement.value);
 
-    if (possibleNum > maxDate || this.allowChars.indexOf(event.key) === - 1) {
+    if (possibleNum > maxDate || this.allowChars.indexOf(key) === - 1) {
       event.preventDefault();
       return;
     }
-    if (this._keyIsNumber(event.key)) {
+    if (this._keyIsNumber(key)) {
       if (event.target.value.length === 1 ||
         (event.target.value.length === 0 && possibleNum > numJumpThreshold)) {
         this.year.nativeElement.focus();
@@ -380,19 +396,20 @@ export class SamDateComponent
   }
 
   onYearInput(event) {
+    const key = KeyHelper.getKeyCode(event);
     const maxValue = 9999;
-    if (this._checkCopyPasteChar(event.key)) {
+    if (this._checkCopyPasteChar(key)) {
       return;
     }
-    const inputNum = parseInt(event.key, 10);
+    const inputNum = parseInt(key, 10);
     const possibleNum =
-      this.getPossibleNum(this.year.nativeElement.value, event.key);
+      this.getPossibleNum(this.year.nativeElement.value, key);
 
-    if (possibleNum > maxValue || this.allowChars.indexOf(event.key) === -1) {
+    if (possibleNum > maxValue || this.allowChars.indexOf(key) === -1) {
       event.preventDefault();
       return;
     }
-    if (this._keyIsNumber(event.key)) {
+    if (this._keyIsNumber(key)) {
       const four = 4; // Why 4?
       if (event.target.value.length + 1 === four) {
         this.blurEvent.emit();

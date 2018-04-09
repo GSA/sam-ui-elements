@@ -1,6 +1,22 @@
 export class KeyHelper {
+
+  public static getKeyCode (event: any): string {
+    if (!event) {
+      return undefined;
+    } else if (event.code) {
+      return event.code;
+    } else if (event.key) {
+      return event.key;
+    } else if (event.keyIdentifier) {
+      return event.keyIdentifier;
+    } else {
+      return undefined;
+    }
+  }
   
-  public static is (validKeyParam: string, event: KeyboardEvent | any) {
+  public static is (
+    validKeyParam: string,
+    event: KeyboardEvent | any): boolean {
     let lowercased = validKeyParam.toLowerCase();
     switch (lowercased) {
       case 'enter':
