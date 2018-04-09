@@ -109,5 +109,42 @@ describe('Sam KeyEvent Class', () => {
     const actual = KeyHelper.is('up', down);
     
     expect(expected).toBe(actual);
-  })
+  });
+
+  fdescribe('KeyHelper getKeyCode method', () => {
+    const mock = {
+      code: undefined,
+      key: undefined,
+      keyIdentifier: undefined
+    }
+
+    it('should return code when present', () => {
+      const expected = mock.code = 'asdf';
+      // Dummy data for testing
+      mock.key = mock.keyIdentifier = 'jkl;';
+
+      const actual = KeyHelper.getKeyCode(mock);
+
+      expect(expected).toEqual(actual);
+    });
+
+    it('should return key if key is present and code is not'
+      , () => {
+      const expected = mock.key = 'asdf';
+      // Dummy data for testing
+      mock.keyIdentifier = 'jkl;';
+
+      const actual = KeyHelper.getKeyCode(mock);
+
+      expect(expected).toEqual(actual);
+    });
+
+    it('should return keyIdentifier if present and code and\
+      key are missing', () => {
+      const expected = mock.keyIdentifier = 'asdf';
+      const actual = KeyHelper.getKeyCode(mock);
+
+      expect(expected).toBe(actual);
+    });
+  });
 });
