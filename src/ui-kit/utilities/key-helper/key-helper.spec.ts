@@ -111,7 +111,7 @@ describe('Sam KeyEvent Class', () => {
     expect(expected).toBe(actual);
   });
 
-  fdescribe('KeyHelper getKeyCode method', () => {
+  describe('KeyHelper getKeyCode method', () => {
     const mock = {
       code: undefined,
       key: undefined,
