@@ -1,19 +1,239 @@
 export class KeyHelper {
 
+  private allowedKeys: string[] = [];
+
+  private currentlySupported = [
+    'enter','up','down','left','right','tab','esc','space',
+    'shift','backspace','1','2','3','4','5','6','7','8',
+    '9','0', 'delete'
+  ];
+
+  constructor (...keys) {
+    this.setAllowedKeys(...keys);
+  }
+
+  public isAllowed (event): boolean {
+    const val = this.allowedKeys
+      .reduce(
+        (val, key) => {
+          console.log(val, key);
+          return KeyHelper.is(key, event) || val;
+        },
+        false
+      );
+    return val;
+  }
+
+  private setAllowedKeys(...keys) {
+    keys.forEach(
+      key => {
+        if (this.currentlySupported.indexOf(key) !== -1) {
+          this.allowedKeys.push(key);
+        } else {
+          const ok = this.allowedToString();
+          const msg = `Only supports ${ok} at this time`;
+          throw new TypeError(msg);
+        }
+      }
+    );
+  }
+
+  private allowedToString (): string {
+    return this.allowedKeys.join (', ');
+  }
+
   public static getKeyCode (event: any): string {
+
     if (!event) {
       return undefined;
-    } else if (event.code) {
-      return event.code;
     } else if (event.key) {
       return event.key;
+    } else if (event.code) {
+      return event.code;
     } else if (event.keyIdentifier) {
       return event.keyIdentifier;
     } else {
       return undefined;
     }
+
   }
-  
+
+  public static getNumberFromKey (event): number {
+    const tests = [
+      KeyHelper.zero, KeyHelper.one, KeyHelper.two,
+      KeyHelper.three, KeyHelper.four, KeyHelper.five,
+      KeyHelper.six, KeyHelper.seven, KeyHelper.eight,
+      KeyHelper.nine
+    ];
+
+    return tests.reduce(
+      (val: number | undefined, test: Function) => {
+        return val !== undefined
+          ? val
+          : test(event);
+      }, undefined
+    );
+  }
+
+  private static isNumber (event): boolean {
+    const val = KeyHelper.getNumberFromKey(event);
+    return !!val ? true : false;
+  }
+
+  private static isExpectedNumber
+    (expected, event): boolean {
+    return expected === KeyHelper.getNumberFromKey(event);
+  }
+
+  private static zero (event): number {
+    const code = KeyHelper.getKeyCode(event);
+
+    switch (code.toString()) {
+      case '0':
+        return 0;
+      case 'U+0030':
+        return 0;
+      case 'Digit0':
+        return 0;
+      default:
+        return undefined;
+    }
+  }
+
+  private static one (event): number {
+    const code = KeyHelper.getKeyCode(event);
+    
+    switch (code.toString()) {
+      case '1':
+        return 1;
+      case 'U+0031':
+        return 1;
+      case 'Digit1':
+        return 1;
+      default:
+        return undefined;
+    }
+  }
+
+  private static two (event): number {
+    const code = KeyHelper.getKeyCode(event);
+    
+    switch (code.toString()) {
+      case '2':
+        return 2;
+      case 'U+0032':
+        return 2;
+      case 'Digit2':
+        return 2;
+      default:
+        return undefined;
+    }
+  }
+
+  private static three (event): number {
+    const code = KeyHelper.getKeyCode(event);
+    
+    switch (code.toString()) {
+      case '3':
+        return 3;
+      case 'U+0033':
+        return 3;
+      case 'Digit3':
+        return 3;
+      default:
+        return undefined;
+    }
+  }
+
+  private static four (event): number {
+    const code = KeyHelper.getKeyCode(event);
+    
+    switch (code.toString()) {
+      case '4':
+        return 4;
+      case 'U+0034':
+        return 4;
+      case 'Digit4':
+        return 4;
+      default:
+        return undefined;
+    }
+  }
+  private static five (event): number {
+    const code = KeyHelper.getKeyCode(event);
+    
+    switch (code.toString()) {
+      case '5':
+        return 5;
+      case 'U+0035':
+        return 5;
+      case 'Digit5':
+        return 5;
+      default:
+        return undefined;
+    }
+  }
+
+  private static six (event): number {
+    const code = KeyHelper.getKeyCode(event);
+    
+    switch (code.toString()) {
+      case '6':
+        return 6;
+      case 'U+0036':
+        return 6;
+      case 'Digit6':
+        return 6;
+      default:
+        return undefined;
+    }
+  }
+
+  private static seven (event): number {
+    const code = KeyHelper.getKeyCode(event);
+    
+    switch (code.toString()) {
+      case '7':
+        return 7;
+      case 'U+0037':
+        return 7;
+      case 'Digit7':
+        return 7;
+      default:
+        return undefined;
+    }
+  }
+
+  private static eight (event): number {
+    const code = KeyHelper.getKeyCode(event);
+    
+    switch (code.toString()) {
+      case '8':
+        return 8;
+      case 'U+0038':
+        return 8;
+      case 'Digit8':
+        return 8;
+      default:
+        return undefined;
+    }
+  }
+
+  private static nine (event): number {
+    const code = KeyHelper.getKeyCode(event);
+    
+    switch (code.toString()) {
+      case '9':
+        return 9;
+      case 'U+0039':
+        return 9;
+      case 'Digit9':
+        return 9;
+      default:
+        return undefined;
+    }
+  }
+
   public static is (
     validKeyParam: string,
     event: KeyboardEvent | any): boolean {
@@ -39,6 +259,28 @@ export class KeyHelper {
         return this._isShift(event);
       case 'backspace':
         return this._isBackspace(event);
+      case 'delete':
+        return false;
+      case '0':
+        return this.isExpectedNumber(0, event);
+      case '1':
+        return this.isExpectedNumber(1, event);
+      case '2':
+        return this.isExpectedNumber(2, event);
+      case '3':
+        return this.isExpectedNumber(3, event);
+      case '4':
+        return this.isExpectedNumber(4, event);
+      case '5':
+        return this.isExpectedNumber(5, event);
+      case '6':
+        return this.isExpectedNumber(6, event);
+      case '7':
+        return this.isExpectedNumber(7, event);
+      case '8':
+        return this.isExpectedNumber(8, event);
+      case '9':
+        return this.isExpectedNumber(9, event);
       default:
         return false;
     }
