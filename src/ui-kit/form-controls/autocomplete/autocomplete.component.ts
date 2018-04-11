@@ -565,6 +565,26 @@ export class SamAutocompleteComponent
     );
   }
 
+  listItemHover(index){
+    const list: ElementRef = this.resultsList || this.resultsListKV;
+    if (!this.listExists(list)) {
+      return;
+    }
+    const children = list.nativeElement.children;
+    let selectedChildIndex = this.getSelectedChildIndex(children);
+    if(selectedChildIndex!==-1 && children[selectedChildIndex]){
+      children[selectedChildIndex].classList.remove("isSelected");
+    }
+    if(children[index]){
+      this.selectedChild = children[index];
+      this.selectedChild.classList.add('isSelected');
+      if (index === children.length - 1) {
+        this.endOfList = true;
+        this.onKeyUpUsingService(this.inputValue);
+      }
+    }
+  }
+
   isFirstItem(index): boolean {
     return index === 0 || index === -1
       ? true

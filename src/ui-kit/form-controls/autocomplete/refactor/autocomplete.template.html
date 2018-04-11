@@ -41,10 +41,11 @@
       *ngIf="displayList | async"
       #list>
       <li [class.multiple-values]="config?.keyValueConfig?.subheadProperty"
-          *ngFor="let option of filteredOptions | async"
+          *ngFor="let option of filteredOptions | async; let i = index"
           class="one class two classess three classessess"
           [ngClass]="{ 'category': option?.isCategory }"
-          (click)="updateComponentValue(option)">
+          (click)="updateComponentValue(option)"
+          (mouseenter)="listItemHover(i)">
         {{ displayOptionText(option) }}
         <ng-container *ngIf="option && option[config?.keyValueConfig?.subheadProperty]">
           <br/>
