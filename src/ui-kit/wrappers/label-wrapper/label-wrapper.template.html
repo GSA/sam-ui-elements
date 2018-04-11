@@ -13,19 +13,24 @@
   <div 
     #hintContainer 
     *ngIf="hint" 
-    class="usa-form-hint" 
+    class="usa-form-hint"
+    aria-live="polite"
     [innerHTML]="hint"
     [style.overflow]="showToggle && !toggleOpen ? 'hidden' : '' "
     [style.height]="showToggle && !toggleOpen ? '2.88em' : '' ">
   </div>
   
-  <div *ngIf="showToggle" style="margin-bottom: 1.7rem;">
-    <a href="javascript:void(0)" (click)="toggleHint(toggleOpen)">
+  <div *ngIf="showToggle"
+    style="margin-bottom: 1.7rem;">
+    <a href="javascript:void(0)"
+      (click)="toggleHint(toggleOpen)">
       {{ toggleOpen ? "less": "more" }}
     </a>
   </div>
   
-  <span *ngIf="errorMessage" class="usa-input-error-message">
+  <span *ngIf="errorMessage"
+    class="usa-input-error-message"
+    aria-live="assertive">
     {{errorMessage}}
   </span>
   
