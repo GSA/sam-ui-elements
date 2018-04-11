@@ -5,24 +5,13 @@ import { mocks } from './key-mocks';
  * is(`validKeyParam`): bool
  */
 const validKeyParams = [
-  'enter',
-  'up',
-  'down',
-  'left',
-  'right',
-  'tab',
-  'esc',
-  'space',
-  'shift',
-  'backspace'
+  'enter', 'up', 'down', 'left', 'right', 'tab', 'esc',
+  'space', 'shift', 'backspace', 'delete', '1', '2', '3', 
+  '4', '5', '6', '7', '8', '9', '0'
 ];
 
 const keyEventProps = [
-  'code',
-  'key',
-  'which',
-  'charCode',
-  'keyCode',
+  'code', 'key', 'which', 'charCode', 'keyCode', 
   'keyIdentifier'
 ]
 
@@ -109,5 +98,78 @@ describe('Sam KeyEvent Class', () => {
     const actual = KeyHelper.is('up', down);
     
     expect(expected).toBe(actual);
-  })
+  });
+
+  describe('KeyHelper getKeyCode method', () => {
+    const mock = {
+      code: undefined,
+      key: undefined,
+      keyIdentifier: undefined
+    }
+
+    it('should return key if present', () => {
+      const expected = mock.key = 'asdf';
+      // Dummy data for testing
+      mock.code = 'jkl;';
+      mock.keyIdentifier = 'jkl;';
+
+      const actual = KeyHelper.getKeyCode(mock);
+
+      expect(expected).toEqual(actual);
+    });
+
+    it('should return code when key not present', () => {
+      const expected = mock.code = 'asdf';
+      // Dummy data for testing
+     mock.keyIdentifier = 'jkl;';
+
+      const actual = KeyHelper.getKeyCode(mock);
+
+      expect(expected).toEqual(actual);
+    });
+
+    it('should return keyIdentifier if present and key and\
+      code are missing', () => {
+      const expected = mock.keyIdentifier = 'asdf';
+      const actual = KeyHelper.getKeyCode(mock);
+
+      expect(expected).toEqual(actual);
+    });
+
+    it('should return undefined if event is undefined',
+      () => {
+        const expected = undefined;
+        const actual = KeyHelper.getKeyCode(undefined);
+        expect(expected).toEqual(actual);
+      }
+    );
+
+    it('should return undefined if event is any other type',
+      () =>{
+        const expected = undefined;
+        const actual = KeyHelper.getKeyCode('haha');
+
+        expect(expected).toEqual(actual);
+      }
+    );
+  });
+
+  describe('Instance methods', () => {
+    let instance: KeyHelper;
+
+    it('Should instantiate with supported keys', () => {
+      const keys = [
+        'enter', 'up', 'down', 'left', 'right', 'tab', 
+        'esc', 'space', 'shift', 'backspace', 'delete',
+        '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'
+      ];
+      const make = () => new KeyHelper(...keys);
+      expect(make).not.toThrow();
+    });
+
+    it('should throw if unsupported key is passed', () => {
+      const make = () => new KeyHelper('a');
+      expect(make).toThrowError();
+    });
+  });
 });
