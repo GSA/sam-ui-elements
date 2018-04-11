@@ -1,19 +1,19 @@
 export class KeyHelper {
 
-  private allowedKeys: string[] = [];
+  private _allowedKeys: string[] = [];
 
-  private currentlySupported = [
+  private _currentlySupported = [
     'enter','up','down','left','right','tab','esc','space',
     'shift','backspace','1','2','3','4','5','6','7','8',
     '9','0', 'delete'
   ];
 
   constructor (...keys) {
-    this.setAllowedKeys(...keys);
+    this._setAllowedKeys(...keys);
   }
 
   public isAllowed (event): boolean {
-    const val = this.allowedKeys
+    const val = this._allowedKeys
       .reduce(
         (val, key) => {
           return KeyHelper.is(key, event) || val;
@@ -23,13 +23,13 @@ export class KeyHelper {
     return val;
   }
 
-  private setAllowedKeys(...keys) {
+  private _setAllowedKeys(...keys) {
     keys.forEach(
       key => {
-        if (this.currentlySupported.indexOf(key) !== -1) {
-          this.allowedKeys.push(key);
+        if (this._currentlySupported.indexOf(key) !== -1) {
+          this._allowedKeys.push(key);
         } else {
-          const ok = this.allowedToString();
+          const ok = this._allowedToString();
           const msg = `Only supports ${ok} at this time`;
           throw new TypeError(msg);
         }
@@ -37,8 +37,8 @@ export class KeyHelper {
     );
   }
 
-  private allowedToString (): string {
-    return this.allowedKeys.join (', ');
+  private _allowedToString (): string {
+    return this._allowedKeys.join(', ');
   }
 
   public static getKeyCode (event: any): string {
@@ -59,10 +59,10 @@ export class KeyHelper {
 
   public static getNumberFromKey (event): number {
     const tests = [
-      KeyHelper.zero, KeyHelper.one, KeyHelper.two,
-      KeyHelper.three, KeyHelper.four, KeyHelper.five,
-      KeyHelper.six, KeyHelper.seven, KeyHelper.eight,
-      KeyHelper.nine
+      KeyHelper._zero, KeyHelper._one, KeyHelper._two,
+      KeyHelper._three, KeyHelper._four, KeyHelper._five,
+      KeyHelper._six, KeyHelper._seven, KeyHelper._eight,
+      KeyHelper._nine
     ];
 
     return tests.reduce(
@@ -72,183 +72,6 @@ export class KeyHelper {
           : test(event);
       }, undefined
     );
-  }
-
-  private static isNumber (event): boolean {
-    const val = KeyHelper.getNumberFromKey(event);
-    return !!val ? true : false;
-  }
-
-  private static isExpectedNumber (expected, event)
-    : boolean {
-    return expected === KeyHelper.getNumberFromKey(event);
-  }
-
-  private static zero (event): number {
-    const code = KeyHelper.getKeyCode(event);
-
-    switch (code.toString()) {
-      case '0':
-        return 0;
-      case 'U+0030':
-        return 0;
-      case 'Digit0':
-        return 0;
-      default:
-        return undefined;
-    }
-  }
-
-  private static one (event): number {
-    const code = KeyHelper.getKeyCode(event);
-    
-    switch (code.toString()) {
-      case '1':
-        return 1;
-      case 'U+0031':
-        return 1;
-      case 'Digit1':
-        return 1;
-      case 'Numpad1':
-        return 1;
-      default:
-        return undefined;
-    }
-  }
-
-  private static two (event): number {
-    const code = KeyHelper.getKeyCode(event);
-    
-    switch (code.toString()) {
-      case '2':
-        return 2;
-      case 'U+0032':
-        return 2;
-      case 'Digit2':
-        return 2;
-      case 'Numpad2':
-        return 2;
-      default:
-        return undefined;
-    }
-  }
-
-  private static three (event): number {
-    const code = KeyHelper.getKeyCode(event);
-    
-    switch (code.toString()) {
-      case '3':
-        return 3;
-      case 'U+0033':
-        return 3;
-      case 'Digit3':
-        return 3;
-      case 'Numpad3':
-        return 3;
-      default:
-        return undefined;
-    }
-  }
-
-  private static four (event): number {
-    const code = KeyHelper.getKeyCode(event);
-    
-    switch (code.toString()) {
-      case '4':
-        return 4;
-      case 'U+0034':
-        return 4;
-      case 'Digit4':
-        return 4;
-      case 'Numpad4':
-        return 4;
-      default:
-        return undefined;
-    }
-  }
-  private static five (event): number {
-    const code = KeyHelper.getKeyCode(event);
-    
-    switch (code.toString()) {
-      case '5':
-        return 5;
-      case 'U+0035':
-        return 5;
-      case 'Digit5':
-        return 5;
-      case 'Numpad5':
-        return 5;
-      default:
-        return undefined;
-    }
-  }
-
-  private static six (event): number {
-    const code = KeyHelper.getKeyCode(event);
-    
-    switch (code.toString()) {
-      case '6':
-        return 6;
-      case 'U+0036':
-        return 6;
-      case 'Digit6':
-        return 6;
-      case 'Numpad6':
-        return 6;
-      default:
-        return undefined;
-    }
-  }
-
-  private static seven (event): number {
-    const code = KeyHelper.getKeyCode(event);
-    
-    switch (code.toString()) {
-      case '7':
-        return 7;
-      case 'U+0037':
-        return 7;
-      case 'Digit7':
-        return 7;
-      case 'Numpad7':
-        return 7;
-      default:
-        return undefined;
-    }
-  }
-
-  private static eight (event): number {
-    const code = KeyHelper.getKeyCode(event);
-    
-    switch (code.toString()) {
-      case '8':
-        return 8;
-      case 'U+0038':
-        return 8;
-      case 'Digit8':
-        return 8;
-      case 'Numpad8':
-        return 8;
-      default:
-        return undefined;
-    }
-  }
-
-  private static nine (event): number {
-    const code = KeyHelper.getKeyCode(event);
-    
-    switch (code.toString()) {
-      case '9':
-        return 9;
-      case 'U+0039':
-        return 9;
-      case 'Digit9':
-        return 9;
-      case 'Numpad9':
-        return 9;
-      default:
-        return undefined;
-    }
   }
 
   public static is (
@@ -279,25 +102,25 @@ export class KeyHelper {
       case 'delete':
         return this._isDelete(event);
       case '0':
-        return this.isExpectedNumber(0, event);
+        return this._isExpectedNumber(0, event);
       case '1':
-        return this.isExpectedNumber(1, event);
+        return this._isExpectedNumber(1, event);
       case '2':
-        return this.isExpectedNumber(2, event);
+        return this._isExpectedNumber(2, event);
       case '3':
-        return this.isExpectedNumber(3, event);
+        return this._isExpectedNumber(3, event);
       case '4':
-        return this.isExpectedNumber(4, event);
+        return this._isExpectedNumber(4, event);
       case '5':
-        return this.isExpectedNumber(5, event);
+        return this._isExpectedNumber(5, event);
       case '6':
-        return this.isExpectedNumber(6, event);
+        return this._isExpectedNumber(6, event);
       case '7':
-        return this.isExpectedNumber(7, event);
+        return this._isExpectedNumber(7, event);
       case '8':
-        return this.isExpectedNumber(8, event);
+        return this._isExpectedNumber(8, event);
       case '9':
-        return this.isExpectedNumber(9, event);
+        return this._isExpectedNumber(9, event);
       default:
         return false;
     }
@@ -442,4 +265,139 @@ export class KeyHelper {
       return false;
     }
   }
+
+  private static _zero (e): number {
+    if (e.code === 'Digit0'
+      || e.code === 'Numpad0'
+      || e.key === 0
+      || e.keyCode === 48
+      || e.keyIdentifier === 'U+0030'
+      || e.which === 48) {
+      return 0;
+    } else {
+      return undefined;
+    }
+  }
+
+  private static _one (e): number {
+    if (e.code === 'Digit1'
+      || e.code === 'Numpad1'
+      || e.key === 1
+      || e.keyCode === 49
+      || e.keyIdentifier === 'U+0031'
+      || e.which === 49) {
+      return 1;
+    } else {
+      return undefined;
+    }
+  }
+
+  private static _two (e): number {
+    if (e.code === 'Digit2'
+      || e.code === 'Numpad2'
+      || e.key === 2
+      || e.keyCode === 50
+      || e.keyIdentifier === 'U+0032'
+      || e.which === 50) {
+      return 2;
+    } else {
+      return undefined;
+    }
+  }
+
+  private static _three (e): number {
+    if (e.code === 'Digit3'
+      || e.code === 'Numpad3'
+      || e.key === 3
+      || e.keyCode === 51
+      || e.keyIdentifier === 'U+0033'
+      || e.which === 51) {
+      return 3;
+    } else {
+      return undefined;
+    }
+  }
+
+  private static _four (e): number {
+    if (e.code === 'Digit4'
+      || e.code === 'Numpad4'
+      || e.key === 4
+      || e.keyCode === 52
+      || e.keyIdentifier === 'U+0034'
+      || e.which === 52) {
+      return 4;
+    } else {
+      return undefined;
+    }
+  }
+  private static _five (e): number {
+    if (e.code === 'Digit5'
+      || e.code === 'Numpad5'
+      || e.key === 5
+      || e.keyCode === 53
+      || e.keyIdentifier === 'U+0035'
+      || e.which === 53) {
+      return 5;
+    } else {
+      return undefined;
+    }
+  }
+
+  private static _six (e): number {
+    if (e.code === 'Digit6'
+      || e.code === 'Numpad6'
+      || e.key === 6
+      || e.keyCode === 54
+      || e.keyIdentifier === 'U+0036'
+      || e.which === 54) {
+      return 6;
+    } else {
+      return undefined;
+    }
+  }
+
+  private static _seven (e): number {
+    if (e.code === 'Digit7'
+      || e.code === 'Numpad7'
+      || e.key === 7
+      || e.keyCode === 55
+      || e.keyIdentifier === 'U+0037'
+      || e.which === 55) {
+      return 7;
+    } else {
+      return undefined;
+    }
+  }
+
+  private static _eight (e): number {
+    if (e.code === 'Digit8'
+      || e.code === 'Numpad8'
+      || e.key === 8
+      || e.keyCode === 56
+      || e.keyIdentifier === 'U+0038'
+      || e.which === 56) {
+      return 8;
+    } else {
+      return undefined;
+    }
+  }
+
+  private static _nine (e): number {
+    if (e.code === 'Digit9'
+      || e.code === 'Numpad9'
+      || e.key === 9
+      || e.keyCode === 57
+      || e.keyIdentifier === 'U+0039'
+      || e.which === 57) {
+      return 9;
+    } else {
+      return undefined;
+    }
+  }
+
+  private static _isExpectedNumber (expected, event)
+    : boolean {
+    return expected === KeyHelper.getNumberFromKey(event);
+  }
+
 }

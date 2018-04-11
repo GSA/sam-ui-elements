@@ -296,7 +296,8 @@ export class SamDateComponent
       event.preventDefault();
       return;
     }
-    if (this._keyIsNumber(key)) {
+
+    if (inputNum !== undefined) {
       if (event.target.value.length === 1 ||
         (event.target.value.length === 0 && possibleNum > 1)) {
         if (this.day.nativeElement.value
@@ -349,7 +350,7 @@ export class SamDateComponent
       event.preventDefault();
       return;
     }
-    if (inputNum) {
+    if (inputNum !== undefined) {
       if (event.target.value.length === 1 ||
         (event.target.value.length === 0
           && possibleNum > numJumpThreshold)) {
@@ -410,15 +411,16 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
-    const inputNum = parseInt(key, 10);
+    const inputNum = KeyHelper.getNumberFromKey(event);
     const possibleNum =
       this.getPossibleNum(this.year.nativeElement.value, event);
 
-    if (possibleNum > maxValue || !this.keys.isAllowed(event)) {
+    if (possibleNum > maxValue
+      || !this.keys.isAllowed(event)) {
       event.preventDefault();
       return;
     }
-    if (this._keyIsNumber(key)) {
+    if (inputNum !== undefined) {
       const four = 4; // Why 4?
       if (event.target.value.length + 1 === four) {
         this.blurEvent.emit();
