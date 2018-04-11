@@ -78,6 +78,94 @@ const ChromeFirefoxMocks = {
     keyCode: 8,
     keyIdentifier: undefined,
     which: 8
+  },
+  delete: {
+    charCode: 0,
+    code: 'Delete',
+    key: 'Delete',
+    keyCode: 46,
+    keyIdentifier: undefined,
+    which: 46
+  },
+  0: {
+    charCode: 0,
+    code: 'Digit0',
+    key: 0,
+    keyCode: 48,
+    keyIdentifier: 'U+0030',
+    which: 48
+  },
+  1: {
+    charCode: 0,
+    code: 'Digit1',
+    key: 1,
+    keyCode: 49,
+    keyIdentifier: 'U+0031',
+    which: 49
+  },
+  2: {
+    charCode: 0,
+    code: 'Digit2',
+    key: 2,
+    keyCode: 50,
+    keyIdentifier: 'U+0032',
+    which: 50
+  },
+  3: {
+    charCode: 0,
+    code: 'Digit3',
+    key: 3,
+    keyCode: 51,
+    keyIdentifier: 'U+0033',
+    which: 51
+  },
+  4: {
+    charCode: 0,
+    code: 'Digit4',
+    key: 4,
+    keyCode: 52,
+    keyIdentifier: 'U+0034',
+    which: 52
+  },
+  5: {
+    charCode: 0,
+    code: 'Digit5',
+    key: 5,
+    keyCode: 53,
+    keyIdentifier: 'U+0035',
+    which: 53
+  },
+  6: {
+    charCode: 0,
+    code: 'Digit6',
+    key: 6,
+    keyCode: 54,
+    keyIdentifier: 'U+0036',
+    which: 54
+  },
+  7: {
+    charCode: 0,
+    code: 'Digit7',
+    key: 7,
+    keyCode: 55,
+    keyIdentifier: 'U+0037',
+    which: 55
+  },
+  8: {
+    charCode: 0,
+    code: 'Digit8',
+    key: 8,
+    keyCode: 56,
+    keyIdentifier: 'U+0038',
+    which: 56
+  },
+  9: {
+    charCode: 0,
+    code: 'Digit9',
+    key: 9,
+    keyCode: 57,
+    keyIdentifier: 'U+0039',
+    which: 57
   }
 };
 
@@ -161,6 +249,94 @@ const SafariMocks = {
     keyCode: 8,
     keyIdentifier: 'U+0008',
     which: 8
+  },
+  delete: {
+    charCode: 0,
+    code: 'Delete',
+    key: 'Delete',
+    keyCode: 46,
+    keyIdentifier: 'U+007F',
+    which: 46
+  },
+  0: {
+    charCode: 0,
+    code: 'Digit0',
+    key: 0,
+    keyCode: 48,
+    keyIdentifier: 'U+0030',
+    which: 48
+  },
+  1: {
+    charCode: 0,
+    code: 'Digit1',
+    key: 1,
+    keyCode: 49,
+    keyIdentifier: 'U+0031',
+    which: 49
+  },
+  2: {
+    charCode: 0,
+    code: 'Digit2',
+    key: 2,
+    keyCode: 50,
+    keyIdentifier: 'U+0032',
+    which: 50
+  },
+  3: {
+    charCode: 0,
+    code: 'Digit3',
+    key: 3,
+    keyCode: 51,
+    keyIdentifier: 'U+0033',
+    which: 51
+  },
+  4: {
+    charCode: 0,
+    code: 'Digit4',
+    key: 4,
+    keyCode: 52,
+    keyIdentifier: 'U+0034',
+    which: 52
+  },
+  5: {
+    charCode: 0,
+    code: 'Digit5',
+    key: 5,
+    keyCode: 53,
+    keyIdentifier: 'U+0035',
+    which: 53
+  },
+  6: {
+    charCode: 0,
+    code: 'Digit6',
+    key: 6,
+    keyCode: 54,
+    keyIdentifier: 'U+0036',
+    which: 54
+  },
+  7: {
+    charCode: 0,
+    code: 'Digit7',
+    key: 7,
+    keyCode: 55,
+    keyIdentifier: 'U+0037',
+    which: 55
+  },
+  8: {
+    charCode: 0,
+    code: 'Digit8',
+    key: 8,
+    keyCode: 56,
+    keyIdentifier: 'U+0038',
+    which: 56
+  },
+  9: {
+    charCode: 0,
+    code: 'Digit9',
+    key: 9,
+    keyCode: 57,
+    keyIdentifier: 'U+0039',
+    which: 57
   }
 };
 
@@ -244,6 +420,94 @@ const EdgeMocks = {
     keyCode: 8,
     keyIdentifier: undefined,
     which: 8
+  },
+  delete: {
+    charCode: 0,
+    code: undefined,
+    key: 'Delete',
+    keyCode: 46,
+    keyIdentifier: undefined,
+    which: 46
+  },
+  0: {
+    charCode: 0,
+    code: 'Digit0',
+    key: 0,
+    keyCode: 48,
+    keyIdentifier: 'U+0030',
+    which: 48
+  },
+  1: {
+    charCode: 0,
+    code: 'Digit1',
+    key: 1,
+    keyCode: 49,
+    keyIdentifier: 'U+0031',
+    which: 49
+  },
+  2: {
+    charCode: 0,
+    code: 'Digit2',
+    key: 2,
+    keyCode: 50,
+    keyIdentifier: 'U+0032',
+    which: 50
+  },
+  3: {
+    charCode: 0,
+    code: 'Digit3',
+    key: 3,
+    keyCode: 51,
+    keyIdentifier: 'U+0033',
+    which: 51
+  },
+  4: {
+    charCode: 0,
+    code: 'Digit4',
+    key: 4,
+    keyCode: 52,
+    keyIdentifier: 'U+0034',
+    which: 52
+  },
+  5: {
+    charCode: 0,
+    code: 'Digit5',
+    key: 5,
+    keyCode: 53,
+    keyIdentifier: 'U+0035',
+    which: 53
+  },
+  6: {
+    charCode: 0,
+    code: 'Digit6',
+    key: 6,
+    keyCode: 54,
+    keyIdentifier: 'U+0036',
+    which: 54
+  },
+  7: {
+    charCode: 0,
+    code: 'Digit7',
+    key: 7,
+    keyCode: 55,
+    keyIdentifier: 'U+0037',
+    which: 55
+  },
+  8: {
+    charCode: 0,
+    code: 'Digit8',
+    key: 8,
+    keyCode: 56,
+    keyIdentifier: 'U+0038',
+    which: 56
+  },
+  9: {
+    charCode: 0,
+    code: 'Digit9',
+    key: 9,
+    keyCode: 57,
+    keyIdentifier: 'U+0039',
+    which: 57
   }
 };
 
@@ -327,6 +591,94 @@ const IEMocks = {
     keyCode: 8,
     keyIdentifier: undefined,
     which: 8
+  },
+  delete: {
+    charCode: 0,
+    code: undefined,
+    key: 'Delete',
+    keyCode: 46,
+    keyIdentifier: undefined,
+    which: 46
+  },
+  0: {
+    charCode: 0,
+    code: 'Digit0',
+    key: 0,
+    keyCode: 48,
+    keyIdentifier: 'U+0030',
+    which: 48
+  },
+  1: {
+    charCode: 0,
+    code: 'Digit1',
+    key: 1,
+    keyCode: 49,
+    keyIdentifier: 'U+0031',
+    which: 49
+  },
+  2: {
+    charCode: 0,
+    code: 'Digit2',
+    key: 2,
+    keyCode: 50,
+    keyIdentifier: 'U+0032',
+    which: 50
+  },
+  3: {
+    charCode: 0,
+    code: 'Digit3',
+    key: 3,
+    keyCode: 51,
+    keyIdentifier: 'U+0033',
+    which: 51
+  },
+  4: {
+    charCode: 0,
+    code: 'Digit4',
+    key: 4,
+    keyCode: 52,
+    keyIdentifier: 'U+0034',
+    which: 52
+  },
+  5: {
+    charCode: 0,
+    code: 'Digit5',
+    key: 5,
+    keyCode: 53,
+    keyIdentifier: 'U+0035',
+    which: 53
+  },
+  6: {
+    charCode: 0,
+    code: 'Digit6',
+    key: 6,
+    keyCode: 54,
+    keyIdentifier: 'U+0036',
+    which: 54
+  },
+  7: {
+    charCode: 0,
+    code: 'Digit7',
+    key: 7,
+    keyCode: 55,
+    keyIdentifier: 'U+0037',
+    which: 55
+  },
+  8: {
+    charCode: 0,
+    code: 'Digit8',
+    key: 8,
+    keyCode: 56,
+    keyIdentifier: 'U+0038',
+    which: 56
+  },
+  9: {
+    charCode: 0,
+    code: 'Digit9',
+    key: 9,
+    keyCode: 57,
+    keyIdentifier: 'U+0039',
+    which: 57
   }
 };
 

@@ -106,50 +106,58 @@ describe('The Sam Date component', () => {
           value: ''
         }
       });
+
       fixture.detectChanges();
+
       monthEl.triggerEventHandler('keydown', {
-        key: '4',
+        key: 1,
         target: {
           value: ''
         },
         preventDefault: () => undefined
       });
 
+      monthEl.triggerEventHandler('keydown', {
+        key: 2,
+        target: {
+          value: ''
+        },
+        preventDefault: () => undefined
+      });
 
       dayEl.triggerEventHandler('keydown', {
-        key: '1',
+        key: 1,
         target: {
           value: ''
         },
         preventDefault: () => undefined
       });
       dayEl.triggerEventHandler('keydown', {
-        key: '6',
+        key: 6,
         target: {
           value: ''
         },
         preventDefault: () => undefined
       });
 
-      yearEl.triggerEventHandler('keydown', {
-        key: '2',
-        target: {
-          value: ''
-        },
-        preventDefault: () => undefined
-      });
-      for (let i = 0; i < 3; i++) {
-        yearEl.triggerEventHandler('keydown', {
-          key: '0',
-          target: {
-            value: ''
-          },
-          preventDefault: () => undefined
-        });
-      }
+      [2,0,0,0].forEach(
+        digit => {
+          yearEl.triggerEventHandler('keydown', {
+            key: digit,
+            target: {
+              value: ''
+            },
+            preventDefault: () => undefined
+          });
+        }
+      );
 
+      fixture.detectChanges();
       const model = component.inputModel;
-      expect(model.month).toBe('4');
+
+      console.log(model, component.inputModel);
+
+      expect(model.month).toBe('12');
       expect(model.day).toBe('16');
       expect(model.year).toBe('2000');
     });

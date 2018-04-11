@@ -6,7 +6,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "npm run init && ng test && rm -rf ./src/components",
+    "test": "npm run init && ng test --single-run --code-coverage && rm -rf ./src/components",
+    "test:watch": "npm run init && ng test --code-coverage", 
     "lint": "ng lint",
     "e2e": "ng e2e",
     "init": "rm -rf ./src/components && cp -r ../src ./src/components"

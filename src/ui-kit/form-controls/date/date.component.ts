@@ -101,7 +101,7 @@ export class SamDateComponent
 
   public allowChars = [
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
-    'Backspace', 'ArrowLeft', 'ArrowRight', 'Tab', 'Delete'
+    'backspace', 'left', 'right', 'tab', 'delete'
   ];
 
   public model: any = {
@@ -115,6 +115,8 @@ export class SamDateComponent
   private nonFebruaryDays = [30, 31];
   private maxMonth = 12;
   private maxDay = 31;
+
+  private keys: KeyHelper = new KeyHelper(...this.allowChars);
 
   get inputModel() {
     return {
@@ -212,7 +214,8 @@ export class SamDateComponent
 
   parseValueString() {
     if (this.value) {
-      // use the forgiving format (that doesn't need 0 padding) for inputs
+      // use the forgiving format (that doesn't need 0 
+      // padding) for inputs
       const m = moment(this.value, this.INPUT_FORMAT);
       if (m.isValid()) {
         const monthVal = m.month() + 1;
@@ -284,16 +287,17 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
-    const inputNum = parseInt(key, 10);
+    const inputNum = KeyHelper.getNumberFromKey(event);
     const possibleNum =
-      this.getPossibleNum(this.month.nativeElement.value, key);
-
+      this.getPossibleNum(this.month.nativeElement.value, event);
+    
     if (possibleNum > this.maxMonth
-      || this.allowChars.indexOf(key) === -1) {
+      || !this.keys.isAllowed(event)) {
       event.preventDefault();
       return;
     }
-    if (this._keyIsNumber(key)) {
+
+    if (inputNum !== undefined) {
       if (event.target.value.length === 1 ||
         (event.target.value.length === 0 && possibleNum > 1)) {
         if (this.day.nativeElement.value
@@ -309,10 +313,10 @@ export class SamDateComponent
     }
   }
 
-  getPossibleNum(value, key): number {
+  getPossibleNum(value, event): number {
     let possibleNum;
     const ten = 10; // What is this number?
-    const inputNum = parseInt(key, 10);
+    const inputNum = KeyHelper.getNumberFromKey(event);
     if (!isNaN(value)
       && value !== '') {
       possibleNum = (parseInt(value, undefined) * ten)
@@ -334,20 +338,22 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
-    const inputNum = parseInt(key, 10);
+    const inputNum = KeyHelper.getNumberFromKey(event);
     const possibleNum =
-      this.getPossibleNum(this.day.nativeElement.value, key);
+      this.getPossibleNum(this.day.nativeElement.value, event);
     const maxDate = this.getMaxDate();
     const numJumpThreshold =
       this.getNumJumpThreshold(this.month.nativeElement.value);
 
-    if (possibleNum > maxDate || this.allowChars.indexOf(key) === - 1) {
+    if (possibleNum > maxDate
+        || !this.keys.isAllowed(event)) {
       event.preventDefault();
       return;
     }
-    if (this._keyIsNumber(key)) {
+    if (inputNum !== undefined) {
       if (event.target.value.length === 1 ||
-        (event.target.value.length === 0 && possibleNum > numJumpThreshold)) {
+        (event.target.value.length === 0
+          && possibleNum > numJumpThreshold)) {
         this.year.nativeElement.focus();
       }
       this.day.nativeElement.value = possibleNum;
@@ -363,8 +369,12 @@ export class SamDateComponent
     const thirty = 30;
     let maxDate = 31;
 
-    if (this.thirtyDayMonths
-      .indexOf(parseInt(this.month.nativeElement.value, undefined)) !== -1 ) {
+    const month = parseInt(
+      this.month.nativeElement.value,
+      undefined
+    );
+
+    if (this.thirtyDayMonths.indexOf(month) !== -1 ) {
       maxDate = thirty;
     }
 
@@ -401,15 +411,16 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
-    const inputNum = parseInt(key, 10);
+    const inputNum = KeyHelper.getNumberFromKey(event);
     const possibleNum =
-      this.getPossibleNum(this.year.nativeElement.value, key);
+      this.getPossibleNum(this.year.nativeElement.value, event);
 
-    if (possibleNum > maxValue || this.allowChars.indexOf(key) === -1) {
+    if (possibleNum > maxValue
+      || !this.keys.isAllowed(event)) {
       event.preventDefault();
       return;
     }
-    if (this._keyIsNumber(key)) {
+    if (inputNum !== undefined) {
       const four = 4; // Why 4?
       if (event.target.value.length + 1 === four) {
         this.blurEvent.emit();
