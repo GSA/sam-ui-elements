@@ -16,7 +16,6 @@ export class KeyHelper {
     const val = this.allowedKeys
       .reduce(
         (val, key) => {
-          console.log(val, key);
           return KeyHelper.is(key, event) || val;
         },
         false
@@ -80,8 +79,8 @@ export class KeyHelper {
     return !!val ? true : false;
   }
 
-  private static isExpectedNumber
-    (expected, event): boolean {
+  private static isExpectedNumber (expected, event)
+    : boolean {
     return expected === KeyHelper.getNumberFromKey(event);
   }
 
@@ -110,6 +109,8 @@ export class KeyHelper {
         return 1;
       case 'Digit1':
         return 1;
+      case 'Numpad1':
+        return 1;
       default:
         return undefined;
     }
@@ -124,6 +125,8 @@ export class KeyHelper {
       case 'U+0032':
         return 2;
       case 'Digit2':
+        return 2;
+      case 'Numpad2':
         return 2;
       default:
         return undefined;
@@ -140,6 +143,8 @@ export class KeyHelper {
         return 3;
       case 'Digit3':
         return 3;
+      case 'Numpad3':
+        return 3;
       default:
         return undefined;
     }
@@ -155,6 +160,8 @@ export class KeyHelper {
         return 4;
       case 'Digit4':
         return 4;
+      case 'Numpad4':
+        return 4;
       default:
         return undefined;
     }
@@ -168,6 +175,8 @@ export class KeyHelper {
       case 'U+0035':
         return 5;
       case 'Digit5':
+        return 5;
+      case 'Numpad5':
         return 5;
       default:
         return undefined;
@@ -184,6 +193,8 @@ export class KeyHelper {
         return 6;
       case 'Digit6':
         return 6;
+      case 'Numpad6':
+        return 6;
       default:
         return undefined;
     }
@@ -198,6 +209,8 @@ export class KeyHelper {
       case 'U+0037':
         return 7;
       case 'Digit7':
+        return 7;
+      case 'Numpad7':
         return 7;
       default:
         return undefined;
@@ -214,6 +227,8 @@ export class KeyHelper {
         return 8;
       case 'Digit8':
         return 8;
+      case 'Numpad8':
+        return 8;
       default:
         return undefined;
     }
@@ -228,6 +243,8 @@ export class KeyHelper {
       case 'U+0039':
         return 9;
       case 'Digit9':
+        return 9;
+      case 'Numpad9':
         return 9;
       default:
         return undefined;
@@ -260,7 +277,7 @@ export class KeyHelper {
       case 'backspace':
         return this._isBackspace(event);
       case 'delete':
-        return false;
+        return this._isDelete(event);
       case '0':
         return this.isExpectedNumber(0, event);
       case '1':
@@ -408,6 +425,18 @@ export class KeyHelper {
       || e.keyIdentifier === 'U+0008'
       || e.which === 8
       || e.keyCode === 8) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  private static _isDelete (e: KeyboardEvent | any) {
+    if (e.code === 'Delete'
+      || e.key === 'Delete'
+      || e.keyIdentifier === 'U+007F'
+      || e.which === 46
+      || e.keyCode === 46) {
       return true;
     } else {
       return false;
