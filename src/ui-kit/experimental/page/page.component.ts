@@ -13,7 +13,7 @@ export class SamPageService{
 export class SamPageComponent{
   @Input() public title: string;
   @Input() public intro: string;
-  constructor(private pageService: SamPageService){}
+  constructor(public pageService: SamPageService){}
 }
 
 @Component({

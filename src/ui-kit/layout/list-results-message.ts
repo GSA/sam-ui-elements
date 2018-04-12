@@ -12,7 +12,7 @@ export class ListResultsMessageComponent implements OnChanges {
   @Input() public currentPage: number;
   @Input() public showing: number;
   @Input() public suffix: string;
-  private message: string;
+  message: string;
 
   ngOnChanges() {
     const total = this.total;

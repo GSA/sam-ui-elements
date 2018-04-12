@@ -55,8 +55,10 @@ describe('The Sam International Phone Group', () => {
 
     it('should rerun validation on phone when prefix\
       changes', () => {
+      component.phoneName = "test";  
       component.group.controls.prefix.setValue(2);
       component.group.updateValueAndValidity();
+      fixture.detectChanges();
       component.group.controls.prefix.setValue(1);
       component.group.updateValueAndValidity();
       fixture.detectChanges();
