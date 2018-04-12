@@ -31,13 +31,20 @@ const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
   multi: true
 };
 
+/**
+ * Methods we're externally exposing
+ */
+interface SamCache{
+  clearCache();
+}
+
 @Component({
   selector: 'sam-autocomplete',
   templateUrl: 'autocomplete.template.html',
   providers: [ AUTOCOMPLETE_VALUE_ACCESSOR ]
 })
 export class SamAutocompleteComponent
-  implements ControlValueAccessor, OnChanges {
+  implements ControlValueAccessor, OnChanges, SamCache {
   @ViewChild('resultsList') resultsList: ElementRef;
   @ViewChild('resultsListKV') resultsListKV: ElementRef;
   @ViewChild('input') input: ElementRef;
@@ -801,5 +808,9 @@ export class SamAutocompleteComponent
     if (index === length - 2) {
       this.endOfList = true;
     }
+  }
+
+  public clearCache(){
+    this.cache.clearAll();
   }
 }
