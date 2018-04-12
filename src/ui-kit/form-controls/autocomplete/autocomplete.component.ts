@@ -31,6 +31,9 @@ const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
   multi: true
 };
 
+/**
+ * Methods we're externally exposing
+ */
 interface SamCache{
   clearCache();
 }
@@ -807,7 +810,7 @@ export class SamAutocompleteComponent
     }
   }
 
-  clearCache(){
+  public clearCache(){
     this.cache.clearAll();
   }
 }
