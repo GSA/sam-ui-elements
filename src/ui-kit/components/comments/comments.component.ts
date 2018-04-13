@@ -62,7 +62,7 @@ export class SamCommentsComponent implements OnInit {
   /**
    * Other private variables
    */
-  private comments: Array<Comment> = [];
+  comments: Array<Comment> = [];
   private maxLength: number = 250;
 
   /**

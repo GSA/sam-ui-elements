@@ -75,6 +75,7 @@ export class SamIntlPhoneGroup extends SamFieldset
   @Input() public prefixName: string;
   @Input() public phoneLabel = 'Phone';
   @Input() public prefixLabel = 'Country Code';
+  prefixError = "";
 
   @ViewChild(FieldsetWrapper) public wrapper: FieldsetWrapper;
 
