@@ -79,6 +79,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
 
   @ViewChild(FieldsetWrapper)
   public wrapper: FieldsetWrapper;
+  activeOptions = 0;
   /*
    * We want our model to list the checked items in the order that they appear 
    * in the options list. This object allows us to efficiently determine if a 
@@ -135,6 +136,17 @@ export class SamCheckboxComponent implements ControlValueAccessor {
       }
     }
     this.model = returnVal;
+    this.setSelectAllCheck();
+  }
+
+  setSelectAllCheck(){
+    let activeOptionsNum = 0;
+    this.options.forEach(val=>{
+      if(!val.disabled){
+        activeOptionsNum++;
+      } 
+    });
+    this.activeOptions=activeOptionsNum;
   }
 
   // Give the check all label a name for screen readers
