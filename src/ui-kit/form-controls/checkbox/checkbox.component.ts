@@ -119,6 +119,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
 
       this.wrapper.formatErrors(this.control);
     }
+    this.setSelectAllCheck();
   }
 
   setModelValue(val) {
