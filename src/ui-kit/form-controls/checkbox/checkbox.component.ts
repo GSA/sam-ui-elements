@@ -81,8 +81,8 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   public wrapper: FieldsetWrapper;
   activeOptions = 0;
   /*
-   * We want our model to list the checked items in the order that they appear 
-   * in the options list. This object allows us to efficiently determine if a 
+   * We want our model to list the checked items in the order that they appear
+   * in the options list. This object allows us to efficiently determine if a
    * value is before another value
    */
   private _ordering: any = {};
@@ -98,7 +98,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
     this.onTouched();
   }
 
-  constructor(private samFormService: SamFormService) {}
+  constructor(protected samFormService: SamFormService) {}
 
   ngOnInit() {
     if (!this.name) {
@@ -144,7 +144,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
     this.options.forEach(val=>{
       if(!val.disabled){
         activeOptionsNum++;
-      } 
+      }
     });
     this.activeOptions=activeOptionsNum;
   }
@@ -169,7 +169,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
       const thisOrder = this._ordering[value];
       while (i < this.model.length) {
         const otherValue = this.model[i];
-        // If the item being inserted is after the current value, break and 
+        // If the item being inserted is after the current value, break and
         // insert it.
         if (thisOrder <= this._ordering[otherValue]) {
           break;
