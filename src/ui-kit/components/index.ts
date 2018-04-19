@@ -32,9 +32,8 @@ import { SamUploadComponent } from './upload/upload.component';
 import { SamWrapperModule } from '../wrappers';
 import { SamCommentsModule } from './comments';
 import { SamImageModule } from './image';
-import { SamActionButton, SamActionsDropdownComponent } from './actions';
-
-
+import { SamActionButton} from './actions/action-button';
+import { SamActionsDropdownComponent } from './actions/actions-dropdown';
 
 @NgModule({
   imports: [

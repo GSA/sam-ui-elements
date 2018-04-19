@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-
-import { SamActionInterface } from '../';
+import { SamActionInterface } from '../action-interface';
 
 @Component({
   selector: 'sam-action-button',
