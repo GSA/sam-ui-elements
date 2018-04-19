@@ -8,7 +8,7 @@ import { AlertType } from '../../types';
 })
 export class SamAlertFooterComponent {
 
-  private alerts: AlertType[] = [];
+  alerts: AlertType[] = [];
 
   constructor(private alertFooterService: SamAlertFooterService) { }
 

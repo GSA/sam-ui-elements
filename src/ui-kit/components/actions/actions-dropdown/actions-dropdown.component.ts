@@ -42,7 +42,7 @@ export class SamActionsDropdownComponent {
   @Output() public emitCallback: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChildren('actionsList') public actionsList;
-  private showActions = false;
+  showActions = false;
   focusIndex = -1;
   hideActions() {
     return this.showActions = false;

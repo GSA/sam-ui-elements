@@ -71,7 +71,7 @@ export class PageTemplateComponent implements OnInit {
    */
   @Output() public breadcrumbChange = new EventEmitter();
 
-  constructor(private pageService: PageService) {}
+  constructor(public pageService: PageService) {}
 
   ngOnInit(): void {
     // Reset sidebar
