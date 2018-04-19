@@ -73,6 +73,10 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   */
   @Input() disabled: boolean;
   /**
+   * Sets the id
+   */
+  @Input() id: string;
+  /**
   * Deprecated, Event emitted when the model value changes
   */
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
@@ -81,8 +85,8 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   public wrapper: FieldsetWrapper;
   activeOptions = 0;
   /*
-   * We want our model to list the checked items in the order that they appear 
-   * in the options list. This object allows us to efficiently determine if a 
+   * We want our model to list the checked items in the order that they appear
+   * in the options list. This object allows us to efficiently determine if a
    * value is before another value
    */
   private _ordering: any = {};
@@ -145,14 +149,20 @@ export class SamCheckboxComponent implements ControlValueAccessor {
     this.options.forEach(val=>{
       if(!val.disabled){
         activeOptionsNum++;
-      } 
+      }
     });
     this.activeOptions=activeOptionsNum;
   }
 
   // Give the check all label a name for screen readers
-  checkAllLabelName() {
-    return `all-${this.label}`;
+  checkAllLabelOrId() {
+    let labelOrId;
+    if (this.id) {
+      labelOrId = `all-${this.id}`;
+    } else {
+      labelOrId = `all-${this.label}`;
+    }
+    return labelOrId;
   }
 
   isChecked(value) {
@@ -170,7 +180,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
       const thisOrder = this._ordering[value];
       while (i < this.model.length) {
         const otherValue = this.model[i];
-        // If the item being inserted is after the current value, break and 
+        // If the item being inserted is after the current value, break and
         // insert it.
         if (thisOrder <= this._ordering[otherValue]) {
           break;
