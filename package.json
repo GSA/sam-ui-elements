@@ -1,6 +1,6 @@
 {
   "name": "sam-ui-elements",
-  "version": "13.2.0",
+  "version": "13.4.0",
   "description": "SAM Client Side Implementation",
   "keywords": [
     "angular2",
@@ -107,6 +107,7 @@
     "karma-coverage": "1.0.0",
     "karma-jasmine": "1.0.2",
     "karma-mocha-reporter": "2.0.0",
+    "karma-sonarqube-unit-reporter": "0.0.11",
     "karma-sourcemap-loader": "0.3.7",
     "karma-webpack": "1.8.0",
     "lodash.clone": "^4.5.0",
