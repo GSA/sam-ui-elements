@@ -6,11 +6,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "npm run init && ng test --single-run --code-coverage && rimraf ./src/components",
+    "test": "ng test --single-run --code-coverage",
     "test:watch": "npm run init && ng test --code-coverage",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "init": "rimraf ./src/components && node test-setup"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -46,7 +45,6 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "karma-sonarqube-unit-reporter": "0.0.11",
     "protractor": "~5.1.2",
-    "rimraf": "2.5.2",
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
     "typescript": "~2.3.3"
