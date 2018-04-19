@@ -25,8 +25,8 @@ describe('The Sam International Phone Group', () => {
     let fixture: any;
   
     const group = new FormGroup({
-      prefix: new FormControl(1),
-      phone: new FormControl(1234)
+      prefix: new FormControl('1'),
+      phone: new FormControl('1234')
     });
   
     beforeEach(() => {
@@ -50,14 +50,16 @@ describe('The Sam International Phone Group', () => {
   
       fixture = TestBed.createComponent(SamIntlPhoneGroup);
       component = fixture.componentInstance;
+      component.phoneName = "test";
+      component.prefixName = "test";
       component.group = group;
     });
 
     it('should rerun validation on phone when prefix\
       changes', () => {
-      component.group.controls.prefix.setValue(2);
+      component.group.controls.prefix.setValue('2');
       component.group.updateValueAndValidity();
-      component.group.controls.prefix.setValue(1);
+      component.group.controls.prefix.setValue('1');
       component.group.updateValueAndValidity();
       fixture.detectChanges();
       const expected = component.group.controls.phone.valid;
