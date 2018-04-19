@@ -14,6 +14,7 @@ describe('The Sam Checkboxes component', () => {
 
     beforeEach(() => {
       component = new SamCheckboxComponent(new SamFormService());
+      component.options = [];
     });
 
     it('should process checkbox changes', () => {
