@@ -20,7 +20,7 @@ describe('SAM Info Accordion Component', () => {
         content: 'Details for Federal Acquisition Regulation: ',
         link: 'View FAR',
         url: 'https://www.acquisition.gov/?q=browsefar',
-        img: 'src/assets/img/placeholder.jpg'
+        img: 'assets/img/placeholder.jpg'
       },
       {
         title: 'SBA Commercial Market Representative',
@@ -28,14 +28,14 @@ describe('SAM Info Accordion Component', () => {
         link: 'View SBA CMR',
         url: 'https://www.sba.gov/contracting/resources-small-businesses\
           /commercial-market-representatives',
-        img: 'src/assets/img/placeholder.jpg'
+        img: 'assets/img/placeholder.jpg'
       },
       {
         title: 'Request DUNS Number',
         content: 'Details for Request DUNS Number: ',
         link: 'View DUNS Number',
         url: 'http://fedgov.dnb.com/webform',
-        img: 'src/assets/img/placeholder.jpg'
+        img: 'assets/img/placeholder.jpg'
       }
     ];
 
