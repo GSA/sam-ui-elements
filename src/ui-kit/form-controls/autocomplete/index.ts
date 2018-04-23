@@ -5,13 +5,6 @@ import { SamAutocompleteComponent } from './autocomplete.component';
 import { SamDirectivesModule } from '../../directives';
 import { SamWrapperModule } from '../../wrappers';
 
-/**
- * Refactor stuff
- */
-import {
-  SamAutocompleteComponentRefactor
-} from './refactor/autocomplete.component';
-
 @NgModule({
   imports: [ 
     FormsModule,
@@ -20,12 +13,10 @@ import {
     SamDirectivesModule,
    ],
   declarations: [
-    SamAutocompleteComponent,
-    SamAutocompleteComponentRefactor
+    SamAutocompleteComponent
   ],
   exports: [
-    SamAutocompleteComponent,
-    SamAutocompleteComponentRefactor
+    SamAutocompleteComponent
   ]
 })
 export class SamAutocompleteModule {}

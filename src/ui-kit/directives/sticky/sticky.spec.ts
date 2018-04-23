@@ -11,7 +11,7 @@ import {SamStickyComponent} from './sticky.component';
   <div class="test-container">
     <div #var sam-sticky 
     [container]="'test-container'" 
-    [limit]="1200" class="test-comp">
+    [limit]="600" class="test-comp">
       <ul>
         <li>1</li>
         <li>2</li>
@@ -51,16 +51,17 @@ describe('The Sam Sticky directive', () => {
     const comp = fixture.debugElement.query(By.css('.test-comp'));
 
     expect(comp.nativeElement.getAttribute('ng-reflect-limit'))
-      .toContain('1200');
+      .toContain('600');
   });
 
-  it('trigger on resize', () => {
-    spyOn(directive, 'resize');
-    window.dispatchEvent(new Event('resize'));
+  it('should handle when resized', () => {
+    directive.resize({});
+    const comp = fixture.debugElement.query(By.css('.test-comp'));
     fixture.detectChanges();
-    expect(directive.resize).toHaveBeenCalled();
-    directive.resize(undefined);
+    console.log(window.innerWidth, directive.limit);
+    expect(comp.nativeElement.getAttribute('style')).toContain('position: static');
   });
+
   it('trigger on scroll', () => {
     const expectedLimit = 1400;
     spyOn(directive, 'scroll');
