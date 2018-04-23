@@ -11,7 +11,6 @@ import { SamFormTemplatesModule } from './form-templates';
 import { SamLayoutModule } from './layout';
 import { SamExperimentalModule } from './experimental';
 import { SamPipesModule } from './pipes';
-import { ServiceDirectivesModule } from './service-directives';
 import { SamFormService } from './form-service';
 
 @NgModule({
@@ -25,8 +24,7 @@ import { SamFormService } from './form-service';
     SamFormTemplatesModule,
     SamLayoutModule,
     SamExperimentalModule,
-    SamPipesModule,
-    ServiceDirectivesModule
+    SamPipesModule
   ],
   exports: [
     SamComponentsModule,
@@ -36,8 +34,7 @@ import { SamFormService } from './form-service';
     SamFormTemplatesModule,
     SamLayoutModule,
     SamExperimentalModule,
-    SamPipesModule,
-    ServiceDirectivesModule
+    SamPipesModule
   ],
   providers: [SamFormService]
 })
