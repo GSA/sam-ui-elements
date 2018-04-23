@@ -102,7 +102,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
     this.onTouched();
   }
 
-  constructor(private samFormService: SamFormService) {}
+  constructor(protected samFormService: SamFormService) {}
 
   ngOnInit() {
     if (!this.name) {

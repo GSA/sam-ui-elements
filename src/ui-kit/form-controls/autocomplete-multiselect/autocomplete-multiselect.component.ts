@@ -94,7 +94,7 @@ export class SamAutocompleteMultiselectComponent
   @Input() public options: Array<any> = [];
   /**
    * Key Value Config is an object that sets which property on the options
-   * objects should be used to display the key, value, and subhead properties 
+   * objects should be used to display the key, value, and subhead properties
    * in the list.
    */
   @Input() public keyValueConfig: KeyValueConfig = {
@@ -185,14 +185,14 @@ export class SamAutocompleteMultiselectComponent
   @Input() public itemTemplate: TemplateRef<any>;
 
   /**
-   * Allow to control whether display the category option in the result list or 
+   * Allow to control whether display the category option in the result list or
    * not
    * @type {boolean}
    */
   @Input() public displayCategory: boolean = true;
 
   /**
-   * Hide textarea label, useful when a wrapper component's label is used 
+   * Hide textarea label, useful when a wrapper component's label is used
    * to target the textarea instead
    */
   @Input() public hideTextareaLabel: boolean = false;
@@ -308,7 +308,7 @@ export class SamAutocompleteMultiselectComponent
   public selectOnEnter(event) {
     const highlighted = this.getSelectedChildIndex(this.getResults());
 
-    if (event.target.value === '' 
+    if (event.target.value === ''
       && highlighted === -1) {
       return;
     }
@@ -431,8 +431,8 @@ export class SamAutocompleteMultiselectComponent
   /**
    * @param results - Results displayed in autocomplete list
    * @param value - event target value
-   * 
-   * @description - If item selected in group is last item in list, 
+   *
+   * @description - If item selected in group is last item in list,
    * fire filter function
    */
   public reachedEndOfList(results, value) {
@@ -460,7 +460,7 @@ export class SamAutocompleteMultiselectComponent
 
   public getSelectedChildIndex(elements: any): number {
     let selectedIndex = -1;
-    
+
     if (elements.length === 0) {
       return selectedIndex;
     }
@@ -553,7 +553,7 @@ export class SamAutocompleteMultiselectComponent
     // If there is 40px left move to the next line
     const padding = 40;
     widthValue = spaceLeft - padding > 0 && elementsWidths && elementsWidths.length > 1 ? containerWidth-spaceLeft + 'px' : '100%';
-    
+
     return widthValue;
   }
 
@@ -706,7 +706,7 @@ export class SamAutocompleteMultiselectComponent
         if (this.categoryIsSelectable) {
           if (option[this.keyValueConfig.categoryProperty]
             && option[this.keyValueConfig.categoryProperty]
-                .toLowerCase().includes(searchString) 
+                .toLowerCase().includes(searchString)
             && availableCategories
               .indexOf(option[this.keyValueConfig.categoryProperty]) === -1) {
             availableCategories.push(

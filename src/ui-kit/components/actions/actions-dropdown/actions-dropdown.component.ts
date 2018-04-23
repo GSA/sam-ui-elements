@@ -8,8 +8,9 @@ import {
   ViewChildren
 } from '@angular/core';
 
-import { SamActionInterface } from '../';
 import { KeyHelper } from '../../../utilities/key-helper/key-helper';
+import {SamActionInterface} from '../action-interface';
+
 @Component({
   selector: 'sam-actions-dropdown',
   templateUrl: 'actions-dropdown.template.html'
