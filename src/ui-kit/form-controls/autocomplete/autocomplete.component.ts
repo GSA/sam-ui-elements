@@ -638,7 +638,9 @@ export class SamAutocompleteComponent
   pushSROnlyMessage(message: string) {
     const srResults: HTMLElement = document.createElement('li');
     srResults.innerText = message;
-    this.srOnly.nativeElement.appendChild(srResults);
+    if(this.srOnly && this.srOnly.nativeElement){
+      this.srOnly.nativeElement.appendChild(srResults);
+    }
   }
 
   checkForFocus(event) {
