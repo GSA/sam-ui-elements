@@ -1,6 +1,6 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
-import suffixes from './suffixes.json';
+import * as suffixes from './suffixes.json';
 import { NameEntryType } from '../../types';
 import {
   NG_VALUE_ACCESSOR,
