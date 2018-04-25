@@ -12,18 +12,111 @@ import {
   ValidatorFn
 } from '@angular/forms';
 
-const suffixOptions = [];
-// const suffixOptions = (suffixes as any).map((item) => {
-//   return {
-//     label: item.suffix,
-//     value: item.suffix
-//   };
-// });
+const suffixes = [
+  {
+    "suffix": "II",
+    "description": "The Second"
+  },
+  {
+    "suffix": "III",
+    "description": "The Third"
+  },
+  {
+    "suffix": "IV",
+    "description": "The Fourth"
+  },
+  {
+    "suffix": "J.D.",
+    "description": "Juris Doctor"
+  },
+  {
+    "suffix": "Jr.",
+    "description": "Junior"
+  },
+  {
+    "suffix": "Ret.",
+    "description": "Retired"
+  },
+  {
+    "suffix": "Sr.",
+    "description": "Senior"
+  },
+  {
+    "suffix": "USA",
+    "description": "United States Army"
+  },
+  {
+    "suffix": "USA, Ret.",
+    "description": "United States Army, Retired"
+  },
+  {
+    "suffix": "USAF",
+    "description": "United States Air Force"
+  },
+  {
+    "suffix": "USAF, Ret.",
+    "description": "United States Air Force, Retired"
+  },
+  {
+    "suffix": "USAFR",
+    "description": "United States Air Force Reserve"
+  },
+  {
+    "suffix": "USAR",
+    "description": "United States Army Reserve"
+  },
+  {
+    "suffix": "USCG",
+    "description": "United States Coast Guard"
+  },
+  {
+    "suffix": "USCG, Ret.",
+    "description": "United States Coast Guard, Retired"
+  },
+  {
+    "suffix": "USMC",
+    "description": "United States Marine Corps"
+  },
+  {
+    "suffix": "USMC, Ret.",
+    "description": "United States Marine Corps, Retired"
+  },
+  {
+    "suffix": "USMCR",
+    "description": "United States Marine Corps Reserve"
+  },
+  {
+    "suffix": "USN",
+    "description": "United States Navy"
+  },
+  {
+    "suffix": "USN, Ret.",
+    "description": "United States Navy, Retired"
+  },
+  {
+    "suffix": "USNR",
+    "description": "United States Navy Reserve"
+  },
+  {
+    "suffix": "V",
+    "description": "The Fifth"
+  },
+  {
+    "suffix": "VI",
+    "description": "The Sixth"
+  }
+];
+const suffixOptions = (suffixes as any).map((item) => {
+  return {
+    label: item.suffix,
+    value: item.suffix
+  };
+});
 //
-// suffixOptions.unshift({
-//   label: 'None',
-//   value: ''
-// });
+suffixOptions.unshift({
+  label: 'None',
+  value: ''
+});
 
 /**
  * The <samNameInput> component is a Name entry portion of a form
