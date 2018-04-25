@@ -587,7 +587,7 @@ export class SamAutocompleteComponent
       this.selectedChild.classList.add('isSelected');
       if (index === children.length - 1) {
         this.endOfList = true;
-        this.onKeyUpUsingService(this.inputValue);
+        this.onKeyUpUsingService(this.inputValue ? this.inputValue : "");
       }
     }
   }
@@ -638,7 +638,9 @@ export class SamAutocompleteComponent
   pushSROnlyMessage(message: string) {
     const srResults: HTMLElement = document.createElement('li');
     srResults.innerText = message;
-    this.srOnly.nativeElement.appendChild(srResults);
+    if(this.srOnly && this.srOnly.nativeElement){
+      this.srOnly.nativeElement.appendChild(srResults);
+    }
   }
 
   checkForFocus(event) {

@@ -1,8 +1,9 @@
 
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef } from '@angular/core';
 import { SamFormService } from '../../form-service';
 import { SamWrapperModule } from '../../wrappers'; 
 
@@ -13,8 +14,79 @@ import { SamAutocompleteComponent } from './autocomplete.component';
 import { AutocompleteService } from '../autocomplete/autocomplete.service';
 
 import { AutocompleteConfig } from '../../types';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 describe('The Sam Autocomplete Component', () => {
+  describe('isolated tests', ()=>{
+    let component: SamAutocompleteComponent;
+    const cdr: ChangeDetectorRef = undefined;
+    beforeEach(() => {
+      component = new SamAutocompleteComponent(null, null, cdr);
+    });
+
+    it('should set a value', ()=>{
+      component.value = [];
+      expect(component.value).toBe(component.innerValue);
+    });
+
+    it('should return errors', ()=>{
+      expect(component.errors).toBe('');
+    });
+
+    it('should detect keyvalue pairs', ()=>{
+      expect(component.isKeyValuePair(['aaa'])).toBe(false);
+      expect(component.isKeyValuePair([{key:'aaa',value:'bbb'}])).toBe(true);
+    });
+
+    it('should have focus handling', ()=>{
+      component.hasFocus = false;
+      component.inputFocusHandler({
+        target: {
+          value: ""
+        }
+      });
+      expect(component.hasFocus).toBe(true);
+    });
+
+    it('should detect a category', ()=>{
+      component.categories = ["classA"];
+      expect(component.isCategory("classA")).toBe(true);
+      expect(component.isCategory("classB")).toBe(false);
+    });
+
+    it('should set request error', ()=>{
+      component.requestError({});
+      expect(component.results[0]).toBe('An error occurred. Try a different value.');
+    });
+
+    it('should handleBackspaceKeyup', ()=>{
+      component.handleBackspaceKeyup();
+      expect(component.value).toBe(null);
+    });
+
+    it('should detect isFirstItem', ()=>{
+      expect(component.isFirstItem(0)).toBe(true);
+      expect(component.isFirstItem(-1)).toBe(true);
+      expect(component.isFirstItem(1)).toBe(false);
+    });
+
+    it('should clearCache', ()=>{
+      component.cache.insert(['aaa'],'');
+      component.clearCache();
+      expect(component.cache.totalBytes).toBe(2);
+    });
+    
+    it('should handle requests througk input', ()=>{
+      let subject = new BehaviorSubject([]);
+      component.httpRequest = subject;//Observable.of(['aaa']);
+      component.ngOnChanges({httpRequest:true});
+      subject.next(['aaa']);
+      subject.next(['aaa','bbb']);
+      subject.next([{key:'aaa',value:'bbb'}]);
+      subject.next([{key:'aaa',value:'bbb'},{key:'ccc',value:'ddd'}]);
+      expect(component.cache.totalBytes).toBe(2);
+    });
+  });
   describe('rendered tests',()=>{
     let component: SamAutocompleteComponent;
     let fixture: ComponentFixture<SamAutocompleteComponent>;
@@ -67,8 +139,10 @@ describe('The Sam Autocomplete Component', () => {
       });
 
       fixture = TestBed.createComponent(SamAutocompleteComponent);
+      let control = new FormControl('');
       component = fixture.componentInstance;
       component.name = name;
+      component.control = control;  
       component.id = id;
       component.labelText = labelText;
       component.options = options;
@@ -172,6 +246,45 @@ describe('The Sam Autocomplete Component', () => {
       component.setSelected('Alabama');
       component.clearInput();
       expect(component.innerValue).toBeFalsy();
+    });
+
+    it('Should handle keydown', ()=>{
+      component.hasFocus = true;
+      component.results = ['aaa','bbb'];
+      fixture.detectChanges();
+      //index -1 to 0
+      component.onKeydown({
+        key: "Down", code: "Down"
+      });
+      //index 0 to 1
+      component.onKeydown({
+        key: "Down", code: "Down"
+      });
+      fixture.detectChanges();
+      //index 1 to 0
+      component.onKeydown({
+        key: "Up", code: "Up"
+      });
+      fixture.detectChanges();
+      component.onKeydown({
+        key: "Enter", code: "Enter"
+      });
+      expect(component.value).toBe('aaa');
+      fixture.detectChanges();
+      component.hasFocus = true;
+      component.results = ['aaa','bbb'];
+      fixture.detectChanges();
+      component.onKeydown({
+        key: "Escape", code: "Escape"
+      });
+      fixture.detectChanges();
+      component.allowAny = true;
+      component.inputValue = 'ccc';
+      component.onKeydown({
+        key: "Enter", code: "Enter"
+      });
+      fixture.detectChanges();
+      expect(component.value).toBe('ccc');
     });
   });
 });
