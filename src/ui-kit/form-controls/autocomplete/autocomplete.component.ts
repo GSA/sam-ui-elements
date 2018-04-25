@@ -611,11 +611,13 @@ export class SamAutocompleteComponent
     if (selectedChild !== -1) {
       if (this.results && this.results[selectedChild]) {
         this.setSelected(this.results[selectedChild]);
+        this.input.nativeElement.focus();
       }
 
       if (this.filteredKeyValuePairs
         && this.filteredKeyValuePairs[selectedChild]) {
         this.setSelected(this.filteredKeyValuePairs[selectedChild]);
+        this.input.nativeElement.focus();
       }
     } else {
       if (this.allowAny) {
