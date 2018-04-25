@@ -1,6 +1,6 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
-import * as suffixes from './suffixes.json';
+//import * as suffixes from './suffixes.json';
 import { NameEntryType } from '../../types';
 import {
   NG_VALUE_ACCESSOR,
@@ -12,17 +12,18 @@ import {
   ValidatorFn
 } from '@angular/forms';
 
-const suffixOptions = (suffixes as any).map((item) => {
-  return {
-    label: item.suffix,
-    value: item.suffix
-  };
-});
-
-suffixOptions.unshift({
-  label: 'None',
-  value: ''
-});
+const suffixOptions = [];
+// const suffixOptions = (suffixes as any).map((item) => {
+//   return {
+//     label: item.suffix,
+//     value: item.suffix
+//   };
+// });
+//
+// suffixOptions.unshift({
+//   label: 'None',
+//   value: ''
+// });
 
 /**
  * The <samNameInput> component is a Name entry portion of a form
