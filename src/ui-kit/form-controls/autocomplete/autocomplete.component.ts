@@ -587,7 +587,7 @@ export class SamAutocompleteComponent
       this.selectedChild.classList.add('isSelected');
       if (index === children.length - 1) {
         this.endOfList = true;
-        this.onKeyUpUsingService(this.inputValue);
+        this.onKeyUpUsingService(this.inputValue ? this.inputValue : "");
       }
     }
   }
