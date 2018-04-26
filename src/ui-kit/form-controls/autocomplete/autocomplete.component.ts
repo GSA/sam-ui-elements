@@ -678,7 +678,6 @@ export class SamAutocompleteComponent
     this.selectedInputValue = this.inputValue;
     this.propogateChange(this.innerValue);
     this.srOnly.nativeElement.innerHTML = null;
-    this.input.nativeElement.blur();
     this.pushSROnlyMessage(`You chose ${message}`);
     this.enterEvent.emit(value);
   }
@@ -767,6 +766,13 @@ export class SamAutocompleteComponent
       return true;
     } else {
       return false;
+    }
+  }
+
+  dropdownClick(obj){
+    this.setSelected(obj);
+    if(this.input && this.input.nativeElement){
+      this.input.nativeElement.focus();
     }
   }
 
