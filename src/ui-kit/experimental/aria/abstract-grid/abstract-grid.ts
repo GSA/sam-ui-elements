@@ -1,6 +1,6 @@
 import { AbstractRow } from './abstract-row';
 import { AbstractCell } from './abstract-cell';
-import { EventDispatcher } from '../events';
+import { EventDispatcher } from '../utils/events';
 
 export type AbstractGridEvent = 'keydown' | 'click';
 
