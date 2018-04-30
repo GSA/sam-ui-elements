@@ -14,7 +14,7 @@ import {
   AbstractCombobox
 } from '../aria/abstract-combobox/abstract-combobox';
 import { AbstractCell } from '../aria/abstract-grid/abstract-cell';
-import { Popover } from './sam-popover';
+import { Popover } from './popover';
 
 @Component({
   selector: 'sam-picker',

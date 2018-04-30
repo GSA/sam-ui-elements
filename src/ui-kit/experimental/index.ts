@@ -17,6 +17,8 @@ import { SamSearchComponent } from './search';
 import { SamPageSidebarComponent } from './page';
 import { SamTitleComponent } from './title';
 import { SamYoutubeComponent } from './youtube';
+import { SamPickerComponent, SamPopoverComponent } from './picker';
+
 
 @NgModule({
   imports: [
@@ -38,7 +40,9 @@ import { SamYoutubeComponent } from './youtube';
     SamSearchComponent,
     SamPageSidebarComponent,
     SamTitleComponent,
-    SamYoutubeComponent
+    SamYoutubeComponent,
+    SamPopoverComponent,
+    SamPickerComponent
   ],
   exports: [
     SamBoxComponent,
@@ -55,7 +59,9 @@ import { SamYoutubeComponent } from './youtube';
     SamSearchComponent,
     SamPageSidebarComponent,
     SamTitleComponent,
-    SamYoutubeComponent
+    SamYoutubeComponent,
+    SamPopoverComponent,
+    SamPickerComponent
   ]
 })
 export class SamExperimentalModule { }
