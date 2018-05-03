@@ -186,13 +186,19 @@ export class SamTelephone extends SamFormControl
   private intlValidator (): ValidatorFn {
 
     return (c: FormControl): { [key: string]: any} => {
-      const intlRegex: RegExp = /^[0-9]{1,15}$/g;
       const message =
-        'International numbers cannot exceed 15 digits';
+        'International phone numbers must be at least 4\
+         digits and at most 15 digits';
 
-      return c && c.value && !c.value.match(intlRegex)
+      return c && c.value && this.isValidIntlNumber(c.value)
         ? { intlPhone: { message: message } }
         : null;
     };
+  }
+
+  private isValidIntlNumber (val: string): boolean {
+    const intlRegex: RegExp = /^[0-9]{1,15}$/g;
+
+    return val.length < 4 || !val.match(intlRegex);
   }
 }

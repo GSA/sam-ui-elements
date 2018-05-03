@@ -1,10 +1,14 @@
-<div [class.usa-input-error]="!!errorMessage">
+<div [class.usa-input-error]="displayErrors()">
 
   <fieldset class="usa-fieldset-inputs usa-sans">
 
-    <legend *ngIf="label || required" [class.usa-input-error-label]="!!errorMessage">
+    <legend *ngIf="label || required"
+      [class.usa-input-error-label]="displayErrors()">
       {{label}}
-      <span *ngIf="required" class="usa-additional_text">Required</span>
+      <span *ngIf="required"
+        class="usa-additional_text">
+        Required
+      </span>
       <ng-content select="[label-right]"></ng-content>
     </legend>
 
@@ -14,8 +18,8 @@
       class="usa-form-hint"
       aria-live="polite"
       [innerHTML]="hint"
-      [style.overflow]="showToggle && !toggleOpen ? 'hidden' : '' "
-      [style.height]="showToggle && !toggleOpen ? '2.88em' : '' ">
+      [style.overflow]="setOverflow()"
+      [style.height]="setHeight()">
     </div>
 
     <div *ngIf="showToggle"
@@ -26,10 +30,14 @@
       </a>
     </div>
 
-    <span *ngIf="errorMessage"
+    <span *ngIf="displayErrors()"
       class="usa-input-error-message"
       aria-live="assertive">
-      {{errorMessage}}
+      <ul>
+        <li *ngFor="let msg of errorMessages">
+          {{ msg }}
+        </li>
+      </ul>
     </span>
 
     <ng-content></ng-content>

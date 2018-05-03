@@ -6,7 +6,7 @@
   [errorMessage]="errorMessage"
   [required]="required">
   <input
-    [ngModel]="inputValue" 
+    [(ngModel)]="inputValue"
     (change)="inputChange($event)"
     (focus)="handleFocus($event)"
     (blur)="handleBlur($event)"

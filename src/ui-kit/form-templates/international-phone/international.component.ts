@@ -75,24 +75,19 @@ export class SamIntlPhoneGroup extends SamFieldset
   @Input() public prefixName: string;
   @Input() public phoneLabel = 'Phone';
   @Input() public prefixLabel = 'Country Code';
-  prefixError = "";
 
   @ViewChild(FieldsetWrapper) public wrapper: FieldsetWrapper;
-
+  
   public prefixControl: AbstractControl;
   public phoneControl: AbstractControl;
-
+  public prefixError: string = '';
   public hint =
     'Country Code is 1 for USA and North America';
-
   public countryCode: any;
-
   private phoneNumberTemplate: string = '(___)___-____';
   private phoneComponentRef: ComponentRef<any>;
-
   private idError: string =
     'Must provide an id for prefix and phone';
-
   private prefixSub: Subscription;
   private phoneSub: Subscription;
   
@@ -109,16 +104,17 @@ export class SamIntlPhoneGroup extends SamFieldset
 
   public ngOnInit () {
     const msg = 'Phone and Prefix names required for 508 compliance';
+    
     if (!this.phoneName || !this.prefixName) {
       throw new TypeError();
     }
+
     this.prefixControl = this.group.controls.prefix;
     this.phoneControl = this.group.controls.phone;
 
     this.prefixSub = this.prefixControl.valueChanges
       .subscribe(
         val => {
-          this.wrapper.formatErrors(this.prefixControl);
           this.countryCode = val;
           /**
            * Necessary to keep group up-to-date with value 
@@ -129,13 +125,19 @@ export class SamIntlPhoneGroup extends SamFieldset
            */
           this.phoneControl
             .setValue(this.phoneControl.value);
+
         },
         err => console.error(err)
       );
 
     this.phoneSub = this.phoneControl.valueChanges
       .subscribe(
-        val => this.wrapper.formatErrors(this.phoneControl),
+        val => {
+          this.wrapper.formatErrors(
+            this.prefixControl,
+            this.phoneControl
+          )
+        },
         err => console.error(err)
       );
   }
