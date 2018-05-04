@@ -112,6 +112,10 @@ export class SamAutocompleteComponent
    */
   @Output() public enterEvent: EventEmitter<any> = new EventEmitter();
   /**
+   * Emitted only when add on icon is clicked  
+   */
+  @Output() public addOnIconEvent: EventEmitter<any> = new EventEmitter();
+  /**
    * Allow to insert a customized template for suggestions to use
    */
   @Input() itemTemplate: TemplateRef<any>;
@@ -407,6 +411,10 @@ export class SamAutocompleteComponent
       this.endOfList = true;
       this.lastSearchedValue = searchString;
     }
+  }
+
+  addOnIconClick(): void {
+    this.addOnIconEvent.emit();
   }
 
   onKeydown(event: any) {
