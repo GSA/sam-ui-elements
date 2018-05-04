@@ -15,6 +15,7 @@ import {
   FormControl
 } from '@angular/forms';
 import { SamFormService } from '../../form-service';
+import {TextAreaWidthType} from "../../types";
 
 export const TEXT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -76,7 +77,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
    * deprecated, emits value change events
    */
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
-  
+
   /**
    * Optional text to be displayed when the text area is empty
    */
@@ -85,6 +86,18 @@ export class SamTextareaComponent implements ControlValueAccessor {
   * Toggles validations to display with SamFormService events
   */
   @Input() useFormService: boolean;
+  /**
+   * Sets the maxCharCount attribute
+   */
+  @Input() maxCharCount: number;
+  /**
+   * Sets the showCharCount attribute
+   */
+  @Input() showCharCount: boolean;
+  /**
+   * Sets the width attribute
+   */
+  @Input() width: TextAreaWidthType;
   /**
    * (deprecated) Emits focus event
    */
@@ -103,6 +116,8 @@ export class SamTextareaComponent implements ControlValueAccessor {
   @Output() inputChange: EventEmitter<any> = new EventEmitter();
 
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
+
+  public counter: number = 0;
 
   public onChange: any = (_) => undefined;
   public onTouched: any = () => undefined;
@@ -151,6 +166,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
         }
       });
     }
+
   }
 
   ngAfterViewInit() {
