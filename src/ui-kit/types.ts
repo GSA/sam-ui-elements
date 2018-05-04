@@ -85,6 +85,10 @@ export interface AutocompleteConfig {
    */
   addOnIconClass?: string;
   /**
+   * Adds an icon name for screen reader to understand
+  */
+  addOnIconName?: string;
+  /**
    * Allows any text inside the input to register as a selection
    */
   allowAny?: boolean;

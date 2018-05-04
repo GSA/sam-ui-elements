@@ -20,7 +20,10 @@
         </span>
         <span class="sr-only">Clear input.</span>
       </ng-container>
-      <span *ngIf="config && config.addOnIconClass" class="add-on"><span class="{{config.addOnIconClass}}"></span></span>
+      <span *ngIf="config && config.addOnIconClass && config.addOnIconName" (click)="addOnIconClick()" class="add-on" role="button">
+        <span class="{{config.addOnIconClass}}"></span>
+        <span class="sr-only">{{config.addOnIconName}}</span> 
+      </span>
     </div>
     <div class="sam-autocomplete-results">
       <ul class="usa-unstyled-list sam-autocomplete-no-results" *ngIf="((results && results.length == 0) && (filteredKeyValuePairs && filteredKeyValuePairs.length == 0))  && hasFocus">
