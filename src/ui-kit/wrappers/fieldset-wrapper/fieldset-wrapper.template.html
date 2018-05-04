@@ -33,11 +33,16 @@
     <span *ngIf="displayErrors()"
       class="usa-input-error-message"
       aria-live="assertive">
-      <ul>
-        <li *ngFor="let msg of errorMessages">
-          {{ msg }}
-        </li>
-      </ul>
+      <ng-container *ngIf="errorMessages.length > 1 else single">
+        <ul>
+          <li *ngFor="let msg of errorMessages">
+            {{ msg }}
+          </li>
+        </ul>
+      </ng-container>
+      <ng-template #single>
+        {{ errorMessages[0] }}
+      </ng-template>
     </span>
 
     <ng-content></ng-content>

@@ -13,7 +13,7 @@ import {
   ValidatorFn,
   NG_VALIDATORS,
   FormControl, 
-  ValidationErrors} from '@angular/forms';
+  ValidationErrors } from '@angular/forms';
 
 import { SamFormService } from '../../../form-service';
 
@@ -127,7 +127,8 @@ export class SamTelephone extends SamFormControl
 
     const digits = numberStr
       .split('')
-      .filter(digit => digit.match(/\d/g));
+      .filter(digit => digit.match(/([^_\)\(-])/g));
+
     const blanks = this.template
       ? this.template.split('')
       : [];
@@ -153,7 +154,7 @@ export class SamTelephone extends SamFormControl
     } else {
       return template
         .split('')
-        .filter(char => char.match(/[0-9]/g))
+        .filter(char => char.match(/([^_\)\(-])/g))
         .join('');
     }
   }
@@ -175,7 +176,7 @@ export class SamTelephone extends SamFormControl
     return (c: FormControl): { [key: string]: any } => {
       const usaRegex: RegExp = /^[0-9]{10}$/g;
       const message =
-        'North American numbers must be 10 digits';
+        'North American phone numbers must be 10 digits.';
       
       return c && c.value && !c.value.match(usaRegex)
         ? { usaPhone: { message: message } }
