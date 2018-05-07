@@ -42,7 +42,7 @@ describe('Sam Telephone Component', () => {
     value is set', () => {
     const expected = '1234567890';
 
-    component.value = '(123) 456 - 7890';
+    component.value = '(123)456-7890';
 
     expect(component.value).toEqual(expected);
   });

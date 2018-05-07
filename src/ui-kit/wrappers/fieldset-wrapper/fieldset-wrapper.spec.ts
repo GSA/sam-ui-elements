@@ -27,7 +27,7 @@ describe('The Sam Fieldset Wrapper component', () => {
         
       const control = new FormControl('');
       component.formatErrors(control);
-      expect(component.errorMessage).toBe('');
+      expect(component.errorMessage).toBe(undefined);
 
       control.markAsDirty();
       control.setErrors({
@@ -69,13 +69,13 @@ describe('The Sam Fieldset Wrapper component', () => {
       control.reset();
       control.markAsDirty();
       component.formatErrors(control);
-      expect(component.errorMessage).toBe('');
+      expect(component.errorMessage).toBe(undefined);
     });
     
     it('should clear error messages', () => {
       component.errorMessage = 'abc';
       component.clearError();
-      expect(component.errorMessage).toBe('');
+      expect(component.errorMessage).toBe(undefined);
     });
   });
 
