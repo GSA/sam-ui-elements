@@ -2,11 +2,10 @@ import {
   Component,
   Input,
   Output,
-  ChangeDetectorRef, 
+  ChangeDetectorRef,
   ElementRef,
   forwardRef,
-  ViewChild,
-  Injector} from '@angular/core';
+  ViewChild } from '@angular/core';
 
 import {
   Validators,
@@ -54,7 +53,7 @@ export class SamInternationalPrefix extends SamFormControl {
   }
 
   public inputChange (event) {
-    this.value = event.currentTarget.value 
+    this.value = event.currentTarget.value
       ? event.currentTarget.value
       : 1;
   }

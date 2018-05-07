@@ -74,7 +74,7 @@ import { Subscription } from 'rxjs';
   templateUrl: 'international.template.html'
 })
 export class SamIntlPhoneGroup extends SamFieldset
-  implements OnChanges, OnInit, OnDestroy {
+  implements OnInit, OnDestroy {
 
   @Input() public name: string;
   @Input() public useFormService: boolean = true;
@@ -103,18 +103,11 @@ export class SamIntlPhoneGroup extends SamFieldset
     super();
   }
 
-  public ngOnChanges (c: SimpleChanges) {
-    if (c.name) {
-      this.prefixName = c.name.currentValue
-        + ' country code';
-    }
-  }
-
   public ngOnInit () {
     const msg = 'Phone and Prefix names required for 508 compliance';
     
     if (!this.phoneName || !this.prefixName) {
-      throw new TypeError();
+      throw new TypeError(msg);
     }
 
     this.prefixControl = this.group.controls.prefix;
@@ -122,37 +115,44 @@ export class SamIntlPhoneGroup extends SamFieldset
 
     this.prefixSub = this.prefixControl.valueChanges
       .subscribe(
-        val => {
-          this.countryCode = val;
-          /**
-           * Necessary to keep group up-to-date with value 
-           * changes inside the form control. Without this,
-           * it either will not update validation when 
-           * country code changes or it will throw a timing
-           * error.
-           */
-          this.phoneControl
-            .setValue(this.phoneControl.value);
-
-        },
-        err => console.error(err)
+        val => this._prefixUpdates(val),
+        err => this._handleError(err)
       );
 
     this.phoneSub = this.phoneControl.valueChanges
       .subscribe(
-        val => {
-          this.wrapper.formatErrors(
-            this.prefixControl,
-            this.phoneControl
-          )
-        },
-        err => console.error(err)
+        val => this._phoneUpdates(val),
+        err => this._handleError(err)
       );
   }
 
   public ngOnDestroy () {
     this.prefixSub.unsubscribe();
     this.phoneSub.unsubscribe();
+  }
+
+  private _prefixUpdates (val) {
+    this.countryCode = val;
+    /**
+     * Necessary to keep group up-to-date with value 
+     * changes inside the form control. Without this,
+     * it either will not update validation when 
+     * country code changes or it will throw a timing
+     * error.
+     */
+    this.phoneControl
+      .setValue(this.phoneControl.value);
+  }
+
+  private _phoneUpdates (val) {
+    this.wrapper.formatErrors(
+      this.prefixControl,
+      this.phoneControl
+    );
+  }
+
+  private _handleError (err) {
+    console.error(err);
   }
 
 }
