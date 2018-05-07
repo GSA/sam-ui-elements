@@ -115,13 +115,29 @@ export class SamIntlPhoneGroup extends SamFieldset
 
     this.prefixSub = this.prefixControl.valueChanges
       .subscribe(
-        val => this._prefixUpdates(val),
+        val => {
+          this.countryCode = val;
+          /**
+           * Necessary to keep group up-to-date with value 
+           * changes inside the form control. Without this,
+           * it either will not update validation when 
+           * country code changes or it will throw a timing
+           * error.
+           */
+          this.phoneControl
+            .setValue(this.phoneControl.value);
+        },
         err => this._handleError(err)
       );
 
     this.phoneSub = this.phoneControl.valueChanges
       .subscribe(
-        val => this._phoneUpdates(val),
+        val => {
+          this.wrapper.formatErrors(
+            this.prefixControl,
+            this.phoneControl
+          );
+        },
         err => this._handleError(err)
       );
   }
@@ -131,28 +147,7 @@ export class SamIntlPhoneGroup extends SamFieldset
     this.phoneSub.unsubscribe();
   }
 
-  private _prefixUpdates (val) {
-    this.countryCode = val;
-    /**
-     * Necessary to keep group up-to-date with value 
-     * changes inside the form control. Without this,
-     * it either will not update validation when 
-     * country code changes or it will throw a timing
-     * error.
-     */
-    this.phoneControl
-      .setValue(this.phoneControl.value);
-  }
-
-  private _phoneUpdates (val) {
-    this.wrapper.formatErrors(
-      this.prefixControl,
-      this.phoneControl
-    );
-  }
-
   private _handleError (err) {
     console.error(err);
   }
-
 }
