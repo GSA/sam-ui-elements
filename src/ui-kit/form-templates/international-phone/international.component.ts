@@ -45,6 +45,10 @@ import { Subscription } from 'rxjs';
       display: flex;
     }
 
+    .sam-international-phone-prefix {
+      max-width: 12rem;
+    }
+
     .sam-international-phone-container * {
       display: inline-block;
     }
@@ -55,6 +59,10 @@ import { Subscription } from 'rxjs';
     }
 
     .sam-telephone {
+      width: 100%;
+    }
+
+    .sam-telephone div {
       width: 100%;
     }
 

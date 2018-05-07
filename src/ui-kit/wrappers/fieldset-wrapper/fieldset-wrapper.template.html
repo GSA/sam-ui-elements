@@ -33,7 +33,7 @@
     <span *ngIf="displayErrors()"
       class="usa-input-error-message"
       aria-live="assertive">
-      <ng-container *ngIf="errorMessages.length > 1 else single">
+      <ng-container *ngIf="displayErrorList() else single">
         <ul>
           <li *ngFor="let msg of errorMessages">
             {{ msg }}

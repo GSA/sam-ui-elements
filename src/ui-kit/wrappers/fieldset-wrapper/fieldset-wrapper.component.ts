@@ -127,6 +127,10 @@ export class FieldsetWrapper {
     return this.errorMessages.length > 0;
   }
 
+  public displayErrorList (): boolean {
+    return this.errorMessages.length > 1;
+  }
+
   public setOverflow (): string {
     return (this.showToggle && !this.toggleOpen)
       ? 'hidden'

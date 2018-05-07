@@ -127,7 +127,7 @@ export class SamTelephone extends SamFormControl
 
     const digits = numberStr
       .split('')
-      .filter(digit => digit.match(/([^_\)\(-])/g));
+      .filter(digit => digit.match(/([^_\)\(-\s])/g));
 
     const blanks = this.template
       ? this.template.split('')
@@ -154,7 +154,7 @@ export class SamTelephone extends SamFormControl
     } else {
       return template
         .split('')
-        .filter(char => char.match(/([^_\)\(-])/g))
+        .filter(char => char.match(/([^_\)\(-\s])/g))
         .join('');
     }
   }
@@ -198,8 +198,8 @@ export class SamTelephone extends SamFormControl
   }
 
   private isValidIntlNumber (val: string): boolean {
-    const intlRegex: RegExp = /^[0-9]{1,15}$/g;
+    const intlRegex: RegExp = /^[0-9]{4,15}$/g;
 
-    return val.length < 4 || !val.match(intlRegex);
+    return !val.match(intlRegex);
   }
 }
