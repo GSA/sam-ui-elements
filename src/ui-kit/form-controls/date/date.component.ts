@@ -208,8 +208,10 @@ export class SamDateComponent
     }
   }
 
-  ngOnChanges() {
-    this.parseValueString();
+  ngOnChanges(changes) {
+    if(changes && changes['value']){
+      this.parseValueString();
+    }
   }
 
   parseValueString() {

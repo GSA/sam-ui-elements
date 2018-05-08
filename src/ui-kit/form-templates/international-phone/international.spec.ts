@@ -17,6 +17,7 @@ import {
   ReactiveFormsModule } from '@angular/forms'; 
 import { SamFormControlsModule } from '../../form-controls';
 import { ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 describe('The Sam International Phone Group', () => {
 
@@ -32,10 +33,12 @@ describe('The Sam International Phone Group', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [
+          CommonModule,
+          FormsModule,
+          FormsModule,
+          ReactiveFormsModule,
           SamWrapperModule,
           SamFormControlsModule,
-          FormsModule,
-          ReactiveFormsModule
         ],
         declarations: [
           SamIntlPhoneGroup,
@@ -65,6 +68,73 @@ describe('The Sam International Phone Group', () => {
       const expected = component.group.controls.phone.valid;
 
       expect(expected).toBe(false);
+    });
+
+    describe('onInit behavior', () => {
+
+      it('should throw if no name is provided for controls',
+        () => {
+          component.phoneName = '';
+          component.prefixName = '';
+
+          expect(component.ngOnInit).toThrow();
+
+          // Adding here to keep component from throwing
+          // during cleanup
+          component.phoneName = 'a';
+          component.prefixName = 'a';
+      });
+
+      it('should throw if no name is provided for prefix',
+        () => {
+        component.phoneName = 'asdf';
+        component.prefixName = '';
+
+        expect(component.ngOnInit).toThrow();
+
+        // Adding here to keep component from throwing
+        // during cleanup
+        component.phoneName = 'a';
+        component.prefixName = 'a';
+      });
+
+      it('should throw if no name is provided for phone',
+        () => {
+        component.phoneName = '';
+        component.prefixName = 'asdf';
+
+        expect(component.ngOnInit).toThrow();
+
+        // Adding here to keep component from throwing
+        // during cleanup
+        component.phoneName = 'a';
+        component.prefixName = 'a';
+      });
+
+      it('should set controls from group', () => {
+        fixture.detectChanges();
+        expect(component.phoneControl)
+          .toEqual(component.group.controls.phone)
+
+        expect(component.prefixControl)
+          .toEqual(component.group.controls.prefix)
+      });
+
+      it('should correctly update countryCode and rerun\
+        validations when prefix changes', 
+        () => {
+          fixture.detectChanges();
+
+          const countryCode = '2';
+          component.phoneControl.setValue('asdf')
+          component.prefixControl.setValue(countryCode);
+
+          fixture.detectChanges();
+          const expected = component.countryCode;
+
+          expect(expected).toEqual(countryCode);
+          expect(component.phoneControl.valid).toBe(false);
+      });
     });
   });
 });

@@ -13,7 +13,7 @@ import {
   ValidatorFn,
   NG_VALIDATORS,
   FormControl, 
-  ValidationErrors} from '@angular/forms';
+  ValidationErrors } from '@angular/forms';
 
 import { SamFormService } from '../../../form-service';
 
@@ -127,7 +127,8 @@ export class SamTelephone extends SamFormControl
 
     const digits = numberStr
       .split('')
-      .filter(digit => digit.match(/\d/g));
+      .filter(digit => digit.match(/([^_\)\(-\s])/g));
+
     const blanks = this.template
       ? this.template.split('')
       : [];
@@ -153,7 +154,7 @@ export class SamTelephone extends SamFormControl
     } else {
       return template
         .split('')
-        .filter(char => char.match(/[0-9]/g))
+        .filter(char => char.match(/([^_\)\(-\s])/g))
         .join('');
     }
   }
@@ -175,7 +176,8 @@ export class SamTelephone extends SamFormControl
     return (c: FormControl): { [key: string]: any } => {
       const usaRegex: RegExp = /^[0-9]{10}$/g;
       const message =
-        'North American numbers must be 10 digits';
+        'North American phone numbers must be 10 numbers \
+        in length';
       
       return c && c.value && !c.value.match(usaRegex)
         ? { usaPhone: { message: message } }
@@ -186,13 +188,19 @@ export class SamTelephone extends SamFormControl
   private intlValidator (): ValidatorFn {
 
     return (c: FormControl): { [key: string]: any} => {
-      const intlRegex: RegExp = /^[0-9]{1,15}$/g;
       const message =
-        'International numbers cannot exceed 15 digits';
+        'International phone numbers include between 4 \
+        and 15 numbers';
 
-      return c && c.value && !c.value.match(intlRegex)
+      return c && c.value && this.isValidIntlNumber(c.value)
         ? { intlPhone: { message: message } }
         : null;
     };
+  }
+
+  private isValidIntlNumber (val: string): boolean {
+    const intlRegex: RegExp = /^[0-9]{4,15}$/g;
+
+    return !val.match(intlRegex);
   }
 }

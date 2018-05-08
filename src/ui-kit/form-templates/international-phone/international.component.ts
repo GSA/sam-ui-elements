@@ -45,6 +45,10 @@ import { Subscription } from 'rxjs';
       display: flex;
     }
 
+    .sam-international-phone-prefix {
+      max-width: 12rem;
+    }
+
     .sam-international-phone-container * {
       display: inline-block;
     }
@@ -58,6 +62,10 @@ import { Subscription } from 'rxjs';
       width: 100%;
     }
 
+    .sam-telephone div {
+      width: 100%;
+    }
+
     .sam-telephone .label-wrapper-container {
       width: 100%;
     }
@@ -66,7 +74,7 @@ import { Subscription } from 'rxjs';
   templateUrl: 'international.template.html'
 })
 export class SamIntlPhoneGroup extends SamFieldset
-  implements OnChanges, OnInit, OnDestroy {
+  implements OnInit, OnDestroy {
 
   @Input() public name: string;
   @Input() public useFormService: boolean = true;
@@ -75,24 +83,19 @@ export class SamIntlPhoneGroup extends SamFieldset
   @Input() public prefixName: string;
   @Input() public phoneLabel = 'Phone';
   @Input() public prefixLabel = 'Country Code';
-  prefixError = "";
 
   @ViewChild(FieldsetWrapper) public wrapper: FieldsetWrapper;
-
+  
   public prefixControl: AbstractControl;
   public phoneControl: AbstractControl;
-
+  public prefixError: string = '';
   public hint =
     'Country Code is 1 for USA and North America';
-
   public countryCode: any;
-
   private phoneNumberTemplate: string = '(___)___-____';
   private phoneComponentRef: ComponentRef<any>;
-
   private idError: string =
     'Must provide an id for prefix and phone';
-
   private prefixSub: Subscription;
   private phoneSub: Subscription;
   
@@ -100,25 +103,19 @@ export class SamIntlPhoneGroup extends SamFieldset
     super();
   }
 
-  public ngOnChanges (c: SimpleChanges) {
-    if (c.name) {
-      this.prefixName = c.name.currentValue
-        + ' country code';
-    }
-  }
-
   public ngOnInit () {
     const msg = 'Phone and Prefix names required for 508 compliance';
+    
     if (!this.phoneName || !this.prefixName) {
-      throw new TypeError();
+      throw new TypeError(msg);
     }
+
     this.prefixControl = this.group.controls.prefix;
     this.phoneControl = this.group.controls.phone;
 
     this.prefixSub = this.prefixControl.valueChanges
       .subscribe(
         val => {
-          this.wrapper.formatErrors(this.prefixControl);
           this.countryCode = val;
           /**
            * Necessary to keep group up-to-date with value 
@@ -130,13 +127,18 @@ export class SamIntlPhoneGroup extends SamFieldset
           this.phoneControl
             .setValue(this.phoneControl.value);
         },
-        err => console.error(err)
+        err => this._handleError(err)
       );
 
     this.phoneSub = this.phoneControl.valueChanges
       .subscribe(
-        val => this.wrapper.formatErrors(this.phoneControl),
-        err => console.error(err)
+        val => {
+          this.wrapper.formatErrors(
+            this.prefixControl,
+            this.phoneControl
+          );
+        },
+        err => this._handleError(err)
       );
   }
 
@@ -145,4 +147,7 @@ export class SamIntlPhoneGroup extends SamFieldset
     this.phoneSub.unsubscribe();
   }
 
+  private _handleError (err) {
+    console.error(err);
+  }
 }
