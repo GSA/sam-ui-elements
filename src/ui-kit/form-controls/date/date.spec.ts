@@ -60,7 +60,7 @@ describe('The Sam Date component', () => {
       component = fixture.componentInstance;
       component.value = '2016-12-29';
       component.name = 'test';
-      component.ngOnChanges();
+      component.ngOnChanges(null);
       fixture.detectChanges();
       monthEl = fixture.debugElement.query(By.css('input[name=date_month]'));
       dayEl = fixture.debugElement.query(By.css('input[name=date_day]'));
