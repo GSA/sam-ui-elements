@@ -300,6 +300,6 @@ export interface AlertType {
 }
 
 export interface TextAreaWidthType {
-  normal?: '46rem';
+  normal?: string;
   full?: string;
 }

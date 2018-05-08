@@ -17,5 +17,5 @@
     (blur)="onBlur()"
     (input)="inputEventHandler($event)">
   </textarea>
-  <span *ngIf="showCharCount">{{maxCharCount - value.length}} characters remaining of {{maxCharCount}} characters.</span>
+  <span [attr.aria-label]="'Maximum characters label'" *ngIf="showCharCount">{{maxCharCount - value.length}} characters remaining of {{maxCharCount}} characters.</span>
 </sam-label-wrapper>

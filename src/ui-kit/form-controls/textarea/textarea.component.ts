@@ -192,6 +192,9 @@ export class SamTextareaComponent implements ControlValueAccessor {
   inputEventHandler(event) {
     this.inputEventChange.emit(event);
     this.inputChange.emit(event);
+    if (this.width) {
+      event.target.style.maxWidth = this.width.full;
+    }
   }
 
   onBlur() {
