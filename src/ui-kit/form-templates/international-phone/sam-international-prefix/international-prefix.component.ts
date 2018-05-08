@@ -71,7 +71,7 @@ export class SamInternationalPrefix extends SamFormControl {
   private countryCodeValidator (c: FormControl) {
     const regex: RegExp = /^[0-9]{1,3}$/g;
     const message =
-      'Country codes cannot exceed 3 digits';
+      'Country codes must be 3 numbers or fewer';
 
     return c && c.value && !c.value.toString().match(regex)
       ? { countryCode: { message: message } }

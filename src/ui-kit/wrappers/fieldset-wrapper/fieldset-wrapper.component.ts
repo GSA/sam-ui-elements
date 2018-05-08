@@ -24,8 +24,12 @@ export class FieldsetWrapper {
    * set the error message
    */
   @Input() public set errorMessage (message: string) {
-    this.errorMessages = [];
-    this.errorMessages.push(message);
+    if (!!message) {
+      this.errorMessages = [];
+      this.errorMessages.push(message);
+    } else {
+      this.errorMessages = [];
+    }
   };
 
   public get errorMessage (): string {
