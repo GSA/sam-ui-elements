@@ -37,7 +37,7 @@ describe('Sam International Prefix', () => {
 
   it('should invalidate country code > 999', () => {
     const value = 1000;
-    const errMsg = 'Country codes cannot exceed 3 digits';
+    const errMsg = 'Country codes must be 3 numbers or fewer';
     const control = new FormControl();
     control.setValue(value);
 
