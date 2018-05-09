@@ -86,10 +86,6 @@ export class SamTextareaComponent implements ControlValueAccessor {
   */
   @Input() useFormService: boolean;
   /**
-   * Sets the maxCharCount attribute
-   */
-  @Input() maxCharCount: number;
-  /**
    * Sets the showCharCount attribute
    */
   @Input() showCharCount: boolean;
@@ -116,6 +112,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
 
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
 
+  public characterCounterMsg: string;
   public onChange: any = (_) => undefined;
   public onTouched: any = () => undefined;
 
@@ -188,8 +185,17 @@ export class SamTextareaComponent implements ControlValueAccessor {
   inputEventHandler(event) {
     this.inputEventChange.emit(event);
     this.inputChange.emit(event);
-    if (this.width) {
-      event.target.style.maxWidth = this.width.full;
+    this.setCharCounterMsg(this.value);
+  }
+
+  setCharCounterMsg(value: string) {
+    if (this.showCharCount) {
+      if (this.value) {
+        let msg = this.maxlength - value.length > 1 ? 'characters ' : 'character ';
+        this.characterCounterMsg = this.maxlength - value.length + ' ' + msg + 'remaining of ' + this.maxlength + ' characters.';
+      } else {
+        this.characterCounterMsg = this.maxlength + ' characters remaining of ' + this.maxlength + ' characters.';
+      }
     }
   }
 
@@ -213,5 +219,6 @@ export class SamTextareaComponent implements ControlValueAccessor {
 
   writeValue(value) {
     this.value = value;
+    this.setCharCounterMsg(this.value);
   }
 }

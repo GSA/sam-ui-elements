@@ -300,6 +300,17 @@ export interface AlertType {
 }
 
 export interface TextAreaWidthType {
-  normal?: string;
-  full?: string;
+  /**
+   * Defines the type of width
+   * when type = '' | 'normal' sets the default css settings
+   * when type = 'full' sets the dynamic css settings
+   */
+  type: '' | 'normal' | 'full';
+
+  /**
+   * Flag for dynamic css settings
+   * when full = true sets the dynamic css
+   * when full = false | undefined sets the default css
+   */
+  full?: boolean;
 }

@@ -5,17 +5,18 @@
   [required]="required || requiredFlag">
   <textarea
     [ngModel]="value"
-    [attr.class]="'sam-text-area'"
+    class="sam-text-area"
     [attr.id]="name"
     [attr.placeholder]="placeholder"
-    [attr.maxlength]="maxCharCount ? maxCharCount : (maxlength ? maxlength : 524288)"
+    [attr.maxlength]="maxlength ? maxlength : 524288"
     [attr.aria-label]="'Text Area'"
     [disabled]="disabled"
-    [style.max-width]="width ? width.full : ''"
+    [ngClass]="{'textarea-normalwidth': (width === undefined || width?.type === 'normal' || width.type === '') , 'textarea-fullwidth': width?.type === 'full' && width?.full}"
     (ngModelChange)="onInputChange($event)"
     (focus)="onFocus($event)"
     (blur)="onBlur()"
     (input)="inputEventHandler($event)">
   </textarea>
-  <span [attr.aria-label]="'Maximum characters label'" *ngIf="showCharCount">{{maxCharCount - value.length}} characters remaining of {{maxCharCount}} characters.</span>
+  <span [attr.aria-live]="'polite'" *ngIf="showCharCount">{{characterCounterMsg}}</span>
 </sam-label-wrapper>
+
