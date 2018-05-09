@@ -310,7 +310,6 @@ export interface TextAreaWidthType {
   /**
    * Flag for dynamic css settings
    * when full = true sets the dynamic css
-   * when full = false | undefined sets the default css
    */
   full?: boolean;
 }
