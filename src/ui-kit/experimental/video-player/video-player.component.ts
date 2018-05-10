@@ -51,7 +51,7 @@ export class SamVideoPlayerComponent {
       "videoTitle": this.title ? this.title : 'Sam Video',
       "debug": true
     }
-gi
+
     // Initialize video player
     new InitPxVideo(this.config);
   }
