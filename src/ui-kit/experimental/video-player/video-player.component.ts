@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ContentChildren, QueryList, ElementRef, forwardRef} from '@angular/core';
-// import GLOBAL_STRINGS from 'accessible-html5-video-player/js/strings.js'
-// import * as InitPxVideo from 'accessible-html5-video-player/js/px-video.js';
+import GLOBAL_STRINGS from 'accessible-html5-video-player/js/strings.js'
+import * as InitPxVideo from 'accessible-html5-video-player/js/px-video.js';
 declare var InitPxVideo: any;
 
 // NOTE: Add px-video.js and strings.js files to your application .angular-cli.json script tag
@@ -37,7 +37,7 @@ export class SamVideoPlayerComponent {
     if (this.sources.length === 0) {
       console.error('SamVideoComponent must be provide a <source> element to functionor or provide template variable #videoTrack');
     }
-  
+
     if (this.tracks.length === 0) {
       console.error('SamVideoComponent must be provide a <track> element with captions for 508 complianceor or provide template variable #videoSrc');
     }
