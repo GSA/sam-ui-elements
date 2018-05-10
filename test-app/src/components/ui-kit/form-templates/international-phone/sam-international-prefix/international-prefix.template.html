@@ -1,0 +1,15 @@
+<sam-label-wrapper
+  class="sam-country-code"
+  [label]="label"
+  [name]="name"
+  [hint]="hint"
+  [errorMessage]="errorMessage"
+  [required]="required">
+  <input
+    class="sam-international-prefix"
+    [ngModel]="inputValue" 
+    (change)="inputChange($event)"
+    type="text" 
+    [attr.id]="name" 
+    [disabled]="disabled"/>
+</sam-label-wrapper>

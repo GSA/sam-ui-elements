@@ -1,0 +1,45 @@
+<sam-label-wrapper [label]="label" [name]="name" [hint]="hint" [required]="required">
+  <div class="sam-time usa-date-of-birth">
+    <div class="usa-form-group usa-form-group-month">
+      <label [attr.for]="hourName()">Hour</label>
+      <input 
+        [attr.id]="hourName()" 
+        [attr.aria-label]="hourName()" 
+        #hour
+        type="number" 
+        (focus)="hourTouched($event)" 
+        (keydown)="hoursPress($event)"
+        [ngModel]="hours" 
+        (ngModelChange)="removalKeyHandler()"
+        class="usa-form-control" 
+        [disabled]="disabled ? disabled : null">
+    </div>
+    <div class="usa-form-group usa-form-group-month">
+      <label [attr.for]="minuteName()">Minute</label>
+      <input 
+        [attr.id]="minuteName()" 
+        [attr.aria-label]="minuteName()" 
+        #minute
+        type="number" 
+        (focus)="minuteTouched($event)" 
+        (keydown)="minutesPress($event)"
+        [ngModel]="minutes" 
+        (ngModelChange)="removalKeyHandler()"
+        class="usa-form-control" 
+        [disabled]="disabled ? disabled : null">
+    </div>
+    <div class="usa-form-group usa-form-group-year">
+      <label [attr.for]="amPmName()">AM/PM</label>
+      <select 
+        [attr.id]="amPmName()" 
+        #ampm 
+        [(ngModel)]='amPm' 
+        (focus)="setTouched()" 
+        (ngModelChange)="selectChange()" 
+        [disabled]="disabled ? disabled : null">
+        <option value="am">AM</option>
+        <option value="pm">PM</option>
+      </select>
+    </div>
+  </div>
+</sam-label-wrapper>

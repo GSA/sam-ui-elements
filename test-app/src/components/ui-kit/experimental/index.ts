@@ -42,7 +42,7 @@ import { SamPickerComponent, SamPopoverComponent } from './picker';
     SamTitleComponent,
     SamYoutubeComponent,
     SamPopoverComponent,
-    SamPickerComponent,
+    SamPickerComponent
   ],
   exports: [
     SamBoxComponent,
@@ -61,8 +61,7 @@ import { SamPickerComponent, SamPopoverComponent } from './picker';
     SamTitleComponent,
     SamYoutubeComponent,
     SamPopoverComponent,
-    SamPickerComponent,
-    
+    SamPickerComponent
   ]
 })
 export class SamExperimentalModule { }

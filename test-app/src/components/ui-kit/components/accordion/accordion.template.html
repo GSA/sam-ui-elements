@@ -1,0 +1,8 @@
+<div>
+  <button class="usa-accordion-button" [attr.aria-expanded]="isExpanded" [attr.aria-controls]="name" (click)="toggle()" [attr.id]="'button-' + name">
+    {{headerText}}
+  </button>
+  <div [attr.aria-hidden]="!isExpanded" class="usa-accordion-content" [attr.id]="name" [attr.aria-labelledby]="'button-' + name">
+    <ng-content></ng-content>
+  </div>
+</div>

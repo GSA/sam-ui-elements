@@ -1,0 +1,35 @@
+<div class="sam-actions"
+     sam-click-outside
+     (clickOutside)="hideActions()"
+     sam-tab-outside
+     (tabOutside)="hideActions()">
+
+  <button class="usa-button" 
+          aria-haspopup="listbox"
+          [attr.aria-labelledby]="name"
+          [attr.aria-expanded]="showActions ? 'true' : undefined"
+          [attr.id]="name"
+          (click)="toggleActions()"
+          (keydown)="leadKeyDownHandler($event)"
+          [ngClass]="buttonType === 'primary' ? 'usa-button-primary' : ''"
+          [disabled]="disabled">
+    Actions&nbsp;
+    <span class="fa fa-chevron-down"></span>
+  </button>
+
+  <ul class="usa-unstyled-list"
+    tabindex="0"
+    role="listbox"
+    [attr.aria-labelledby]="name"
+    *ngIf="showActions">
+    <li *ngFor="let action of actions" role="option">
+      <button #actionsList class="usa-button"
+        (keydown)="keyDownHandler($event)"
+        (click)="chooseAction(action)">
+        <span [ngClass]="action?.icon"></span>&nbsp;
+        <span>{{action?.label}}</span>
+      </button>
+    </li>
+  </ul>
+
+</div>

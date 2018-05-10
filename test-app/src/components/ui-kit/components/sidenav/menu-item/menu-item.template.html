@@ -1,0 +1,14 @@
+<ul class="usa-sidenav-sub_list">
+  <li *ngFor="let child of children; let $index = index;">
+    <!-- TOOD: discuss whether to use <button> instead of <a>, if <a>, then need to implement event handler for space -->
+    <a role="button" [attr.aria-label]="child.label" tabindex="0" (click)="updateUI($index, $event, child)" (keyup.enter)="updateUI($index, $event, child)"
+      [ngClass]="{'usa-current': isSelected($index),'disabled': child.disabled}">
+      {{child.label}} <ng-container *ngIf="child?.iconClass"> <span [ngClass]="child.iconClass"></span></ng-container>
+    </a>
+    <sam-menu-item *ngIf="isSelected($index)"
+                 [nodeDepth]="nodeDepth + 1"
+                 [children]="child.children"
+                 (selection)="emitSelectedChild($event)">
+    </sam-menu-item>
+  </li>
+</ul>
