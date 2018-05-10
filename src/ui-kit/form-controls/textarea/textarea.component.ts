@@ -15,6 +15,7 @@ import {
   FormControl
 } from '@angular/forms';
 import { SamFormService } from '../../form-service';
+import {TextAreaWidthType} from "../../types";
 
 export const TEXT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -76,7 +77,6 @@ export class SamTextareaComponent implements ControlValueAccessor {
    * deprecated, emits value change events
    */
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
-  
   /**
    * Optional text to be displayed when the text area is empty
    */
@@ -85,6 +85,14 @@ export class SamTextareaComponent implements ControlValueAccessor {
   * Toggles validations to display with SamFormService events
   */
   @Input() useFormService: boolean;
+  /**
+   * Sets the showCharCount attribute
+   */
+  @Input() showCharCount: boolean;
+  /**
+   * Sets the width attribute
+   */
+  @Input() width: TextAreaWidthType;
   /**
    * (deprecated) Emits focus event
    */
@@ -104,6 +112,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
 
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
 
+  public characterCounterMsg: string;
   public onChange: any = (_) => undefined;
   public onTouched: any = () => undefined;
 
@@ -176,6 +185,18 @@ export class SamTextareaComponent implements ControlValueAccessor {
   inputEventHandler(event) {
     this.inputEventChange.emit(event);
     this.inputChange.emit(event);
+    this.setCharCounterMsg(this.value);
+  }
+
+  setCharCounterMsg(value: string) {
+    if (this.showCharCount) {
+      if (this.value) {
+        let msg = this.maxlength - value.length > 1 ? 'characters ' : 'character ';
+        this.characterCounterMsg = this.maxlength - value.length + ' ' + msg + 'remaining of ' + this.maxlength + ' characters.';
+      } else {
+        this.characterCounterMsg = this.maxlength + ' characters remaining of ' + this.maxlength + ' characters.';
+      }
+    }
   }
 
   onBlur() {
@@ -198,5 +219,6 @@ export class SamTextareaComponent implements ControlValueAccessor {
 
   writeValue(value) {
     this.value = value;
+    this.setCharCounterMsg(this.value);
   }
 }

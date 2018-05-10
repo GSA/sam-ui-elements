@@ -289,7 +289,7 @@ export interface AlertType {
    */
   description;
   /**
-   * Sets a timeout (in milliseconds) for the alert to dismiss itself. 0 is 
+   * Sets a timeout (in milliseconds) for the alert to dismiss itself. 0 is
    * infinite.
    */
   timer: number;
@@ -297,4 +297,19 @@ export interface AlertType {
    * Explicity defines that user must dismiss alert
    */
   mustDismiss?: boolean;
+}
+
+export interface TextAreaWidthType {
+  /**
+   * Defines the type of width
+   * when type = '' | 'normal' sets the default css settings
+   * when type = 'full' sets the dynamic css settings
+   */
+  type: '' | 'normal' | 'full';
+
+  /**
+   * Flag for dynamic css settings
+   * when full = true sets the dynamic css
+   */
+  full?: boolean;
 }
