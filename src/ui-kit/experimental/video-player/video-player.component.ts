@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ContentChildren, QueryList, ElementRef, forwardRef} from '@angular/core';
-import GLOBAL_STRINGS from 'accessible-html5-video-player/js/strings.js'
-import * as InitPxVideo from 'accessible-html5-video-player/js/px-video.js';
+// import GLOBAL_STRINGS from 'accessible-html5-video-player/js/strings.js'
+// import * as InitPxVideo from 'accessible-html5-video-player/js/px-video.js';
 declare var InitPxVideo: any;
 
 // NOTE: add px-video.js and strings.js files to your application .angular-cli.json script tag
