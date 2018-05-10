@@ -3,7 +3,7 @@ import GLOBAL_STRINGS from 'accessible-html5-video-player/js/strings.js'
 import * as InitPxVideo from 'accessible-html5-video-player/js/px-video.js';
 declare var InitPxVideo: any;
 
-// NOTE: add px-video.js and strings.js files to your application .angular-cli.json script tag
+// NOTE: Add px-video.js and strings.js files to your application .angular-cli.json script tag
 
 interface InitPxVideoConfig {
   "videoId": string,
@@ -51,7 +51,7 @@ export class SamVideoPlayerComponent {
       "videoTitle": this.title ? this.title : 'Sam Video',
       "debug": true
     }
-
+gi
     // Initialize video player
     new InitPxVideo(this.config);
   }
