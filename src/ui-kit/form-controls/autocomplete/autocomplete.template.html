@@ -16,8 +16,8 @@
              [attr.aria-label]="name">
       <ng-container *ngIf="!input.disabled">
         <span  class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}">
-          <span [attr.tabindex]="tabIndex" class="fa fa-times-circle" aria-hidden="true" (click)="clearInput()" (keyup.enter)="clearInput()">
-              <span class="sr-only">Clear input</span>
+          <span [attr.tabindex]="tabIndex" class="fa fa-times-circle" aria-hidden="false" (click)="clearInput()" (keyup.enter)="clearInput()">
+              <span class="sr-only">Clear input button</span>
           </span>
         </span>
       </ng-container>
