@@ -123,6 +123,8 @@ describe('The Sam International Phone Group', () => {
       it('should correctly update countryCode and rerun\
         validations when prefix changes', 
         () => {
+          component.phoneName = 'a';
+          component.prefixName = 'a';
           fixture.detectChanges();
 
           const countryCode = '2';
