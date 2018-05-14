@@ -23,6 +23,7 @@
     "@angular/platform-browser": "^4.2.4",
     "@angular/platform-browser-dynamic": "^4.2.4",
     "@angular/router": "^4.2.4",
+    "accessible-html5-video-player": "^1.0.3",
     "core-js": "^2.4.1",
     "moment": "~2.15.2",
     "rxjs": "^5.4.2",

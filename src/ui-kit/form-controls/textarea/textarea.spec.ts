@@ -25,7 +25,7 @@ describe('The Sam Textarea component', () => {
       expect(component.value).toBe('hello');
     });
 
-    it('should have emitters for input/focus', () => {
+    it('should have emitters for keup/focus', () => {
       component.focusEvent.subscribe(data => {
         expect(data).toBe(true);
       });
@@ -40,7 +40,7 @@ describe('The Sam Textarea component', () => {
       component.value = 'hello';
       component.showCharCount = true;
       component.setCharCounterMsg(component.value);
-      expect(component.characterCounterMsg).toEqual('5 characters remaining of 100 characters.');
+      expect(component.characterCounterMsg).toEqual('5 characters remaining of 10 characters.');
 
       /*When value is empty*/
       component.maxlength = 10;
