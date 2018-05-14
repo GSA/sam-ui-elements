@@ -118,7 +118,7 @@ export class FieldsetWrapper {
 
   public formatErrors(...controls: AbstractControl[]): void {
     this.errorMessages = [];
-    controls.map(
+    controls.forEach(
       control => this._formatError(control)
     );
   }
