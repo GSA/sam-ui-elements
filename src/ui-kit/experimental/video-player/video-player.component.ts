@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ContentChildren, QueryList, ElementRef, forwardRef} from '@angular/core';
+import { Component, Input, OnInit, ContentChildren, QueryList, ElementRef, forwardRef, Renderer2} from '@angular/core';
 import GLOBAL_STRINGS from 'accessible-html5-video-player/js/strings.js'
 import * as InitPxVideo from 'accessible-html5-video-player/js/px-video.js';
 declare var InitPxVideo: any;
@@ -29,6 +29,8 @@ export class SamVideoPlayerComponent {
   @Input() public seekInterval: number;
   private config: InitPxVideoConfig;
 
+  constructor(private render: Renderer2, private template:ElementRef) {}
+
   ngAfterContentInit() {
     if (this.videos.length === 0) {
       console.error('SamVideoComponent must be provide a <video> element to function or provide template variable #videoPly');
@@ -54,5 +56,8 @@ export class SamVideoPlayerComponent {
 
     // Initialize video player
     new InitPxVideo(this.config);
+
+    const el = this.template.nativeElement.querySelector('progress');
+    this.render.setAttribute(el, 'name', this.videoId);
   }
 }
