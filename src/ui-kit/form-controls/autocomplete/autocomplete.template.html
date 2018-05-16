@@ -15,10 +15,10 @@
              (ngModelChange)="onChange()"
              [attr.aria-label]="name">
       <ng-container *ngIf="!input.disabled">
-        <span [attr.tabindex]="tabIndex" class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}">
-          <span class="fa fa-times-circle" aria-hidden="true" (click)="clearInput()" (keyup.enter)="clearInput()"></span>
+        <span  class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}">
+          <span role="button" [attr.tabindex]="tabIndex" class="fa fa-times-circle" aria-label="Clear input" aria-hidden="false" (click)="clearInput()" (keyup.enter)="clearInput()">
+          </span>
         </span>
-        <span class="sr-only">Clear input.</span>
       </ng-container>
       <span *ngIf="config && config.addOnIconClass && config.addOnIconName" (click)="addOnIconClick()" class="add-on" role="button">
         <span class="{{config.addOnIconClass}}"></span>
