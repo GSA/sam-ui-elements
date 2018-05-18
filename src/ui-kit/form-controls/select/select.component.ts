@@ -52,6 +52,10 @@ export class SamSelectComponent implements ControlValueAccessor, AfterViewInit {
   */
   @Input() public name: string;
   /**
+  * Sets the aria label attribute for the component
+  */
+  @Input() public ariaLabel: string;
+  /**
    * Sets the tabindex attribute value
    */
   @Input() public tabIndex: number = 0;
@@ -95,6 +99,9 @@ export class SamSelectComponent implements ControlValueAccessor, AfterViewInit {
     private samFormService: SamFormService) { }
 
   ngOnInit() {
+    if(!this.ariaLabel){
+      this.ariaLabel = this.name; 
+    }
     if (!this.name) {
       throw new Error('<sam-select> requires a [name]\
        parameter for 508 compliance');
