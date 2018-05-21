@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { FormGroup, FormControl } from '@angular/forms';
 
 // Load the implementations that should be tested
 import {
@@ -23,7 +24,7 @@ export class CommentsDemoService implements CommentsService {
 
     {
       datetime: new Date('7/16/2017'),
-      text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\
+      text: 'Lorem ipsum dolor sit amet1, consectetuer adipiscing elit.\
         Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque\
         penatibus et magnis dis parturient montes, nascetur ridiculus mus. \
         Donec quam felis, ultricies nec, pellentesque eu, pretium.',
@@ -32,7 +33,7 @@ export class CommentsDemoService implements CommentsService {
     {
       datetime: new Date('6/1/2017'),
       image: washingtonImg,
-      text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean\
+      text: 'Lorem ipsum dolor sit amet2, consectetuer adipiscing elit. Aenean\
       commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et\
       magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, \
       ultricies nec, pellentesque eu, pretium.',
@@ -42,7 +43,7 @@ export class CommentsDemoService implements CommentsService {
     {
       username: 'colin-dev@commoncomponents.team',
       datetime: new Date(),
-      text: 'Lorem ipsum doit amet, consectetuer adipiscing elit. Aenean\
+      text: 'Lorem ipsum doit amet3, consectetuer adipiscing elit. Aenean\
       commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et\
       magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,\
       ultricies nec, pellentesque eu, pretium.',
@@ -51,7 +52,7 @@ export class CommentsDemoService implements CommentsService {
     {
       username: 'colin-dev@commoncomponents.team',
       datetime: new Date(),
-      text: 'Lorem ipsum dolor sit amet, conctetuer adipiscing elit. Aenean\
+      text: 'Lorem ipsum dolor sit amet4, conctetuer adipiscing elit. Aenean\
       commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et\
       magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,\
       ultricies nec, pellentesque eu, pretium.',
@@ -60,7 +61,7 @@ export class CommentsDemoService implements CommentsService {
     {
       username: 'colin-dev@commoncomponents.team',
       datetime: new Date(),
-      text: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean\
+      text: 'Lorem ipsum dolor sit amet5, consectetuer adipiscing elit. Aenean\
       modo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et\
       magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,\
       ultricies nec, pellentesque eu, pretium.',
@@ -69,7 +70,7 @@ export class CommentsDemoService implements CommentsService {
     {
       username: 'colin-dev@commoncomponents.team',
       datetime: new Date(),
-      text: 'Lo ipsum dolor sit amet, consectetuer adipiscing elit. Aenean\
+      text: 'Lo ipsum dolor sit amet6, consectetuer adipiscing elit. Aenean\
       commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et \
       magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, \
       ultricies nec, pellentesque eu, pretium.',
@@ -78,7 +79,7 @@ export class CommentsDemoService implements CommentsService {
     {
       username: 'colin-dev@commoncomponents.team',
       datetime: new Date(),
-      text: 'Lo ipsum dolor sit amet, consectetuer adipiscing elit. Aenean\
+      text: 'Lo ipsum dolor sit amet7, consectetuer adipiscing elit. Aenean\
       commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et \
       magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, \
       ultricies nec, pellentesque eu, pretium.',
@@ -244,6 +245,39 @@ describe('The Sam Comments component', () => {
 
       component.form.controls.text.setValue(dummyText);
       fixture.detectChanges();
+    });
+
+    it('enter handling', function() {
+      fixture.detectChanges();
+      const testString = 'super flyyyy';
+      component.form.controls.text.setValue(testString);
+      fixture.detectChanges();
+      const event = new KeyboardEvent("keyup",{
+        "key": "Enter"
+      });
+      component.textArea.nativeElement.dispatchEvent(event);
+      fixture.detectChanges();
+      const mainCompEl =
+      fixture.debugElement.query(By.css('.sam-comments')).nativeElement;
+      const liArray = mainCompEl.querySelectorAll('li');
+      const expected = 8;
+      console.log(liArray[7].innerText);
+      expect(liArray[7].innerText).toContain(testString);
+      expect(liArray.length).toBe(expected);
+    });
+
+    it('delete handling', function(){
+      component.onDelete(component.comments[0]);
+      expect(component.comments.length).toBe(6);
+    });
+    
+    it('isSubmitDisabled handling', function(){
+      let formGroup = new FormGroup({
+        test: new FormControl('')
+      });
+      formGroup.controls['test'].markAsDirty();
+      formGroup.controls['test'].updateValueAndValidity();
+      expect(component.isSubmitDisabled(formGroup)).toBe(false);
     });
   });
 });
