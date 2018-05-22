@@ -4,7 +4,9 @@ import {
   ViewChild,
   HostListener,
   AfterViewChecked,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  ElementRef,
+  Renderer2
 } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
@@ -36,17 +38,32 @@ export class LabelWrapper implements AfterViewChecked {
   /**
    * set the error message
    */
-  @Input() public errorMessage: string;
+  @Input() public set errorMessage (message: string) {
+    this._errorMessage = message;
+    if (this._errorMessage) {
+      this.setInputLabelElement(this.errorElId);
+    } else {
+      this.setInputLabelElement('');
+    }
+  };
 
-  @ViewChild('labelDiv') public labelDiv: any;
-  @ViewChild('hintContainer') public hintContainer: any;
+  public get errorMessage (): string {
+    return this._errorMessage;
+  }
+
+  @ViewChild('labelDiv') public labelDiv: ElementRef;
+  @ViewChild('hintContainer') public hintContainer: ElementRef;
+  public input: HTMLElement;
   public showToggle: boolean = false;
+  public errorElId: string;
+
+  private _errorMessage = '';
   private toggleOpen: boolean = false;
   private lineSize: number;
   private lineLimit: number = 2;
   private checkMore = false; // semaphore
 
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor(private cdr: ChangeDetectorRef, private _rend: Renderer2) { }
 
   public ngOnChanges(c) {
     if (!this.checkMore
@@ -60,8 +77,16 @@ export class LabelWrapper implements AfterViewChecked {
     }
   }
 
+  public ngOnInit () {
+    this.errorElId = this.name + '-error';
+  }
+
   public ngAfterViewInit() {
     this.calcToggle();
+    const selector = `#${this.name}`;
+    this.input =
+      this.labelDiv.nativeElement
+        .querySelector(selector);
   }
 
   public ngAfterViewChecked() {
@@ -80,6 +105,13 @@ export class LabelWrapper implements AfterViewChecked {
         ? true
         : false;
     }
+  }
+
+  public setInputLabelElement (elRefId) {
+    if (this.input) {
+      this._rend.setAttribute(this.input, 'aria-describedby', elRefId);
+    }
+    console.log(this.input);
   }
 
   @HostListener('window:resize', ['$event'])
