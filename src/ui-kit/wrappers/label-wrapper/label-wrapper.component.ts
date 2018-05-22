@@ -40,11 +40,7 @@ export class LabelWrapper implements AfterViewChecked {
    */
   @Input() public set errorMessage (message: string) {
     this._errorMessage = message;
-    if (this._errorMessage) {
-      this.setInputLabelElement(this.errorElId);
-    } else {
-      this.setInputLabelElement('');
-    }
+    this._setDescribedByEl();
   };
 
   public get errorMessage (): string {
@@ -56,6 +52,7 @@ export class LabelWrapper implements AfterViewChecked {
   public input: HTMLElement;
   public showToggle: boolean = false;
   public errorElId: string;
+  public hintElId: string;
 
   private _errorMessage = '';
   private toggleOpen: boolean = false;
@@ -77,16 +74,15 @@ export class LabelWrapper implements AfterViewChecked {
     }
   }
 
-  public ngOnInit () {
-    this.errorElId = this.name + '-error';
-  }
-
   public ngAfterViewInit() {
     this.calcToggle();
     const selector = `#${this.name}`;
     this.input =
       this.labelDiv.nativeElement
         .querySelector(selector);
+        
+    this._setLabelIds();
+    this._setDescribedByEl();
   }
 
   public ngAfterViewChecked() {
@@ -111,7 +107,6 @@ export class LabelWrapper implements AfterViewChecked {
     if (this.input) {
       this._rend.setAttribute(this.input, 'aria-describedby', elRefId);
     }
-    console.log(this.input);
   }
 
   @HostListener('window:resize', ['$event'])
@@ -196,6 +191,31 @@ export class LabelWrapper implements AfterViewChecked {
         return;
       default:
         return this.errorMessage = 'Invalid';
+    }
+  }
+
+  private _setLabelIds () {
+    this._setErrorLabelId();
+    this._setHintLabelId();
+  }
+
+  private _setErrorLabelId () {
+    this.errorElId = this.name + '-error';
+  }
+
+  private _setHintLabelId () {
+    if (this.hint) {
+      this.hintElId = this.name + '-hint';
+    }
+  }
+
+  private _setDescribedByEl () {
+    if (this.errorMessage) {
+      this.setInputLabelElement(this.errorElId);
+    } else if (this.hint) {
+      this.setInputLabelElement(this.hintElId);
+    } else {
+      this.setInputLabelElement('');
     }
   }
 }
