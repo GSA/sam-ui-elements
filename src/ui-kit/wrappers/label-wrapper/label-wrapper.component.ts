@@ -40,7 +40,7 @@ export class LabelWrapper implements AfterViewChecked {
    */
   @Input() public set errorMessage (message: string) {
     this._errorMessage = message;
-    this._setDescribedByEl();
+    this.setDescribedByEl();
   };
 
   public get errorMessage (): string {
@@ -60,13 +60,16 @@ export class LabelWrapper implements AfterViewChecked {
   private lineLimit: number = 2;
   private checkMore = false; // semaphore
 
-  constructor(private cdr: ChangeDetectorRef, private _rend: Renderer2) { }
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private _rend: Renderer2) { }
 
   public ngOnChanges(c) {
     if (!this.checkMore
         && c.hint
         && c.hint.previousValue !== c.hint.currentValue) {
-      // needs to be open to recalc correctly in ngAfterViewChecked
+      // needs to be open to recalc correctly in 
+      // ngAfterViewChecked
       this.showToggle = false;
       this.toggleOpen = false;
       this.checkMore = true;
@@ -81,8 +84,8 @@ export class LabelWrapper implements AfterViewChecked {
       this.labelDiv.nativeElement
         .querySelector(selector);
         
-    this._setLabelIds();
-    this._setDescribedByEl();
+    this.setLabelIds();
+    this.setDescribedByEl();
   }
 
   public ngAfterViewChecked() {
@@ -96,7 +99,9 @@ export class LabelWrapper implements AfterViewChecked {
   public calcToggle() {
     if (this.hintContainer) {
       const numOfLines =
-        this.calculateNumberOfLines(this.hintContainer.nativeElement);
+        this.calculateNumberOfLines(
+          this.hintContainer.nativeElement
+        );
       this.showToggle = numOfLines > this.lineLimit
         ? true
         : false;
@@ -105,13 +110,18 @@ export class LabelWrapper implements AfterViewChecked {
 
   public setInputLabelElement (elRefId) {
     if (this.input) {
-      this._rend.setAttribute(this.input, 'aria-describedby', elRefId);
+      this._rend.setAttribute(
+        this.input,
+        'aria-describedby',
+        elRefId
+      );
     }
   }
 
   @HostListener('window:resize', ['$event'])
   public onResize(event) {
-    // needs to be open to recalc correctly in ngAfterViewChecked
+    // needs to be open to recalc correctly in 
+    // ngAfterViewChecked
     this.showToggle = false;
     this.toggleOpen = false;
     this.checkMore = true;
@@ -127,7 +137,8 @@ export class LabelWrapper implements AfterViewChecked {
       const other = obj.cloneNode(true);
       other.innerHTML = 'a<br>b';
       other.style.visibility = 'hidden';
-      const el = <HTMLElement>document.getElementsByTagName('body')[0];
+      const el = <HTMLElement>document
+        .getElementsByTagName('body')[0];
       el.appendChild(other);
       this.lineSize = other.offsetHeight / 2;
       el.removeChild(other);
@@ -194,22 +205,22 @@ export class LabelWrapper implements AfterViewChecked {
     }
   }
 
-  private _setLabelIds () {
-    this._setErrorLabelId();
-    this._setHintLabelId();
+  private setLabelIds () {
+    this.setErrorLabelId();
+    this.setHintLabelId();
   }
 
-  private _setErrorLabelId () {
+  private setErrorLabelId () {
     this.errorElId = this.name + '-error';
   }
 
-  private _setHintLabelId () {
+  private setHintLabelId () {
     if (this.hint) {
       this.hintElId = this.name + '-hint';
     }
   }
 
-  private _setDescribedByEl () {
+  private setDescribedByEl () {
     if (this.errorMessage) {
       this.setInputLabelElement(this.errorElId);
     } else if (this.hint) {

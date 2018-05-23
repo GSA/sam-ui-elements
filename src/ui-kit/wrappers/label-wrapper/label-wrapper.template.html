@@ -9,7 +9,7 @@
       <ng-content select="[label-right]"></ng-content>
   </label>
   
-  <div #hintContainer 
+  <div #hintContainer
     *ngIf="hint" 
     class="usa-form-hint"
     [id]="hintElId"
@@ -26,7 +26,7 @@
     </a>
   </div>
   
-  <span *ngIf="errorMessage"
+  <span *ngIf="!!errorMessage"
     class="usa-input-error-message"
     [id]="errorElId">
     {{errorMessage}}
