@@ -6,7 +6,7 @@
   <ul class="usa-unstyled-list">
     <li *ngFor="let option of options; let i = index">
       <input [attr.id]="option.name"
-        aria-label="Radio Button"
+        [attr.aria-label]="label"
         type="radio"
         (change)="onRadioChange(option.value)"
         [attr.disabled]="disabled"
