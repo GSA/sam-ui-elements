@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 
 import { SamBoxComponent } from './box';
 import { SamContainerComponent } from './container';
@@ -26,7 +25,6 @@ import { SamInputMaskModule } from './input-mask';
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
     RouterModule,
     SamInputMaskModule,
   ],
