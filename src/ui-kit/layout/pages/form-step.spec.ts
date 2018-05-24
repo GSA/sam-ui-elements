@@ -45,12 +45,46 @@ describe('Form Step Component', () => {
         fixture = TestBed.createComponent(FormStepComponent);
         component = fixture.componentInstance;
         component.sideNavModel = data;
+        component.tabsComponent = {
+            toggleButtonOnErrors: false
+        };
         fixture.detectChanges(); // trigger initial data binding
     });
   
     it('should initialize', function () {
         fixture.detectChanges();
         expect(true).toBe(true);
+    });
+
+    it('should toggle buttons', () =>{
+        component.toggleButtons(true);
+        expect(component.tabsComponent.toggleButtonOnErrors).toBe(true);
+        component.toggleButtons(false);
+        expect(component.tabsComponent.toggleButtonOnErrors).toBe(false);
+        component.hasErrors = true;
+        component.ngOnChanges();
+        expect(component.tabsComponent.toggleButtonOnErrors).toBe(true);
+    });
+
+    it('should have emitters', () =>{
+        component.breadcrumbOut.subscribe(() => {
+            expect(true).toBe(true);
+        });
+        component.breadcrumbChange.subscribe(() => {
+            expect(true).toBe(true);
+        });
+        component.action.subscribe(() => {
+            expect(true).toBe(true);
+        });
+        component.sideNavOutput.subscribe(() => {
+            expect(true).toBe(true);
+        });
+        component.sideNavChange.subscribe(() => {
+            expect(true).toBe(true);
+        });
+        component.breadcrumbHandler({});
+        component.formAction({});
+        component.navHandler({});
     });
   });
 });
