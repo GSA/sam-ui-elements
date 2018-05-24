@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 import { SamBoxComponent } from './box';
 import { SamContainerComponent } from './container';
@@ -19,12 +20,15 @@ import { SamTitleComponent } from './title';
 import { SamYoutubeComponent } from './youtube';
 import { SamPickerComponent, SamPopoverComponent } from './picker';
 import {SamVideoPlayerComponent} from "./video-player";
+import { SamInputMaskModule } from './input-mask';
 
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule
+    FormsModule,
+    RouterModule,
+    SamInputMaskModule,
   ],
   declarations: [
     SamBoxComponent,
@@ -65,7 +69,7 @@ import {SamVideoPlayerComponent} from "./video-player";
     SamPopoverComponent,
     SamPickerComponent,
     SamVideoPlayerComponent,
-
+    SamInputMaskModule,
   ]
 })
 export class SamExperimentalModule { }
