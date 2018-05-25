@@ -6,10 +6,9 @@
   [required]="required">
   <input
     type="text"
-    aria-label="Text Input"
+    [id]="name"
     [(ngModel)]="value"
     [attr.maxlength]="maxlength ? maxlength : 524288"
-    [attr.id]="name"
     [attr.placeholder]="placeholder"
     [disabled]="disabled"
     (ngModelChange)="onInputChange()"

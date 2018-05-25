@@ -4,7 +4,7 @@ import {
     ComponentFixtureAutoDetect,
     ComponentFixture
 } from '@angular/core/testing';
-import {Component, ChangeDetectorRef} from '@angular/core';
+import {Component, ChangeDetectorRef, Renderer2} from '@angular/core';
 import {By} from '@angular/platform-browser';
 import { FormControl } from '@angular/forms';
 // Load the implementations that should be tested
@@ -14,8 +14,9 @@ describe('The Sam Label Wrapper component', () => {
   describe('isolated tests', () => {
     let component: LabelWrapper;
     const cdr: ChangeDetectorRef = undefined;
+    const renderer: Renderer2 = undefined;
     beforeEach(() => {
-      component = new LabelWrapper(cdr);
+      component = new LabelWrapper(cdr, renderer);
     });
     
     it('should display error messages with a form control', () => {

@@ -1,8 +1,7 @@
 <div #labelDiv 
   [class.usa-input-error]="!!errorMessage">
   
-  <label 
-    *ngIf="!!label" 
+  <label *ngIf="!!label" 
     [attr.for]="name" 
     [class.usa-input-error-label]="errorMessage">
       {{ label || '' }}
@@ -10,11 +9,10 @@
       <ng-content select="[label-right]"></ng-content>
   </label>
   
-  <div 
-    #hintContainer 
+  <div #hintContainer
     *ngIf="hint" 
     class="usa-form-hint"
-    aria-live="polite"
+    [id]="hintElId"
     [innerHTML]="hint"
     [style.overflow]="showToggle && !toggleOpen ? 'hidden' : '' "
     [style.height]="showToggle && !toggleOpen ? '2.88em' : '' ">
@@ -28,9 +26,9 @@
     </a>
   </div>
   
-  <span *ngIf="errorMessage"
+  <span *ngIf="!!errorMessage"
     class="usa-input-error-message"
-    aria-live="assertive">
+    [id]="errorElId">
     {{errorMessage}}
   </span>
   

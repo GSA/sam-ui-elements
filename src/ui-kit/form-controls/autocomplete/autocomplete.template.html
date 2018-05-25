@@ -12,8 +12,7 @@
              (keydown)="onKeydown($event)"
              (keyup)="onKeyup($event)"
              [(ngModel)]="inputValue"
-             (ngModelChange)="onChange()"
-             [attr.aria-label]="name">
+             (ngModelChange)="onChange()">
       <ng-container *ngIf="!input.disabled">
         <span  class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}">
           <span role="button" [attr.tabindex]="tabIndex" class="fa fa-times-circle" aria-label="Clear input" aria-hidden="false" (click)="clearInput()" (keyup.enter)="clearInput()">
