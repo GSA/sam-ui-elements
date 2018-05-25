@@ -22,9 +22,7 @@ export interface Sort {
 export class SamSortDirective {
   /** Collection of all registered sortables that this directive manages. */
   sortables = new Map<string, SamSortable>();
-  
-  private _disableClear: boolean;
-
+  /* tslint:disable */
   /** The id of the most recently sorted SamSortable. */
   @Input('samSortActive') active: string;
 
@@ -44,6 +42,8 @@ export class SamSortDirective {
   @Input('samSortDisableClear')
   get disableClear() { return this._disableClear; }
   set disableClear(v) { this._disableClear = coerceBooleanProperty(v); }
+  /* tslint:enable */
+  private _disableClear: boolean;
 
   /** Event emitted when the user changes either the active sort or sort direction. */
   @Output() samSortChange = new EventEmitter<Sort>();
