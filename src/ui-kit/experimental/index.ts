@@ -19,12 +19,14 @@ import { SamTitleComponent } from './title';
 import { SamYoutubeComponent } from './youtube';
 import { SamPickerComponent, SamPopoverComponent } from './picker';
 import {SamVideoPlayerComponent} from "./video-player";
+import { SamInputMaskModule } from './input-mask';
 
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    SamInputMaskModule,
   ],
   declarations: [
     SamBoxComponent,
@@ -65,7 +67,7 @@ import {SamVideoPlayerComponent} from "./video-player";
     SamPopoverComponent,
     SamPickerComponent,
     SamVideoPlayerComponent,
-
+    SamInputMaskModule,
   ]
 })
 export class SamExperimentalModule { }
