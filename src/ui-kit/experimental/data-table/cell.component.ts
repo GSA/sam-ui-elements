@@ -6,9 +6,11 @@ export const _SamHeaderCellBase = CdkHeaderCell;
 export const _SamCell = CdkCell;
 
 /** Header cell template container that adds the right classes and role. */
+/* tslint:disable */
 @Directive({
   selector: 'sam-header-cell'
 })
+/* tslint:enable */
 export class SamHeaderCellDirective extends _SamHeaderCellBase {
     @HostBinding('class.sam-header-cell') samCellClass = true;
     @HostBinding('attr.role') roleAttr = 'columnheader';
@@ -21,9 +23,11 @@ export class SamHeaderCellDirective extends _SamHeaderCellBase {
 }
 
 /** Cell template container that adds the right classes and role. */
+/* tslint:disable */
 @Directive({
   selector: 'sam-cell'
 })
+/* tslint:enable */
 export class SamCellDirective extends _SamCell {
     @HostBinding('class.sam-cell') samCellClass = true;
     @HostBinding('attr.role') roleAttr = 'gridcell';
