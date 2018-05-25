@@ -19,12 +19,15 @@ import { SamTitleComponent } from './title';
 import { SamYoutubeComponent } from './youtube';
 import { SamPickerComponent, SamPopoverComponent } from './picker';
 import {SamVideoPlayerComponent} from "./video-player";
+import { SamInputMaskModule } from './input-mask';
 import { SamDataTableModule } from './data-table';
+
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
+    SamInputMaskModule,
     SamDataTableModule
   ],
   declarations: [
@@ -66,6 +69,7 @@ import { SamDataTableModule } from './data-table';
     SamPopoverComponent,
     SamPickerComponent,
     SamVideoPlayerComponent,
+    SamInputMaskModule,
     SamDataTableModule,
   ]
 })
