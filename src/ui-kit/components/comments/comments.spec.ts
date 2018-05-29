@@ -261,7 +261,7 @@ describe('The Sam Comments component', () => {
       fixture.debugElement.query(By.css('.sam-comments')).nativeElement;
       const liArray = mainCompEl.querySelectorAll('li');
       const expected = 8;
-      console.log(liArray[7].innerText);
+      
       expect(liArray[7].innerText).toContain(testString);
       expect(liArray.length).toBe(expected);
     });
