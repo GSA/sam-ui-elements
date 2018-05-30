@@ -79,13 +79,23 @@ export class LabelWrapper implements AfterViewChecked {
 
   public ngAfterViewInit() {
     this.calcToggle();
+    if(!this.name){
+      return;
+    }
     const selector = `#${this.name}`;
-    this.input =
+    let lookup;
+    try{
+      lookup =
       this.labelDiv.nativeElement
         .querySelector(selector);
-        
-    this.setLabelIds();
-    this.setDescribedByEl();
+    } catch(exception){
+      console.error(selector + ' not found in label wrapper setup');
+    }
+    if(lookup){
+      this.input = lookup;
+      this.setLabelIds();
+      this.setDescribedByEl();
+    }
   }
 
   public ngAfterViewChecked() {
