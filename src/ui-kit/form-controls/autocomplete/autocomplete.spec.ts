@@ -93,7 +93,7 @@ describe('The Sam Autocomplete Component', () => {
 
     // Autocomplete Dropdown With Button
     const name: string = 'MyComponent65491455';
-    const id: string = '12310923123';
+    const id: string = 'id12310923123';
     const labelText: string = 'Test Component';
     const options: any = [
       'Alabama',

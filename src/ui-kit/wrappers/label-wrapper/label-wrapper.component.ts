@@ -212,11 +212,13 @@ export class LabelWrapper implements AfterViewChecked {
 
   private setErrorLabelId () {
     this.errorElId = this.name + '-error';
+    this.cdr.detectChanges();
   }
 
   private setHintLabelId () {
     if (this.hint) {
       this.hintElId = this.name + '-hint';
+      this.cdr.detectChanges();
     }
   }
 
