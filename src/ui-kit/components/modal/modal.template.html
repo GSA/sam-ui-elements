@@ -3,7 +3,7 @@
 		<div class="usa-alert {{this.types[type].class}}">
 		  <div class="usa-alert-body">
 		    <h3 class="usa-alert-heading">
-		      <button class="usa-button-link pull-right" *ngIf="showClose" (click)="closeModal()"><span class="fa fa-times-circle"></span><span class="usa-sr-only" [attr.id]="modalElIds?.closeId">close modal</span></button>
+		      <button class="usa-button-link pull-right" *ngIf="showClose" (click)="closeModal()"><span class="fa fa-times-circle" [attr.id]="modalElIds?.closeId"></span><span class="usa-sr-only">close modal</span></button>
 					{{title}}
 					<span class="sr-only">{{this.types[type].sr}}</span>
 				</h3>
