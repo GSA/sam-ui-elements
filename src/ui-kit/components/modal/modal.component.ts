@@ -56,6 +56,21 @@ export class SamModalComponent implements OnInit {
    * Close modal if ESC key is pressed, defaults to true
    */
   @Input() closeOnEscape: boolean = true;
+
+  /**
+   * Sets the close modal Id
+   */
+  @Input() closeId: string;
+
+  /**
+   * Sets the cancel modal Id
+   */
+  @Input() cancelId: string;
+
+  /**
+   * Sets the submit modal Id
+   */
+  @Input() submitId: string;
   /**
    * (deprecated) Emitted event when modal is opened
    */
@@ -105,6 +120,11 @@ export class SamModalComponent implements OnInit {
   private _scrollHelpers: any;
 
   private args = undefined;
+  public modalElIds = {
+    closeId: '',
+    submitId: '',
+    cancelId: ''
+  };
 
   constructor(private hostElement: ElementRef, private cdr: ChangeDetectorRef) {
     this.internalId = Date.now();
@@ -115,6 +135,7 @@ export class SamModalComponent implements OnInit {
     if (!this.typeNotDefined()) {
       this.selectedType = this.types[this.type].class;
     }
+    this.setModalElementIds();
   }
 
   set508() {
@@ -143,7 +164,6 @@ export class SamModalComponent implements OnInit {
       }
       this._focusModalElement = false;
     }
-
   }
 
   removeTabbable(item: any) {
@@ -235,5 +255,16 @@ export class SamModalComponent implements OnInit {
 
   private preventClosing(evt) {
     evt.stopPropagation();
+  }
+  private setModalElementIds() {
+    if (this.cancelId) {
+      this.modalElIds.cancelId = this.cancelId;
+    }
+    if (this.closeId) {
+      this.modalElIds.closeId = this.closeId;
+    }
+    if (this.submitId) {
+      this.modalElIds.submitId = this.submitId;
+    }
   }
 }
