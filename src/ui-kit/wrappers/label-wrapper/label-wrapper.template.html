@@ -12,7 +12,7 @@
   <div #hintContainer
     *ngIf="hint" 
     class="usa-form-hint"
-    [id]="hintElId"
+    [attr.id]="hintElId"
     [innerHTML]="hint"
     [style.overflow]="showToggle && !toggleOpen ? 'hidden' : '' "
     [style.height]="showToggle && !toggleOpen ? '2.88em' : '' ">
@@ -28,7 +28,7 @@
   
   <span *ngIf="!!errorMessage"
     class="usa-input-error-message"
-    [id]="errorElId">
+    [attr.id]="errorElId">
     {{errorMessage}}
   </span>
   
