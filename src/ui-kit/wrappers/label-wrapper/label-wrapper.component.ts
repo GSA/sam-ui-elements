@@ -120,11 +120,19 @@ export class LabelWrapper implements AfterViewChecked {
 
   public setInputLabelElement (elRefId) {
     if (this.input) {
-      this._rend.setAttribute(
-        this.input,
-        'aria-describedby',
-        elRefId
-      );
+      if (elRefId) {
+        this._rend.setAttribute(
+          this.input,
+          'aria-describedby',
+          elRefId
+        );
+      } else {
+        this._rend.removeAttribute(
+          this.input,
+          'aria-describedby'
+        );
+      }
+
     }
   }
 
