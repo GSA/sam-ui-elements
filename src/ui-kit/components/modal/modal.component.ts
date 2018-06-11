@@ -56,21 +56,6 @@ export class SamModalComponent implements OnInit {
    * Close modal if ESC key is pressed, defaults to true
    */
   @Input() closeOnEscape: boolean = true;
-
-  /**
-   * Sets the close modal Id
-   */
-  @Input() closeId: string;
-
-  /**
-   * Sets the cancel modal Id
-   */
-  @Input() cancelId: string;
-
-  /**
-   * Sets the submit modal Id
-   */
-  @Input() submitId: string;
   /**
    * (deprecated) Emitted event when modal is opened
    */
@@ -257,14 +242,10 @@ export class SamModalComponent implements OnInit {
     evt.stopPropagation();
   }
   private setModalElementIds() {
-    if (this.cancelId) {
-      this.modalElIds.cancelId = this.cancelId;
-    }
-    if (this.closeId) {
-      this.modalElIds.closeId = this.closeId;
-    }
-    if (this.submitId) {
-      this.modalElIds.submitId = this.submitId;
+    if (this.id) {
+      this.modalElIds.cancelId = this.id + 'Cancel';
+      this.modalElIds.closeId = this.id + 'Close';
+      this.modalElIds.submitId = this.id + 'Submit';
     }
   }
 }
