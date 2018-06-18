@@ -105,6 +105,11 @@ export class SamModalComponent implements OnInit {
   private _scrollHelpers: any;
 
   private args = undefined;
+  public modalElIds = {
+    closeId: '',
+    submitId: '',
+    cancelId: ''
+  };
 
   constructor(private hostElement: ElementRef, private cdr: ChangeDetectorRef) {
     this.internalId = Date.now();
@@ -115,6 +120,7 @@ export class SamModalComponent implements OnInit {
     if (!this.typeNotDefined()) {
       this.selectedType = this.types[this.type].class;
     }
+    this.setModalElementIds();
   }
 
   set508() {
@@ -143,7 +149,6 @@ export class SamModalComponent implements OnInit {
       }
       this._focusModalElement = false;
     }
-
   }
 
   removeTabbable(item: any) {
@@ -235,5 +240,12 @@ export class SamModalComponent implements OnInit {
 
   private preventClosing(evt) {
     evt.stopPropagation();
+  }
+  private setModalElementIds() {
+    if (this.id) {
+      this.modalElIds.cancelId = this.id + 'Cancel';
+      this.modalElIds.closeId = this.id + 'Close';
+      this.modalElIds.submitId = this.id + 'Submit';
+    }
   }
 }
