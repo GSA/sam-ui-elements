@@ -112,6 +112,10 @@ export interface AutocompleteConfig {
    * Sets whether categories can be selected or not
    */
   isCategorySelectable?: boolean;
+  /**
+   * Sets a title attribute value
+   */
+  title?: string;
 }
 
 export interface AutocompleteKeyValueConfig {
