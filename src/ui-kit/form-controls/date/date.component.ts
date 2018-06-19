@@ -443,8 +443,8 @@ export class SamDateComponent
   onChangeHandler(override = undefined) {
     this.onTouched();
     if (this.isClean(override)) {
-      this.onChange(undefined);
-      this.valueChange.emit(undefined);
+      this.onChange(null);
+      this.valueChange.emit(null);
     } else if (!this.getDate(override).isValid()) {
       this.onChange('Invalid Date');
       this.valueChange.emit('Invalid Date');
