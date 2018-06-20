@@ -25,6 +25,7 @@ import {
   SamDatabankTitleSectionDirective
 } from './title-section.component';
 import { SamExperimentalModule } from '../../..';
+import { MdExpansionModule } from './expansion';
 
 @NgModule({
   imports: [
@@ -32,6 +33,7 @@ import { SamExperimentalModule } from '../../..';
     FormsModule,
     ReactiveFormsModule,
     MdSidenavModule,
+    MdExpansionModule
   ],
   declarations: [
     SamActionBarComponent,
@@ -46,6 +48,7 @@ import { SamExperimentalModule } from '../../..';
     SamPageNextComponent
   ],
   exports: [
+    MdExpansionModule,
     MdSidenavModule,
     SamActionBarComponent,
     SamLayoutComponent,
