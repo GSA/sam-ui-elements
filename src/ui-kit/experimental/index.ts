@@ -20,17 +20,18 @@ import { SamPageSidebarComponent } from './page';
 import { SamTitleComponent } from './title';
 import { SamYoutubeComponent } from './youtube';
 import { SamPickerComponent, SamPopoverComponent } from './picker';
-import { SamVideoPlayerComponent} from "./video-player";
+import { SamVideoPlayerComponent} from './video-player';
 import { SamInputMaskModule } from './input-mask';
 import { SamDataTableModule } from './data-table';
-
+import { SamLayoutComponentsModule } from './patterns';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     SamInputMaskModule,
-    SamDataTableModule
+    SamDataTableModule,
+    SamLayoutComponentsModule,
   ],
   declarations: [
     SamBoxComponent,
@@ -77,6 +78,7 @@ import { SamDataTableModule } from './data-table';
     SamVideoPlayerComponent,
     SamInputMaskModule,
     SamDataTableModule,
+    SamLayoutComponentsModule
   ]
 })
 export class SamExperimentalModule { }
