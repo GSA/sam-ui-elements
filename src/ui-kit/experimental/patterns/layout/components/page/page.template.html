@@ -1,8 +1,35 @@
-<div class="mat-sidenav-backdrop" (click)="_onBackdropClicked()"
-     [class.mat-sidenav-shown]="_isShowingBackdrop()"></div>
+<ng-content select="sam-toolbar"></ng-content>
 
-<ng-content select="sam-aside"></ng-content>
+<div class="mat-sidenav-container"
+  [ngClass]="{'mat-sidenav-transition': _enableTransitions}">
 
-<div class="mat-sidenav-content" [ngStyle]="_getStyles()" cdk-scrollable>
-  <ng-content></ng-content>
+  <div class="mat-sidenav-backdrop"
+    (click)="_onBackdropClicked()"
+    [class.mat-sidenav-shown]="_isShowingBackdrop()"
+  ></div>
+
+  <ng-content select="sam-aside"></ng-content>
+
+  <div class="mat-sidenav-content"
+    [ngStyle]="_getStyles()"
+    cdk-scrollable>
+    <ng-content></ng-content>
+  </div>
+
+  <ng-content select="sam-modal"></ng-content>
 </div>
+<!--
+<sam-layout>
+  <sam-toolbar></sam-toolbar>
+  <sam-aside></sam-aside>
+  <sam-main>
+    <sam-page-title></sam-page-title>
+    <sam-filter-drawer></sam-filter-drawer>
+    <sam-data-container>
+      <sam-data-actions></sam-data-actions>
+      <sam-data></sam-data>
+    </sam-data-container>
+  </sam-main>
+  <sam-modal></sam-modal>
+</sam-layout>
+-->
