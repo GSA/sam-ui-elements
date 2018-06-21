@@ -44,6 +44,10 @@ export class SamTextComponent implements ControlValueAccessor, OnDestroy {
   */
   @Input() public label: string;
   /**
+  * Sets the id attribute
+  */
+  @Input() public id: string;
+  /**
   * Sets the name attribute
   */
   @Input() public name: string;

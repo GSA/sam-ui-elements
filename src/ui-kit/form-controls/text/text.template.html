@@ -1,12 +1,12 @@
 <sam-label-wrapper
   [label]="label"
-  [name]="name"
+  [name]="id ? id : name"
   [hint]="hint"
   [errorMessage]="errorMessage"
   [required]="required">
   <input
     type="text"
-    [id]="name"
+    [attr.id]="id ? id : name"
     [(ngModel)]="value"
     [attr.maxlength]="maxlength ? maxlength : 524288"
     [attr.placeholder]="placeholder"
