@@ -1,4 +1,8 @@
-import { Component, Input, HostBinding } from "@angular/core";
+import {
+  Component,
+  Input,
+  HostBinding
+} from '@angular/core';
 
 @Component({
   selector: 'sam-page-title',
@@ -19,5 +23,4 @@ export class SamPageTitle {
 
   @HostBinding('attr.id') public attrId = this.id;
   @HostBinding('attr.tabindex') public tabindex = 0;
-
 }
