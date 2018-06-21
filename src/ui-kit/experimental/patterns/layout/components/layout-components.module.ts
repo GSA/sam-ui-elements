@@ -26,7 +26,7 @@ import {
 } from './title-section.component';
 import { SamExperimentalModule } from '../../..';
 import { MdExpansionModule } from './expansion';
-import { SamPageTitle } from './main-section';
+import { SamPageTitle } from './main-section/page-title/page-title.component';
 
 @NgModule({
   imports: [
