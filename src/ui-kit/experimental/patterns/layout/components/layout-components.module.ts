@@ -26,6 +26,7 @@ import {
 } from './title-section.component';
 import { SamExperimentalModule } from '../../..';
 import { MdExpansionModule } from './expansion';
+import { SamPageTitle } from './main-section';
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import { MdExpansionModule } from './expansion';
     SamFiltersWrapperComponent,
     SamResourcesWrapperComponent,
     SamDatabankTitleSectionDirective,
-    SamPageNextComponent
+    SamPageNextComponent,
+    SamPageTitle
   ],
   exports: [
     MdExpansionModule,
@@ -59,7 +61,8 @@ import { MdExpansionModule } from './expansion';
     SamFiltersWrapperComponent,
     SamResourcesWrapperComponent,
     SamDatabankTitleSectionDirective,
-    SamPageNextComponent
+    SamPageNextComponent,
+    SamPageTitle
   ]
 })
 export class SamLayoutComponentsModule {}

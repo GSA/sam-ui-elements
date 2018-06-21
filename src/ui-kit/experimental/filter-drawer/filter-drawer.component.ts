@@ -1,4 +1,18 @@
-import { Component, Output, EventEmitter, HostListener, ContentChildren, Directive, Input, QueryList} from '@angular/core';
+import {
+  Component,
+  Output,
+  EventEmitter,
+  HostListener,
+  ContentChildren,
+  Directive,
+  Input,
+  QueryList,
+  AfterContentInit,
+  forwardRef,
+  ChangeDetectionStrategy,
+  AfterContentChecked
+} from '@angular/core';
+import { DataStore } from '../patterns';
 
 
 @Component({
@@ -25,10 +39,45 @@ export class SamFilterDrawerItemComponent {
 
 @Component({
   selector: "sam-filter-drawer",
-  templateUrl: 'filter-drawer.template.html'
+  templateUrl: 'filter-drawer.template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SamFilterDrawerComponent {
-  @ContentChildren(SamFilterDrawerItemComponent) items: QueryList<SamFilterDrawerItemComponent>
+export class SamFilterDrawerComponent implements AfterContentChecked {
+  @Output() public clear = new EventEmitter<any>();
+  @Output() public save = new EventEmitter<any>();
+
+  @ContentChildren(forwardRef(() => SamFilterDrawerItemComponent))
+    public items: QueryList<SamFilterDrawerItemComponent>;
+  
+  constructor (private _store: DataStore) {}
+
+  public ngAfterContentChecked () {
+    this.items.forEach(
+      (el: SamFilterDrawerItemComponent) => {
+        el.remove.subscribe(
+          evt => this.removeFilter(evt)
+        );
+      }
+    );
+  }
+
+  public removeFilter (filterItem) {
+    const removed = {};
+    removed[filterItem.id] = '';
+
+    const newValue = {
+      ...this._store.currentState.filters,
+      ...removed
+    };
+
+    this._store.update(
+      {
+        type: 'FILTERS_CHANGED',
+        payload: newValue
+      }
+    );
+  }
+
 }
 
  

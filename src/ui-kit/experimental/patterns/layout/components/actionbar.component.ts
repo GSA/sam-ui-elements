@@ -1,12 +1,14 @@
 import {
-    Component,
-    ContentChild,
-    AfterContentInit,
-    HostBinding
+  Component,
+  ContentChild,
+  AfterContentInit,
+  HostBinding
 } from '@angular/core';
 
 @Component({
-    selector: 'sam-action-bar',
-    template: '<ng-content></ng-content>'
+  selector: 'sam-action-bar',
+  template: `
+    <ng-content></ng-content>
+  `
 })
 export class SamActionBarComponent {}
