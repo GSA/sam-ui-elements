@@ -35,15 +35,22 @@ export class SamPageNextComponent
     super.ngAfterContentInit();
 
     this._setupAside();
-
-    // Attach sidenav to toolbar
-    this.toolbar.sidenav = this.aside;
+    this._setupToolbar();
   }
 
   private _setupAside () {
     if (this.aside) {
       this.aside.opened = true;
       this.aside.mode = 'side';
+    }
+  }
+
+  private _setupToolbar () {
+    if (this.toolbar) {
+      if (this.aside) {
+        // Attach sidenav to toolbar
+        this.toolbar.sidenav = this.aside;
+      }
     }
   }
 
