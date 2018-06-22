@@ -1,4 +1,5 @@
 import { DataStoreEvent, DataStore } from '../store';
+import { modelType } from '../model/layout.model';
 
 export const layoutEvents = {
   DATA_CHANGED: 'DATA_CHANGED',
@@ -9,7 +10,7 @@ export const layoutEvents = {
   VALUE_CHANGED: 'VALUE_CHANGED'
 }
 
-export function layoutReducer (state: any, action: DataStoreEvent) {
+export function layoutReducer (state: any, action: DataStoreEvent): modelType {
   switch (action.type) {
     case 'VALUE_CHANGED':
       return action.payload;
