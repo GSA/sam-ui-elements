@@ -1,6 +1,12 @@
-export type model = {
+export type modelType = {
+  /**
+   * Active filters, each property should be of type 'filterItemModel'
+   */
   filters?: {},
   pagination?: paginationModel,
+  /**
+   * 
+   */
   data?: any,
   sort?: sortModel
 }
@@ -12,7 +18,7 @@ export type sortModel = {
    */
   active: string,
   /**
-   * 
+   * Sorted column direction
    */
   direction: "" | "asc" | "desc"
 };
@@ -23,7 +29,7 @@ export type paginationModel = {
   totalSize: number
 };
 
-export const model: model = {
+export const model: modelType = {
   filters: {},
   pagination: {
     currentPage: undefined,
