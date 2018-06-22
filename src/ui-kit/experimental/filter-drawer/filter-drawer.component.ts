@@ -12,7 +12,7 @@ import {
   ChangeDetectionStrategy,
   AfterContentChecked
 } from '@angular/core';
-import { DataStore } from '../patterns';
+import { SamPageNextService } from '../patterns';
 
 
 @Component({
@@ -49,7 +49,7 @@ export class SamFilterDrawerComponent implements AfterContentChecked {
   @ContentChildren(forwardRef(() => SamFilterDrawerItemComponent))
     public items: QueryList<SamFilterDrawerItemComponent>;
   
-  constructor (private _store: DataStore) {}
+  constructor (private _service: SamPageNextService) {}
 
   public ngAfterContentChecked () {
     this.items.forEach(
@@ -66,16 +66,11 @@ export class SamFilterDrawerComponent implements AfterContentChecked {
     removed[filterItem.id] = '';
 
     const newValue = {
-      ...this._store.currentState.filters,
+      ...this._service.properties['filters'].value,
       ...removed
     };
 
-    this._store.update(
-      {
-        type: 'FILTERS_CHANGED',
-        payload: newValue
-      }
-    );
+    this._service.properties['filters'].setValue(newValue);
   }
 
 }

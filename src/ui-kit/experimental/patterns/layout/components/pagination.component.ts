@@ -78,6 +78,7 @@ export class SamDatabankPaginationComponent implements OnInit {
   // If the total number of pages is less than this
   // threshold, display all pages
   private maxTotalPageWithoutEllipsis: number = 10;
+  
   public pageSize = 10;
 
   /**
@@ -91,7 +92,7 @@ export class SamDatabankPaginationComponent implements OnInit {
   /**
    * Shows the current page number
    */
-  @Input() currentPage: number;
+  @Input() currentPage: number = 1;
   /**
    * Shows the number of total pages
    */

@@ -9,27 +9,22 @@ export interface DataStoreEvent {
 
 export class DataStore {
 
-  public state: Observable<any>;
+  public state: BehaviorSubject<any>;
   public events: Observable<any>;
 
-  private _state: BehaviorSubject<any>;
-  private _events: BehaviorSubject<DataStoreEvent>;
+  private _events: BehaviorSubject<any>;
   private _dispatcher: BehaviorSubject<DataStoreEvent>;
 
-
   public get currentState (): any {
-    return this._state.getValue();
+    return this.state.getValue();
   }
 
   constructor (private _reducer, initialState) {
     // Initialize State
-    this._state = new BehaviorSubject<any>(initialState);
-    this.state = this._state.asObservable();
+    this.state = new BehaviorSubject<any>(initialState);
 
     // Initialize Events
-    this._events = new BehaviorSubject<DataStoreEvent>(
-      { type: 'init', payload: this._state.getValue() }
-    );
+    this._events = new BehaviorSubject<any>({ type: 'init' });
     this.events = this._events.asObservable();
 
     // Initialize Dispatcher
@@ -48,12 +43,11 @@ export class DataStore {
 
   private _processDispatchedEvent (event: DataStoreEvent) {
     // Update state based on action
-    this._state.next(this._reducer(
-      this._state.getValue(),
+    this.state.next(this._reducer(
+      this.state.getValue(),
       event
     ));
 
-    // Alert subscribers that an event has modified state
-    this._events.next(event);
+    this._events.next({ type: event.type, payload: this.currentState});
   }
 }

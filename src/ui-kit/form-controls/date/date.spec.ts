@@ -157,8 +157,6 @@ describe('The Sam Date component', () => {
       fixture.detectChanges();
       const model = component.inputModel;
 
-      console.log(model, component.inputModel);
-
       expect(model.month).toBe('12');
       expect(model.day).toBe('16');
       expect(model.year).toBe('2000');

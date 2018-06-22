@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 
 import { MdSidenavContainer, MdSidenav } from '../sidenav/sidenav';
-import { SamToolbarComponent } from '..';
+import { SamToolbarComponent } from '../toolbar.component';
 
 @Component({
   selector: 'sam-page-next',
