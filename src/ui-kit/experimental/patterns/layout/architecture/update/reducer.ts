@@ -1,6 +1,7 @@
 import { DataStoreEvent, DataStore } from '../store';
+import { model } from '../model/layout.model';
 
-export function layoutReducer (state: any, action: DataStoreEvent) {
+export function layoutReducer (state: any, action: DataStoreEvent): model {
   switch (action.type) {
     case 'DATA_CHANGED':
       return {
