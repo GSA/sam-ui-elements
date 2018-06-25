@@ -3,34 +3,68 @@ import {
   ContentChild,
   AfterContentInit,
   HostBinding,
-  Input
+  Input,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import { MdSidenav } from './sidenav/sidenav';
+
+export type toolbarItem = {
+  label: string,
+  icon: string,
+  disabled?: boolean
+};
 
 @Component({
     selector: 'sam-toolbar',
     template: `
   <div class="sam small menu">
-    <a (click)="sidenav.toggle()">
+    <a *ngIf="sidenav"
+    tabindex="0"
+    (click)="sidenav.toggle()"
+    (keyup.enter)="actionClick(item)">
       Toggle filters
     </a>
     <div class="section right">
-      <a>
-        <i class="fa fa-download" aria-hidden="true"></i>
-        Download
-      </a>
-      <a>
-        <i class="fa fa-share-alt" aria-hidden="true"></i>
-        Share
-      </a>
-      <a>
-        <i class="fa fa-cloud" aria-hidden="true"></i>
-        Save Criteria
+      <a *ngFor="let item of contentModel"
+      [ngClass]="{disabled: item.disabled}"
+      tabindex="0"
+      (click)="actionClick(item)"
+      (keyup.enter)="actionClick(item)">
+        <i class="fa {{item.icon}}" aria-hidden="true"></i>
+        {{item.label}}
       </a>
     </div>
   </div>
   `
-  })
-  export class SamToolbarComponent {
-    @Input() sidenav: MdSidenav;
+})
+
+export class SamToolbarComponent {
+  /**
+   * Passes in the sidebar for toggling
+   */
+  @Input() sidenav: MdSidenav;
+  /**
+   * Passes in the content model for the top right items+icons
+   */
+  @Input() contentModel: toolbarItem[] = [{
+    label: "Download",
+    icon: 'fa-download'
+  }, {
+    label: "Share",
+    icon: 'fa-share-alt'
+  }, {
+    label: "Save Criteria",
+    icon: 'fa-cloud'
+  }];
+  /**
+   * Emitter for interaction handling
+   */
+  @Output() action: EventEmitter<any> = new EventEmitter<any>();
+
+  actionClick(item){
+    if(!item.disabled){
+      this.action.emit(item);
+    }
   }
+}
