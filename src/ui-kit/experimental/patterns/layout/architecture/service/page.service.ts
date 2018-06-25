@@ -1,72 +1,55 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
 
-import { DataStore, DataStoreEvent } from '../store';
-import { layoutEvents } from '../update';
+import { ServiceProperty } from './service-property';
+import { DataStore } from '../store';
 
-export interface SortEvent {
-  active: string;
-  direction: 'asc' | 'desc';
-}
 
-export interface PaginationEvent {
-  currentPage: number;
-  totalPages: number;
-}
-
-export class ServiceProperty<T> {
-  public valueChanges: Observable<T>;
-
-  private _value: BehaviorSubject<T>;
-  private _updateFn;
-
-  public get value (): T {
-    return this._value.getValue();
-  }
-
-  constructor (initialValue: T) {
-    this._value = new BehaviorSubject(initialValue);
-    this.valueChanges = this._value.asObservable();
-  }
-
-  public setValue (value: T) {
-    this._value.next(this._updateFn(value));
-  }
-
-  public registerChanges (fn) {
-    this._updateFn = fn;
-  }
-}
-
-interface ServiceProperties {
+interface ServicePropertyObj {
   [key: string]: ServiceProperty<any>
 }
 
 @Injectable()
 export class SamPageNextService {
 
-  public properties: ServiceProperties;
+  public properties: ServicePropertyObj;
 
-  public valueChanges: Observable<any>;
-
-  private _value: BehaviorSubject<any>;
-
-  public get value () {
-    return this._value.getValue();
-  }
-
+  public value: ServiceProperty<any>;
 
   constructor (private _store: DataStore) {
-    this._initSubjects();
-    this._initObservables();
+    this._setupValue();
+    this._registerProperties();
+  }
 
+  private _setupValue () {
+    this.value = new ServiceProperty<any>(
+      this._store.currentState,
+      this._store.state
+    );
+
+    this.value.registerChanges(
+      this._update('value').bind(this)
+    );
+  }
+
+  private _registerProperties () {
+    const stream = this._store.state;
     this.properties = {
-      'pagination': new ServiceProperty<any>({}),
-      'sort': new ServiceProperty<any>({}),
-      'filters': new ServiceProperty<any>({}),
-      'data': new ServiceProperty<any>({})
+      'pagination': new ServiceProperty<any>(
+        {},
+        stream.map(value => value['pagination'])
+      ),
+      'sort': new ServiceProperty<any>(
+        {},
+        stream.map(value => value['sort'])
+      ),
+      'filters': new ServiceProperty<any>(
+        {},
+        stream.map(value => value['filters'])
+      ),
+      'data': new ServiceProperty<any>(
+        {},
+        stream.map(value => value['data'])
+      )
     };
 
     Object.keys(this.properties).forEach(
@@ -77,30 +60,12 @@ export class SamPageNextService {
     );
   }
 
-  public setValue (state: any): void {
-    this._store.update(
-      {
-        type: layoutEvents.VALUE_CHANGED,
-        payload: state
-      }
-    );
-  }
-
-  private _initSubjects () {
-    this._value = this._store.state;
-  }
-
-  private _initObservables () {        
-    this.valueChanges =this._value.asObservable();;
-  }
-
   private _update (event: string) {
     return function _updateFn (value: any) {
       this._store.update({
         type: event,
         payload: value
       });
-      return this._store.currentState[event];
     }
   }
 }
