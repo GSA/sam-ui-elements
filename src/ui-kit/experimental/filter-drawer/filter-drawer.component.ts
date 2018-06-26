@@ -66,11 +66,11 @@ export class SamFilterDrawerComponent implements AfterContentChecked {
     removed[filterItem.id] = '';
 
     const newValue = {
-      ...this._service.properties['filters'].value,
+      ...this._service.model.properties['filters'].value,
       ...removed
     };
 
-    this._service.properties['filters'].setValue(newValue);
+    this._service.model.properties['filters'].setValue(newValue);
   }
 
 }

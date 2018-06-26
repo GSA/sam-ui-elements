@@ -1,71 +1,81 @@
 import { Injectable } from '@angular/core';
 
-import { ServiceProperty } from './service-property';
+import { ServiceModel } from './service-property';
 import { DataStore } from '../store';
+import { modelType } from '../model';
 
 
-interface ServicePropertyObj {
-  [key: string]: ServiceProperty<any>
+export type DataLayoutProperty = 'data' | 'filter' | 'pagination';
+
+@Injectable()
+export class LayoutService {
+  public model: ServiceModel;
+
+  constructor (private _store: DataStore) {
+    this.model = new ServiceModel(
+      { name: 'value', value: {} },
+      this._store.state,
+      {
+        sort: {},
+        filters: {},
+        pagination: {}
+      }
+    );
+
+    this.model.registerChanges(this._valueChanges(this))
+  }
+
+  public get (propertyName) {
+    return this.model.properties[propertyName];
+  }
+
+  private _valueChanges (context) {
+    return function (propertyName: string) {
+      return function (payloadValue) {
+        context._store.update({
+          type: propertyName,
+          payload: payloadValue
+        });
+      }
+    }
+  }
 }
+
 
 @Injectable()
 export class SamPageNextService {
 
-  public properties: ServicePropertyObj;
-
-  public value: ServiceProperty<any>;
+  public model: ServiceModel;
 
   constructor (private _store: DataStore) {
-    this._setupValue();
-    this._registerProperties();
+    this._setupModel();
   }
 
-  private _setupValue () {
-    this.value = new ServiceProperty<any>(
-      this._store.currentState,
-      this._store.state
-    );
-
-    this.value.registerChanges(
-      this._update('value').bind(this)
-    );
-  }
-
-  private _registerProperties () {
-    const stream = this._store.state;
-    this.properties = {
-      'pagination': new ServiceProperty<any>(
-        {},
-        stream.map(value => value['pagination'])
-      ),
-      'sort': new ServiceProperty<any>(
-        {},
-        stream.map(value => value['sort'])
-      ),
-      'filters': new ServiceProperty<any>(
-        {},
-        stream.map(value => value['filters'])
-      ),
-      'data': new ServiceProperty<any>(
-        {},
-        stream.map(value => value['data'])
-      )
-    };
-
-    Object.keys(this.properties).forEach(
-      key => {
-        this.properties[key]
-          .registerChanges(this._update(key).bind(this));
+  private _setupModel () {
+    this.model = new ServiceModel(
+      { name: 'value', value: {}},
+      this._store.state,
+      {
+        pagination: {},
+        sort: {},
+        data: {},
+        filters: {}
       }
     );
+
+    this.model.registerChanges(this._updateFn(this));
   }
 
-  private _update (event: string) {
-    return function _updateFn (value: any) {
-      this._store.update({
-        type: event,
-        payload: value
-      });
+  private _updateFn (context) {
+    return function (event) {
+      return function (value) {
+        context._store.update(
+          {
+            type: event,
+            payload: value
+          }
+        )
+      }
     }
   }
 }

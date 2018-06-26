@@ -31,11 +31,11 @@ export class SamMainComponent implements AfterContentInit {
   }
 
   private _clearDrawer () {
-    const keys = Object.keys(this._service.properties['filters'].value);
+    const keys = Object.keys(this._service.model.properties['filters'].value);
     const newValue = {};
 
     keys.forEach(key => newValue[key] = null);
 
-    this._service.properties['filters'].setValue(newValue);
+    this._service.model.properties['filters'].setValue(newValue);
   }
 }

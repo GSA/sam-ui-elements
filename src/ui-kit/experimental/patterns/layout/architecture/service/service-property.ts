@@ -1,27 +1,38 @@
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
-export abstract class AbstractServiceProperty<T> {
-  public valueChanges: Observable<T>;
+export interface ServicePropertyObj {
+  [key: string]: ServiceProperty
+}
 
-  public get value (): T {
+export interface ServicePropertyConfig {
+  name: string;
+  value?: any;
+}
+
+export abstract class AbstractServiceProperty {
+  public readonly name: string;
+  public valueChanges: Observable<any>;
+
+  public get value (): any {
     return this._value.getValue();
   }
 
-  protected _value: BehaviorSubject<T>;
-  protected _updateFn: (value: T) => T;
+  protected _value: BehaviorSubject<any>;
+  protected _updateFn: (value: any) => any;
 
-  constructor (initialValue: any, protected _source?: Observable<any>) {
-    this._value = new BehaviorSubject(initialValue || {});
+  constructor (
+    config: ServicePropertyConfig,
+    protected _source?: Observable<any>) {
+    this.name = config.name;
+    this._value = new BehaviorSubject(config.value || {});
     this.valueChanges = this._value.asObservable();
     this._registerSource();
   }
 
-  public abstract setValue (value: T): void
+  public abstract setValue (value: any): void
 
-  public registerChanges (fn): void {
-    this._updateFn = fn;
-  }
+  public abstract registerChanges (fn): void
 
   private _registerSource () {
     if (this._source) {
@@ -32,16 +43,71 @@ export abstract class AbstractServiceProperty<T> {
   }
 }
 
-export class ServiceProperty<T>
-  extends AbstractServiceProperty<T> {
+export class ServiceProperty
+  extends AbstractServiceProperty {
 
-  public valueChanges: Observable<T>;
-
-  constructor (initialValue: T, source: Observable<any>) {
-    super(initialValue, source);
+  constructor (
+    config: ServicePropertyConfig,
+    source: Observable<any>) {
+    super(config, source);
   }
 
-  public setValue (value: T) {
+  public setValue (value: any): void {
     this._updateFn(value);
+  }
+
+  public registerChanges (fn): void {
+    this._updateFn = fn;
+  }
+}
+
+export class ServiceModel extends AbstractServiceProperty {
+  public properties: ServicePropertyObj = {};
+
+  constructor (
+    config: ServicePropertyConfig,
+    source: Observable<any>,
+    properties?: {[key: string]: any}) {
+    super(config, source);
+    this._initProperties(properties);
+  }
+
+  public get (propertyName: string): ServiceProperty {
+    return this.properties[propertyName];
+  }
+
+
+  private _initProperties (properties: {[key: string]: any}) {
+    if (properties) {
+      const stream = this.valueChanges;
+
+      Object.keys(properties).forEach(
+        key => {
+          this.properties[key] = new ServiceProperty(
+            { name: key, value: properties[key] },
+            stream.map(value => value[key])
+              .distinctUntilChanged()
+          );
+        }
+      );
+    }
+  }
+
+  private _registerProperties () {
+    Object.keys(this.properties).forEach(
+      key => {
+        this.properties[key]
+          .registerChanges(this._updateFn(key));
+      }
+    );
+  }
+
+  public setValue (value: any) {
+    this._updateFn(this.name)(value);
+  }
+
+  public registerChanges (fn): void {
+    this._updateFn = fn;
+    this._registerProperties();
   }
 }
