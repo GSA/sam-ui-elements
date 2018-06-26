@@ -6,11 +6,14 @@ import {
 } from '@angular/core';
 import { MdSidenav } from './sidenav/sidenav';
 
-export type toolbarItem = {
+export type ToolbarItem = {
   label: string,
-  icon: string,
+  icon: ToolbarItemIcon,
   disabled?: boolean
 };
+
+export type ToolbarItemIcon = 'fa-download' | 'fa-share-alt'
+  | 'fa-cloud';
 
 @Component({
     selector: 'sam-toolbar',
@@ -44,7 +47,7 @@ export class SamToolbarComponent {
   /**
    * Passes in the content model for the top right items+icons
    */
-  @Input() contentModel: toolbarItem[] = [{
+  @Input() contentModel: ToolbarItem[] = [{
     label: 'Download',
     icon: 'fa-download'
   }, {
