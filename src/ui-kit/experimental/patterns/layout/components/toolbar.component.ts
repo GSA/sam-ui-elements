@@ -1,8 +1,5 @@
 import {
   Component,
-  ContentChild,
-  AfterContentInit,
-  HostBinding,
   Input,
   Output,
   EventEmitter
@@ -48,13 +45,13 @@ export class SamToolbarComponent {
    * Passes in the content model for the top right items+icons
    */
   @Input() contentModel: toolbarItem[] = [{
-    label: "Download",
+    label: 'Download',
     icon: 'fa-download'
   }, {
-    label: "Share",
+    label: 'Share',
     icon: 'fa-share-alt'
   }, {
-    label: "Save Criteria",
+    label: 'Save Criteria',
     icon: 'fa-cloud'
   }];
   /**
