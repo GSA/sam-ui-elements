@@ -1,11 +1,9 @@
 import {
   Component,
   ContentChild,
-  AfterContentInit,
-  HostBinding
 } from '@angular/core';
 import { SamDatabankPaginationComponent } from './pagination.component';
-import { SamPageNextService } from '../architecture/service';
+import { SamPageNextService } from '../architecture';
 
 @Component({
   selector: 'sam-action-bar',

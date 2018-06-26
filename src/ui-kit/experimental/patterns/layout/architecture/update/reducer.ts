@@ -1,5 +1,5 @@
 import { DataStoreEvent, DataStore } from '../store';
-import { modelType } from '../model/layout.model';
+import { modelType } from '../model';
 
 export const layoutEvents = {
   DATA_CHANGED: 'DATA_CHANGED',

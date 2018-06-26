@@ -1,46 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { ServiceModel } from './service-property';
-import { DataStore } from '../store';
-import { modelType } from '../model';
+import { ServiceModel, ServiceProperty } from './service-property';
+import { DataStore } from '../store/datastore';
 
-
-export type DataLayoutProperty = 'data' | 'filter' | 'pagination';
-
-@Injectable()
-export class LayoutService {
-  public model: ServiceModel;
-
-  constructor (private _store: DataStore) {
-    this.model = new ServiceModel(
-      { name: 'value', value: {} },
-      this._store.state,
-      {
-        sort: {},
-        filters: {},
-        pagination: {}
-      }
-    );
-
-    this.model.registerChanges(this._valueChanges(this))
-  }
-
-  public get (propertyName) {
-    return this.model.properties[propertyName];
-  }
-
-  private _valueChanges (context) {
-    return function (propertyName: string) {
-      return function (payloadValue) {
-        context._store.update({
-          type: propertyName,
-          payload: payloadValue
-        });
-      }
-    }
-  }
-}
-
+export type DataLayoutProperty = 'data'
+  | 'filter' | 'pagination' | 'sort';
 
 @Injectable()
 export class SamPageNextService {
@@ -49,6 +13,10 @@ export class SamPageNextService {
 
   constructor (private _store: DataStore) {
     this._setupModel();
+  }
+
+  public get (property: DataLayoutProperty): ServiceProperty {
+    return this.model.properties[property];
   }
 
   private _setupModel () {
