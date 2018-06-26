@@ -7,7 +7,7 @@ import {
   forwardRef
 } from '@angular/core';
 import { SamFilterDrawerComponent, SamFilterDrawerItemComponent } from '../../../filter-drawer';
-import { DataStore } from '../architecture/store';
+import { SamPageNextService } from '../architecture';
 
 @Component({
   selector: 'sam-main',
@@ -24,24 +24,18 @@ export class SamMainComponent implements AfterContentInit {
   @ContentChild(forwardRef(() => SamFilterDrawerComponent))
     public drawer: SamFilterDrawerComponent;
 
-  constructor (private _store: DataStore) {}
+  constructor (private _service: SamPageNextService) {}
 
   public ngAfterContentInit () {
     this.drawer.clear.subscribe(evt => this._clearDrawer());
   }
 
   private _clearDrawer () {
-    const filters = this._store.currentState.filters;
-    const keys = Object.keys(filters);
+    const keys = Object.keys(this._service.model.properties['filters'].value);
     const newValue = {};
 
     keys.forEach(key => newValue[key] = null);
 
-    this._store.update(
-      {
-        type: 'FILTERS_CHANGED',
-        payload: newValue
-      }
-    );
+    this._service.model.properties['filters'].setValue(newValue);
   }
 }
