@@ -71,6 +71,11 @@ export class SamSortHeaderComponent implements SamSortable, OnInit, OnDestroy {
     /** Sets the position of the arrow that displays when sorted. */
     @Input() arrowPosition: 'before' | 'after' = 'after';
 
+    /**
+     * Disables the sort event from firing
+     */
+    @Input() disabled: boolean = false;
+
     /** Overrides the sort start value of the containing MdSort for this SamSortable. */
     @Input('start') start: 'asc' | 'desc';
 
@@ -80,8 +85,13 @@ export class SamSortHeaderComponent implements SamSortable, OnInit, OnDestroy {
     @HostBinding('class.sam-sort-header-sorted') samSortHeaderSorted(){
         return this._isSorted();
     }
+    @HostBinding('class.sam-sort-header-disabled') samSortHeaderDisabled(){
+        return this.disabled;
+    }
     @HostListener('click') hostClick(){
-        return this._sort.sort(this);
+        if(!this.disabled){
+            return this._sort.sort(this);
+        }
     }
     get disableClear() { return this._disableClear; }
     set disableClear(v) { this._disableClear = coerceBooleanProperty(v); }
@@ -101,7 +111,7 @@ export class SamSortHeaderComponent implements SamSortable, OnInit, OnDestroy {
 
     ngOnInit() {
         if (!this.id && this._cdkColumnDef) {
-        this.id = this._cdkColumnDef.name;
+            this.id = this._cdkColumnDef.name;
         }
 
         this._sort.register(this);
