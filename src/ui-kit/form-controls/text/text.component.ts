@@ -84,7 +84,7 @@ export class SamTextComponent implements ControlValueAccessor, OnDestroy {
    */
   @Input() public placeholder: string;
   /**
-   * Optional text for screen reader
+   * Sets the title attribute on the input for accessibility
    */
   @Input() public title: string;
   /**
