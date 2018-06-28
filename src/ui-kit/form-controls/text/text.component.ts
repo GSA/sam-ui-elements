@@ -84,6 +84,10 @@ export class SamTextComponent implements ControlValueAccessor, OnDestroy {
    */
   @Input() public placeholder: string;
   /**
+   * Sets the title attribute on the input for accessibility
+   */
+  @Input() public title: string;
+  /**
    * (deprecated) Lose focus event emit
    */
   @Output() public onBlur: EventEmitter<boolean> = new EventEmitter<boolean>();
