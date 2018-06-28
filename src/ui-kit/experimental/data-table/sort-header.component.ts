@@ -38,7 +38,8 @@ template: `
 <div class="sam-sort-header-container"
      [class.sam-sort-header-position-before]="arrowPosition == 'before'">
   <button class="sam-sort-header-button" type="button"
-          [attr.aria-label]="_intl.sortButtonLabel(id)">
+          [attr.aria-label]="_intl.sortButtonLabel(id)"
+          [attr.disabled]="disabled ? disabled : undefined">
     <ng-content></ng-content>
     <span *ngIf="_isSorted(); else not_sorted"
         class="fa"
@@ -84,9 +85,6 @@ export class SamSortHeaderComponent implements SamSortable, OnInit, OnDestroy {
 
     @HostBinding('class.sam-sort-header-sorted') samSortHeaderSorted(){
         return this._isSorted();
-    }
-    @HostBinding('class.sam-sort-header-disabled') samSortHeaderDisabled(){
-        return this.disabled;
     }
     @HostListener('click') hostClick(){
         if(!this.disabled){
