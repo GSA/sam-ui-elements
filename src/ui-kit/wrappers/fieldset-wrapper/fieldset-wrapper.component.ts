@@ -21,7 +21,11 @@ export class FieldsetWrapper {
    */
   @Input() public hint: string;
   /**
-   * set the error message
+   * Add an array of errorMessages
+   */
+  @Input() public errorMessages: any[] = [];
+  /**
+   * set a single error message
    */
   @Input() public set errorMessage (message: string) {
     if (!!message) {
@@ -45,8 +49,6 @@ export class FieldsetWrapper {
   private lineSize: number;
   private lineLimit: number = 2;
   private checkMore = false; // semaphore
-
-  public errorMessages: any[] = [];
 
   constructor(private cdr: ChangeDetectorRef) { }
 
