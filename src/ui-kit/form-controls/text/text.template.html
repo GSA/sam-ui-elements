@@ -6,6 +6,7 @@
   [required]="required">
   <input
     type="text"
+    [attr.title]="title ? title : ''"
     [attr.id]="id ? id : name"
     [(ngModel)]="value"
     [attr.maxlength]="maxlength ? maxlength : 524288"
