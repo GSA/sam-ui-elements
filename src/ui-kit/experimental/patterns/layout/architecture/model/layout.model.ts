@@ -8,7 +8,8 @@ export type modelType = {
    * 
    */
   data?: any,
-  sort?: sortModel
+  sort?: sortModel,
+  actions?: any
 }
 
 //single column sort
@@ -29,7 +30,7 @@ export type paginationModel = {
   totalSize: number
 };
 
-export const model: modelType = {
+export const model: any = {
   filters: {},
   pagination: {
     currentPage: undefined,
@@ -40,7 +41,8 @@ export const model: modelType = {
   sort: {
     active: "",
     direction: ""
-  }
+  },
+  actions: {}
 };
 
 /**

@@ -9,3 +9,5 @@ export * from './feedback-wrapper.component';
 export * from './resources-wrapper.component';
 export * from './title-section.component';
 export * from './layout-components.module';
+
+export * from './page-action.directive';

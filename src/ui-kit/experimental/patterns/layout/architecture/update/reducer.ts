@@ -38,6 +38,11 @@ export function layoutReducer (state: any, action: DataStoreEvent): modelType {
         ...state,
         sort: action.payload
       };
+    case 'actions':
+      return {
+        ...state,
+        actions: action.payload
+      }
     case 'ERROR':
       return {
         ...state,

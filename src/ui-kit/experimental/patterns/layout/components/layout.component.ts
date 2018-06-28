@@ -1,17 +1,8 @@
 import {
   Component,
   ContentChild,
-  AfterContentInit,
   HostBinding,
-  ContentChildren,
-  QueryList,
-  Input,
-  Output,
-  EventEmitter,
-  ElementRef,
-  Renderer2,
   forwardRef,
-  ViewChild
 } from '@angular/core';
 import { SamActionBarComponent } from './actionbar.component';
 import { SamMainComponent } from './main.component';
