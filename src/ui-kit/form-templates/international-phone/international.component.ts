@@ -8,6 +8,7 @@ import { AbstractControl } from '@angular/forms';
 
 import { SamFieldset } from './sam-fieldset/sam-fieldset';
 import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
+import { SamFormService } from '../../form-service';
 
 @Component({
   selector: 'sam-intl-telephone-group',
@@ -68,11 +69,9 @@ export class SamIntlPhoneGroup extends SamFieldset
   public prefixError: string = '';
   public hint =
     'Country Code is 1 for USA and North America';
-  public countryCode: any;
-
-  public errorStrategy: (...any) => boolean = this._defaultStrategy;
+  public countryCode: string = '1';
   
-  constructor () {
+  constructor (private _formService: SamFormService) {
     super();
   }
 
@@ -89,22 +88,61 @@ export class SamIntlPhoneGroup extends SamFieldset
           this.group.patchValue({prefix: '1'})
         } else {
           this.countryCode = change.prefix;
-          if (this.errorStrategy()) {
-            this.wrapper.formatErrors(
-              this.group.controls.prefix,
-              this.group.controls.phone
-            );
-          }
         }
       }
-    )
+    );
+
+    this._setValidationStrategy();
 
     this.prefixControl = this.group.controls.prefix;
     this.phoneControl = this.group.controls.phone;
   }
 
-  private _defaultStrategy (): boolean {
-    return true;
+  private _setValidationStrategy () {
+    if (!this.useFormService) {
+      this._useDefaultStrategy();
+    } else {
+      this._useFormServiceStrategy();
+    }
+  }
+
+  private _useFormServiceStrategy (): void {
+    this._formService.formEventsUpdated$
+      .subscribe(
+        (evt: any) => {
+          if ((!evt.root
+            || evt.root === this.group)
+            && evt.eventType
+            && evt.eventType === 'submit') {
+
+            this.wrapper.formatErrors(
+              this.group.controls.prefix,
+              this.group.controls.phone
+            );
+
+          } else if ((!evt.root
+            || evt.root === this.group)
+            && evt.eventType
+            && evt.eventType === 'reset') {
+
+            this.wrapper.clearError();
+
+          }
+        },
+        (err: any) => console.error('Error occured')
+      );
+  }
+
+  private _useDefaultStrategy (): void {
+    this.group.valueChanges.subscribe(
+      change => {
+
+          this.wrapper.formatErrors(
+            this.group.controls.prefix,
+            this.group.controls.phone
+          );
+        }
+    );
   }
 
 }
