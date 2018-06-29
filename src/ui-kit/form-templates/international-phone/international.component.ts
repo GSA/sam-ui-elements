@@ -86,17 +86,16 @@ export class SamIntlPhoneGroup extends SamFieldset
       throw new TypeError(msg);
     }
 
-    // below is already handled in the prefix component
-    // this.group.valueChanges.subscribe(
-    //   change => {
-    //     if (!change.prefix) {
-    //       this.group.patchValue({ prefix: '1' });
-    //       this.cdr.detectChanges();
-    //     } else {
-    //       this.countryCode = change.prefix;
-    //     }
-    //   }
-    // );
+    this.group.valueChanges.subscribe(
+      change => {
+        if (!change.prefix) {
+          this.group.patchValue({ prefix: '1' });
+          this.cdr.detectChanges();
+        } else {
+          this.countryCode = change.prefix;
+        }
+      }
+    );
 
     this._setValidationStrategy();
 
