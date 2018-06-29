@@ -12,12 +12,9 @@ import { SamAlertFooterComponent, SamAlertFooterService } from './alert-footer';
 import { SamBadgeComponent } from './badge';
 import { SamBannerComponent } from './banner';
 import { SamBreadcrumbsComponent } from './breadcrumbs';
-import { SamCollapsibleComponent } from './collapsible';
 import { SamDownloadComponent } from './download';
-import { SamFiltersContainerComponent } from './filters-container';
 import { SamHeaderComponent } from './header';
 import { SamHistoryComponent } from './history';
-import { SamInfoAccordionComponent } from './info-accordion';
 import { SamLabelComponent } from './label';
 import { SamModalComponent } from './modal';
 import { SamMultiSelectDropdownComponent } from './multiselect-dropdown';
@@ -55,12 +52,9 @@ import { SamActionsDropdownComponent } from './actions/actions-dropdown';
     SamBadgeComponent,
     SamBannerComponent,
     SamBreadcrumbsComponent,
-    SamCollapsibleComponent,
     SamDownloadComponent,
-    SamFiltersContainerComponent,
     SamHeaderComponent,
     SamHistoryComponent,
-    SamInfoAccordionComponent,
     SamLabelComponent,
     SamModalComponent,
     SamMultiSelectDropdownComponent,
@@ -82,12 +76,9 @@ import { SamActionsDropdownComponent } from './actions/actions-dropdown';
     SamBadgeComponent,
     SamBannerComponent,
     SamBreadcrumbsComponent,
-    SamCollapsibleComponent,
     SamDownloadComponent,
-    SamFiltersContainerComponent,
     SamHeaderComponent,
     SamHistoryComponent,
-    SamInfoAccordionComponent,
     SamLabelComponent,
     SamModalComponent,
     SamMultiSelectDropdownComponent,
