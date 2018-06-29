@@ -86,16 +86,17 @@ export class SamIntlPhoneGroup extends SamFieldset
       throw new TypeError(msg);
     }
 
-    this.group.valueChanges.subscribe(
-      change => {
-        if (!change.prefix) {
-          this.group.patchValue({ prefix: '1' });
-          this.cdr.detectChanges();
-        } else {
-          this.countryCode = change.prefix;
-        }
-      }
-    );
+    // below is already handled in the prefix component
+    // this.group.valueChanges.subscribe(
+    //   change => {
+    //     if (!change.prefix) {
+    //       this.group.patchValue({ prefix: '1' });
+    //       this.cdr.detectChanges();
+    //     } else {
+    //       this.countryCode = change.prefix;
+    //     }
+    //   }
+    // );
 
     this._setValidationStrategy();
 
@@ -129,7 +130,7 @@ export class SamIntlPhoneGroup extends SamFieldset
             || evt.root === this.group.root)
             && evt.eventType
             && evt.eventType === 'reset') {
-
+            console.log("clear???");
             this.wrapper.clearError();
 
           }
