@@ -1,18 +1,10 @@
 import {
   Component,
-  Input,
-  Output,
   ChangeDetectorRef,
-  ElementRef,
-  forwardRef,
-  ViewChild } from '@angular/core';
+  ViewChild,
+  ElementRef } from '@angular/core';
 
-import {
-  Validators,
-  ValidatorFn,
-  NG_VALIDATORS,
-  NgControl,
-  FormControl } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 import { SamFormService } from '../../../form-service';
 
@@ -37,25 +29,31 @@ import {
 })
 export class SamInternationalPrefix extends SamFormControl {
 
+  @ViewChild('input') public input: ElementRef;
+
   public min = 1;
   public max = 999;
-  public inputValue: any = 1;
+  public inputValue: any = '1';
   public defaultValidators = [ this.countryCodeValidator ];
 
-  protected defaultValue = 1;
+  protected defaultValue = '1';
 
   constructor (
     public samFormService: SamFormService,
     public cdr: ChangeDetectorRef ) {
 
     super(samFormService, cdr);
+  }
 
+  public ngOnInit () {
+    this.value = this.defaultValue;
   }
 
   public inputChange (event) {
     this.value = event.currentTarget.value
       ? event.currentTarget.value
-      : 1;
+      : '1';
+    this.input.nativeElement.value = this.value;
   }
 
   public validate (c: FormControl) {

@@ -1,7 +1,9 @@
 <sam-fieldset-wrapper
   [hint]="hint"
   [label]="label"
-  [formGroup]="group">
+  [formGroup]="group"
+  [errorMessages]="errorMessages"
+  [errorMessage]="errorMessage">
   <div class="sam-international-phone-container">
     <sam-international-prefix
       class="sam-international-phone-prefix"
@@ -9,14 +11,12 @@
       [label]="prefixLabel"
       [name]="prefixName"
       [required]="required"
-      [useFormService]="false"
     ></sam-international-prefix>
     <sam-telephone
       class="sam-international-telephone"
       [label]="phoneLabel"
       [name]="phoneName"
       formControlName="phone"
-      [useFormService]="false"
       [countryCode]="countryCode"
     ></sam-telephone>
   </div>

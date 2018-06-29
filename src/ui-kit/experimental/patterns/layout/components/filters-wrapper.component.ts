@@ -8,7 +8,10 @@ import {
   OnInit
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { DataStore, DataStoreEvent } from '../architecture';
+
+import {
+  SamPageNextService
+} from '../architecture';
 
 
 @Component({
@@ -19,42 +22,32 @@ export class SamFiltersWrapperComponent
   implements OnInit {
   @Input() public group: FormGroup;
 
-  constructor (private _store: DataStore) {}
+  constructor (private _service: SamPageNextService) {}
 
   public ngOnInit () {
     // Add initial form model to data structure
-    this._store.update(
-      {
-        type: 'FILTERS_CHANGED',
-        payload: this.group.value
-      }
+    this._service.model.properties['filters'].setValue(
+      this.group.value
     );
 
     // Update layout model when values change
     this.group.valueChanges.subscribe(
-      changes => this._store.update(
-        {
-          type: 'FILTERS_CHANGED',
-          payload: changes
-        }
-      )
+      changes => this._service.model
+        .properties['filters'].setValue(changes)
     );
 
     // Listen for external changes to value and update form
-    this._store.events.subscribe(
-      event => this._handleStoreEvents(event)
-    );
-  }
+    this._service.model.properties['filters']
+      .valueChanges.subscribe(
+        event => {
+          try {
+            this.group.setValue(event, { emitEvent: false })
+          } catch (e) {
+            return;
+          }
+        }
+      );
 
-  private _handleStoreEvents (e: DataStoreEvent) {
-    switch (e.type) {
-      case 'FILTERS_CHANGED':
-        return this.group.setValue(
-          this._store.currentState.filters,
-          { emitEvent: false }
-        );
-      default:
-        return;
-    }
   }
+  
 }
