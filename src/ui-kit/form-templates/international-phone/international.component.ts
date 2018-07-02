@@ -89,13 +89,15 @@ export class SamIntlPhoneGroup extends SamFieldset
     this.group.valueChanges.subscribe(
       change => {
         if (!change.prefix) {
-          this.group.patchValue({ prefix: '1' });
-          this.cdr.detectChanges();
+          this.group.patchValue({prefix: '1'});
         } else {
           this.countryCode = change.prefix;
         }
       }
     );
+
+    // Get initial value from Subject
+    this.group.updateValueAndValidity();
 
     this._setValidationStrategy();
 
@@ -129,18 +131,18 @@ export class SamIntlPhoneGroup extends SamFieldset
             || evt.root === this.group.root)
             && evt.eventType
             && evt.eventType === 'reset') {
-            console.log("clear???");
+
             this.wrapper.clearError();
 
           }
         },
-        (err: any) => console.error('Error occured')
+        (err: any) => console.error('Error occured', err)
       );
   }
 
   private _useDefaultStrategy (): void {
     this.group.valueChanges.subscribe(
-      change => {
+      _ => {
 
           this.wrapper.formatErrors(
             this.group.controls.prefix,

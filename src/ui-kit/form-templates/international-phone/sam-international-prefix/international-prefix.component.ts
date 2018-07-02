@@ -38,13 +38,12 @@ export class SamInternationalPrefix extends SamFormControl {
 
   protected defaultValue = '1';
 
-
   public get value (): any {
     return this._value;
   }
 
   public set value (val: any) {
-    this._value = !val ? this.defaultValue : val;
+    this._value = val ? val : this.defaultValue;
     this.inputValue = this._value;
   }
 
@@ -56,7 +55,9 @@ export class SamInternationalPrefix extends SamFormControl {
   }
 
   public ngOnInit () {
+    super.ngOnInit();
     this.value = this.defaultValue;
+    this.onChange(this.value);
   }
 
   public inputChange (event) {
@@ -78,7 +79,7 @@ export class SamInternationalPrefix extends SamFormControl {
   }
 
   public writeValue (val: any): void {
-    this.value = !val ? '1' : val;
+    this.value = val;
   }
 
   private countryCodeValidator (c: FormControl) {

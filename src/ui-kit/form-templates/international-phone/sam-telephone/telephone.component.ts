@@ -1,17 +1,13 @@
 import {
   Component,
   Input,
-  Output,
   OnChanges,
-  forwardRef,
   ChangeDetectorRef, 
   SimpleChanges, 
   ViewEncapsulation } from '@angular/core';
 
 import {
-  Validators,
   ValidatorFn,
-  NG_VALIDATORS,
   FormControl, 
   ValidationErrors } from '@angular/forms';
 
