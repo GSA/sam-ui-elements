@@ -9,7 +9,7 @@
         [attr.aria-label]="label"
         type="radio"
         (change)="onRadioChange(option.value)"
-        [attr.disabled]="disabled"
+        [attr.disabled]="option.disabled || disabled ? 'disabled': undefined"
         [attr.name]="name"
         [checked]="model === option.value">
       <label [attr.for]="option.name">{{option.label}}</label>
