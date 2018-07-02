@@ -3,7 +3,9 @@ import {
   Input,
   OnInit,
   ViewChild,
-  ViewEncapsulation } from '@angular/core';
+  ViewEncapsulation,
+  ChangeDetectorRef
+ } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
 import { SamFieldset } from './sam-fieldset/sam-fieldset';
@@ -71,7 +73,9 @@ export class SamIntlPhoneGroup extends SamFieldset
     'Country Code is 1 for USA and North America';
   public countryCode: string = '1';
   
-  constructor (private _formService: SamFormService) {
+  constructor (private _formService: SamFormService,
+    private cdr: ChangeDetectorRef
+  ) {
     super();
   }
 
@@ -85,12 +89,15 @@ export class SamIntlPhoneGroup extends SamFieldset
     this.group.valueChanges.subscribe(
       change => {
         if (!change.prefix) {
-          this.group.patchValue({prefix: '1'})
+          this.group.patchValue({prefix: '1'});
         } else {
           this.countryCode = change.prefix;
         }
       }
     );
+
+    // Get initial value from Subject
+    this.group.updateValueAndValidity();
 
     this._setValidationStrategy();
 
@@ -111,7 +118,7 @@ export class SamIntlPhoneGroup extends SamFieldset
       .subscribe(
         (evt: any) => {
           if ((!evt.root
-            || evt.root === this.group)
+            || evt.root === this.group.root)
             && evt.eventType
             && evt.eventType === 'submit') {
 
@@ -121,7 +128,7 @@ export class SamIntlPhoneGroup extends SamFieldset
             );
 
           } else if ((!evt.root
-            || evt.root === this.group)
+            || evt.root === this.group.root)
             && evt.eventType
             && evt.eventType === 'reset') {
 
@@ -129,13 +136,13 @@ export class SamIntlPhoneGroup extends SamFieldset
 
           }
         },
-        (err: any) => console.error('Error occured')
+        (err: any) => console.error('Error occured', err)
       );
   }
 
   private _useDefaultStrategy (): void {
     this.group.valueChanges.subscribe(
-      change => {
+      _ => {
 
           this.wrapper.formatErrors(
             this.group.controls.prefix,

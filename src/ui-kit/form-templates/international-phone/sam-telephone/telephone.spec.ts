@@ -1,13 +1,8 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { ChangeDetectorRef, SimpleChange } from '@angular/core';
-import { By } from '@angular/platform-browser';
-import { FormsModule, FormControl } from '@angular/forms';
+import { SimpleChange } from '@angular/core';
+
 // Load the implementations that should be tested
 import { SamTelephone } from './telephone.component';
-import { SamFormControlsModule } from '../../../form-controls';
-import { SamWrapperModule } from '../../../wrappers';
-import { SamUIKitModule } from '../../../index';
-import { SamFormService } from '../../../form-service';
+
 
 const mockEvent = {
   currentTarget: {
