@@ -1,18 +1,5 @@
-import {
-  Component,
-  Input,
-  ViewChild,
-  HostListener,
-  ChangeDetectorRef,
-  OnChanges,
-  AfterViewInit,
-  AfterViewChecked
-} from '@angular/core';
-
-import {
-  AbstractControl,
-  FormGroup
-} from '@angular/forms';
+import { Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 export class SamFieldset {
   /**
@@ -23,6 +10,10 @@ export class SamFieldset {
    * sets the hint text
    */
   @Input() public hint: string;
+  /**
+   * Set an array of error messages
+   */
+  @Input() public errorMessages: any[] = [];
   /**
    * set the error message
    */

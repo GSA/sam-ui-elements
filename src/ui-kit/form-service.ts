@@ -10,7 +10,6 @@ import {
   QueryEncoder
 } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs';
 import { Subject }    from 'rxjs/Subject';
 import { AbstractControl }    from '@angular/forms';
 

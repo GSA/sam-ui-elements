@@ -38,7 +38,8 @@ template: `
 <div class="sam-sort-header-container"
      [class.sam-sort-header-position-before]="arrowPosition == 'before'">
   <button class="sam-sort-header-button" type="button"
-          [attr.aria-label]="_intl.sortButtonLabel(id)">
+          [attr.aria-label]="_intl.sortButtonLabel(id)"
+          [attr.disabled]="disabled ? disabled : undefined">
     <ng-content></ng-content>
     <span *ngIf="_isSorted(); else not_sorted"
         class="fa"
@@ -71,6 +72,11 @@ export class SamSortHeaderComponent implements SamSortable, OnInit, OnDestroy {
     /** Sets the position of the arrow that displays when sorted. */
     @Input() arrowPosition: 'before' | 'after' = 'after';
 
+    /**
+     * Disables the sort event from firing
+     */
+    @Input() disabled: boolean = false;
+
     /** Overrides the sort start value of the containing MdSort for this SamSortable. */
     @Input('start') start: 'asc' | 'desc';
 
@@ -81,7 +87,9 @@ export class SamSortHeaderComponent implements SamSortable, OnInit, OnDestroy {
         return this._isSorted();
     }
     @HostListener('click') hostClick(){
-        return this._sort.sort(this);
+        if(!this.disabled){
+            return this._sort.sort(this);
+        }
     }
     get disableClear() { return this._disableClear; }
     set disableClear(v) { this._disableClear = coerceBooleanProperty(v); }
@@ -101,7 +109,7 @@ export class SamSortHeaderComponent implements SamSortable, OnInit, OnDestroy {
 
     ngOnInit() {
         if (!this.id && this._cdkColumnDef) {
-        this.id = this._cdkColumnDef.name;
+            this.id = this._cdkColumnDef.name;
         }
 
         this._sort.register(this);
