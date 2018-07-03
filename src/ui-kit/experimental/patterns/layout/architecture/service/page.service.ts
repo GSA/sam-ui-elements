@@ -4,7 +4,7 @@ import { ServiceModel, ServiceProperty } from './service-property';
 import { DataStore } from '../store';
 
 export type DataLayoutProperty = 'data'
-  | 'filters' | 'pagination' | 'sort' | 'actions';
+  | 'filters' | 'pagination' | 'sort';
 
 @Injectable()
 export class SamPageNextService {
@@ -27,8 +27,7 @@ export class SamPageNextService {
         pagination: {},
         sort: {},
         data: {},
-        filters: {},
-        actions: {}
+        filters: {}
       }
     );
 
