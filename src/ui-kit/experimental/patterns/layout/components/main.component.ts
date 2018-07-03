@@ -6,7 +6,7 @@ import {
   Input,
   forwardRef
 } from '@angular/core';
-import { SamFilterDrawerComponent, SamFilterDrawerItemComponent } from '../../../filter-drawer';
+import { SamFilterDrawerComponent } from '../../../filter-drawer';
 import { SamPageNextService } from '../architecture';
 
 @Component({

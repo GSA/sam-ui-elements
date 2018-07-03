@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { ServiceModel, ServiceProperty } from './service-property';
-import { DataStore } from '../store/datastore';
+import { DataStore } from '../store';
 
 export type DataLayoutProperty = 'data'
   | 'filters' | 'pagination' | 'sort' | 'actions';
