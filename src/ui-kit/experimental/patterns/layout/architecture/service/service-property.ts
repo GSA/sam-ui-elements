@@ -32,6 +32,8 @@ export abstract class AbstractServiceProperty {
 
   public abstract setValue (value: any): void
 
+  public abstract patchValue (value: any): void
+
   public abstract registerChanges (fn): void
 
   private _registerSource () {
@@ -54,6 +56,10 @@ export class ServiceProperty
 
   public setValue (value: any): void {
     this._updateFn(value);
+  }
+
+  public patchValue (value: any): void {
+    this._updateFn({...this.value, ...value});
   }
 
   public registerChanges (fn): void {
@@ -104,6 +110,10 @@ export class ServiceModel extends AbstractServiceProperty {
 
   public setValue (value: any) {
     this._updateFn(this.name)(value);
+  }
+
+  public patchValue (value: any): void {
+    this._updateFn(this.name)({...this.value, ...value});
   }
 
   public registerChanges (fn): void {

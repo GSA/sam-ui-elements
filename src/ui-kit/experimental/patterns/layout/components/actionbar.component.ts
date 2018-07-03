@@ -10,7 +10,9 @@ import { SamPageNextService } from '../architecture';
   selector: 'sam-action-bar',
   template: `
     <ng-content select="sam-databank-pagination"></ng-content>
-    <ng-content select=".action-control"></ng-content>
+    <div class="actions-container">
+      <ng-content select="[samPageAction]"></ng-content>
+    </div>
   `
 })
 export class SamActionBarComponent {
@@ -20,7 +22,9 @@ export class SamActionBarComponent {
   constructor (@Optional() private _service: SamPageNextService) {}
 
   public ngAfterContentInit () {
-    this._setupPagination();
+    if (this.pagination) {
+      this._setupPagination();
+    }
   }
 
   private _setupPagination () {

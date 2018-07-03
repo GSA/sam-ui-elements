@@ -2,15 +2,14 @@ import {
   Component,
   ElementRef,
   ViewEncapsulation,
-  Host,
   Renderer2,
-  HostBinding,
   NgZone,
   ContentChild
 } from '@angular/core';
 
 import { MdSidenavContainer, MdSidenav } from '../sidenav/sidenav';
 import { SamToolbarComponent } from '../toolbar.component';
+import { SamPageNextService } from '../../architecture';
 
 @Component({
   selector: 'sam-page-next',
@@ -21,6 +20,7 @@ export class SamPageNextComponent
   extends MdSidenavContainer {
 
   @ContentChild(MdSidenav) public aside: MdSidenav;
+
   @ContentChild(SamToolbarComponent)
     public toolbar: SamToolbarComponent;
 

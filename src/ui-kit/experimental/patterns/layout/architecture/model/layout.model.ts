@@ -8,7 +8,7 @@ export type modelType = {
    * 
    */
   data?: any,
-  sort?: sortModel
+  sort?: sortModel,
 }
 
 //single column sort

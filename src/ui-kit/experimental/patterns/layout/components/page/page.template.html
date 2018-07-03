@@ -13,8 +13,6 @@
   <div class="mat-sidenav-content"
     [ngStyle]="_getStyles()"
     cdk-scrollable>
-    <ng-content></ng-content>
+    <ng-content select="sam-main"></ng-content>
   </div>
-
-  <ng-content select="sam-modal"></ng-content>
 </div>
