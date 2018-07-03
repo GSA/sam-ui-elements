@@ -24,7 +24,7 @@ export class SamModalComponent implements OnInit {
    */
   @Input() id: string = '';
   /**
-   * Sets type of modal, takes values of "success", "warning", "error", or
+   * Sets type of modal, takes values of "success", "warning", "error", "plain" or
    * "info"
    */
   @Input() type: string;
@@ -89,7 +89,8 @@ export class SamModalComponent implements OnInit {
     'success': { class: 'usa-alert-success', sr: 'success alert'},
     'warning': { class: 'usa-alert-warning', sr: 'warning alert'},
     'error': { class: 'usa-alert-error', sr: 'error alert'},
-    'info': { class: 'usa-alert-info', sr: 'information alert'}
+    'info': { class: 'usa-alert-info', sr: 'information alert'},
+    'plain': { class: 'usa-alert-plain', sr: 'plain alert'}
   };
   public selectedType: string = this.types.success.class;
 
