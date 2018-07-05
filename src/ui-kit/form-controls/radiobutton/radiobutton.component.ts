@@ -18,7 +18,7 @@ import {
 import {SamFormService} from '../../form-service';
 
 /**
- * The <sam-radio-button> component is a set of checkboxes compliant with 
+ * The <sam-radio-button> component is a set of checkboxes compliant with
  * sam.gov standards
  */
 @Component({
@@ -69,8 +69,8 @@ export class SamRadioButtonComponent  {
   @Output() public modelChange: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild(FieldsetWrapper) public wrapper: FieldsetWrapper;
-  
-  private disabled = undefined;
+
+  public disabled = undefined;
 
 
   public ngOnInit() {
@@ -95,10 +95,10 @@ export class SamRadioButtonComponent  {
     this.onChange(value);
     this.modelChange.emit(value);
   }
-  
+
   public onChange: any = () => undefined;
   public onTouched: any = () => undefined;
-  
+
   public registerOnChange(fn) {
     this.onChange = fn;
   }

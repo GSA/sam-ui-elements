@@ -1,4 +1,4 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 // Load the implementations that should be tested
 import {
@@ -7,7 +7,6 @@ import {
 
 import { SamInternationalPrefix } from './sam-international-prefix';
 import { SamTelephone } from './sam-telephone/telephone.component';
-import { SamUIKitModule } from '../../index';
 import { SamFormService } from '../../form-service';
 import { SamWrapperModule } from '../../wrappers'; 
 import {

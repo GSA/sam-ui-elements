@@ -5,7 +5,7 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 
-import { SamPageNextComponent } from './page/page.component';
+import { SamPageNextComponent } from './page';
 import { MdSidenavModule } from './sidenav';
 import { SamActionBarComponent } from './actionbar.component';
 import { SamLayoutComponent } from './layout.component';
@@ -24,9 +24,9 @@ import {
 import {
   SamDatabankTitleSectionDirective
 } from './title-section.component';
-import { SamExperimentalModule } from '../../..';
 import { MdExpansionModule } from './expansion';
 import { SamPageTitle } from './main-section/page-title/page-title.component';
+import { SamPageActionDirective } from './page-action.directive';
 
 @NgModule({
   imports: [
@@ -37,6 +37,7 @@ import { SamPageTitle } from './main-section/page-title/page-title.component';
     MdExpansionModule
   ],
   declarations: [
+    // Components
     SamActionBarComponent,
     SamLayoutComponent,
     SamMainComponent,
@@ -47,7 +48,10 @@ import { SamPageTitle } from './main-section/page-title/page-title.component';
     SamResourcesWrapperComponent,
     SamDatabankTitleSectionDirective,
     SamPageNextComponent,
-    SamPageTitle
+    SamPageTitle,
+    
+    // Directives
+    SamPageActionDirective
   ],
   exports: [
     MdExpansionModule,
@@ -62,7 +66,8 @@ import { SamPageTitle } from './main-section/page-title/page-title.component';
     SamResourcesWrapperComponent,
     SamDatabankTitleSectionDirective,
     SamPageNextComponent,
-    SamPageTitle
+    SamPageTitle,
+    SamPageActionDirective
   ]
 })
 export class SamLayoutComponentsModule {}
