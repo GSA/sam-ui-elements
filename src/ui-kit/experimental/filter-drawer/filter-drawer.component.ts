@@ -10,7 +10,8 @@ import {
   AfterContentInit,
   forwardRef,
   ChangeDetectionStrategy,
-  AfterContentChecked
+  AfterContentChecked,
+  Optional
 } from '@angular/core';
 import { SamPageNextService } from '../patterns';
 
@@ -43,36 +44,48 @@ export class SamFilterDrawerItemComponent {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SamFilterDrawerComponent implements AfterContentChecked {
+  /**
+   * Event emitter for the 'clear' event
+   */
   @Output() public clear = new EventEmitter<any>();
+  /**
+   * Event emitter for the 'save' event
+   */
   @Output() public save = new EventEmitter<any>();
 
   @ContentChildren(forwardRef(() => SamFilterDrawerItemComponent))
     public items: QueryList<SamFilterDrawerItemComponent>;
   
-  constructor (private _service: SamPageNextService) {}
+  constructor (@Optional() private _service: SamPageNextService) {}
 
   public ngAfterContentChecked () {
-    this.items.forEach(
-      (el: SamFilterDrawerItemComponent) => {
-        el.remove.subscribe(
-          evt => this.removeFilter(evt)
-        );
-      }
-    );
+    this.setupPageServiceHandling();
   }
 
   public removeFilter (filterItem) {
     const removed = {};
     removed[filterItem.id] = '';
+    if(this._service){
+      const newValue = {
+        ...this._service.model.properties['filters'].value,
+        ...removed
+      };
 
-    const newValue = {
-      ...this._service.model.properties['filters'].value,
-      ...removed
-    };
-
-    this._service.model.properties['filters'].setValue(newValue);
+      this._service.model.properties['filters'].setValue(newValue);
+    }
   }
 
+  private setupPageServiceHandling(){
+    if(this.items){
+      this.items.forEach(
+        (el: SamFilterDrawerItemComponent) => {
+          el.remove.subscribe(
+            evt => this.removeFilter(evt)
+          );
+        }
+      );
+    }
+  }
 }
 
  
