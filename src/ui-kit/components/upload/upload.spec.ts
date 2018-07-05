@@ -8,6 +8,11 @@ import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { 
+  BrowserDynamicTestingModule, 
+  platformBrowserDynamicTesting 
+} 
+from '@angular/platform-browser-dynamic/testing';
 
 class MockHttpClient {
   request() {
@@ -33,9 +38,18 @@ describe('The Sam Upload component', () => {
   let host: any;
   let fixture: any;
 
+  TestBed.initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting());
+
+
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ TestHostComponent, SamUploadComponent, SamDragDropDirective, SamProgress, FilesizePipe  ],
+      declarations: [ 
+        TestHostComponent, 
+        SamUploadComponent, 
+        SamDragDropDirective, 
+        SamProgress, 
+        FilesizePipe  
+      ],
       imports: [ FormsModule, ReactiveFormsModule ],
       providers: [
         { provide: HttpClient, useClass: MockHttpClient },
@@ -79,9 +93,9 @@ describe('The Sam Upload component', () => {
     component.uploadRequest = () => request;
     component.deleteRequest = () => deleteRequest;
     component.onFilesChange(<any>list);
-    const firstFile = component._model[0];
+    const firstFile = component.fileCtrlConfig[0];
     expect(firstFile).toBeTruthy();
-    component.onCloseClick(firstFile);
-    expect(component._model.length).toBe(0);
+    component.onCloseClick(0);
+    expect(component.fileCtrlConfig.length).toBe(0);
   });
 });
