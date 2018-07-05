@@ -23,14 +23,14 @@
               <ng-container *ngIf="!fileCtrlConfig[i].isNameEditMode; else fileNameEdit">
                   <p *ngIf="isEditMode()">{{ fctrl.fileName }} </p>
                   <a *ngIf="!isEditMode()" class="file-link">{{ fctrl.fileName }} </a>
-                  <a class="pull-right inline-pencil-icon" (click)="onNameEditSwitch(i)" *ngIf="isEditMode()"><i class="fa fa-pencil"></i></a>
+                  <a class="pull-right inline-pencil-icon" (click)="onNameEditSwitch(i)" *ngIf="isEditMode()" tabindex=0><i class="fa fa-pencil"></i></a>
               </ng-container>
               <ng-template #fileNameEdit>
                 <div class="relative">
                   <input class="inline-name-input" [(ngModel)]="fctrl.shadowFileName" (keyup.enter)="onNameEditComplete(i)">
                   <span class="inline-icon-group">
-                    <a class="inline-edit-icon" (click)="onNameEditSwitch(i)"><i class="fa fa-reply"></i></a>
-                    <a class="inline-edit-icon" (click)="onNameEditComplete(i)"><i class="fa fa-check"></i></a>
+                    <a class="inline-edit-icon" (click)="onNameEditSwitch(i)" tabindex=0><i class="fa fa-reply"></i></a>
+                    <a class="inline-edit-icon" (click)="onNameEditComplete(i)" tabindex=0><i class="fa fa-check"></i></a>
                   </span>
                 </div>
               </ng-template>
@@ -44,10 +44,11 @@
             <td class="upload-table-props-col">
               <ng-container *ngIf="isEditMode(); else secureTag">
                 <input [attr.id]="'cbx-secure-'+i" 
+                  name="security-checkbox"
                   class="secure-cbx"
                   type="checkbox" 
-                  (click)="onCheckSecure($event.target.checked,i)"/>
-                <label [attr.for]="'cbx-secure-'+index" class="secure-lable">Secure</label>
+                  [(ngModel)]="fctrl.isSecure"/>
+                <label [attr.for]="'cbx-secure-'+i" class="secure-label">Secure</label>
               </ng-container>
               <ng-template #secureTag>
                 <span class="upload-secure-span" *ngIf="fctrl.isSecure"><i class="fa fa-lock"></i>&nbsp;Secure</span>
