@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -37,6 +38,7 @@ import { SamActionsDropdownComponent } from './actions/actions-dropdown';
 
 @NgModule({
   imports: [
+    FormsModule,
     CommonModule,
     RouterModule,
     SamFormControlsModule,

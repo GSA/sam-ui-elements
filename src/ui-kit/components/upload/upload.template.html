@@ -6,26 +6,87 @@
      [ngClass]=" { 'disabled': disabled, 'drag-border': shouldShowDropTarget() }"
      [ngStyle]="{'pointer-events': disabled ? 'none' : 'initial'}"
   >
-  <div class="file-container-no-drag" *ngIf="!shouldShowDropTarget()">
+  <div>
+    <table class="upload-table" *ngIf="fileCtrlConfig.length" [attr.id]="name+'-upload-table'">
+      <thead class="upload-table-header">
+        <th scope="col" align="left" class="p_L-4x">Document</th>
+        <th scope="col">File Size</th>
+        <th scope="col">Security</th>
+        <th scope="col" *ngIf="isEditMode()">Actions</th>
+        <th scope="col" *ngIf="!isEditMode()">Posted</th>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let fctrl of fileCtrlConfig; let i = index">
+          <tr class="upload-table-row" [ngClass]="getTableRowClass(fctrl)">
+            <td class="p_T-1x p_B-1x p_L-4x upload-table-doc-col">
+              <div class="pdf-icon"><i class="fa fa-file-pdf-o p_R-2x"></i> </div>
+              <ng-container *ngIf="!fileCtrlConfig[i].isNameEditMode; else fileNameEdit">
+                  <p *ngIf="isEditMode()">{{ fctrl.fileName }} </p>
+                  <a *ngIf="!isEditMode()" class="file-link">{{ fctrl.fileName }} </a>
+                  <a class="pull-right inline-pencil-icon" (click)="onNameEditSwitch(i)" *ngIf="isEditMode()"><i class="fa fa-pencil"></i></a>
+              </ng-container>
+              <ng-template #fileNameEdit>
+                <div class="relative">
+                  <input class="inline-name-input" [(ngModel)]="fctrl.shadowFileName" (keyup.enter)="onNameEditComplete(i)">
+                  <span class="inline-icon-group">
+                    <a class="inline-edit-icon" (click)="onNameEditSwitch(i)"><i class="fa fa-reply"></i></a>
+                    <a class="inline-edit-icon" (click)="onNameEditComplete(i)"><i class="fa fa-check"></i></a>
+                  </span>
+                </div>
+              </ng-template>
+              <div class="file-error" *ngIf="shouldShowError(i)">Error: {{getError(i)}}</div>
+
+              
+            </td>
+            <td class="upload-table-props-col">
+              {{ fctrl.fileSize | filesize }}
+            </td>
+            <td class="upload-table-props-col">
+              <ng-container *ngIf="isEditMode(); else secureTag">
+                <input [attr.id]="'cbx-secure-'+i" 
+                  class="secure-cbx"
+                  type="checkbox" 
+                  (click)="onCheckSecure($event.target.checked,i)"/>
+                <label [attr.for]="'cbx-secure-'+index" class="secure-lable">Secure</label>
+              </ng-container>
+              <ng-template #secureTag>
+                <span class="upload-secure-span" *ngIf="fctrl.isSecure"><i class="fa fa-lock"></i>&nbsp;Secure</span>
+                <span class="upload-secure-span" *ngIf="!fctrl.isSecure"><i class="fa fa-unlock"></i>&nbsp;Not Secure</span>
+              </ng-template>
+            </td>
+            <td class="upload-table-props-col" *ngIf="isEditMode()">
+              <i class="fa fa-chevron-up p_R-1x p_T-2x" (click)="swapFiles(i, i-1)" *ngIf="!fileCtrlConfig[i].isFirst"></i>
+              <i class="fa fa-chevron-down p_R-1x p_T-2x" (click)="swapFiles(i, i+1)" *ngIf="!fileCtrlConfig[i].isLast"></i>
+              <i class="fa fa-remove remove-icon p_T-2x" (click)="onCloseClick(i)"></i>
+            </td>
+            <td class="upload-table-props-col upload-table-date-col" *ngIf="!isEditMode()">
+              {{fctrl.date}}
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <div class="file-container-no-drag" *ngIf="!shouldShowDropTarget() && isEditMode()">
     <div class="text-center upload-cloud" *ngIf="!anyFiles()">
       <span class="fa fa-cloud-upload"></span>&nbsp;Drag and drop files here, or<a (click)="file.click()">&nbsp;browse</a>
     </div>
-    <div *ngFor="let uf of _model" class="file-item">
-      <div class="file-row">
+    <!-- <div *ngFor="let uf of _model" class="file-item"> -->
+      <!-- <div class="file-row">
         <div class="file-name">{{ uf.file.name }}</div>
         <div class="file-size">{{ uf.file.size | filesize }}</div>
         <div class="file-delete"><span class="icon close fa fa-times-circle" (click)="onCloseClick(uf)"></span></div>
-      </div>
-      <div class="file-progress" *ngIf="shouldShowProgressBar(uf)">
+      </div> -->
+      <!-- <div class="file-progress" *ngIf="shouldShowProgressBar(uf)">
         <sam-progress-bar [value]="uf.upload.progress"></sam-progress-bar>
-      </div>
-      <div class="file-error" *ngIf="shouldShowError(uf)" style="color: red">Error: {{uf.upload.error}}</div>
-    </div>
-    <div class="text-center" *ngIf="anyFiles() && shouldAllowMoreFiles()">
+      </div> -->
+      <!-- <div class="file-error" *ngIf="shouldShowError(uf)" style="color: red">Error: {{uf.upload.error}}</div> -->
+    <!-- </div> -->
+    <div class="text-center p_T-4x p_B-4x" *ngIf="anyFiles() && shouldAllowMoreFiles()">
       <span class="fa fa-cloud-upload"></span>&nbsp;Drag and drop files here, or<a (click)="file.click()">&nbsp;browse</a>
     </div>
   </div>
-  <div class="file-container-dragging text-center" *ngIf="shouldShowDropTarget()">
+  <div class="file-container-dragging text-center" *ngIf="shouldShowDropTarget() && isEditMode()">
     Drop Files Here
     <p class="text-center"><span class="fa fa-cloud-upload"></span></p>
   </div>
@@ -34,5 +95,12 @@
   </div>
 
   <!-- Hidden input to trigger the browser file selector -->
-  <input type="file" #file [attr.id]="name" [attr.accept]="accept" ngModel class="hide" (change)="onFilesChange($event.target.files)" [attr.multiple]="maxFiles === 0 || maxFiles > 1 ? 'multiple' : null">
+  <input type="file" 
+        #file 
+        [attr.id]="name" 
+        [attr.accept]="accept" 
+        ngModel 
+        class="hide" 
+        (change)="onFilesChange($event.target.files)" 
+        [attr.multiple]="maxFiles === 0 || maxFiles > 1 ? 'multiple' : null">
 </div>
