@@ -59,15 +59,7 @@ export class SamFilterDrawerComponent implements AfterContentChecked {
   constructor (@Optional() private _service: SamPageNextService) {}
 
   public ngAfterContentChecked () {
-    if(this.items){
-      this.items.forEach(
-        (el: SamFilterDrawerItemComponent) => {
-          el.remove.subscribe(
-            evt => this.removeFilter(evt)
-          );
-        }
-      );
-    }
+    this.setupPageServiceHandling();
   }
 
   public removeFilter (filterItem) {
@@ -83,6 +75,17 @@ export class SamFilterDrawerComponent implements AfterContentChecked {
     }
   }
 
+  private setupPageServiceHandling(){
+    if(this.items){
+      this.items.forEach(
+        (el: SamFilterDrawerItemComponent) => {
+          el.remove.subscribe(
+            evt => this.removeFilter(evt)
+          );
+        }
+      );
+    }
+  }
 }
 
  
