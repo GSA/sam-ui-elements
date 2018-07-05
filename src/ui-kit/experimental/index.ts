@@ -23,6 +23,7 @@ import { SamPickerComponent, SamPopoverComponent } from './picker';
 import { SamVideoPlayerComponent} from './video-player';
 import { SamInputMaskModule } from './input-mask';
 import { SamDataTableModule } from './data-table';
+import { SamPageTitle } from './page-title';
 import { SamLayoutComponentsModule } from './patterns';
 
 @NgModule({
@@ -54,6 +55,7 @@ import { SamLayoutComponentsModule } from './patterns';
     SamPopoverComponent,
     SamPickerComponent,
     SamVideoPlayerComponent,
+    SamPageTitle,
   ],
   exports: [
     SamBoxComponent,
@@ -78,7 +80,8 @@ import { SamLayoutComponentsModule } from './patterns';
     SamVideoPlayerComponent,
     SamInputMaskModule,
     SamDataTableModule,
-    SamLayoutComponentsModule
+    SamLayoutComponentsModule,
+    SamPageTitle
   ]
 })
 export class SamExperimentalModule { }

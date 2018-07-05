@@ -25,7 +25,6 @@ import {
   SamDatabankTitleSectionDirective
 } from './title-section.component';
 import { MdExpansionModule } from './expansion';
-import { SamPageTitle } from './main-section/page-title/page-title.component';
 import { SamPageActionDirective } from './page-action.directive';
 
 @NgModule({
@@ -48,7 +47,6 @@ import { SamPageActionDirective } from './page-action.directive';
     SamResourcesWrapperComponent,
     SamDatabankTitleSectionDirective,
     SamPageNextComponent,
-    SamPageTitle,
     
     // Directives
     SamPageActionDirective
@@ -66,7 +64,6 @@ import { SamPageActionDirective } from './page-action.directive';
     SamResourcesWrapperComponent,
     SamDatabankTitleSectionDirective,
     SamPageNextComponent,
-    SamPageTitle,
     SamPageActionDirective
   ]
 })
