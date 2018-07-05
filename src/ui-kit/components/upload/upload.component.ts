@@ -348,7 +348,7 @@ export class SamUploadComponent implements ControlValueAccessor {
   }
 
   onCloseClick(index) {
-    const file = this.fileCtrlConfig.splice(index, 1);
+    const file = this.fileCtrlConfig.splice(index, 1)[0];
     const uf = this._model.find(f => f.file.name === file.originName);
     if (uf) {
       this.removeUploadedFile(uf);

@@ -78,9 +78,9 @@
     </table>
   </div>
   <div class="file-container-no-drag" *ngIf="!shouldShowDropTarget() && isEditMode()">
-    <div class="text-center upload-cloud" *ngIf="!anyFiles()">
+    <!-- <div class="text-center upload-cloud" *ngIf="!anyFiles()">
       <span class="fa fa-cloud-upload"></span>&nbsp;Drag and drop files here, or<a (click)="file.click()">&nbsp;browse</a>
-    </div>
+    </div> -->
     <!-- <div *ngFor="let uf of _model" class="file-item"> -->
       <!-- <div class="file-row">
         <div class="file-name">{{ uf.file.name }}</div>
@@ -92,7 +92,7 @@
       </div> -->
       <!-- <div class="file-error" *ngIf="shouldShowError(uf)" style="color: red">Error: {{uf.upload.error}}</div> -->
     <!-- </div> -->
-    <div class="text-center p_T-4x p_B-4x" *ngIf="anyFiles() && shouldAllowMoreFiles()">
+    <div class="text-center p_T-4x p_B-4x" *ngIf="shouldAllowMoreFiles()">
       <span class="fa fa-cloud-upload"></span>&nbsp;Drag and drop files here, or<a (click)="file.click()">&nbsp;browse</a>
     </div>
   </div>
