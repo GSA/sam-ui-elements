@@ -154,13 +154,17 @@ export class SamUploadComponent implements ControlValueAccessor {
 
   ngOnInit() {
     if (this.uploadedFiles.length) {
-      this.fileCtrlConfig = this.uploadedFiles
-        .map(uf => this.initilizeFileCtrl(
-          uf, 
-          uf.isSecure, 
-          moment(uf.postedDate).format('MMM DD, YYYY h:mm a')));
-      this.updateFilePos();
+      this.setUploadedFiles(this.uploadedFiles);
     }
+  }
+
+  setUploadedFiles(uploadedFiles) {
+    this.fileCtrlConfig = uploadedFiles
+      .map(uf => this.initilizeFileCtrl(
+        uf, 
+        uf.isSecure, 
+        moment(uf.postedDate).format('MMM DD, YYYY h:mm a')));
+    this.updateFilePos();
   }
 
   registerOnChange(fn) {
@@ -337,15 +341,19 @@ export class SamUploadComponent implements ControlValueAccessor {
     const file = this.fileCtrlConfig.splice(index, 1);
     const uf = this._model.find(f => f.file.name === file.fileName);
     if (uf) {
-      const { upload } = uf;
-      if (upload.subscription && upload.status === UploadStatus.Uploading) {
-        upload.subscription.unsubscribe();
-      } else if (this.deleteRequest && upload.status === UploadStatus.Done) {
-        this.deleteFile(uf);
-      }
-      this.removeFileFromList(uf);
+      this.removeUploadedFile(uf);
     }
     this.updateFilePos();
+  }
+
+  removeUploadedFile(uf) {
+    const { upload } = uf;
+    if (upload.subscription && upload.status === UploadStatus.Uploading) {
+      upload.subscription.unsubscribe();
+    } else if (this.deleteRequest && upload.status === UploadStatus.Done) {
+      this.deleteFile(uf);
+    }
+    this.removeFileFromList(uf);
   }
 
   deleteFile(uf: UploadFile) {
