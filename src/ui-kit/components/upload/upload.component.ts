@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { Component, ElementRef, Input, ViewChild,
+import { Component, ElementRef, Input, ViewChild, Renderer2,
   forwardRef } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpEventType, 
   HttpHeaderResponse, HttpRequest } from '@angular/common/http';
@@ -148,13 +148,19 @@ export class SamUploadComponent implements ControlValueAccessor {
   /* The hidden file input dom element */
   @ViewChild('file') private fileInput: ElementRef;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private renderer: Renderer2) {
 
   }
 
   ngOnInit() {
     if (this.uploadedFiles.length) {
       this.setUploadedFiles(this.uploadedFiles);
+    }
+  }
+
+  ngOnChanges() {
+    if (!this.isEditMode()) {
+      this.fileCtrlConfig.forEach(fctrl => fctrl.isNameEditMode = false);
     }
   }
 
@@ -324,17 +330,26 @@ export class SamUploadComponent implements ControlValueAccessor {
     const curFileConfig = this.fileCtrlConfig[index];
     curFileConfig.shadowFileName = curFileConfig.fileName;
     curFileConfig.isNameEditMode = !curFileConfig.isNameEditMode;
+    if (curFileConfig.isNameEditMode) {
+      setTimeout(() => {
+        this.renderer.selectRootElement(`.inline-name-input-${index}`).focus();
+      }, 0);
+    }
   }
 
-  onNameEditComplete(index) {
+  onNameEditComplete(index, overwirte: boolean = true) {
     const curFileConfig = this.fileCtrlConfig[index];
-    curFileConfig.fileName = curFileConfig.shadowFileName;
+    if (overwirte) {
+      curFileConfig.fileName = curFileConfig.shadowFileName;
+    } else {
+      curFileConfig.shadowFileName = curFileConfig.fileName;
+    }
     curFileConfig.isNameEditMode = false;
   }
 
   onCloseClick(index) {
     const file = this.fileCtrlConfig.splice(index, 1);
-    const uf = this._model.find(f => f.file.name === file.fileName);
+    const uf = this._model.find(f => f.file.name === file.originName);
     if (uf) {
       this.removeUploadedFile(uf);
     }

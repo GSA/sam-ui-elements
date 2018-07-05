@@ -23,14 +23,14 @@
               <ng-container *ngIf="!fileCtrlConfig[i].isNameEditMode; else fileNameEdit">
                   <p *ngIf="isEditMode()">{{ fctrl.fileName }} </p>
                   <a *ngIf="!isEditMode()" class="file-link">{{ fctrl.fileName }} </a>
-                  <a class="pull-right inline-pencil-icon" (click)="onNameEditSwitch(i)" *ngIf="isEditMode()" tabindex=0 aria-label="edit-file-name"><i class="fa fa-pencil"></i></a>
+                  <button [ngClass]="'edit-btn-'+i" class="pull-right inline-pencil-icon clear-button" (click)="onNameEditSwitch(i)" *ngIf="isEditMode()" aria-label="edit-file-name"><i class="fa fa-pencil"></i></button>
               </ng-container>
               <ng-template #fileNameEdit>
                 <div class="relative">
-                  <input class="inline-name-input" [(ngModel)]="fctrl.shadowFileName" (keyup.enter)="onNameEditComplete(i)">
+                  <input [ngClass]="'inline-name-input-'+i" class="inline-name-input" [(ngModel)]="fctrl.shadowFileName" (keyup.enter)="onNameEditComplete(i)">
                   <span class="inline-icon-group">
-                    <a class="inline-edit-icon" (click)="onNameEditSwitch(i)" tabindex=0 aria-label="reset-name"><i class="fa fa-reply"></i></a>
-                    <a class="inline-edit-icon" (click)="onNameEditComplete(i)" tabindex=0 aria-label="apply-name"><i class="fa fa-check"></i></a>
+                    <button type="button" class="clear-button inline-edit-icon" (click)="onNameEditComplete(i, false)" aria-label="reset-name"><i class="fa fa-reply"></i></button>
+                    <button type="button" class="clear-button inline-edit-icon" (click)="onNameEditComplete(i)" aria-label="apply-name"><i class="fa fa-check"></i></button>
                   </span>
                 </div>
               </ng-template>
@@ -56,9 +56,18 @@
               </ng-template>
             </td>
             <td class="upload-table-props-col" *ngIf="isEditMode()">
-              <i class="fa fa-chevron-up p_R-1x p_T-2x" (click)="swapFiles(i, i-1)" *ngIf="!fileCtrlConfig[i].isFirst" tabindex=0 aria-label="move-up"></i>
-              <i class="fa fa-chevron-down p_R-1x p_T-2x" (click)="swapFiles(i, i+1)" *ngIf="!fileCtrlConfig[i].isLast" tabindex=0 aria-label="move-down"></i>
-              <i class="fa fa-remove remove-icon p_T-2x" (click)="onCloseClick(i)" tabindex=0 aria-label="delete"></i>
+              <button class="clear-button" (click)="swapFiles(i, i+1)" *ngIf="!fileCtrlConfig[i].isLast; else emptySpace">
+                <i class="fa fa-chevron-down p_R-1x p_T-2x" aria-label="move-down"></i>
+              </button>
+              <button class="clear-button" (click)="swapFiles(i, i-1)" *ngIf="!fileCtrlConfig[i].isFirst; else emptySpace">
+                <i class="fa fa-chevron-up p_R-1x p_T-2x" aria-label="move-up"></i>
+              </button>
+              <button [ngClass]="'delete-btn-'+i" class="clear-button" (click)="onCloseClick(i)">
+                <i class="fa fa-remove remove-icon p_T-2x"aria-label="delete"></i>
+              </button>
+              <ng-template #emptySpace>
+                <div style="display: inline-block; width: 30px"></div>
+              </ng-template>
             </td>
             <td class="upload-table-props-col upload-table-date-col" *ngIf="!isEditMode()">
               {{fctrl.date}}

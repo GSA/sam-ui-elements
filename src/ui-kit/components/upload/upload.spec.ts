@@ -8,6 +8,11 @@ import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { 
+  BrowserDynamicTestingModule, 
+  platformBrowserDynamicTesting 
+} 
+from '@angular/platform-browser-dynamic/testing';
 
 class MockHttpClient {
   request() {
@@ -32,6 +37,9 @@ describe('The Sam Upload component', () => {
   let component: SamUploadComponent;
   let host: any;
   let fixture: any;
+
+  TestBed.initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting());
+
 
   beforeEach(() => {
     TestBed.configureTestingModule({
