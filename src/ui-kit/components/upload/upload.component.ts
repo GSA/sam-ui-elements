@@ -320,11 +320,6 @@ export class SamUploadComponent implements ControlValueAccessor {
     });
   }
 
-  onCheckSecure(isChecked, index) {
-    const curFileConfig = this.fileCtrlConfig[index];
-    curFileConfig.isSecure = isChecked;
-  }
-
   onNameEditSwitch(index) {
     const curFileConfig = this.fileCtrlConfig[index];
     curFileConfig.shadowFileName = curFileConfig.fileName;
