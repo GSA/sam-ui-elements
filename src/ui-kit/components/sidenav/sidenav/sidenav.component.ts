@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { SamMenuItemComponent } from '../menu-item';
 import { SidenavService } from '../services';
 import { MenuItem } from '../interfaces';
+import { isEmpty } from 'lodash';
 
 /**
  * The <sam-sidenav> component builds a side navigation bar
@@ -74,7 +75,9 @@ export class SamSidenavComponent implements OnInit {
       //if model changes, need set to new model, and reset to 0 index tab
       this.service.setModel(this.model);
       this.service.setChildren(this.model.children);
-      this.updateUI(0, null, null);
+      if(c.model.previousValue && !isEmpty(c.model.previousValue)){
+        this.updateUI(0, null, null);
+      }
     }
     if (c.labelLookup && this.labelLookup) {
       const selection =
