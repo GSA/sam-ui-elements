@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SamUploadComponent, UploadStatus } from './upload.component';
+import { UploadStatus, SamUploadComponentV2 } from './upload-v2.component';
 import { SamDragDropDirective } from '../../directives/drag-drop/drag-drop.directive';
 import { FilesizePipe } from '../../pipes/filesize/filesize.pipe';
 import { SamProgress } from '../progress-bar/progress-bar.component';
@@ -29,13 +29,19 @@ class TestHostComponent {
 }
 
 describe('The Sam Upload component', () => {
-  let component: SamUploadComponent;
+  let component: SamUploadComponentV2;
   let host: any;
   let fixture: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ TestHostComponent, SamUploadComponent, SamDragDropDirective, SamProgress, FilesizePipe  ],
+      declarations: [ 
+        TestHostComponent, 
+        SamUploadComponent, 
+        SamDragDropDirective, 
+        SamProgress, 
+        FilesizePipe  
+      ],
       imports: [ FormsModule, ReactiveFormsModule ],
       providers: [
         { provide: HttpClient, useClass: MockHttpClient },
@@ -79,9 +85,9 @@ describe('The Sam Upload component', () => {
     component.uploadRequest = () => request;
     component.deleteRequest = () => deleteRequest;
     component.onFilesChange(<any>list);
-    const firstFile = component._model[0];
+    const firstFile = component.fileCtrlConfig[0];
     expect(firstFile).toBeTruthy();
-    component.onCloseClick(firstFile);
-    expect(component._model.length).toBe(0);
+    component.onCloseClick(0);
+    expect(component.fileCtrlConfig.length).toBe(0);
   });
 });
