@@ -70,6 +70,12 @@ export class SamSidenavComponent implements OnInit {
   }
 
   ngOnChanges(c) {
+    if(c.model) {
+      //if model changes, need set to new model, and reset to 0 index tab
+      this.service.setModel(this.model);
+      this.service.setChildren(this.model.children);
+      this.updateUI(0, null, null);
+    }
     if (c.labelLookup && this.labelLookup) {
       const selection =
         this.lookupLabelInModel(this.model.children, this.labelLookup, []);
