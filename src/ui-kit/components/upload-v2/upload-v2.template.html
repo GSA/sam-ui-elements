@@ -57,13 +57,13 @@
             </td>
             <td class="upload-table-props-col" *ngIf="isEditMode()">
               <button type="button" class="clear-button" (click)="swapFiles(i, i+1)" *ngIf="!fileCtrlConfig[i].isLast; else emptySpace">
-                <i class="fa fa-chevron-down p_R-1x p_T-2x" aria-label="move-down"></i>
+                <i class="fa fa-chevron-down p_R-1x" aria-label="move-down"></i>
               </button>
               <button type="button" class="clear-button" (click)="swapFiles(i, i-1)" *ngIf="!fileCtrlConfig[i].isFirst; else emptySpace">
-                <i class="fa fa-chevron-up p_R-1x p_T-2x" aria-label="move-up"></i>
+                <i class="fa fa-chevron-up p_R-1x" aria-label="move-up"></i>
               </button>
               <button type="button" [ngClass]="'delete-btn-'+i" class="clear-button" (click)="onCloseClick(i)">
-                <i class="fa fa-remove remove-icon p_T-2x"aria-label="delete"></i>
+                <i class="fa fa-remove remove-icon"aria-label="delete"></i>
               </button>
               <ng-template #emptySpace>
                 <div style="display: inline-block; width: 30px"></div>
