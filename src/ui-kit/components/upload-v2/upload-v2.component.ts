@@ -1,12 +1,14 @@
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { Component, ElementRef, Input, ViewChild,
+import { Component, ElementRef, Input, ViewChild, Renderer2,
   forwardRef } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpEventType, 
   HttpHeaderResponse, HttpRequest } from '@angular/common/http';
 import { DragState } from '../../directives/drag-drop/drag-drop.directive';
 import { HttpEvent } from '@angular/common/http/src/response';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { UploadedFileData } from '../../types';
+import * as moment from 'moment';
 
 export type RequestGenerator =
   (file: File) => HttpRequest<any> | Observable<HttpRequest<any>>;
@@ -39,7 +41,7 @@ function toArray(list) {
 
 const VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => SamUploadComponent),
+  useExisting: forwardRef(() => SamUploadComponentV2),
   multi: true
 };
 
@@ -66,12 +68,22 @@ export namespace UploadValidator {
 }
 
 @Component({
-  selector: 'sam-upload',
+  selector: 'sam-upload-v2',
   providers: [VALUE_ACCESSOR],
-  templateUrl: 'upload.template.html',
+  templateUrl: 'upload-v2.template.html',
 })
-export class SamUploadComponent implements ControlValueAccessor {
+export class SamUploadComponentV2 implements ControlValueAccessor {
 
+  /**
+   * Files that were already uploaded to server
+   */
+  @Input() public uploadedFiles: Array<UploadedFileData> = [];
+  /**
+   * Controls the mode of upload component, publish mode will only have
+   * the view permission, and edit mode allows you to edit the file name
+   * security check etc.
+   */
+  @Input() public mode: 'edit' | 'publish' = 'edit';
   /**
    * The request the gets called after a file has been selected for upload.
    * Report progress must be true if you want the progress bar.
@@ -123,6 +135,8 @@ export class SamUploadComponent implements ControlValueAccessor {
 
   public disabled: boolean = false;
 
+  public fileCtrlConfig: any = [];
+
   /* The list of visible files. Does not include deleted 
   files. Does include files with errors */
   public _model: Array<UploadFile> = [];
@@ -134,8 +148,29 @@ export class SamUploadComponent implements ControlValueAccessor {
   /* The hidden file input dom element */
   @ViewChild('file') private fileInput: ElementRef;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private renderer: Renderer2) {
 
+  }
+
+  ngOnInit() {
+    if (this.uploadedFiles.length) {
+      this.setUploadedFiles(this.uploadedFiles);
+    }
+  }
+
+  ngOnChanges() {
+    if (!this.isEditMode()) {
+      this.fileCtrlConfig.forEach(fctrl => fctrl.isNameEditMode = false);
+    }
+  }
+
+  setUploadedFiles(uploadedFiles) {
+    this.fileCtrlConfig = uploadedFiles
+      .map(uf => this.initilizeFileCtrl(
+        uf, 
+        uf.isSecure, 
+        moment(uf.postedDate).format('MMM DD, YYYY h:mm a')));
+    this.updateFilePos();
   }
 
   registerOnChange(fn) {
@@ -187,10 +222,45 @@ export class SamUploadComponent implements ControlValueAccessor {
     // concat old items and new items
     this._model = [...this._model, ...ufs];
 
+    // set up file table row config
+    this.fileCtrlConfig = [
+      ...this.fileCtrlConfig, 
+      ...ufs.map(uf => this.initilizeFileCtrl(uf.file))
+    ];
+    this.updateFilePos();
+
     if (!this.uploadDeferred) {
       this.doUpload(ufs);
     }
     this.emit();
+  }
+
+  initilizeFileCtrl(
+    {name, size}, 
+    isSecure = false, 
+    date = moment().format('MMM DD, YYYY h:mm a')) {
+    return {
+      date,
+      isSecure,
+      isNameEditMode: false,
+      fileName: name,
+      fileSize: size,
+      shadowFileName: name,
+      originName: name,
+      isFirst: false,
+      isLast: false
+    };
+  }
+
+  getTableRowClass(fctrl) {
+    if (this.shouldShowDropTarget() || !this.isEditMode()) {
+      return '';
+    }
+    return !fctrl.isLast ? '' : 'no-border';
+  }
+
+  getFileNameClass() {
+    return this.isEditMode() ? '' : 'upload-table-file-link';
   }
 
   startUpload() {
@@ -256,7 +326,37 @@ export class SamUploadComponent implements ControlValueAccessor {
     });
   }
 
-  onCloseClick(uf: UploadFile) {
+  onNameEditSwitch(index) {
+    const curFileConfig = this.fileCtrlConfig[index];
+    curFileConfig.shadowFileName = curFileConfig.fileName;
+    curFileConfig.isNameEditMode = !curFileConfig.isNameEditMode;
+    if (curFileConfig.isNameEditMode) {
+      setTimeout(() => {
+        this.renderer.selectRootElement(`.inline-name-input-${index}`).focus();
+      }, 0);
+    }
+  }
+
+  onNameEditComplete(index, overwirte: boolean = true) {
+    const curFileConfig = this.fileCtrlConfig[index];
+    if (overwirte) {
+      curFileConfig.fileName = curFileConfig.shadowFileName;
+    } else {
+      curFileConfig.shadowFileName = curFileConfig.fileName;
+    }
+    curFileConfig.isNameEditMode = false;
+  }
+
+  onCloseClick(index) {
+    const file = this.fileCtrlConfig.splice(index, 1)[0];
+    const uf = this._model.find(f => f.file.name === file.originName);
+    if (uf) {
+      this.removeUploadedFile(uf);
+    }
+    this.updateFilePos();
+  }
+
+  removeUploadedFile(uf) {
     const { upload } = uf;
     if (upload.subscription && upload.status === UploadStatus.Uploading) {
       upload.subscription.unsubscribe();
@@ -275,6 +375,25 @@ export class SamUploadComponent implements ControlValueAccessor {
     delete$.subscribe();
   }
 
+  isEditMode() {
+    return this.mode === 'edit';
+  }
+
+  swapFiles(x, y) {
+    const temp = this.fileCtrlConfig[x];
+    this.fileCtrlConfig[x] = this.fileCtrlConfig[y];
+    this.fileCtrlConfig[y] = temp; 
+    this.updateFilePos();
+  }
+
+  updateFilePos() {
+    this.fileCtrlConfig = this.fileCtrlConfig.map((fctrl, i) => {
+      fctrl.isFirst = i === 0;
+      fctrl.isLast = i === this.fileCtrlConfig.length - 1;
+      return fctrl;
+    });
+  }
+
   removeFileFromList(uf: UploadFile) {
     this._model = this._model.filter(_uf => _uf !== uf);
     if (!this._model.length) {
@@ -287,12 +406,22 @@ export class SamUploadComponent implements ControlValueAccessor {
     return !!(this._model && this._model.length);
   }
 
+  getError(index) {
+    const fileName = this.fileCtrlConfig[index].fileName;
+    return this._model.find(f => f.file.name === fileName).upload.error;
+  }
+
   shouldShowProgressBar(uf: UploadFile) {
     return uf.upload.status === UploadStatus.Uploading;
   }
 
-  shouldShowError(uf: UploadFile) {
-    return uf.upload.status === UploadStatus.Error;
+  shouldShowError(index) {
+    const fileName = this.fileCtrlConfig[index].fileName;
+    const uf = this._model.find(f => f.file.name === fileName);
+    if (!!uf) {
+      return uf.upload.status === UploadStatus.Error;
+    }
+    return false;
   }
 
   shouldShowDropTarget() {
