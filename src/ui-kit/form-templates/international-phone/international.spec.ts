@@ -1,4 +1,4 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 // Load the implementations that should be tested
 import {
@@ -7,7 +7,6 @@ import {
 
 import { SamInternationalPrefix } from './sam-international-prefix';
 import { SamTelephone } from './sam-telephone/telephone.component';
-import { SamUIKitModule } from '../../index';
 import { SamFormService } from '../../form-service';
 import { SamWrapperModule } from '../../wrappers'; 
 import {
@@ -70,73 +69,87 @@ describe('The Sam International Phone Group', () => {
       expect(expected).toBe(false);
     });
 
-    describe('onInit behavior', () => {
-
-      it('should throw if no name is provided for controls',
-        () => {
-          component.phoneName = '';
-          component.prefixName = '';
-
-          expect(component.ngOnInit).toThrow();
-
-          // Adding here to keep component from throwing
-          // during cleanup
-          component.phoneName = 'a';
-          component.prefixName = 'a';
-      });
-
-      it('should throw if no name is provided for prefix',
-        () => {
-        component.phoneName = 'asdf';
+    it('should throw if no name is provided for controls',
+      () => {
+        component.phoneName = '';
         component.prefixName = '';
 
-        expect(component.ngOnInit).toThrow();
-
-        // Adding here to keep component from throwing
-        // during cleanup
-        component.phoneName = 'a';
-        component.prefixName = 'a';
-      });
-
-      it('should throw if no name is provided for phone',
-        () => {
-        component.phoneName = '';
-        component.prefixName = 'asdf';
-
-        expect(component.ngOnInit).toThrow();
-
-        // Adding here to keep component from throwing
-        // during cleanup
-        component.phoneName = 'a';
-        component.prefixName = 'a';
-      });
-
-      it('should set controls from group', () => {
-        fixture.detectChanges();
-        expect(component.phoneControl)
-          .toEqual(component.group.controls.phone)
-
-        expect(component.prefixControl)
-          .toEqual(component.group.controls.prefix)
-      });
-
-      it('should correctly update countryCode and rerun\
-        validations when prefix changes', 
-        () => {
+        try {
+          fixture.detectChanges();
+          fail();
+        } catch (exception){
+          expect(true).toBe(true);
+          //fix component so it cleans up properly
           component.phoneName = 'a';
           component.prefixName = 'a';
-          fixture.detectChanges();
+          component.ngOnInit();
+        }
+    });
 
-          const countryCode = '2';
-          component.phoneControl.setValue('asdf')
-          component.prefixControl.setValue(countryCode);
+    it('should throw if no name is provided for prefix',
+      () => {
+      component.phoneName = 'asdf';
+      component.prefixName = '';
 
-          fixture.detectChanges();
-          const expected = component.countryCode;
+      try {
+        fixture.detectChanges();
+        fail();
+      } catch (exception){
+        expect(true).toBe(true);
+        //fix component so it cleans up properly
+        component.phoneName = 'a';
+        component.prefixName = 'a';
+        component.ngOnInit();
+      }
+    });
 
-          expect(expected).toEqual(countryCode);
-          expect(component.phoneControl.valid).toBe(false);
-      });
+    it('should throw if no name is provided for phone',
+      () => {
+      component.phoneName = '';
+      component.prefixName = 'asdf';
+
+      try {
+        fixture.detectChanges();
+        fail();
+      } catch (exception){
+        expect(true).toBe(true);
+        //fix component so it cleans up properly
+        component.phoneName = 'a';
+        component.prefixName = 'a';
+        component.ngOnInit();
+      }
+
+      // Adding here to keep component from throwing
+      // during cleanup
+      component.phoneName = 'a';
+      component.prefixName = 'a';
+    });
+
+    it('should set controls from group', () => {
+      fixture.detectChanges();
+      expect(component.phoneControl)
+        .toEqual(component.group.controls.phone)
+
+      expect(component.prefixControl)
+        .toEqual(component.group.controls.prefix)
+    });
+
+    it('should correctly update countryCode and rerun\
+      validations when prefix changes', 
+      () => {
+        component.phoneName = 'a';
+        component.prefixName = 'a';
+        fixture.detectChanges();
+
+        const countryCode = '2';
+        component.phoneControl.setValue('asdf')
+        component.prefixControl.setValue(countryCode);
+
+        fixture.detectChanges();
+        const expected = component.countryCode;
+
+        expect(expected).toEqual(countryCode);
+        expect(component.phoneControl.valid).toBe(false);
     });
   });
 });

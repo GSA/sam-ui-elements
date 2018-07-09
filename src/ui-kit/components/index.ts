@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -12,12 +13,9 @@ import { SamAlertFooterComponent, SamAlertFooterService } from './alert-footer';
 import { SamBadgeComponent } from './badge';
 import { SamBannerComponent } from './banner';
 import { SamBreadcrumbsComponent } from './breadcrumbs';
-import { SamCollapsibleComponent } from './collapsible';
 import { SamDownloadComponent } from './download';
-import { SamFiltersContainerComponent } from './filters-container';
 import { SamHeaderComponent } from './header';
 import { SamHistoryComponent } from './history';
-import { SamInfoAccordionComponent } from './info-accordion';
 import { SamLabelComponent } from './label';
 import { SamModalComponent } from './modal';
 import { SamMultiSelectDropdownComponent } from './multiselect-dropdown';
@@ -34,9 +32,11 @@ import { SamCommentsModule } from './comments';
 import { SamImageModule } from './image';
 import { SamActionButton} from './actions/action-button';
 import { SamActionsDropdownComponent } from './actions/actions-dropdown';
+import { SamUploadComponentV2 } from './upload-v2/upload-v2.component';
 
 @NgModule({
   imports: [
+    FormsModule,
     CommonModule,
     RouterModule,
     SamFormControlsModule,
@@ -55,12 +55,9 @@ import { SamActionsDropdownComponent } from './actions/actions-dropdown';
     SamBadgeComponent,
     SamBannerComponent,
     SamBreadcrumbsComponent,
-    SamCollapsibleComponent,
     SamDownloadComponent,
-    SamFiltersContainerComponent,
     SamHeaderComponent,
     SamHistoryComponent,
-    SamInfoAccordionComponent,
     SamLabelComponent,
     SamModalComponent,
     SamMultiSelectDropdownComponent,
@@ -71,6 +68,7 @@ import { SamActionsDropdownComponent } from './actions/actions-dropdown';
     SamTabsComponent,
     SamTabComponent,
     SamUploadComponent,
+    SamUploadComponentV2,
     SamActionButton,
     SamActionsDropdownComponent,
   ],
@@ -82,12 +80,9 @@ import { SamActionsDropdownComponent } from './actions/actions-dropdown';
     SamBadgeComponent,
     SamBannerComponent,
     SamBreadcrumbsComponent,
-    SamCollapsibleComponent,
     SamDownloadComponent,
-    SamFiltersContainerComponent,
     SamHeaderComponent,
     SamHistoryComponent,
-    SamInfoAccordionComponent,
     SamLabelComponent,
     SamModalComponent,
     SamMultiSelectDropdownComponent,
@@ -99,6 +94,7 @@ import { SamActionsDropdownComponent } from './actions/actions-dropdown';
     SamTabsComponent,
     SamTabComponent,
     SamUploadComponent,
+    SamUploadComponentV2,
     AccordionsModule,
     SamCommentsModule,
     SamImageModule,

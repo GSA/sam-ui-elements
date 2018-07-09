@@ -1,7 +1,5 @@
 import {
-  Component,
   Input,
-  Output,
   OnInit, 
   ViewChild,
   ChangeDetectorRef, 
@@ -12,7 +10,6 @@ import {
   ControlValueAccessor,
   FormControl,
   ValidatorFn,
-  AsyncValidatorFn,
   NG_VALUE_ACCESSOR, 
   NG_VALIDATORS} from '@angular/forms';
 

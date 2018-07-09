@@ -112,6 +112,10 @@ export interface AutocompleteConfig {
    * Sets whether categories can be selected or not
    */
   isCategorySelectable?: boolean;
+  /**
+   * Sets a title attribute value
+   */
+  title?: string;
 }
 
 export interface AutocompleteKeyValueConfig {
@@ -312,4 +316,23 @@ export interface TextAreaWidthType {
    * when full = true sets the dynamic css
    */
   full?: boolean;
+}
+
+export interface UploadedFileData {
+  /**
+   * Defines the file name for the uploaded file
+   */
+  name: string;
+  /**
+   * Defines file size for the uploaded file
+   */
+  size: number;
+  /**
+   * Defines the security level of the file uploaded
+   */
+  isSecure?: boolean;
+  /**
+   * Date the file got posted to server
+   */
+  postedDate: string;
 }

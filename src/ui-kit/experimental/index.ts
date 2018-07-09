@@ -4,6 +4,8 @@ import { RouterModule } from '@angular/router';
 
 import { SamBoxComponent } from './box';
 import { SamContainerComponent } from './container';
+import { SamFilterDrawerItemComponent } from './filter-drawer';
+import { SamFilterDrawerComponent } from './filter-drawer';
 import { SamIconComponent } from './icon';
 import { SamLabelNextComponent } from './label';
 import { SamLayoutComponent } from './layout';
@@ -18,17 +20,25 @@ import { SamPageSidebarComponent } from './page';
 import { SamTitleComponent } from './title';
 import { SamYoutubeComponent } from './youtube';
 import { SamPickerComponent, SamPopoverComponent } from './picker';
-import {SamVideoPlayerComponent} from "./video-player";
-
+import { SamVideoPlayerComponent} from './video-player';
+import { SamInputMaskModule } from './input-mask';
+import { SamDataTableModule } from './data-table';
+import { SamPageTitle } from './page-title';
+import { SamLayoutComponentsModule } from './patterns';
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    SamInputMaskModule,
+    SamDataTableModule,
+    SamLayoutComponentsModule,
   ],
   declarations: [
     SamBoxComponent,
     SamContainerComponent,
+    SamFilterDrawerItemComponent,
+    SamFilterDrawerComponent,
     SamIconComponent,
     SamLabelNextComponent,
     SamLayoutComponent,
@@ -45,10 +55,13 @@ import {SamVideoPlayerComponent} from "./video-player";
     SamPopoverComponent,
     SamPickerComponent,
     SamVideoPlayerComponent,
+    SamPageTitle,
   ],
   exports: [
     SamBoxComponent,
     SamContainerComponent,
+    SamFilterDrawerItemComponent,
+    SamFilterDrawerComponent,
     SamIconComponent,
     SamLabelNextComponent,
     SamLayoutComponent,
@@ -65,7 +78,10 @@ import {SamVideoPlayerComponent} from "./video-player";
     SamPopoverComponent,
     SamPickerComponent,
     SamVideoPlayerComponent,
-
+    SamInputMaskModule,
+    SamDataTableModule,
+    SamLayoutComponentsModule,
+    SamPageTitle
   ]
 })
 export class SamExperimentalModule { }

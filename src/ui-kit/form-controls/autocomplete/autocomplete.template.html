@@ -6,19 +6,19 @@
              [attr.tabindex]="tabIndex"
              #input autocomplete="off"
              [attr.placeholder]="config?.placeholder"
+             [attr.title]="config?.title"
              [attr.name]="name"
              type="text"
              (focus)="inputFocusHandler($event)"
              (keydown)="onKeydown($event)"
              (keyup)="onKeyup($event)"
              [(ngModel)]="inputValue"
-             (ngModelChange)="onChange()"
-             [attr.aria-label]="name">
+             (ngModelChange)="onChange()">
       <ng-container *ngIf="!input.disabled">
-        <span [attr.tabindex]="tabIndex" class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}">
-          <span class="fa fa-times-circle" aria-hidden="true" (click)="clearInput()" (keyup.enter)="clearInput()"></span>
+        <span  class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}">
+          <span role="button" [attr.tabindex]="tabIndex" class="fa fa-times-circle" aria-label="Clear input" aria-hidden="false" (click)="clearInput()" (keyup.enter)="clearInput()">
+          </span>
         </span>
-        <span class="sr-only">Clear input.</span>
       </ng-container>
       <span *ngIf="config && config.addOnIconClass && config.addOnIconName" (click)="addOnIconClick()" class="add-on" role="button">
         <span class="{{config.addOnIconClass}}"></span>

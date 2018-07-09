@@ -1,36 +1,16 @@
 import {
   Component,
   Input,
-  Output,
-  OnChanges,
   OnInit,
-  OnDestroy,
-  AfterViewInit,
   ViewChild,
-  Type,
-  ComponentFactoryResolver,
-  ViewContainerRef,
-  ComponentFactory, 
-  ComponentRef,
-  ChangeDetectorRef,
-  Renderer2, 
-  ViewEncapsulation, 
-  SimpleChanges } from '@angular/core';
-
-import {
-  FormGroup,
-  FormControl,
-  AbstractControl } from '@angular/forms';
+  ViewEncapsulation,
+  ChangeDetectorRef
+ } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
 
 import { SamFieldset } from './sam-fieldset/sam-fieldset';
-
-import {
-  SamInternationalPrefix
-} from './sam-international-prefix';
-
-import { SamFormService } from '../../form-service';
 import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
-import { Subscription } from 'rxjs';
+import { SamFormService } from '../../form-service';
 
 @Component({
   selector: 'sam-intl-telephone-group',
@@ -74,10 +54,10 @@ import { Subscription } from 'rxjs';
   templateUrl: 'international.template.html'
 })
 export class SamIntlPhoneGroup extends SamFieldset
-  implements OnInit, OnDestroy {
+  implements OnInit {
 
   @Input() public name: string;
-  @Input() public useFormService: boolean = true;
+  @Input() public useFormService: boolean = false;
   @Input() public useDefaultValidations: boolean = true;
   @Input() public phoneName: string;
   @Input() public prefixName: string;
@@ -91,15 +71,11 @@ export class SamIntlPhoneGroup extends SamFieldset
   public prefixError: string = '';
   public hint =
     'Country Code is 1 for USA and North America';
-  public countryCode: any;
-  private phoneNumberTemplate: string = '(___)___-____';
-  private phoneComponentRef: ComponentRef<any>;
-  private idError: string =
-    'Must provide an id for prefix and phone';
-  private prefixSub: Subscription;
-  private phoneSub: Subscription;
+  public countryCode: string = '1';
   
-  constructor () {
+  constructor (private _formService: SamFormService,
+    private cdr: ChangeDetectorRef
+  ) {
     super();
   }
 
@@ -110,44 +86,70 @@ export class SamIntlPhoneGroup extends SamFieldset
       throw new TypeError(msg);
     }
 
+    this.group.valueChanges.subscribe(
+      change => {
+        if (!change.prefix) {
+          this.group.patchValue({prefix: '1'});
+        } else {
+          this.countryCode = change.prefix;
+        }
+      }
+    );
+
+    // Get initial value from Subject
+    this.group.updateValueAndValidity();
+
+    this._setValidationStrategy();
+
     this.prefixControl = this.group.controls.prefix;
     this.phoneControl = this.group.controls.phone;
+  }
 
-    this.prefixSub = this.prefixControl.valueChanges
+  private _setValidationStrategy () {
+    if (!this.useFormService) {
+      this._useDefaultStrategy();
+    } else {
+      this._useFormServiceStrategy();
+    }
+  }
+
+  private _useFormServiceStrategy (): void {
+    this._formService.formEventsUpdated$
       .subscribe(
-        val => {
-          this.countryCode = val;
-          /**
-           * Necessary to keep group up-to-date with value 
-           * changes inside the form control. Without this,
-           * it either will not update validation when 
-           * country code changes or it will throw a timing
-           * error.
-           */
-          this.phoneControl
-            .setValue(this.phoneControl.value);
+        (evt: any) => {
+          if ((!evt.root
+            || evt.root === this.group.root)
+            && evt.eventType
+            && evt.eventType === 'submit') {
+
+            this.wrapper.formatErrors(
+              this.group.controls.prefix,
+              this.group.controls.phone
+            );
+
+          } else if ((!evt.root
+            || evt.root === this.group.root)
+            && evt.eventType
+            && evt.eventType === 'reset') {
+
+            this.wrapper.clearError();
+
+          }
         },
-        err => this._handleError(err)
+        (err: any) => console.error('Error occured', err)
       );
+  }
 
-    this.phoneSub = this.phoneControl.valueChanges
-      .subscribe(
-        val => {
+  private _useDefaultStrategy (): void {
+    this.group.valueChanges.subscribe(
+      _ => {
+
           this.wrapper.formatErrors(
-            this.prefixControl,
-            this.phoneControl
+            this.group.controls.prefix,
+            this.group.controls.phone
           );
-        },
-        err => this._handleError(err)
-      );
+        }
+    );
   }
 
-  public ngOnDestroy () {
-    this.prefixSub.unsubscribe();
-    this.phoneSub.unsubscribe();
-  }
-
-  private _handleError (err) {
-    console.error(err);
-  }
 }

@@ -4,7 +4,8 @@ import {
   Output,
   EventEmitter,
   OnChanges,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  AfterViewInit
 } from '@angular/core';
 
 
@@ -99,7 +100,7 @@ import {
     </page>
   `
 })
-export class FormStepComponent implements OnChanges {
+export class FormStepComponent implements OnChanges, AfterViewInit {
   /**
    * Sets breadcrumbs model
    */
@@ -194,6 +195,10 @@ export class FormStepComponent implements OnChanges {
   @Output() statusBannerExpandedChange = new EventEmitter();
 
   constructor(private cdr: ChangeDetectorRef) {
+  }
+
+  ngAfterViewInit() {
+    this.cdr.detectChanges();
   }
 
   ngOnChanges() {

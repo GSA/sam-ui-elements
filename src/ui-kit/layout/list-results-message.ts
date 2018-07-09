@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges  } from '@angular/core';
-import { NumberFormatter } from '@angular/common/src/pipes/intl';
+
 /**
 * ListResultsMessageComponent - Lists results message component
 */

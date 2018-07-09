@@ -5,9 +5,9 @@
   [hint]="hint"
   [errorMessage]="errorMessage"
   [required]="required">
-  <input
+  <input #input
     class="sam-international-prefix"
-    [ngModel]="inputValue" 
+    [(ngModel)]="inputValue" 
     (change)="inputChange($event)"
     type="text" 
     [attr.id]="name" 

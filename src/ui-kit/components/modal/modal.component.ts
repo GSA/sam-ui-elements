@@ -24,7 +24,7 @@ export class SamModalComponent implements OnInit {
    */
   @Input() id: string = '';
   /**
-   * Sets type of modal, takes values of "success", "warning", "error", or
+   * Sets type of modal, takes values of "success", "warning", "error", "plain" or
    * "info"
    */
   @Input() type: string;
@@ -89,7 +89,8 @@ export class SamModalComponent implements OnInit {
     'success': { class: 'usa-alert-success', sr: 'success alert'},
     'warning': { class: 'usa-alert-warning', sr: 'warning alert'},
     'error': { class: 'usa-alert-error', sr: 'error alert'},
-    'info': { class: 'usa-alert-info', sr: 'information alert'}
+    'info': { class: 'usa-alert-info', sr: 'information alert'},
+    'plain': { class: 'usa-alert-plain', sr: 'plain alert'}
   };
   public selectedType: string = this.types.success.class;
 
@@ -105,6 +106,11 @@ export class SamModalComponent implements OnInit {
   private _scrollHelpers: any;
 
   private args = undefined;
+  public modalElIds = {
+    closeId: '',
+    submitId: '',
+    cancelId: ''
+  };
 
   constructor(private hostElement: ElementRef, private cdr: ChangeDetectorRef) {
     this.internalId = Date.now();
@@ -115,6 +121,7 @@ export class SamModalComponent implements OnInit {
     if (!this.typeNotDefined()) {
       this.selectedType = this.types[this.type].class;
     }
+    this.setModalElementIds();
   }
 
   set508() {
@@ -143,7 +150,6 @@ export class SamModalComponent implements OnInit {
       }
       this._focusModalElement = false;
     }
-
   }
 
   removeTabbable(item: any) {
@@ -235,5 +241,12 @@ export class SamModalComponent implements OnInit {
 
   private preventClosing(evt) {
     evt.stopPropagation();
+  }
+  private setModalElementIds() {
+    if (this.id) {
+      this.modalElIds.cancelId = this.id + 'Cancel';
+      this.modalElIds.closeId = this.id + 'Close';
+      this.modalElIds.submitId = this.id + 'Submit';
+    }
   }
 }

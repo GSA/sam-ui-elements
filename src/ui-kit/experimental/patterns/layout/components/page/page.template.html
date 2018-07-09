@@ -1,0 +1,18 @@
+<ng-content select="sam-toolbar"></ng-content>
+
+<div class="mat-sidenav-container"
+  [ngClass]="{'mat-sidenav-transition': _enableTransitions}">
+
+  <div class="mat-sidenav-backdrop"
+    (click)="_onBackdropClicked()"
+    [class.mat-sidenav-shown]="_isShowingBackdrop()"
+  ></div>
+
+  <ng-content select="sam-aside"></ng-content>
+
+  <div class="mat-sidenav-content"
+    [ngStyle]="_getStyles()"
+    cdk-scrollable>
+    <ng-content select="sam-main"></ng-content>
+  </div>
+</div>

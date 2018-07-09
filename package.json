@@ -1,6 +1,6 @@
 {
   "name": "sam-ui-elements",
-  "version": "13.4.0",
+  "version": "14.2.2",
   "description": "SAM Client Side Implementation",
   "keywords": [
     "angular2",
@@ -62,6 +62,7 @@
   },
   "peerDependencies": {
     "@angular/animations": "4.3.3",
+    "@angular/cdk": "2.0.0-beta.8",
     "@angular/common": "4.3.3",
     "@angular/compiler": "4.3.3",
     "@angular/compiler-cli": "4.3.3",

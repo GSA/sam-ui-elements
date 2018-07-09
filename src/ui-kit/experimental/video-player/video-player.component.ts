@@ -37,18 +37,18 @@ export class SamVideoPlayerComponent {
     }
 
     if (this.sources.length === 0) {
-      console.error('SamVideoComponent must be provide a <source> element to functionor or provide template variable #videoTrack');
+      console.error('SamVideoComponent must be provide a <source> element to function or provide template variable #videoTrack');
     }
 
     if (this.tracks.length === 0) {
-      console.error('SamVideoComponent must be provide a <track> element with captions for 508 complianceor or provide template variable #videoSrc');
+      console.error('SamVideoComponent must be provide a <track> element with captions for 508 compliance or provide template variable #videoSrc');
     }
   }
 
   ngAfterViewInit() {
     this.config = {
       "videoId": this.videoId,
-      "captionsOnDefault": this.captionOption ? this.captionOption : true,
+      "captionsOnDefault": this.captionOption,
       "seekInterval": this.seekInterval ? this.seekInterval : 10,
       "videoTitle": this.title ? this.title : 'Sam Video',
       "debug": true
@@ -57,7 +57,12 @@ export class SamVideoPlayerComponent {
     // Initialize video player
     new InitPxVideo(this.config);
 
-    const el = this.template.nativeElement.querySelector('progress');
-    this.render.setAttribute(el, 'name', this.videoId);
+    const progressEl = this.template.nativeElement.querySelector('progress');
+    const videoEl = this.template.nativeElement.querySelector('video');
+    this.render.setAttribute(progressEl, 'name', this.videoId);
+    this.render.setAttribute(progressEl, 'aria-label', 'video progress bar');
+    this.render.setAttribute(progressEl, 'role', 'progressbar');
+    this.render.setAttribute(videoEl, 'name', this.videoId);
+    this.render.setAttribute(videoEl, 'role', 'presentation');
   }
 }

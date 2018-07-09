@@ -64,8 +64,7 @@
                                 handleEnterEvent($event))))))"
                       (keyup)="applyTextAreaWidth(handleEnterEvent($event))"
                       *ngIf="!isDisabled"
-                      (focus)="filterOptions(searchText ? searchText : '')"
-                      aria-label="autocomplete-multiselect">
+                      (focus)="filterOptions(searchText ? searchText : '')">
             </textarea>
 
 

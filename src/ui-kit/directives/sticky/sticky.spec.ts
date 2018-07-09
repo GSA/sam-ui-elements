@@ -58,7 +58,6 @@ describe('The Sam Sticky directive', () => {
     directive.resize({});
     const comp = fixture.debugElement.query(By.css('.test-comp'));
     fixture.detectChanges();
-    console.log(window.innerWidth, directive.limit);
     expect(comp.nativeElement.getAttribute('style')).toContain('position: static');
   });
 

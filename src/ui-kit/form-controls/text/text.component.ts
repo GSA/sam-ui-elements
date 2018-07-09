@@ -44,6 +44,10 @@ export class SamTextComponent implements ControlValueAccessor, OnDestroy {
   */
   @Input() public label: string;
   /**
+  * Sets the id attribute
+  */
+  @Input() public id: string;
+  /**
   * Sets the name attribute
   */
   @Input() public name: string;
@@ -79,6 +83,10 @@ export class SamTextComponent implements ControlValueAccessor, OnDestroy {
    * Optional text to be displayed when the text area is empty
    */
   @Input() public placeholder: string;
+  /**
+   * Sets the title attribute on the input for accessibility
+   */
+  @Input() public title: string;
   /**
    * (deprecated) Lose focus event emit
    */

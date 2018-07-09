@@ -73,7 +73,6 @@ describe('The AlertFooter component', () => {
       });
       component.refreshAlerts();
       fixture.detectChanges();
-      // console.log(fixture.nativeElement.querySelector("samalert"));
       expect(
         fixture.nativeElement.querySelectorAll('sam-alert').length
       )
