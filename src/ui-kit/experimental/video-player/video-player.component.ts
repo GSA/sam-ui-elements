@@ -33,15 +33,15 @@ export class SamVideoPlayerComponent {
 
   ngAfterContentInit() {
     if (this.videos.length === 0) {
-      console.error('SamVideoComponent must be provide a <video> element to function or provide template variable #videoPly');
+      console.warn('SamVideoComponent must be provide a <video> element to function or provide template variable #videoPly');
     }
 
     if (this.sources.length === 0) {
-      console.error('SamVideoComponent must be provide a <source> element to function or provide template variable #videoTrack');
+      console.warn('SamVideoComponent must be provide a <source> element to function or provide template variable #videoSrc');
     }
 
     if (this.tracks.length === 0) {
-      console.error('SamVideoComponent must be provide a <track> element with captions for 508 compliance or provide template variable #videoSrc');
+      console.warn('SamVideoComponent must be provide a <track> element with captions for 508 compliance or provide template variable #videoTrack');
     }
   }
 
@@ -64,5 +64,10 @@ export class SamVideoPlayerComponent {
     this.render.setAttribute(progressEl, 'role', 'progressbar');
     this.render.setAttribute(videoEl, 'name', this.videoId);
     this.render.setAttribute(videoEl, 'role', 'presentation');
+  }
+
+  ngOnDestroy() {
+    let pxAnounce = document.getElementById('px-video-aria-announce');
+    if (pxAnounce) pxAnounce.remove();
   }
 }
