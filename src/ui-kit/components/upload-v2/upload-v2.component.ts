@@ -326,7 +326,8 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     });
   }
 
-  onNameEditSwitch(index) {
+  onNameEditSwitch(index, event) {
+    event.preventDefault();
     const curFileConfig = this.fileCtrlConfig[index];
     curFileConfig.shadowFileName = curFileConfig.fileName;
     curFileConfig.isNameEditMode = !curFileConfig.isNameEditMode;
