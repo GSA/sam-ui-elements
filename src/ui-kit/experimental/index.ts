@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { SamBoxComponent } from './box';
@@ -25,6 +26,8 @@ import { SamInputMaskModule } from './input-mask';
 import { SamDataTableModule } from './data-table';
 import { SamPageTitle } from './page-title';
 import { SamLayoutComponentsModule } from './patterns';
+import { SamDollarComponent } from './dollar';
+import { SamWrapperModule } from '../wrappers';
 
 @NgModule({
   imports: [
@@ -33,6 +36,8 @@ import { SamLayoutComponentsModule } from './patterns';
     SamInputMaskModule,
     SamDataTableModule,
     SamLayoutComponentsModule,
+    FormsModule,
+    SamWrapperModule,
   ],
   declarations: [
     SamBoxComponent,
@@ -56,6 +61,7 @@ import { SamLayoutComponentsModule } from './patterns';
     SamPickerComponent,
     SamVideoPlayerComponent,
     SamPageTitle,
+    SamDollarComponent,
   ],
   exports: [
     SamBoxComponent,
@@ -81,7 +87,8 @@ import { SamLayoutComponentsModule } from './patterns';
     SamInputMaskModule,
     SamDataTableModule,
     SamLayoutComponentsModule,
-    SamPageTitle
+    SamPageTitle,
+    SamDollarComponent,
   ]
 })
 export class SamExperimentalModule { }
