@@ -133,7 +133,7 @@ export class SamDollarComponent extends SamFormControl {
     this.attrType = 'text';
     const value = this.strToDollar(this.value);
     if (value !== this.previousValue) {
-        this.onInputChange2(value);
+        this.emitChange(value);
         this.previousValue = value;
     }
     this.value = value;
@@ -171,12 +171,11 @@ export class SamDollarComponent extends SamFormControl {
   }
 
   public onInputChange() {
-    this.onTouched();
     const value: any = this.strToDollar(this.value);
-    this.onChange(value);
+    this.emitChange(value);
   }
 
-  public onInputChange2(value) {
+  public emitChange(value) {
     this.onTouched();
     this.onChange(value);
   }
