@@ -1,15 +1,14 @@
 <sam-label-wrapper
   [label]="label"
-  [name]="id ? id : name"
+  [name]="id"
   [hint]="hint"
-  [errorMessage]="errorMessage"
   [required]="required">
   <input
     [attr.type]="attrType"
     [attr.title]="title ? title : undefined"
-    [attr.id]="id ? id : name"
+    [attr.id]="id"
+    [attr.name]="name"
     [(ngModel)]="value"
-    [attr.maxlength]="maxlength ? maxlength : 524288"
     [attr.placeholder]="placeholder"
     [disabled]="disabled"
     [ngClass]="{'dollar-text':attrType=='text'}"

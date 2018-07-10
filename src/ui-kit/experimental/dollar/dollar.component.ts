@@ -10,7 +10,6 @@ import {
     OnDestroy,
     AfterViewInit
   } from '@angular/core';
-import { LabelWrapper } from '../../wrappers/label-wrapper';
 import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
@@ -19,8 +18,10 @@ import {
   ValidatorFn
 } from '@angular/forms';
 import { Subject } from 'rxjs/Subject';
+import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { SamFormService } from '../../form-service';
 import { KeyHelper } from '../../utilities/key-helper/key-helper';
+import { SamFormControl } from '../../form-controls/sam-form-control';
 
 @Component({
     selector: 'sam-dollar',
@@ -31,59 +32,11 @@ import { KeyHelper } from '../../utilities/key-helper/key-helper';
         multi: true
     }]
 })
-export class SamDollarComponent implements ControlValueAccessor, OnInit, OnDestroy, AfterViewInit {
-  /**
-  * Sets the text input value
-  */
-  @Input() public value: string = '';
-  /**
-  * Sets the label text
-  */
-  @Input() public label: string;
-  /**
-  * Sets the id attribute
-  */
-  @Input() public id: string;
-  /**
-  * Sets the name attribute
-  */
-  @Input() public name: string;
-  /**
-  * Sets the helpful hint text
-  */
-  @Input() public hint: string;
-  /**
-  * Sets the general error message
-  */
-  @Input() public errorMessage: string;
-  /**
-  * Sets the disabled attribute
-  */
-  @Input() public disabled: boolean;
-  /**
-  * Sets the required attribute
-  */
-  @Input() public required: boolean;
-  /**
-  * Passes in the Angular FormControl
-  */
-  @Input() public control: FormControl;
-  /**
-  * Sets the maxlength attribute
-  */
-  @Input() public maxlength: number;
-  /**
-  * Toggles validations to display with SamFormService events
-  */
-  @Input() public useFormService: boolean;
+export class SamDollarComponent extends SamFormControl {
   /**
    * Optional text to be displayed when the text area is empty
    */
   @Input() public placeholder: string;
-  /**
-   * Sets the title attribute on the input for accessibility
-   */
-  @Input() public title: string;
   /**
    * (deprecated) Lose focus event emit
    */
@@ -95,19 +48,24 @@ export class SamDollarComponent implements ControlValueAccessor, OnInit, OnDestr
 
   @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
 
+  // type=number starts adding letter 'e' if a max length is not enforced
   strictMaxLength = 16;
   attrType = 'text';
   previousValue = null;
   private ngUnsubscribe: Subject<any> = new Subject();
-  public onChange: any = (c) => null;
-  public onTouched: any = () => null;
 
-  constructor(private samFormService: SamFormService,
-    private cdr: ChangeDetectorRef) {}
+  constructor(public samFormService: SamFormService,
+    public cdr: ChangeDetectorRef) {
+      super(samFormService, cdr);
+    }
 
   public ngOnInit() {
+    this.setupComponent();
+  }
+
+  protected setupComponent(){
     if (!this.name) {
-      throw new Error('<sam-dollar> requires a [name] parameter\
+      throw new Error('<sam-dollar> requires a [id] parameter\
        for 508 compliance');
     }
 
@@ -125,9 +83,6 @@ export class SamDollarComponent implements ControlValueAccessor, OnInit, OnDestr
       validators.push(Validators.required);
     }
 
-    if (this.maxlength) {
-      validators.push(Validators.maxLength(this.maxlength));
-    }
     this.control.setValidators(validators);
 
     if (!this.useFormService) {
@@ -224,23 +179,5 @@ export class SamDollarComponent implements ControlValueAccessor, OnInit, OnDestr
   public onInputChange2(value) {
     this.onTouched();
     this.onChange(value);
-  }
-
-  public registerOnChange(fn) {
-    this.onChange = fn;
-  }
-
-  public registerOnTouched(fn) {
-    this.onTouched = fn;
-  }
-
-  public setDisabledState(disabled) {
-    this.disabled = disabled;
-  }
-
-  public writeValue(value) {
-    this.value = value !== null
-      ? '' + value
-      : '';
   }
 }
