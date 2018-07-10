@@ -23,7 +23,7 @@
               <ng-container *ngIf="!fileCtrlConfig[i].isNameEditMode; else fileNameEdit">
                   <p *ngIf="isEditMode()">{{ fctrl.fileName }} </p>
                   <a *ngIf="!isEditMode()" class="file-link">{{ fctrl.fileName }} </a>
-                  <button type="button" [ngClass]="'edit-btn-'+i" class="pull-right inline-pencil-icon clear-button" (click)="onNameEditSwitch(i)" *ngIf="isEditMode()" aria-label="edit-file-name"><i class="fa fa-pencil"></i></button>
+                  <button type="button" [ngClass]="'edit-btn-'+i" class="pull-right inline-pencil-icon clear-button" (click)="onNameEditSwitch(i, $event)" *ngIf="isEditMode()" aria-label="edit-file-name"><i class="fa fa-pencil"></i></button>
               </ng-container>
               <ng-template #fileNameEdit>
                 <div class="relative">

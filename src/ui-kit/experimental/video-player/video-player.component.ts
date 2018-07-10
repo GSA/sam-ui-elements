@@ -32,17 +32,10 @@ export class SamVideoPlayerComponent {
   constructor(private render: Renderer2, private template:ElementRef) {}
 
   ngAfterContentInit() {
-    if (this.videos.length === 0) {
-      console.error('SamVideoComponent must be provide a <video> element to function or provide template variable #videoPly');
-    }
 
-    if (this.sources.length === 0) {
-      console.error('SamVideoComponent must be provide a <source> element to function or provide template variable #videoTrack');
-    }
-
-    if (this.tracks.length === 0) {
-      console.error('SamVideoComponent must be provide a <track> element with captions for 508 compliance or provide template variable #videoSrc');
-    }
+    this.validateElement(this.videos, 'SamVideoComponent must be provide a <video> element to function or provide template variable #videoPly')
+    this.validateElement(this.sources, 'SamVideoComponent must be provide a <source> element to function or provide template variable #videoSrc');
+    this.validateElement(this.tracks, 'SamVideoComponent must be provide a <track> element with captions for 508 compliance or provide template variable #videoTrack');
   }
 
   ngAfterViewInit() {
@@ -59,10 +52,25 @@ export class SamVideoPlayerComponent {
 
     const progressEl = this.template.nativeElement.querySelector('progress');
     const videoEl = this.template.nativeElement.querySelector('video');
-    this.render.setAttribute(progressEl, 'name', this.videoId);
-    this.render.setAttribute(progressEl, 'aria-label', 'video progress bar');
-    this.render.setAttribute(progressEl, 'role', 'progressbar');
-    this.render.setAttribute(videoEl, 'name', this.videoId);
-    this.render.setAttribute(videoEl, 'role', 'presentation');
+    this.setElementAttribute(progressEl, 'name', this.videoId);
+    this.setElementAttribute(progressEl, 'aria-label', 'video progress bar');
+    this.setElementAttribute(progressEl, 'role', 'progressbar');
+    this.setElementAttribute(videoEl, 'name', this.videoId);
+    this.setElementAttribute(videoEl, 'role', 'presentation');
+  }
+
+  ngOnDestroy() {
+    let pxAnounce = document.getElementById('px-video-aria-announce');
+    if (pxAnounce) pxAnounce.remove();
+  }
+
+  setElementAttribute(el, attName, attValue) {
+    this.render.setAttribute(el, attName, attValue);
+  }
+
+  validateElement(el: QueryList<ElementRef>, message: string) {
+    if (el.length === 0) {
+      console.error(message);
+    }
   }
 }
