@@ -86,7 +86,11 @@ export class SamAutocompleteMultiselectComponent
   @ViewChild('hiddenText') hiddenText: ElementRef;
   @ViewChild('resultsList') resultsList: ElementRef;
   @ViewChild(LabelWrapper) wrapper: LabelWrapper;
-
+  
+  /**
+   * Used when a to set the text for the hidden label for the textarea in the autocomplete
+   */
+  @Input() public srlabelText: string = "textarea input";
   /**
    * Options should be an array of objects that contain the key value pairs
    * to be used to select in the component.
