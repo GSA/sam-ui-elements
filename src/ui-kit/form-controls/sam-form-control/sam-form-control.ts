@@ -35,13 +35,51 @@ export function ValidatorToken (className) {
 export class SamFormControl
   implements ControlValueAccessor, OnInit, AfterViewInit {
 
+  /**
+   * Sets the label text
+   */
   @Input() public label: string;
+  /**
+   * Sets the name attribute on the input element
+   */
   @Input() public name: string;
+  /**
+   * Sets the id attribute on the input element, 
+   * this is linked with the label
+   */
+  @Input() public id: string;
+  /**
+   * Sets the title attribute on the input element
+   */
+  @Input() public title: string;
+  /**
+   * Sets the hint text under the label
+   */
   @Input() public hint: string;
+  /**
+   * (Deprecated) Sets the error message manually, 
+   * errors should be set in the the form controls directly 
+   * to populate error messages
+   */
   @Input() public errorMessage: string;
+  /**
+   * Sets the required snippet in the label
+   */
   @Input() public required: boolean;
+  /**
+   * Takes the form control to watch for changes to update 
+   * the label error messages
+   */
   @Input() public control: FormControl;
+  /**
+   * (Decprecated) Turns on the SamFormService in order to trigger
+   * error message updates programmatically over value/status changes
+   * in the form control
+   */
   @Input() public useFormService: boolean;
+  /**
+   * Enable to turn off all validations
+   */
   @Input() public disableValidation: boolean;
 
   @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
@@ -144,12 +182,10 @@ private setValidationMethod () {
       (err: any) => console.error('Error occurred')
     );
 
-  } else {
+    } else {
 
-    this.samFormService.formEventsUpdated$
-      .subscribe(
-        (evt: any) => {
-
+      this.samFormService.formEventsUpdated$
+        .subscribe( (evt: any) => {
           if ((!evt.root
             || evt.root === this.control.root)
             && evt.eventType
@@ -163,13 +199,11 @@ private setValidationMethod () {
             && evt.eventType === 'reset') {
 
             this.wrapper.clearError();
-
           }
-        },
-        (err: any) => console.error('Error occured')
+        }, (err: any) => console.error('Error occured')
       );
+    }
   }
-}
 
   private initWrapper () {
     if (this.control) {
