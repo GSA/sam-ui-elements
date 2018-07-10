@@ -64,7 +64,7 @@ export class SamDollarComponent extends SamFormControl {
   }
 
   protected setupComponent(){
-    if (!this.name) {
+    if (!this.id) {
       throw new Error('<sam-dollar> requires a [id] parameter\
        for 508 compliance');
     }
