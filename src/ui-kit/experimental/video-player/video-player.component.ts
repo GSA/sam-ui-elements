@@ -61,7 +61,11 @@ export class SamVideoPlayerComponent {
 
   ngOnDestroy() {
     let pxAnounce = document.getElementById('px-video-aria-announce');
-    if (pxAnounce) pxAnounce.remove();
+    if (pxAnounce && typeof pxAnounce.remove === 'function') {
+      pxAnounce.remove();
+    } else {
+      pxAnounce.parentNode.removeChild(pxAnounce);
+    }
   }
 
   setElementAttribute(el, attName, attValue) {
