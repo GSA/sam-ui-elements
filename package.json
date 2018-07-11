@@ -2,6 +2,10 @@
   "name": "sam-ui-elements",
   "version": "14.3.0",
   "description": "SAM Client Side Implementation",
+  "repository": {
+    "type": "git",
+    "url": "https://github.helix.gsa.gov/GSA-IAE-APPS/sam-ui-elements.git"
+  },
   "keywords": [
     "angular2",
     "webpack",
