@@ -17,11 +17,11 @@ export enum DragState {
 })
 export class SamDragDropDirective {
   /**
-   * Disables the effect 
+   * Disables the effect
    */
   @Input() public disabled: boolean = false;
   /**
-   * Sets the current drag state ('NotDragging', 'DraggingInTarget', 
+   * Sets the current drag state ('NotDragging', 'DraggingInTarget',
    * 'DraggingOutsideTarget')
    */
   @Input() public dragState: DragState = DragState.NotDragging;
@@ -56,7 +56,7 @@ export class SamDragDropDirective {
     this.dragStateChange.emit(dragState);
   }
 
-  @HostListener('window:drop', ['$event']) public onWindowDrop(event) {
+  @HostListener('drop', ['$event']) public onElementDrop(event) {
     // Prevent file from loading in the browser tab
     event.preventDefault();
     event.stopPropagation();
@@ -74,7 +74,7 @@ export class SamDragDropDirective {
     this._updateDragState(DragState.NotDragging);
   }
 
-  @HostListener('window:dragover', ['$event']) public onWindowDragOver(event) {
+  @HostListener('dragover', ['$event']) public onElementDragOver(event) {
     // Prevent file from loading in the browser tab
     event.preventDefault();
     event.stopPropagation();
@@ -94,7 +94,19 @@ export class SamDragDropDirective {
     }
   }
 
-  @HostListener('window:mouseout') public onWindowDragend($event) {
+  @HostListener('dragleave', ['$event']) public onElementDragend(event) {
     this._updateDragState(DragState.NotDragging);
   }
+
+  @HostListener('window:dragover', ['$event']) public onWindowDragover(event) {
+    // Prevent file from loading in the browser tab
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  @HostListener('window:drop', ['$event']) public onWindowDrop(event) {
+    // Prevent file from loading in the browser tab
+    event.preventDefault();
+    event.stopPropagation();
+  }
 }
+

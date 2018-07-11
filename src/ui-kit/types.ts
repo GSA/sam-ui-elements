@@ -317,3 +317,22 @@ export interface TextAreaWidthType {
    */
   full?: boolean;
 }
+
+export interface UploadedFileData {
+  /**
+   * Defines the file name for the uploaded file
+   */
+  name: string;
+  /**
+   * Defines file size for the uploaded file
+   */
+  size: number;
+  /**
+   * Defines the security level of the file uploaded
+   */
+  isSecure?: boolean;
+  /**
+   * Date the file got posted to server
+   */
+  postedDate: string;
+}

@@ -49,7 +49,7 @@
             <label *ngIf="name && !label && !hideTextareaLabel"
                   [attr.for]="name+'-ac-textarea'"
                   class="sr-only">
-                  textarea input
+                    {{srlabelText}}
             </label>
             <textarea #textArea
                       rows="1"

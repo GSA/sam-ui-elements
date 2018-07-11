@@ -1,0 +1,19 @@
+<sam-label-wrapper
+  [label]="label"
+  [name]="id"
+  [hint]="hint"
+  [required]="required">
+  <input
+    [attr.type]="attrType"
+    [attr.title]="title ? title : undefined"
+    [attr.id]="id"
+    [attr.name]="name"
+    [(ngModel)]="value"
+    [attr.placeholder]="placeholder"
+    [disabled]="disabled"
+    [ngClass]="{'dollar-text':attrType=='text'}"
+    (keydown)="onKeyInput($event)"
+    (ngModelChange)="onInputChange()"
+    (focus)="onFocus()"
+    (blur)="onLoseFocus()">
+</sam-label-wrapper>
