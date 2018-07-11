@@ -11,3 +11,5 @@ export * from './title-section.component';
 export * from './layout-components.module';
 export * from './page';
 export * from './page-action.directive';
+export * from './main-content.component';
+export * from './content-outlet.directive';

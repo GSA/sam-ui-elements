@@ -25,7 +25,8 @@ import {
   SamDatabankTitleSectionDirective
 } from './title-section.component';
 import { MdExpansionModule } from './expansion';
-import { SamPageActionDirective } from './page-action.directive';
+import { SamMainContentComponent } from './main-content.component';
+import { SamContentOutletDirective } from './content-outlet.directive';
 
 @NgModule({
   imports: [
@@ -40,31 +41,39 @@ import { SamPageActionDirective } from './page-action.directive';
     SamActionBarComponent,
     SamLayoutComponent,
     SamMainComponent,
+    SamMainContentComponent,
     SamDatabankPaginationComponent,
     SamToolbarComponent,
     SamFeedbackWrapperComponent,
     SamFiltersWrapperComponent,
     SamResourcesWrapperComponent,
-    SamDatabankTitleSectionDirective,
     SamPageNextComponent,
     
     // Directives
-    SamPageActionDirective
+    SamDatabankTitleSectionDirective,
+    SamContentOutletDirective,
+
   ],
   exports: [
+    // Modules
     MdExpansionModule,
     MdSidenavModule,
+
+    // Components
     SamActionBarComponent,
     SamLayoutComponent,
     SamMainComponent,
+    SamMainContentComponent,
     SamDatabankPaginationComponent,
     SamToolbarComponent,
     SamFeedbackWrapperComponent,
     SamFiltersWrapperComponent,
     SamResourcesWrapperComponent,
-    SamDatabankTitleSectionDirective,
     SamPageNextComponent,
-    SamPageActionDirective
+
+    // Directives
+    SamDatabankTitleSectionDirective,
+    SamContentOutletDirective,
   ]
 })
 export class SamLayoutComponentsModule {}

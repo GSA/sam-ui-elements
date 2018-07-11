@@ -45,7 +45,8 @@ export class SamActionBarComponent {
       currentPage: this.pagination.currentPage,
       totalPages: this.pagination.totalPages
     };
-    this._service.model.properties['pagination'].setValue(pg);
+    this._service.model.properties['pagination']
+      .setValue(pg);
   }
   
 }
