@@ -3,7 +3,6 @@ import {
   ContentChild,
   AfterContentInit,
   HostBinding,
-  Input,
   forwardRef
 } from '@angular/core';
 import { SamFilterDrawerComponent } from '../../../filter-drawer';
@@ -14,8 +13,7 @@ import { SamPageNextService } from '../architecture';
   template: `
     <ng-content select="sam-page-title"></ng-content>
     <ng-content select="sam-filter-drawer"></ng-content>
-    <ng-content select="sam-data-container"></ng-content>
-    <ng-content></ng-content>
+    <ng-content select="sam-main-content"></ng-content>
   `
 })
 export class SamMainComponent implements AfterContentInit {
@@ -31,11 +29,14 @@ export class SamMainComponent implements AfterContentInit {
   }
 
   private _clearDrawer () {
-    const keys = Object.keys(this._service.model.properties['filters'].value);
+    const keys = Object.keys(
+      this._service.model.properties['filters'].value
+    );
     const newValue = {};
 
     keys.forEach(key => newValue[key] = null);
 
-    this._service.model.properties['filters'].setValue(newValue);
+    this._service.model.properties['filters']
+      .setValue(newValue);
   }
 }

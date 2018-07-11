@@ -1,10 +1,6 @@
 import {
   Component,
-  ContentChild,
-  AfterContentInit,
-  HostBinding,
   Input,
-  AfterViewInit,
   OnInit
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -47,7 +43,5 @@ export class SamFiltersWrapperComponent
           }
         }
       );
-
   }
-  
 }
