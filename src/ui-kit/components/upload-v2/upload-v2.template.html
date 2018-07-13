@@ -17,7 +17,6 @@
       </thead>
       <tbody>
         <ng-container *ngFor="let fctrl of fileCtrlConfig; let i = index">
-          {{fctrl | json}}
           <tr class="upload-table-row" [ngClass]="getTableRowClass(fctrl)">
             <td class="p_T-1x p_B-1x p_L-4x upload-table-doc-col">
               <div class="pdf-icon"><i class="fa fa-file-pdf-o p_R-2x"></i> </div>

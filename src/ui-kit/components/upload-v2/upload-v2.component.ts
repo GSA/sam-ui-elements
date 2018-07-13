@@ -76,7 +76,7 @@ export namespace UploadValidator {
 })
 export class SamUploadComponentV2 implements ControlValueAccessor {
   /**
-   * Sets ID html attribute of modal
+   * Sets ID html attribute of upload component
    */
   @Input() id: string = '';
   /**
