@@ -16,7 +16,6 @@ import { SamBreadcrumbsComponent } from './breadcrumbs';
 import { SamDownloadComponent } from './download';
 import { SamHeaderComponent } from './header';
 import { SamHistoryComponent } from './history';
-import { SamLabelComponent } from './label';
 import { SamModalComponent } from './modal';
 import { SamMultiSelectDropdownComponent } from './multiselect-dropdown';
 import { SamPaginationComponent } from './pagination';
@@ -58,7 +57,6 @@ import { SamUploadComponentV2 } from './upload-v2/upload-v2.component';
     SamDownloadComponent,
     SamHeaderComponent,
     SamHistoryComponent,
-    SamLabelComponent,
     SamModalComponent,
     SamMultiSelectDropdownComponent,
     SamPaginationComponent,
@@ -83,7 +81,6 @@ import { SamUploadComponentV2 } from './upload-v2/upload-v2.component';
     SamDownloadComponent,
     SamHeaderComponent,
     SamHistoryComponent,
-    SamLabelComponent,
     SamModalComponent,
     SamMultiSelectDropdownComponent,
     SamPaginationComponent,
