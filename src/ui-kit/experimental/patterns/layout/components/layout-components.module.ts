@@ -10,7 +10,7 @@ import { MdSidenavModule } from './sidenav';
 import { SamActionBarComponent } from './actionbar.component';
 import { SamLayoutComponent } from './layout.component';
 import { SamMainComponent } from './main.component';
-import { SamDatabankPaginationComponent } from './pagination.component';
+import { SamDatabankPaginationComponent } from './pagination';
 import { SamToolbarComponent } from './toolbar.component';
 import {
   SamFeedbackWrapperComponent
