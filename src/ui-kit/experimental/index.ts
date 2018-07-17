@@ -29,8 +29,6 @@ import { SamLayoutComponentsModule } from './patterns';
 import { SamDollarComponent } from './dollar';
 import { SamWrapperModule } from '../wrappers';
 
-import { SamFormControlsModule } from '../form-controls';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -40,7 +38,6 @@ import { SamFormControlsModule } from '../form-controls';
     SamLayoutComponentsModule,
     FormsModule,
     SamWrapperModule,
-    SamFormControlsModule
   ],
   declarations: [
     SamBoxComponent,
