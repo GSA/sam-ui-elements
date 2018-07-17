@@ -336,7 +336,7 @@ export interface UploadedFileData {
    */
   postedDate: string;
   /**
-   * sets the fileId
+   * sets the url
    */
-  fileId: string;
+  url: string;
 }

@@ -134,11 +134,6 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
    */
   @Input() public name = 'upload';
 
-  /**
-   * Emmits event on click
-   */
-  @Output() onFileClick: EventEmitter<any> = new EventEmitter();
-
   public dragState: DragState = DragState.NotDragging;
 
   public showMaxFilesError: boolean = false;
@@ -159,19 +154,19 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   @ViewChild('file') private fileInput: ElementRef;
 
   public uploadElIds = {
-    tableId: '',
-    fileLinkId: '',
-    editId: '',
-    editInputId: '',
-    deleteId: '',
-    firstId: '',
-    lastId: '',
-    replyActionId: '',
-    updateFileActionId: '',
-    fileError: '',
-    fileSecure: '',
-    fileSecureLabel: '',
-    browseClick: ''
+    tableId: 'tableId',
+    fileLinkId: 'fileLinkId',
+    editId: 'editId',
+    editInputId: 'editInputId',
+    deleteId: 'deleteId',
+    firstId: 'firstId',
+    lastId: 'lastId',
+    replyActionId: 'replyActionId',
+    updateFileActionId: 'updateFileActionId',
+    fileError: 'fileError',
+    fileSecure: 'fileSecure',
+    fileSecureLabel: 'fileSecureLabel',
+    browseClick: 'browseClick'
   };
 
 
@@ -264,7 +259,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   }
 
   initilizeFileCtrl(
-    {name, size, fileId},
+    {name, size, url},
     isSecure = false,
     date = moment().format('MMM DD, YYYY h:mm a')) {
     return {
@@ -277,7 +272,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
       originName: name,
       isFirst: false,
       isLast: false,
-     fileId: fileId
+     url: url
     };
   }
 
@@ -517,24 +512,13 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
 
   private setUploadElementIds() {
     if (this.id) {
-      this.uploadElIds.tableId = this.id + '-table';
-      this.uploadElIds.fileLinkId = this.id + 'file-link-';
-      this.uploadElIds.editId = this.id + '-edit-';
-      this.uploadElIds.deleteId = this.id + '-delete-';
-      this.uploadElIds.firstId = this.id + '-first-';
-      this.uploadElIds.lastId = this.id + '-last-';
-      this.uploadElIds.replyActionId = this.id + '-reply-action-';
-      this.uploadElIds.updateFileActionId = this.id + '-update-file-action-';
-      this.uploadElIds.fileError = this.id + '-file-error-';
-      this.uploadElIds.fileSecure = this.id + '-cbx-secure-';
-      this.uploadElIds.fileSecureLabel = this.id + '-cbx-secure-';
-      this.uploadElIds.editInputId = this.id + '-edit-input-';
-      this.uploadElIds.browseClick = this.id + '-browse-click';
+      Object.keys(this.uploadElIds).forEach(key =>{
+        this.setElementId(key)} );
     }
   }
-
-  onFileLinkClick(index) {
-    const curFileConfig = this.fileCtrlConfig[index];
-    this.onFileClick.emit(this.uploadedFiles[index].fileId);
+  private setElementId (property: string): void {
+    if (this.uploadElIds && this.uploadElIds[property]) {
+      this.uploadElIds[property] = `${this.id}-${property}`;
+    }
   }
 }
