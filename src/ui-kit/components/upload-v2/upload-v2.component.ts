@@ -166,7 +166,15 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     fileError: 'fileError',
     fileSecure: 'fileSecure',
     fileSecureLabel: 'fileSecureLabel',
-    browseClick: 'browseClick'
+    browseClick: 'browseClick',
+    editFileName: 'edit-file-name',
+    fileNameInput: 'file-name-input',
+    resetName: 'reset-name',
+    applyName: 'apply-name',
+    moveDown: 'move-down',
+    moveUp: 'move-up',
+    delete: 'delete',
+    securityCheckboxInput: 'security-checkbox-input'
   };
 
 
@@ -512,11 +520,13 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
 
   private setUploadElementIds() {
     if (this.id) {
-      Object.keys(this.uploadElIds).forEach(key =>{
-        this.setElementId(key)} );
+      Object.keys(this.uploadElIds).forEach(key => {
+        this.setElementId(key);
+      });
     }
   }
-  private setElementId (property: string): void {
+
+  private setElementId(property: string): void {
     if (this.uploadElIds && this.uploadElIds[property]) {
       this.uploadElIds[property] = `${this.id}-${property}`;
     }
