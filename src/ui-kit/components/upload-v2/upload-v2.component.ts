@@ -1,8 +1,9 @@
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
-import { Component, ElementRef, Input, ViewChild, Renderer2,
+import {
+  Component, ElementRef, Input, ViewChild, Renderer2,
   forwardRef } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpEventType, 
+import { HttpClient, HttpErrorResponse, HttpEventType,
   HttpHeaderResponse, HttpRequest } from '@angular/common/http';
 import { DragState } from '../../directives/drag-drop/drag-drop.directive';
 import { HttpEvent } from '@angular/common/http/src/response';
@@ -73,7 +74,10 @@ export namespace UploadValidator {
   templateUrl: 'upload-v2.template.html',
 })
 export class SamUploadComponentV2 implements ControlValueAccessor {
-
+  /**
+   * Sets ID html attribute of upload component
+   */
+  @Input() id: string = '';
   /**
    * Files that were already uploaded to server
    */
@@ -137,7 +141,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
 
   public fileCtrlConfig: any = [];
 
-  /* The list of visible files. Does not include deleted 
+  /* The list of visible files. Does not include deleted
   files. Does include files with errors */
   public _model: Array<UploadFile> = [];
 
@@ -148,11 +152,37 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   /* The hidden file input dom element */
   @ViewChild('file') private fileInput: ElementRef;
 
+  public uploadElIds = {
+    tableId: 'tableId',
+    fileLinkId: 'fileLinkId',
+    editId: 'editId',
+    editInputId: 'editInputId',
+    deleteId: 'deleteId',
+    firstId: 'firstId',
+    lastId: 'lastId',
+    replyActionId: 'replyActionId',
+    updateFileActionId: 'updateFileActionId',
+    fileError: 'fileError',
+    fileSecure: 'fileSecure',
+    fileSecureLabel: 'fileSecureLabel',
+    browseClick: 'browseClick',
+    editFileName: 'edit-file-name',
+    fileNameInput: 'file-name-input',
+    resetName: 'reset-name',
+    applyName: 'apply-name',
+    moveDown: 'move-down',
+    moveUp: 'move-up',
+    delete: 'delete',
+    securityCheckboxInput: 'security-checkbox-input'
+  };
+
+
   constructor(private httpClient: HttpClient, private renderer: Renderer2) {
 
   }
 
   ngOnInit() {
+    this.setUploadElementIds();
     if (this.uploadedFiles.length) {
       this.setUploadedFiles(this.uploadedFiles);
     }
@@ -167,8 +197,8 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   setUploadedFiles(uploadedFiles) {
     this.fileCtrlConfig = uploadedFiles
       .map(uf => this.initilizeFileCtrl(
-        uf, 
-        uf.isSecure, 
+        uf,
+        uf.isSecure,
         moment(uf.postedDate).format('MMM DD, YYYY h:mm a')));
     this.updateFilePos();
   }
@@ -224,7 +254,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
 
     // set up file table row config
     this.fileCtrlConfig = [
-      ...this.fileCtrlConfig, 
+      ...this.fileCtrlConfig,
       ...ufs.map(uf => this.initilizeFileCtrl(uf.file))
     ];
     this.updateFilePos();
@@ -236,8 +266,8 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   }
 
   initilizeFileCtrl(
-    {name, size}, 
-    isSecure = false, 
+    {name, size, url},
+    isSecure = false,
     date = moment().format('MMM DD, YYYY h:mm a')) {
     return {
       date,
@@ -248,7 +278,8 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
       shadowFileName: name,
       originName: name,
       isFirst: false,
-      isLast: false
+      isLast: false,
+     url: url
     };
   }
 
@@ -369,9 +400,9 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
 
   deleteFile(uf: UploadFile) {
     const delete$ = this._getDeleteRequestForFile(uf);
-    // errors are intentionally ignored. In the case of an 
+    // errors are intentionally ignored. In the case of an
     // error, show it in the console, but don't annoy the user.
-    // There may be an extra file on the server, but that's 
+    // There may be an extra file on the server, but that's
     // not the user's problem
     delete$.subscribe();
   }
@@ -383,7 +414,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   swapFiles(x, y) {
     const temp = this.fileCtrlConfig[x];
     this.fileCtrlConfig[x] = this.fileCtrlConfig[y];
-    this.fileCtrlConfig[y] = temp; 
+    this.fileCtrlConfig[y] = temp;
     this.updateFilePos();
   }
 
@@ -480,9 +511,23 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   }
 
   _clearInput() {
-    // clear the input's internal value, or it will not 
+    // clear the input's internal value, or it will not
     // emit the change event if we select a file, deselect that file,
     // and select the same file again
     this.fileInput.nativeElement.value = '';
+  }
+
+  private setUploadElementIds() {
+    if (this.id) {
+      Object.keys(this.uploadElIds).forEach(key => {
+        this.setElementId(key);
+      });
+    }
+  }
+
+  private setElementId(property: string): void {
+    if (this.uploadElIds && this.uploadElIds[property]) {
+      this.uploadElIds[property] = `${this.id}-${property}`;
+    }
   }
 }
