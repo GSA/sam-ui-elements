@@ -3,7 +3,8 @@ import {
   Input,
   Output,
   EventEmitter,
-  OnInit
+  OnInit,
+  SimpleChanges
 } from '@angular/core';
 
 import { Paginator } from './paginator';
@@ -90,19 +91,8 @@ export class SamDatabankPaginationComponent
     this._setupPagination();
   }
 
-  public ngOnChanges (c: any) {
-    if (c.unit) {
-      this.paginator.unit = this.unit;
-    }
-
-    if (c.totalUnits) {
-      this.paginator.setTotalUnits(this.totalUnits);
-    }
-
-    if (c.currentPage) {
-      this.paginator.setCurrentPage(this.currentPage);
-      this.currentPage = this.paginator.getCurrentPage();
-    }
+  public ngOnChanges (c: SimpleChanges) {
+    this._processChanges(c);
   }
 
   public ngOnInit () {
@@ -125,6 +115,21 @@ export class SamDatabankPaginationComponent
 
   public printPerPageString(): string {
     return this.paginator.printPerPageString()
+  }
+
+  private _processChanges (c: SimpleChanges): void {
+    if (c.unit) {
+      this.paginator.unit = this.unit;
+    }
+
+    if (c.totalUnits) {
+      this.paginator.setTotalUnits(this.totalUnits);
+    }
+
+    if (c.currentPage) {
+      this.paginator.setCurrentPage(this.currentPage);
+      this.currentPage = this.paginator.getCurrentPage();
+    }
   }
 
   private _setupPagination () {
