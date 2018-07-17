@@ -2,8 +2,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import {
   Component, ElementRef, Input, ViewChild, Renderer2,
-  forwardRef, Output, EventEmitter
-} from '@angular/core';
+  forwardRef } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpEventType,
   HttpHeaderResponse, HttpRequest } from '@angular/common/http';
 import { DragState } from '../../directives/drag-drop/drag-drop.directive';
