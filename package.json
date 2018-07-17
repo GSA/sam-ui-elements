@@ -1,7 +1,7 @@
 {
   "name": "@gsa-sam/sam-ui-elements",
-  "version": "0.0.2",
-  "description": "SAM Client Side Implementation",
+  "version": "0.0.3",
+  "description": "SAM UI library",
   "repository": {
     "type": "git",
     "url": "https://github.helix.gsa.gov/GSA-IAE-APPS/sam-ui-elements.git"
