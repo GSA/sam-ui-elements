@@ -3,7 +3,7 @@ import {
   ContentChild,
   Optional,
 } from '@angular/core';
-import { SamDatabankPaginationComponent } from './pagination';
+import { SamPaginationNextComponent } from './pagination';
 import { SamPageNextService } from '../architecture';
 
 @Component({
@@ -16,8 +16,8 @@ import { SamPageNextService } from '../architecture';
   `
 })
 export class SamActionBarComponent {
-  @ContentChild(SamDatabankPaginationComponent)
-    public pagination: SamDatabankPaginationComponent;
+  @ContentChild(SamPaginationNextComponent)
+    public pagination: SamPaginationNextComponent;
 
   constructor (@Optional() private _service: SamPageNextService) {}
 

@@ -4,7 +4,8 @@ import {
   Output,
   EventEmitter,
   OnInit,
-  SimpleChanges
+  SimpleChanges,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import { Paginator } from './paginator';
@@ -14,9 +15,10 @@ import { Paginator } from './paginator';
  */
 @Component({
   selector: 'sam-databank-pagination',
-  templateUrl: 'pagination.template.html'
+  templateUrl: 'pagination.template.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SamDatabankPaginationComponent
+export class SamPaginationNextComponent
   implements OnInit {
 
   public paginator: Paginator;
