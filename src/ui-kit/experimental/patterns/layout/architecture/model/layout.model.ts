@@ -26,7 +26,8 @@ export type sortModel = {
 export type paginationModel = {
   currentPage: number,
   pageSize: number,
-  totalSize: number
+  totalSize: number,
+  totalUnits: number
 };
 
 export const model: modelType = {
@@ -34,7 +35,8 @@ export const model: modelType = {
   pagination: {
     currentPage: undefined,
     pageSize: 10,
-    totalSize: undefined
+    totalSize: undefined,
+    totalUnits: undefined
   },
   data: {},
   sort: {

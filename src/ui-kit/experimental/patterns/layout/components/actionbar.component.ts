@@ -3,21 +3,21 @@ import {
   ContentChild,
   Optional,
 } from '@angular/core';
-import { SamDatabankPaginationComponent } from './pagination.component';
+import { SamPaginationNextComponent } from './pagination';
 import { SamPageNextService } from '../architecture';
 
 @Component({
   selector: 'sam-action-bar',
   template: `
-    <ng-content select="sam-databank-pagination"></ng-content>
+    <ng-content select="sam-pagination-next"></ng-content>
     <div class="actions-container">
       <ng-content select="[samPageAction]"></ng-content>
     </div>
   `
 })
 export class SamActionBarComponent {
-  @ContentChild(SamDatabankPaginationComponent)
-    public pagination: SamDatabankPaginationComponent;
+  @ContentChild(SamPaginationNextComponent)
+    public pagination: SamPaginationNextComponent;
 
   constructor (@Optional() private _service: SamPageNextService) {}
 
@@ -36,15 +36,34 @@ export class SamActionBarComponent {
       // Fire off initial value
       this.pagination.pageChange
         .emit(this.pagination.currentPage);
+      
+      this.pagination.unitsChange.subscribe(
+        evt => this._onUnitsChange(evt)
+      );
     }
   }
 
   private _onPageChange (event) {
+
     const pg = {
       pageSize: this.pagination.pageSize,
       currentPage: this.pagination.currentPage,
-      totalPages: this.pagination.totalPages
+      totalPages: this.pagination.totalPages,
+      totalUnits: this.pagination.totalUnits
     };
+
+    this._service.model.properties['pagination']
+      .setValue(pg);
+  }
+
+  private _onUnitsChange (size) {
+    const pg = {
+      pageSize: this.pagination.pageSize,
+      currentPage: this.pagination.currentPage,
+      totalPages: this.pagination.totalPages,
+      totalUnits: this.pagination.totalUnits
+    };
+
     this._service.model.properties['pagination']
       .setValue(pg);
   }
