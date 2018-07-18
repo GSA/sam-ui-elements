@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  HostListener,
   ViewEncapsulation,
   Renderer2,
   NgZone,
@@ -16,35 +17,36 @@ import { SamPageNextService } from '../../architecture';
   templateUrl: 'page.template.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class SamPageNextComponent
-  extends MdSidenavContainer {
-
+export class SamPageNextComponent extends MdSidenavContainer {
+  
+  @HostListener('window:resize')
+  resize() { if (this.aside) { this._responsiveAside(); } }
+  
   @ContentChild(MdSidenav) public aside: MdSidenav;
-
+  
   @ContentChild(SamToolbarComponent)
-    public toolbar: SamToolbarComponent;
-
-  constructor(
-    _element: ElementRef,
-    _renderer: Renderer2,
-    _ngZone: NgZone) {
+  public toolbar: SamToolbarComponent;
+  
+  constructor(_element: ElementRef, _renderer: Renderer2, _ngZone: NgZone) {
     super(null, _element, _renderer, _ngZone);
   }
-
+  
   ngAfterContentInit () {
     super.ngAfterContentInit();
 
-    this._setupAside();
     this._setupToolbar();
   }
 
+  ngAfterViewInit (){
+    this._setupAside();
+  }
+  
   private _setupAside () {
     if (this.aside) {
-      this.aside.opened = true;
-      this.aside.mode = 'side';
+      this._responsiveAside();
     }
   }
-
+  
   private _setupToolbar () {
     if (this.toolbar) {
       if (this.aside) {
@@ -53,5 +55,18 @@ export class SamPageNextComponent
       }
     }
   }
-
+  
+  private _responsiveAside () {
+    this.aside.mode = !this._isSmallScreen() ? 'side' : 'over';
+    if(this.aside.opened && this._isSmallScreen()){
+      this.aside.opened = false;
+    }else if(!this.aside.opened && !this._isSmallScreen()){
+      this.aside.opened = true;
+    }
+  }
+  
+  private _isSmallScreen () {
+    return window.innerWidth <= 600 ? true : false;
+  }
+  
 }
