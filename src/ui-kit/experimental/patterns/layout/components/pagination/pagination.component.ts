@@ -14,7 +14,7 @@ import { Paginator } from './paginator';
  * The <sam-pagination> allows users to select a page
  */
 @Component({
-  selector: 'sam-databank-pagination',
+  selector: 'sam-pagination-next',
   templateUrl: 'pagination.template.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

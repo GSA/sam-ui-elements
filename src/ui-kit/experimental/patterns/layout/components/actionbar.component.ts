@@ -9,7 +9,7 @@ import { SamPageNextService } from '../architecture';
 @Component({
   selector: 'sam-action-bar',
   template: `
-    <ng-content select="sam-databank-pagination"></ng-content>
+    <ng-content select="sam-pagination-next"></ng-content>
     <div class="actions-container">
       <ng-content select="[samPageAction]"></ng-content>
     </div>
