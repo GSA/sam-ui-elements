@@ -91,20 +91,20 @@ export class SamDatabankPaginationComponent
     this._setupPagination();
   }
 
-  public ngOnChanges (c: SimpleChanges) {
+  public ngOnChanges (c: SimpleChanges): void {
     this._processChanges(c);
   }
 
-  public ngOnInit () {
+  public ngOnInit (): void {
     this._emitInitialEvents();
   }
 
-  public onNextClick() {
+  public onNextClick(): void {
     this.paginator.nextPage();
     this._updatePage();
   }
 
-  public onPreviousClick() {
+  public onPreviousClick(): void {
     this.paginator.previousPage();
     this._updatePage();
   }
@@ -132,7 +132,7 @@ export class SamDatabankPaginationComponent
     }
   }
 
-  private _setupPagination () {
+  private _setupPagination (): void {
     this.paginator = new Paginator(
       this.unit,
       this._defaultSize,
@@ -140,12 +140,12 @@ export class SamDatabankPaginationComponent
     );
   }
 
-  private _updatePage () {
+  private _updatePage (): void {
     this.currentPage = this.paginator.getCurrentPage();
     this.pageChange.emit(this.currentPage);
   }
 
-  private _emitInitialEvents () {
+  private _emitInitialEvents (): void {
     this.pageChange.emit(this.paginator.getCurrentPage());
     this.unitsChange.emit(this.paginator.getUnitsPerPage());
   }
