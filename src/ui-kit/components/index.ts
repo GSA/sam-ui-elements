@@ -98,3 +98,9 @@ import { SamUploadComponentV2 } from './upload-v2/upload-v2.component';
   ]
 })
 export class SamComponentsModule {}
+
+export * from './alert-footer';
+export * from './comments';
+export * from './pagination';
+export * from './modal';
+export * from './sidenav';

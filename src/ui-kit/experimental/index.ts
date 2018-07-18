@@ -93,4 +93,6 @@ import { SamWrapperModule } from '../wrappers';
 })
 export class SamExperimentalModule { }
 
+export * from './data-table';
+export * from './patterns';
 

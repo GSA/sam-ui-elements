@@ -11,6 +11,8 @@ import {SamSortDirective} from './sort.directive';
 export * from './cell.component';
 export * from './data-table.component';
 export * from './row.component';
+export * from './sort-header.component';
+export * from './sort.directive';
 
 @NgModule({
   imports: [CdkTableModule, CommonModule],
