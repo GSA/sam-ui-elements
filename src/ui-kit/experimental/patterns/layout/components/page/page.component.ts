@@ -33,9 +33,12 @@ export class SamPageNextComponent extends MdSidenavContainer {
   
   ngAfterContentInit () {
     super.ngAfterContentInit();
-    
-    this._setupAside();
+
     this._setupToolbar();
+  }
+
+  ngAfterViewInit (){
+    this._setupAside();
   }
   
   private _setupAside () {
@@ -53,14 +56,17 @@ export class SamPageNextComponent extends MdSidenavContainer {
     }
   }
   
-  
   private _responsiveAside () {
-    this.aside.mode = window.innerWidth > 600 ? 'side' : 'over';
-    if(this.aside.opened && window.innerWidth < 600){
+    this.aside.mode = !this._isSmallScreen() ? 'side' : 'over';
+    if(this.aside.opened && this._isSmallScreen()){
       this.aside.opened = false;
-    }else if(!this.aside.opened && window.innerWidth > 600){
+    }else if(!this.aside.opened && !this._isSmallScreen()){
       this.aside.opened = true;
     }
+  }
+  
+  private _isSmallScreen () {
+    return window.innerWidth <= 600 ? true : false;
   }
   
 }
