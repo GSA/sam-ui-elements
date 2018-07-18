@@ -148,7 +148,7 @@ export class AutocompleteCache {
       return this.cached[key].value;
     }
 
-    this.makeSpaceInCache(Cached.countBytes(value));
+    // this.makeSpaceInCache(Cached.countBytes(value));
 
     if (!this.cached[key]) {
       this.cached[key] = new Cached(key, value);
