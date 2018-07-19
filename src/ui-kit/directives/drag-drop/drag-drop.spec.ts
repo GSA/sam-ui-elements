@@ -69,7 +69,8 @@ describe('The Sam Focus directive', () => {
     component.action.subscribe(val => {
       expect(val).toBe(true);
     });
-    directive.onWindowDragOver(<any>{
+
+    directive.onWindowDragover(<any>{
         preventDefault: function(){},
         stopPropagation: function(){},
         dataTransfer: {
@@ -77,7 +78,8 @@ describe('The Sam Focus directive', () => {
         },
         target: component.dummydrop.nativeElement
     });
-    directive.onWindowDragend(<any>{
+    
+    directive.onElementDragend(<any>{
         preventDefault: function(){},
         stopPropagation: function(){},
         dataTransfer: {
