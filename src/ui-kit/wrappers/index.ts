@@ -10,3 +10,6 @@ import { LabelWrapper } from './label-wrapper';
   exports: [ FieldsetWrapper, LabelWrapper ]
 })
 export class SamWrapperModule {}
+
+export * from './fieldset-wrapper';
+export * from './label-wrapper';

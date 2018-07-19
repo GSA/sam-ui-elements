@@ -24,3 +24,7 @@ import { FilesizePipe } from './filesize/filesize.pipe';
 })
 export class SamPipesModule {}
 
+export * from './date-time-display';
+export * from './filesize';
+export * from './short-date';
+export * from './time-ago';
