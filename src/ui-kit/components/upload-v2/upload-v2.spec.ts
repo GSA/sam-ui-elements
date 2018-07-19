@@ -18,7 +18,7 @@ class MockHttpClient {
 @Component({
   template: `
     <form [formGroup]="form">
-      <sam-upload formControlName="upload"></sam-upload>
+      <sam-upload-v2 formControlName="upload"></sam-upload-v2>
     </form>
   `
 })
@@ -37,7 +37,7 @@ describe('The Sam Upload component', () => {
     TestBed.configureTestingModule({
       declarations: [ 
         TestHostComponent, 
-        SamUploadComponent, 
+        SamUploadComponentV2, 
         SamDragDropDirective, 
         SamProgress, 
         FilesizePipe  
@@ -51,7 +51,7 @@ describe('The Sam Upload component', () => {
 
     fixture = TestBed.createComponent(TestHostComponent);
     host = fixture.component;
-    component = fixture.debugElement.query(By.directive(SamUploadComponent)).injector.get(SamUploadComponent);
+    component = fixture.debugElement.query(By.directive(SamUploadComponentV2)).injector.get(SamUploadComponentV2);
     fixture.detectChanges();
   });
 

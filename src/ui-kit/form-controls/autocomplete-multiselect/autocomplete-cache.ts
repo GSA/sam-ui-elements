@@ -128,8 +128,10 @@ export class AutocompleteCache {
   }
 
   public remove (key: string): void {
-    this.byteSize -= this.cached[key].byteSize;
-    delete this.cached[key];
+    if (this.cached[key]) {
+      this.byteSize -= this.cached[key].byteSize;
+      delete this.cached[key];
+    }
   }
 
   public clear (): void {
@@ -147,8 +149,6 @@ export class AutocompleteCache {
       && AutocompleteCache.arraysEqual(value, this.cached[key].lastValue)) {
       return this.cached[key].value;
     }
-
-    this.makeSpaceInCache(Cached.countBytes(value));
 
     if (!this.cached[key]) {
       this.cached[key] = new Cached(key, value);
@@ -169,16 +169,5 @@ export class AutocompleteCache {
     this.default.insert(value);
     this.historyTuple = [this.default, this.history];
     return this.default.value;
-  }
-
-  private makeSpaceInCache (itemSize: number): void {
-    while (this.byteSize + itemSize > this.maxBytes) {
-      if (this.history.length > 1) {
-        this.remove(this.history[0]);
-        this.history.shift();
-      } else {
-        break;
-      }
-    }
   }
 }
