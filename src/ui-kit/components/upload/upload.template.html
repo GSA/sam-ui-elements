@@ -32,6 +32,9 @@
   <div *ngIf="showMaxFilesError" class="file-max-error">
     <span class="fa fa-warning"></span>&nbsp;{{maxFilesErrorMessage()}}
   </div>
+  <div *ngIf="isNotAccept && !shouldShowDropTarget()" class="file-max-error">
+    <span class="fa fa-warning">&nbsp; Please select {{this.accept}} type of file.</span>
+  </div>
 
   <!-- Hidden input to trigger the browser file selector -->
   <input type="file" #file [attr.id]="name" [attr.accept]="accept" ngModel class="hide" (change)="onFilesChange($event.target.files)" [attr.multiple]="maxFiles === 0 || maxFiles > 1 ? 'multiple' : null">
