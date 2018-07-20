@@ -123,7 +123,10 @@ export class SamUploadComponent implements ControlValueAccessor {
 
   public disabled: boolean = false;
 
-  public isNotAccept = false;
+  public isAcceptableFileType = true;
+
+  public shouldShowDropTarget = false;
+
   /* The list of visible files. Does not include deleted
   files. Does include files with errors */
   public _model: Array<UploadFile> = [];
@@ -137,6 +140,12 @@ export class SamUploadComponent implements ControlValueAccessor {
 
   constructor(private httpClient: HttpClient) {
 
+  }
+
+  onDragStateChange(dragState) {
+    dragState !== DragState.NotDragging ?
+        this.shouldShowDropTarget = true :
+        this.shouldShowDropTarget = false;
   }
 
   registerOnChange(fn) {
@@ -176,18 +185,9 @@ export class SamUploadComponent implements ControlValueAccessor {
       return;
     }
 
-    // restrict the file type
-    // (<input accept="file_extension|audio/*|video/*|image/*|media_type">)
-    asArray.forEach(uf => {
-      if (this.accept && !uf.type.startsWith(this.accept.split('/')[0])
-        && uf.name.indexOf(this.accept) < 0) {
-        this.isNotAccept = true;
-      } else {
-        this.isNotAccept = false;
-      }
-    });
+    this._checkAcceptableFileType(asArray);
 
-    if (this.isNotAccept) {
+    if (!this.isAcceptableFileType) {
       return;
     }
 
@@ -311,10 +311,6 @@ export class SamUploadComponent implements ControlValueAccessor {
     return uf.upload.status === UploadStatus.Error;
   }
 
-  shouldShowDropTarget() {
-    return this.dragState !== DragState.NotDragging;
-  }
-
   shouldAllowMoreFiles() {
     if (!this.maxFiles) {
       return true;
@@ -370,5 +366,18 @@ export class SamUploadComponent implements ControlValueAccessor {
     // emit the change event if we select a file, deselect that file,
     // and select the same file again
     this.fileInput.nativeElement.value = '';
+  }
+
+  _checkAcceptableFileType(uploadFiles) {
+    // restrict the file type
+    // (<input accept="file_extension|audio/*|video/*|image/*|media_type">)
+    uploadFiles.forEach(uf => {
+      if (this.accept && !uf.type.startsWith(this.accept.split('/')[0])
+        && uf.name.indexOf(this.accept) < 0) {
+        this.isAcceptableFileType = false;
+      } else {
+        this.isAcceptableFileType = true;
+      }
+    });
   }
 }

@@ -2,11 +2,12 @@
      sam-drag-drop
      [disabled]="disabled"
      (dropEvent)="onFilesChange($event)"
-     [(dragState)]="dragState"
-     [ngClass]=" { 'disabled': disabled, 'drag-border': shouldShowDropTarget() }"
+     [dragState]="dragState"
+     (dragStateChange)="onDragStateChange($event)"
+     [ngClass]=" { 'disabled': disabled, 'drag-border': shouldShowDropTarget }"
      [ngStyle]="{'pointer-events': disabled ? 'none' : 'initial'}"
   >
-  <div class="file-container-no-drag" *ngIf="!shouldShowDropTarget()">
+  <div class="file-container-no-drag" *ngIf="!shouldShowDropTarget">
     <div class="text-center upload-cloud" *ngIf="!anyFiles()">
       <span class="fa fa-cloud-upload"></span>&nbsp;Drag and drop files here, or<a (click)="file.click()">&nbsp;browse</a>
     </div>
@@ -25,14 +26,14 @@
       <span class="fa fa-cloud-upload"></span>&nbsp;Drag and drop files here, or<a (click)="file.click()">&nbsp;browse</a>
     </div>
   </div>
-  <div class="file-container-dragging text-center" *ngIf="shouldShowDropTarget()">
+  <div class="file-container-dragging text-center" *ngIf="shouldShowDropTarget">
     Drop Files Here
     <p class="text-center"><span class="fa fa-cloud-upload"></span></p>
   </div>
   <div *ngIf="showMaxFilesError" class="file-max-error">
     <span class="fa fa-warning"></span>&nbsp;{{maxFilesErrorMessage()}}
   </div>
-  <div *ngIf="isNotAccept && !shouldShowDropTarget()" class="file-max-error">
+  <div *ngIf="!isAcceptableFileType && !shouldShowDropTarget" class="file-max-error">
     <span class="fa fa-warning">&nbsp; Please select {{this.accept}} type of file.</span>
   </div>
 
