@@ -2,7 +2,7 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Component, ElementRef, Input, ViewChild,
   forwardRef } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpEventType, 
+import { HttpClient, HttpErrorResponse, HttpEventType,
   HttpHeaderResponse, HttpRequest } from '@angular/common/http';
 import { DragState } from '../../directives/drag-drop/drag-drop.directive';
 import { HttpEvent } from '@angular/common/http/src/response';
@@ -123,7 +123,11 @@ export class SamUploadComponent implements ControlValueAccessor {
 
   public disabled: boolean = false;
 
-  /* The list of visible files. Does not include deleted 
+  public isAcceptableFileType = true;
+
+  public shouldShowDropTarget = false;
+
+  /* The list of visible files. Does not include deleted
   files. Does include files with errors */
   public _model: Array<UploadFile> = [];
 
@@ -136,6 +140,12 @@ export class SamUploadComponent implements ControlValueAccessor {
 
   constructor(private httpClient: HttpClient) {
 
+  }
+
+  onDragStateChange(dragState) {
+    dragState !== DragState.NotDragging ?
+        this.shouldShowDropTarget = true :
+        this.shouldShowDropTarget = false;
   }
 
   registerOnChange(fn) {
@@ -172,6 +182,12 @@ export class SamUploadComponent implements ControlValueAccessor {
     }
 
     if (asArray.length === 0) {
+      return;
+    }
+
+    this._checkAcceptableFileType(asArray);
+
+    if (!this.isAcceptableFileType) {
       return;
     }
 
@@ -268,9 +284,9 @@ export class SamUploadComponent implements ControlValueAccessor {
 
   deleteFile(uf: UploadFile) {
     const delete$ = this._getDeleteRequestForFile(uf);
-    // errors are intentionally ignored. In the case of an 
+    // errors are intentionally ignored. In the case of an
     // error, show it in the console, but don't annoy the user.
-    // There may be an extra file on the server, but that's 
+    // There may be an extra file on the server, but that's
     // not the user's problem
     delete$.subscribe();
   }
@@ -293,10 +309,6 @@ export class SamUploadComponent implements ControlValueAccessor {
 
   shouldShowError(uf: UploadFile) {
     return uf.upload.status === UploadStatus.Error;
-  }
-
-  shouldShowDropTarget() {
-    return this.dragState !== DragState.NotDragging;
   }
 
   shouldAllowMoreFiles() {
@@ -350,9 +362,22 @@ export class SamUploadComponent implements ControlValueAccessor {
   }
 
   _clearInput() {
-    // clear the input's internal value, or it will not 
+    // clear the input's internal value, or it will not
     // emit the change event if we select a file, deselect that file,
     // and select the same file again
     this.fileInput.nativeElement.value = '';
+  }
+
+  _checkAcceptableFileType(uploadFiles) {
+    // restrict the file type
+    // (<input accept="file_extension|audio/*|video/*|image/*|media_type">)
+    uploadFiles.forEach(uf => {
+      if (this.accept && !uf.type.startsWith(this.accept.split('/')[0])
+        && uf.name.indexOf(this.accept) < 0) {
+        this.isAcceptableFileType = false;
+      } else {
+        this.isAcceptableFileType = true;
+      }
+    });
   }
 }
