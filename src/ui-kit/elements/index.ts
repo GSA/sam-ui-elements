@@ -15,3 +15,5 @@ import { SamButtonComponent } from './button';
   ]
 })
 export class SamElementsModule { }
+
+export * from './button';

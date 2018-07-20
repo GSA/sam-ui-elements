@@ -98,3 +98,25 @@ import { SamUploadComponentV2 } from './upload-v2/upload-v2.component';
   ]
 })
 export class SamComponentsModule {}
+
+export * from './accordion';
+export * from './actions';
+export * from './alert';
+export * from './alert-footer';
+export * from './badge';
+export * from './banner';
+export * from './breadcrumbs';
+export * from './comments';
+export * from './download';
+export * from './header';
+export * from './history';
+export * from './image';
+export * from './modal';
+export * from './multiselect-dropdown';
+export * from './pagination';
+export * from './point-of-contact';
+export * from './sidenav';
+export * from './spinner';
+export * from './tabs';
+export * from './upload';
+export { SamUploadComponentV2 } from './upload-v2';

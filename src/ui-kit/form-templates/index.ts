@@ -42,3 +42,7 @@ import {
   ]
 })
 export class SamFormTemplatesModule {}
+
+export * from './international-phone';
+export * from './name-entry';
+export * from './phone-entry';
