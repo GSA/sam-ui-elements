@@ -14,6 +14,7 @@ export const _SamCell = CdkCell;
 export class SamHeaderCellDirective extends _SamHeaderCellBase {
     @HostBinding('class.sam-header-cell') samCellClass = true;
     @HostBinding('attr.role') roleAttr = 'columnheader';
+    @HostBinding('attr.scope') scopeAttr = 'col';
     constructor(columnDef: CdkColumnDef,
             elementRef: ElementRef,
             renderer: Renderer2) {

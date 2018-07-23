@@ -23,7 +23,6 @@ import { SamYoutubeComponent } from './youtube';
 import { SamPickerComponent, SamPopoverComponent } from './picker';
 import { SamVideoPlayerComponent} from './video-player';
 import { SamInputMaskModule } from './input-mask';
-import { SamDataTableModule } from './data-table';
 import { SamPageTitle } from './page-title';
 import { SamLayoutComponentsModule } from './patterns';
 import { SamDollarComponent } from './dollar';
@@ -34,7 +33,6 @@ import { SamWrapperModule } from '../wrappers';
     CommonModule,
     RouterModule,
     SamInputMaskModule,
-    SamDataTableModule,
     SamLayoutComponentsModule,
     FormsModule,
     SamWrapperModule,
@@ -85,7 +83,6 @@ import { SamWrapperModule } from '../wrappers';
     SamPickerComponent,
     SamVideoPlayerComponent,
     SamInputMaskModule,
-    SamDataTableModule,
     SamLayoutComponentsModule,
     SamPageTitle,
     SamDollarComponent,
@@ -93,6 +90,5 @@ import { SamWrapperModule } from '../wrappers';
 })
 export class SamExperimentalModule { }
 
-export * from './data-table';
 export * from './patterns';
 
