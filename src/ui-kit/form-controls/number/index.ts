@@ -1,1 +1,1 @@
-export * from './number.component';
+export { SamNumberComponent } from './number.component';

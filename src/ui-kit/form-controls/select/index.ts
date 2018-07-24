@@ -19,3 +19,5 @@ import { SamWrapperModule } from '../../wrappers';
   ]
 })
 export class SamSelectModule {}
+
+export * from './select.component';

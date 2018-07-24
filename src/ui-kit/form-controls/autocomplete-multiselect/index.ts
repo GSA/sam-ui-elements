@@ -22,3 +22,5 @@ import { SamDirectivesModule } from '../../directives';
   ]
 })
 export class SamAutocompleteMultiselectModule {}
+
+export * from './autocomplete-multiselect.component';
