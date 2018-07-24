@@ -15,3 +15,5 @@ import { SamWrapperModule } from '../../wrappers';
   exports: [ SamTextComponent ]
 })
 export class SamTextInputModule {}
+
+export * from './text.component';

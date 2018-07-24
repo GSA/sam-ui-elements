@@ -17,19 +17,17 @@ import {
 import { SamFormService } from '../../form-service';
 import {TextAreaWidthType} from "../../types";
 
-export const TEXT_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => SamTextareaComponent),
-  multi: true
-};
-
 /**
  * The <sam-text-area> component provides a textarea input form control
  */
 @Component({
   selector: 'sam-text-area',
   templateUrl: 'textarea.template.html',
-  providers: [ TEXT_VALUE_ACCESSOR ]
+  providers: [ {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => SamTextareaComponent),
+    multi: true
+  } ]
 })
 export class SamTextareaComponent implements ControlValueAccessor {
   /**

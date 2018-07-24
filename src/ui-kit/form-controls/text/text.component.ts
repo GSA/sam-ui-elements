@@ -20,11 +20,6 @@ import {
 import { SamFormService } from '../../form-service';
 import { Subject } from 'rxjs';
 
-export const TEXT_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => SamTextComponent),
-  multi: true
-};
 
 /**
  * The <sam-text> component provides a text input form control
@@ -32,7 +27,11 @@ export const TEXT_VALUE_ACCESSOR: any = {
 @Component({
   selector: 'sam-text',
   templateUrl: 'text.template.html',
-  providers: [ TEXT_VALUE_ACCESSOR ]
+  providers: [ {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => SamTextComponent),
+    multi: true
+  } ]
 })
 export class SamTextComponent implements ControlValueAccessor, OnDestroy {
   /**

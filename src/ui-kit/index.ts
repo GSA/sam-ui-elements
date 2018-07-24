@@ -52,3 +52,4 @@ export * from './wrappers';
 
 export * from './types';
 export * from './form-service';
+export * from './type-check-helpers';
