@@ -16,12 +16,6 @@ import {
 } from '@angular/forms';
 import { SamFormService } from '../../form-service';
 
-export const TEXT_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => SamNumberComponent),
-  multi: true
-};
-
 /**
  *
  */
@@ -45,7 +39,11 @@ export const TEXT_VALUE_ACCESSOR: any = {
           (change)="onInputChange($event.target.value)">
       </sam-label-wrapper>
   `,
-  providers: [ TEXT_VALUE_ACCESSOR ]
+  providers: [ {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => SamNumberComponent),
+    multi: true
+  } ]
 })
 export class SamNumberComponent implements ControlValueAccessor {
   /**
