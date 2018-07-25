@@ -217,7 +217,13 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
 
   writeValue(value: null|undefined|any) {
     if (value && value.length) {
-      this._model = value;
+      const ufs = value.map(f => {
+        return {
+          file: f,
+          upload: new Upload()
+        };
+      });
+      this.populateFiles(value, ufs);
     } else {
       this._model = [];
       this._clearInput();
@@ -226,39 +232,18 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
 
   onFilesChange(files: FileList) {
     this.onTouched();
-    this.showMaxFilesError = false;
-
     // convert to array for the convience of the standard array functions
     const asArray = toArray(files);
-    const wouldBeTotal = asArray.length + this._model.length;
-    if (this.maxFiles > 0 && wouldBeTotal > this.maxFiles) {
-      this.showMaxFilesError = true;
-      return;
-    }
-
     if (asArray.length === 0) {
       return;
     }
-
     const ufs = asArray.map(f => {
       return {
         file: f,
         upload: new Upload()
       };
     });
-
-    this.validateFiles(ufs);
-
-    // concat old items and new items
-    this._model = [...this._model, ...ufs];
-
-    // set up file table row config
-    this.fileCtrlConfig = [
-      ...this.fileCtrlConfig,
-      ...ufs.map(uf => this.initilizeFileCtrl(uf.file))
-    ];
-    this.updateFilePos();
-
+    this.populateFiles(asArray, ufs);
     if (!this.uploadDeferred) {
       this.doUpload(ufs);
     }
@@ -529,5 +514,25 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     if (this.uploadElIds && this.uploadElIds[property]) {
       this.uploadElIds[property] = `${this.id}-${property}`;
     }
+  }
+
+  populateFiles(files, ufs) {
+    this.showMaxFilesError = false;
+    const wouldBeTotal = files.length + this._model.length;
+    if (this.maxFiles > 0 && wouldBeTotal > this.maxFiles) {
+      this.showMaxFilesError = true;
+      return;
+    }
+    this.validateFiles(ufs);
+
+    // concat old items and new items
+    this._model = [...this._model, ...ufs];
+
+    // set up file table row config
+    this.fileCtrlConfig = [
+      ...this.fileCtrlConfig,
+      ...ufs.map(uf => this.initilizeFileCtrl(uf.file))
+    ];
+    this.updateFilePos();
   }
 }
