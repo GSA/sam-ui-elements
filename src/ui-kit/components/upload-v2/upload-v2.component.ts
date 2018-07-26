@@ -217,17 +217,20 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
 
   writeValue(value: null|undefined|any) {
     if (value && value.length) {
-      const ufs = value.map(f => {
-        return {
-          file: f,
-          upload: new Upload()
-        };
-      });
-      this.populateFiles(value, ufs);
+      this.setUploadTableData(value);
     } else {
       this._model = [];
       this._clearInput();
     }
+  }
+  setUploadTableData(value: any[]) {
+    const uploadedFilesConfig = value.map(file => {
+      return {
+        file: file,
+        upload: new Upload()
+      };
+    });
+    this.populateFiles(value, uploadedFilesConfig);
   }
 
   onFilesChange(files: FileList) {
@@ -237,15 +240,15 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     if (asArray.length === 0) {
       return;
     }
-    const ufs = asArray.map(f => {
+    const uploadedFilesConfig = asArray.map(file => {
       return {
-        file: f,
+        file: file,
         upload: new Upload()
       };
     });
-    this.populateFiles(asArray, ufs);
+    this.populateFiles(asArray, uploadedFilesConfig);
     if (!this.uploadDeferred) {
-      this.doUpload(ufs);
+      this.doUpload(uploadedFilesConfig);
     }
     this.emit();
   }
@@ -516,22 +519,28 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     }
   }
 
-  populateFiles(files, ufs) {
+  private populateFiles(value, uploadedFilesConfig) {
+   this.validateUploadedFiles(value, uploadedFilesConfig);
+   this.populateFileUploadTable(uploadedFilesConfig);
+  }
+
+  private validateUploadedFiles(value, uploadedFilesConfig) {
     this.showMaxFilesError = false;
-    const wouldBeTotal = files.length + this._model.length;
+    const wouldBeTotal = value.length + this._model.length;
     if (this.maxFiles > 0 && wouldBeTotal > this.maxFiles) {
       this.showMaxFilesError = true;
       return;
     }
-    this.validateFiles(ufs);
-
+    this.validateFiles(uploadedFilesConfig);
+  }
+  private populateFileUploadTable(uploadedFilesConfig) {
     // concat old items and new items
-    this._model = [...this._model, ...ufs];
+    this._model = [...this._model, ...uploadedFilesConfig];
 
     // set up file table row config
     this.fileCtrlConfig = [
       ...this.fileCtrlConfig,
-      ...ufs.map(uf => this.initilizeFileCtrl(uf.file))
+      ...uploadedFilesConfig.map(uploadFile => this.initilizeFileCtrl(uploadFile.file))
     ];
     this.updateFilePos();
   }
