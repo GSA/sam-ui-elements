@@ -217,50 +217,38 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
 
   writeValue(value: null|undefined|any) {
     if (value && value.length) {
-      this._model = value;
+      this.setUploadTableData(value);
     } else {
       this._model = [];
       this._clearInput();
     }
   }
-
-  onFilesChange(files: FileList) {
-    this.onTouched();
-    this.showMaxFilesError = false;
-
-    // convert to array for the convience of the standard array functions
-    const asArray = toArray(files);
-    const wouldBeTotal = asArray.length + this._model.length;
-    if (this.maxFiles > 0 && wouldBeTotal > this.maxFiles) {
-      this.showMaxFilesError = true;
-      return;
-    }
-
-    if (asArray.length === 0) {
-      return;
-    }
-
-    const ufs = asArray.map(f => {
+  setUploadTableData(value: any[]) {
+    const uploadedFilesConfig = value.map(file => {
       return {
-        file: f,
+        file: file,
         upload: new Upload()
       };
     });
+    this.populateFiles(value, uploadedFilesConfig);
+  }
 
-    this.validateFiles(ufs);
-
-    // concat old items and new items
-    this._model = [...this._model, ...ufs];
-
-    // set up file table row config
-    this.fileCtrlConfig = [
-      ...this.fileCtrlConfig,
-      ...ufs.map(uf => this.initilizeFileCtrl(uf.file))
-    ];
-    this.updateFilePos();
-
+  onFilesChange(files: FileList) {
+    this.onTouched();
+    // convert to array for the convience of the standard array functions
+    const asArray = toArray(files);
+    if (asArray.length === 0) {
+      return;
+    }
+    const uploadedFilesConfig = asArray.map(file => {
+      return {
+        file: file,
+        upload: new Upload()
+      };
+    });
+    this.populateFiles(asArray, uploadedFilesConfig);
     if (!this.uploadDeferred) {
-      this.doUpload(ufs);
+      this.doUpload(uploadedFilesConfig);
     }
     this.emit();
   }
@@ -529,5 +517,31 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     if (this.uploadElIds && this.uploadElIds[property]) {
       this.uploadElIds[property] = `${this.id}-${property}`;
     }
+  }
+
+  private populateFiles(value, uploadedFilesConfig) {
+   this.validateUploadedFiles(value, uploadedFilesConfig);
+   this.populateFileUploadTable(uploadedFilesConfig);
+  }
+
+  private validateUploadedFiles(value, uploadedFilesConfig) {
+    this.showMaxFilesError = false;
+    const wouldBeTotal = value.length + this._model.length;
+    if (this.maxFiles > 0 && wouldBeTotal > this.maxFiles) {
+      this.showMaxFilesError = true;
+      return;
+    }
+    this.validateFiles(uploadedFilesConfig);
+  }
+  private populateFileUploadTable(uploadedFilesConfig) {
+    // concat old items and new items
+    this._model = [...this._model, ...uploadedFilesConfig];
+
+    // set up file table row config
+    this.fileCtrlConfig = [
+      ...this.fileCtrlConfig,
+      ...uploadedFilesConfig.map(uploadFile => this.initilizeFileCtrl(uploadFile.file))
+    ];
+    this.updateFilePos();
   }
 }
