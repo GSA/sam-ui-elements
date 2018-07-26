@@ -179,7 +179,6 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   }
 
   onCheckChanged(value, isChecked, id) {
-    debugger
     this.onTouched();
     this.optionChange = value;
     this.optionId = id;
