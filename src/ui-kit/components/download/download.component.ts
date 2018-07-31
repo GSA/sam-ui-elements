@@ -1,12 +1,14 @@
 import {
   Component,
-  Input,
+  Input
+ } from '@angular/core';
+ import {
   trigger,
   state,
   style,
   transition,
   animate
- } from '@angular/core';
+ } from '@angular/animations';
 import { DownloadPackageType } from '../../types';
 
 /**
