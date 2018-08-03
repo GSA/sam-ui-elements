@@ -10,7 +10,6 @@ import {
 
 import { MdSidenavContainer, MdSidenav } from '../sidenav/sidenav';
 import { SamToolbarComponent } from '../toolbar.component';
-import { SamPageNextService } from '../../architecture';
 
 @Component({
   selector: 'sam-page-next',

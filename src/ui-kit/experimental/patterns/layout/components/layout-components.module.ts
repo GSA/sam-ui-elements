@@ -27,6 +27,8 @@ import {
 import { MdExpansionModule } from './expansion';
 import { SamMainContentComponent } from './main-content.component';
 import { SamContentOutletDirective } from './content-outlet.directive';
+import { SamAsideToggleComponent } from './aside-toggle.component';
+import { SamComponentsModule } from '../../../../components';
 
 @NgModule({
   imports: [
@@ -34,7 +36,8 @@ import { SamContentOutletDirective } from './content-outlet.directive';
     FormsModule,
     ReactiveFormsModule,
     MdSidenavModule,
-    MdExpansionModule
+    MdExpansionModule,
+    SamComponentsModule
   ],
   declarations: [
     // Components
@@ -48,6 +51,7 @@ import { SamContentOutletDirective } from './content-outlet.directive';
     SamFiltersWrapperComponent,
     SamResourcesWrapperComponent,
     SamPageNextComponent,
+    SamAsideToggleComponent,
     
     // Directives
     SamDatabankTitleSectionDirective,
@@ -70,6 +74,7 @@ import { SamContentOutletDirective } from './content-outlet.directive';
     SamFiltersWrapperComponent,
     SamResourcesWrapperComponent,
     SamPageNextComponent,
+    SamAsideToggleComponent,
 
     // Directives
     SamDatabankTitleSectionDirective,
