@@ -29,6 +29,7 @@ import { SamMainContentComponent } from './main-content.component';
 import { SamContentOutletDirective } from './content-outlet.directive';
 import { SamAsideToggleComponent } from './aside-toggle.component';
 import { SamComponentsModule } from '../../../../components';
+import { SamActionsListModule } from '../../../actions-list';
 
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import { SamComponentsModule } from '../../../../components';
     ReactiveFormsModule,
     MdSidenavModule,
     MdExpansionModule,
-    SamComponentsModule
+    SamComponentsModule,
+    SamActionsListModule
   ],
   declarations: [
     // Components

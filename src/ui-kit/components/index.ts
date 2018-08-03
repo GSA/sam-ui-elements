@@ -32,7 +32,6 @@ import { SamImageModule } from './image';
 import { SamActionButton} from './actions/action-button';
 import { SamActionsDropdownComponent } from './actions/actions-dropdown';
 import { SamUploadComponentV2 } from './upload-v2/upload-v2.component';
-import { SamActionsListComponent } from './actions-list';
 
 @NgModule({
   imports: [
@@ -70,7 +69,6 @@ import { SamActionsListComponent } from './actions-list';
     SamUploadComponentV2,
     SamActionButton,
     SamActionsDropdownComponent,
-    SamActionsListComponent
   ],
   exports: [
     SamActionButton,
@@ -97,7 +95,6 @@ import { SamActionsListComponent } from './actions-list';
     AccordionsModule,
     SamCommentsModule,
     SamImageModule,
-    SamActionsListComponent
   ]
 })
 export class SamComponentsModule {}
@@ -122,5 +119,4 @@ export * from './sidenav';
 export * from './spinner';
 export * from './tabs';
 export * from './upload';
-export * from './actions-list';
 export { SamUploadComponentV2 } from './upload-v2';

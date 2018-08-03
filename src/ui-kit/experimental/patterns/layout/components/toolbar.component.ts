@@ -5,7 +5,7 @@ import {
   EventEmitter
 } from '@angular/core';
 import { MdSidenav } from './sidenav';
-import { ToolbarItem } from '../../../../components/actions-list';
+import { ToolbarItem } from '../../../actions-list';
 
 @Component({
   selector: 'sam-toolbar',

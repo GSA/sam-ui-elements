@@ -28,6 +28,7 @@ import { SamPageTitle } from './page-title';
 import { SamLayoutComponentsModule } from './patterns';
 import { SamDollarComponent } from './dollar';
 import { SamWrapperModule } from '../wrappers';
+import { SamActionsListModule } from './actions-list';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { SamWrapperModule } from '../wrappers';
     SamLayoutComponentsModule,
     FormsModule,
     SamWrapperModule,
+    SamActionsListModule
   ],
   declarations: [
     SamBoxComponent,
