@@ -27,6 +27,7 @@ import {
 import { MdExpansionModule } from './expansion';
 import { SamMainContentComponent } from './main-content.component';
 import { SamContentOutletDirective } from './content-outlet.directive';
+import { SamReportingMainComponent } from './template/reporting-main.component';
 
 @NgModule({
   imports: [
@@ -48,6 +49,7 @@ import { SamContentOutletDirective } from './content-outlet.directive';
     SamFiltersWrapperComponent,
     SamResourcesWrapperComponent,
     SamPageNextComponent,
+    SamReportingMainComponent,
     
     // Directives
     SamDatabankTitleSectionDirective,
@@ -70,6 +72,7 @@ import { SamContentOutletDirective } from './content-outlet.directive';
     SamFiltersWrapperComponent,
     SamResourcesWrapperComponent,
     SamPageNextComponent,
+    SamReportingMainComponent,
 
     // Directives
     SamDatabankTitleSectionDirective,
