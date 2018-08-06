@@ -9,7 +9,7 @@ EventEmitter
 import {CdkTableModule} from '@angular/cdk';
 
 import { SamDataTableModule,SamSortDirective } from './';
-import { ExampleDataSource,ExampleDatabase } from './data-source.sample';
+import { ExampleDataSource,ExampleDatabase } from './data-source.sample.spec';
 
 @Component({
     selector: 'test-cmp',
