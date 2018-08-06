@@ -22,7 +22,7 @@ export class SamMainComponent implements AfterContentInit {
   @ContentChild(forwardRef(() => SamFilterDrawerComponent))
     public drawer: SamFilterDrawerComponent;
 
-  constructor (private _service: SamPageNextService) {}
+  constructor (protected _service: SamPageNextService) {}
 
   public ngAfterContentInit () {
     this.drawer.clear.subscribe(evt => this._clearDrawer());

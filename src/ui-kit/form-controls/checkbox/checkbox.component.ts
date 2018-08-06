@@ -76,10 +76,19 @@ export class SamCheckboxComponent implements ControlValueAccessor {
    * Sets the id
    */
   @Input() id: string;
+
+  public optionChange:string;
+
+  public optionId:string;
+  
+
+  
   /**
   * Deprecated, Event emitted when the model value changes
   */
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild(FieldsetWrapper)
   public wrapper: FieldsetWrapper;
@@ -169,8 +178,10 @@ export class SamCheckboxComponent implements ControlValueAccessor {
     return this.model.indexOf(value) !== -1;
   }
 
-  onCheckChanged(value, isChecked) {
+  onCheckChanged(value, isChecked, id) {
     this.onTouched();
+    this.optionChange = value;
+    this.optionId = id;
     if (!isChecked) {
       // If the option was unchecked, remove it from the model
       this.value = this.model.filter(val => val !== value);
@@ -205,7 +216,10 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   }
 
   emitModel() {
+
     this.modelChange.emit(this.model);
+  
+    this.optionSelected.emit({model : this.model, selected: this.optionChange, id: this.optionId});
   }
 
   registerOnChange(fn) {

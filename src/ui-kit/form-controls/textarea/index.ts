@@ -15,3 +15,5 @@ import { SamWrapperModule } from '../../wrappers';
   exports: [ SamTextareaComponent ]
 })
 export class SamTextAreaModule {}
+
+export * from './textarea.component';

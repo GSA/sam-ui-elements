@@ -14,3 +14,5 @@ import { OptionsType } from '../../types';
   exports: [ SamCheckboxComponent ]
 })
 export class SamCheckboxModule {}
+
+export * from './checkbox.component';
