@@ -4,46 +4,25 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
-import { MdSidenav } from './sidenav/sidenav';
-
-export type ToolbarItem = {
-  label: string,
-  icon: ToolbarItemIcon,
-  disabled?: boolean
-};
-
-export type ToolbarItemIcon = 'fa-download' | 'fa-share-alt'
-  | 'fa-cloud';
+import { MdSidenav } from './sidenav';
+import { ToolbarItem } from '../../../actions-list';
 
 @Component({
-    selector: 'sam-toolbar',
-    template: `
-  <div class="sam small menu">
-    <a *ngIf="sidenav"
-    tabindex="0"
-    (click)="sidenav.toggle()"
-    (keyup.enter)="actionClick(item)">
-      Toggle filters
-    </a>
-    <div class="section right">
-      <a *ngFor="let item of contentModel"
-      [ngClass]="{disabled: item.disabled}"
-      tabindex="0"
-      (click)="actionClick(item)"
-      (keyup.enter)="actionClick(item)">
-        <i class="fa {{item.icon}}" aria-hidden="true"></i>
-        {{item.label}}
-      </a>
+  selector: 'sam-toolbar',
+  template: `
+    <div class="sam small menu">
+      <sam-aside-toggle [sidenav]="sidenav"
+        [contentModel]="sidenavModel"
+        (toggle)="action.emit($event)">
+      </sam-aside-toggle>
+      <sam-actions [contentModel]="contentModel"
+        (action)="action.emit($event)"
+      ></sam-actions>
     </div>
-  </div>
   `
 })
-
 export class SamToolbarComponent {
-  /**
-   * Passes in the sidebar for toggling
-   */
-  @Input() sidenav: MdSidenav;
+  @Input() public sidenav: MdSidenav;
   /**
    * Passes in the content model for the top right items+icons
    */
@@ -52,19 +31,20 @@ export class SamToolbarComponent {
     icon: 'fa-download'
   }, {
     label: 'Share',
-    icon: 'fa-share-alt'
+    icon: 'fa-share-alt',
+    disabled: true
   }, {
     label: 'Save Criteria',
     icon: 'fa-cloud'
   }];
+
+  @Input() sidenavModel: ToolbarItem = {
+    label: 'Toggle Filters',
+    icon: 'fa-bars',
+    disabled: false
+  }
   /**
    * Emitter for interaction handling
    */
   @Output() action: EventEmitter<any> = new EventEmitter<any>();
-
-  actionClick(item){
-    if(!item.disabled){
-      this.action.emit(item);
-    }
-  }
 }
