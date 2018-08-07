@@ -10,14 +10,14 @@ export const _SamTable = CdkTable;
  * Todo: revert back to using CDK_TABLE_TEMPLATE in a later version
  */
 @Component({
-  selector: 'sam-datatable',
+  selector: 'sam-datatable, table[sam-datatable]',
   template: `
-  <div class="sam-datatable-thead">
+  <thead class="sam-datatable-thead">
   <ng-container headerRowPlaceholder></ng-container>
-  </div>
-  <div class="sam-datatable-tbody">
+  </thead>
+  <tbody class="sam-datatable-tbody">
   <ng-container rowPlaceholder></ng-container>
-  </div>
+  </tbody>
   <ng-content select="[rowFooterPlaceholder]"></ng-content>`,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -8,7 +8,7 @@ export const _SamCell = CdkCell;
 /** Header cell template container that adds the right classes and role. */
 /* tslint:disable */
 @Directive({
-  selector: 'sam-header-cell'
+  selector: 'sam-header-cell, th[sam-header-cell]'
 })
 /* tslint:enable */
 export class SamHeaderCellDirective extends _SamHeaderCellBase {
@@ -26,7 +26,7 @@ export class SamHeaderCellDirective extends _SamHeaderCellBase {
 /** Cell template container that adds the right classes and role. */
 /* tslint:disable */
 @Directive({
-  selector: 'sam-cell'
+  selector: 'sam-cell, td[sam-header-cell]'
 })
 /* tslint:enable */
 export class SamCellDirective extends _SamCell {
