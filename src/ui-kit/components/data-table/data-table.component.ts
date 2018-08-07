@@ -12,12 +12,8 @@ export const _SamTable = CdkTable;
 @Component({
   selector: 'sam-datatable, table[sam-datatable]',
   template: `
-  <thead class="sam-datatable-thead">
   <ng-container headerRowPlaceholder></ng-container>
-  </thead>
-  <tbody class="sam-datatable-tbody">
   <ng-container rowPlaceholder></ng-container>
-  </tbody>
   <ng-content select="[rowFooterPlaceholder]"></ng-content>`,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
