@@ -18,13 +18,13 @@ describe('The Sam Checkboxes component', () => {
     });
 
     it('should process checkbox changes', () => {
-      component.onCheckChanged('test', true);
+      component.onCheckChanged('test', true, '');
       expect(component.model[0]).toBe('test');
       
-      component.onCheckChanged('test2', true);
+      component.onCheckChanged('test2', true, '');
       expect(component.model[1]).toBe('test2');
 
-      component.onCheckChanged('test', false);
+      component.onCheckChanged('test', false, '');
       expect(component.model[0]).toBe('test2');
     });
 

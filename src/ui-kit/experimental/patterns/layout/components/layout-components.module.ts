@@ -30,6 +30,7 @@ import { SamContentOutletDirective } from './content-outlet.directive';
 import { SamAsideToggleComponent } from './aside-toggle.component';
 import { SamComponentsModule } from '../../../../components';
 import { SamActionsListModule } from '../../../actions-list';
+import { SamReportingMainComponent } from './template/reporting-main.component';
 
 @NgModule({
   imports: [
@@ -54,6 +55,7 @@ import { SamActionsListModule } from '../../../actions-list';
     SamResourcesWrapperComponent,
     SamPageNextComponent,
     SamAsideToggleComponent,
+    SamReportingMainComponent,
     
     // Directives
     SamDatabankTitleSectionDirective,
@@ -77,6 +79,7 @@ import { SamActionsListModule } from '../../../actions-list';
     SamResourcesWrapperComponent,
     SamPageNextComponent,
     SamAsideToggleComponent,
+    SamReportingMainComponent,
 
     // Directives
     SamDatabankTitleSectionDirective,
