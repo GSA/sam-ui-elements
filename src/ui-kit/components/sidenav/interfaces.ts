@@ -13,4 +13,5 @@ export interface MenuItem {
   disabled?: boolean;
   children?: MenuItem[];
   iconClass?: string;
+  id?: string;
 }
