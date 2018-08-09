@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SamUploadComponentV2 } from './upload-v2.component';
 import { SamProgressModule } from '../progress-bar';
-import { SamDirectivesModule } from '../../directives';
-import { SamPipesModule } from '../../pipes';
+import { SamDragDropModule } from '../../directives';
+import { SamFilesizeModule } from '../../pipes';
 
 @NgModule({
     declarations: [ SamUploadComponentV2 ],
@@ -12,9 +12,9 @@ import { SamPipesModule } from '../../pipes';
     imports: [
         CommonModule,
         FormsModule,
-        SamDirectivesModule,
+        SamDragDropModule,
         SamProgressModule,
-        SamPipesModule
+        SamFilesizeModule
     ]
 })
 export class SamUploadV2Module { }
