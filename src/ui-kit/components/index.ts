@@ -11,25 +11,25 @@ import { AccordionsModule } from './accordion';
 import { SamAlertComponent } from './alert';
 import { SamAlertFooterComponent, SamAlertFooterService } from './alert-footer';
 import { SamBadgeComponent } from './badge';
-import { SamBannerComponent } from './banner';
-import { SamBreadcrumbsComponent } from './breadcrumbs';
+import { SamBannerModule } from './banner';
+import { SamBreadcrumbsModule } from './breadcrumbs';
 import { SamDownloadComponent } from './download';
-import { SamHeaderComponent } from './header';
+import { SamHeaderModule } from './header';
 import { SamHistoryComponent } from './history';
-import { SamModalComponent } from './modal';
+import { SamModalModule } from './modal';
 import { SamMultiSelectDropdownComponent } from './multiselect-dropdown';
 import { SamPaginationComponent } from './pagination';
 import { SamPipesModule } from '../pipes';
 import { SamPointOfContactComponent } from './point-of-contact';
-import { SamProgress } from './progress-bar/progress-bar.component';
+import { SamProgressModule } from './progress-bar';
 import { SamSidenavModule } from './sidenav';
 import { SamSpinnerComponent } from './spinner';
 import { SamTabsComponent, SamTabComponent } from './tabs';
-import { SamUploadComponent } from './upload/upload.component';
+import { SamUploadModule } from './upload';
 import { SamWrapperModule } from '../wrappers';
 import { SamCommentsModule } from './comments';
 import { SamImageModule } from './image';
-import { SamActionButton} from './actions/action-button';
+import { SamActionButtonModule } from './actions/action-button';
 import { SamActionsDropdownComponent } from './actions/actions-dropdown';
 import { SamUploadComponentV2 } from './upload-v2/upload-v2.component';
 import { SamDataTableModule } from './data-table';
@@ -49,50 +49,50 @@ import { SamDataTableModule } from './data-table';
     SamCommentsModule,
     SamImageModule,
     SamDataTableModule,
+    SamBannerModule,
+    SamHeaderModule,
+    SamModalModule,
+    SamBreadcrumbsModule,
+    SamUploadModule,
+    SamProgressModule,
+    SamActionButtonModule,
   ],
   declarations: [
     SamAlertComponent,
     SamAlertFooterComponent,
     SamBadgeComponent,
-    SamBannerComponent,
-    SamBreadcrumbsComponent,
     SamDownloadComponent,
-    SamHeaderComponent,
     SamHistoryComponent,
-    SamModalComponent,
     SamMultiSelectDropdownComponent,
     SamPaginationComponent,
     SamPointOfContactComponent,
-    SamProgress,
     SamSpinnerComponent,
     SamTabsComponent,
     SamTabComponent,
-    SamUploadComponent,
     SamUploadComponentV2,
-    SamActionButton,
     SamActionsDropdownComponent,
   ],
   exports: [
-    SamActionButton,
+    SamActionButtonModule,
     SamActionsDropdownComponent,
     SamAlertComponent,
     SamAlertFooterComponent,
     SamBadgeComponent,
-    SamBannerComponent,
-    SamBreadcrumbsComponent,
+    SamBannerModule,
+    SamBreadcrumbsModule,
     SamDownloadComponent,
-    SamHeaderComponent,
+    SamHeaderModule,
     SamHistoryComponent,
-    SamModalComponent,
+    SamModalModule,
     SamMultiSelectDropdownComponent,
     SamPaginationComponent,
     SamPointOfContactComponent,
-    SamProgress,
+    SamProgressModule,
     SamSidenavModule,
     SamSpinnerComponent,
     SamTabsComponent,
     SamTabComponent,
-    SamUploadComponent,
+    SamUploadModule,
     SamUploadComponentV2,
     AccordionsModule,
     SamCommentsModule,
