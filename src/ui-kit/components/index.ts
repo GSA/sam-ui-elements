@@ -8,30 +8,30 @@ import { SamDirectivesModule } from '../directives';
 import { SamElementsModule } from '../elements';
 
 import { AccordionsModule } from './accordion';
-import { SamAlertComponent } from './alert';
-import { SamAlertFooterComponent, SamAlertFooterService } from './alert-footer';
-import { SamBadgeComponent } from './badge';
+import { SamAlertModule } from './alert';
+import { SamAlertFooterModule } from './alert-footer';
+import { SamBadgeModule } from './badge';
 import { SamBannerModule } from './banner';
 import { SamBreadcrumbsModule } from './breadcrumbs';
-import { SamDownloadComponent } from './download';
+import { SamDownloadModule } from './download';
 import { SamHeaderModule } from './header';
-import { SamHistoryComponent } from './history';
+import { SamHistoryModule } from './history';
 import { SamModalModule } from './modal';
-import { SamMultiSelectDropdownComponent } from './multiselect-dropdown';
-import { SamPaginationComponent } from './pagination';
+import { SamMultiSelectDropdownModule } from './multiselect-dropdown';
+import { SamPaginationModule } from './pagination';
 import { SamPipesModule } from '../pipes';
-import { SamPointOfContactComponent } from './point-of-contact';
+import { SamPointOfContactModule } from './point-of-contact';
 import { SamProgressModule } from './progress-bar';
 import { SamSidenavModule } from './sidenav';
-import { SamSpinnerComponent } from './spinner';
-import { SamTabsComponent, SamTabComponent } from './tabs';
+import { SamSpinnerModule } from './spinner';
+import { SamTabsModule } from './tabs';
 import { SamUploadModule } from './upload';
 import { SamWrapperModule } from '../wrappers';
 import { SamCommentsModule } from './comments';
 import { SamImageModule } from './image';
 import { SamActionButtonModule } from './actions/action-button';
-import { SamActionsDropdownComponent } from './actions/actions-dropdown';
-import { SamUploadComponentV2 } from './upload-v2/upload-v2.component';
+import { SamActionDropdownModule } from './actions/actions-dropdown';
+import { SamUploadV2Module } from './upload-v2';
 import { SamDataTableModule } from './data-table';
 
 @NgModule({
@@ -56,44 +56,43 @@ import { SamDataTableModule } from './data-table';
     SamUploadModule,
     SamProgressModule,
     SamActionButtonModule,
+    SamActionDropdownModule,
+    SamAlertModule,
+    SamAlertFooterModule,
+    SamBadgeModule,
+    SamDownloadModule,
+    SamHistoryModule,
+    SamMultiSelectDropdownModule,
+    SamPaginationModule,
+    SamPointOfContactModule,
+    SamSpinnerModule,
+    SamTabsModule,
+    SamUploadV2Module,
   ],
   declarations: [
-    SamAlertComponent,
-    SamAlertFooterComponent,
-    SamBadgeComponent,
-    SamDownloadComponent,
-    SamHistoryComponent,
-    SamMultiSelectDropdownComponent,
-    SamPaginationComponent,
-    SamPointOfContactComponent,
-    SamSpinnerComponent,
-    SamTabsComponent,
-    SamTabComponent,
-    SamUploadComponentV2,
-    SamActionsDropdownComponent,
+    
   ],
   exports: [
     SamActionButtonModule,
-    SamActionsDropdownComponent,
-    SamAlertComponent,
-    SamAlertFooterComponent,
-    SamBadgeComponent,
+    SamActionDropdownModule,
+    SamAlertModule,
+    SamAlertFooterModule,
+    SamBadgeModule,
     SamBannerModule,
     SamBreadcrumbsModule,
-    SamDownloadComponent,
+    SamDownloadModule,
     SamHeaderModule,
-    SamHistoryComponent,
+    SamHistoryModule,
     SamModalModule,
-    SamMultiSelectDropdownComponent,
-    SamPaginationComponent,
-    SamPointOfContactComponent,
+    SamMultiSelectDropdownModule,
+    SamPaginationModule,
+    SamPointOfContactModule,
     SamProgressModule,
     SamSidenavModule,
-    SamSpinnerComponent,
-    SamTabsComponent,
-    SamTabComponent,
+    SamSpinnerModule,
+    SamTabsModule,
     SamUploadModule,
-    SamUploadComponentV2,
+    SamUploadV2Module,
     AccordionsModule,
     SamCommentsModule,
     SamImageModule,
