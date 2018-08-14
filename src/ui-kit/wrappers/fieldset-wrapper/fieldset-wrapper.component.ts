@@ -70,7 +70,7 @@ export class FieldsetWrapper {
   }
 
   public ngAfterViewChecked() {
-    if (this.checkMore) {
+    if (this.checkMore && !this.showToggle) {
       this.calcToggle();
       this.cdr.detectChanges();
       this.checkMore = false;
