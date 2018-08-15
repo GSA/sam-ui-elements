@@ -10,7 +10,6 @@ import { HttpEvent } from '@angular/common/http/src/response';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {UploadedFileAction, UploadedFileData} from '../../types';
 import * as moment from 'moment';
-import { isEmpty } from 'lodash';
 
 export type RequestGenerator =
   (file: File) => HttpRequest<any> | Observable<HttpRequest<any>>;
@@ -83,7 +82,15 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
    * Files that were already uploaded to server
    */
   @Input() public uploadedFiles: Array<UploadedFileData> = [];
-  @Input() public uploadedFileAction: UploadedFileAction = {};
+  /**
+   * Sets disable attribute toggle for Uploaded file actions
+   */
+  @Input() public uploadedFileAction: UploadedFileAction =
+        {
+            isEditDisabled: false,
+            isDeleteDisabled: false,
+            isSortDisabled: false
+        };
   /**
    * Controls the mode of upload component, publish mode will only have
    * the view permission, and edit mode allows you to edit the file name
@@ -186,7 +193,6 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
 
   ngOnInit() {
     this.setUploadElementIds();
-    this.uploadedFileActionToggle();
     if (this.uploadedFiles.length) {
       this.setUploadedFiles(this.uploadedFiles);
     }
@@ -547,12 +553,5 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
       ...uploadedFilesConfig.map(uploadFile => this.initilizeFileCtrl(uploadFile.file))
     ];
     this.updateFilePos();
-  }
-  uploadedFileActionToggle() {
-      if (isEmpty(this.uploadedFileAction)) {
-          this.uploadedFileAction.isEditDisabled = false;
-          this.uploadedFileAction.isDeleteDisabled = false;
-          this.uploadedFileAction.isSortDisabled = false;
-      }
   }
 }
