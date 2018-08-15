@@ -186,11 +186,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
 
   ngOnInit() {
     this.setUploadElementIds();
-    if (isEmpty(this.uploadedFileAction)) {
-      this.uploadedFileAction.isEditDisabled = false;
-        this.uploadedFileAction.isDeleteDisabled = false;
-        this.uploadedFileAction.isSortDisabled = false;
-    }
+    this.uploadedFileActionToggle();
     if (this.uploadedFiles.length) {
       this.setUploadedFiles(this.uploadedFiles);
     }
@@ -551,5 +547,12 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
       ...uploadedFilesConfig.map(uploadFile => this.initilizeFileCtrl(uploadFile.file))
     ];
     this.updateFilePos();
+  }
+  uploadedFileActionToggle() {
+      if (isEmpty(this.uploadedFileAction)) {
+          this.uploadedFileAction.isEditDisabled = false;
+          this.uploadedFileAction.isDeleteDisabled = false;
+          this.uploadedFileAction.isSortDisabled = false;
+      }
   }
 }
