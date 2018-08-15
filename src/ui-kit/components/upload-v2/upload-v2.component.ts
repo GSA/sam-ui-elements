@@ -8,7 +8,7 @@ import { HttpClient, HttpErrorResponse, HttpEventType,
 import { DragState } from '../../directives/drag-drop/drag-drop.directive';
 import { HttpEvent } from '@angular/common/http/src/response';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { UploadedFileData } from '../../types';
+import {UploadedFileAction, UploadedFileData} from '../../types';
 import * as moment from 'moment';
 
 export type RequestGenerator =
@@ -83,6 +83,15 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
    */
   @Input() public uploadedFiles: Array<UploadedFileData> = [];
   /**
+   * Sets disable attribute toggle for Uploaded file actions
+   */
+  @Input() public uploadedFileAction: UploadedFileAction =
+        {
+            isEditDisabled: false,
+            isDeleteDisabled: false,
+            isSortDisabled: false
+        };
+  /**
    * Controls the mode of upload component, publish mode will only have
    * the view permission, and edit mode allows you to edit the file name
    * security check etc.
@@ -154,6 +163,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
 
   public uploadElIds = {
     tableId: 'tableId',
+    fileName: 'fileName',
     fileLinkId: 'fileLinkId',
     editId: 'editId',
     editInputId: 'editInputId',
@@ -199,7 +209,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
       .map(uf => this.initilizeFileCtrl(
         uf,
         uf.isSecure,
-        moment(uf.postedDate).format('MMM DD, YYYY h:mm a')));
+        uf.postedDate));
     this.updateFilePos();
   }
 

@@ -340,3 +340,17 @@ export interface UploadedFileData {
    */
   url: string;
 }
+export interface UploadedFileAction {
+    /**
+     * Defines the edit action for the uploaded file
+     */
+    isEditDisabled?: boolean;
+    /**
+     * Defines the delete action for the uploaded file
+     */
+    isDeleteDisabled?: boolean;
+    /**
+     * Defines the sort action for the uploaded files
+     */
+    isSortDisabled?: boolean;
+}

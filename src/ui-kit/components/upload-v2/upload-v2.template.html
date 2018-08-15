@@ -21,9 +21,9 @@
             <td class="p_T-1x p_B-1x p_L-4x upload-table-doc-col">
               <div class="pdf-icon"><i class="fa fa-file-pdf-o p_R-2x"></i> </div>
               <ng-container *ngIf="!fileCtrlConfig[i].isNameEditMode; else fileNameEdit">
-                  <p *ngIf="isEditMode()">{{ fctrl.fileName }} </p>
+                  <p *ngIf="isEditMode()" [attr.id]="uploadElIds.fileName + i">{{ fctrl.fileName }} </p>
                   <a *ngIf="!isEditMode()" class="file-link" [attr.id]="uploadElIds.fileLinkId + i" [attr.href]="fctrl.url">{{ fctrl.fileName }} </a>
-                  <button type="button" [attr.id]="uploadElIds.editId + i" [ngClass]="'edit-btn-'+i" class="pull-right inline-pencil-icon clear-button" (click)="onNameEditSwitch(i, $event)" *ngIf="isEditMode()" [attr.aria-label]="uploadElIds.editFileName + i"><i class="fa fa-pencil"></i></button>
+                  <button type="button" [attr.disabled]="uploadedFileAction.isEditDisabled ? 'disabled' : undefined" [attr.id]="uploadElIds.editId + i" [ngClass]="'edit-btn-'+i" class="pull-right inline-pencil-icon clear-button" (click)="onNameEditSwitch(i, $event)" *ngIf="isEditMode()" [attr.aria-label]="uploadElIds.editFileName + i"><i class="fa fa-pencil"></i></button>
               </ng-container>
               <ng-template #fileNameEdit>
                 <div class="relative">
@@ -56,13 +56,13 @@
               </ng-template>
             </td>
             <td class="upload-table-props-col" *ngIf="isEditMode()">
-              <button type="button" [attr.id]="uploadElIds.lastId + i" class="clear-button" (click)="swapFiles(i, i+1)" *ngIf="!fileCtrlConfig[i].isLast; else emptySpace">
+              <button type="button" [attr.disabled]="uploadedFileAction.isSortDisabled ? 'disabled' : undefined" [attr.id]="uploadElIds.lastId + i" class="clear-button" (click)="swapFiles(i, i+1)" *ngIf="!fileCtrlConfig[i].isLast; else emptySpace">
                 <i class="fa fa-chevron-down p_R-1x" [attr.aria-label]="uploadElIds.moveDown + i"></i>
               </button>
-              <button type="button" [attr.id]="uploadElIds.firstId + i" class="clear-button" (click)="swapFiles(i, i-1)" *ngIf="!fileCtrlConfig[i].isFirst; else emptySpace">
+              <button type="button" [attr.disabled]="uploadedFileAction.isSortDisabled? 'disabled' : undefined" [attr.id]="uploadElIds.firstId + i" class="clear-button" (click)="swapFiles(i, i-1)" *ngIf="!fileCtrlConfig[i].isFirst; else emptySpace">
                 <i class="fa fa-chevron-up p_R-1x" [attr.aria-label]="uploadElIds.moveUp + i"></i>
               </button>
-              <button type="button" [attr.id]="uploadElIds.deleteId + i" [ngClass]="'delete-btn-'+i" class="clear-button" (click)="onCloseClick(i)">
+              <button type="button" [attr.disabled]="uploadedFileAction.isDeleteDisabled? 'disabled' : undefined" [attr.id]="uploadElIds.deleteId + i" [ngClass]="'delete-btn-'+i" class="clear-button" (click)="onCloseClick(i)">
                 <i class="fa fa-remove remove-icon" [attr.aria-label]="uploadElIds.delete + i"></i>
               </button>
               <ng-template #emptySpace>
