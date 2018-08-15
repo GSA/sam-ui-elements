@@ -99,7 +99,7 @@ export class LabelWrapper implements AfterViewChecked {
   }
 
   public ngAfterViewChecked() {
-    if (this.checkMore) {
+    if (this.checkMore && !this.showToggle) {
       this.calcToggle();
       this.cdr.detectChanges();
       this.checkMore = false;
