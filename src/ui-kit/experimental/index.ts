@@ -28,7 +28,6 @@ import { SamLayoutComponentsModule } from './patterns';
 import { SamDollarComponent } from './dollar';
 import { SamWrapperModule } from '../wrappers';
 import { SamActionsListModule } from './actions-list';
-import { SamDynamicComponent, Anchor, DynamicComponentConstructor } from './dynamic';
 @NgModule({
   imports: [
     CommonModule,
@@ -61,10 +60,7 @@ import { SamDynamicComponent, Anchor, DynamicComponentConstructor } from './dyna
     SamPickerComponent,
     SamVideoPlayerComponent,
     SamPageTitle,
-    SamDollarComponent,
-
-    SamDynamicComponent,
-    Anchor
+    SamDollarComponent
   ],
   exports: [
     SamBoxComponent,
@@ -90,14 +86,10 @@ import { SamDynamicComponent, Anchor, DynamicComponentConstructor } from './dyna
     SamInputMaskModule,
     SamLayoutComponentsModule,
     SamPageTitle,
-    SamDollarComponent,
-
-    SamDynamicComponent,
-    Anchor
+    SamDollarComponent
   ]
 })
 export class SamExperimentalModule { }
 
 export * from './patterns';
 
-export { SamDynamicComponent, Anchor, DynamicComponentConstructor } from './dynamic';
