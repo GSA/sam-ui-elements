@@ -28,6 +28,7 @@ import { SamLayoutComponentsModule } from './patterns';
 import { SamDollarComponent } from './dollar';
 import { SamWrapperModule } from '../wrappers';
 import { SamActionsListModule } from './actions-list';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -60,7 +61,7 @@ import { SamActionsListModule } from './actions-list';
     SamPickerComponent,
     SamVideoPlayerComponent,
     SamPageTitle,
-    SamDollarComponent
+    SamDollarComponent,
   ],
   exports: [
     SamBoxComponent,
@@ -86,7 +87,7 @@ import { SamActionsListModule } from './actions-list';
     SamInputMaskModule,
     SamLayoutComponentsModule,
     SamPageTitle,
-    SamDollarComponent
+    SamDollarComponent,
   ]
 })
 export class SamExperimentalModule { }
