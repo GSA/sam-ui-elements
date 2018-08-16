@@ -14,7 +14,7 @@ import { TestAutocompleteService } from './test.service';
 @Component({
  template: `
    <sam-autocomplete [formControl]="formControl"
-    [formlyAttributes]="field"
+    [control]="formControl"
    ></sam-autocomplete>
  `,
  changeDetection: ChangeDetectionStrategy.OnPush,
@@ -32,6 +32,11 @@ export class SamFormlyAutocomplete extends AbstractSamFormly {
   constructor (_cdr: ChangeDetectorRef) {
     super();
     this.cdr = _cdr;
+  }
+
+  ngDoCheck () {
+    super.ngDoCheck();
+    console.log((<any>this).formControl);
   }
 }
 

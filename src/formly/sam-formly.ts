@@ -1,5 +1,6 @@
 import { ChangeDetectorRef } from '@angular/core';
 import { FieldType } from '@ngx-formly/core';
+import { SamAutocompleteComponent } from '../ui-kit';
 
 export abstract class AbstractSamFormly extends FieldType {
 
@@ -19,6 +20,9 @@ export abstract class AbstractSamFormly extends FieldType {
         component[key] = configuration[key];
       }
     );
+    if ((<any>this).template.control) {
+      (<any>this).template.control = (<any>this).formControl;
+    }
     this.cdr.detectChanges();
   }
 }

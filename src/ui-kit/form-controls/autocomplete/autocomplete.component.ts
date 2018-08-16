@@ -288,9 +288,16 @@ export class SamAutocompleteComponent
 
   ngAfterViewInit() {
     if (this.control) {
-      setTimeout(() => {
-        this.wrapper.formatErrors(this.control);
-      });
+      this.wrapper.formatErrors(this.control);
+      this.cdr.detectChanges();
+    }
+  }
+
+  ngAfterViewChecked () {
+    if (this.control) {
+      console.log(this.control);
+    } else {
+      console.log("I GOT NO CONTROL");
     }
   }
 
