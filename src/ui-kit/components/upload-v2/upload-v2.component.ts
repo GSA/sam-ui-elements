@@ -183,7 +183,9 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     moveDown: 'move-down',
     moveUp: 'move-up',
     delete: 'delete',
-    securityCheckboxInput: 'security-checkbox-input'
+    securityCheckboxInput: 'security-checkbox-input',
+    fileSize: 'fileSize',
+    date: 'date'
   };
 
 
