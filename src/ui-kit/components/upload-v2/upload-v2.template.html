@@ -63,7 +63,7 @@
                 <i class="fa fa-chevron-up p_R-1x" [attr.aria-label]="uploadElIds.moveUp + i"></i>
               </button>
               <button type="button" [attr.disabled]="uploadedFileAction.isDeleteDisabled? 'disabled' : undefined" [attr.id]="uploadElIds.deleteId + i" [ngClass]="'delete-btn-'+i" class="clear-button" (click)="onCloseClick(i)" [ngClass]="uploadedFileAction.isCustomClass ? 'opportunity-file-actions-hide' : undefined">
-                <i class="fa fa-remove remove-icon" [attr.aria-label]="uploadElIds.delete + i" [ngClass]="uploadedFileAction.isCustomClass ? 'opportunity-file-actions-hide' : 'undefined'"></i>
+                <i class="fa fa-remove remove-icon" [attr.aria-label]="uploadElIds.delete + i" [ngClass]="uploadedFileAction.isCustomClass ? 'opportunity-file-actions-hide' : undefined"></i>
               </button>
               <ng-template #emptySpace>
                 <div style="display: inline-block; width: 30px"></div>
