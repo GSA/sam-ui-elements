@@ -93,7 +93,7 @@
       <!-- <div class="file-error" *ngIf="shouldShowError(uf)" style="color: red">Error: {{uf.upload.error}}</div> -->
     <!-- </div> -->
     <div class="text-center p_T-4x p_B-4x" *ngIf="shouldAllowMoreFiles()">
-      <span class="fa fa-cloud-upload"></span>&nbsp;Drag and drop files here, or<a (click)="file.click()" [attr.id]="uploadElIds.browseClick">&nbsp;browse</a>
+      <span class="fa fa-cloud-upload"></span>&nbsp;Drag and drop files here, or<a (click)="file.click()" [attr.id]="uploadElIds.browseClick" tabindex="0" (keyup.enter)="file.click()">&nbsp;browse</a>
     </div>
   </div>
   <div class="file-container-dragging text-center" *ngIf="shouldShowDropTarget() && isEditMode()">
