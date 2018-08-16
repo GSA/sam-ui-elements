@@ -89,7 +89,9 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
         {
             isEditDisabled: false,
             isDeleteDisabled: false,
-            isSortDisabled: false
+            isSortDisabled: false,
+            isSecureDisabled: false,
+            isCustomClass: false
         };
   /**
    * Controls the mode of upload component, publish mode will only have
