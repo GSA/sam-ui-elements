@@ -39,7 +39,7 @@
 
             </td>
             <td class="upload-table-props-col">
-              {{ fctrl.fileSize | filesize }}
+              <div [attr.id]="uploadElIds.fileSize + i">{{ fctrl.fileSize | filesize }}</div>
             </td>
             <td class="upload-table-props-col">
               <ng-container *ngIf="isEditMode(); else secureTag">
@@ -70,7 +70,7 @@
               </ng-template>
             </td>
             <td class="upload-table-props-col upload-table-date-col" *ngIf="!isEditMode()">
-              {{fctrl.date}}
+              <div [attr.id]="uploadElIds.date + i">{{fctrl.date}}</div>
             </td>
           </tr>
         </ng-container>
