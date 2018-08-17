@@ -1,6 +1,5 @@
 import { ChangeDetectorRef } from '@angular/core';
 import { FieldType } from '@ngx-formly/core';
-import { SamAutocompleteComponent } from '../ui-kit';
 
 export abstract class AbstractSamFormly extends FieldType {
 

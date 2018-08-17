@@ -4,8 +4,9 @@ import {
   ViewChild,
   ChangeDetectorRef
 } from '@angular/core';
-import { AbstractSamFormly } from '../sam-formly';
-import { SamTextComponent } from '../../ui-kit';
+
+import { AbstractSamFormly } from '../../sam-formly';
+import { SamTextComponent } from '../../../ui-kit';
 
 @Component({
  template: `

@@ -1,10 +1,23 @@
+/**
+ * Third party imports
+ */
 import { NgModule } from '@angular/core';
-import { SamUIKitModule } from '../ui-kit';
+import {
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
-import { SamFormlyAutocomplete } from './autocomplete';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SamFormlyText } from './text';
-import { SamFormlyCheckbox } from './checkbox/checkbox.component';
+import { SamUIKitModule } from '../ui-kit';
+
+/**
+ * Package imports
+ */
+import {
+  SamFormlyCheckbox,
+  SamFormlyText,
+  SamFormlyAutocomplete
+} from './components';
+import { SamFilterWrapperModule } from './wrappers';
 
 @NgModule({
  imports: [
@@ -27,17 +40,18 @@ import { SamFormlyCheckbox } from './checkbox/checkbox.component';
        { name: 'time' },
        { name: 'toggle' }
      ]
-   })
+   }),
+   SamFilterWrapperModule
  ],
  declarations: [
    SamFormlyAutocomplete,
    SamFormlyText,
-   SamFormlyCheckbox
+   SamFormlyCheckbox,
  ],
  exports: [
    SamFormlyAutocomplete,
    SamFormlyText,
-   SamFormlyCheckbox
+   SamFormlyCheckbox,
  ]
 })
 export class FormlySAMUIModule {}

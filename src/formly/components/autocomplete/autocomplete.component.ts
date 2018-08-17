@@ -7,8 +7,9 @@ import {
 import {
   SamAutocompleteComponent,
   AutocompleteService
-} from '../../ui-kit';
-import { AbstractSamFormly } from '../sam-formly';
+} from '../../../ui-kit';
+
+import { AbstractSamFormly } from '../../sam-formly';
 import { TestAutocompleteService } from './test.service';
 
 @Component({
@@ -32,11 +33,6 @@ export class SamFormlyAutocomplete extends AbstractSamFormly {
   constructor (_cdr: ChangeDetectorRef) {
     super();
     this.cdr = _cdr;
-  }
-
-  ngDoCheck () {
-    super.ngDoCheck();
-    console.log((<any>this).formControl);
   }
 }
 
