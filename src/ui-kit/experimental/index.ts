@@ -88,6 +88,7 @@ import { SamActionsListModule } from './actions-list';
     SamLayoutComponentsModule,
     SamPageTitle,
     SamDollarComponent,
+    SamActionsListModule
   ]
 })
 export class SamExperimentalModule { }
