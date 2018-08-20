@@ -293,14 +293,6 @@ export class SamAutocompleteComponent
     }
   }
 
-  ngAfterViewChecked () {
-    if (this.control) {
-      console.log(this.control);
-    } else {
-      console.log("I GOT NO CONTROL");
-    }
-  }
-
   get errors() {
     return !this.useFormService ? (this.errorMessage || '') : '';
   }
