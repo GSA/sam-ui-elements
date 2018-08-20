@@ -340,3 +340,25 @@ export interface UploadedFileData {
    */
   url: string;
 }
+export interface UploadedFileAction {
+    /**
+     * Defines the edit action toggle for the uploaded file
+     */
+    isEditDisabled?: boolean;
+    /**
+     * Defines the delete action toggle for the uploaded file
+     */
+    isDeleteDisabled?: boolean;
+    /**
+     * Defines the sort action toggle for the uploaded files
+     */
+    isSortDisabled?: boolean;
+    /**
+     * Defines the secure action toggle for the uploaded files
+     */
+    isSecureDisabled?: boolean
+    /**
+     * Sets the custom class for uploaded file actions
+     */
+    isCustomClass?: boolean
+}
