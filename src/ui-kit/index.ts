@@ -8,6 +8,7 @@ export * from './layout';
 export * from './pipes';
 export * from './utilities';
 export * from './wrappers';
+export * from './filters';
 
 export * from './types';
 export * from './form-service';

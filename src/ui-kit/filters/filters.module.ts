@@ -5,7 +5,7 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FormlyModule } from '@ngx-formly/core';
-import { SamUIKitModule } from '../ui-kit';
+import { SamUIKitModule } from '../sam-ui-elements.module';
 import { SamFiltersComponent } from './filters.component';
 
 @NgModule({
