@@ -2,13 +2,13 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import {
   Component, ElementRef, Input, ViewChild, Renderer2,
-  forwardRef } from '@angular/core';
+  forwardRef, SimpleChanges } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpEventType,
   HttpHeaderResponse, HttpRequest } from '@angular/common/http';
 import { DragState } from '../../directives/drag-drop/drag-drop.directive';
 import { HttpEvent } from '@angular/common/http/src/response';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import {UploadedFileAction, UploadedFileData} from '../../types';
+import { UploadedFileData} from '../../types';
 import * as moment from 'moment';
 
 export type RequestGenerator =
@@ -83,16 +83,9 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
    */
   @Input() public uploadedFiles: Array<UploadedFileData> = [];
   /**
-   * Sets disable attribute toggle for Uploaded file actions
+   * Flag to Show/hide Uploaded file actions
    */
-  @Input() public uploadedFileAction: UploadedFileAction =
-        {
-            isEditDisabled: false,
-            isDeleteDisabled: false,
-            isSortDisabled: false,
-            isSecureDisabled: false,
-            isCustomClass: false
-        };
+  @Input() public toggleFileAction: boolean = true;
   /**
    * Controls the mode of upload component, publish mode will only have
    * the view permission, and edit mode allows you to edit the file name
@@ -170,8 +163,8 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     editId: 'editId',
     editInputId: 'editInputId',
     deleteId: 'deleteId',
-    firstId: 'firstId',
-    lastId: 'lastId',
+    moveUp: 'moveUp',
+    moveDown: 'moveDown',
     replyActionId: 'replyActionId',
     updateFileActionId: 'updateFileActionId',
     fileError: 'fileError',
@@ -182,12 +175,11 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     fileNameInput: 'file-name-input',
     resetName: 'reset-name',
     applyName: 'apply-name',
-    moveDown: 'move-down',
-    moveUp: 'move-up',
     delete: 'delete',
     securityCheckboxInput: 'security-checkbox-input',
     fileSize: 'fileSize',
-    date: 'date'
+    date: 'date',
+    fileToolTip: 'fileToolTip'
   };
 
 
@@ -202,10 +194,14 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     }
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes: SimpleChanges) {
     if (!this.isEditMode()) {
       this.fileCtrlConfig.forEach(fctrl => fctrl.isNameEditMode = false);
     }
+      this.fileCtrlConfig = [];
+      if(changes && changes['uploadedFiles'] && changes['uploadedFiles'].previousValue != changes['uploadedFiles'].currentValue) {
+         this.setUploadTableData(changes['uploadedFiles'].currentValue);
+      }
   }
 
   setUploadedFiles(uploadedFiles) {
@@ -268,7 +264,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   }
 
   initilizeFileCtrl(
-    {name, size, url},
+    {name, size, url, icon},
     isSecure = false,
     date = moment().format('MMM DD, YYYY h:mm a')) {
     return {
@@ -281,7 +277,8 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
       originName: name,
       isFirst: false,
       isLast: false,
-     url: url
+     url: url,
+     icon: icon
     };
   }
 

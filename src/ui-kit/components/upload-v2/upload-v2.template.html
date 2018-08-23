@@ -19,11 +19,14 @@
         <ng-container *ngFor="let fctrl of fileCtrlConfig; let i = index">
           <tr class="upload-table-row" [ngClass]="getTableRowClass(fctrl)">
             <td class="p_T-1x p_B-1x p_L-4x upload-table-doc-col">
-              <div class="pdf-icon"><i class="fa fa-file-pdf-o p_R-2x"></i> </div>
+              <div class="file-icon" [attr.title]="fctrl?.icon?.name" [attr.id]="uploadElIds.fileToolTip + i" [attr.aria-label]="fctrl?.icon?.name"><i class="p_R-2x" [ngClass]="fctrl?.icon?.iconClass"></i>
+              </div>
               <ng-container *ngIf="!fileCtrlConfig[i].isNameEditMode; else fileNameEdit">
                   <p *ngIf="isEditMode()" [attr.id]="uploadElIds.fileName + i">{{ fctrl.fileName }} </p>
                   <a *ngIf="!isEditMode()" class="file-link" [attr.id]="uploadElIds.fileLinkId + i" [attr.href]="fctrl.url">{{ fctrl.fileName }} </a>
-                  <button type="button" [attr.disabled]="uploadedFileAction.isEditDisabled ? 'disabled' : undefined" [attr.id]="uploadElIds.editId + i" [ngClass]="uploadedFileAction.isCustomClass ? 'opportunity-file-actions-hide' : undefined" class="pull-right inline-pencil-icon clear-button" (click)="onNameEditSwitch(i, $event)" *ngIf="isEditMode()" [attr.aria-label]="uploadElIds.editFileName + i"><i class="fa fa-pencil"></i></button>
+                <div *ngIf="toggleFileAction">
+                  <button type="button"  [attr.id]="uploadElIds.editId + i" class="pull-right inline-pencil-icon clear-button" (click)="onNameEditSwitch(i, $event)" *ngIf="isEditMode()" [attr.aria-label]="uploadElIds.editFileName + i"><i class="fa fa-pencil"></i></button>
+              </div>
               </ng-container>
               <ng-template #fileNameEdit>
                 <div class="relative">
@@ -41,33 +44,38 @@
             <td class="upload-table-props-col">
               <div [attr.id]="uploadElIds.fileSize + i">{{ fctrl.fileSize | filesize }}</div>
             </td>
-            <td class="upload-table-props-col" [ngClass]="uploadedFileAction.isCustomClass ? 'opportunity-file-actions-hide' : undefined">
+            <td class="upload-table-props-col">
+              <div *ngIf="toggleFileAction">
               <ng-container *ngIf="isEditMode(); else secureTag">
                 <input [attr.id]="uploadElIds.fileSecure + i"
                   name="security-checkbox"
                   class="secure-cbx"
                   type="checkbox"
-                  [(ngModel)]="fctrl.isSecure" [attr.aria-label]="uploadElIds.securityCheckboxInput + i" [attr.disabled]="uploadedFileAction.isSecureDisabled ? 'disabled' : undefined"/>
-                <label [attr.for]="uploadElIds.fileSecureLabel + i" class="secure-label">Secure</label>
+                  [(ngModel)]="fctrl.isSecure" [attr.aria-label]="uploadElIds.securityCheckboxInput + i"/>
+                <label [attr.id]="uploadElIds.fileSecureLabel + i" class="secure-label">Secure</label>
               </ng-container>
               <ng-template #secureTag>
                 <span class="upload-secure-span" *ngIf="fctrl.isSecure"><i class="fa fa-lock"></i>&nbsp;Secure</span>
                 <span class="upload-secure-span" *ngIf="!fctrl.isSecure"><i class="fa fa-unlock"></i>&nbsp;Not Secure</span>
               </ng-template>
+              </div>
             </td>
             <td class="upload-table-props-col" *ngIf="isEditMode()">
-              <button type="button" [attr.disabled]="uploadedFileAction.isSortDisabled ? 'disabled' : undefined" [attr.id]="uploadElIds.lastId + i" class="clear-button" (click)="swapFiles(i, i+1)" *ngIf="!fileCtrlConfig[i].isLast; else emptySpace" [ngClass]="uploadedFileAction.isCustomClass ? 'opportunity-file-actions-hide' : undefined">
+              <div *ngIf="toggleFileAction">
+              <button type="button" [attr.id]="uploadElIds.moveDown + i" class="clear-button" (click)="swapFiles(i, i+1)" *ngIf="!fileCtrlConfig[i].isLast; else emptySpace">
                 <i class="fa fa-chevron-down p_R-1x" [attr.aria-label]="uploadElIds.moveDown + i"></i>
               </button>
-              <button type="button" [attr.disabled]="uploadedFileAction.isSortDisabled? 'disabled' : undefined" [attr.id]="uploadElIds.firstId + i" class="clear-button" (click)="swapFiles(i, i-1)" *ngIf="!fileCtrlConfig[i].isFirst; else emptySpace" [ngClass]="uploadedFileAction.isCustomClass ? 'opportunity-file-actions-hide' : undefined">
+              <button type="button"  [attr.id]="uploadElIds.moveUp + i" class="clear-button" (click)="swapFiles(i, i-1)" *ngIf="!fileCtrlConfig[i].isFirst; else emptySpace">
                 <i class="fa fa-chevron-up p_R-1x" [attr.aria-label]="uploadElIds.moveUp + i"></i>
               </button>
-              <button type="button" [attr.disabled]="uploadedFileAction.isDeleteDisabled? 'disabled' : undefined" [attr.id]="uploadElIds.deleteId + i" [ngClass]="'delete-btn-'+i" class="clear-button" (click)="onCloseClick(i)" [ngClass]="uploadedFileAction.isCustomClass ? 'opportunity-file-actions-hide' : undefined">
-                <i class="fa fa-remove remove-icon" [attr.aria-label]="uploadElIds.delete + i" [ngClass]="uploadedFileAction.isCustomClass ? 'opportunity-file-actions-hide' : undefined"></i>
+
+              <button type="button" [attr.id]="uploadElIds.deleteId + i" class="clear-button" (click)="onCloseClick(i)">
+                <i class="fa fa-remove remove-icon" [attr.aria-label]="uploadElIds.delete + i"></i>
               </button>
               <ng-template #emptySpace>
                 <div style="display: inline-block; width: 30px"></div>
               </ng-template>
+              </div>
             </td>
             <td class="upload-table-props-col upload-table-date-col" *ngIf="!isEditMode()">
               <div [attr.id]="uploadElIds.date + i">{{fctrl.date}}</div>
