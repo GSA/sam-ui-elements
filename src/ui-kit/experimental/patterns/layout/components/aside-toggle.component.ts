@@ -12,7 +12,7 @@ import { ToolbarItem } from '../../../actions-list';
   template: `
     <button class="sam button tertiary small"
       (click)="handleClick()"
-      [disabled]="contentModel?.disabled">
+      [disabled]="contentModel?.disabled">    
       <span class="fa"
         [ngClass]="contentModel?.icon"
         aria-hidden="true"
