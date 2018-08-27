@@ -19,24 +19,15 @@ export type ToolbarItemIcon = 'fa-download' | 'fa-share-alt'
   selector: 'sam-actions',
   template: `
     <div class="section right">
-      <ng-container *ngFor="let item of contentModel">
-        <button 
-          *ngIf="!item.showMore"
-          class="sam button link"
-          [ngClass]="{disabled: item?.disabled}"
-          [disabled]="item?.disabled"
-          (click)="actionClick(item)"
-          (keyup.enter)="actionClick(item)">
-          <i class="fa {{item?.icon}}" aria-hidden="true"></i>
-          {{item?.label}}
-        </button>
-      </ng-container>
-      <sam-actions-dropdown
-        *ngIf="showMoreActions.length > 0"
-        [text]="'More'"
-        [actions]="showMoreActions"
-        (emitAction)="dropdownClick($event)">
-      </sam-actions-dropdown>
+      <button class="sam button tertiary small"
+        [ngClass]="{disabled: item?.disabled}"
+        [disabled]="item?.disabled"
+        (click)="actionClick(item)"
+        (keyup.enter)="actionClick(item)"
+        *ngFor="let item of contentModel">
+        <i class="fa {{item?.icon}}" aria-hidden="true"></i>
+        {{item?.label}}
+      </button>
     </div>
   `
 })

@@ -10,9 +10,9 @@ import { ToolbarItem } from '../../../actions-list';
 @Component({
   selector: 'sam-aside-toggle',
   template: `
-    <button class="sam button link"
+    <button class="sam button tertiary small"
       (click)="handleClick()"
-      [disabled]="contentModel?.disabled">
+      [disabled]="contentModel?.disabled">    
       <span class="fa"
         [ngClass]="contentModel?.icon"
         aria-hidden="true"
