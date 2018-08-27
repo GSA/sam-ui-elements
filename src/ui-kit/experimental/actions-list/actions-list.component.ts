@@ -8,7 +8,8 @@ import {
 export type ToolbarItem = {
   label: string,
   icon: ToolbarItemIcon,
-  disabled?: boolean
+  disabled?: boolean,
+  showMore?: boolean
 };
 
 export type ToolbarItemIcon = 'fa-download' | 'fa-share-alt'
@@ -18,15 +19,24 @@ export type ToolbarItemIcon = 'fa-download' | 'fa-share-alt'
   selector: 'sam-actions',
   template: `
     <div class="section right">
-      <button class="sam button link"
-        [ngClass]="{disabled: item?.disabled}"
-        [disabled]="item?.disabled"
-        (click)="actionClick(item)"
-        (keyup.enter)="actionClick(item)"
-        *ngFor="let item of contentModel">
-        <i class="fa {{item?.icon}}" aria-hidden="true"></i>
-        {{item?.label}}
-      </button>
+      <ng-container *ngFor="let item of contentModel">
+        <button 
+          *ngIf="!item.showMore"
+          class="sam button link"
+          [ngClass]="{disabled: item?.disabled}"
+          [disabled]="item?.disabled"
+          (click)="actionClick(item)"
+          (keyup.enter)="actionClick(item)">
+          <i class="fa {{item?.icon}}" aria-hidden="true"></i>
+          {{item?.label}}
+        </button>
+      </ng-container>
+      <sam-actions-dropdown
+        *ngIf="showMoreActions.length > 0"
+        [text]="'More'"
+        [actions]="showMoreActions"
+        (emitAction)="dropdownClick($event)">
+      </sam-actions-dropdown>
     </div>
   `
 })
@@ -39,10 +49,40 @@ export class SamActionsListComponent {
    * Emitter for interaction handling
    */
   @Output() action: EventEmitter<any> = new EventEmitter<any>();
+  showMoreActions = [];
 
   public actionClick (item) {
     if (!item.disabled) {
       this.action.emit(item);
+    }
+  }
+
+  public dropdownClick(item){
+    console.log(item);
+    let matchedItem = this.contentModel.find(modelItem=>{
+      if(modelItem.label == item.label){
+        return true;
+      }
+    });
+    if(matchedItem){
+      this.actionClick(matchedItem);
+    }
+  }
+
+  public ngOnChanges(c){
+    if(c['contentModel'] && this.contentModel){
+      this.showMoreActions = [];
+      for(let item of this.contentModel){
+        if(item.showMore){
+          let showMoreAction = {
+            name: item.label,
+            label: item.label,
+            icon: 'fa ' + item.icon,
+            //callback: this.dropdownClick(item)
+          };
+          this.showMoreActions.push(showMoreAction);
+        }
+      }
     }
   }
 }

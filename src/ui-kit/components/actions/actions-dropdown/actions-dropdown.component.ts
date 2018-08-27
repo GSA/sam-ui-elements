@@ -33,6 +33,7 @@ export class SamActionsDropdownComponent {
    * Sets the class of the button (primary or default)
    */
   @Input() public buttonType: 'primary'|'default' = 'default';
+  @Input() public text: string = 'Actions';
   /**
    * Emits event when action changes
    */
