@@ -20,6 +20,10 @@ import {
   keyframes,
   stagger
 } from '@angular/animations';
+import { 
+  faSearch,
+  faCircleNotch
+} from '@fortawesome/free-solid-svg-icons';
 
 import { PrototypeSearchService } from './search.service';
 
@@ -69,6 +73,8 @@ export class SamSearchComponent implements OnInit{
   
   loading = false;
   results = [];
+  faSearch = faSearch;
+  faCircleNotch = faCircleNotch;
   
   ngOnInit(): void{
     this.resultsWidth = "450px";
