@@ -18,7 +18,7 @@ export type ToolbarItemIcon = 'fa-download' | 'fa-share-alt'
   selector: 'sam-actions',
   template: `
     <div class="section right">
-      <button class="sam button link"
+      <button class="sam button tertiary small"
         [ngClass]="{disabled: item?.disabled}"
         [disabled]="item?.disabled"
         (click)="actionClick(item)"
