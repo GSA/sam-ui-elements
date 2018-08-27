@@ -1,6 +1,7 @@
 import {
   Component,
-  Input
+  Input,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
@@ -18,7 +19,8 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
         [fields]="fields"
         [model]="model"></formly-form>
     </div>
-  `
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SamFiltersComponent {
   @Input() public form: FormGroup;
