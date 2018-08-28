@@ -1,3 +1,0 @@
-
-REMOVE "OVERLAY" FOLDER WHEN WE UPGRADE TO ANGULAR 6
-Overlay its part of angular 6 cdk
