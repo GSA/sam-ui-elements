@@ -1,14 +1,9 @@
 import {
   Input,
-  OnChanges,
-  Component,
-  HostBinding,
-  SimpleChanges
+  Component
 } from '@angular/core';
 import {
-  icon,
   Icon,
-  parse,
   Styles,
   PullProp,
   IconProp,
@@ -16,8 +11,6 @@ import {
   FlipProp,
   FaSymbol,
   Transform,
-  IconParams,
-  IconLookup,
   RotateProp
 } from '@fortawesome/fontawesome-svg-core';
 
