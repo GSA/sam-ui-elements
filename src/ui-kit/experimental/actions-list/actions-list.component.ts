@@ -49,7 +49,7 @@ export class SamActionsListComponent {
    * Emitter for interaction handling
    */
   @Output() action: EventEmitter<any> = new EventEmitter<any>();
-  showMoreActions = [];
+  public showMoreActions = [];
 
   public actionClick (item) {
     if (!item.disabled) {
@@ -57,28 +57,26 @@ export class SamActionsListComponent {
     }
   }
 
-  public dropdownClick(item){
-    console.log(item);
-    let matchedItem = this.contentModel.find(modelItem=>{
-      if(modelItem.label == item.label){
+  public dropdownClick(item) {
+    let matchedItem = this.contentModel.find(modelItem => {
+      if (modelItem.label === item.label) {
         return true;
       }
     });
-    if(matchedItem){
+    if (matchedItem) {
       this.actionClick(matchedItem);
     }
   }
 
-  public ngOnChanges(c){
-    if(c['contentModel'] && this.contentModel){
+  public ngOnChanges(c) {
+    if (c.contentModel && this.contentModel) {
       this.showMoreActions = [];
-      for(let item of this.contentModel){
-        if(item.showMore){
+      for (let item of this.contentModel) {
+        if (item.showMore) {
           let showMoreAction = {
             name: item.label,
             label: item.label,
-            icon: 'fa ' + item.icon,
-            //callback: this.dropdownClick(item)
+            icon: 'fa ' + item.icon
           };
           this.showMoreActions.push(showMoreAction);
         }
