@@ -7,7 +7,7 @@ import { SamBoxComponent } from './box';
 import { SamContainerComponent } from './container';
 import { SamFilterDrawerItemComponent } from './filter-drawer';
 import { SamFilterDrawerComponent } from './filter-drawer';
-import { SamIconComponent } from './icon';
+import { SamIconsModule } from './icon';
 import { SamLabelNextComponent } from './label';
 import { SamLayoutComponent } from './layout';
 import { SamLayoutContentComponent } from './layout';
@@ -37,14 +37,14 @@ import { SamActionsListModule } from './actions-list';
     SamLayoutComponentsModule,
     FormsModule,
     SamWrapperModule,
-    SamActionsListModule
+    SamActionsListModule,
+    SamIconsModule
   ],
   declarations: [
     SamBoxComponent,
     SamContainerComponent,
     SamFilterDrawerItemComponent,
     SamFilterDrawerComponent,
-    SamIconComponent,
     SamLabelNextComponent,
     SamLayoutComponent,
     SamLayoutContentComponent,
@@ -68,7 +68,6 @@ import { SamActionsListModule } from './actions-list';
     SamContainerComponent,
     SamFilterDrawerItemComponent,
     SamFilterDrawerComponent,
-    SamIconComponent,
     SamLabelNextComponent,
     SamLayoutComponent,
     SamLayoutContentComponent,
@@ -88,7 +87,8 @@ import { SamActionsListModule } from './actions-list';
     SamLayoutComponentsModule,
     SamPageTitle,
     SamDollarComponent,
-    SamActionsListModule
+    SamActionsListModule,
+    SamIconsModule,
   ]
 })
 export class SamExperimentalModule { }
