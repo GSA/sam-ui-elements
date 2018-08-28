@@ -41,6 +41,10 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   */
   @Input() label: string;
   /**
+  * Sets the semantic description for the component
+  */
+  @Input() name: string;
+  /**
   * Sets helpful text for the using the component
   */
   @Input() hint: string;
@@ -110,11 +114,6 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   constructor(protected samFormService: SamFormService) {}
 
   ngOnInit() {
-    if (!this.id) {
-      throw new Error('<sam-checkbox> requires a [id] parameter for 508 \
-      compliance');
-    }
-
     // initialize the order lookup map
     for (let i = 0; i < this.options.length; i++) {
       const val = this.options[i].value;
