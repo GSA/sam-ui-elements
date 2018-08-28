@@ -15,7 +15,8 @@ import { SamUIKitModule } from '../ui-kit';
 import {
   SamFormlyCheckbox,
   SamFormlyText,
-  SamFormlyAutocomplete
+  SamFormlyAutocomplete,
+  SamFormlyDate
 } from './components';
 import { SamFilterWrapperModule } from './wrappers';
 
@@ -30,7 +31,7 @@ import { SamFilterWrapperModule } from './wrappers';
        { name: 'checkbox', component: SamFormlyCheckbox },
        { name: 'text', component: SamFormlyText },
        { name: 'autocomplete-multiselect' },
-       { name: 'date' },
+       { name: 'date', component: SamFormlyDate },
        { name: 'date-range' },
        { name: 'date-time' },
        { name: 'number' },
@@ -47,11 +48,13 @@ import { SamFilterWrapperModule } from './wrappers';
    SamFormlyAutocomplete,
    SamFormlyText,
    SamFormlyCheckbox,
+   SamFormlyDate
  ],
  exports: [
    SamFormlyAutocomplete,
    SamFormlyText,
    SamFormlyCheckbox,
+   SamFormlyDate
  ]
 })
 export class FormlySAMUIModule {}

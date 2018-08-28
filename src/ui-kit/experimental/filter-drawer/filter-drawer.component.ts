@@ -4,16 +4,14 @@ import {
   EventEmitter,
   HostListener,
   ContentChildren,
-  Directive,
   Input,
   QueryList,
-  AfterContentInit,
   forwardRef,
   ChangeDetectionStrategy,
   AfterContentChecked,
   Optional
 } from '@angular/core';
-import { SamPageNextService } from '../patterns';
+import { SamPageNextService } from '../patterns/layout/architecture';
 
 
 @Component({

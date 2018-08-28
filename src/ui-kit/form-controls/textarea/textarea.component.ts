@@ -15,7 +15,7 @@ import {
   FormControl
 } from '@angular/forms';
 import { SamFormService } from '../../form-service';
-import {TextAreaWidthType} from "../../types";
+import { TextAreaWidthType } from '../../types';
 
 /**
  * The <sam-text-area> component provides a textarea input form control

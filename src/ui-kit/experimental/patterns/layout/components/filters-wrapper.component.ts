@@ -6,9 +6,7 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import {
-  SamPageNextService
-} from '../architecture';
+import { SamPageNextService } from '../architecture';
 
 
 @Component({
@@ -26,10 +24,7 @@ export class SamFiltersWrapperComponent
   }
 
   private _initializeService () {
-    this.group.valueChanges.subscribe(
-      changes => console.log(changes)
-    );
-    
+
     if (this._service) {
       // Add initial form model to data structure
       this._service.model.properties['filters'].setValue(
