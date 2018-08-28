@@ -1,24 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { DateTimeDisplayPipe } from './date-time-display';
-import { TimeAgoPipe } from './time-ago';
-import { ShortDatePipe } from './short-date/short-date.pipe';
-import { FilesizePipe } from './filesize/filesize.pipe';
+import { DateTimeDisplayModule } from './date-time-display';
+import { TimeAgoModule } from './time-ago';
+import { ShortDateModule } from './short-date';
+import { SamFilesizeModule } from './filesize';
 
 @NgModule({
-  imports: [ CommonModule ],
+  imports: [ 
+    CommonModule,
+    DateTimeDisplayModule,
+    SamFilesizeModule,
+    ShortDateModule,
+    TimeAgoModule,
+  ],
   declarations: [
-    FilesizePipe,
-    TimeAgoPipe,
-    DateTimeDisplayPipe,
-    ShortDatePipe
+    
   ],
   exports: [
-    FilesizePipe,
-    TimeAgoPipe,
-    DateTimeDisplayPipe,
-    ShortDatePipe,
+    SamFilesizeModule,
+    TimeAgoModule,
+    DateTimeDisplayModule,
+    ShortDateModule,
   ],
   providers: []
 })

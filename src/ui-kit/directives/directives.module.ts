@@ -1,34 +1,33 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import {
-  SamClickOutsideDirective
-} from './click-outside/click-outside.directive';
-import { SamStickyComponent } from './sticky/sticky.component';
-import { SamTabOutsideDirective } from './tab-outside/taboutside.directive';
-import { SamFocusDirective } from './focus/focus.directive';
-import { SamDragDropDirective } from './drag-drop/drag-drop.directive';
-import {
-  SamExternalLinkDirective
-} from './external-link/external-link.directive';
+import { SamClickOutsideModule } from './click-outside';
+import { SamStickyModule } from './sticky';
+import { SamTabOutsideModule } from './tab-outside';
+import { SamFocusModule } from './focus';
+import { SamDragDropModule } from './drag-drop';
+import { SamExternalLinkModule } from './external-link';
 
 @NgModule({
-  imports: [ CommonModule ],
+  imports: [ 
+    CommonModule,
+    SamClickOutsideModule,
+    SamDragDropModule,
+    SamExternalLinkModule,
+    SamFocusModule,
+    SamStickyModule,
+    SamTabOutsideModule,
+  ],
   declarations: [
-    SamStickyComponent,
-    SamClickOutsideDirective,
-    SamTabOutsideDirective,
-    SamFocusDirective,
-    SamDragDropDirective,
-    SamExternalLinkDirective
+
   ],
   exports: [
-    SamStickyComponent,
-    SamClickOutsideDirective,
-    SamTabOutsideDirective,
-    SamFocusDirective,
-    SamDragDropDirective,
-    SamExternalLinkDirective
+    SamClickOutsideModule,
+    SamTabOutsideModule,
+    SamFocusModule,
+    SamDragDropModule,
+    SamExternalLinkModule,
+    SamStickyModule,
   ]
 
 })

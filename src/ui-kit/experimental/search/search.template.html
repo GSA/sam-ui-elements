@@ -29,8 +29,8 @@
     <div *ngIf="tabSearch" class="tab-search">CFDA Number</div>
     <input #searchInput type="search" name="samsearch" placeholder="Search" (keydown.backspace)="inputBackspace($event)" (keydown.tab)="inputTab($event)">
     <button (click)="closeAutocomplete('')" [routerLink]="['/patterns/pages/page/search']">
-      <sam-icon *ngIf="!loading" name="search"></sam-icon>
-      <sam-icon *ngIf="loading" name="circle-notch"></sam-icon>
+      <sam-icon *ngIf="!loading" [icon]="faSearch"></sam-icon>
+      <sam-icon *ngIf="loading" [icon]="faCircleNotch"></sam-icon>
     </button>
   </div>
   
