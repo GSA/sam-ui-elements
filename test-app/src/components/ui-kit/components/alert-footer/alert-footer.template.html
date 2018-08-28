@@ -1,0 +1,12 @@
+<div class="usa-alert-fixed-footer">
+	<sam-alert 
+		*ngFor="let alert of alerts; let i = index" 
+		[dismissTimer]="alert.timer" 
+		[showClose]="true" 
+		[userMustDismiss]="alert.mustDismiss ? alert.mustDismiss : false"
+		[type]="alert.type" 
+		[title]="alert.title" 
+		[description]="alert.description" 
+		(dismiss)="dismissFooterAlert(i)">
+	</sam-alert>
+</div>

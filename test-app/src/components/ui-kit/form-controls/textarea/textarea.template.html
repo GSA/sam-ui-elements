@@ -1,0 +1,22 @@
+<sam-label-wrapper [label]="label"
+  [name]="name"
+  [hint]="hint"
+  [errorMessage]="errorMessage"
+  [required]="required || requiredFlag">
+  <textarea
+    [ngModel]="value"
+    class="sam-text-area"
+    [attr.id]="name"
+    [attr.placeholder]="placeholder"
+    [attr.title]="title"
+    [attr.maxlength]="maxlength ? maxlength : 524288"
+    [disabled]="disabled"
+    [ngClass]="{'textarea-normalwidth': (width === undefined || width?.type === 'normal' || width.type === '') , 'textarea-fullwidth': width?.type === 'full' && width?.full}"
+    (ngModelChange)="onInputChange($event)"
+    (focus)="onFocus($event)"
+    (blur)="onBlur()"
+    (input)="inputEventHandler($event)">
+  </textarea>
+  <span [attr.aria-live]="'polite'" *ngIf="showCharCount">{{characterCounterMsg}}</span>
+</sam-label-wrapper>
+

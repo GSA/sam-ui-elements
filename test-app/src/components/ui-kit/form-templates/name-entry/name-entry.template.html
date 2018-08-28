@@ -1,0 +1,24 @@
+<fieldset>
+  <legend *ngIf="legend.length" [innerText]="legend"></legend>
+
+  <sam-label-wrapper class="label-wrapper" [label]="'First Name'" [name]="getIdentifer('first-name')" [errorMessage]="fNameErrorMsg" [required]="true">
+    <input [attr.disabled]="disabled ? disabled : null" (blur)="modelChange()" (ngModelChange)="modelChange()" [(ngModel)]="model.firstName" id="{{getIdentifer('first-name')}}" name="{{getIdentifer('first-name')}}" type="text" required="true">
+  </sam-label-wrapper>
+
+  <sam-label-wrapper class="label-wrapper" [label]="'Middle Name'" [name]="getIdentifer('middle-name')" [errorMessage]="mNameErrorMsg">
+    <input [attr.disabled]="disabled ? disabled : null" (blur)="modelChange()" (ngModelChange)="modelChange()" [(ngModel)]="model.middleName" id="{{getIdentifer('middle-name')}}" name="{{getIdentifer('middle-name')}}" type="text">
+  </sam-label-wrapper>
+
+  <sam-label-wrapper class="label-wrapper" [label]="'Last Name'" [name]="getIdentifer('last-name')" [errorMessage]="lNameErrorMsg" [required]="true">
+    <input [attr.disabled]="disabled ? disabled : null" (blur)="modelChange()" (ngModelChange)="modelChange()" [(ngModel)]="model.lastName" id="{{getIdentifer('last-name')}}" name="{{getIdentifer('last-name')}}" type="text" required="true">
+  </sam-label-wrapper>
+
+  <sam-select [(model)]="model.suffix"
+    (ngModelChange)="modelChange()"
+    [name]="getIdentifer('suffix')"
+    [options]="store.suffixes"
+    [errorMessage]="suffixErrorMsg"
+    [disabled]="disabled ? disabled : null"
+    label="Suffix">
+  </sam-select>
+</fieldset>

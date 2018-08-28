@@ -1,0 +1,23 @@
+<sam-fieldset-wrapper
+  [hint]="hint"
+  [label]="label"
+  [formGroup]="group"
+  [errorMessages]="errorMessages"
+  [errorMessage]="errorMessage">
+  <div class="sam-international-phone-container">
+    <sam-international-prefix
+      class="sam-international-phone-prefix"
+      formControlName="prefix"
+      [label]="prefixLabel"
+      [name]="prefixName"
+      [required]="required"
+    ></sam-international-prefix>
+    <sam-telephone
+      class="sam-international-telephone"
+      [label]="phoneLabel"
+      [name]="phoneName"
+      formControlName="phone"
+      [countryCode]="countryCode"
+    ></sam-telephone>
+  </div>
+</sam-fieldset-wrapper>

@@ -1,0 +1,5 @@
+ <sam-label-wrapper [label]="label" [name]="name" [hint]="hint" [errorMessage]="errorMessage" [required]="required">
+  <select [attr.tabindex]="tabIndex" [attr.id]="name" [attr.aria-label]="ariaLabel" [ngModel]="model" (change)="onSelectChange(select.value)" (blur)="onBlur()" #select [disabled]="disabled">
+    <option *ngFor="let option of options" [value]="option.value" [disabled]="option.disabled">{{option.label}}</option>
+  </select>
+</sam-label-wrapper>

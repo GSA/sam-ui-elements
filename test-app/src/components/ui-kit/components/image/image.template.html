@@ -1,0 +1,45 @@
+<div #componentContainer
+     class="sam-image"
+     (dragenter)="onDragEnter($event)"
+     (dragover)="onDragOver($event)"
+     (drop)="onDropEvent($event)">
+  <img id="image"
+       #image
+       (error)="error.emit()"
+       src="{{generateSrc()}}"
+       alt="User uploaded image"
+       title="User uploaded image">
+  <button #editButton
+          type="button"
+          class="usa-button-link edit-button"
+          [ngClass]="{ 'hide-button': hideEditButton() }"
+          [disabled]="hideEditButton()">
+    Edit
+  </button>
+  <div [ngClass]="{ 'hide': !editMode }">
+    <p>Drag and drop image or</p>
+    <input #filePicker
+           class="usa-sr-only"
+           id="file"
+           type="file"
+           accept="image/*">
+    <label for="file"
+           title="{{getFileName()}}">
+      <span class="fa fa-upload"></span>&nbsp;{{generateFilePickerLabelText()}}
+    </label>
+    <span class="usa-sr-only">{{getFileName()}}</span>
+    <div class="actions">
+      <button #cancelButton
+              [ngClass]="{ 'hide-button': !isImageTemporary() }"
+              class="usa-button-link cancel-button"
+              type="button">
+        Revert
+      </button>
+      <button #saveButton
+              type="button"
+              class="save-button">
+        {{generateDoneText()}}
+      </button>
+    </div>
+  </div>
+</div>
