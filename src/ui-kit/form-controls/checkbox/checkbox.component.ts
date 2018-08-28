@@ -41,6 +41,10 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   */
   @Input() label: string;
   /**
+  * Sets the semantic description for the component
+  */
+  @Input() name: string;
+  /**
   * Sets helpful text for the using the component
   */
   @Input() hint: string;
@@ -110,8 +114,8 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   constructor(protected samFormService: SamFormService) {}
 
   ngOnInit() {
-    if (!this.id) {
-      throw new Error('<sam-checkbox> requires a [id] parameter for 508 \
+    if (!this.name) {
+      throw new Error('<sam-checkbox> requires a [name] parameter for 508 \
       compliance');
     }
 
