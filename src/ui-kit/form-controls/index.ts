@@ -6,16 +6,16 @@ import { SamAutocompleteModule } from './autocomplete';
 import { SamAutocompleteMultiselectModule } from './autocomplete-multiselect';
 import { SamWrapperModule } from '../wrappers';
 import { SamCheckboxModule } from './checkbox';
-import { SamDateComponent } from './date';
-import { SamDateTimeComponent } from './date-time';
-import { SamDateRangeComponent } from './date-range';
-import { SamNumberComponent } from './number';
-import { SamRadioButtonComponent } from './radiobutton';
+import { SamDateModule } from './date';
+import { SamDateTimeModule } from './date-time';
+import { SamDateRangeModule } from './date-range';
+import { SamNumberModule } from './number';
+import { SamRadioButtonModule } from './radiobutton';
 import { SamSelectModule } from './select';
 import { SamTextInputModule } from './text';
 import { SamTextAreaModule } from './textarea';
-import { SamTimeComponent } from './time';
-import { SamToggleSwitchComponent } from './toggle-switch';
+import { SamTimeModule } from './time';
+import { SamToggleSwitchModule } from './toggle-switch';
 
 
 @NgModule({
@@ -27,31 +27,33 @@ import { SamToggleSwitchComponent } from './toggle-switch';
     SamCheckboxModule,
     SamSelectModule,
     SamTextInputModule,
+    SamAutocompleteModule,
     SamAutocompleteMultiselectModule,
+    SamDateModule,
+    SamDateTimeModule,
+    SamDateRangeModule,
+    SamNumberModule,
+    SamRadioButtonModule,
+    SamTimeModule,
+    SamToggleSwitchModule,
   ],
   declarations: [
-    SamDateComponent,
-    SamDateTimeComponent,
-    SamDateRangeComponent,
-    SamNumberComponent,
-    SamRadioButtonComponent,
-    SamTimeComponent,
-    SamToggleSwitchComponent,
+    
   ],
   exports: [
+    SamAutocompleteModule,
+    SamAutocompleteMultiselectModule,
     SamCheckboxModule,
-    SamDateComponent,
-    SamDateTimeComponent,
-    SamDateRangeComponent,
-    SamNumberComponent,
-    SamRadioButtonComponent,
+    SamDateModule,
+    SamDateTimeModule,
+    SamDateRangeModule,
+    SamNumberModule,
+    SamRadioButtonModule,
     SamSelectModule,
     SamTextInputModule,
     SamTextAreaModule,
-    SamTimeComponent,
-    SamAutocompleteModule,
-    SamToggleSwitchComponent,
-    SamAutocompleteMultiselectModule
+    SamTimeModule,
+    SamToggleSwitchModule,
   ],
   providers: []
 })

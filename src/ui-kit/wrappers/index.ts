@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FieldsetWrapper } from './fieldset-wrapper';
-import { LabelWrapper } from './label-wrapper';
+import { SamFieldsetWrapperModule } from './fieldset-wrapper';
+import { SamLabelWrapperModule } from './label-wrapper';
 
 @NgModule({
-  imports: [ CommonModule ],
-  declarations: [ FieldsetWrapper, LabelWrapper ],
-  exports: [ FieldsetWrapper, LabelWrapper ]
+  imports: [ CommonModule, SamFieldsetWrapperModule, SamLabelWrapperModule ],
+  declarations: [ ],
+  exports: [ SamFieldsetWrapperModule, SamLabelWrapperModule ]
 })
 export class SamWrapperModule {}
 

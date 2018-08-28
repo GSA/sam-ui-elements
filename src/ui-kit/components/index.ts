@@ -8,30 +8,30 @@ import { SamDirectivesModule } from '../directives';
 import { SamElementsModule } from '../elements';
 
 import { AccordionsModule } from './accordion';
-import { SamAlertComponent } from './alert';
-import { SamAlertFooterComponent, SamAlertFooterService } from './alert-footer';
-import { SamBadgeComponent } from './badge';
-import { SamBannerComponent } from './banner';
-import { SamBreadcrumbsComponent } from './breadcrumbs';
-import { SamDownloadComponent } from './download';
-import { SamHeaderComponent } from './header';
-import { SamHistoryComponent } from './history';
-import { SamModalComponent } from './modal';
-import { SamMultiSelectDropdownComponent } from './multiselect-dropdown';
-import { SamPaginationComponent } from './pagination';
+import { SamAlertModule } from './alert';
+import { SamAlertFooterModule } from './alert-footer';
+import { SamBadgeModule } from './badge';
+import { SamBannerModule } from './banner';
+import { SamBreadcrumbsModule } from './breadcrumbs';
+import { SamDownloadModule } from './download';
+import { SamHeaderModule } from './header';
+import { SamHistoryModule } from './history';
+import { SamModalModule } from './modal';
+import { SamMultiSelectDropdownModule } from './multiselect-dropdown';
+import { SamPaginationModule } from './pagination';
 import { SamPipesModule } from '../pipes';
-import { SamPointOfContactComponent } from './point-of-contact';
-import { SamProgress } from './progress-bar/progress-bar.component';
+import { SamPointOfContactModule } from './point-of-contact';
+import { SamProgressModule } from './progress-bar';
 import { SamSidenavModule } from './sidenav';
-import { SamSpinnerComponent } from './spinner';
-import { SamTabsComponent, SamTabComponent } from './tabs';
-import { SamUploadComponent } from './upload/upload.component';
+import { SamSpinnerModule } from './spinner';
+import { SamTabsModule } from './tabs';
+import { SamUploadModule } from './upload';
 import { SamWrapperModule } from '../wrappers';
 import { SamCommentsModule } from './comments';
 import { SamImageModule } from './image';
-import { SamActionButton} from './actions/action-button';
-import { SamActionsDropdownComponent } from './actions/actions-dropdown';
-import { SamUploadComponentV2 } from './upload-v2/upload-v2.component';
+import { SamActionButtonModule } from './actions/action-button';
+import { SamActionDropdownModule } from './actions/actions-dropdown';
+import { SamUploadV2Module } from './upload-v2';
 import { SamDataTableModule } from './data-table';
 
 @NgModule({
@@ -49,51 +49,50 @@ import { SamDataTableModule } from './data-table';
     SamCommentsModule,
     SamImageModule,
     SamDataTableModule,
+    SamBannerModule,
+    SamHeaderModule,
+    SamModalModule,
+    SamBreadcrumbsModule,
+    SamUploadModule,
+    SamProgressModule,
+    SamActionButtonModule,
+    SamActionDropdownModule,
+    SamAlertModule,
+    SamAlertFooterModule,
+    SamBadgeModule,
+    SamDownloadModule,
+    SamHistoryModule,
+    SamMultiSelectDropdownModule,
+    SamPaginationModule,
+    SamPointOfContactModule,
+    SamSpinnerModule,
+    SamTabsModule,
+    SamUploadV2Module,
   ],
   declarations: [
-    SamAlertComponent,
-    SamAlertFooterComponent,
-    SamBadgeComponent,
-    SamBannerComponent,
-    SamBreadcrumbsComponent,
-    SamDownloadComponent,
-    SamHeaderComponent,
-    SamHistoryComponent,
-    SamModalComponent,
-    SamMultiSelectDropdownComponent,
-    SamPaginationComponent,
-    SamPointOfContactComponent,
-    SamProgress,
-    SamSpinnerComponent,
-    SamTabsComponent,
-    SamTabComponent,
-    SamUploadComponent,
-    SamUploadComponentV2,
-    SamActionButton,
-    SamActionsDropdownComponent,
+    
   ],
   exports: [
-    SamActionButton,
-    SamActionsDropdownComponent,
-    SamAlertComponent,
-    SamAlertFooterComponent,
-    SamBadgeComponent,
-    SamBannerComponent,
-    SamBreadcrumbsComponent,
-    SamDownloadComponent,
-    SamHeaderComponent,
-    SamHistoryComponent,
-    SamModalComponent,
-    SamMultiSelectDropdownComponent,
-    SamPaginationComponent,
-    SamPointOfContactComponent,
-    SamProgress,
+    SamActionButtonModule,
+    SamActionDropdownModule,
+    SamAlertModule,
+    SamAlertFooterModule,
+    SamBadgeModule,
+    SamBannerModule,
+    SamBreadcrumbsModule,
+    SamDownloadModule,
+    SamHeaderModule,
+    SamHistoryModule,
+    SamModalModule,
+    SamMultiSelectDropdownModule,
+    SamPaginationModule,
+    SamPointOfContactModule,
+    SamProgressModule,
     SamSidenavModule,
-    SamSpinnerComponent,
-    SamTabsComponent,
-    SamTabComponent,
-    SamUploadComponent,
-    SamUploadComponentV2,
+    SamSpinnerModule,
+    SamTabsModule,
+    SamUploadModule,
+    SamUploadV2Module,
     AccordionsModule,
     SamCommentsModule,
     SamImageModule,
