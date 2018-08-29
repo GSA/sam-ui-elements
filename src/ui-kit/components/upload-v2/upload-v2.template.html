@@ -73,7 +73,7 @@
                 <i class="fa fa-remove remove-icon" [attr.aria-label]="uploadElIds.delete + i"></i>
               </button>
               <ng-template #emptySpace>
-                <div style="display: inline-block; width: 30px"></div>
+                <div class="empty-space"></div>
               </ng-template>
               </div>
             </td>
@@ -86,20 +86,6 @@
     </table>
   </div>
   <div class="file-container-no-drag" *ngIf="!shouldShowDropTarget() && isEditMode()">
-    <!-- <div class="text-center upload-cloud" *ngIf="!anyFiles()">
-      <span class="fa fa-cloud-upload"></span>&nbsp;Drag and drop files here, or<a (click)="file.click()">&nbsp;browse</a>
-    </div> -->
-    <!-- <div *ngFor="let uf of _model" class="file-item"> -->
-      <!-- <div class="file-row">
-        <div class="file-name">{{ uf.file.name }}</div>
-        <div class="file-size">{{ uf.file.size | filesize }}</div>
-        <div class="file-delete"><span class="icon close fa fa-times-circle" (click)="onCloseClick(uf)"></span></div>
-      </div> -->
-      <!-- <div class="file-progress" *ngIf="shouldShowProgressBar(uf)">
-        <sam-progress-bar [value]="uf.upload.progress"></sam-progress-bar>
-      </div> -->
-      <!-- <div class="file-error" *ngIf="shouldShowError(uf)" style="color: red">Error: {{uf.upload.error}}</div> -->
-    <!-- </div> -->
     <div class="text-center p_T-4x p_B-4x" *ngIf="shouldAllowMoreFiles()">
       <span class="fa fa-cloud-upload"></span>&nbsp;Drag and drop files here, or<a (click)="file.click()" [attr.id]="uploadElIds.browseClick" tabindex="0" (keyup.enter)="file.click()">&nbsp;browse</a>
     </div>
