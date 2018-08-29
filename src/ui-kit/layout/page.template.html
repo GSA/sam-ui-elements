@@ -1,5 +1,4 @@
-<div class="occupy-page" style="display: flex;"
-     [style.background-color]="theme == 'inside' ? '#F9F9F9' : ''">
+<div class="occupy-page" [style.background-color]="theme == 'inside' ? '#F9F9F9' : ''">
 
   <div grid [class.stackable]="stackable" class="container">
 
@@ -24,7 +23,7 @@
 
     <div row class="page-content">
       <!-- Sidebar -->
-      <div *ngIf="sidebar" [columns]="sidebarColumns" style="align-self: start; max-height: 99.9%;">
+      <div class="page-content-sidebar" *ngIf="sidebar" [columns]="sidebarColumns">
         <ng-content select="sidebar"></ng-content>
       </div>
 
