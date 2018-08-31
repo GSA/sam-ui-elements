@@ -2,14 +2,17 @@ import { NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { SamButtonModule } from './button';
+import { SamButtonNextModule } from './button-next';
 
 @NgModule({
   imports: [
     CommonModule,
-    SamButtonModule
+    SamButtonModule,
+    SamButtonNextModule
   ],
   exports: [
-    SamButtonModule
+    SamButtonModule,
+    SamButtonNextModule
   ]
 })
 export class SamElementsModule {}
