@@ -28,6 +28,7 @@ import { SamLayoutComponentsModule } from './patterns';
 import { SamDollarComponent } from './dollar';
 import { SamWrapperModule } from '../wrappers';
 import { SamActionsListModule } from './actions-list';
+import { SamButtonNextModule } from './button-next';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ import { SamActionsListModule } from './actions-list';
     FormsModule,
     SamWrapperModule,
     SamActionsListModule,
-    SamIconsModule
+    SamIconsModule,
+    SamButtonNextModule
   ],
   declarations: [
     SamBoxComponent,
@@ -89,6 +91,7 @@ import { SamActionsListModule } from './actions-list';
     SamDollarComponent,
     SamActionsListModule,
     SamIconsModule,
+    SamButtonNextModule
   ]
 })
 export class SamExperimentalModule {}
