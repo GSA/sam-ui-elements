@@ -7,7 +7,7 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
   selector: 'sam-button-next',
   template: `
     <button
-      id={{id}} 
+      [attr.id]="id"
       class="sam button" 
       [ngClass]="btnClass" 
       [attr.disabled]="isDisabled ? '' : null" 
