@@ -25,13 +25,11 @@ import { SamProgressModule } from './progress-bar';
 import { SamSidenavModule } from './sidenav';
 import { SamSpinnerModule } from './spinner';
 import { SamTabsModule } from './tabs';
-import { SamUploadModule } from './upload';
 import { SamWrapperModule } from '../wrappers';
 import { SamCommentsModule } from './comments';
 import { SamImageModule } from './image';
 import { SamActionButtonModule } from './actions/action-button';
 import { SamActionDropdownModule } from './actions/actions-dropdown';
-import { SamUploadV2Module } from './upload-v2';
 import { SamDataTableModule } from './data-table';
 
 @NgModule({
@@ -53,7 +51,6 @@ import { SamDataTableModule } from './data-table';
     SamHeaderModule,
     SamModalModule,
     SamBreadcrumbsModule,
-    SamUploadModule,
     SamProgressModule,
     SamActionButtonModule,
     SamActionDropdownModule,
@@ -67,7 +64,6 @@ import { SamDataTableModule } from './data-table';
     SamPointOfContactModule,
     SamSpinnerModule,
     SamTabsModule,
-    SamUploadV2Module,
   ],
   declarations: [
     
@@ -91,8 +87,6 @@ import { SamDataTableModule } from './data-table';
     SamSidenavModule,
     SamSpinnerModule,
     SamTabsModule,
-    SamUploadModule,
-    SamUploadV2Module,
     AccordionsModule,
     SamCommentsModule,
     SamImageModule,
