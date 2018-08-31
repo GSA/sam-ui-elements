@@ -16,6 +16,8 @@ import { SamTextInputModule } from './text';
 import { SamTextAreaModule } from './textarea';
 import { SamTimeModule } from './time';
 import { SamToggleSwitchModule } from './toggle-switch';
+import { SamUploadModule } from './upload';
+import { SamUploadV2Module } from './upload-v2';
 
 
 @NgModule({
@@ -36,6 +38,8 @@ import { SamToggleSwitchModule } from './toggle-switch';
     SamRadioButtonModule,
     SamTimeModule,
     SamToggleSwitchModule,
+    SamUploadModule,
+    SamUploadV2Module,
   ],
   declarations: [
     
@@ -54,6 +58,8 @@ import { SamToggleSwitchModule } from './toggle-switch';
     SamTextAreaModule,
     SamTimeModule,
     SamToggleSwitchModule,
+    SamUploadModule,
+    SamUploadV2Module,
   ],
   providers: []
 })

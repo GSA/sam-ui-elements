@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SamUploadComponent } from './upload.component';
-import { SamProgressModule } from '../progress-bar';
+import { SamProgressModule } from '../../components/progress-bar';
 import { SamDragDropModule } from '../../directives';
 import { SamFilesizeModule } from '../../pipes';
 
@@ -11,5 +11,3 @@ import { SamFilesizeModule } from '../../pipes';
     imports: [CommonModule, SamDragDropModule, SamProgressModule, SamFilesizeModule]
 })
 export class SamUploadModule { }
-
-export * from './upload.component';
