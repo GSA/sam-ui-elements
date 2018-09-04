@@ -21,7 +21,7 @@ import { SamPageSidebarComponent } from './page';
 import { SamTitleComponent } from './title';
 import { SamYoutubeComponent } from './youtube';
 import { SamPickerComponent, SamPopoverComponent } from './picker';
-import { SamVideoPlayerComponent} from './video-player';
+import { SamVideoPlayerModule } from './video-player';
 import { SamInputMaskModule } from './input-mask';
 import { SamPageTitle } from './page-title';
 import { SamLayoutComponentsModule } from './patterns';
@@ -40,7 +40,8 @@ import { SamButtonNextModule } from './button-next';
     SamWrapperModule,
     SamActionsListModule,
     SamIconsModule,
-    SamButtonNextModule
+    SamButtonNextModule,
+    SamVideoPlayerModule
   ],
   declarations: [
     SamBoxComponent,
@@ -61,7 +62,6 @@ import { SamButtonNextModule } from './button-next';
     SamYoutubeComponent,
     SamPopoverComponent,
     SamPickerComponent,
-    SamVideoPlayerComponent,
     SamPageTitle,
     SamDollarComponent,
   ],
@@ -84,7 +84,7 @@ import { SamButtonNextModule } from './button-next';
     SamYoutubeComponent,
     SamPopoverComponent,
     SamPickerComponent,
-    SamVideoPlayerComponent,
+    SamVideoPlayerModule,
     SamInputMaskModule,
     SamLayoutComponentsModule,
     SamPageTitle,
