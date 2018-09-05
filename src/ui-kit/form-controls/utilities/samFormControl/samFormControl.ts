@@ -19,11 +19,12 @@ export class SamFormControlDirective implements OnChanges {
   constructor(private _el: ElementRef,
     private _renderer: Renderer2) { }
   
-  public ngOnChanges () {
+  public ngOnChanges (c) {
+    console.log(c);
       this._renderer.setAttribute(
         this._el.nativeElement,
         'value',
-        this.samModel
+        this.samModel || ''
       );
   }
 
