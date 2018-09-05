@@ -7,12 +7,11 @@
   <input
     type="text"
     samFormControl
-    emitOn="change"
     [(samModel)]="test"
+    [emitOn]="emitOn"
     [attr.title]="title ? title : undefined"
     [attr.id]="id ? id : name"
     [attr.maxlength]="maxlength ? maxlength : 524288"
     [attr.placeholder]="placeholder"
     [disabled]="disabled">
 </sam-label-wrapper>
-{{ test }}

@@ -11,7 +11,7 @@ import {
   selector: '[samFormControl]'
 })
 export class SamFormControlDirective {
-  @Input() public emitOn: string;
+  @Input() public emitOn = 'input';
   @Input() public samModel: any;
   @Output() public samModelChange = new EventEmitter<any>();
 
