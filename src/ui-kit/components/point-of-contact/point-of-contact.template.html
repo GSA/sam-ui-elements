@@ -1,0 +1,16 @@
+<div class="sam-poc">
+  <span class="sam-fullname" *ngIf="data.fullName">{{data.fullName}}<br></span>
+  <ng-container *ngIf="data.title">{{data.title}}</ng-container>
+  <ng-container *ngIf="data.address">{{data.address}}, <br></ng-container>
+  <ng-container *ngIf="data.address2">{{data.address2}}<br/></ng-container>
+  <ng-container *ngIf="data.city || data.state || data.zip">
+    <ng-container *ngIf="data.city">{{data.city}}, </ng-container>
+    <ng-container *ngIf="data.state">{{data.state}} </ng-container>
+    <ng-container *ngIf="data.zip">{{data.zip}}</ng-container><br>
+  </ng-container>
+  <ng-container *ngIf="data.email"><strong><span class="fa fa-envelope-o" aria-hidden="true"></span></strong> <a href="mailto:{{data.email}}">{{data.email}}</a> <br></ng-container>
+  <ng-container *ngIf="data.phone"><strong><span class="fa fa-phone" aria-hidden="true"></span></strong> {{data.phone}}<br></ng-container>
+  <ng-container *ngIf="data.phone2"><strong><span class="fa fa-phone" aria-hidden="true"></span></strong> {{data.phone2}}<br></ng-container>
+  <ng-container *ngIf="data.fax"><strong><span class="fa fa-fax" aria-hidden="true"></span></strong> {{data.fax}}<br></ng-container>
+  <ng-container *ngIf="data.website"><strong><span class="fa fa-globe" aria-hidden="true"></span></strong> {{data.website}}<br></ng-container>
+</div>

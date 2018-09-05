@@ -1,0 +1,89 @@
+<section>
+  <div class="download-container-header">
+    <h2>Packages</h2>
+    <ng-container *ngIf="packages">
+      <span class="download-button">
+        <a class="usa-button-small usa-button-gray" *ngIf="hasPublicPackages() && downloadAllUrl" [attr.href]="downloadAllUrl">
+          <span class="fa fa-cloud-download" aria-hidden="true"></span>
+          <span>Download All Packages</span>
+        </a>
+      </span>
+    </ng-container>
+  </div>
+
+  <ng-container *ngIf="packages && packages.length > 0">
+    <div class="card download-container" *ngFor="let package of packages" [@intro]="fade">
+      <!-- It's public -->
+      <div *ngIf="package.access.toLowerCase() === 'public'" class="card-header {{ package.accordionState }}" (click)="toggleAccordion(package)" tabindex="0" (keyup.enter)="toggleAccordion(package)">
+        <h3>{{ package.name }} ({{ package.resources?.length }})</h3>
+        <strong>Type: {{ package.type }}</strong>
+      </div>
+
+      <span *ngIf="package.access.toLowerCase() === 'public' && package.downloadUrl" class="download-button">
+        <a class="usa-button-small usa-button-gray" [attr.href]="package.downloadUrl">
+          <span class="fa fa-cloud-download" aria-hidden="true"></span>
+          <span>Download</span>
+        </a>
+      </span>
+
+      <ul *ngIf="package.access.toLowerCase() === 'public'" [@accordion]="package.accordionState" class="usa-zebra-list">
+        <li *ngFor="let resource of package.resources">
+          <div class="download-info">
+            <span class="download-info-icon">
+              <span class="{{resource.typeInfo.iconClass}}"></span>
+            </span>
+            <span class="download-info-link">
+              <a [attr.href]="resource.downloadUrl">
+                {{resource.description}}
+                <sup *ngIf="resource.size && resource.size != 0">
+                  {{resource.size }}
+                </sup>
+              </a>
+            </span>
+            <span class="download-info-type">
+              {{resource.typeInfo.name}}
+            </span>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Its private -->
+      <div *ngIf="package.access.toLowerCase() === 'private'" class="card-header-secure">
+        <h3>{{ package.name }} ({{ package.resources?.length }})</h3>
+        <strong>Type: {{ package.type }}</strong>
+      </div>
+
+      <div *ngIf="package.access.toLowerCase() === 'private'" class="card-secure-content">
+        <p>
+          <span class="fa fa-lock fa-3x fa-pull-left" aria-hidden="true"></span>
+          <em>Secure/sensitive attachments are not currently available, please go to <a href="https://www.fbo.gov/">FBO.gov</a> to view this attachment.</em>
+        </p>
+      </div>
+
+      <!-- Extra options -->
+      <div class="card-extra-content">
+        <div class="label-container-inline">
+          <span class="fa fa-calendar-check-o" aria-hidden="true"></span>
+          <strong>Posted on {{ package.postedDate }}</strong>
+        </div>
+        <div class="label-container-inline package-access">
+          <span class="fa" [ngClass]="{'fa-unlock' : package.access.toLowerCase() === 'public', 'fa-lock': package.access.toLowerCase() === 'private'}" aria-hidden="true"></span>
+          <strong>{{isSecure(package.access)}}</strong>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="card" *ngIf="packages.length < 1 && !attachmentError" [@intro]="fade">
+    <div class="card-secure-content usa-text-center">
+      <span class="fa fa-spinner fa-spin"></span>
+      <strong>Loading &hellip;</strong>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="packages.length < 1 && attachmentError" [@intro]="fade">
+    <div class="card-secure-content usa-text-center">
+      <strong>No packages uploaded.</strong>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,52 @@
+<div class="search-container">
+  <div class="sam-ui search" [@search]="loading">
+    <div class="select-option">
+      All Award Data
+      <span class="fa fa-chevron-down"></span>
+    </div>
+    <select (change)="onSelectChange($event)">
+      <option selected>All Award Data</option>
+      <option disabled>────────────────</option>
+      <option>Assistance</option>
+      <option>&nbsp;&nbsp;&nbsp;&nbsp;Assistance Listings</option>
+      <option>&nbsp;&nbsp;&nbsp;&nbsp;Regional Assistance Offices</option>
+      <option>Contracting</option>
+      <option>&nbsp;&nbsp;&nbsp;&nbsp;Contract Opportunities</option>
+      <option>&nbsp;&nbsp;&nbsp;&nbsp;Contract Awards</option>
+      <option>Entity Data</option>
+      <option>&nbsp;&nbsp;&nbsp;&nbsp;Entities</option>
+      <option>&nbsp;&nbsp;&nbsp;&nbsp;Exclusions</option>
+      <option>Agencies</option>
+      <option disabled>────────────────</option>
+      <option>Analytics</option>
+      <option>Help</option>
+      <option disabled>────────────────</option>
+      <option>Directories</option>
+      <option>&nbsp;&nbsp;&nbsp;&nbsp;NAICS</option>
+      <option>&nbsp;&nbsp;&nbsp;&nbsp;PSCs</option>
+      <option>&nbsp;&nbsp;&nbsp;&nbsp;Wage Determinations</option>
+    </select>
+    <div *ngIf="tabSearch" class="tab-search">CFDA Number</div>
+    <input #searchInput type="search" name="samsearch" placeholder="Search" (keydown.backspace)="inputBackspace($event)" (keydown.tab)="inputTab($event)">
+    <button (click)="closeAutocomplete('')" [routerLink]="['/patterns/pages/page/search']">
+      <sam-icon *ngIf="!loading" [icon]="faSearch"></sam-icon>
+      <sam-icon *ngIf="loading" [icon]="faCircleNotch"></sam-icon>
+    </button>
+  </div>
+  
+  <ul class="search-results" [@results]="results.length" [style.width]="resultsWidth" [style.padding-bottom.px]="results.length ? '10' : '0'">
+    <ng-container *ngFor="let result of results; first as isFirst" >
+      
+      <li *ngIf="!tabSearch" (click)="closeAutocomplete(result.name)" [routerLink]="['/patterns/pages/page/search']">
+        <span [innerHTML]="result.description"></span>
+      </li>
+      
+      <li *ngIf="tabSearch && result.domain === 'in Assistance Listing'" (click)="closeAutocomplete(result.name)" [routerLink]="['/patterns/pages/page/search']">
+        <span [innerHTML]="result.description"></span>
+      </li>
+      
+      <li class="domain" *ngIf="isFirst && result.domain && !tabSearch" [innerHTML]="result.domain"></li>
+      
+    </ng-container>
+  </ul>
+</div>

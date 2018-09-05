@@ -1,0 +1,14 @@
+<div class="sam">
+  <ul>
+    <ng-content></ng-content>
+  </ul>
+  <span class="options">
+    <a class="remove" (click)="save.emit()">
+      <i class="fa fa-cloud"></i>
+      Save Filters
+    </a>
+    <a class="remove" (click)="clear.emit()">
+      Clear Filters
+    </a>
+  </span>
+</div>
