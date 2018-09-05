@@ -6,13 +6,13 @@
   [required]="required">
   <input
     type="text"
+    samFormControl
+    emitOn="change"
+    [(samModel)]="test"
     [attr.title]="title ? title : undefined"
     [attr.id]="id ? id : name"
-    [(ngModel)]="value"
     [attr.maxlength]="maxlength ? maxlength : 524288"
     [attr.placeholder]="placeholder"
-    [disabled]="disabled"
-    (ngModelChange)="onInputChange()"
-    (focus)="onTouched()"
-    (blur)="onLoseFocus()">
+    [disabled]="disabled">
 </sam-label-wrapper>
+{{ test }}

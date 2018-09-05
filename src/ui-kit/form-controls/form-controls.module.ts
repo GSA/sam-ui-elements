@@ -17,7 +17,6 @@ import { SamTextAreaModule } from './textarea';
 import { SamTimeModule } from './time';
 import { SamToggleSwitchModule } from './toggle-switch';
 
-
 @NgModule({
   imports: [
     CommonModule,
@@ -36,9 +35,6 @@ import { SamToggleSwitchModule } from './toggle-switch';
     SamRadioButtonModule,
     SamTimeModule,
     SamToggleSwitchModule,
-  ],
-  declarations: [
-    
   ],
   exports: [
     SamAutocompleteModule,

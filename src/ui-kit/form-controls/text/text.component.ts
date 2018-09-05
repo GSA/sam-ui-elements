@@ -87,6 +87,10 @@ export class SamTextComponent implements ControlValueAccessor, OnDestroy {
    */
   @Input() public title: string;
   /**
+   * Changes the HTML event the changes emit on
+   */
+  @Input() public emitOn: string; // onchange | oninput | keydown
+  /**
    * (deprecated) Lose focus event emit
    */
   @Output() public onBlur: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -97,7 +101,8 @@ export class SamTextComponent implements ControlValueAccessor, OnDestroy {
 
   @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
 
-
+  public test: any;
+  
   public onChange: any = (c) => null;
   public onTouched: any = () => null;
 
