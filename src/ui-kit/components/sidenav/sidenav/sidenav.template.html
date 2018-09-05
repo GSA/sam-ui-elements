@@ -5,7 +5,7 @@
       <a role="button" tabindex="0"
         [ngClass]="{'usa-current': isSelected($index), 'disabled': child.disabled}"
         (keyup.enter)="updateUI($index, $event, child)"
-        (click)="updateUI($index, $event, child)">
+        (click)="updateUI($index, $event, child)" [attr.id]="child.id">
           {{child.label}}
           <ng-container *ngIf="child?.iconClass">
             <span [ngClass]="child.iconClass"></span>
@@ -36,7 +36,7 @@
       }"
       (keyup.enter)="updateUI($index, $event, child)"
       [title]="child.iconClass ? child.label + ' - ' + child.iconClass : child.label"
-      (click)="updateUI($index, $event, child)">
+      (click)="updateUI($index, $event, child)" [attr.id]="child.id">
       <div class="content">
         <div class="title">{{child.label}}</div>
       </div>

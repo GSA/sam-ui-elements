@@ -12,3 +12,4 @@ export * from './layout-components.module';
 export * from './page';
 export * from './main-content.component';
 export * from './content-outlet.directive';
+export * from './aside-toggle.component';

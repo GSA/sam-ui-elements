@@ -1,0 +1,42 @@
+<div class="file-container"
+     sam-drag-drop
+     [disabled]="disabled"
+     (dropEvent)="onFilesChange($event)"
+     [dragState]="dragState"
+     (dragStateChange)="onDragStateChange($event)"
+     [ngClass]=" { 'disabled': disabled, 'drag-border': shouldShowDropTarget }"
+     [ngStyle]="{'pointer-events': disabled ? 'none' : 'initial'}"
+  >
+  <div class="file-container-no-drag" *ngIf="!shouldShowDropTarget">
+    <div class="text-center upload-cloud" *ngIf="!anyFiles()">
+      <span class="fa fa-cloud-upload"></span>&nbsp;Drag and drop files here, or<a (click)="file.click()">&nbsp;browse</a>
+    </div>
+    <div *ngFor="let uf of _model" class="file-item">
+      <div class="file-row">
+        <div class="file-name">{{ uf.file.name }}</div>
+        <div class="file-size">{{ uf.file.size | filesize }}</div>
+        <div class="file-delete"><span class="icon close fa fa-times-circle" (click)="onCloseClick(uf)"></span></div>
+      </div>
+      <div class="file-progress" *ngIf="shouldShowProgressBar(uf)">
+        <sam-progress-bar [value]="uf.upload.progress"></sam-progress-bar>
+      </div>
+      <div class="file-error" *ngIf="shouldShowError(uf)">Error: {{uf.upload.error}}</div>
+    </div>
+    <div class="text-center" *ngIf="anyFiles() && shouldAllowMoreFiles()">
+      <span class="fa fa-cloud-upload"></span>&nbsp;Drag and drop files here, or<a (click)="file.click()">&nbsp;browse</a>
+    </div>
+  </div>
+  <div class="file-container-dragging text-center" *ngIf="shouldShowDropTarget">
+    Drop Files Here
+    <p class="text-center"><span class="fa fa-cloud-upload"></span></p>
+  </div>
+  <div *ngIf="showMaxFilesError" class="file-max-error">
+    <span class="fa fa-warning"></span>&nbsp;{{maxFilesErrorMessage()}}
+  </div>
+  <div *ngIf="!isAcceptableFileType && !shouldShowDropTarget" class="file-max-error">
+    <span class="fa fa-warning">&nbsp; Please select {{this.accept}} type of file.</span>
+  </div>
+
+  <!-- Hidden input to trigger the browser file selector -->
+  <input type="file" #file [attr.id]="name" [attr.accept]="accept" ngModel class="hide" (change)="onFilesChange($event.target.files)" [attr.multiple]="maxFiles === 0 || maxFiles > 1 ? 'multiple' : null">
+</div>

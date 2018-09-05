@@ -114,11 +114,6 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   constructor(protected samFormService: SamFormService) {}
 
   ngOnInit() {
-    if (!this.name) {
-      throw new Error('<sam-checkbox> requires a [name] parameter for 508 \
-      compliance');
-    }
-
     // initialize the order lookup map
     for (let i = 0; i < this.options.length; i++) {
       const val = this.options[i].value;

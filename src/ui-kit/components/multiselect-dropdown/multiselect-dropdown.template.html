@@ -1,4 +1,4 @@
-<div class="dropdown" sam-click-outside (clickOutside)="onMoveOutside()" style="display: inline-block">
+<div class="dropdown" sam-click-outside (clickOutside)="onMoveOutside()">
     <div class="dropdown-title pointer" [ngClass]='disabled && "disabled"' role="button" tabindex="0"
         (click)="toggleItemList($event)" (keydown)="toggleItemList($event)">
         {{elementLabel}}

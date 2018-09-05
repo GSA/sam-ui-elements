@@ -339,4 +339,8 @@ export interface UploadedFileData {
    * sets the url
    */
   url: string;
+    /**
+     * sets the file icon
+     */
+  icon: any;
 }
