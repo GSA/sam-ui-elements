@@ -7,11 +7,13 @@
   <input
     type="text"
     samFormControl
-    [(samModel)]="test"
+    [(samModel)]="value"
     [emitOn]="emitOn"
     [attr.title]="title ? title : undefined"
     [attr.id]="id ? id : name"
     [attr.maxlength]="maxlength ? maxlength : 524288"
     [attr.placeholder]="placeholder"
-    [disabled]="disabled">
+    [disabled]="disabled"
+    (focus)="onTouched()"
+    (blur)="onLoseFocus()">
 </sam-label-wrapper>
