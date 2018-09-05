@@ -2,9 +2,19 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { SamComponentsModule } from '../components';
-import { SamElementsModule } from '../elements';
-import { SamDirectivesModule } from '../directives';
+import {
+  SamBreadcrumbsModule,
+  SamPaginationModule,
+  SamSidenavModule,
+  SamAlertModule,
+  SamBadgeModule
+} from '../components';
+import {
+  SamButtonModule
+} from '../elements';
+import {
+  SamStickyModule
+} from '../directives';
 
 import { PageService } from './page.service';
 import { PageTemplateComponent } from './page.component';
@@ -58,9 +68,13 @@ import { FormOnlyPageTemplateComponent } from './form-only-page.component';
   ],
   imports: [
     CommonModule,
-    SamComponentsModule,
-    SamDirectivesModule,
-    SamElementsModule,
+    SamBreadcrumbsModule,
+    SamPaginationModule,
+    SamSidenavModule,
+    SamAlertModule,
+    SamBadgeModule,
+    SamButtonModule,
+    SamStickyModule,
     RouterModule
   ],
   exports: [
