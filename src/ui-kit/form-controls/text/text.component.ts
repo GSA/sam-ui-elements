@@ -169,14 +169,14 @@ export class SamTextComponent implements ControlValueAccessor, OnDestroy {
 
   public onLoseFocus() {
     if (this.value.trim() !== this.value) {
-      this.value = this.value.trim();
-      this.onInputChange();
+      this.onInputChange(this.value.trim());
     }
     this.onBlur.emit(true);
     this.blur.emit(true);
   }
 
-  public onInputChange() {
+  public onInputChange(event) {
+    this.value = event;
     this.onTouched();
     this.onChange(this.value);
   }

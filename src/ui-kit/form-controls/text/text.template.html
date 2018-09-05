@@ -7,7 +7,8 @@
   <input
     type="text"
     samFormControl
-    [(samModel)]="value"
+    [samModel]="value"
+    (samModelChange)="onInputChange($event)"
     [emitOn]="emitOn"
     [attr.title]="title ? title : undefined"
     [attr.id]="id ? id : name"
