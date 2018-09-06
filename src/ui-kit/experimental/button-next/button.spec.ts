@@ -62,7 +62,7 @@ describe('The Sam Button Next component', () => {
     component.id = tertiaryBtnConfig.buttonId;
     fixture.detectChanges();
 
-    expect(component.btnClass).toContain('basic blue');
+    expect(component.btnClass).toContain('tertiary');
     expect(component.isDisabled).toBe(false);
   });
 
@@ -73,7 +73,7 @@ describe('The Sam Button Next component', () => {
     component.id = samBtnErrorConfig.buttonId;
     fixture.detectChanges();
 
-    expect(component.btnClass).toContain('primary');
+    expect(component.btnClass).toContain('secondary');
     expect(component.isDisabled).toBe(false);
   });
 });
