@@ -90,7 +90,7 @@ export class SamTextComponent implements ControlValueAccessor, OnDestroy {
   /**
    * Changes the HTML event the changes emit on
    */
-  @Input() public emitOn = 'change';
+  @Input() public emitOn = 'input';
   /**
    * (deprecated) Lose focus event emit
    */
