@@ -20,8 +20,4 @@ export class SamFormlyText extends AbstractSamFormly {
   constructor (public cdr: ChangeDetectorRef) {
     super();
   }
-
-  ngAfterViewChecked () {
-    console.log((<any>this).formControl);
-  }
 }

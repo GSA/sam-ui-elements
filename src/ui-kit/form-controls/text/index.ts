@@ -4,14 +4,12 @@ import { FormsModule } from '@angular/forms';
 
 import { SamTextComponent } from './text.component';
 import { SamWrapperModule } from '../../wrappers';
-import { SamFormControlModule } from '../utilities';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    SamWrapperModule,
-    SamFormControlModule
+    SamWrapperModule
   ],
   declarations: [ SamTextComponent ],
   exports: [ SamTextComponent ]

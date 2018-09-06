@@ -6,15 +6,14 @@
   [required]="required">
   <input
     type="text"
-    samFormControl
-    [samModel]="value"
-    (samModelChange)="onInputChange($event)"
-    [emitOn]="emitOn"
+    [ngModel]="value"
     [attr.title]="title ? title : undefined"
     [attr.id]="id ? id : name"
     [attr.maxlength]="maxlength ? maxlength : 524288"
     [attr.placeholder]="placeholder"
     [disabled]="disabled"
-    (focus)="onTouched()"
-    (blur)="onLoseFocus()">
+    (focus)="focusEvent.next({type: 'focus', event: $event})"
+    (blur)="focusEvent.next({type: 'blur', event: $event})"
+    (change)="changeEvent.next({type: 'change', event: $event})"
+    (input)="changeEvent.next({type: 'input', event: $event})">
 </sam-label-wrapper>

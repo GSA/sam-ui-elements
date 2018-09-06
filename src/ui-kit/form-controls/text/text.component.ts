@@ -18,7 +18,7 @@ import {
 } from '@angular/forms';
 
 import { SamFormService } from '../../form-service';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
 /**
  * The <sam-text> component provides a text input form control
@@ -26,11 +26,13 @@ import { Subject } from 'rxjs';
 @Component({
   selector: 'sam-text',
   templateUrl: 'text.template.html',
-  providers: [ {
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => SamTextComponent),
-    multi: true
-  } ]
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SamTextComponent),
+      multi: true
+    }
+  ]
 })
 export class SamTextComponent implements ControlValueAccessor, OnDestroy {
   /**
@@ -88,7 +90,7 @@ export class SamTextComponent implements ControlValueAccessor, OnDestroy {
   /**
    * Changes the HTML event the changes emit on
    */
-  @Input() public emitOn = 'input';
+  @Input() public emitOn = 'change';
   /**
    * (deprecated) Lose focus event emit
    */
@@ -100,8 +102,14 @@ export class SamTextComponent implements ControlValueAccessor, OnDestroy {
 
   @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
   
+  public test: any;
   public onChange: any = (c) => null;
   public onTouched: any = () => null;
+
+  public focusEvent = new Subject<any>();
+  public changeEvent = new Subject<any>();
+  private _focusSubscription: Subscription;
+  private _changeSubsription: Subscription;
 
   private ngUnsubscribe: Subject<any> = new Subject();
 
@@ -109,6 +117,17 @@ export class SamTextComponent implements ControlValueAccessor, OnDestroy {
     private cdr: ChangeDetectorRef) {}
 
   public ngOnInit() {
+    this._focusSubscription = this.focusEvent.subscribe(
+      this._handleFocusEvents.bind(this)
+    );
+
+    this._changeSubsription = 
+      this.changeEvent
+        .filter(event => event.type === this.emitOn)
+        .subscribe(
+          e => this._setValue.call(this,e.event.target.value)
+        )
+
     if (!this.name) {
       throw new Error('<sam-text> requires a [name] parameter\
        for 508 compliance');
@@ -155,6 +174,9 @@ export class SamTextComponent implements ControlValueAccessor, OnDestroy {
     this.cdr.detach();
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+
+    this._focusSubscription.unsubscribe();
+    this._changeSubsription.unsubscribe();
   }
 
   public ngAfterViewInit() {
@@ -165,17 +187,12 @@ export class SamTextComponent implements ControlValueAccessor, OnDestroy {
   }
 
   public onLoseFocus() {
-    if (this.value.trim() !== this.value) {
-      this.onInputChange(this.value.trim());
+    const trimmed = this.value.trim();
+    if (trimmed !== this.value) {
+      this._setValue(trimmed);
     }
     this.onBlur.emit(true);
     this.blur.emit(true);
-  }
-
-  public onInputChange(event) {
-    this.value = event;
-    this.onTouched();
-    this.onChange(this.value);
   }
 
   public registerOnChange(fn) {
@@ -194,5 +211,19 @@ export class SamTextComponent implements ControlValueAccessor, OnDestroy {
     this.value = value !== null
       ? '' + value
       : '';
+    this.cdr.detectChanges();
+  }
+
+  private _handleFocusEvents (event) {
+    if (event.type === 'focus') {
+      this.onTouched();
+    } else if (event.type === 'blur') {
+      this.onLoseFocus();
+    }
+  }
+
+  private _setValue (value) {
+    this.value = value;
+    this.onChange(this.value);
   }
 }
