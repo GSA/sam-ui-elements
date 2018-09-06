@@ -188,7 +188,7 @@ export class SamButtonComponent {
     }
     
     if(deprecated.length > 0){
-      console.info("Button its using deprecated inputs, please update\nButton Documentation: https://40globalenablercomp.apps.prod-iae.bsp.gsa.gov/docs/elements/button")
+      console.info("Button its using deprecated inputs, please update inputs");
     }
     
     console.table(deprecated);
