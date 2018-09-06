@@ -40,15 +40,6 @@ describe('The Sam Checkboxes component', () => {
       component.writeValue(undefined);
       expect(component.model.length).toBe(0);
     });
-
-    it('should pass 508', () => {
-      try {
-        component.ngOnInit();
-        fail();
-      } catch (e) {
-        expect(true).toBe(true);
-      }
-    });
   });
   describe('rendered tests', () => {
     let component: SamCheckboxComponent;

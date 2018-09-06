@@ -21,13 +21,14 @@ import { SamPageSidebarComponent } from './page';
 import { SamTitleComponent } from './title';
 import { SamYoutubeComponent } from './youtube';
 import { SamPickerComponent, SamPopoverComponent } from './picker';
-import { SamVideoPlayerComponent} from './video-player';
+import { SamVideoPlayerModule } from './video-player';
 import { SamInputMaskModule } from './input-mask';
 import { SamPageTitle } from './page-title';
 import { SamLayoutComponentsModule } from './patterns';
 import { SamDollarComponent } from './dollar';
 import { SamWrapperModule } from '../wrappers';
 import { SamActionsListModule } from './actions-list';
+import { SamButtonNextModule } from './button-next';
 
 @NgModule({
   imports: [
@@ -38,7 +39,9 @@ import { SamActionsListModule } from './actions-list';
     FormsModule,
     SamWrapperModule,
     SamActionsListModule,
-    SamIconsModule
+    SamIconsModule,
+    SamButtonNextModule,
+    SamVideoPlayerModule
   ],
   declarations: [
     SamBoxComponent,
@@ -59,7 +62,6 @@ import { SamActionsListModule } from './actions-list';
     SamYoutubeComponent,
     SamPopoverComponent,
     SamPickerComponent,
-    SamVideoPlayerComponent,
     SamPageTitle,
     SamDollarComponent,
   ],
@@ -82,13 +84,14 @@ import { SamActionsListModule } from './actions-list';
     SamYoutubeComponent,
     SamPopoverComponent,
     SamPickerComponent,
-    SamVideoPlayerComponent,
+    SamVideoPlayerModule,
     SamInputMaskModule,
     SamLayoutComponentsModule,
     SamPageTitle,
     SamDollarComponent,
     SamActionsListModule,
     SamIconsModule,
+    SamButtonNextModule
   ]
 })
 export class SamExperimentalModule {}

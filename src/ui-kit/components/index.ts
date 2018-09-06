@@ -18,6 +18,4 @@ export * from './point-of-contact';
 export * from './sidenav';
 export * from './spinner';
 export * from './tabs';
-export * from './upload';
-export { SamUploadComponentV2 } from './upload-v2';
 export * from './components.module';

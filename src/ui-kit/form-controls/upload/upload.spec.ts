@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UploadStatus, SamUploadComponentV2 } from './upload-v2.component';
+import { SamUploadComponent, UploadStatus } from './upload.component';
 import { SamDragDropDirective } from '../../directives/drag-drop/drag-drop.directive';
 import { FilesizePipe } from '../../pipes/filesize/filesize.pipe';
-import { SamProgress } from '../progress-bar/progress-bar.component';
+import { SamProgress } from '../../components/progress-bar/progress-bar.component';
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
@@ -18,7 +18,7 @@ class MockHttpClient {
 @Component({
   template: `
     <form [formGroup]="form">
-      <sam-upload-v2 formControlName="upload"></sam-upload-v2>
+      <sam-upload formControlName="upload"></sam-upload>
     </form>
   `
 })
@@ -29,19 +29,13 @@ class TestHostComponent {
 }
 
 describe('The Sam Upload component', () => {
-  let component: SamUploadComponentV2;
+  let component: SamUploadComponent;
   let host: any;
   let fixture: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ 
-        TestHostComponent, 
-        SamUploadComponentV2, 
-        SamDragDropDirective, 
-        SamProgress, 
-        FilesizePipe  
-      ],
+      declarations: [ TestHostComponent, SamUploadComponent, SamDragDropDirective, SamProgress, FilesizePipe  ],
       imports: [ FormsModule, ReactiveFormsModule ],
       providers: [
         { provide: HttpClient, useClass: MockHttpClient },
@@ -51,7 +45,7 @@ describe('The Sam Upload component', () => {
 
     fixture = TestBed.createComponent(TestHostComponent);
     host = fixture.component;
-    component = fixture.debugElement.query(By.directive(SamUploadComponentV2)).injector.get(SamUploadComponentV2);
+    component = fixture.debugElement.query(By.directive(SamUploadComponent)).injector.get(SamUploadComponent);
     fixture.detectChanges();
   });
 
@@ -85,9 +79,9 @@ describe('The Sam Upload component', () => {
     component.uploadRequest = () => request;
     component.deleteRequest = () => deleteRequest;
     component.onFilesChange(<any>list);
-    const firstFile = component.fileCtrlConfig[0];
+    const firstFile = component._model[0];
     expect(firstFile).toBeTruthy();
-    component.onCloseClick(0);
-    expect(component.fileCtrlConfig.length).toBe(0);
+    component.onCloseClick(firstFile);
+    expect(component._model.length).toBe(0);
   });
 });

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SamUploadComponentV2 } from './upload-v2.component';
-import { SamProgressModule } from '../progress-bar';
+import { SamProgressModule } from '../../components/progress-bar';
 import { SamDragDropModule } from '../../directives';
 import { SamFilesizeModule } from '../../pipes';
 
@@ -18,5 +18,3 @@ import { SamFilesizeModule } from '../../pipes';
     ]
 })
 export class SamUploadV2Module { }
-
-export * from './upload-v2.component';

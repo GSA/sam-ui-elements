@@ -13,3 +13,5 @@ export * from './text';
 export * from './textarea';
 export * from './time';
 export * from './toggle-switch';
+export * from './upload';
+export { SamUploadComponentV2,SamUploadV2Module } from './upload-v2';
