@@ -5,27 +5,27 @@ import {
   Renderer2,
   EventEmitter,
   Output,
-  OnChanges
+  ChangeDetectorRef
 } from '@angular/core';
 
 @Directive({
   selector: '[samFormControl]'
 })
-export class SamFormControlDirective implements OnChanges {
+export class SamFormControlDirective {
   @Input() public emitOn = 'input';
   @Input() public samModel: any;
   @Output() public samModelChange = new EventEmitter<any>();
 
   constructor(private _el: ElementRef,
-    private _renderer: Renderer2) { }
+    private _renderer: Renderer2,
+    private _cdr: ChangeDetectorRef) { }
   
-  public ngOnChanges (c) {
-    console.log(c);
-      this._renderer.setAttribute(
-        this._el.nativeElement,
-        'value',
-        this.samModel || ''
-      );
+  public ngOnChanges () {
+    this._renderer.setAttribute(
+      this._el.nativeElement,
+      'value',
+      this.samModel
+    );
   }
 
   public ngOnInit () {

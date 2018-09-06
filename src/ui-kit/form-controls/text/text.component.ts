@@ -20,7 +20,6 @@ import {
 import { SamFormService } from '../../form-service';
 import { Subject } from 'rxjs';
 
-
 /**
  * The <sam-text> component provides a text input form control
  */
@@ -100,8 +99,6 @@ export class SamTextComponent implements ControlValueAccessor, OnDestroy {
   @Output() public blur: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
-
-  public test: any;
   
   public onChange: any = (c) => null;
   public onTouched: any = () => null;
