@@ -4,26 +4,8 @@ import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { FormsModule, FormControl } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { SamFormService } from '../../form-service';
-import { ChangeDetectorRef } from '@angular/core';
 
 describe('The Sam Text component', () => {
-  describe('isolated tests', () => {
-    let component: SamTextComponent;
-    const cdr: ChangeDetectorRef = undefined;
-    beforeEach(() => {
-      component = new SamTextComponent(new SamFormService(), cdr);
-    });
-
-    it('should implement controlvalueaccessor', () => {
-      component.onChange();
-      component.onTouched();
-      component.setDisabledState(false);
-      component.registerOnChange((_) => undefined);
-      component.registerOnTouched(() => undefined);
-      component.writeValue('hello');
-      expect(component.value).toBe('hello');
-    });
-  });
   describe('rendered tests', () => {
     let component: SamTextComponent;
     let fixture: any;
@@ -44,6 +26,16 @@ describe('The Sam Text component', () => {
       component = fixture.componentInstance;
       component.label = 'A label can have spaces';
       component.name = 'my-text-component';
+    });
+
+    it('should implement controlvalueaccessor', () => {
+      component.onChange();
+      component.onTouched();
+      component.setDisabledState(false);
+      component.registerOnChange((_) => undefined);
+      component.registerOnTouched(() => undefined);
+      component.writeValue('hello');
+      expect(component.value).toBe('hello');
     });
   
     it('should allow an initial value to be set by the value input', () => {
