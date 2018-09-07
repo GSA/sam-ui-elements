@@ -95,7 +95,7 @@ export class SamTextComponent implements ControlValueAccessor,
   /**
    * Changes the HTML event the changes emit on
    */
-  @Input() public emitOn = 'input';
+  @Input() public emitOn: 'input' | 'change' = 'input';
   /**
    * (deprecated) Lose focus event emit
    */
