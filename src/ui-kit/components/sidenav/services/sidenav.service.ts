@@ -35,6 +35,9 @@ export class SidenavService {
       this.indexArray.push(index);
     } else {
       this.indexArray[nodeDepth] = index;
+      if(this.indexArray.length > nodeDepth+1){
+        this.indexArray.splice(nodeDepth+1);
+      }
     }
   }
 
