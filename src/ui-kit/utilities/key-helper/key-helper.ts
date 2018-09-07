@@ -271,6 +271,7 @@ export class KeyHelper {
       || e.code === 'Numpad0'
       || e.key === 0
       || e.keyCode === 48
+      || e.keyCode === 96
       || e.keyIdentifier === 'U+0030'
       || e.which === 48) {
       return 0;
@@ -284,6 +285,7 @@ export class KeyHelper {
       || e.code === 'Numpad1'
       || e.key === 1
       || e.keyCode === 49
+      || e.keyCode === 97
       || e.keyIdentifier === 'U+0031'
       || e.which === 49) {
       return 1;
@@ -297,6 +299,7 @@ export class KeyHelper {
       || e.code === 'Numpad2'
       || e.key === 2
       || e.keyCode === 50
+      || e.keyCode === 98
       || e.keyIdentifier === 'U+0032'
       || e.which === 50) {
       return 2;
@@ -310,6 +313,7 @@ export class KeyHelper {
       || e.code === 'Numpad3'
       || e.key === 3
       || e.keyCode === 51
+      || e.keyCode === 99
       || e.keyIdentifier === 'U+0033'
       || e.which === 51) {
       return 3;
@@ -323,6 +327,7 @@ export class KeyHelper {
       || e.code === 'Numpad4'
       || e.key === 4
       || e.keyCode === 52
+      || e.keyCode === 100
       || e.keyIdentifier === 'U+0034'
       || e.which === 52) {
       return 4;
@@ -335,6 +340,7 @@ export class KeyHelper {
       || e.code === 'Numpad5'
       || e.key === 5
       || e.keyCode === 53
+      || e.keyCode === 101
       || e.keyIdentifier === 'U+0035'
       || e.which === 53) {
       return 5;
@@ -348,6 +354,7 @@ export class KeyHelper {
       || e.code === 'Numpad6'
       || e.key === 6
       || e.keyCode === 54
+      || e.keyCode === 102
       || e.keyIdentifier === 'U+0036'
       || e.which === 54) {
       return 6;
@@ -361,6 +368,7 @@ export class KeyHelper {
       || e.code === 'Numpad7'
       || e.key === 7
       || e.keyCode === 55
+      || e.keyCode === 103
       || e.keyIdentifier === 'U+0037'
       || e.which === 55) {
       return 7;
@@ -374,6 +382,7 @@ export class KeyHelper {
       || e.code === 'Numpad8'
       || e.key === 8
       || e.keyCode === 56
+      || e.keyCode === 104
       || e.keyIdentifier === 'U+0038'
       || e.which === 56) {
       return 8;
@@ -387,6 +396,7 @@ export class KeyHelper {
       || e.code === 'Numpad9'
       || e.key === 9
       || e.keyCode === 57
+      || e.keyCode === 105
       || e.keyIdentifier === 'U+0039'
       || e.which === 57) {
       return 9;

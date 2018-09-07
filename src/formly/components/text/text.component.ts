@@ -10,7 +10,7 @@ import { SamTextComponent } from '../../../ui-kit';
 
 @Component({
  template: `
-   <sam-text [formControl]="formControl"></sam-text>
+   <sam-text [formControl]="formControl" [control]="formControl"></sam-text>
  `,
  changeDetection: ChangeDetectionStrategy.OnPush
 })

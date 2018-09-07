@@ -19,7 +19,6 @@ import { SamToggleSwitchModule } from './toggle-switch';
 import { SamUploadModule } from './upload';
 import { SamUploadV2Module } from './upload-v2';
 
-
 @NgModule({
   imports: [
     CommonModule,
@@ -40,9 +39,6 @@ import { SamUploadV2Module } from './upload-v2';
     SamToggleSwitchModule,
     SamUploadModule,
     SamUploadV2Module,
-  ],
-  declarations: [
-    
   ],
   exports: [
     SamAutocompleteModule,

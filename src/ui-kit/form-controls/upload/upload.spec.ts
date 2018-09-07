@@ -3,7 +3,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { SamUploadComponent, UploadStatus } from './upload.component';
 import { SamDragDropDirective } from '../../directives/drag-drop/drag-drop.directive';
 import { FilesizePipe } from '../../pipes/filesize/filesize.pipe';
-import { SamProgress } from '../progress-bar/progress-bar.component';
+import { SamProgress } from '../../components/progress-bar/progress-bar.component';
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
