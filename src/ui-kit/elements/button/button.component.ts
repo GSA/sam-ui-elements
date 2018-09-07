@@ -131,10 +131,6 @@ export class SamButtonComponent {
     // Theme
     dark: 'inverted'
   };
-
-  public ngOnInit () {
-    this.debug();
-  }
   
   get btnClass(): String {
     const classMap = [];
