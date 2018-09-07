@@ -1,4 +1,11 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter
+} from '@angular/core';
+
+import { Deprecator } from '../../utilities';
 
 /**
 * The <sam-button> component generates a button for user interaction
@@ -124,6 +131,10 @@ export class SamButtonComponent {
     // Theme
     dark: 'inverted'
   };
+
+  public ngOnInit () {
+    this.debug();
+  }
   
   get btnClass(): String {
     const classMap = [];
@@ -153,45 +164,21 @@ export class SamButtonComponent {
     return classMap.join(' ');
   }
   
-  debug(){
-    function Deprecated(deprecated, use) {
-      this.Deprecated = deprecated;
-      this.Use = use;
-      this.UpdateBy = "PI 16 Sprint 2"
-    }
-    
-    let deprecated = [];
-    
-    if(this.buttonId){
-      deprecated.push(new Deprecated("buttonId", "id"));
-    }
-    if(this.buttonText){
-      deprecated.push(new Deprecated("buttonText", "<sam-button>Your Text</sam-button>"));
-    }
-    if(this.buttonType){
-      deprecated.push( new Deprecated("buttonType", "action"));
-      if(this.buttonType == "negative"){
-        deprecated.push( new Deprecated("buttonType='negative'", "action='secondary'"));
-      }
-    }
-    if(this.buttonSize){
-      deprecated.push(new Deprecated("buttonSize", "size"));
-      if(this.buttonType == "large"){
-        deprecated.push( new Deprecated("buttonSize='large'", "Large size is not available - remove buttonSize to use normal size"));
-      }
-    }
-    if(this.buttonDisabled){
-      deprecated.push(new Deprecated("buttonDisabled", "isDisabled"));
-    }
-    if(this.buttonClass){
-      deprecated.push(new Deprecated("buttonClass", "Please remove this input"));
-    }
-    
-    if(deprecated.length > 0){
-      console.info("Button its using deprecated inputs, please update inputs");
-    }
-    
-    console.table(deprecated);
+  debug () {
+    const deprecated: string[][] = [
+      ['buttonId', 'id', 'PI 16 Sprint 2'],
+      ['buttonText', '<sam-button>Your Text</sam-button', 'PI 16 Sprint 2'],
+      ['buttonType', 'action', 'PI 16 Sprint 2'],
+      ['buttonType', 'action="secondary"', 'PI 16 Sprint 2', 'negative'],
+      ['buttonSize', 'size', 'PI 16 Sprint 2'],
+      ['buttonSize', 'Large size is not available - remove buttonSize to use normal size', 'PI 16 Sprint 2', 'large'],
+      ['buttonDisabled', 'isDisabled', 'PI 16 Sprint 2'],
+      ['buttonClass', 'Please remove this input', 'PI 16 Sprint 2'],
+    ]
+
+    const deprecator = new Deprecator(this);
+    deprecated.forEach(prop => deprecator.deprecate(...prop));
+    deprecator.render(this);
   }
   
   click($event) {
