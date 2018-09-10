@@ -173,7 +173,11 @@ export class SamButtonComponent {
     ]
 
     const deprecator = new Deprecator(this);
-    deprecated.forEach(prop => deprecator.deprecate(...prop));
+    deprecated.forEach(
+      prop => deprecator.deprecate(
+        prop[0], prop[1], prop[2], prop[3]
+      )
+    );
     deprecator.render(this);
   }
   

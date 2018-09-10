@@ -11,20 +11,20 @@ export class Deprecator {
   constructor (public parentClass: any,
     public globalMessage?: string) {}
 
-  public deprecate (...args): void {
-
+  public deprecate (deprecatedMember: string, 
+    use: string, updateBy: string, deprecatedValue?: string): void {
     const dep = new Deprecated(
-      args[0],
-      args[1],
-      args[2],
-      args[3]
+      deprecatedMember,
+      use,
+      updateBy,
+      deprecatedValue
     );
 
     this._deprecated.push(dep);
   }
 
   public render (parent: any): void {
-    if(this._deprecated.length > 0){
+    if (this._deprecated.length > 0) {
       console.warn(this._createWarningMessage());
       if (this.globalMessage) {
         console.warn(this.globalMessage);
