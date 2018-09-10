@@ -12,22 +12,25 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { SamPageNextService } from '../architecture';
 
-
 @Component({
   selector: 'sam-filters-wrapper',
   template: `
-    <ng-content></ng-content>
-    <sam-button-next
-      action="primary"
-      (onClick)="runReportEvent.next()">
-      Run Report
-    </sam-button-next>
+    <form [formGroup]="group"
+      (ngSubmit)="runReportEvent.next()">
+      <ng-content></ng-content>
+      <sam-button-next
+        action="submit"
+        [isDisabled]="!group.valid">
+        Run Report
+      </sam-button-next>
+    </form>
   `
 })
 export class SamFiltersWrapperComponent
   implements OnInit, OnDestroy {
 
   @Input() public group: FormGroup;
+  @Input() public disabled = false;
 
   public runReportEvent = new Subject<any>();
   private _runReportSubscription: Subscription;
