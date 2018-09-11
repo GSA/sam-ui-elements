@@ -10,7 +10,6 @@ import {
 } from '../../../ui-kit';
 
 import { AbstractSamFormly } from '../../sam-formly';
-import { TestAutocompleteService } from './test.service';
 
 @Component({
  template: `
@@ -18,7 +17,7 @@ import { TestAutocompleteService } from './test.service';
     [control]="formControl"
    ></sam-autocomplete>
  `,
- changeDetection: ChangeDetectionStrategy.OnPush,
+ changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SamFormlyAutocomplete extends AbstractSamFormly {
   @ViewChild(SamAutocompleteComponent)
