@@ -31,6 +31,7 @@ import { SamAsideToggleComponent } from './aside-toggle.component';
 import { SamComponentsModule } from '../../../../components';
 import { SamActionsListModule } from '../../../actions-list';
 import { SamReportingMainComponent } from './template/reporting-main.component';
+import { SamButtonNextModule } from '../../../button-next';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { SamReportingMainComponent } from './template/reporting-main.component';
     MdSidenavModule,
     MdExpansionModule,
     SamComponentsModule,
-    SamActionsListModule
+    SamActionsListModule,
+    SamButtonNextModule
   ],
   declarations: [
     // Components
