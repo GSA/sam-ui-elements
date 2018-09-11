@@ -19,12 +19,6 @@ import { TestAutocompleteService } from './test.service';
    ></sam-autocomplete>
  `,
  changeDetection: ChangeDetectionStrategy.OnPush,
- providers: [
-    {
-      provide: AutocompleteService,
-      useClass: TestAutocompleteService
-    }
-  ],
 })
 export class SamFormlyAutocomplete extends AbstractSamFormly {
   @ViewChild(SamAutocompleteComponent)
