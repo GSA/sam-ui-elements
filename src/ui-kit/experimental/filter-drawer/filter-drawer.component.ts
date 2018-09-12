@@ -31,7 +31,7 @@ export class SamFilterDrawerChip {
 }
 
 @Component({
-  selector: "sam-filter-drawer-item",
+  selector: 'sam-filter-drawer-item',
   template: `
     {{ label }}
     <ul>
@@ -62,6 +62,9 @@ export class SamFilterDrawerItemComponent {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SamFilterDrawerComponent implements AfterContentChecked {
+ /**
+  * Emits event when remove item is clicked
+  */
   @Output() public remove = new EventEmitter<any>();
   /**
    * Event emitter for the 'clear' event
