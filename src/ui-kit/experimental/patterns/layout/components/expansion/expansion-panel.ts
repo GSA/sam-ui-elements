@@ -79,6 +79,7 @@ export class MdExpansionPanelComponent extends AccordionItem {
               _uniqueSelectionDispatcher: UniqueSelectionDispatcher) {
     super(accordion, _uniqueSelectionDispatcher);
     this.accordion = accordion;
+    console.log(accordion);
   }
 
   /** Whether the expansion indicator should be hidden. */

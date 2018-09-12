@@ -11,7 +11,6 @@ import { SamPageNextService } from '../architecture';
 @Component({
   selector: 'sam-main',
   template: `
-    <ng-content select="sam-page-title"></ng-content>
     <ng-content select="sam-filter-drawer"></ng-content>
     <ng-content select="sam-main-content"></ng-content>
   `

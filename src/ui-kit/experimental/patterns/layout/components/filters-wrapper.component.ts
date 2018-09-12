@@ -27,7 +27,6 @@ import { areEqual } from '../../../../utilities';
       </sam-button-next>
       <sam-button-next
         action="secondary"
-        size="small"
         (onClick)="resetReportEvent.next()">
         Reset Report
       </sam-button-next>
