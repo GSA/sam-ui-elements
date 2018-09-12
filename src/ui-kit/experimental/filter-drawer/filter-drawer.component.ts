@@ -2,7 +2,6 @@ import {
   Component,
   Output,
   EventEmitter,
-  HostListener,
   ContentChildren,
   Input,
   QueryList,
@@ -19,6 +18,7 @@ import { SamPageNextService } from '../patterns/layout/architecture';
   <span class="sam label">
     {{ label }}
     <button class="sam button tertiary"
+      [title]="'Remove ' + label"
       (click)="click.next($event)">
       <span class="fa fa-close" aria-hidden="true"></span>
     </button>
@@ -31,48 +31,38 @@ export class SamFilterDrawerChip {
 }
 
 @Component({
-
-  selector: "[sam-filter-drawer-item]",
+  selector: "sam-filter-drawer-item",
   template: `
-    {{ fieldLabel }}
-    <sam-filter-drawer-chip
-      *ngFor="let value of values"
-      [label]="value"
-      (click)="handleClick(value)"
-    ></sam-filter-drawer-chip>
+    {{ label }}
+    <ul>
+      <li *ngFor="let value of values">
+        <sam-filter-drawer-chip
+          [label]="value"
+          (click)="removeFilter(value)"
+        ></sam-filter-drawer-chip>
+      </li>
+    </ul>
   `
  })
-
 export class SamFilterDrawerItemComponent {
-  @HostListener('click') public itemClick () {
-    this.remove.emit({
-      id: this.fieldId,
-      label: this.fieldLabel,
-      value: this.fieldValue
-    });
-  }
-  @Input() public fieldId: string;
-  @Input() public fieldLabel: string;
-  @Input() public fieldValue: string;
+  @Input() public label: string;
+  @Input() public values: any[];
   @Output() public remove = new EventEmitter();
 
-  values = [];
-
-  public ngOnChanges () {
-    this.values = [this.fieldValue];
-  }
-
-  public handleClick (value: any) {
-    console.log('hiya!');
+  public removeFilter (value) {
+    const removed = {};
+    removed[this.label] = value;
+    this.remove.emit(removed);
   }
 }
 
 @Component({
-  selector: "sam-filter-drawer",
+  selector: 'sam-filter-drawer',
   templateUrl: 'filter-drawer.template.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SamFilterDrawerComponent implements AfterContentChecked {
+  @Output() public remove = new EventEmitter<any>();
   /**
    * Event emitter for the 'clear' event
    */
@@ -87,28 +77,11 @@ export class SamFilterDrawerComponent implements AfterContentChecked {
     this.setupPageServiceHandling();
   }
 
-  public removeFilter (filterItem) {
-    const removed = {};
-    removed[filterItem.id] = '';
-
-    if (this._service) {
-      const newValue = {
-        ...this._service.model.properties['filters'].value,
-        ...removed
-      };
-
-      this._service.model.properties['filters']
-        .setValue(newValue);
-    }
-  }
-
   private setupPageServiceHandling(){
     if(this.items){
       this.items.forEach(
         (el: SamFilterDrawerItemComponent) => {
-          el.remove.subscribe(
-            evt => this.removeFilter(evt)
-          );
+          el.remove.subscribe(evt => this.remove.emit(evt));
         }
       );
     }
