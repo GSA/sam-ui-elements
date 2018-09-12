@@ -15,6 +15,7 @@ import { SamToolbarComponent } from '../toolbar.component';
   selector: 'sam-page-next',
   templateUrl: 'page.template.html',
   encapsulation: ViewEncapsulation.None,
+  styleUrls: ['./sam-page-next.scss'],
 })
 export class SamPageNextComponent extends MdSidenavContainer {
   

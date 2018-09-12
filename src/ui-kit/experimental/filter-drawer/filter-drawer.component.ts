@@ -46,10 +46,6 @@ export class SamFilterDrawerComponent implements AfterContentChecked {
    * Event emitter for the 'clear' event
    */
   @Output() public clear = new EventEmitter<any>();
-  /**
-   * Event emitter for the 'save' event
-   */
-  @Output() public save = new EventEmitter<any>();
 
   @ContentChildren(forwardRef(() => SamFilterDrawerItemComponent))
     public items: QueryList<SamFilterDrawerItemComponent>;
