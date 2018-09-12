@@ -26,7 +26,7 @@ export class SamAsideToggleComponent {
 
   @Input() public contentModel: ToolbarItem = {
     label: 'Toggle',
-    icon: 'fa-bars',
+    icon: 'fa-chevron-circle-left',
     disabled: false
   }
 

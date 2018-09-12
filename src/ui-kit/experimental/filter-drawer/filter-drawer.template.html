@@ -3,12 +3,11 @@
     <ng-content></ng-content>
   </ul>
   <span class="options">
-    <a class="remove" (click)="save.emit()">
-      <i class="fa fa-cloud"></i>
-      Save Filters
-    </a>
-    <a class="remove" (click)="clear.emit()">
-      Clear Filters
-    </a>
+    <sam-button-next 
+      action="secondary"
+      size="small"
+      (click)="clear.emit()">
+      Clear All
+    </sam-button-next>
   </span>
 </div>

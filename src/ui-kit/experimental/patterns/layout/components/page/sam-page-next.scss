@@ -1,0 +1,19 @@
+.sam-page-next-header{
+  background-color: #323a45;
+  padding: 0 15px;
+  h1.sam.heading{
+    .intro{
+      font-size: 24px;
+      font-weight: 300;
+    }
+    font-size: 25px;
+    letter-spacing: -.5px;
+    line-height: 26px; 
+  }
+}
+
+sam-main sam-main-content sam-tabs{
+  display: block;
+  background-color: white;
+  box-shadow: 0px 1px 2px 1px rgba(0,0,0,0.15);
+}

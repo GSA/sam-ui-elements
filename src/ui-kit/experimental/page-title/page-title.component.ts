@@ -7,7 +7,7 @@ import {
 @Component({
   selector: 'sam-page-title',
   template: `
-    <h1 class="sam heading" [attr.id]="id" [attr.tabindex]="tabIndex">
+    <h1 class="sam heading" [attr.id]="id" [attr.tabindex]="tabIndex" [class.inverted]="inverted">
       <span class="intro">{{ super }}</span> 
       {{ title }} 
     </h1>
@@ -31,4 +31,8 @@ export class SamPageTitle {
    * Super text of the title
    */
   @Input() public super: string;
+  /**
+   * If true makes text white
+   */
+  @Input() public inverted: boolean;
 }
