@@ -29,7 +29,7 @@ export class SamToolbarComponent {
   @Input() contentModel: ToolbarItem[] = [
     {
       label: 'Save',
-      icon: 'fa-plus-square'
+      icon: 'fa-filter'
     },
     {
       label: 'Download',
