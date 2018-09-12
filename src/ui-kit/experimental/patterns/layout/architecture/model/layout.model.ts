@@ -44,26 +44,3 @@ export const model: modelType = {
     direction: ""
   }
 };
-
-/**
- * id - some program friendly identifier
- * 
- */
-export type filterItemModel = {
-  /**
-   * program-friendly string identifier
-   */
-  id: string,
-  /**
-   * visible filter label
-   */
-  label: string,
-  /**
-   * current filter value
-   */
-  value: any,
-  /**
-   * filter category to help group certain ones together
-   */
-  category?: string
-};
