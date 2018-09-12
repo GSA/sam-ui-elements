@@ -5,8 +5,12 @@ import { RouterModule } from '@angular/router';
 
 import { SamBoxComponent } from './box';
 import { SamContainerComponent } from './container';
-import { SamFilterDrawerItemComponent } from './filter-drawer';
-import { SamFilterDrawerComponent } from './filter-drawer';
+import {
+  SamFilterDrawerItemComponent,
+  SamFilterDrawerComponent,
+  SamFilterDrawerChip
+} from './filter-drawer';
+import {  } from './filter-drawer';
 import { SamIconsModule } from './icon';
 import { SamLabelNextComponent } from './label';
 import { SamLayoutComponent } from './layout';
@@ -48,6 +52,7 @@ import { SamButtonNextModule } from './button-next';
     SamContainerComponent,
     SamFilterDrawerItemComponent,
     SamFilterDrawerComponent,
+    SamFilterDrawerChip,
     SamLabelNextComponent,
     SamLayoutComponent,
     SamLayoutContentComponent,
@@ -70,6 +75,7 @@ import { SamButtonNextModule } from './button-next';
     SamContainerComponent,
     SamFilterDrawerItemComponent,
     SamFilterDrawerComponent,
+    SamFilterDrawerChip,
     SamLabelNextComponent,
     SamLayoutComponent,
     SamLayoutContentComponent,

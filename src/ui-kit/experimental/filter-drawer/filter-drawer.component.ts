@@ -13,17 +13,38 @@ import {
 } from '@angular/core';
 import { SamPageNextService } from '../patterns/layout/architecture';
 
+@Component({
+  selector: 'sam-filter-drawer-chip',
+  template: `
+  <span class="sam label">
+    {{ label }}
+    <button class="sam button tertiary"
+      (click)="click.next($event)">
+      <span class="fa fa-close" aria-hidden="true"></span>
+    </button>
+  </span>
+  `
+})
+export class SamFilterDrawerChip {
+  @Input() public label: string;
+  @Output() public click = new EventEmitter<any>();
+}
 
 @Component({
 
   selector: "[sam-filter-drawer-item]",
   template: `
-    <span>{{this.fieldLabel}}:</span> {{this.fieldValue}} <i class="icon close fa fa-times"></i>
+    {{ fieldLabel }}
+    <sam-filter-drawer-chip
+      *ngFor="let value of values"
+      [label]="value"
+      (click)="handleClick(value)"
+    ></sam-filter-drawer-chip>
   `
  })
 
 export class SamFilterDrawerItemComponent {
-  @HostListener('click') itemClick(){
+  @HostListener('click') public itemClick () {
     this.remove.emit({
       id: this.fieldId,
       label: this.fieldLabel,
@@ -33,7 +54,17 @@ export class SamFilterDrawerItemComponent {
   @Input() public fieldId: string;
   @Input() public fieldLabel: string;
   @Input() public fieldValue: string;
-  @Output() public remove: EventEmitter<any> = new EventEmitter();
+  @Output() public remove = new EventEmitter();
+
+  values = [];
+
+  public ngOnChanges () {
+    this.values = [this.fieldValue];
+  }
+
+  public handleClick (value: any) {
+    console.log('hiya!');
+  }
 }
 
 @Component({
@@ -63,13 +94,15 @@ export class SamFilterDrawerComponent implements AfterContentChecked {
   public removeFilter (filterItem) {
     const removed = {};
     removed[filterItem.id] = '';
-    if(this._service){
+
+    if (this._service) {
       const newValue = {
         ...this._service.model.properties['filters'].value,
         ...removed
       };
 
-      this._service.model.properties['filters'].setValue(newValue);
+      this._service.model.properties['filters']
+        .setValue(newValue);
     }
   }
 
