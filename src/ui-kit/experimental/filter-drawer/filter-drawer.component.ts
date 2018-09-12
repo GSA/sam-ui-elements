@@ -8,9 +8,7 @@ import {
   forwardRef,
   ChangeDetectionStrategy,
   AfterContentChecked,
-  Optional
 } from '@angular/core';
-import { SamPageNextService } from '../patterns/layout/architecture';
 
 @Component({
   selector: 'sam-filter-drawer-chip',
@@ -74,7 +72,7 @@ export class SamFilterDrawerComponent implements AfterContentChecked {
   @ContentChildren(forwardRef(() => SamFilterDrawerItemComponent))
     public items: QueryList<SamFilterDrawerItemComponent>;
   
-  constructor (@Optional() private _service: SamPageNextService) {}
+  constructor () {}
 
   public ngAfterContentChecked () {
     this.setupPageServiceHandling();
