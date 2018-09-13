@@ -5,6 +5,9 @@ import {
   ViewEncapsulation,
   Renderer2,
   NgZone,
+  Input,
+  Output,
+  EventEmitter,
   ContentChild
 } from '@angular/core';
 
@@ -18,7 +21,9 @@ import { SamToolbarComponent } from '../toolbar.component';
   styleUrls: ['./sam-page-next.scss'],
 })
 export class SamPageNextComponent extends MdSidenavContainer {
-  
+  @Input() backButtonText = "";
+  @Output() backButton: any = new EventEmitter();
+
   @HostListener('window:resize')
   resize() { if (this.aside) { this._responsiveAside(); } }
   
@@ -69,4 +74,7 @@ export class SamPageNextComponent extends MdSidenavContainer {
     return window.innerWidth <= 600 ? true : false;
   }
   
+  backBtnClick(){
+    this.backButton.emit();
+  }
 }

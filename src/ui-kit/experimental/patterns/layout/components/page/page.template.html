@@ -1,6 +1,12 @@
 <div class="sam-page-next-header">
+  <div *ngIf="backButtonText" class="backBtn">
+    <button (click)="backBtnClick()"><span class="fa fa-long-arrow-left"></span> {{backButtonText}}</button>
+  </div>
   <ng-content select="sam-page-title">
   </ng-content>
+  <div *ngIf="backButtonText" class="backBtn-right">
+      <button (click)="backBtnClick()"><span class="fa fa-times fa-2x"></span><span class="sr-only">{{backButtonText}}</span></button>
+  </div>
 </div>
 
 
