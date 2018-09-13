@@ -15,7 +15,10 @@ import {
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { MdSidenavContainer, MdSidenav } from '../sidenav/sidenav';
+import {
+  MdSidenavContainer,
+  MdSidenav
+} from '../sidenav/sidenav';
 import { SamToolbarComponent } from '../toolbar.component';
 
 @Component({
@@ -25,41 +28,49 @@ import { SamToolbarComponent } from '../toolbar.component';
   styleUrls: ['./sam-page-next.scss'],
 })
 export class SamPageNextComponent extends MdSidenavContainer {
-  @Input() backButtonText = "";
-  @Output() backButton: any = new EventEmitter();
+  @Input() public backButtonText = 'Back to Report';
+  @Output() public backButtonClick = new EventEmitter();
 
   @HostListener('window:resize')
-  resize() { if (this.aside) { this._responsiveAside(); } }
-  
-  @ContentChild(MdSidenav) public aside: MdSidenav;
-  
-  @ContentChild(SamToolbarComponent)
-  public toolbar: SamToolbarComponent;
-
-  faLongArrowAltLeft = faLongArrowAltLeft;
-  faTimes = faTimes;
-  
-  constructor(_element: ElementRef, _renderer: Renderer2, _ngZone: NgZone) {
-    super(null, _element, _renderer, _ngZone);
-  }
-  
-  ngAfterContentInit () {
-    super.ngAfterContentInit();
-
-    this._setupToolbar();
-  }
-
-  ngAfterViewInit (){
-    this._setupAside();
-  }
-  
-  private _setupAside () {
+  public resize() {
     if (this.aside) {
       this._responsiveAside();
     }
   }
   
-  private _setupToolbar () {
+  @ContentChild(MdSidenav) public aside: MdSidenav;
+  
+  @ContentChild(SamToolbarComponent)
+    public toolbar: SamToolbarComponent;
+
+  public backIcon = faLongArrowAltLeft;
+  public closeIcon = faTimes;
+  
+  constructor(_element: ElementRef, _renderer: Renderer2, _ngZone: NgZone) {
+    super(null, _element, _renderer, _ngZone);
+  }
+  
+  public ngAfterContentInit (): void {
+    super.ngAfterContentInit();
+
+    this._setupToolbar();
+  }
+
+  public ngAfterViewInit (): void {
+    this._setupAside();
+  }
+
+  public backBtnClick (): void {
+    this.backButtonClick.emit();
+  }
+  
+  private _setupAside (): void {
+    if (this.aside) {
+      this._responsiveAside();
+    }
+  }
+  
+  private _setupToolbar (): void {
     if (this.toolbar) {
       if (this.aside) {
         // Attach sidenav to toolbar
@@ -68,20 +79,17 @@ export class SamPageNextComponent extends MdSidenavContainer {
     }
   }
   
-  private _responsiveAside () {
+  private _responsiveAside (): void {
     this.aside.mode = !this._isSmallScreen() ? 'side' : 'over';
-    if(this.aside.opened && this._isSmallScreen()){
+
+    if (this.aside.opened && this._isSmallScreen()) {
       this.aside.opened = false;
-    }else if(!this.aside.opened && !this._isSmallScreen()){
+    } else if (!this.aside.opened && !this._isSmallScreen()) {
       this.aside.opened = true;
     }
   }
   
-  private _isSmallScreen () {
+  private _isSmallScreen (): boolean {
     return window.innerWidth <= 600 ? true : false;
-  }
-  
-  backBtnClick(){
-    this.backButton.emit();
   }
 }

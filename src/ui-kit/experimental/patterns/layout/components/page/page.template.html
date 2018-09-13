@@ -1,11 +1,16 @@
 <div class="sam-page-next-header">
   <div *ngIf="backButtonText" class="backBtn">
-    <button (click)="backBtnClick()"><sam-icon [icon]="faLongArrowAltLeft"></sam-icon> {{backButtonText}}</button>
+    <button (click)="backBtnClick()">
+      <sam-icon [icon]="backIcon"></sam-icon>
+      {{ backButtonText }}
+    </button>
   </div>
-  <ng-content select="sam-page-title">
-  </ng-content>
+  <ng-content select="sam-page-title"></ng-content>
   <div *ngIf="backButtonText" class="backBtn-right">
-      <button (click)="backBtnClick()"><sam-icon [icon]="faTimes" size="2x"></sam-icon><span class="sr-only">{{backButtonText}}</span></button>
+    <button (click)="backBtnClick()"
+      [attr.title]="backButtonText">
+      <sam-icon [icon]="closeIcon" size="2x"></sam-icon>
+    </button>
   </div>
 </div>
 
@@ -16,8 +21,8 @@
 
   <div class="mat-sidenav-backdrop"
     (click)="_onBackdropClicked()"
-    [class.mat-sidenav-shown]="_isShowingBackdrop()"
-  ></div>
+    [class.mat-sidenav-shown]="_isShowingBackdrop()">
+  </div>
 
   <ng-content select="sam-aside"></ng-content>
 
