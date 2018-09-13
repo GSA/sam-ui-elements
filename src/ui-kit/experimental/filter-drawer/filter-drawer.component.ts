@@ -6,8 +6,6 @@ import {
   Input,
   QueryList,
   forwardRef,
-  ChangeDetectionStrategy,
-  AfterContentChecked,
 } from '@angular/core';
 
 @Component({
@@ -15,9 +13,10 @@ import {
   template: `
   <span class="sam label">
     {{ label }}
-    <button class="sam button tertiary"
+    <button *ngIf="!disabled"
+      class="sam button tertiary"
       [title]="'Remove ' + label"
-      (click)="click.next($event)">
+      (click)="remove.next($event)">
       <span class="fa fa-close" aria-hidden="true"></span>
     </button>
   </span>
@@ -25,7 +24,8 @@ import {
 })
 export class SamFilterDrawerChip {
   @Input() public label: string;
-  @Output() public click = new EventEmitter<any>();
+  @Input() public disabled = false;
+  @Output() public remove = new EventEmitter<any>();
 }
 
 @Component({
@@ -36,7 +36,8 @@ export class SamFilterDrawerChip {
       <li *ngFor="let value of values">
         <sam-filter-drawer-chip
           [label]="value"
-          (click)="removeFilter(value)"
+          [disabled]="disabled"
+          (remove)="removeFilter(value)"
         ></sam-filter-drawer-chip>
       </li>
     </ul>
@@ -45,9 +46,10 @@ export class SamFilterDrawerChip {
 export class SamFilterDrawerItemComponent {
   @Input() public label: string;
   @Input() public values: any[];
+  @Input() public disabled = true;
   @Output() public remove = new EventEmitter();
 
-  public removeFilter (value) {
+  public removeFilter (value): void {
     const removed = {};
     removed[this.label] = value;
     this.remove.emit(removed);
@@ -57,13 +59,8 @@ export class SamFilterDrawerItemComponent {
 @Component({
   selector: 'sam-filter-drawer',
   templateUrl: 'filter-drawer.template.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SamFilterDrawerComponent implements AfterContentChecked {
- /**
-  * Emits event when remove item is clicked
-  */
-  @Output() public remove = new EventEmitter<any>();
+export class SamFilterDrawerComponent {
   /**
    * Event emitter for the 'clear' event
    */
@@ -71,21 +68,9 @@ export class SamFilterDrawerComponent implements AfterContentChecked {
 
   @ContentChildren(forwardRef(() => SamFilterDrawerItemComponent))
     public items: QueryList<SamFilterDrawerItemComponent>;
-  
-  constructor () {}
 
-  public ngAfterContentChecked () {
-    this.setupPageServiceHandling();
-  }
-
-  private setupPageServiceHandling(){
-    if(this.items){
-      this.items.forEach(
-        (el: SamFilterDrawerItemComponent) => {
-          el.remove.subscribe(evt => this.remove.emit(evt));
-        }
-      );
-    }
+  public get showClear (): boolean {
+    return this.items.length > 0;
   }
 }
 
