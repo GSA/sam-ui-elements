@@ -28,7 +28,7 @@ import { SamToolbarComponent } from '../toolbar.component';
   styleUrls: ['./sam-page-next.scss'],
 })
 export class SamPageNextComponent extends MdSidenavContainer {
-  @Input() public backButtonText = 'Back to Report';
+  @Input() public backButtonText = '';
   @Output() public backButtonClick = new EventEmitter();
 
   @HostListener('window:resize')
