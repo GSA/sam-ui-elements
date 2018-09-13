@@ -29,7 +29,7 @@ import { SamToolbarComponent } from '../toolbar.component';
 })
 export class SamPageNextComponent extends MdSidenavContainer {
   @Input() public backButtonText = '';
-  @Output() public backButtonClick = new EventEmitter();
+  @Output() public backButtonClick = new EventEmitter<any>();
 
   @HostListener('window:resize')
   public resize() {
