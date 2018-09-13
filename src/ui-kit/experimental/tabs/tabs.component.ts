@@ -12,7 +12,8 @@ import {
     ElementRef,
     OnChanges,
     ViewChild,
-    AfterViewInit
+    AfterViewInit,
+    HostListener
   } from '@angular/core';
   import {
     faChevronRight,
@@ -150,6 +151,12 @@ import {
      * Event emitted on tab selection
      */
     @Output() tabChange = new EventEmitter();
+
+    @HostListener('window:resize')
+    resize() {
+      this.setupScrollable();
+      this.onScroll();
+    }
   
     private _size = 'large';
     private _theme = 'default';
@@ -211,11 +218,17 @@ import {
     }
   
     ngAfterViewInit() {
+      this.setupScrollable();
+    }
+
+    setupScrollable(){
       if (this.tabsContent.nativeElement.scrollWidth > this.tabsContent.nativeElement.clientWidth) {
         this.scrollable = true;
-        this.scrolling = this.scrollable ? 'scrolling' : '';
-        this.cdr.detectChanges();
+      } else {
+        this.scrollable = false;
       }
+      this.scrolling = this.scrollable ? 'scrolling' : '';
+      this.cdr.detectChanges();
     }
   
     selectTab(tab: SamTabNextComponent, index) {
