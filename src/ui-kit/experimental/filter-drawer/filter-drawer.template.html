@@ -2,6 +2,7 @@
   <ng-content></ng-content>
   <span class="options">
     <sam-button-next 
+      *ngIf="showClear"
       action="secondary"
       size="small"
       (click)="clear.emit()">
