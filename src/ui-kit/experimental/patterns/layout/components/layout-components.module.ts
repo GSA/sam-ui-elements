@@ -32,6 +32,7 @@ import { SamComponentsModule } from '../../../../components';
 import { SamActionsListModule } from '../../../actions-list';
 import { SamReportingMainComponent } from './template/reporting-main.component';
 import { SamButtonNextModule } from '../../../button-next';
+import { SamIconsModule } from '../../../icon';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import { SamButtonNextModule } from '../../../button-next';
     MdExpansionModule,
     SamComponentsModule,
     SamActionsListModule,
-    SamButtonNextModule
+    SamButtonNextModule,
+    SamIconsModule
   ],
   declarations: [
     // Components

@@ -10,6 +10,10 @@ import {
   EventEmitter,
   ContentChild
 } from '@angular/core';
+import {
+  faLongArrowAltLeft,
+  faTimes,
+} from '@fortawesome/free-solid-svg-icons';
 
 import { MdSidenavContainer, MdSidenav } from '../sidenav/sidenav';
 import { SamToolbarComponent } from '../toolbar.component';
@@ -31,6 +35,9 @@ export class SamPageNextComponent extends MdSidenavContainer {
   
   @ContentChild(SamToolbarComponent)
   public toolbar: SamToolbarComponent;
+
+  faLongArrowAltLeft = faLongArrowAltLeft;
+  faTimes = faTimes;
   
   constructor(_element: ElementRef, _renderer: Renderer2, _ngZone: NgZone) {
     super(null, _element, _renderer, _ngZone);
