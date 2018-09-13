@@ -5,8 +5,15 @@ import {
   ViewEncapsulation,
   Renderer2,
   NgZone,
+  Input,
+  Output,
+  EventEmitter,
   ContentChild
 } from '@angular/core';
+import {
+  faLongArrowAltLeft,
+  faTimes,
+} from '@fortawesome/free-solid-svg-icons';
 
 import { MdSidenavContainer, MdSidenav } from '../sidenav/sidenav';
 import { SamToolbarComponent } from '../toolbar.component';
@@ -18,7 +25,9 @@ import { SamToolbarComponent } from '../toolbar.component';
   styleUrls: ['./sam-page-next.scss'],
 })
 export class SamPageNextComponent extends MdSidenavContainer {
-  
+  @Input() backButtonText = "";
+  @Output() backButton: any = new EventEmitter();
+
   @HostListener('window:resize')
   resize() { if (this.aside) { this._responsiveAside(); } }
   
@@ -26,6 +35,9 @@ export class SamPageNextComponent extends MdSidenavContainer {
   
   @ContentChild(SamToolbarComponent)
   public toolbar: SamToolbarComponent;
+
+  faLongArrowAltLeft = faLongArrowAltLeft;
+  faTimes = faTimes;
   
   constructor(_element: ElementRef, _renderer: Renderer2, _ngZone: NgZone) {
     super(null, _element, _renderer, _ngZone);
@@ -69,4 +81,7 @@ export class SamPageNextComponent extends MdSidenavContainer {
     return window.innerWidth <= 600 ? true : false;
   }
   
+  backBtnClick(){
+    this.backButton.emit();
+  }
 }

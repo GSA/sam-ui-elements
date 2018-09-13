@@ -1,6 +1,26 @@
 .sam-page-next-header{
   background-color: #323a45;
   padding: 0 15px;
+  display:flex;
+
+  .backBtn{
+    color: #fff;
+    flex-basis: 276px;
+    line-height: 105px;
+    button{
+      background: transparent;
+    }
+  }
+  
+  .backBtn-right{
+    button{
+      background: transparent;
+    }
+  }
+  sam-page-title{
+    flex-grow: 1
+  }
+
   h1.sam.heading{
     .intro{
       font-size: 24px;
