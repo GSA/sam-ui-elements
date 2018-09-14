@@ -1,0 +1,80 @@
+.sam.pagination ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+.sam.pagination li {
+	display: inline;
+}
+
+.sam.pagination a {
+	padding: 5px 8px 5px 10px;
+	text-decoration: none;
+}
+
+.sam.pagination a.active {
+	border-radius: 2px;
+}
+
+.sam.pagination .fa-angle-left{
+	margin-right: 5px;
+}
+
+.sam.pagination .fa-angle-right{
+	margin-left: 5px;
+}
+
+.sam.pagination.databank {
+
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	
+
+	label {
+		font-weight: 400;
+	}
+
+	select {
+		display: inline;
+		max-width: 6rem;
+		padding: 0 1.5em 0  0.4em;
+		border-width: 0 0 2px 0;
+		color: black;
+	}
+
+	button {
+		background-color: transparent;
+		color: inherit;
+		width: 50px;
+		padding: 0.8em 1em;
+		border-radius: 50%;
+		box-shadow: none;
+		transition: background-color 0.2s;
+	}
+
+	button:active:not(:disabled) {
+		background-color: lightgrey;
+	}
+
+	> * {
+		white-space: nowrap;
+	}
+
+	.arrows {
+		white-space: nowrap;
+	}
+
+	
+}
+
+@media screen and (min-width: 600px) {
+  .sam.pagination.databank { 
+		flex-direction: row;
+		align-items: center;
+		padding-left: 15px;
+		.selector{
+			margin-right: 15px;
+		}
+	}
+}

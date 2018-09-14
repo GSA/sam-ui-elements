@@ -1,0 +1,37 @@
+// Import all the theming functionality.
+@import '../core';
+@import '../../breadcrumbs/theme';
+@import '../../menu/theme';
+@import '../../table/theme';
+@import '../../pagination/theme';
+@import '../../sidenav/theme';
+@import '../../expansion/theme';
+
+@import '../../box/box';
+@import '../../button/button';
+
+@import '../../container/container';
+@import '../../icon/icon';
+@import '../../image/image';
+@import '../../input/input';
+@import '../../label/label';
+@import '../../layout/layout';
+@import '../../list/list';
+@import '../../master/master';
+@import '../../page/page';
+@import '../../search/search';
+@import '../../title/title';
+@import '../../video/video';
+
+// Create a theme.
+@mixin sam-gov-theme($theme) {
+  @include sam-core-theme($theme);
+  @include sam-box-theme($theme);
+  @include sam-breadcrumbs-theme($theme);
+  @include sam-button-theme($theme);
+  @include sam-menu-theme($theme);
+  @include sam-table-theme($theme);
+  @include sam-pagination-theme($theme);
+  @include sam-sidenav-theme($theme);
+  @include sam-expansion-panel-theme($theme);
+}
