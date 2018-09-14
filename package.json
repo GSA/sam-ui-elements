@@ -1,6 +1,6 @@
 {
   "name": "@gsa-sam/sam-ui-elements",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "SAM UI library",
   "keywords": [
     "angular2",
@@ -9,6 +9,7 @@
   ],
   "files": [
     "src/",
+    "sam-styles",
     "index.ts",
     "LICENSE",
     "README.md"
