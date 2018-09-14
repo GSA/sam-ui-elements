@@ -1,0 +1,29 @@
+.sam.menu{
+	padding:0px 15px;
+}
+
+.sam.menu .section.right{
+	display: flex;
+	flex-direction: column;
+	margin-top: 5px;
+}
+
+.sam.menu .section.right a{
+	margin-top: 5px;
+}
+
+
+@media screen and (min-width: 600px) {
+	.sam.menu{
+		display: flex;
+		justify-content: space-between;
+	}
+	.sam.menu .section.right{
+		flex-direction: row;
+		margin-top: 0px;
+	}
+	.sam.menu .section.right a{
+		margin-top: 0px;
+		margin-left:15px;
+	}
+}
