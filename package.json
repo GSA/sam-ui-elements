@@ -9,7 +9,7 @@
   ],
   "files": [
     "src/",
-    "sam-styles",
+    "sam-styles/",
     "index.ts",
     "LICENSE",
     "README.md"
