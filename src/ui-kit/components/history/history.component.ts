@@ -5,10 +5,10 @@ import { HistoryNodeType } from '../../types';
   templateUrl: 'history.template.html'
 })
 export class SamHistoryComponent {
-    /**
-     * sets the id for history items
-     */
-    @Input() id: string;
+  /**
+   * sets the id for history items
+   */
+  @Input() id: string;
   /**
    * sets the model for generating nodes
    */
