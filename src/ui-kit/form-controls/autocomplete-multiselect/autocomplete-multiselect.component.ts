@@ -125,6 +125,11 @@ export class SamAutocompleteMultiselectComponent
    * See labelWrapper for more detail.
    */
   @Input() public hint: string;
+
+  /**
+   * set to false if more/less is not required
+   */
+  @Input() public hideShowMore :  boolean = true;
   /**
    * Used by labelWrapper. Provides a name for input and label.
    * See labelWrapper for more detail.

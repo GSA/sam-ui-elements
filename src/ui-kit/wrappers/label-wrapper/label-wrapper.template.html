@@ -14,16 +14,19 @@
     class="usa-form-hint"
     [attr.id]="hintElId"
     [innerHTML]="hint"
-    [style.overflow]="showToggle && !toggleOpen ? 'hidden' : '' "
-    [style.height]="showToggle && !toggleOpen ? '2.88em' : '' ">
+    [style.overflow]="showToggle && hideShowMore && !toggleOpen ? 'hidden' : '' "
+    [style.height]="showToggle && hideShowMore && !toggleOpen ? '2.88em' : '' ">
   </div>
   
-  <div *ngIf="showToggle"
+  <div *ngIf="showToggle && hideShowMore"
     class="toggle-more">
     <a href="javascript:void(0)"
       (click)="toggleHint(toggleOpen)">
       {{ toggleOpen ? "less": "more" }}
     </a>
+  </div>
+  <div *ngIf="!hideShowMore"
+    class="toggle-more">
   </div>
   
   <span *ngIf="!!errorMessage"
