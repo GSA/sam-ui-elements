@@ -4,7 +4,8 @@ import { Component, Input } from '@angular/core';
   selector: 'form-only',
   template: `
     <div class="occupy-page"
-      [style.background-color]="theme == 'inside' ? '#F9F9F9' : ''">
+      [style.background-color]="theme == 'inside' ? '#F9F9F9' : '' " 
+      [style.border-top]=" theme == 'inside' ? '1px solid #F9F9F9' : '' ">
       <div grid class="container">
         <div row>
           <div columns="2"></div>
