@@ -39,7 +39,7 @@ export class LabelWrapper implements AfterViewChecked {
   /**
    * set to false if more/less is not required
    */
-  @Input() public hideHint :  boolean = true;
+  @Input() public hideHint :  boolean = false;
 
   /**
    * set the error message

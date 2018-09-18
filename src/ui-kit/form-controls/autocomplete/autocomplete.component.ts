@@ -74,7 +74,7 @@ export class SamAutocompleteComponent
   /**
    * set to false if more/less is not required
    */
-  @Input() public hideHint :  boolean = true;
+  @Input() public hideHint :  boolean = false;
   /**
   * Define autocomplete options
   */
