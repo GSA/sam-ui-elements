@@ -72,6 +72,10 @@ export class SamAutocompleteComponent
   */
   @Input() public hint: string;
   /**
+   * set to false if more/less is not required
+   */
+  @Input() public hideHint :  boolean = true;
+  /**
   * Define autocomplete options
   */
   @Input() public options: Array<any>;

@@ -35,6 +35,12 @@ export class LabelWrapper implements AfterViewChecked {
    * toggles the required text
    */
   @Input() public requiredFlag: boolean = false;
+
+  /**
+   * set to false if more/less is not required
+   */
+  @Input() public hideHint :  boolean = true;
+
   /**
    * set the error message
    */
