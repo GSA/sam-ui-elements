@@ -18,4 +18,5 @@ export * from './point-of-contact';
 export * from './sidenav';
 export * from './spinner';
 export * from './tabs';
+export * from './page-title';
 export * from './components.module';
