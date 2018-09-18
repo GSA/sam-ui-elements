@@ -14,11 +14,11 @@
     class="usa-form-hint"
     [attr.id]="hintElId"
     [innerHTML]="hint"
-    [style.overflow]="showToggle && hideHint && !toggleOpen ? 'hidden' : '' "
-    [style.height]="showToggle && hideHint && !toggleOpen ? '2.88em' : '' ">
+    [style.overflow]="showToggle && !hideHint && !toggleOpen ? 'hidden' : '' "
+    [style.height]="showToggle && !hideHint && !toggleOpen ? '2.88em' : '' ">
   </div>
   
-  <div *ngIf="showToggle && hideHint"
+  <div *ngIf="showToggle && !hideHint"
     class="toggle-more">
     <a href="javascript:void(0)"
       (click)="toggleHint(toggleOpen)">
