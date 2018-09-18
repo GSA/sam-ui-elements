@@ -8,10 +8,11 @@ import { SamDirectivesModule } from './directives';
 import { SamElementsModule } from './elements';
 import { SamFormControlsModule } from './form-controls';
 import { SamFormTemplatesModule } from './form-templates';
-import { SamLayoutModule } from './layout';
+import { SamLayoutModule } from './layout-deprecated';
 import { SamExperimentalModule } from './experimental';
 import { SamPipesModule } from './pipes';
 import { SamFormService } from './form-service';
+import { SamLayoutNextModule } from './layout';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { SamFormService } from './form-service';
     SamFormTemplatesModule,
     SamLayoutModule,
     SamExperimentalModule,
-    SamPipesModule
+    SamPipesModule,
+    SamLayoutNextModule
   ],
   exports: [
     SamComponentsModule,
@@ -34,7 +36,8 @@ import { SamFormService } from './form-service';
     SamFormTemplatesModule,
     SamLayoutModule,
     SamExperimentalModule,
-    SamPipesModule
+    SamPipesModule,
+    SamLayoutNextModule
   ],
   providers: [SamFormService]
 })

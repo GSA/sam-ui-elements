@@ -16,9 +16,6 @@ import {
   SamFeedbackWrapperComponent
 } from './feedback-wrapper.component';
 import {
-  SamFiltersWrapperComponent
-} from './filters-wrapper.component';
-import {
   SamResourcesWrapperComponent
 } from './resources-wrapper.component';
 import {
@@ -33,6 +30,7 @@ import { SamActionsListModule } from '../../../actions-list';
 import { SamReportingMainComponent } from './template/reporting-main.component';
 import { SamButtonNextModule } from '../../../button-next';
 import { SamIconsModule } from '../../../icon';
+import { SamFiltersWrapperModule } from '../../../../layout/filters-wrapper/filters-wrapper.module';
 
 @NgModule({
   imports: [
@@ -44,7 +42,8 @@ import { SamIconsModule } from '../../../icon';
     SamComponentsModule,
     SamActionsListModule,
     SamButtonNextModule,
-    SamIconsModule
+    SamIconsModule,
+    SamFiltersWrapperModule
   ],
   declarations: [
     // Components
@@ -55,7 +54,6 @@ import { SamIconsModule } from '../../../icon';
     SamPaginationNextComponent,
     SamToolbarComponent,
     SamFeedbackWrapperComponent,
-    SamFiltersWrapperComponent,
     SamResourcesWrapperComponent,
     SamPageNextComponent,
     SamAsideToggleComponent,
@@ -79,7 +77,6 @@ import { SamIconsModule } from '../../../icon';
     SamPaginationNextComponent,
     SamToolbarComponent,
     SamFeedbackWrapperComponent,
-    SamFiltersWrapperComponent,
     SamResourcesWrapperComponent,
     SamPageNextComponent,
     SamAsideToggleComponent,
