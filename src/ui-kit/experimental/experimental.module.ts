@@ -27,7 +27,6 @@ import { SamYoutubeComponent } from './youtube';
 import { SamPickerComponent, SamPopoverComponent } from './picker';
 import { SamVideoPlayerModule } from './video-player';
 import { SamInputMaskModule } from './input-mask';
-import { SamPageTitle } from './page-title';
 import { SamLayoutComponentsModule } from './patterns';
 import { SamDollarComponent } from './dollar';
 import { SamWrapperModule } from '../wrappers';
@@ -69,7 +68,6 @@ import { SamTabsNextModule } from './tabs';
     SamYoutubeComponent,
     SamPopoverComponent,
     SamPickerComponent,
-    SamPageTitle,
     SamDollarComponent,
   ],
   exports: [
@@ -95,7 +93,6 @@ import { SamTabsNextModule } from './tabs';
     SamVideoPlayerModule,
     SamInputMaskModule,
     SamLayoutComponentsModule,
-    SamPageTitle,
     SamDollarComponent,
     SamActionsListModule,
     SamIconsModule,

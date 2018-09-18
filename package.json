@@ -1,6 +1,6 @@
 {
   "name": "@gsa-sam/sam-ui-elements",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "SAM UI library",
   "keywords": [
     "angular2",
@@ -85,7 +85,7 @@
     "ie-shim": "0.1.0",
     "rxjs": "5.0.1",
     "zone.js": "0.8.14",
-    "moment": "~2.15.2"
+    "moment": "2.19.3"
   },
   "devDependencies": {
     "@angularclass/hmr": "1.0.1",

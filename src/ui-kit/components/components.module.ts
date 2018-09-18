@@ -31,6 +31,7 @@ import { SamImageModule } from './image';
 import { SamActionButtonModule } from './actions/action-button';
 import { SamActionDropdownModule } from './actions/actions-dropdown';
 import { SamDataTableModule } from './data-table';
+import { SamPageTitleModule } from './page-title';
 
 @NgModule({
   imports: [
@@ -64,6 +65,7 @@ import { SamDataTableModule } from './data-table';
     SamPointOfContactModule,
     SamSpinnerModule,
     SamTabsModule,
+    SamPageTitleModule,
   ],
   declarations: [
     
@@ -91,6 +93,7 @@ import { SamDataTableModule } from './data-table';
     SamCommentsModule,
     SamImageModule,
     SamDataTableModule,
+    SamPageTitleModule,
   ]
 })
 export class SamComponentsModule {}
