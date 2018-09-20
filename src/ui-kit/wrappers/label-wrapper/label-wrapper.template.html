@@ -11,24 +11,23 @@
       <ng-content select="[label-right]"></ng-content>
   </label>
   
-  <div #hintContainer
-    *ngIf="hint" 
-    class="usa-form-hint"
-    [attr.id]="hintElId"
-    [innerHTML]="hint"
-    [style.overflow]="setOverflow()"
-    [style.height]="setHeight()">
-  </div>
-  
-  <div *ngIf="showToggle && !showFullHint"
-    class="toggle-more">
-    <a href="javascript:void(0)"
-      (click)="toggleHint(toggleOpen)">
-      {{ toggleOpen ? "less": "more" }}
-    </a>
+  <div class="toggle-more">
+    <div #hintContainer
+      *ngIf="hint" 
+      class="usa-form-hint"
+      [attr.id]="hintElId"
+      [innerHTML]="hint"
+      [style.overflow]="setOverflow()"
+      [style.height]="setHeight()">
+    </div>
+    <div *ngIf="showToggle && !showFullHint">
+      <a href="javascript:void(0)"
+        (click)="toggleHint(toggleOpen)">
+        {{ toggleOpen ? "less": "more" }}
+      </a>
+    </div>
   </div>
 
-  <div *ngIf="!showFullHint" class="toggle-more"></div>
   
   <span *ngIf="!!errorMessage"
     class="usa-input-error-message"
