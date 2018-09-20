@@ -1,11 +1,13 @@
-<div #labelDiv 
-  [class.usa-input-error]="!!errorMessage">
+<div #labelDiv [class.usa-input-error]="!!errorMessage">
   
   <label *ngIf="!!label" 
     [attr.for]="name" 
     [class.usa-input-error-label]="errorMessage">
       {{ label || '' }}
-      <span *ngIf="required || requiredFlag" class="usa-additional_text">Required</span>
+      <span *ngIf="required || requiredFlag"
+        class="usa-additional_text">
+        Required
+      </span>
       <ng-content select="[label-right]"></ng-content>
   </label>
   
@@ -14,8 +16,8 @@
     class="usa-form-hint"
     [attr.id]="hintElId"
     [innerHTML]="hint"
-    [style.overflow]="showToggle && !hideHint && !toggleOpen ? 'hidden' : '' "
-    [style.height]="showToggle && !hideHint && !toggleOpen ? '2.88em' : '' ">
+    [style.overflow]="setOverflow()"
+    [style.height]="setHeight()">
   </div>
   
   <div *ngIf="showToggle && !hideHint"
@@ -25,9 +27,8 @@
       {{ toggleOpen ? "less": "more" }}
     </a>
   </div>
-  <div *ngIf="!hideHint"
-    class="toggle-more">
-  </div>
+
+  <div *ngIf="hideHint" class="toggle-more"></div>
   
   <span *ngIf="!!errorMessage"
     class="usa-input-error-message"

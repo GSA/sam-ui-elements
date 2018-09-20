@@ -209,6 +209,22 @@ export class LabelWrapper implements AfterViewChecked {
     this.errorMessage = '';
   }
 
+  public setOverflow (): string {
+    return this.showToggle
+      && !this.hideHint
+      && !this.toggleOpen
+        ? 'hidden'
+        : '';
+  }
+
+  public setHeight (): string {
+    return this.showToggle
+      && !this.hideHint
+      && !this.toggleOpen
+        ? '2.88em'
+        : '';
+  }
+
   private setInvalidErrors(error, errorObject) {
     switch (error) {
       case 'maxlength':
