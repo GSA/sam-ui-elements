@@ -39,7 +39,7 @@ export class LabelWrapper implements AfterViewChecked {
   /**
    * set to false if more/less is not required
    */
-  @Input() public hideHint :  boolean = false;
+  @Input() public showFullHint :  boolean = false;
 
   /**
    * set the error message
@@ -211,7 +211,7 @@ export class LabelWrapper implements AfterViewChecked {
 
   public setOverflow (): string {
     return this.showToggle
-      && !this.hideHint
+      && !this.showFullHint
       && !this.toggleOpen
         ? 'hidden'
         : '';
@@ -219,7 +219,7 @@ export class LabelWrapper implements AfterViewChecked {
 
   public setHeight (): string {
     return this.showToggle
-      && !this.hideHint
+      && !this.showFullHint
       && !this.toggleOpen
         ? '2.88em'
         : '';

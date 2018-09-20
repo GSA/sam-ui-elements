@@ -20,7 +20,7 @@
     [style.height]="setHeight()">
   </div>
   
-  <div *ngIf="showToggle && !hideHint"
+  <div *ngIf="showToggle && !showFullHint"
     class="toggle-more">
     <a href="javascript:void(0)"
       (click)="toggleHint(toggleOpen)">
@@ -28,7 +28,7 @@
     </a>
   </div>
 
-  <div *ngIf="!hideHint" class="toggle-more"></div>
+  <div *ngIf="!showFullHint" class="toggle-more"></div>
   
   <span *ngIf="!!errorMessage"
     class="usa-input-error-message"
