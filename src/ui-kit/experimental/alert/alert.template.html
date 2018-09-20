@@ -1,0 +1,20 @@
+<div [ngClass]="[selectedType]" #alert>
+    <span class="sam-alert-close" *ngIf="showClose">
+        <span class="fa fa-times-circle" (click)="closeAlert()" tabindex="0" (keyup.enter)="closeAlert()"></span>
+    </span>
+    <div class="sam-alert-body">
+        <sam-icon [icon]="selectedIcon"></sam-icon>
+        <span class="sr-only">{{this.types[this.type]?.sr}}</span>
+        <ng-content></ng-content>
+        <!-- <h3 *ngIf="title" class="sam-alert-heading" [innerText]="title"></h3>
+        
+        <ng-content select="[leading-content]"></ng-content>
+        <div *ngIf="showMoreToggle">
+            <ng-content select="[main-content]"></ng-content>
+        </div>
+        <div *ngIf="showMoreToggle!==undefined" class="show-hide-toggle">
+            <a (click)="toggleContent()" tabindex="0" (keyup.enter)="toggleContent()">{{showMoreLinkText}}</a>
+        </div> -->
+    </div>
+</div>
+      
