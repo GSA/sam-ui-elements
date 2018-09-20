@@ -129,7 +129,7 @@ export class SamAutocompleteMultiselectComponent
   /**
    * set to false if more/less is not required
    */
-  @Input() public hideHint :  boolean = false;
+  @Input() public showFullHint :  boolean = false;
   /**
    * Used by labelWrapper. Provides a name for input and label.
    * See labelWrapper for more detail.
