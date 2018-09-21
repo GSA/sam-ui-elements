@@ -1,7 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { SamFiltersWrapperModule, SamFiltersWrapperComponent } from './';
-import { FormsModule, FormControl } from '@angular/forms';
-import { By } from '@angular/platform-browser';
+import { forwardRef } from '@angular/core';
+import { SamPageNextService } from '../../experimental/patterns/layout/architecture/service/page.service';
+import { DataStore } from '../../experimental/patterns/layout/architecture/store/datastore';
+import { layoutStore } from '../../experimental/patterns/layout/architecture/update/layout-store';
 
 describe('The Sam Filter Wrapper component', () => {  
   describe('rendered tests', () => {
@@ -14,8 +16,14 @@ describe('The Sam Filter Wrapper component', () => {
           SamFiltersWrapperModule
         ],
         declarations: [
+
         ],
         providers: [
+          {
+            provide: DataStore,
+            useValue: layoutStore
+          },
+          forwardRef(() => SamPageNextService)
         ]
       });
   
