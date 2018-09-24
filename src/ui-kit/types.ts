@@ -1,5 +1,5 @@
 export { BadgeConfig } from './components/badge';
-export { PageConfig } from './layout/types';
+export { PageConfig } from './layout-deprecated/types';
 
 export interface OptionsType {
   /**
