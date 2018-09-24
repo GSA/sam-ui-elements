@@ -328,7 +328,6 @@ export class MdSidenav implements AfterContentInit, OnDestroy {
   // Do not use ChangeDetectionStrategy.OnPush. It does not work for this component because
   // technically it is a sibling of MdSidenav (on the content tree) and isn't updated when MdSidenav
   // changes its state.
-  //templateUrl: 'sidenav-container.html',
   template: ``, // Page component extends this component
   // styleUrls: [
   //   'sidenav.css',
