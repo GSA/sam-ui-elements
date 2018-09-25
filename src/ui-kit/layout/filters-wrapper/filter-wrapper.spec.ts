@@ -4,6 +4,7 @@ import { forwardRef } from '@angular/core';
 import { SamPageNextService } from '../../experimental/patterns/layout/architecture/service/page.service';
 import { DataStore } from '../../experimental/patterns/layout/architecture/store/datastore';
 import { layoutStore } from '../../experimental/patterns/layout/architecture/update/layout-store';
+import { SamButtonNextModule } from '../../experimental/button-next/button.module';
 
 describe('The Sam Filter Wrapper component', () => {  
   describe('rendered tests', () => {
@@ -13,6 +14,7 @@ describe('The Sam Filter Wrapper component', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [
+          SamButtonNextModule,
           SamFiltersWrapperModule
         ],
         declarations: [

@@ -33,6 +33,7 @@ import { SamWrapperModule } from '../wrappers';
 import { SamActionsListModule } from './actions-list';
 import { SamButtonNextModule } from './button-next';
 import { SamTabsNextModule } from './tabs';
+import { SamAlertNextModule } from './alert';
 
 @NgModule({
   imports: [
@@ -46,7 +47,8 @@ import { SamTabsNextModule } from './tabs';
     SamIconsModule,
     SamButtonNextModule,
     SamVideoPlayerModule,
-    SamTabsNextModule
+    SamTabsNextModule,
+    SamAlertNextModule
   ],
   declarations: [
     SamBoxComponent,
@@ -97,7 +99,8 @@ import { SamTabsNextModule } from './tabs';
     SamActionsListModule,
     SamIconsModule,
     SamButtonNextModule,
-    SamTabsNextModule
+    SamTabsNextModule,
+    SamAlertNextModule
   ]
 })
 export class SamExperimentalModule {}
