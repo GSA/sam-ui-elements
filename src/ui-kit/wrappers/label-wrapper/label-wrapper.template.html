@@ -11,9 +11,8 @@
       <ng-content select="[label-right]"></ng-content>
   </label>
   
-  <div class="toggle-more">
+  <div *ngIf="hint" class="toggle-more">
     <div #hintContainer
-      *ngIf="hint" 
       class="usa-form-hint"
       [attr.id]="hintElId"
       [innerHTML]="hint"
