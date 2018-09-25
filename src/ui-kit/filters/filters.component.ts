@@ -1,11 +1,14 @@
 import {
   Component,
   Input,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  Optional,
+  SimpleChanges
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { FormlyFieldConfig } from '@ngx-formly/core';
+import { SamPageNextService } from '../experimental/patterns/layout/architecture';
 
 @Component({
   selector: 'sam-filters',
@@ -26,4 +29,12 @@ export class SamFiltersComponent {
   @Input() public form: FormGroup;
   @Input() public fields: FormlyFieldConfig[];
   @Input() public model: any;
+
+  constructor (@Optional() private _service: SamPageNextService) {}
+
+  public ngOnChanges (c: SimpleChanges) {
+    if (this._service && c.fields) {
+      this._service.get('filterFields').setValue(this.fields);
+    }
+  }
 }

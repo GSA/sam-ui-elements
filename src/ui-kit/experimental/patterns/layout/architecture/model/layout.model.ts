@@ -3,6 +3,7 @@ export type modelType = {
    * Active filters, each property should be of type 'filterItemModel'
    */
   filters?: {},
+  filterFields?: any[],
   pagination?: paginationModel,
   /**
    * 
@@ -32,6 +33,7 @@ export type paginationModel = {
 
 export const model: modelType = {
   filters: {},
+  filterFields: [],
   pagination: {
     currentPage: undefined,
     pageSize: 10,

@@ -3,58 +3,20 @@ import {
   Output,
   EventEmitter,
   ContentChildren,
-  Input,
   QueryList,
   forwardRef,
+  ViewChild,
 } from '@angular/core';
 
-@Component({
-  selector: 'sam-filter-drawer-chip',
-  template: `
-  <span class="sam label">
-    {{ label }}
-    <button *ngIf="!disabled"
-      class="sam button tertiary"
-      [title]="'Remove ' + label"
-      (click)="remove.next($event)">
-      <span class="fa fa-close" aria-hidden="true"></span>
-    </button>
-  </span>
-  `
-})
-export class SamFilterDrawerChip {
-  @Input() public label: string;
-  @Input() public disabled = false;
-  @Output() public remove = new EventEmitter<any>();
-}
+import {
+  SamPageNextService
+} from '../patterns/layout/architecture';
 
-@Component({
-  selector: 'sam-filter-drawer-item',
-  template: `
-    {{ label }}
-    <ul>
-      <li *ngFor="let value of values">
-        <sam-filter-drawer-chip
-          [label]="value"
-          [disabled]="disabled"
-          (remove)="removeFilter(value)"
-        ></sam-filter-drawer-chip>
-      </li>
-    </ul>
-  `
- })
-export class SamFilterDrawerItemComponent {
-  @Input() public label: string;
-  @Input() public values: any[];
-  @Input() public disabled = true;
-  @Output() public remove = new EventEmitter();
+import { ChipHostDirective } from './chip-host';
+import {
+  SamFilterDrawerItemComponent
+} from './filter-drawer-item';
 
-  public removeFilter (value): void {
-    const removed = {};
-    removed[this.label] = value;
-    this.remove.emit(removed);
-  }
-}
 
 @Component({
   selector: 'sam-filter-drawer',
@@ -66,12 +28,25 @@ export class SamFilterDrawerComponent {
    */
   @Output() public clear = new EventEmitter<any>();
 
+  @ViewChild(forwardRef(() => ChipHostDirective))
+    public chips: ChipHostDirective;
+
   @ContentChildren(forwardRef(() => SamFilterDrawerItemComponent))
     public items: QueryList<SamFilterDrawerItemComponent>;
-
+  
   public get showClear (): boolean {
-    return this.items.length > 0;
+    if (!this.usingDirective) {
+      return this.items.length > 0;
+    } else {
+      return this._showClear;
+    }
   }
-}
 
- 
+  public set showClear (value: boolean) {
+    this._showClear = value;
+  }
+
+  public usingDirective = false;
+  private _showClear = false;
+
+}
