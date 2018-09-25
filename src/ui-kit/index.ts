@@ -4,7 +4,7 @@ export * from './elements';
 export * from './experimental';
 export * from './form-controls';
 export * from './form-templates';
-export * from './layout';
+export * from './layout-deprecated';
 export * from './pipes';
 export * from './utilities';
 export * from './wrappers';

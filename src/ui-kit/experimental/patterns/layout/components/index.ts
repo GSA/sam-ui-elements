@@ -4,7 +4,6 @@ export * from './main.component';
 export * from './pagination';
 export * from './toolbar.component';
 export * from './layout-components.module';
-export * from './filters-wrapper.component';
 export * from './feedback-wrapper.component';
 export * from './resources-wrapper.component';
 export * from './title-section.component';

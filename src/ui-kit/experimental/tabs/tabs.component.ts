@@ -222,6 +222,9 @@ import {
     }
 
     setupScrollable(){
+      if(!this.tabsContent){
+        return;
+      }
       if (this.tabsContent.nativeElement.scrollWidth > this.tabsContent.nativeElement.clientWidth) {
         this.scrollable = true;
       } else {

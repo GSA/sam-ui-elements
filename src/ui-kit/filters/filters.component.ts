@@ -2,7 +2,8 @@ import {
   Component,
   Input,
   ChangeDetectionStrategy,
-  Optional
+  Optional,
+  SimpleChanges
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
@@ -31,8 +32,8 @@ export class SamFiltersComponent {
 
   constructor (@Optional() private _service: SamPageNextService) {}
 
-  public ngOnChanges () {
-    if (this._service) {
+  public ngOnChanges (c: SimpleChanges) {
+    if (this._service && c.fields) {
       this._service.get('filterFields').setValue(this.fields);
     }
   }

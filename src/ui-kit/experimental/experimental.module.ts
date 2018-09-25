@@ -8,7 +8,6 @@ import { SamContainerComponent } from './container';
 import {
   SamFilterDrawerModule
 } from './filter-drawer';
-import {  } from './filter-drawer';
 import { SamIconsModule } from './icon';
 import { SamLabelNextComponent } from './label';
 import { SamLayoutComponent } from './layout';
@@ -31,6 +30,7 @@ import { SamWrapperModule } from '../wrappers';
 import { SamActionsListModule } from './actions-list';
 import { SamButtonNextModule } from './button-next';
 import { SamTabsNextModule } from './tabs';
+import { SamAlertNextModule } from './alert';
 
 @NgModule({
   imports: [
@@ -45,7 +45,8 @@ import { SamTabsNextModule } from './tabs';
     SamButtonNextModule,
     SamVideoPlayerModule,
     SamTabsNextModule,
-    SamFilterDrawerModule
+    SamFilterDrawerModule,
+    SamAlertNextModule
   ],
   declarations: [
     SamBoxComponent,
@@ -91,7 +92,8 @@ import { SamTabsNextModule } from './tabs';
     SamIconsModule,
     SamButtonNextModule,
     SamTabsNextModule,
-    SamFilterDrawerModule
+    SamFilterDrawerModule,
+    SamAlertNextModule
   ]
 })
 export class SamExperimentalModule {}
