@@ -43,6 +43,11 @@ export function layoutReducer (state: any, action: DataStoreEvent): modelType {
         ...state,
         data: action.payload
       };
+    case 'filterFields':
+      return {
+        ...state,
+        filterFields: action.payload
+      };
     default:
       return state;
   }
