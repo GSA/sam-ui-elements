@@ -34,6 +34,19 @@ export class SamFilterDrawerComponent {
   @ContentChildren(forwardRef(() => SamFilterDrawerItemComponent))
     public items: QueryList<SamFilterDrawerItemComponent>;
   
-  public showClear: boolean = true;
+  public get showClear (): boolean {
+    if (!this.usingDirective) {
+      return this.items.length > 0;
+    } else {
+      return this._showClear;
+    }
+  }
+
+  public set showClear (value: boolean) {
+    this._showClear = value;
+  }
+
+  public usingDirective = false;
+  private _showClear = false;
 
 }

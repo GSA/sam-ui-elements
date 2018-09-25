@@ -33,6 +33,7 @@ export class DynamicChipsDirective implements OnInit {
     private componentFactoryResolver: ComponentFactoryResolver) {}
 
   public ngOnInit () {
+    this.host.usingDirective = true;
     this._loadComponents();
   }
 
