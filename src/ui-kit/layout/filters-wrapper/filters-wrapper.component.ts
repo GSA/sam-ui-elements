@@ -54,9 +54,9 @@ import {
     }
   
     public ngOnDestroy () {
-      this._runReportSubscription.unsubscribe();
-      this._filtersSubscription.unsubscribe();
-      this._resetReportSubscription.unsubscribe();
+      // this._runReportSubscription.unsubscribe();
+      // this._filtersSubscription.unsubscribe();
+      // this._resetReportSubscription.unsubscribe();
     }
   
     private _initializeHandlers () {
