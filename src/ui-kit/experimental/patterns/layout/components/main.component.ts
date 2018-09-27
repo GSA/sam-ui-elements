@@ -12,7 +12,8 @@ import { SamPageNextService } from '../architecture';
   selector: 'sam-main',
   template: `
     <ng-content select="sam-filter-drawer"></ng-content>
-    <ng-content select="sam-main-content"></ng-content>
+    <ng-content select="sam-alert-next"></ng-content>
+    <ng-content></ng-content>
   `
 })
 export class SamMainComponent implements AfterContentInit {
