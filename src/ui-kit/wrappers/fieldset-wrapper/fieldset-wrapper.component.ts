@@ -56,7 +56,7 @@ export class FieldsetWrapper {
     if (!this.checkMore
       && c.hint
       && c.hint.previousValue !== c.hint.currentValue) {
-      // needs to be open to recalc correctly in 
+      // needs to be open to recalc correctly in
       // ngAfterViewChecked
       this.showToggle = false;
       this.toggleOpen = false;
@@ -91,7 +91,7 @@ export class FieldsetWrapper {
 
   @HostListener('window:resize', ['$event'])
   public onResize(event) {
-    // needs to be open to recalc correctly in 
+    // needs to be open to recalc correctly in
     // ngAfterViewChecked
     this.showToggle = false;
     this.toggleOpen = false;
@@ -146,7 +146,7 @@ export class FieldsetWrapper {
   public setHeight (): string {
     return (this.showToggle && !this.toggleOpen)
       ? '2.88em'
-      : '' 
+      : ''
   }
 
   private _formatError(control: AbstractControl) {
@@ -154,8 +154,15 @@ export class FieldsetWrapper {
       return;
     }
 
+    if (control.pristine) {
+      this.errorMessage = '';
+      return;
+    }
+
     if (control.invalid && control.errors) {
       this.formatInvalidErrors(control);
+    } else if (!control.errors) {
+        this.errorMessage = '';
     }
   }
 
