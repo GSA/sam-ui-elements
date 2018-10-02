@@ -11,7 +11,7 @@ import { ToolbarItem } from '../../../actions-list';
   selector: 'sam-toolbar',
   template: `
   <div class="sam small menu">
-  <sam-aside-toggle [sidenav]="sidenav"
+  <sam-aside-toggle [showToggle]="showToggle" [sidenav]="sidenav"
   [contentModel]="sidenavModel"
   (toggle)="action.emit($event)">
   </sam-aside-toggle>
@@ -22,6 +22,7 @@ import { ToolbarItem } from '../../../actions-list';
   `
 })
 export class SamToolbarComponent {
+  @Input() showToggle = true;
   @Input() public sidenav: MdSidenav;
   /**
   * Passes in the content model for the top right items+icons
