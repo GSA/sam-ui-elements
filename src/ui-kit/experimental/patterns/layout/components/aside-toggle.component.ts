@@ -10,7 +10,7 @@ import { ToolbarItem } from '../../../actions-list';
 @Component({
   selector: 'sam-aside-toggle',
   template: `
-    <button class="sam button tertiary small"
+    <button *ngIf="sidenav" class="sam button tertiary small"
       (click)="handleClick()"
       [disabled]="contentModel?.disabled">    
       <span class="fa"

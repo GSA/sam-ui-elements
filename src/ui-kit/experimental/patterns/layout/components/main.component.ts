@@ -25,7 +25,9 @@ export class SamMainComponent implements AfterContentInit {
   constructor (protected _service: SamPageNextService) {}
 
   public ngAfterContentInit () {
-    this.drawer.clear.subscribe(evt => this._clearDrawer());
+    if(this.drawer){
+      this.drawer.clear.subscribe(evt => this._clearDrawer());
+    }
   }
 
   private _clearDrawer () {
