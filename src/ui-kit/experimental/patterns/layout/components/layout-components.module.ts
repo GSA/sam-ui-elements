@@ -13,9 +13,6 @@ import { SamMainComponent } from './main.component';
 import { SamPaginationNextComponent } from './pagination';
 import { SamToolbarComponent } from './toolbar.component';
 import {
-  SamFeedbackWrapperComponent
-} from './feedback-wrapper.component';
-import {
   SamResourcesWrapperComponent
 } from './resources-wrapper.component';
 import {
@@ -53,7 +50,6 @@ import { SamFiltersWrapperModule } from '../../../../layout/filters-wrapper/filt
     SamMainContentComponent,
     SamPaginationNextComponent,
     SamToolbarComponent,
-    SamFeedbackWrapperComponent,
     SamResourcesWrapperComponent,
     SamPageNextComponent,
     SamAsideToggleComponent,
@@ -76,7 +72,6 @@ import { SamFiltersWrapperModule } from '../../../../layout/filters-wrapper/filt
     SamMainContentComponent,
     SamPaginationNextComponent,
     SamToolbarComponent,
-    SamFeedbackWrapperComponent,
     SamResourcesWrapperComponent,
     SamPageNextComponent,
     SamAsideToggleComponent,
