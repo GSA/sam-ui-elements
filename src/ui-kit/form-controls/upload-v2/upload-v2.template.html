@@ -4,11 +4,12 @@
            [closeOnEscape]="true"
            [type]="'warning'"
            [title]="uploadFileActionModalConfig.title"
+           [description]="uploadFileActionModalConfig.description"
            [submitButtonLabel]="'Ok'"
            [cancelButtonLabel]="'Cancel'"
            (onSubmit)="onActionModalSubmit($event)"
            (close)="onUploadModalCloseChange($event)">
-  <ng-content select=".upload-v2-action-modal"></ng-content>
+  <ng-content select=".action-modal-content"></ng-content>
 </sam-modal>
 
 <div class="file-container"
