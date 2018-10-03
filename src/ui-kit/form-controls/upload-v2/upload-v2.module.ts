@@ -5,6 +5,7 @@ import { SamUploadComponentV2 } from './upload-v2.component';
 import { SamProgressModule } from '../../components/progress-bar';
 import { SamDragDropModule } from '../../directives';
 import { SamFilesizeModule } from '../../pipes';
+import {SamModalModule} from '../../components/modal';
 
 @NgModule({
     declarations: [ SamUploadComponentV2 ],
@@ -14,7 +15,8 @@ import { SamFilesizeModule } from '../../pipes';
         FormsModule,
         SamDragDropModule,
         SamProgressModule,
-        SamFilesizeModule
+        SamFilesizeModule,
+        SamModalModule
     ]
 })
 export class SamUploadV2Module { }
