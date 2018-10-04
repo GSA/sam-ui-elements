@@ -29,6 +29,7 @@ import { SamToolbarComponent } from '../toolbar.component';
 })
 export class SamPageNextComponent extends MdSidenavContainer {
   @Input() public backButtonText = '';
+  @Input() public startSidebarClosed = false;
   @Output() public backButtonClick = new EventEmitter<any>();
 
   @HostListener('window:resize')
@@ -67,6 +68,9 @@ export class SamPageNextComponent extends MdSidenavContainer {
   private _setupAside (): void {
     if (this.aside) {
       this._responsiveAside();
+      if(this.startSidebarClosed){
+        this.aside.toggle(false);
+      }
     }
   }
   

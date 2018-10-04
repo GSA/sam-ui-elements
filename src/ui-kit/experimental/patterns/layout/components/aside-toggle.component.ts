@@ -10,7 +10,7 @@ import { ToolbarItem } from '../../../actions-list';
 @Component({
   selector: 'sam-aside-toggle',
   template: `
-    <button *ngIf="sidenav" class="sam button tertiary small"
+    <button *ngIf="sidenav && showToggle" class="sam button tertiary small"
       (click)="handleClick()"
       [disabled]="contentModel?.disabled">    
       <span class="fa"
@@ -22,6 +22,7 @@ import { ToolbarItem } from '../../../actions-list';
   `
 })
 export class SamAsideToggleComponent {
+  @Input() showToggle = true;
   @Input() public sidenav: MdSidenav
 
   @Input() public contentModel: ToolbarItem = {
@@ -31,7 +32,11 @@ export class SamAsideToggleComponent {
   }
 
   @Output() public toggle = new EventEmitter<ToolbarItem>();
-
+  ngOnChanges(c){
+    if(c.showToggle && this.sidenav && this.showToggle){
+      this.sidenav.toggle(true);
+    }
+  }
   public ariaLabel = 'Toggle '
 
   public handleClick (): void {
