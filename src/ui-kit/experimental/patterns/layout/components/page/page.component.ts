@@ -30,8 +30,17 @@ import { SamPageNextService } from '../../architecture';
   styleUrls: ['./sam-page-next.scss'],
 })
 export class SamPageNextComponent extends MdSidenavContainer {
+  /**
+   * Text string for the back button
+   */
   @Input() public backButtonText = '';
+  /**
+   * Forces the sidebar closed on initialization
+   */
   @Input() public startSidebarClosed = false;
+  /**
+   * Event emitter for back button interaction
+   */
   @Output() public backButtonClick = new EventEmitter<any>();
 
   @HostListener('window:resize')
