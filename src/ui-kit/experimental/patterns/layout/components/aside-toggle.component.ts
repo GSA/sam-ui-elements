@@ -2,10 +2,12 @@ import {
   Input,
   Output,
   EventEmitter,
-  Component
+  Component,
+  Optional
 } from '@angular/core';
 import { MdSidenav } from './sidenav';
 import { ToolbarItem } from '../../../actions-list';
+import { SamPageNextService } from '../architecture';
 
 @Component({
   selector: 'sam-aside-toggle',
@@ -23,7 +25,7 @@ import { ToolbarItem } from '../../../actions-list';
 })
 export class SamAsideToggleComponent {
   @Input() showToggle = true;
-  @Input() public sidenav: MdSidenav
+  @Input() public sidenav: MdSidenav;
 
   @Input() public contentModel: ToolbarItem = {
     label: 'Toggle',
@@ -32,6 +34,16 @@ export class SamAsideToggleComponent {
   }
 
   @Output() public toggle = new EventEmitter<ToolbarItem>();
+
+  constructor(@Optional() public _pageService: SamPageNextService){ }
+
+  ngOnInit(){
+    this._pageService.getPageMessage().subscribe((data)=>{
+      if(this.sidenav && data && data.text === 'open aside'){
+        this.showToggle = true;
+      }
+    });
+  }
   ngOnChanges(c){
     if(c.showToggle && this.sidenav && this.showToggle){
       this.sidenav.toggle(true);

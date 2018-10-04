@@ -2,17 +2,27 @@ import { Injectable } from '@angular/core';
 
 import { ServiceModel, ServiceProperty } from './service-property';
 import { DataStore } from '../store';
+import { Observable } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 
 export type DataLayoutProperty = 'data'
   | 'filters' | 'pagination' | 'sort' | 'filterFields';
 
 @Injectable()
 export class SamPageNextService {
-
+  private subject = new Subject<any>();
   public model: ServiceModel;
 
   constructor (private _store: DataStore) {
     this._setupModel();
+  }
+
+  public sendPageMessage(message: string) {
+    this.subject.next({ text: message });
+  }
+
+  public getPageMessage(): Observable<any> {
+    return this.subject.asObservable();
   }
 
   public get (property: DataLayoutProperty): ServiceProperty {

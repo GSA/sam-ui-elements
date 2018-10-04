@@ -8,7 +8,8 @@ import {
   Input,
   Output,
   EventEmitter,
-  ContentChild
+  ContentChild,
+  Optional
 } from '@angular/core';
 import {
   faLongArrowAltLeft,
@@ -20,6 +21,7 @@ import {
   MdSidenav
 } from '../sidenav/sidenav';
 import { SamToolbarComponent } from '../toolbar.component';
+import { SamPageNextService } from '../../architecture';
 
 @Component({
   selector: 'sam-page-next',
@@ -46,9 +48,16 @@ export class SamPageNextComponent extends MdSidenavContainer {
 
   public backIcon = faLongArrowAltLeft;
   public closeIcon = faTimes;
-  
-  constructor(_element: ElementRef, _renderer: Renderer2, _ngZone: NgZone) {
+  constructor(_element: ElementRef, _renderer: Renderer2, _ngZone: NgZone, @Optional() public _pageService: SamPageNextService) {
     super(null, _element, _renderer, _ngZone);
+  }
+
+  public ngOnInit(){
+    this._pageService.getPageMessage().subscribe((data)=>{
+      if(data.text && data.text === 'open aside'){
+        this.aside.toggle(true);
+      }
+    });
   }
   
   public ngAfterContentInit (): void {
