@@ -24,15 +24,25 @@ import { SamPageNextService } from '../architecture';
   `
 })
 export class SamAsideToggleComponent {
+  /**
+   * Shows/hides the toggle button
+   */
   @Input() showToggle = true;
+  /**
+   * Passes in the sidenav component the toggle button controls
+   */
   @Input() public sidenav: MdSidenav;
-
+  /**
+   * The content model for button
+   */
   @Input() public contentModel: ToolbarItem = {
     label: 'Toggle',
     icon: 'fa-chevron-circle-left',
     disabled: false
   }
-
+  /**
+   * The event emitter for toggle events
+   */
   @Output() public toggle = new EventEmitter<ToolbarItem>();
 
   constructor(@Optional() public _pageService: SamPageNextService){ }
