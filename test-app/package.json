@@ -7,7 +7,7 @@
     "start": "ng serve",
     "build": "ng build",
     "test": "npm run init && ng test --single-run --code-coverage && node test-postjob && rimraf ./src/components",
-    "test:watch": "npm run init && ng test --code-coverage",
+    "test:watch": "npm run init && ng test --code-coverage -sm=false",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "init": "rimraf ./src/components && node test-setup"
