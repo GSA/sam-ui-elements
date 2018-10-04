@@ -134,8 +134,8 @@ export class SamTextComponent implements ControlValueAccessor,
   }
 
   public ngOnDestroy (): void {
-    this.cdr.detach();
     this._unsubscribe();
+    this.cdr.detach();
   }
 
   public onLoseFocus (): void {

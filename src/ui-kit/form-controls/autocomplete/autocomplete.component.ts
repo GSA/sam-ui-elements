@@ -9,7 +9,8 @@ import {
   Optional,
   OnChanges,
   ChangeDetectorRef,
-  TemplateRef
+  TemplateRef,
+  OnDestroy
 } from '@angular/core';
 import {
   NG_VALUE_ACCESSOR,
@@ -44,7 +45,7 @@ interface SamCache{
   providers: [ AUTOCOMPLETE_VALUE_ACCESSOR ]
 })
 export class SamAutocompleteComponent
-  implements ControlValueAccessor, OnChanges, SamCache {
+  implements ControlValueAccessor, OnChanges, OnDestroy, SamCache {
   @ViewChild('resultsList') resultsList: ElementRef;
   @ViewChild('resultsListKV') resultsListKV: ElementRef;
   @ViewChild('input') input: ElementRef;
@@ -295,6 +296,10 @@ export class SamAutocompleteComponent
       this.wrapper.formatErrors(this.control);
       this.cdr.detectChanges();
     }
+  }
+
+  ngOnDestroy (): void {
+    this.cdr.detach();
   }
 
   get errors() {
