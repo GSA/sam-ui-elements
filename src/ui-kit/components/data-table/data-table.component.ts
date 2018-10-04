@@ -28,4 +28,10 @@ export const _SamTable = CdkTable;
 export class SamDataTableComponent<T> extends _SamTable<T> {
     @Input() allowHorizontalScroll = false;
     @HostBinding('class.sam-datatable-horizontal') samTableHorizontalClass = this.allowHorizontalScroll;
+
+    ngOnChanges(c){
+        if(c.allowHorizontalScroll){
+            this.samTableHorizontalClass = this.allowHorizontalScroll;
+        }
+    }
 }
