@@ -188,9 +188,8 @@ sam-header-cell{
  */
  .sam.large.table{
    overflow-x: auto;
-  //  .sam-datatable-thead,
-  //  .sam-datatable-tbody{
-  //    width: 1500px;
-  //  }
  }
 
+.sam-datatable-horizontal{
+  overflow-x: scroll;
+}
