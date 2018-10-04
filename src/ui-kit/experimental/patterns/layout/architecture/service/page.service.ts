@@ -8,6 +8,8 @@ import { Subject } from 'rxjs/Subject';
 export type DataLayoutProperty = 'data'
   | 'filters' | 'pagination' | 'sort' | 'filterFields';
 
+export type SamPageEvents = "open sidebar" | "close sidebar";
+
 @Injectable()
 export class SamPageNextService {
   private pageSubject = new Subject<any>();
@@ -17,8 +19,8 @@ export class SamPageNextService {
     this._setupModel();
   }
 
-  public sendPageMessage(message: string) {
-    this.pageSubject.next({ text: message });
+  public sendPageMessage(message: SamPageEvents) {
+    this.pageSubject.next({ event: message });
   }
 
   public getPageMessage(): Observable<any> {

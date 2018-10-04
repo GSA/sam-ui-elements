@@ -62,8 +62,8 @@ export class SamPageNextComponent extends MdSidenavContainer {
   }
 
   public ngOnInit(){
-    this._pageService.getPageMessage().subscribe((data)=>{
-      if(data.text && data.text === 'open aside'){
+    this._pageService.getPageMessage().subscribe((data) => {
+      if(data && data.event && data.event === 'open sidebar'){
         this.aside.toggle(true);
       }
     });

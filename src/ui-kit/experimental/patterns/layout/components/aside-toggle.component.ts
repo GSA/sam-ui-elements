@@ -49,7 +49,7 @@ export class SamAsideToggleComponent {
 
   ngOnInit(){
     this._pageService.getPageMessage().subscribe((data)=>{
-      if(this.sidenav && data && data.text === 'open aside'){
+      if(this.sidenav && data && data.event && data.event === 'open sidebar'){
         this.showToggle = true;
       }
     });
