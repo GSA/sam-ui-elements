@@ -23,7 +23,7 @@ import {
 export class SamFilterDrawerItemComponent {
   @Input() public label: string;
   @Input() public values: any[];
-  @Input() public disabled = true;
+  @Input() public disabled = false;
   @Output() public remove = new EventEmitter();
 
   public removeFilter (value): void {

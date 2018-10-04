@@ -344,3 +344,32 @@ export interface UploadedFileData {
      */
   icon: any;
 }
+
+export interface UploadFileActionModalConfig {
+    /**
+     * sets the upload modal title
+     */
+    title?: string,
+    /**
+     * sets the upload modal description
+     */
+    description?: string
+}
+export interface ToggleUploadFileAction {
+    /**
+     * sets the upload file edit action toggle
+     */
+    isEdit?: boolean,
+    /**
+     * sets the upload file secure action toggle
+     */
+    isSecure?: boolean,
+    /**
+     * sets the upload file sort action toggle
+     */
+    isSort?: boolean,
+    /**
+     * sets the upload file remove action toggle
+     */
+    isRemove?: boolean
+}
