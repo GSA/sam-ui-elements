@@ -26,6 +26,7 @@ import {
 export class DynamicChipsDirective implements OnInit {
 
   @Input() public map: (...args) => { label: string, values: any[] }[];
+  @Input() public disabled = false;
   @Output() public remove = new EventEmitter<any>();
 
   constructor (public host: SamFilterDrawerComponent,
@@ -106,6 +107,9 @@ export class DynamicChipsDirective implements OnInit {
     ): void {
     chipRef.instance.label = model.label;
     chipRef.instance.values = model.values;
+    if(this.disabled) {
+      chipRef.instance.disabled = true;
+    }
     chipRef.instance.remove.subscribe(
       event => this.remove.emit(event)
     );
