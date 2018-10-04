@@ -10,7 +10,7 @@ export type DataLayoutProperty = 'data'
 
 @Injectable()
 export class SamPageNextService {
-  private subject = new Subject<any>();
+  private pageSubject = new Subject<any>();
   public model: ServiceModel;
 
   constructor (private _store: DataStore) {
@@ -18,11 +18,11 @@ export class SamPageNextService {
   }
 
   public sendPageMessage(message: string) {
-    this.subject.next({ text: message });
+    this.pageSubject.next({ text: message });
   }
 
   public getPageMessage(): Observable<any> {
-    return this.subject.asObservable();
+    return this.pageSubject.asObservable();
   }
 
   public get (property: DataLayoutProperty): ServiceProperty {
