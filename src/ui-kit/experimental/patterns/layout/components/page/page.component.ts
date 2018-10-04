@@ -8,7 +8,8 @@ import {
   Input,
   Output,
   EventEmitter,
-  ContentChild
+  ContentChild,
+  Optional
 } from '@angular/core';
 import {
   faLongArrowAltLeft,
@@ -20,6 +21,7 @@ import {
   MdSidenav
 } from '../sidenav/sidenav';
 import { SamToolbarComponent } from '../toolbar.component';
+import { SamPageNextService } from '../../architecture';
 
 @Component({
   selector: 'sam-page-next',
@@ -28,7 +30,17 @@ import { SamToolbarComponent } from '../toolbar.component';
   styleUrls: ['./sam-page-next.scss'],
 })
 export class SamPageNextComponent extends MdSidenavContainer {
+  /**
+   * Text string for the back button
+   */
   @Input() public backButtonText = '';
+  /**
+   * Forces the sidebar closed on initialization
+   */
+  @Input() public startSidebarClosed = false;
+  /**
+   * Event emitter for back button interaction
+   */
   @Output() public backButtonClick = new EventEmitter<any>();
 
   @HostListener('window:resize')
@@ -45,9 +57,16 @@ export class SamPageNextComponent extends MdSidenavContainer {
 
   public backIcon = faLongArrowAltLeft;
   public closeIcon = faTimes;
-  
-  constructor(_element: ElementRef, _renderer: Renderer2, _ngZone: NgZone) {
+  constructor(_element: ElementRef, _renderer: Renderer2, _ngZone: NgZone, @Optional() public _pageService: SamPageNextService) {
     super(null, _element, _renderer, _ngZone);
+  }
+
+  public ngOnInit(){
+    this._pageService.getPageMessage().subscribe((data) => {
+      if(data && data.event && data.event === 'open sidebar'){
+        this.aside.toggle(true);
+      }
+    });
   }
   
   public ngAfterContentInit (): void {
@@ -67,6 +86,9 @@ export class SamPageNextComponent extends MdSidenavContainer {
   private _setupAside (): void {
     if (this.aside) {
       this._responsiveAside();
+      if(this.startSidebarClosed){
+        this.aside.toggle(false);
+      }
     }
   }
   

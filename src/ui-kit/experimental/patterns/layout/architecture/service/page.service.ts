@@ -2,17 +2,29 @@ import { Injectable } from '@angular/core';
 
 import { ServiceModel, ServiceProperty } from './service-property';
 import { DataStore } from '../store';
+import { Observable } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 
 export type DataLayoutProperty = 'data'
   | 'filters' | 'pagination' | 'sort' | 'filterFields';
 
+export type SamPageEvents = "open sidebar" | "close sidebar";
+
 @Injectable()
 export class SamPageNextService {
-
+  private pageSubject = new Subject<any>();
   public model: ServiceModel;
 
   constructor (private _store: DataStore) {
     this._setupModel();
+  }
+
+  public sendPageMessage(message: SamPageEvents) {
+    this.pageSubject.next({ event: message });
+  }
+
+  public getPageMessage(): Observable<any> {
+    return this.pageSubject.asObservable();
   }
 
   public get (property: DataLayoutProperty): ServiceProperty {
