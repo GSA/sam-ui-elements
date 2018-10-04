@@ -22,7 +22,13 @@ import { ToolbarItem } from '../../../actions-list';
   `
 })
 export class SamToolbarComponent {
+  /**
+   * Shows/hides the toggle button in the aside toggle component
+   */
   @Input() showToggle = true;
+  /**
+   * Passes in the sidenav component that the toggle button controls
+   */
   @Input() public sidenav: MdSidenav;
   /**
   * Passes in the content model for the top right items+icons
