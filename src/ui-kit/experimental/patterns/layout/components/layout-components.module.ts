@@ -11,7 +11,6 @@ import { SamActionBarComponent } from './actionbar.component';
 import { SamLayoutComponent } from './layout.component';
 import { SamMainComponent } from './main.component';
 import { SamPaginationNextComponent } from './pagination';
-import { SamToolbarComponent } from './toolbar.component';
 import {
   SamResourcesWrapperComponent
 } from './resources-wrapper.component';
@@ -21,7 +20,6 @@ import {
 import { MdExpansionModule } from './expansion';
 import { SamMainContentComponent } from './main-content.component';
 import { SamContentOutletDirective } from './content-outlet.directive';
-import { SamAsideToggleComponent } from './aside-toggle.component';
 import { SamComponentsModule } from '../../../../components';
 import { SamActionsListModule } from '../../../actions-list';
 import { SamReportingMainComponent } from './template/reporting-main.component';
@@ -49,10 +47,8 @@ import { SamFiltersWrapperModule } from '../../../../layout/filters-wrapper/filt
     SamMainComponent,
     SamMainContentComponent,
     SamPaginationNextComponent,
-    SamToolbarComponent,
     SamResourcesWrapperComponent,
     SamPageNextComponent,
-    SamAsideToggleComponent,
     SamReportingMainComponent,
     
     // Directives
@@ -71,10 +67,8 @@ import { SamFiltersWrapperModule } from '../../../../layout/filters-wrapper/filt
     SamMainComponent,
     SamMainContentComponent,
     SamPaginationNextComponent,
-    SamToolbarComponent,
     SamResourcesWrapperComponent,
     SamPageNextComponent,
-    SamAsideToggleComponent,
     SamReportingMainComponent,
 
     // Directives
