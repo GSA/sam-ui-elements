@@ -160,7 +160,9 @@ export class SamTextComponent implements ControlValueAccessor,
     this.value = value !== null
       ? '' + value
       : '';
-    this.cdr.detectChanges();
+    if (!this.cdr['destroyed']) {
+      this.cdr.detectChanges();
+    }
   }
 
   private _validateInputs (): void {
