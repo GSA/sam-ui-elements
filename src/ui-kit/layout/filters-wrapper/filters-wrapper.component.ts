@@ -55,7 +55,9 @@ import {
   
     public ngOnDestroy () {
       this._runReportSubscription.unsubscribe();
-      this._filtersSubscription.unsubscribe();
+      if(this._service){
+        this._filtersSubscription.unsubscribe();
+      }
       this._resetReportSubscription.unsubscribe();
     }
   
@@ -63,8 +65,10 @@ import {
       this._runReportSubscription = 
         this.runReportEvent.subscribe(
           (_) => {
-            this._service.model.properties['filters']
-              .setValue(this.group.value);
+            if(this._service){
+              this._service.model.properties['filters']
+                .setValue(this.group.value);
+            }
           }
         );
             
@@ -79,9 +83,10 @@ import {
       Object.keys(this.group.value).forEach(
         key => cleared[key] = null
       );
-  
-      this._service.model.properties['filters']
-        .setValue(cleared);
+      if(this._service){
+        this._service.model.properties['filters']
+          .setValue(cleared);
+      }
     }
   
     private _initializeService () {

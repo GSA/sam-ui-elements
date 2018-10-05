@@ -48,11 +48,13 @@ export class SamAsideToggleComponent {
   constructor(@Optional() public _pageService: SamPageNextService){ }
 
   ngOnInit(){
-    this._pageService.getPageMessage().subscribe((data)=>{
-      if(this.sidenav && data && data.event && data.event === 'open sidebar'){
-        this.showToggle = true;
-      }
-    });
+    if(this._pageService){
+      this._pageService.getPageMessage().subscribe((data)=>{
+        if(this.sidenav && data && data.event && data.event === 'open sidebar'){
+          this.showToggle = true;
+        }
+      });
+    }
   }
   ngOnChanges(c){
     if(c.showToggle && this.sidenav && this.showToggle){
