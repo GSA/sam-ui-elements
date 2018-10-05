@@ -10,4 +10,5 @@
   @include sam-breadcrumbs-typography($config);
   @include sam-table-typography($config);
   @include sam-pagination-typography($config);
+  @include sam-tabs-typography($config);
 }

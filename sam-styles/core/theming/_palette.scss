@@ -77,4 +77,5 @@ $sam-theme-background: (
   sidenav:           white,
   table:             white,
   table-header:      map-get($map: $uswds-cool-gray, $key: 600),
+  tab-header:        map-get($map: $uswds-cool-gray, $key: 100),
 );

@@ -1,0 +1,51 @@
+@import '../patterns/layout/components/core/style/variables';
+@import '../patterns/layout/components/core/style/layout-common';
+@import 'tabs-common';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px 1px rgba(0,0,0,.15);
+  &.mat-tab-group-inverted-header {
+    flex-direction: column-reverse;
+  }
+}
+
+:host[md-stretch-tabs] .mat-tab-label,
+:host[mat-stretch-tabs] .mat-tab-label {
+  flex-basis: 0;
+  flex-grow: 1;
+}
+
+// The bottom section of the view; contains the tab bodies
+.mat-tab-body-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  transition: height $mat-tab-animation-duration $ease-in-out-curve-function;
+}
+
+// Wraps each tab body
+.mat-tab-body {
+  @include mat-fill;
+  display: block;
+  overflow: hidden;
+
+  &.mat-tab-body-active {
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: 1;
+    flex-grow: 1; 
+  }
+
+  &:focus {
+    outline: 2px dotted #aeb0b5;
+    outline-offset: -1px;
+  }
+
+  :host.mat-tab-group-dynamic-height &.mat-tab-body-active {
+    overflow-y: hidden;
+  }
+}

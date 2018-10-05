@@ -9,6 +9,7 @@
 
 @import '../../box/box';
 @import '../../button/button';
+@import '../../tabs/tabs';
 
 @import '../../container/container';
 @import '../../icon/icon';
@@ -34,4 +35,5 @@
   @include sam-pagination-theme($theme);
   @include sam-sidenav-theme($theme);
   @include sam-expansion-panel-theme($theme);
+  @include sam-tabs-theme($theme);
 }
