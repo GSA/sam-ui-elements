@@ -19,7 +19,7 @@ import {
 } from '../experimental';
 import { SamUIKitModule } from '../sam-ui-elements.module';
 
-fdescribe('The Sam Filters Component', () => {
+describe('The Sam Filters Component', () => {
 
   describe('rendered tests',()=>{
     let component: SamFiltersComponent;
