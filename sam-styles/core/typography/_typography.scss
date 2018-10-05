@@ -96,8 +96,14 @@
     margin: 0;
   }
 
+  html {
+    font-family: "Source Sans Pro";
+  }
+
   body{
     font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   p{
