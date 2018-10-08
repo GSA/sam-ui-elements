@@ -77,7 +77,7 @@ export class SamDownloadComponent {
 
   private isSecure(field: string) {
     if (field.toLowerCase() === 'public') {
-      return 'Not Secure';
+      return 'Public';
     } else {
       return 'Secured';
     }
