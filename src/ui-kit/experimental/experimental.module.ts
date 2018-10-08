@@ -5,9 +5,6 @@ import { RouterModule } from '@angular/router';
 
 import { SamBoxComponent } from './box';
 import { SamContainerComponent } from './container';
-import {
-  SamFilterDrawerModule
-} from './filter-drawer';
 import { SamIconsModule } from './icon';
 import { SamLabelNextComponent } from './label';
 import { SamLayoutComponent } from './layout';
@@ -45,7 +42,6 @@ import { SamAlertNextModule } from './alert';
     SamButtonNextModule,
     SamVideoPlayerModule,
     SamTabsNextModule,
-    SamFilterDrawerModule,
     SamAlertNextModule
   ],
   declarations: [
@@ -92,7 +88,6 @@ import { SamAlertNextModule } from './alert';
     SamIconsModule,
     SamButtonNextModule,
     SamTabsNextModule,
-    SamFilterDrawerModule,
     SamAlertNextModule
   ]
 })
