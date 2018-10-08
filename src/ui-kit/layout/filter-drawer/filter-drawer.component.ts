@@ -10,7 +10,7 @@ import {
 
 import {
   SamPageNextService
-} from '../patterns/layout/architecture';
+} from '../../experimental/patterns/layout/architecture';
 
 import { ChipHostDirective } from './chip-host';
 import {
