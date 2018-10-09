@@ -23,20 +23,34 @@ import {
         <sam-button-next
           action="submit"
           [isDisabled]="disableAction">
-          Run Report
+          {{runBtnText}}
         </sam-button-next>
         <sam-button-next
           action="secondary"
           (onClick)="resetReportEvent.next()">
-          Reset Report
+          {{resetBtnText}}
         </sam-button-next>
       </form>
     `
   })
   export class SamFiltersWrapperComponent
     implements OnInit, OnDestroy {
-  
+    
+    /**
+     * Sets primary button text submitting the form
+     */
+    @Input() public runBtnText: string = "Run Report";
+    /**
+     * Sets secondary button text for resetting the form
+     */
+    @Input() public resetBtnText: string = "Reset Report";
+    /**
+     * Passes in the required form group
+     */
     @Input() public group: FormGroup;
+    /**
+     * Disables the primary button text
+     */
     @Input() public disabled = false;
   
     public runReportEvent = new Subject<any>();
