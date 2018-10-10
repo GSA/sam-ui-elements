@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { SamAsideToggleModule, SamAsideToggleComponent } from './';
+import { SamAsideToggleComponent } from './';
 
 
 describe('The Sam Aside Toggle component', () => {  
@@ -9,11 +9,8 @@ describe('The Sam Aside Toggle component', () => {
   
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [
-            SamAsideToggleModule
-        ],
         declarations: [
-
+          SamAsideToggleComponent
         ],
         providers: [
         ]
