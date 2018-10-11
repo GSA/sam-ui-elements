@@ -114,6 +114,7 @@
   </div>
 
   <!-- Hidden input to trigger the browser file selector -->
+  <label class="hide" *ngIf="uploadElIds && uploadElIds.fileLinkId" [attr.for]="uploadElIds.fileLinkId">file uploads</label>
   <input type="file"
         #file
         [attr.id]="uploadElIds.fileLinkId"
