@@ -1,0 +1,27 @@
+sam-filter-drawer {
+	.sam {
+		display:inline-flex;
+
+		ul{
+			margin:0px 10px 20px 0;
+			padding:0px;
+	
+			li{
+				display:inline-block;
+				width: auto;
+				padding: 3px 10px 5px;
+				margin-right:5px;
+				border-radius:3px;
+				font-size:1.4rem;
+			}
+			li i{
+				margin-left:5px;
+				cursor: pointer;
+			}
+		}
+	
+		.options{
+			margin-top: 15px;
+		}
+	}
+}
