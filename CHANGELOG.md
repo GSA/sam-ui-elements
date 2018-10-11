@@ -2,7 +2,7 @@
 
 ## 0.3.3 (11/10/2018)
 
----
+- style updates
 
 ## 0.3.2 (10/10/2018)
 *No changelog for this release.*
