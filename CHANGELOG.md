@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.4 (12/10/2018)
+- Pagination Next: UI improvements for small screens
+- Datatable: Minimun width for columns 
+- Datatable: Zebra styles for rows
+
 ## 0.3.3 (11/10/2018)
 
 - style updates
