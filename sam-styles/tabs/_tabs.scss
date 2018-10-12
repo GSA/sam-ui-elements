@@ -47,8 +47,8 @@
   .mat-tab-label, .mat-tab-link {
     font: {
       family: sam-font-family($config);
-      size: sam-font-size($config, button);
-      weight: 700;
+      size: sam-font-size($config, body);
+      weight: 600;
     }
   }
 }

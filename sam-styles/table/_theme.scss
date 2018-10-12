@@ -10,7 +10,7 @@
     background: sam-color($background, table);
   }
 
-  sam-row, sam-header-row, sam-footer-row,
+  sam-row, sam-header-row, sam-footer-row, tr[sam-row],
   th.sam-header-cell, td.sam-cell, td.sam-footer-cell {
     border-bottom-color: sam-color($foreground, divider);
   }
@@ -28,11 +28,11 @@
     color: sam-color($foreground, text);
   }
 
-  sam-datatable sam-row:nth-child(2n){
+  tr[sam-row]:nth-child(2n){
     background-color: rgba(0,0,50,.02);
   }
 
-  sam-datatable sam-row:hover{
+  tr[sam-row]:hover{
       background-color: rgba(220, 228, 238, 0.5);
   }
 

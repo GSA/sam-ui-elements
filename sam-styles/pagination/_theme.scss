@@ -1,10 +1,10 @@
 @mixin sam-pagination-theme($theme) {
   $primary: map-get($map: $theme, $key: primary);
   
-  .sam.pagination a.active {
-    background-color: sam-color($primary, 500);
-    color: white;
-  }
+  // .sam.pagination a.active {
+  //   background-color: sam-color($primary, 500);
+  //   color: white;
+  // }
 
 }
 

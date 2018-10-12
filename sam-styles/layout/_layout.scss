@@ -27,27 +27,15 @@ sam-resources-wrapper {
   display: block;
 }
 
-sam-action-bar{
-  display: flex;
-  flex-direction: column;
-  .actions-container{
-    margin-top: 10px;
-  }
-}
-
 sam-alert-next{
   display:block;
   margin-bottom:15px;
 }
 
-@media screen and (min-width: 600px) {
-  sam-action-bar{
-    flex-direction: row;
-    justify-content: space-between;
-    .actions-container{
-      margin-top: 0px;
-    }
-  }
+sam-action-bar{
+  display: flex;
+  justify-content: space-between;
+  padding: 0 15px;
 }
 
 /**********************************************

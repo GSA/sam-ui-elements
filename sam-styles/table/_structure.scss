@@ -67,7 +67,7 @@ td[sam-cell], th[sam-header-cell] {
   flex: 1;
   display: flex;
   align-items: center;
-  overflow: hidden;
+  // overflow: hidden;
   word-wrap: break-word;
   min-height: inherit;
 }
@@ -109,12 +109,13 @@ sam-header-cell{
    outline: 0;
    font: inherit;
    color: currentColor;
+   min-width: 200px;
    span.fa{
      padding-left: 5px;
     }
     &:focus{
       outline: 2px dotted #aeb0b5;
-      outline-offset: 1px;
+      outline-offset: 3px;
       box-shadow: none;
     }
  }
@@ -192,4 +193,10 @@ sam-header-cell{
 
 .sam-datatable-horizontal{
   overflow-x: scroll;
+}
+.sam-datatable-horizontal::-webkit-scrollbar {
+  height: 7px;
+}
+.sam-datatable-horizontal::-webkit-scrollbar-thumb {
+  border-radius: 2px;
 }

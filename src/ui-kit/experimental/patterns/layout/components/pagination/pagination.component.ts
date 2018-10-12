@@ -8,6 +8,11 @@ import {
   ChangeDetectionStrategy
 } from '@angular/core';
 
+import {
+  faChevronLeft,
+  faChevronRight,
+} from '@fortawesome/free-solid-svg-icons';
+
 import { Paginator } from './paginator';
 
 /**
@@ -18,10 +23,12 @@ import { Paginator } from './paginator';
   templateUrl: 'pagination.template.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SamPaginationNextComponent
-  implements OnInit {
+export class SamPaginationNextComponent implements OnInit {
 
   public paginator: Paginator;
+
+  public faChevronLeft = faChevronLeft;
+  public faChevronRight = faChevronRight;
 
   /**
    * Sets the number of units per page
