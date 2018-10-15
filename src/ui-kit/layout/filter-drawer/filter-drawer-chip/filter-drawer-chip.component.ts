@@ -14,6 +14,7 @@ import {
       class="sam button tertiary"
       [title]="'Remove ' + label"
       (click)="remove.next($event)">
+      <span class="sr-only">Close button</span>
       <span class="fa fa-close" aria-hidden="true"></span>
     </button>
   </span>
