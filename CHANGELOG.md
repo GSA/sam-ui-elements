@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.5 (15/10/2018)
+- Sam Styles Improvements: Radio, Checkbox, select and text area styles
+- Filter Drawer: Wave fix
+
 ## 0.3.4 (12/10/2018)
 - Pagination Next: UI improvements for small screens
 - Datatable: Minimun width for columns 
