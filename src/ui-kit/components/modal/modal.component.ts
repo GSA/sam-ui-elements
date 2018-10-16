@@ -10,6 +10,9 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 import { ScrollHelpers } from '../../dom-helpers';
+import {
+    IconProp
+} from '@fortawesome/fontawesome-svg-core';
 
 /**
  * The <sam-modal> component display a popover for user interaction
@@ -24,8 +27,8 @@ export class SamModalComponent implements OnInit {
    */
   @Input() id: string = '';
   /**
-   * Sets type of modal, takes values of "success", "warning", "error", "plain" or
-   * "info"
+   * Sets type of modal, takes values of "success", "warning", "error", "plain"
+   * "info" or "primary"
    */
   @Input() type: string;
   /**
@@ -56,6 +59,10 @@ export class SamModalComponent implements OnInit {
    * Close modal if ESC key is pressed, defaults to true
    */
   @Input() closeOnEscape: boolean = true;
+  /**
+   * Set the title Icon
+   */
+  @Input() icon: IconProp;
   /**
    * (deprecated) Emitted event when modal is opened
    */
@@ -90,7 +97,8 @@ export class SamModalComponent implements OnInit {
     'warning': { class: 'usa-alert-warning', sr: 'warning alert'},
     'error': { class: 'usa-alert-error', sr: 'error alert'},
     'info': { class: 'usa-alert-info', sr: 'information alert'},
-    'plain': { class: 'usa-alert-plain', sr: 'plain alert'}
+    'plain': { class: 'usa-alert-plain', sr: 'plain alert'},
+    'primary': {class: 'sam-primary'}
   };
   public selectedType: string = this.types.success.class;
 
