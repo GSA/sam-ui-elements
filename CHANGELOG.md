@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.6 (17/10/2018)
+- Adding modal primary option
+
+
 ## 0.3.5 (15/10/2018)
 - Sam Styles Improvements: Radio, Checkbox, select and text area styles
 - Filter Drawer: Wave fix
