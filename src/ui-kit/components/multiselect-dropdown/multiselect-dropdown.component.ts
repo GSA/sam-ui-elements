@@ -71,7 +71,7 @@ export class SamMultiSelectDropdownComponent implements OnChanges {
         this.model.length === this.options.length) {
       this.elementLabel = 'All';
     } else if (this.model.length > 1) {
-      this.elementLabel = `Multiple ${this.label}+' Selected`;
+      this.elementLabel = `Multiple ${this.label} Selected`;
     } else {
       throw new Error('Unable to display dropdown label');
     }
