@@ -7,13 +7,8 @@ import {
   Optional,
   forwardRef,
   TemplateRef,
-  trigger,
-  state,
-  style,
-  transition,
-  animate,
-  keyframes
 } from '@angular/core';
+import { animate, state, style, transition, trigger , keyframes} from '@angular/animations';
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
