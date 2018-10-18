@@ -342,10 +342,13 @@ export class SamAutocompleteComponent
       this.checkLastSearch(searchString);
     }
 
-    if (this.options) {
-      this.onKeyUpWithOptions(searchString);
-    } else if (this.autocompleteService || this.httpRequest) {
-      this.onKeyUpUsingService(searchString);
+    if (!KeyHelper.is('enter', event)) {
+      if (this.options) {
+        this.onKeyUpWithOptions(searchString);
+      } else if (this.autocompleteService || this.httpRequest) {
+        this.onKeyUpUsingService(searchString);
+      }
+      this.hasFocus = true;
     }
   }
 
@@ -790,6 +793,7 @@ export class SamAutocompleteComponent
     if(this.input && this.input.nativeElement){
       this.input.nativeElement.focus();
     }
+    this.hasFocus =false;
   }
 
   writeValue(value: any): void {
