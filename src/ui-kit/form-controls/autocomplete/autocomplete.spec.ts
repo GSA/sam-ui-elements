@@ -40,6 +40,11 @@ describe('The Sam Autocomplete Component', () => {
 
     it('should have focus handling', ()=>{
       component.hasFocus = false;
+      component.srOnly = {
+        "nativeElement" : { innerHTML :""}}
+
+    
+
       component.inputFocusHandler({
         target: {
           value: ""
@@ -248,40 +253,57 @@ describe('The Sam Autocomplete Component', () => {
       expect(component.innerValue).toBeFalsy();
     });
 
-    it('Should handle keydown', ()=>{
+    it('Should handle keyup', ()=>{
       component.hasFocus = true;
+       component.inputFocusHandler({
+        target: {
+          value: ""
+        }
+      });
       component.results = ['aaa','bbb'];
       fixture.detectChanges();
       //index -1 to 0
-      component.onKeydown({
-        key: "Down", code: "Down"
+      component.onKeyup({
+        key: "Down", code: "Down", target: {
+          value: ""
+        }
       });
       //index 0 to 1
-      component.onKeydown({
-        key: "Down", code: "Down"
+      component.onKeyup({
+        key: "Down", code: "Down", target: {
+          value: ""
+        }
       });
       fixture.detectChanges();
       //index 1 to 0
-      component.onKeydown({
-        key: "Up", code: "Up"
+      component.onKeyup({
+        key: "Up", code: "Up", target: {
+          value: ""
+        }
       });
       fixture.detectChanges();
-      component.onKeydown({
-        key: "Enter", code: "Enter"
+      component.onKeyup({
+        key: "Enter", code: "Enter", target: {
+          value: ""
+        }
       });
       expect(component.value).toBe('aaa');
       fixture.detectChanges();
       component.hasFocus = true;
       component.results = ['aaa','bbb'];
       fixture.detectChanges();
-      component.onKeydown({
-        key: "Escape", code: "Escape"
+      component.onKeyup({
+        key: "Escape", code: "Escape", target: {
+          value: ""
+        }
       });
       fixture.detectChanges();
       component.allowAny = true;
       component.inputValue = 'ccc';
-      component.onKeydown({
-        key: "Enter", code: "Enter"
+      component.onKeyup({
+        key: "Enter", code: "Enter", target: {
+          value: ""
+        }
       });
       fixture.detectChanges();
       expect(component.value).toBe('ccc');
