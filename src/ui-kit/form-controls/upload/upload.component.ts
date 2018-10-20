@@ -1,5 +1,4 @@
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable ,  Subscription } from 'rxjs';
 import { Component, ElementRef, Input, ViewChild,
   forwardRef } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpEventType,

@@ -1,5 +1,4 @@
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable ,  Subscription } from 'rxjs';
 import {
   Component, ElementRef, Input, ViewChild, Renderer2,
   forwardRef, SimpleChanges,  Output,

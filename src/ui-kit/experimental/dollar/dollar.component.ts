@@ -17,7 +17,7 @@ import {
   Validators,
   ValidatorFn
 } from '@angular/forms';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { SamFormService } from '../../form-service';
 import { KeyHelper } from '../../utilities/key-helper/key-helper';

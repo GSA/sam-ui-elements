@@ -9,8 +9,8 @@ import {
   URLSearchParams,
   QueryEncoder
 } from '@angular/http';
-import 'rxjs/add/operator/map';
-import { Subject }    from 'rxjs/Subject';
+
+import { Subject }    from 'rxjs';
 import { AbstractControl }    from '@angular/forms';
 
 @Injectable()

@@ -9,10 +9,7 @@
 import {ElementRef, Injectable, NgZone, Optional, SkipSelf} from '@angular/core';
 import {Platform} from '@angular/cdk';
 import {Scrollable} from './scrollable';
-import {Subject} from 'rxjs/Subject';
-import {Subscription} from 'rxjs/Subscription';
-import {fromEvent} from 'rxjs/observable/fromEvent';
-import {merge} from 'rxjs/observable/merge';
+import {Subject, Subscription, fromEvent, merge} from 'rxjs';
 import {auditTime} from '@angular/cdk';
 
 

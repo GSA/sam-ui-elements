@@ -27,13 +27,13 @@ import {
 
 import { PrototypeSearchService } from './search.service';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/switch';
+import { Observable } from 'rxjs';
+
+
+
+
+
+
 
 @Component({
   selector: "sam-search",

@@ -18,8 +18,7 @@ import {
   ValidatorFn
 } from '@angular/forms';
 
-import { Subject } from 'rxjs/Subject'
-import { Subscription } from 'rxjs/Subscription';
+import { Subject ,  Subscription } from 'rxjs'
 
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { SamFormService } from '../../form-service';
