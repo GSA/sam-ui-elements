@@ -1,25 +1,24 @@
-<sam-modal *ngIf="uploadFileActionModalConfig" #actionModal
-           [showClose]="true"
-           [closeOnOutsideClick]="true"
-           [closeOnEscape]="true"
-           [type]="'warning'"
-           [title]="uploadFileActionModalConfig.title"
-           [description]="uploadFileActionModalConfig.description"
-           [submitButtonLabel]="'Ok'"
-           [cancelButtonLabel]="'Cancel'"
-           (onSubmit)="onActionModalSubmit($event)"
-           (close)="onUploadModalCloseChange($event)">
+<sam-modal *ngIf="uploadFileActionModalConfig"
+  #actionModal
+  [showClose]="true"
+  [closeOnOutsideClick]="true"
+  [closeOnEscape]="true"
+  [type]="'warning'"
+  [title]="uploadFileActionModalConfig.title"
+  [description]="uploadFileActionModalConfig.description"
+  [submitButtonLabel]="'Ok'"
+  [cancelButtonLabel]="'Cancel'"
+  (submit)="onActionModalSubmit($event)">
   <ng-content select=".action-modal-content"></ng-content>
 </sam-modal>
 
 <div class="file-container"
-     sam-drag-drop
-     [disabled]="disabled"
-     (dropEvent)="onFilesChange($event)"
-     [(dragState)]="dragState"
-     [ngClass]=" { 'disabled': disabled, 'drag-border': shouldShowDropTarget() }"
-     [ngStyle]="{'pointer-events': disabled ? 'none' : 'initial'}"
-  >
+  sam-drag-drop
+  [disabled]="disabled"
+  (dropEvent)="onFilesChange($event)"
+  [(dragState)]="dragState"
+  [ngClass]=" { 'disabled': disabled, 'drag-border': shouldShowDropTarget() }"
+  [ngStyle]="{'pointer-events': disabled ? 'none' : 'initial'}">
   <div>
     <table class="upload-table" *ngIf="fileCtrlConfig.length" [attr.id]="uploadElIds.tableId">
       <thead class="upload-table-header">
@@ -116,11 +115,11 @@
   <!-- Hidden input to trigger the browser file selector -->
   <label class="hide" *ngIf="uploadElIds && uploadElIds.fileLinkId" [attr.for]="uploadElIds.fileLinkId">file uploads</label>
   <input type="file"
-        #file
-        [attr.id]="uploadElIds.fileLinkId"
-        [attr.accept]="accept"
-        ngModel
-        class="hide"
-        (change)="onFilesChange($event.target.files)"
-        [attr.multiple]="maxFiles === 0 || maxFiles > 1 ? 'multiple' : null">
+    #file
+    [attr.id]="uploadElIds.fileLinkId"
+    [attr.accept]="accept"
+    ngModel
+    class="hide"
+    (change)="onFilesChange($event.target.files)"
+    [attr.multiple]="maxFiles === 0 || maxFiles > 1 ? 'multiple' : null">
 </div>
