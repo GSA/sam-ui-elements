@@ -35,14 +35,14 @@ const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
 /**
  * Methods we're externally exposing
  */
-interface SamCache{
+interface SamCache {
   clearCache();
 }
 
 @Component({
   selector: 'sam-autocomplete',
   templateUrl: 'autocomplete.template.html',
-  providers: [ AUTOCOMPLETE_VALUE_ACCESSOR ]
+  providers: [AUTOCOMPLETE_VALUE_ACCESSOR]
 })
 export class SamAutocompleteComponent
   implements ControlValueAccessor, OnChanges, OnDestroy, SamCache {
@@ -75,7 +75,7 @@ export class SamAutocompleteComponent
   /**
    * set to false if more/less is not required
    */
-  @Input() public showFullHint :  boolean = false;
+  @Input() public showFullHint: boolean = false;
   /**
   * Define autocomplete options
   */
@@ -84,7 +84,7 @@ export class SamAutocompleteComponent
    * Allows for a configuration object
    */
   @Input() public config: AutocompleteConfig =
-    { keyValueConfig: { keyProperty: 'key', valueProperty: 'value'} };
+    { keyValueConfig: { keyProperty: 'key', valueProperty: 'value' } };
   /**
    * Allows any value typed in the input to be chosen
    */
@@ -212,7 +212,7 @@ export class SamAutocompleteComponent
 
   constructor(@Optional() public autocompleteService: AutocompleteService,
     private samFormService: SamFormService,
-    private cdr: ChangeDetectorRef) {}
+    private cdr: ChangeDetectorRef) { }
 
   ngOnChanges(changes) {
     if (changes.httpRequest) {
@@ -298,7 +298,7 @@ export class SamAutocompleteComponent
     }
   }
 
-  ngOnDestroy (): void {
+  ngOnDestroy(): void {
     this.cdr.detach();
   }
 
@@ -321,10 +321,8 @@ export class SamAutocompleteComponent
   }
 
   onKeyup(event: any) {
-    // If event.target.name is an empty string, set search string to default
-    // search string
-    const searchString = event.target.value || '';
 
+   
     if (KeyHelper.is('tab', event)) {
       return
     }
@@ -336,16 +334,39 @@ export class SamAutocompleteComponent
       this.handleBackspaceKeyup();
     }
 
-    if(!KeyHelper.is('down', event) &&
-      !KeyHelper.is('up', event) &&
-      event.type!=="focus"){
-      this.checkLastSearch(searchString);
-    }
+    this.srOnly.nativeElement.innerHTML = null;
+    const list: ElementRef = this.resultsList || this.resultsListKV;
+    if (list && (KeyHelper.is('down', event) || KeyHelper.is('up', event) || (KeyHelper.is('enter', event) && !this.hasServiceError) || KeyHelper.is('esc', event))) {
+      // On down arrow press
+      if (KeyHelper.is('down', event)) {
+        this.onDownArrowDown(list);
+      }
 
-    if (this.options) {
-      this.onKeyUpWithOptions(searchString);
-    } else if (this.autocompleteService || this.httpRequest) {
-      this.onKeyUpUsingService(searchString);
+      // On up arrow press
+      if (KeyHelper.is('up', event)) {
+        this.onUpArrowDown(list);
+      }
+
+      // On enter press
+      if (KeyHelper.is('enter', event) && !this.hasServiceError) {
+        this.onEnterDown(list);
+      }
+
+      // ESC
+      if (KeyHelper.is('esc', event)) {
+        this.clearDropdown();
+      }
+    }
+    else if (KeyHelper.is('enter', event) && this.allowAny) {
+      this.setSelected(this.inputValue);
+    }
+    else {
+      const searchString = event.target.value || '';
+      if (this.options) {
+        this.onKeyUpWithOptions(searchString);
+      } else if (this.autocompleteService || this.httpRequest) {
+        this.onKeyUpUsingService(searchString);
+      }
     }
   }
 
@@ -369,14 +390,14 @@ export class SamAutocompleteComponent
     }
     if (this.autocompleteService) {
       window.clearTimeout(this.inputTimer);
-      this.inputTimer = window.setTimeout(()=>{
+      this.inputTimer = window.setTimeout(() => {
         this.autocompleteService
           .fetch(searchString, this.endOfList, options)
           .subscribe(
             (res) => {
               let len;
               this.hasServiceError = false;
-              this.cache.insert(res,searchString);
+              this.cache.insert(res, searchString);
               if (this.config && this.config.keyValueConfig) {
                 this.filteredKeyValuePairs = this.cache.get(searchString);
                 len = !!this.filteredKeyValuePairs
@@ -392,7 +413,7 @@ export class SamAutocompleteComponent
               this.endOfList = false;
             },
             (err) => this.requestError(err),
-        )
+          )
       }, this.debounceTime);
       return;
     } else if (this.httpRequest) {
@@ -410,50 +431,13 @@ export class SamAutocompleteComponent
     if (this.inputValue === '') {
       this.value = null;
     }
-  }
-
-  checkLastSearch(searchString: string): void {
-    if ((this.lastSearchedValue !== searchString) || searchString === '') {
-      this.results = null;
-      this.filteredKeyValuePairs = null;
-      this.endOfList = true;
-      this.lastSearchedValue = searchString;
-    }
+    this.hasFocus = true;
   }
 
   addOnIconClick(): void {
     this.addOnIconEvent.emit();
   }
 
-  onKeydown(event: any) {
-    this.srOnly.nativeElement.innerHTML = null;
-
-    const list: ElementRef = this.resultsList || this.resultsListKV;
-
-    if (list) {
-      // On down arrow press
-      if (KeyHelper.is('down', event)) {
-        this.onDownArrowDown(list);
-      }
-
-      // On up arrow press
-      if (KeyHelper.is('up', event)) {
-        this.onUpArrowDown(list);
-      }
-
-      // On enter press
-      if (KeyHelper.is('enter', event) && !this.hasServiceError ) {
-        this.onEnterDown(list);
-      }
-
-      // ESC
-      if (KeyHelper.is('esc', event)) {
-        this.clearDropdown();
-      }
-    } else if (KeyHelper.is('enter', event) && this.allowAny ) {
-      this.setSelected(this.inputValue);
-    }
-  }
 
   onDownArrowDown(list: ElementRef) {
     if (!this.listExists(list)) {
@@ -470,7 +454,7 @@ export class SamAutocompleteComponent
       this.onKeyUpUsingService(this.inputValue);
       selectedChildIndex =
         this.checkCategoryIndex(children[selectedChildIndex]);
-     isFirstItemCategory = this.isFirstItemCategory(
+      isFirstItemCategory = this.isFirstItemCategory(
         children[selectedChildIndex],
         selectedChildIndex
       );
@@ -533,7 +517,7 @@ export class SamAutocompleteComponent
     return !!this.results
       ? this.results[index]
       : this.filteredKeyValuePairs[index]
-        [this.config.keyValueConfig.valueProperty];
+      [this.config.keyValueConfig.valueProperty];
   }
 
   onUpArrowDown(list) {
@@ -556,7 +540,7 @@ export class SamAutocompleteComponent
 
         if (selectedChildIndex !== 1
           && children[selectedChildIndex - 1].classList
-          .contains('category')) {
+            .contains('category')) {
           selectedChildIndex--;
         }
 
@@ -566,7 +550,7 @@ export class SamAutocompleteComponent
 
         if (selectedChildIndex - 1 === 0
           && children[selectedChildIndex - 1].classList
-          .contains('category')) {
+            .contains('category')) {
           this.endOfList = true;
           children[children.length - 1].classList.add('isSelected');
           this.selectedChild = children[children.length - 1];
@@ -588,17 +572,17 @@ export class SamAutocompleteComponent
     );
   }
 
-  listItemHover(index){
+  listItemHover(index) {
     const list: ElementRef = this.resultsList || this.resultsListKV;
     if (!this.listExists(list)) {
       return;
     }
     const children = list.nativeElement.children;
     let selectedChildIndex = this.getSelectedChildIndex(children);
-    if(selectedChildIndex!==-1 && children[selectedChildIndex]){
+    if (selectedChildIndex !== -1 && children[selectedChildIndex]) {
       children[selectedChildIndex].classList.remove("isSelected");
     }
-    if(children[index]){
+    if (children[index]) {
       this.selectedChild = children[index];
       this.selectedChild.classList.add('isSelected');
       if (index === children.length - 1) {
@@ -623,7 +607,6 @@ export class SamAutocompleteComponent
   onEnterDown(list) {
     const children = list.nativeElement.children;
     const selectedChild = this.getSelectedChildIndex(children);
-
     if (selectedChild !== -1) {
       if (this.results && this.results[selectedChild]) {
         this.setSelected(this.results[selectedChild]);
@@ -656,7 +639,7 @@ export class SamAutocompleteComponent
   pushSROnlyMessage(message: string) {
     const srResults: HTMLElement = document.createElement('li');
     srResults.innerText = message;
-    if(this.srOnly && this.srOnly.nativeElement){
+    if (this.srOnly && this.srOnly.nativeElement) {
       this.srOnly.nativeElement.appendChild(srResults);
     }
   }
@@ -682,12 +665,12 @@ export class SamAutocompleteComponent
       return;
     }
     let displayValue = value ? value : '';
-    if (this.config && this.config.keyValueConfig && value 
+    if (this.config && this.config.keyValueConfig && value
       && value[this.config.keyValueConfig.valueProperty]) {
       displayValue = value[this.config.keyValueConfig.valueProperty];
     }
     const message = displayValue;
-    this.innerValue = value ? value : '' ;
+    this.innerValue = value ? value : '';
     this.hasFocus = false;
     this.inputValue = message;
     this.input.nativeElement.value = message;
@@ -716,9 +699,9 @@ export class SamAutocompleteComponent
     let currentCategory = '';
     const reducedArr = keyValuePairs.reduce((prev, curr, index, arr) => {
       if (curr[this.config.keyValueConfig.keyProperty]
-            .toLowerCase().includes(lowerSubStr)
-          || curr[this.config.keyValueConfig.valueProperty]
-            .toLowerCase().includes(lowerSubStr)) {
+        .toLowerCase().includes(lowerSubStr)
+        || curr[this.config.keyValueConfig.valueProperty]
+          .toLowerCase().includes(lowerSubStr)) {
         /**
          * Check if the current item in the array contains the substring value
          * in either the key or value property provided on the config input
@@ -785,11 +768,12 @@ export class SamAutocompleteComponent
     }
   }
 
-  dropdownClick(obj){
+  dropdownClick(obj) {
     this.setSelected(obj);
-    if(this.input && this.input.nativeElement){
+    if (this.input && this.input.nativeElement) {
       this.input.nativeElement.focus();
     }
+    this.hasFocus = false;
   }
 
   writeValue(value: any): void {
@@ -836,7 +820,7 @@ export class SamAutocompleteComponent
     }
   }
 
-  public clearCache(){
+  public clearCache() {
     this.cache.clearAll();
   }
 }
