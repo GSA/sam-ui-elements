@@ -395,22 +395,20 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     curFileConfig.isNameEditMode = false;
   }
 
-    onCloseClick(fileName, index) {
-        this.actionModal.openModal(index);
+  onCloseClick(fileName, index) {
+    this.actionModal.openModal(index);
+  }
+
+  onActionModalSubmit(index) {
+    this.actionModal.closeModal();
+    const file = this.fileCtrlConfig.splice(index, 1)[0];
+    const uf = this._model.find(f => f.file.name === file.originName);
+    if (uf) {
+      this.removeUploadedFile(uf);
     }
-    onActionModalSubmit(index) {
-        this.actionModal.closeModal();
-        const file = this.fileCtrlConfig.splice(index, 1)[0];
-        const uf = this._model.find(f => f.file.name === file.originName);
-        if (uf) {
-            this.removeUploadedFile(uf);
-        }
-        this.updateFilePos();
-        this.modalChange.emit(index);
-    }
-    onUploadModalCloseChange(event) {
-        this.modalChange.emit(event);
-    }
+    this.updateFilePos();
+    this.modalChange.emit(index);
+  }
 
   removeUploadedFile(uf) {
     const { upload } = uf;
