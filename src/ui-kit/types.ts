@@ -338,11 +338,15 @@ export interface UploadedFileData {
   /**
    * sets the url
    */
-  url: string;
-    /**
-     * sets the file icon
-     */
+  url?: string;
+  /**
+   * sets the file icon
+   */
   icon: any;
+  /**
+   * Whether link to download should be disabled
+   */
+  disabled?: boolean;
 }
 
 export interface UploadFileActionModalConfig {
