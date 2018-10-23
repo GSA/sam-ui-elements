@@ -35,10 +35,13 @@
               <div class="file-icon" [attr.title]="fctrl?.icon?.name" [attr.id]="uploadElIds.fileToolTip + i" [attr.aria-label]="fctrl?.icon?.name"><i class="p_R-2x" [ngClass]="fctrl?.icon?.iconClass"></i>
               </div>
               <ng-container *ngIf="!fileCtrlConfig[i].isNameEditMode; else fileNameEdit">
-                  <p *ngIf="isEditMode()" [attr.id]="uploadElIds.fileName + i">{{ fctrl.fileName }} </p>
-                  <a *ngIf="!isEditMode()" class="file-link" [attr.id]="uploadElIds.fileLinkId + i" [attr.href]="fctrl.url">{{ fctrl.fileName }} </a>
+                <p *ngIf="isEditMode()" [attr.id]="uploadElIds.fileName + i">{{ fctrl.fileName }} </p>
+                <ng-container *ngIf="!isEditMode()">
+                  <a *ngIf="!fctrl.disabled" class="file-link" [attr.id]="uploadElIds.fileLinkId + i" [attr.href]="fctrl.url">{{ fctrl.fileName }} </a>
+                  <span *ngIf="fctrl.disabled" class="file-link" [attr.id]="uploadElIds.fileLinkId + i">{{ fctrl.fileName }} </span>
+                </ng-container>
                 <div *ngIf="toggleUploadFileAction?.isEdit">
-                  <button type="button"  [attr.id]="uploadElIds.editId + i" class="pull-right inline-pencil-icon clear-button" (click)="onNameEditSwitch(i, $event)" *ngIf="isEditMode()" [attr.aria-label]="uploadElIds.editFileName + i"><i class="fa fa-pencil"></i></button>
+                <button type="button"  [attr.id]="uploadElIds.editId + i" class="pull-right inline-pencil-icon clear-button" (click)="onNameEditSwitch(i, $event)" *ngIf="isEditMode()" [attr.aria-label]="uploadElIds.editFileName + i"><i class="fa fa-pencil"></i></button>
               </div>
               </ng-container>
               <ng-template #fileNameEdit>
