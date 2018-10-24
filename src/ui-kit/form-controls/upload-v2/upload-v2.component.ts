@@ -281,7 +281,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   }
 
   initilizeFileCtrl(
-    {name, size, url, icon},
+    {name, size, url, icon, disabled},
     isSecure = false,
     date = moment().format('MMM DD, YYYY h:mm a')) {
     return {
@@ -294,8 +294,9 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
       originName: name,
       isFirst: false,
       isLast: false,
-     url: url,
-     icon: icon
+      url: url,
+      icon: icon,
+      disabled: disabled,
     };
   }
 
