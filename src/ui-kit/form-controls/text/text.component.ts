@@ -97,6 +97,10 @@ export class SamTextComponent implements ControlValueAccessor,
    */
   @Input() public emitOn: 'input' | 'change' = 'input';
   /**
+   * Toggles default component validations
+   */
+  @Input() public defaultValidations: boolean = true;
+  /**
    * (deprecated) Lose focus event emit
    */
   @Output() public onBlur = new EventEmitter<boolean>();
@@ -247,13 +251,14 @@ export class SamTextComponent implements ControlValueAccessor,
     if (this.control.validator) {
       validators.push(this.control.validator);
     }
-    
-    if (this.required) {
-      validators.push(Validators.required);
-    }
+    if(this.defaultValidations){
+      if (this.required) {
+        validators.push(Validators.required);
+      }
 
-    if (this.maxlength) {
-      validators.push(Validators.maxLength(this.maxlength));
+      if (this.maxlength) {
+        validators.push(Validators.maxLength(this.maxlength));
+      }
     }
 
     return validators;
