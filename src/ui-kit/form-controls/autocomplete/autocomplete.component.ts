@@ -273,7 +273,7 @@ export class SamAutocompleteComponent
       return;
     }
     if (!this.useFormService) {
-      this.control.statusChanges.subscribe(() => {
+      this.control.markAsPending.subscribe(() => {
         setTimeout(() => {
           this.wrapper.formatErrors(this.control);
         });

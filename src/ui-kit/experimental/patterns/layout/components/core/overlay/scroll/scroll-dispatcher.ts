@@ -11,7 +11,7 @@ import {Platform} from '@angular/cdk';
 import {Scrollable} from './scrollable';
 import {Subject} from 'rxjs/Subject';
 import {Subscription} from 'rxjs/Subscription';
-import {fromEvent} from 'rxjs/observable/fromEvent';
+import {fromEvent} from 'rxjs';
 import {merge} from 'rxjs/observable/merge';
 import {auditTime} from '@angular/cdk';
 

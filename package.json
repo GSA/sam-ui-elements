@@ -15,27 +15,27 @@
     "README.md"
   ],
   "peerDependencies": {
-    "@angular/animations": "4.3.3",
+    "@angular/animations": "6.1.0",
     "@angular/cdk": "2.0.0-beta.8",
-    "@angular/common": "4.3.3",
-    "@angular/compiler": "4.3.3",
-    "@angular/compiler-cli": "4.3.3",
-    "@angular/core": "4.3.3",
-    "@angular/forms": "4.3.3",
-    "@angular/http": "4.3.3",
-    "@angular/platform-browser": "4.3.3",
-    "@angular/platform-browser-dynamic": "4.3.3",
-    "@angular/platform-server": "4.3.3",
-    "@angular/router": "4.3.3",
+    "@angular/common": "6.1.0",
+    "@angular/compiler": "6.1.0",
+    "@angular/compiler-cli": "6.1.0",
+    "@angular/core": "6.1.0",
+    "@angular/forms": "6.1.0",
+    "@angular/http": "6.1.0",
+    "@angular/platform-browser": "6.1.0",
+    "@angular/platform-browser-dynamic": "6.1.0",
+    "@angular/platform-server": "6.1.0",
+    "@angular/router": "6.1.0",
     "@angularclass/conventions-loader": "1.0.12",
     "@fortawesome/fontawesome-svg-core": "1.2.2",
     "@fortawesome/free-solid-svg-icons": "5.2.0",
     "@ngx-formly/core": "^2.1.1",
     "accessible-html5-video-player": "^1.0.3",
-    "core-js": "2.4.1",
+    "core-js": "2.5.7",
     "ie-shim": "0.1.0",
-    "rxjs": "5.0.1",
-    "zone.js": "0.8.14",
+    "rxjs": "6.3.3",
+    "zone.js": "0.8.26",
     "moment": "2.19.3"
   },
   "devDependencies": {
@@ -86,12 +86,15 @@
     "tslint": "3.15.1",
     "tslint-loader": "2.1.5",
     "typedoc": "^0.5.0",
-    "typescript": "2.4.2",
+    "typescript": "2.9.2",
     "url-loader": "0.5.7",
     "webpack": "1.13.2",
     "webpack-dev-middleware": "1.6.1",
     "webpack-dev-server": "1.15.2",
     "webpack-md5-hash": "0.0.5",
     "webpack-merge": "0.14.0"
+  },
+  "dependencies": {
+    "rxjs-compat": "^6.2.0"
   }
 }

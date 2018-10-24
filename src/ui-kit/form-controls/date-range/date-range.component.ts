@@ -224,7 +224,7 @@ export class SamDateRangeComponent
     }
     this.control.setValidators(validators);
     if (!this.useFormService) {
-      this.control.statusChanges.subscribe(() => {
+      this.control.markAsPending.subscribe(() => {
         this.wrapper.formatErrors(this.control);
       });
       this.wrapper.formatErrors(this.control);

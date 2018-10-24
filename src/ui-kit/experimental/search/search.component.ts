@@ -26,9 +26,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import { PrototypeSearchService } from './search.service';
-
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromEvent';
+import { fromEvent, Observable} from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
@@ -79,7 +77,7 @@ export class SamSearchComponent implements OnInit{
   ngOnInit(): void{
     this.resultsWidth = "450px";
     // convert the `keyup` event into an observable stream
-    Observable.fromEvent(this.inputEl.nativeElement, 'keyup')
+    fromEvent(this.inputEl.nativeElement, 'keyup')
     .map((e: any) => e.target.value) // extract the value of the input
     .filter((text: string) => text.length > 1) // filter out if empty
     .do(()=> this.loading = true) // enable loading

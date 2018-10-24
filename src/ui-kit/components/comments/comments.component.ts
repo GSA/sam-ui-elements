@@ -13,7 +13,7 @@ import {
   ControlValueAccessor
 } from '@angular/forms';
 
-import { Observable, Subscription, Subject } from 'rxjs';
+import { Observable, Subscription, Subject,fromEvent } from 'rxjs';
 import * as moment from 'moment';
 
 import { SamAccordionComponent } from '../accordion';
@@ -95,11 +95,11 @@ export class SamCommentsComponent implements OnInit {
 
     // Register observables for 'click' events
     this.showButtonStream =
-      Observable.fromEvent(this.showCommentsButton.nativeElement, 'click');
+      fromEvent(this.showCommentsButton.nativeElement, 'click');
     this.hideCommentsStream =
-      Observable.fromEvent(this.hideCommentsButton.nativeElement, 'click');
+      fromEvent(this.hideCommentsButton.nativeElement, 'click');
     this.enterEventStream =
-      Observable.fromEvent(this.textArea.nativeElement, 'keyup');
+      fromEvent(this.textArea.nativeElement, 'keyup');
 
     // Map DOM events to actions
     this.getCommentsStream =
