@@ -236,7 +236,7 @@ export class SamAutocompleteMultiselectComponent
       return;
     }
     if (!this.useFormService) {
-      this.control.markAsPending.subscribe(() => {
+      this.control.statusChanges.subscribe(() => {
         this.wrapper.formatErrors(this.control);
       });
       this.wrapper.formatErrors(this.control);
