@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
+import { Observable ,  Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { Component, ElementRef, Input, ViewChild,
   forwardRef } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpEventType,
@@ -336,7 +336,9 @@ export class SamUploadComponent implements ControlValueAccessor {
     const request = this.deleteRequest(uf);
 
     if (request instanceof Observable) {
-      return request.switchMap(req => this.httpClient.request(req));
+      return request.pipe(
+        switchMap(req => this.httpClient.request(req))
+      );
     } else if (request instanceof HttpRequest) {
       return this.httpClient.request(request);
     } else {
@@ -349,10 +351,12 @@ export class SamUploadComponent implements ControlValueAccessor {
     const request = this.uploadRequest(file);
 
     if (request instanceof Observable) {
-      return request.switchMap((req: HttpRequest<any>) => {
-        upload.request = req;
-        return this.httpClient.request(req);
-      });
+      return request.pipe(
+        switchMap((req: HttpRequest<any>) => {
+          upload.request = req;
+          return this.httpClient.request(req);
+        })
+      );
     } else if (request instanceof HttpRequest) {
       upload.request = request;
       return this.httpClient.request(request);

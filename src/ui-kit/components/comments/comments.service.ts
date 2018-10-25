@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { Comment } from './';
 
@@ -21,19 +21,19 @@ export class CommentsService {
   }
 
   getComments(): Observable<Comment[]> {
-    return Observable.of(this._comments);
+    return of(this._comments);
   }
 
   postComment(_: any): Observable<Comment[]> {
-    return Observable.of(this._comments);
+    return of(this._comments);
   }
 
   deleteComment(comment: Comment): Observable<Comment[]> {
-    return Observable.of(this._comments);
+    return of(this._comments);
   }
 
   getInitialState(): Observable<Comment[]> {
     const lastTwo = -2;
-    return Observable.of(this._comments.slice(lastTwo));
+    return of(this._comments.slice(lastTwo));
   }
 }

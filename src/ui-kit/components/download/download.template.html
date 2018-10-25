@@ -12,7 +12,7 @@
   </div>
 
   <ng-container *ngIf="packages && packages.length > 0">
-    <div class="card download-container" *ngFor="let package of packages" [@intro]="fade">
+    <div class="card download-container" *ngFor="let package of packages" [@intro]="'fade'">
       <!-- It's public -->
       <div *ngIf="package.access.toLowerCase() === 'public'" class="card-header {{ package.accordionState }}" (click)="toggleAccordion(package)" tabindex="0" (keyup.enter)="toggleAccordion(package)">
         <h3>{{ package.name }} ({{ package.resources?.length }})</h3>
@@ -74,14 +74,14 @@
     </div>
   </ng-container>
 
-  <div class="card" *ngIf="packages.length < 1 && !attachmentError" [@intro]="fade">
+  <div class="card" *ngIf="packages.length < 1 && !attachmentError" [@intro]="'fade'">
     <div class="card-secure-content usa-text-center">
       <span class="fa fa-spinner fa-spin"></span>
       <strong>Loading &hellip;</strong>
     </div>
   </div>
 
-  <div class="card" *ngIf="packages.length < 1 && attachmentError" [@intro]="fade">
+  <div class="card" *ngIf="packages.length < 1 && attachmentError" [@intro]="'fade'">
     <div class="card-secure-content usa-text-center">
       <strong>No packages uploaded.</strong>
     </div>

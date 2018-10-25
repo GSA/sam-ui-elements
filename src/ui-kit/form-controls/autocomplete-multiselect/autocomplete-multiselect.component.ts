@@ -191,7 +191,6 @@ export class SamAutocompleteMultiselectComponent
   /**
    * Allow to control whether display the category option in the result list or
    * not
-   * @type {boolean}
    */
   @Input() public displayCategory: boolean = true;
 
@@ -205,7 +204,7 @@ export class SamAutocompleteMultiselectComponent
 
   public innerValue: Array<any> = [];
   public isDisabled: boolean = false;
-  private list: any = [];
+  public list: any = [];
   private inputTimer: any;
   public displaySpinner: boolean = false;
   private textAreaMinHeight = 22;
@@ -923,7 +922,7 @@ export class SamAutocompleteMultiselectComponent
     this.updateMarked();
   }
 
-  public clearSearch() {
+  public clearSearch(...args: any[]) {
     this.searchText = '';
     if(this.textArea && this.textArea.nativeElement){
       this.textArea.nativeElement.style.height = this.textAreaMinHeight+"px";

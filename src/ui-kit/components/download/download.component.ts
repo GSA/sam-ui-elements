@@ -71,7 +71,7 @@ export class SamDownloadComponent {
       card.accordionState === 'expanded' ? 'collapsed' : 'expanded';
   }
 
-  private isSecure(field: string) {
+  public isSecure(field: string) {
     if (field.toLowerCase() === 'public') {
       return 'Public';
     } else {

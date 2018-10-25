@@ -247,9 +247,10 @@ export class SamModalComponent implements OnInit {
     }
   }
 
-  private preventClosing(evt) {
+  public preventClosing(evt) {
     evt.stopPropagation();
   }
+  
   private setModalElementIds() {
     if (this.id) {
       this.modalElIds.cancelId = this.id + 'Cancel';

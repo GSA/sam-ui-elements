@@ -31,12 +31,9 @@ import {
 } from '@angular/cdk';
 import {MdTabLabelWrapper} from './tab-label-wrapper';
 
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription, of as observableOf, merge, fromEvent} from 'rxjs';
 
 import {auditTime, startWith} from '@angular/cdk';
-import {of as observableOf} from 'rxjs/observable/of';
-import {merge} from 'rxjs/observable/merge';
-import {fromEvent} from 'rxjs';
 
 
 /**

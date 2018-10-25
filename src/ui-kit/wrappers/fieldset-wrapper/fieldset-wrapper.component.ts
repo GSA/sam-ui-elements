@@ -45,7 +45,7 @@ export class FieldsetWrapper {
   @Input() public required: boolean = false;
   @ViewChild('hintContainer') public hintContainer: any;
   public showToggle: boolean = false;
-  private toggleOpen: boolean = false;
+  public toggleOpen: boolean = false;
   private lineSize: number;
   private lineLimit: number = 2;
   private checkMore = false; // semaphore

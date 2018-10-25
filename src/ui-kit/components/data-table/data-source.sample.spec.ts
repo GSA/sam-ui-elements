@@ -1,11 +1,8 @@
 import { SamSortable, SamSortDirective } from './';
-import { merge } from 'rxjs/observable/merge';
+import { merge ,  BehaviorSubject ,  Observable,fromEvent } from 'rxjs';
 import { DataSource } from '@angular/cdk';
 
 import { RECORDS } from './data.sample.spec';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-/* tslint:disable */
-import { Observable,fromEvent } from 'rxjs';
 /* tslint:enable */
 
 export interface CFDAData {

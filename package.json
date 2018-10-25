@@ -10,7 +10,10 @@
   ],
   "ngPackage": {
     "lib": {
-      "entryFile": "src/index.ts"
+      "entryFile": "src/index.ts",
+      "umdModuleIds": {
+        "moment": "moment"
+      }
     }
   },
   "files": [

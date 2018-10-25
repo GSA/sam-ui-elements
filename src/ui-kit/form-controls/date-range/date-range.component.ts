@@ -116,8 +116,8 @@ export class SamDateRangeComponent
     year: undefined
   };
 
-  private startDateValue;
-  private endDateValue;
+  public startDateValue;
+  public endDateValue;
 
   public static dateRangeValidation(c: AbstractControl) {
     const error = {

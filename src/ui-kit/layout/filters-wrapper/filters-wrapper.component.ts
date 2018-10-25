@@ -7,9 +7,7 @@ import {
   } from '@angular/core';
   import { FormGroup } from '@angular/forms';
   
-  import { Observable } from 'rxjs/Observable';
-  import { Subject } from 'rxjs/Subject';
-  import { Subscription } from 'rxjs/Subscription';
+  import { Observable ,  Subject ,  Subscription, combineLatest } from 'rxjs';
   
   import { SamPageNextService } from '../../experimental/patterns/layout/architecture';
   import { areEqual } from '../../utilities';
@@ -110,7 +108,7 @@ import {
     private _initializeService () {
       if (this._service) {
   
-        Observable.combineLatest(
+        combineLatest(
           this.group.valueChanges,
           this._service.model.properties['filters'].valueChanges
         )

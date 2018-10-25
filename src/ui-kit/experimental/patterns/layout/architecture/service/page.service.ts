@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ServiceModel, ServiceProperty } from './service-property';
 import { DataStore } from '../store';
-import { Observable } from 'rxjs';
-import { Subject } from 'rxjs/Subject';
+import { Observable ,  Subject } from 'rxjs';
 
 export type DataLayoutProperty = 'data'
   | 'filters' | 'pagination' | 'sort' | 'filterFields';

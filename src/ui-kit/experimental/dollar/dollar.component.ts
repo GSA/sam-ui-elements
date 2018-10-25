@@ -1,36 +1,32 @@
 import {
-    Component,
-    ChangeDetectorRef,
-    Input,
-    ViewChild,
-    forwardRef,
-    Output,
-    EventEmitter,
-    OnInit,
-    OnDestroy,
-    AfterViewInit
-  } from '@angular/core';
+  Component,
+  ChangeDetectorRef,
+  Input,
+  ViewChild,
+  forwardRef,
+  Output,
+  EventEmitter
+} from '@angular/core';
 import {
   NG_VALUE_ACCESSOR,
-  ControlValueAccessor,
-  FormControl,
   Validators,
   ValidatorFn
 } from '@angular/forms';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { SamFormService } from '../../form-service';
 import { KeyHelper } from '../../utilities/key-helper/key-helper';
 import { SamFormControl } from '../../form-controls/sam-form-control';
 
 @Component({
-    selector: 'sam-dollar',
-    templateUrl: 'dollar.template.html',
-    providers: [{
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => SamDollarComponent),
-        multi: true
-    }]
+  selector: 'sam-dollar',
+  templateUrl: 'dollar.template.html',
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => SamDollarComponent),
+    multi: true
+  }]
 })
 export class SamDollarComponent extends SamFormControl {
   /**
@@ -86,7 +82,11 @@ export class SamDollarComponent extends SamFormControl {
     this.control.setValidators(validators);
 
     if (!this.useFormService) {
-      this.control.statusChanges.takeUntil(this.ngUnsubscribe).subscribe(() => {
+      this.control.statusChanges
+      .pipe(
+        takeUntil(this.ngUnsubscribe)
+      )
+      .subscribe(() => {
         this.wrapper.formatErrors(this.control);
         this.cdr.detectChanges();
       });

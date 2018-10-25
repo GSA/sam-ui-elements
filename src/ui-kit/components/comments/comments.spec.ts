@@ -1,3 +1,5 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -10,8 +12,6 @@ import {
   Comment
 } from './';
 import { SamPipesModule } from '../../pipes';
-
-import { Observable } from 'rxjs';
 
 const washingtonImg =
   'https://upload.wikimedia.org/wikipedia/commons/c/c6/Georgewashington.jpg';
@@ -106,7 +106,7 @@ export class CommentsDemoService implements CommentsService {
   postComment(_: any): Observable<Comment[]> {
     if (_.text === 'asdf') {
       const err = new Error('I errored, bro');
-      return Observable.throw(err);
+      return observableThrowError(err);
     }
     this._comments.push(_);
     return Observable.of(this._comments);

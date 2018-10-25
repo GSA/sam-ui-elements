@@ -1,10 +1,6 @@
 
 /**
  * Checks if two items are equal by value rather than reference
- * 
- * @param {*} item1 - The item in question
- * @param {*} item2 - An item to compare against
- * @returns {boolean}
  */
 export function areEqual (item1: any, item2: any): boolean {
   const type1: string = typeof item1,
@@ -25,10 +21,6 @@ export function areEqual (item1: any, item2: any): boolean {
    * Since the typeof an object and an array are 'object' in Javascript,
    * additional type checking is needed to determine if an object is an 
    * array or not.
-   * 
-   * @param item1 
-   * @param item2 
-   * @returns {boolean}
    */
   function areObjectsEqual (item1, item2): boolean {
     // typeof null === 'object', so we have to check for null with the object 
@@ -51,11 +43,6 @@ export function areEqual (item1: any, item2: any): boolean {
 
   /**
    * Checks if two arrays are equal
-   * 
-   * @param {*} array1 
-   * @param {*} array2 
-   * 
-   * @returns {boolean}
    */
   function areArraysEqual (array1, array2): boolean {
     const len1: number = array1.length,
@@ -78,11 +65,6 @@ export function areEqual (item1: any, item2: any): boolean {
 
   /**
    * Check if two non-array objects are equal
-   * 
-   * @param {*} array1 
-   * @param {*} array2 
-   * 
-   * @returns {boolean}
    */
   function areNonArrayObjectsEqual (obj1, obj2): boolean {
     const keys1 = Object.keys(obj1),

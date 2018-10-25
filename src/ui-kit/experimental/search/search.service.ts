@@ -2,7 +2,8 @@ import {
   Injectable
 } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { from } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class PrototypeSearchService{
@@ -80,35 +81,37 @@ export class PrototypeSearchService{
   
   
   public loadData(query: string) {
-    return Observable.from([this.results]).map(response => {
-      return response.map(item => {
-        
-        let description;
-        
-        let regex = new RegExp(query, 'gi');
-        let match;
-        if(match = regex.exec(item.name)){
-          let wordLength = parseInt(match.index + query.length);
-          if(match.index === 0){
-            description = `${item.name.slice(match.index, wordLength)}<b>${item.name.slice(wordLength)}</b>`;
-          }else{
-            description = `<b>${item.name.slice(0, match.index)}</b>${item.name.slice(match.index, wordLength)}<b>${item.name.slice(wordLength)}</b>`;
+    return from([this.results]).pipe(
+      map(response => {
+        return response.map(item => {
+          
+          let description;
+          
+          let regex = new RegExp(query, 'gi');
+          let match;
+          if(match = regex.exec(item.name)){
+            let wordLength = parseInt(match.index + query.length);
+            if(match.index === 0){
+              description = `${item.name.slice(match.index, wordLength)}<b>${item.name.slice(wordLength)}</b>`;
+            }else{
+              description = `<b>${item.name.slice(0, match.index)}</b>${item.name.slice(match.index, wordLength)}<b>${item.name.slice(wordLength)}</b>`;
+            }
+            
+            if(item.domain === 'Assistance Listing'){
+              description = `${item.name.slice(match.index, wordLength)}<b>${item.name.slice(wordLength)}</b>`;
+              description = `${description} ${item.title}`;
+            }
           }
           
-          if(item.domain === 'Assistance Listing'){
-            description = `${item.name.slice(match.index, wordLength)}<b>${item.name.slice(wordLength)}</b>`;
-            description = `${description} ${item.title}`;
+          return {
+            name: item.name,
+            domain: (query.length >= 14 || item.domain === 'Assistance Listing') ? `in ${item.domain}` : false,
+            description: description
           }
-        }
-        
-        return {
-          name: item.name,
-          domain: (query.length >= 14 || item.domain === 'Assistance Listing') ? `in ${item.domain}` : false,
-          description: description
-        }
-        
-      }).filter( item => item.description);
-    });
+          
+        }).filter( item => item.description);
+      })
+    );
   }
   
 }

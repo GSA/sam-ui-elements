@@ -14,7 +14,7 @@ import { SamAutocompleteComponent } from './autocomplete.component';
 import { AutocompleteService } from '../autocomplete/autocomplete.service';
 
 import { AutocompleteConfig } from '../../types';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 describe('The Sam Autocomplete Component', () => {
   describe('isolated tests', ()=>{

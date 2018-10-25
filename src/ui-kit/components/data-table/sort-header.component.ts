@@ -4,7 +4,7 @@ import {
   } from '@angular/core';
 import {SamSortDirective, SamSortable, SortDirection} from './sort.directive';
 import {CdkColumnDef, coerceBooleanProperty} from '@angular/cdk';
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription} from 'rxjs';
 
 
 /**

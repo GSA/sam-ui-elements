@@ -61,7 +61,7 @@ export class LabelWrapper implements AfterViewChecked {
   public hintElId: string;
 
   private _errorMessage = '';
-  private toggleOpen: boolean = false;
+  public toggleOpen: boolean = false;
   private lineSize: number;
   private lineLimit: number = 2;
   private checkMore = false; // semaphore

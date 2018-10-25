@@ -6,6 +6,7 @@ import { Component,
          Output,
          EventEmitter } from '@angular/core';
 import { Observable, Subscription , fromEvent} from 'rxjs';
+import { merge } from 'rxjs/operators';
 
 @Component({
   selector: 'sam-image',
@@ -69,8 +70,10 @@ export class SamImageComponent implements OnInit {
 
     this.editModeSubscription =
       this.editButtonStream
-      .merge(this.cancelButtonStream)
-      .merge(this.saveButtonStream)
+      .pipe(
+        merge(this.cancelButtonStream),
+        merge(this.saveButtonStream)
+      )
       .subscribe(
         (event) => {
           if (this.editable) {
