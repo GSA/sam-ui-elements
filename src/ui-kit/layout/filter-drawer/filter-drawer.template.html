@@ -1,13 +1,13 @@
-<div class="sam">
+<div class="filters">
   <ng-template chipHost></ng-template>
-  <ng-content></ng-content>
-  <span class="options">
-    <sam-button-next 
-      *ngIf="showClear"
-      action="secondary"
-      size="small"
-      (click)="clear.emit()">
-      Clear All
-    </sam-button-next>
-  </span>
 </div>
+<ng-content></ng-content>
+<span class="options">
+  <sam-button-next 
+    *ngIf="showClear"
+    action="secondary"
+    size="small"
+    (click)="clear.emit()">
+    Clear All
+  </sam-button-next>
+</span>

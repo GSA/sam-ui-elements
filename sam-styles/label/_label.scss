@@ -1,5 +1,6 @@
 .sam.label:not(.input){
   background-color: #dce4ef;
+  white-space: nowrap;
   font-size: 13px;
   font-weight: 600;
   padding: 2px 10px;
@@ -7,7 +8,7 @@
   color: #212121;
   margin-right: 5px;
   display: inline-block;
-  box-shadow: 0px 0.8px 0.1px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0.8px 0.1px 0px rgba(0, 0, 0, 0.3);
 }
 
 .sam.label .sam.button{
