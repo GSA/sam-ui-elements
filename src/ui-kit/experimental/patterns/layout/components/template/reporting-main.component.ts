@@ -2,7 +2,7 @@ import {
   Component, HostBinding, forwardRef
 } from '@angular/core';
 
-import { SamMainComponent } from '../';
+import { SamMainComponent } from '../main.component';
 import { SamPageNextService } from '../../architecture';
 
 @Component({

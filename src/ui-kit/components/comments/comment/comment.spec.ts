@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import * as moment_ from 'moment';
+import * as moment_ from 'moment/moment';
 const moment = moment_;
 
 // Load the implementations that should be tested

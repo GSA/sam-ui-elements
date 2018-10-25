@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SamCommentsComponent } from './comments.component';
 import { SamCommentComponent } from './comment';
-import { CommentsService } from './comments.service';
 
 import { SamPipesModule } from '../../pipes';
 import { SamTextAreaModule } from '../../form-controls/textarea';

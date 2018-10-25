@@ -1,5 +1,6 @@
 import { DateTimeDisplayPipe } from './date-time-display.pipe';
-import * as moment from 'moment/moment';
+import * as moment_ from 'moment';
+const moment = moment_;
 
 describe('DateTimeDisplayPipe test', () => {
   const pipe = new DateTimeDisplayPipe();

@@ -28,8 +28,7 @@ import { SamTabsModule } from './tabs';
 import { SamWrapperModule } from '../wrappers';
 import { SamCommentsModule } from './comments';
 import { SamImageModule } from './image';
-import { SamActionButtonModule } from './actions/action-button';
-import { SamActionDropdownModule } from './actions/actions-dropdown';
+import { SamActionButtonModule, SamActionDropdownModule } from './actions';
 import { SamDataTableModule } from './data-table';
 import { SamPageTitleModule } from './page-title';
 

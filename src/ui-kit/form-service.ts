@@ -1,16 +1,4 @@
-import {Injectable} from '@angular/core';
-// import {
-//   Http,
-//   Headers,
-//   RequestOptions,
-//   Request,
-//   RequestMethod,
-//   Response,
-//   URLSearchParams,
-//   QueryEncoder
-// } from '@angular/http';
-
-
+import { Injectable } from '@angular/core';
 import { Subject }    from 'rxjs';
 import { AbstractControl }    from '@angular/forms';
 

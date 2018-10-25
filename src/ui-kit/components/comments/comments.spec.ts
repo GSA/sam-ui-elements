@@ -5,13 +5,10 @@ import { By } from '@angular/platform-browser';
 import { FormGroup, FormControl } from '@angular/forms';
 
 // Load the implementations that should be tested
-import {
-  SamCommentsComponent,
-  SamCommentsModule,
-  CommentsService,
-  Comment
-} from './';
-import { SamPipesModule } from '../../pipes';
+import { Comment } from './interfaces';
+import { SamCommentsComponent } from './comments.component';
+import { SamCommentsModule } from './comments.module'
+import { CommentsService } from './comments.service';
 
 const washingtonImg =
   'https://upload.wikimedia.org/wikipedia/commons/c/c6/Georgewashington.jpg';

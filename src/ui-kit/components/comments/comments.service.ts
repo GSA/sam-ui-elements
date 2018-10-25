@@ -1,6 +1,6 @@
 import { Observable, of } from 'rxjs';
 
-import { Comment } from './';
+import { Comment } from './interfaces';
 
 export class CommentsService {
 

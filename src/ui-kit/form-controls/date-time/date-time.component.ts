@@ -6,7 +6,8 @@ import {
   forwardRef,
   OnChanges
 } from '@angular/core';
-import * as moment from 'moment/moment';
+import * as moment_ from 'moment';
+const moment = moment_;
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
 import { SamDateComponent } from '../date/date.component';

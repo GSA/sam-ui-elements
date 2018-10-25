@@ -1,5 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import * as moment from 'moment/moment';
+import * as moment_ from 'moment';
+const moment = moment_;
 // import 'moment-timezone';
 
 @Pipe({name: 'dateTimeDisplay'})
