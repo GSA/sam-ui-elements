@@ -3,7 +3,7 @@
   [name]="id ? id : name"
   [hint]="hint"
   [errorMessage]="errorMessage"
-  [required]="required || optional">
+  [required]="required || !optional">
   <input
     type="text"
     [ngModel]="value"
