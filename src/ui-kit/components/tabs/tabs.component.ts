@@ -117,7 +117,7 @@ export class SamTabsComponent implements AfterContentInit {
 
   private _size = 'large';
   private _theme = 'default';
-  private themes = {
+  public themes = {
     default: 'secondary pointing',
     separate: 'separate tabular',
   };

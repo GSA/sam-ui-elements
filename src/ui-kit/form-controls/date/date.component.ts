@@ -27,6 +27,17 @@ import {
   KeyHelper
 } from '../../utilities/key-helper/key-helper';
 
+export function dateRequiredValidator (c: AbstractControl) {
+  if (c.dirty && !c.value) {
+    return {
+      dateRequiredError: {
+        message: 'This field is required'
+      }
+    };
+  }
+  return undefined;
+};
+
 /**
  * The <sam-date> component is a Date entry portion of a form
  */
@@ -126,17 +137,8 @@ export class SamDateComponent
     };
   }
 
-  static dateRequired() {
-    return (c: AbstractControl) => {
-      if (c.dirty && !c.value) {
-        return {
-          dateRequiredError: {
-            message: 'This field is required'
-          }
-        };
-      }
-      return undefined;
-    };
+  static dateRequired(): ValidatorFn {
+    return dateRequiredValidator;
   }
   
   static dateValidation() {

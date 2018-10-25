@@ -2,8 +2,6 @@ import {
   Component,
   Input,
   ViewChild,
-  Output,
-  EventEmitter,
   OnInit,
   forwardRef,
   OnChanges
@@ -15,19 +13,19 @@ import { SamDateComponent } from '../date/date.component';
 import { SamTimeComponent } from '../time/time.component';
 import {SamFormService} from '../../form-service';
 
-const MY_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => SamDateTimeComponent),
-  multi: true
-};
-
 /**
  * The <sam-date-time> component is a DateTime entry portion of a form
  */
 @Component({
   selector: 'sam-date-time',
   templateUrl: 'date-time.template.html',
-  providers: [ MY_VALUE_ACCESSOR ]
+  providers: [ 
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SamDateTimeComponent),
+      multi: true
+    }
+  ]
 })
 export class SamDateTimeComponent
   implements OnInit, OnChanges, ControlValueAccessor {
