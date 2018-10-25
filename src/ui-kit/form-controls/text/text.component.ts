@@ -73,6 +73,10 @@ export class SamTextComponent implements ControlValueAccessor,
   */
   @Input() public required: boolean;
   /**
+  * Sets the required attribute
+  */
+  @Input() public optional: boolean = true;
+  /**
   * Passes in the Angular FormControl
   */
   @Input() public control: FormControl;
@@ -252,7 +256,7 @@ export class SamTextComponent implements ControlValueAccessor,
       validators.push(this.control.validator);
     }
     if(this.defaultValidations){
-      if (this.required) {
+      if (this.required || !this.optional) {
         validators.push(Validators.required);
       }
 
