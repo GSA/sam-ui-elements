@@ -5,6 +5,7 @@ import { ElementRef } from '@angular/core';
 // Load the implementations that should be tested
 import { SamModalComponent } from './modal.component';
 import { SamElementsModule } from '../../elements';
+import { SamIconsModule } from '../../experimental/icon';
 
 describe('The Sam Modal component', () => {
   describe('isolated tests', () => {
@@ -35,7 +36,7 @@ describe('The Sam Modal component', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [SamElementsModule],
+        imports: [SamElementsModule, SamIconsModule],
         declarations: [SamModalComponent]
       });
 

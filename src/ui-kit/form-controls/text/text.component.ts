@@ -256,7 +256,7 @@ export class SamTextComponent implements ControlValueAccessor,
       validators.push(this.control.validator);
     }
     if(this.defaultValidations){
-      if (this.required || !this.optional) {
+      if (this.required) {
         validators.push(Validators.required);
       }
 
