@@ -14,9 +14,7 @@ import { ResultsTemplateComponent } from './results.component';
 /**
  * Grid
  */
-import { GridDirective } from './grid/grid.directive';
-import { RowDirective } from './grid/row.directive';
-import { ColumnDirective } from './grid/column.directive';
+import { GridDirective, RowDirective, ColumnDirective } from './grid';
 
 /**
  * Pages

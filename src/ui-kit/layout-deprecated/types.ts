@@ -1,4 +1,4 @@
-import { BadgeConfig } from '../components/badge';
+import { BadgeConfig } from '../components';
 
 export interface PageConfig {
   class?: string;

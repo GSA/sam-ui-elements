@@ -7,3 +7,4 @@ export * from './results.component';
 export * from './sidebar.component';
 export * from './title-and-section.component';
 export * from './types';
+export * from './grid';
