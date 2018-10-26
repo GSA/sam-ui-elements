@@ -8,6 +8,7 @@
   [description]="uploadFileActionModalConfig.description"
   [submitButtonLabel]="'Ok'"
   [cancelButtonLabel]="'Cancel'"
+  (open)="onActionModalOpen($event)"
   (submit)="onActionModalSubmit($event)">
   <ng-content select=".action-modal-content"></ng-content>
 </sam-modal>
