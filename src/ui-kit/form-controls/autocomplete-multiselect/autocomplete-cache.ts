@@ -1,4 +1,4 @@
-import { areEqual } from '../../utilities/are-equal/are-equal';
+import { areEqual } from '../../utilities';
 
 export class Cached {
   private contents: any[] = [];

@@ -8,7 +8,7 @@ import {
 import { FormGroup } from '@angular/forms';
 
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { SamPageNextService } from '../experimental/patterns/layout/architecture';
+import { SamPageNextService } from '../experimental';
 
 @Component({
   selector: 'sam-filters',

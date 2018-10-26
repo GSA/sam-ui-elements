@@ -23,7 +23,7 @@ import {
 import { Subject ,  Subscription } from 'rxjs'
 import { takeUntil } from 'rxjs/operators';
 
-import { LabelWrapper } from '../../wrappers/label-wrapper';
+import { LabelWrapper } from '../../wrappers';
 import { SamFormService } from '../../form-service';
 
 /**

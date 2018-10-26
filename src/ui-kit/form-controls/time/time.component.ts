@@ -2,21 +2,17 @@ import {
   Component,
   Input,
   ViewChild,
-  Output,
-  EventEmitter,
   OnInit,
   OnChanges,
   forwardRef
 } from '@angular/core';
 import * as moment_ from 'moment';
 const moment = moment_;
-import { LabelWrapper } from '../../wrappers/label-wrapper';
+import { LabelWrapper } from '../../wrappers';
 import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
-  FormControl,
-  Validators,
-  ValidatorFn
+  FormControl
 } from '@angular/forms';
 import {SamFormService} from '../../form-service';
 

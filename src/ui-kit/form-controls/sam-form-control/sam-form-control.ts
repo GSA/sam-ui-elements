@@ -14,7 +14,7 @@ import {
   NG_VALIDATORS} from '@angular/forms';
 
 import { SamFormService } from '../../form-service';
-import { LabelWrapper } from '../../wrappers/label-wrapper';
+import { LabelWrapper } from '../../wrappers';
 
 export function AccessorToken (className) {
   return {

@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { SamNumberComponent } from './number.component';
 import {
   LabelWrapper
-} from '../../wrappers/label-wrapper/label-wrapper.component';
+} from '../../wrappers';
 import { FormsModule, FormControl } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { SamFormService } from '../../form-service';

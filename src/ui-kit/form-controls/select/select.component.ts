@@ -9,7 +9,7 @@ import {
   forwardRef,
   AfterViewInit
 } from '@angular/core';
-import { LabelWrapper } from '../../wrappers/label-wrapper';
+import { LabelWrapper } from '../../wrappers';
 import { OptionsType } from '../../types';
 import {
   FormControl,

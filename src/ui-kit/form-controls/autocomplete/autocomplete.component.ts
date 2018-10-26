@@ -22,9 +22,9 @@ import { AutocompleteConfig } from '../../types';
 import { AutocompleteService } from './autocomplete.service';
 import { SamFormService } from '../../form-service';
 
-import { KeyHelper } from '../../utilities/key-helper/key-helper';
-import { areEqual } from '../../utilities/are-equal/are-equal';
-import { AutocompleteCache } from '../autocomplete-multiselect/autocomplete-cache';
+import { KeyHelper } from '../../utilities';
+import { areEqual } from '../../utilities';
+import { AutocompleteCache } from '../autocomplete-multiselect';
 
 const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,

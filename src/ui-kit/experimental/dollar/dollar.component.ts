@@ -14,10 +14,10 @@ import {
 } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { LabelWrapper } from '../../wrappers/label-wrapper';
+import { LabelWrapper } from '../../wrappers';
 import { SamFormService } from '../../form-service';
-import { KeyHelper } from '../../utilities/key-helper/key-helper';
-import { SamFormControl } from '../../form-controls/sam-form-control';
+import { KeyHelper } from '../../utilities';
+import { SamFormControl } from '../../form-controls';
 
 @Component({
   selector: 'sam-dollar',

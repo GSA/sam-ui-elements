@@ -11,7 +11,7 @@ import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR
 } from '@angular/forms';
-import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
+import { FieldsetWrapper } from '../../wrappers';
 import { OptionsType } from '../../types';
 import { SamFormService } from '../../form-service';
 

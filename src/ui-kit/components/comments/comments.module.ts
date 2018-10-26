@@ -6,7 +6,7 @@ import { SamCommentsComponent } from './comments.component';
 import { SamCommentComponent } from './comment';
 
 import { SamPipesModule } from '../../pipes';
-import { SamTextAreaModule } from '../../form-controls/textarea';
+import { SamTextAreaModule } from '../../form-controls';
 import { AccordionsModule } from '../accordion';
 
 @NgModule({

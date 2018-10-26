@@ -1,4 +1,4 @@
-import { EventDispatcher } from '../utils/events';
+import { EventDispatcher } from '../utils';
 
 export type CellRole = 'gridcell'
   | 'columnheader'

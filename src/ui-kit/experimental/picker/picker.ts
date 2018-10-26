@@ -13,7 +13,7 @@ import {
 import {
   AbstractCombobox
 } from '../aria/abstract-combobox/abstract-combobox';
-import { AbstractCell } from '../aria/abstract-grid/abstract-cell';
+import { AbstractCell } from '../aria';
 import { Popover } from './popover';
 
 @Component({

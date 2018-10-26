@@ -14,12 +14,12 @@ import {
   NG_VALUE_ACCESSOR,
   FormControl
 } from '@angular/forms';
-import { LabelWrapper } from '../../wrappers/label-wrapper';
-import { AutocompleteService } from '../autocomplete/autocomplete.service';
+import { LabelWrapper } from '../../wrappers';
+import { AutocompleteService } from '../autocomplete';
 import { AutocompleteCache } from './autocomplete-cache';
 
 import { SamFormService } from '../../form-service';
-import { KeyHelper } from '../../utilities/key-helper/key-helper';
+import { KeyHelper } from '../../utilities';
 @Component({
   selector: 'sam-autocomplete-multiselect',
   templateUrl: 'autocomplete-multiselect.template.html',

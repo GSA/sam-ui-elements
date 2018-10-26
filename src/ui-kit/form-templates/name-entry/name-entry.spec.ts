@@ -2,7 +2,6 @@ import { TestBed, async } from '@angular/core/testing';
 
 // Load the implementations that should be tested
 import { SamNameEntryComponent } from './name-entry.component';
-import { SamUIKitModule } from '../../index';
 import { SamFormService } from '../../form-service';
 import { SamWrapperModule } from '../../wrappers'; 
 import { FormsModule, FormControl } from '@angular/forms'; 

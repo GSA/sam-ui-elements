@@ -1,8 +1,7 @@
 import { AbstractCell } from '../abstract-grid/abstract-cell';
 import { EventDispatcher } from '../utils/events';
-import { AbstractGrid } from '../abstract-grid/abstract-grid';
 
-interface AbstractPopup {
+export interface AbstractPopup {
   onClick: (callback: Function, context: Object) => void;
   onKeydown: (callback: Function, context: Object) => void;
   focused: AbstractCell;

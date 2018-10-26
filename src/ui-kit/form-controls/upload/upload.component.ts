@@ -4,7 +4,7 @@ import { Component, ElementRef, Input, ViewChild,
   forwardRef } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpEventType,
   HttpHeaderResponse, HttpRequest } from '@angular/common/http';
-import { DragState } from '../../directives/drag-drop/drag-drop.directive';
+import { DragState } from '../../directives';
 import { HttpEvent } from '@angular/common/http/src/response';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 

@@ -26,7 +26,7 @@ import { SamFormService } from '../../form-service';
 
 import {
   KeyHelper
-} from '../../utilities/key-helper/key-helper';
+} from '../../utilities';
 
 export function dateRequiredValidator (c: AbstractControl) {
   if (c.dirty && !c.value) {

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SamModalComponent } from './modal.component';
-import { SamButtonModule } from '../../elements/button';
-import { SamIconsModule} from '../../experimental/icon';
+import { SamButtonModule } from '../../elements';
+import { SamIconsModule } from '../../experimental';
 
 @NgModule({
     imports: [CommonModule, SamButtonModule, SamIconsModule],

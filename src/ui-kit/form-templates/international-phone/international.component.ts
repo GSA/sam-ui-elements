@@ -8,8 +8,8 @@ import {
  } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
-import { SamFieldset } from './sam-fieldset/sam-fieldset';
-import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
+import { SamFieldset } from './sam-fieldset';
+import { FieldsetWrapper } from '../../wrappers';
 import { SamFormService } from '../../form-service';
 
 @Component({

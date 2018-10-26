@@ -1,7 +1,6 @@
 import {
   Component,
-  Input,
-  HostBinding
+  Input
 } from '@angular/core';
 
 @Component({

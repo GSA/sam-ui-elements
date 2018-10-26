@@ -8,7 +8,7 @@ import {
   ViewChildren
 } from '@angular/core';
 
-import { KeyHelper } from '../../../utilities/key-helper/key-helper';
+import { KeyHelper } from '../../../utilities';
 import {SamActionInterface} from '../action-interface';
 
 @Component({

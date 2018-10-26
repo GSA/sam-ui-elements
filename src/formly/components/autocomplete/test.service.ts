@@ -1,4 +1,4 @@
-import { AutocompleteService } from '@gsa-sam/sam-ui-elements';
+import { AutocompleteService } from '../../../ui-kit';
 /* tslint:disable */
 import { Observable } from 'rxjs';
 /* tslint:enable */

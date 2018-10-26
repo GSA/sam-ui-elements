@@ -1,5 +1,5 @@
 import { Component, forwardRef, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { AbstractGrid, AbstractGridConfig } from '../aria/abstract-grid/abstract-grid';
+import { AbstractGrid, AbstractGridConfig } from '../aria';
 
 export class Popover {
   public grid;

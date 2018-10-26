@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import {
   LabelWrapper
-} from '../../wrappers/label-wrapper/label-wrapper.component';
+} from '../../wrappers';
 import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,

@@ -8,7 +8,7 @@ import {
   OnInit,
   forwardRef
 } from '@angular/core';
-import { LabelWrapper } from '../../wrappers/label-wrapper';
+import { LabelWrapper } from '../../wrappers';
 import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,

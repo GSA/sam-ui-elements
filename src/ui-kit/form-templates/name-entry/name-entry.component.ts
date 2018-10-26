@@ -1,5 +1,4 @@
 import { Component, Input, forwardRef } from '@angular/core';
-import { LabelWrapper } from '../../wrappers/label-wrapper';
 //import * as suffixes from './suffixes.json';
 import { NameEntryType } from '../../types';
 import {
@@ -8,8 +7,6 @@ import {
   Validator,
   ControlValueAccessor,
   FormControl,
-  Validators,
-  ValidatorFn
 } from '@angular/forms';
 
 const suffixes = [

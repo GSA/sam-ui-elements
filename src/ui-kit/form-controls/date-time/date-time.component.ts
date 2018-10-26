@@ -9,7 +9,7 @@ import {
 import * as moment_ from 'moment';
 const moment = moment_;
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
+import { FieldsetWrapper } from '../../wrappers';
 import { SamDateComponent } from '../date/date.component';
 import { SamTimeComponent } from '../time/time.component';
 import {SamFormService} from '../../form-service';

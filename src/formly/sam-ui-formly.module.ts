@@ -16,11 +16,11 @@ import {
   SamFormlyCheckbox,
   SamFormlyText,
   SamFormlyAutocomplete,
-  SamFormlyDate, SamFormlyRadio, SamFormlyAutoCompleteMultiselect
+  SamFormlyDate, SamFormlyRadio, SamFormlyAutoCompleteMultiselect,
+  SamFormlyDateRange, SamFormlyNumber
 } from './components';
 import { SamFilterWrapperModule } from './wrappers';
-import {SamFormlyDateRange} from './components/date-range';
-import {SamFormlyNumber} from './components/number';
+
 
 @NgModule({
  imports: [

@@ -2,7 +2,7 @@ import { Component, forwardRef, Input,
     ViewEncapsulation, ChangeDetectorRef,
     ChangeDetectionStrategy, HostListener, OnInit, OnChanges } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { SamFormControl } from '../../form-controls/sam-form-control';
+import { SamFormControl } from '../../form-controls';
 import { SamFormService } from '../../form-service';
 
 export const VALUE_ACCESSOR: any = {
