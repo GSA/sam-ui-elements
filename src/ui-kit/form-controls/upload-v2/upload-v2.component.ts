@@ -151,6 +151,11 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
    */
   @Output() public modalChange: EventEmitter<any> = new EventEmitter<any>();
 
+  /**
+   * Event emitted on modal submit
+   */
+  @Output() public modalOpen: EventEmitter<any> = new EventEmitter<any>();
+
   public dragState: DragState = DragState.NotDragging;
 
   public showMaxFilesError: boolean = false;
@@ -398,6 +403,10 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
 
   onCloseClick(fileName, index) {
     this.actionModal.openModal(index);
+  }
+
+  onActionModalOpen(data){
+    this.modalOpen.emit(data);
   }
 
   onActionModalSubmit(index) {
