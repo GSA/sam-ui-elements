@@ -1,3 +1,3 @@
 export * from './toolbar.module';
-export { SamToolbarComponent } from './toolbar.component';
-export { SamAsideToggleComponent } from './aside-toggle.component';
+export * from './toolbar.component';
+export * from './aside-toggle.component';

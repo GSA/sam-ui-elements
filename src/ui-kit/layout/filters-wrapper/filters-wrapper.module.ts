@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SamFiltersWrapperComponent } from './filters-wrapper.component';
-import { SamButtonNextModule } from '../../experimental/button-next';
+import { SamButtonNextModule } from '../../experimental';
 
 @NgModule({
     imports: [CommonModule,ReactiveFormsModule,SamButtonNextModule],

@@ -9,3 +9,9 @@ export * from './layout-components.module';
 export * from './page';
 export * from './main-content.component';
 export * from './content-outlet.directive';
+export * from './sidenav';
+export * from './template';
+export * from './pagination';
+export * from './page';
+export * from './expansion';
+

@@ -5,7 +5,7 @@ import {
   HostBinding,
   forwardRef
 } from '@angular/core';
-import { SamFilterDrawerComponent } from '../../../../layout/filter-drawer';
+import { SamFilterDrawerComponent } from '../../../../layout';
 import { SamPageNextService } from '../architecture';
 
 @Component({

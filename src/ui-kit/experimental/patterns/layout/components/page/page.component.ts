@@ -20,7 +20,7 @@ import {
   MdSidenavContainer,
   MdSidenav
 } from '../sidenav/sidenav';
-import { SamToolbarComponent } from '../../../../../layout/toolbar';
+import { SamToolbarComponent } from '../../../../../layout';
 import { SamPageNextService } from '../../architecture';
 
 @Component({

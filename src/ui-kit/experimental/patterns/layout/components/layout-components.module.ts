@@ -22,10 +22,10 @@ import { SamMainContentComponent } from './main-content.component';
 import { SamContentOutletDirective } from './content-outlet.directive';
 import { SamComponentsModule } from '../../../../components';
 import { SamActionsListModule } from '../../../actions-list';
-import { SamReportingMainComponent } from './template/reporting-main.component';
+import { SamReportingMainComponent } from './template';
 import { SamButtonNextModule } from '../../../button-next';
 import { SamIconsModule } from '../../../icon';
-import { SamFiltersWrapperModule } from '../../../../layout/filters-wrapper/filters-wrapper.module';
+import { SamFiltersWrapperModule } from '../../../../layout';
 
 @NgModule({
   imports: [

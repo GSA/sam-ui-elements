@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { SamAsideToggleComponent } from './';
+import { SamAsideToggleComponent } from './aside-toggle.component';
 
 
 describe('The Sam Aside Toggle component', () => {  

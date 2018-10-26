@@ -9,7 +9,7 @@ import {
   
   import { Observable ,  Subject ,  Subscription, combineLatest } from 'rxjs';
   
-  import { SamPageNextService } from '../../experimental/patterns/layout/architecture';
+  import { SamPageNextService } from '../../experimental';
   import { areEqual } from '../../utilities';
   
   @Component({

@@ -5,9 +5,9 @@ import {
   Component,
   Optional
 } from '@angular/core';
-import { MdSidenav } from '../../experimental/patterns/layout/components/sidenav';
-import { ToolbarItem } from '../../experimental/actions-list';
-import { SamPageNextService } from '../../experimental/patterns/layout/architecture';
+import { MdSidenav } from '../../experimental';
+import { ToolbarItem } from '../../experimental';
+import { SamPageNextService } from '../../experimental';
 
 @Component({
   selector: 'sam-aside-toggle',

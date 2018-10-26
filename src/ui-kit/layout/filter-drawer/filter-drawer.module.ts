@@ -10,7 +10,7 @@ import {
 import {
   SamFilterDrawerComponent
 } from './filter-drawer.component';
-import { SamButtonNextModule } from '../../experimental/button-next';
+import { SamButtonNextModule } from '../../experimental';
 
 @NgModule({
   imports: [

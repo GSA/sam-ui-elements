@@ -4,8 +4,8 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
-import { MdSidenav } from '../../experimental/patterns/layout/components/sidenav';
-import { ToolbarItem } from '../../experimental/actions-list';
+import { MdSidenav } from '../../experimental';
+import { ToolbarItem } from '../../experimental';
 
 @Component({
   selector: 'sam-toolbar',

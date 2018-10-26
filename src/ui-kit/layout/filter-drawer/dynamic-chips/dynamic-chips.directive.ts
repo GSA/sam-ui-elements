@@ -18,7 +18,7 @@ import {
 
 import {
   SamPageNextService
-} from '../../../experimental/patterns/layout/architecture';
+} from '../../../experimental';
 
 @Directive({
   selector: '[dynamicChips]'
