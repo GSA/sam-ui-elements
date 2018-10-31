@@ -5,8 +5,6 @@ import { RouterModule } from '@angular/router';
 
 import { SamBoxComponent } from './box';
 import { SamContainerComponent } from './container';
-import { SamFilterDrawerItemComponent } from './filter-drawer';
-import { SamFilterDrawerComponent } from './filter-drawer';
 import { SamIconsModule } from './icon';
 import { SamLabelNextComponent } from './label';
 import { SamLayoutComponent } from './layout';
@@ -23,12 +21,13 @@ import { SamYoutubeComponent } from './youtube';
 import { SamPickerComponent, SamPopoverComponent } from './picker';
 import { SamVideoPlayerModule } from './video-player';
 import { SamInputMaskModule } from './input-mask';
-import { SamPageTitle } from './page-title';
 import { SamLayoutComponentsModule } from './patterns';
 import { SamDollarComponent } from './dollar';
 import { SamWrapperModule } from '../wrappers';
 import { SamActionsListModule } from './actions-list';
 import { SamButtonNextModule } from './button-next';
+import { SamTabsNextModule } from './tabs';
+import { SamAlertNextModule } from './alert';
 
 @NgModule({
   imports: [
@@ -41,13 +40,13 @@ import { SamButtonNextModule } from './button-next';
     SamActionsListModule,
     SamIconsModule,
     SamButtonNextModule,
-    SamVideoPlayerModule
+    SamVideoPlayerModule,
+    SamTabsNextModule,
+    SamAlertNextModule
   ],
   declarations: [
     SamBoxComponent,
     SamContainerComponent,
-    SamFilterDrawerItemComponent,
-    SamFilterDrawerComponent,
     SamLabelNextComponent,
     SamLayoutComponent,
     SamLayoutContentComponent,
@@ -62,14 +61,11 @@ import { SamButtonNextModule } from './button-next';
     SamYoutubeComponent,
     SamPopoverComponent,
     SamPickerComponent,
-    SamPageTitle,
     SamDollarComponent,
   ],
   exports: [
     SamBoxComponent,
     SamContainerComponent,
-    SamFilterDrawerItemComponent,
-    SamFilterDrawerComponent,
     SamLabelNextComponent,
     SamLayoutComponent,
     SamLayoutContentComponent,
@@ -87,11 +83,12 @@ import { SamButtonNextModule } from './button-next';
     SamVideoPlayerModule,
     SamInputMaskModule,
     SamLayoutComponentsModule,
-    SamPageTitle,
     SamDollarComponent,
     SamActionsListModule,
     SamIconsModule,
-    SamButtonNextModule
+    SamButtonNextModule,
+    SamTabsNextModule,
+    SamAlertNextModule
   ]
 })
 export class SamExperimentalModule {}

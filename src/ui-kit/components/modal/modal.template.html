@@ -1,13 +1,18 @@
-<div aria-live="assertive" #modalRoot *ngIf="show" [attr.id]="id" tabindex="-1" role="dialog" class="modal-dialog" tabindex="-1" (keydown.esc)="closeOnEscape ? closeModal() : 0" (click)="closeOnOutsideClick ? closeModal() : 0">
+<div aria-live="assertive" #modalRoot *ngIf="show" [attr.id]="id" tabindex="-1" role="dialog" class="modal-dialog" (keydown.esc)="closeOnEscape ? closeModal() : 0" (click)="closeOnOutsideClick ? closeModal() : 0">
 	<div #modalContent class="modal-content" (click)="preventClosing($event)">
-		<div class="usa-alert {{this.types[type].class}}">
+		<div *ngIf="this.type !== 'primary'" class="usa-alert {{this.types[type].class}}">
 		  <div class="usa-alert-body">
-		    <h3 class="usa-alert-heading">
-		      <button class="usa-button-link pull-right" *ngIf="showClose" (click)="closeModal()"><span class="fa fa-times-circle" [attr.id]="modalElIds?.closeId"></span><span class="usa-sr-only">close modal</span></button>
-					{{title}}
-					<span class="sr-only">{{this.types[type].sr}}</span>
-				</h3>
+				<button class="usa-button-link pull-right" *ngIf="showClose" (click)="closeModal()"><span class="fa fa-times-circle" [attr.id]="modalElIds?.closeId"></span><span class="usa-sr-only">close modal</span></button>
+				<span *ngIf="this.types[type].sr" class="sr-only">{{this.types[type].sr}}</span>
+		    <h3 class="usa-alert-heading">{{title}}</h3>
 		  </div>
+		</div>
+		<div *ngIf="this.type === 'primary'" class="primary-model-body">
+			<button class="sam-primary-button pull-right" *ngIf="showClose" (click)="closeModal()"><span class="fa fa-times-circle" [attr.id]="modalElIds?.closeId"></span><span class="usa-sr-only">close modal</span></button>
+			<div class="sam-primary-title">
+				<sam-icon [icon]="icon" size="2x"></sam-icon>
+				<h3>{{title}}</h3>
+			</div>
 		</div>
 		<div class="modal-body">
 		  <p *ngIf="description">{{description}}</p>

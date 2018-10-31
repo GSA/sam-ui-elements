@@ -134,8 +134,8 @@ export class SamTextComponent implements ControlValueAccessor,
   }
 
   public ngOnDestroy (): void {
-    this.cdr.detach();
     this._unsubscribe();
+    this.cdr.detach();
   }
 
   public onLoseFocus (): void {
@@ -160,7 +160,9 @@ export class SamTextComponent implements ControlValueAccessor,
     this.value = value !== null
       ? '' + value
       : '';
-    this.cdr.detectChanges();
+    if (!this.cdr['destroyed']) {
+      this.cdr.detectChanges();
+    }
   }
 
   private _validateInputs (): void {

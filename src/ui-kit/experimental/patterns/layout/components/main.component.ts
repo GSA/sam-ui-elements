@@ -5,15 +5,15 @@ import {
   HostBinding,
   forwardRef
 } from '@angular/core';
-import { SamFilterDrawerComponent } from '../../../filter-drawer';
+import { SamFilterDrawerComponent } from '../../../../layout/filter-drawer';
 import { SamPageNextService } from '../architecture';
 
 @Component({
   selector: 'sam-main',
   template: `
-    <ng-content select="sam-page-title"></ng-content>
+    <ng-content select="sam-alert-next"></ng-content>
     <ng-content select="sam-filter-drawer"></ng-content>
-    <ng-content select="sam-main-content"></ng-content>
+    <ng-content></ng-content>
   `
 })
 export class SamMainComponent implements AfterContentInit {
@@ -25,7 +25,9 @@ export class SamMainComponent implements AfterContentInit {
   constructor (protected _service: SamPageNextService) {}
 
   public ngAfterContentInit () {
-    this.drawer.clear.subscribe(evt => this._clearDrawer());
+    if(this.drawer){
+      this.drawer.clear.subscribe(evt => this._clearDrawer());
+    }
   }
 
   private _clearDrawer () {

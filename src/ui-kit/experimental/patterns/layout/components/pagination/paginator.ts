@@ -26,6 +26,10 @@ export class Paginator {
     this._recalculatePagination();
   }
 
+  public getTotalPages (): number{
+    return Math.ceil(this.getTotalUnits() / this.getUnitsPerPage());
+  }
+
   public getUnitsPerPage (): number {
     return this._unitsPerPage;
   }
@@ -60,7 +64,7 @@ export class Paginator {
     const [min, max] =
       this._calculateDisplayedUnits(this._currentPage);
 
-    return `${min} to ${max} of ${this.getTotalUnits()}`;
+    return `${min} – ${max} of ${this.getTotalUnits()}`;
   }
 
   public printPerPageString (): string {

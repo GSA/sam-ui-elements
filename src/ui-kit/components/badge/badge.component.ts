@@ -1,7 +1,5 @@
 import { Component, Input } from '@angular/core';
 
-import { merge, pick } from 'lodash';
-
 import { BadgeConfig } from './types';
 
 @Component({
@@ -23,7 +21,7 @@ export class SamBadgeComponent {
    * Sets options for badge
    */
   @Input() set options(config: BadgeConfig) {
-    this._options = pick(config, ['attached']);
+    this._options = config;
   }
 
   get attached(): string {

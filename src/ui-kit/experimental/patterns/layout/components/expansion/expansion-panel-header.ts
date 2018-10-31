@@ -51,12 +51,12 @@ import {MdExpansionPanelComponent, EXPANSION_PANEL_ANIMATION_TIMING} from './exp
   animations: [
     trigger('indicatorRotate', [
       state('collapsed', style({transform: 'rotate(0deg)'})),
-      state('expanded', style({transform: 'rotate(180deg)'})),
+      state('expanded', style({transform: 'translateY(3px) rotate(90deg)'})),
       transition('expanded <=> collapsed', animate(EXPANSION_PANEL_ANIMATION_TIMING)),
     ]),
     trigger('expansionHeight', [
       state('collapsed', style({height: '48px', 'line-height': '48px'})),
-      state('expanded', style({height: '64px', 'line-height': '68px'})),
+      state('expanded', style({height: '48px', 'line-height': '48px'})),
       transition('expanded <=> collapsed', animate(EXPANSION_PANEL_ANIMATION_TIMING)),
     ]),
   ],

@@ -1,6 +1,6 @@
 <div class="sam-autocomplete" sam-click-outside (clickOutside)="checkForFocus($event)" sam-tab-outside (tabOutside)="checkForFocus($event)">
   <!-- Text input -->
-  <sam-label-wrapper #wrapper [label]="labelText" [hint]="hint" [name]="id" [required]="required" [errorMessage]="errorMessage">
+  <sam-label-wrapper #wrapper [label]="labelText" [hint]="hint" [showFullHint]="showFullHint" [name]="id" [required]="required" [errorMessage]="errorMessage">
     <div class="input-container">
       <input [attr.id]="id"
              [attr.tabindex]="tabIndex"
@@ -9,8 +9,7 @@
              [attr.title]="config?.title"
              [attr.name]="name"
              type="text"
-             (focus)="inputFocusHandler($event)"
-             (keydown)="onKeydown($event)"
+             (focus)="inputFocusHandler($event)"       
              (keyup)="onKeyup($event)"
              [(ngModel)]="inputValue"
              (ngModelChange)="onChange()">

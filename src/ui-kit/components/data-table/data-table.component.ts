@@ -1,5 +1,10 @@
-import {ChangeDetectionStrategy, Component,
-    ViewEncapsulation, HostBinding} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    Component,
+    ViewEncapsulation,
+    HostBinding,
+    Input
+} from '@angular/core';
 import {CDK_TABLE_TEMPLATE, CdkTable} from '@angular/cdk';
 
 /** Workaround for https://github.com/angular/angular/issues/17849 */
@@ -10,14 +15,23 @@ export const _SamTable = CdkTable;
  * Todo: revert back to using CDK_TABLE_TEMPLATE in a later version
  */
 @Component({
-  selector: 'sam-datatable, table[sam-datatable]',
+  selector: 'sam-datatable',
   template: `
-  <ng-container headerRowPlaceholder></ng-container>
-  <ng-container rowPlaceholder></ng-container>
-  <ng-content select="[rowFooterPlaceholder]"></ng-content>`,
+  <table class="sam-table sam large table">
+    <ng-container headerRowPlaceholder></ng-container>
+    <ng-container rowPlaceholder></ng-container>
+    <ng-content select="[rowFooterPlaceholder]"></ng-content>
+  </table>`,
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SamDataTableComponent<T> extends _SamTable<T> {
-    @HostBinding('class.sam-table') samTableClass = true;
+    @Input() allowHorizontalScroll = false;
+    @HostBinding('class.sam-datatable-horizontal') samTableHorizontalClass = this.allowHorizontalScroll;
+
+    ngOnChanges(c){
+        if(c.allowHorizontalScroll){
+            this.samTableHorizontalClass = this.allowHorizontalScroll;
+        }
+    }
 }

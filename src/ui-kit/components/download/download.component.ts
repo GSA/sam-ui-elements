@@ -1,12 +1,8 @@
 import {
   Component,
-  Input,
-  trigger,
-  state,
-  style,
-  transition,
-  animate
+  Input
  } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { DownloadPackageType } from '../../types';
 
 /**
@@ -77,7 +73,7 @@ export class SamDownloadComponent {
 
   private isSecure(field: string) {
     if (field.toLowerCase() === 'public') {
-      return 'Not Secure';
+      return 'Public';
     } else {
       return 'Secured';
     }

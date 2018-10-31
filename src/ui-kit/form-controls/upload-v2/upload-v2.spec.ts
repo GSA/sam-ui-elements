@@ -8,6 +8,7 @@ import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { SamModalModule } from '../../components/modal';
 
 class MockHttpClient {
   request() {
@@ -28,7 +29,7 @@ class TestHostComponent {
   });
 }
 
-describe('The Sam Upload component', () => {
+describe('The Sam Upload v2 component', () => {
   let component: SamUploadComponentV2;
   let host: any;
   let fixture: any;
@@ -42,7 +43,7 @@ describe('The Sam Upload component', () => {
         SamProgress, 
         FilesizePipe  
       ],
-      imports: [ FormsModule, ReactiveFormsModule ],
+      imports: [ FormsModule, ReactiveFormsModule, SamModalModule ],
       providers: [
         { provide: HttpClient, useClass: MockHttpClient },
       ]
@@ -87,7 +88,10 @@ describe('The Sam Upload component', () => {
     component.onFilesChange(<any>list);
     const firstFile = component.fileCtrlConfig[0];
     expect(firstFile).toBeTruthy();
-    component.onCloseClick(0);
+    component.onCloseClick("",0)
+    fixture.detectChanges();
+    component.onActionModalSubmit(0);
+    fixture.detectChanges();
     expect(component.fileCtrlConfig.length).toBe(0);
   });
 });

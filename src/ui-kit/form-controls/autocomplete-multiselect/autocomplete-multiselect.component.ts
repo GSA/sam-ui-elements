@@ -7,13 +7,8 @@ import {
   Optional,
   forwardRef,
   TemplateRef,
-  trigger,
-  state,
-  style,
-  transition,
-  animate,
-  keyframes
 } from '@angular/core';
+import { animate, state, style, transition, trigger , keyframes} from '@angular/animations';
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
@@ -125,6 +120,11 @@ export class SamAutocompleteMultiselectComponent
    * See labelWrapper for more detail.
    */
   @Input() public hint: string;
+
+  /**
+   * set to false if more/less is not required
+   */
+  @Input() public showFullHint :  boolean = false;
   /**
    * Used by labelWrapper. Provides a name for input and label.
    * See labelWrapper for more detail.

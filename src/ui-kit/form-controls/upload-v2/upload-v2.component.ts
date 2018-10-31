@@ -2,13 +2,17 @@ import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import {
   Component, ElementRef, Input, ViewChild, Renderer2,
-  forwardRef, SimpleChanges } from '@angular/core';
+  forwardRef, SimpleChanges,  Output,
+    EventEmitter, } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpEventType,
   HttpHeaderResponse, HttpRequest } from '@angular/common/http';
 import { DragState } from '../../directives/drag-drop/drag-drop.directive';
 import { HttpEvent } from '@angular/common/http/src/response';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { UploadedFileData} from '../../types';
+import {
+    UploadFileActionModalConfig, ToggleUploadFileAction,
+    UploadedFileData
+} from '../../types';
 import * as moment from 'moment';
 
 export type RequestGenerator =
@@ -85,7 +89,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   /**
    * Flag to Show/hide Uploaded file actions
    */
-  @Input() public toggleFileAction: boolean = true;
+  @Input() public toggleUploadFileAction: ToggleUploadFileAction = {};
   /**
    * Controls the mode of upload component, publish mode will only have
    * the view permission, and edit mode allows you to edit the file name
@@ -137,6 +141,21 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
    */
   @Input() public name = 'upload';
 
+    /**
+     * Sets modal config of upload component
+     */
+  @Input() public uploadFileActionModalConfig: UploadFileActionModalConfig = {};
+
+  /**
+   * Event emitted on modal submit
+   */
+  @Output() public modalChange: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
+   * Event emitted on modal submit
+   */
+  @Output() public modalOpen: EventEmitter<any> = new EventEmitter<any>();
+
   public dragState: DragState = DragState.NotDragging;
 
   public showMaxFilesError: boolean = false;
@@ -156,13 +175,16 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   /* The hidden file input dom element */
   @ViewChild('file') private fileInput: ElementRef;
 
+    /* actionModal: If defined and not null, shows a modal with specified title and description when deleting or removing from table*/
+    @ViewChild('actionModal') actionModal;
+
   public uploadElIds = {
     tableId: 'tableId',
     fileName: 'fileName',
     fileLinkId: 'fileLinkId',
     editId: 'editId',
     editInputId: 'editInputId',
-    deleteId: 'deleteId',
+    removeId: 'removeId',
     moveUp: 'moveUp',
     moveDown: 'moveDown',
     replyActionId: 'replyActionId',
@@ -264,7 +286,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   }
 
   initilizeFileCtrl(
-    {name, size, url, icon},
+    {name, size, url, icon, disabled},
     isSecure = false,
     date = moment().format('MMM DD, YYYY h:mm a')) {
     return {
@@ -277,8 +299,9 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
       originName: name,
       isFirst: false,
       isLast: false,
-     url: url,
-     icon: icon
+      url: url,
+      icon: icon,
+      disabled: disabled,
     };
   }
 
@@ -378,13 +401,23 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     curFileConfig.isNameEditMode = false;
   }
 
-  onCloseClick(index) {
+  onCloseClick(fileName, index) {
+    this.actionModal.openModal(index);
+  }
+
+  onActionModalOpen(data){
+    this.modalOpen.emit(data);
+  }
+
+  onActionModalSubmit(index) {
+    this.actionModal.closeModal();
     const file = this.fileCtrlConfig.splice(index, 1)[0];
     const uf = this._model.find(f => f.file.name === file.originName);
     if (uf) {
       this.removeUploadedFile(uf);
     }
     this.updateFilePos();
+    this.modalChange.emit(index);
   }
 
   removeUploadedFile(uf) {

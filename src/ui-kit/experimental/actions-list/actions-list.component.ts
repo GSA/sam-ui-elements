@@ -13,7 +13,7 @@ export type ToolbarItem = {
 };
 
 export type ToolbarItemIcon = 'fa-download' | 'fa-share-alt'
-  | 'fa-cloud' | 'fa-bars';
+  | 'fa-filter' | 'fa-chevron-circle-left';
 
 @Component({
   selector: 'sam-actions',

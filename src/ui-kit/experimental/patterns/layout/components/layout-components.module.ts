@@ -11,13 +11,6 @@ import { SamActionBarComponent } from './actionbar.component';
 import { SamLayoutComponent } from './layout.component';
 import { SamMainComponent } from './main.component';
 import { SamPaginationNextComponent } from './pagination';
-import { SamToolbarComponent } from './toolbar.component';
-import {
-  SamFeedbackWrapperComponent
-} from './feedback-wrapper.component';
-import {
-  SamFiltersWrapperComponent
-} from './filters-wrapper.component';
 import {
   SamResourcesWrapperComponent
 } from './resources-wrapper.component';
@@ -27,10 +20,12 @@ import {
 import { MdExpansionModule } from './expansion';
 import { SamMainContentComponent } from './main-content.component';
 import { SamContentOutletDirective } from './content-outlet.directive';
-import { SamAsideToggleComponent } from './aside-toggle.component';
 import { SamComponentsModule } from '../../../../components';
 import { SamActionsListModule } from '../../../actions-list';
 import { SamReportingMainComponent } from './template/reporting-main.component';
+import { SamButtonNextModule } from '../../../button-next';
+import { SamIconsModule } from '../../../icon';
+import { SamFiltersWrapperModule } from '../../../../layout/filters-wrapper/filters-wrapper.module';
 
 @NgModule({
   imports: [
@@ -40,7 +35,10 @@ import { SamReportingMainComponent } from './template/reporting-main.component';
     MdSidenavModule,
     MdExpansionModule,
     SamComponentsModule,
-    SamActionsListModule
+    SamActionsListModule,
+    SamButtonNextModule,
+    SamIconsModule,
+    SamFiltersWrapperModule
   ],
   declarations: [
     // Components
@@ -49,12 +47,8 @@ import { SamReportingMainComponent } from './template/reporting-main.component';
     SamMainComponent,
     SamMainContentComponent,
     SamPaginationNextComponent,
-    SamToolbarComponent,
-    SamFeedbackWrapperComponent,
-    SamFiltersWrapperComponent,
     SamResourcesWrapperComponent,
     SamPageNextComponent,
-    SamAsideToggleComponent,
     SamReportingMainComponent,
     
     // Directives
@@ -73,12 +67,8 @@ import { SamReportingMainComponent } from './template/reporting-main.component';
     SamMainComponent,
     SamMainContentComponent,
     SamPaginationNextComponent,
-    SamToolbarComponent,
-    SamFeedbackWrapperComponent,
-    SamFiltersWrapperComponent,
     SamResourcesWrapperComponent,
     SamPageNextComponent,
-    SamAsideToggleComponent,
     SamReportingMainComponent,
 
     // Directives

@@ -1,0 +1,46 @@
+.sam-page-next-header{
+  display:flex;
+  flex-direction: column;
+  padding: 0 15px;
+  background-color: #323a45;
+
+  .backBtn-right{
+    display: none;
+  }
+
+  .sam.heading{
+    padding-top: 5px;
+    font-size: 25px;
+    letter-spacing: -.5px;
+    line-height: 26px;
+  }
+
+  .sam.heading .intro{
+    font-size: 24px;
+    font-weight: 300;
+  }
+}
+
+// Fixes Y scrollbar in filters
+.mat-expansion-panel-body sam-checkbox{
+  display: block;
+  position: relative;
+}
+
+@media screen and (min-width: 600px) {
+  .sam-page-next-header{
+    flex-direction: row;
+    .backBtn{
+      width: 250px;
+    }
+    sam-page-title{
+      flex-grow: 1;
+    }
+    .sam.heading{
+      padding-top: 15px;
+    }
+    .backBtn-right{
+      display: block;
+    }
+  }
+}

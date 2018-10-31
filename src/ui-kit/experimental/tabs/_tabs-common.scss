@@ -1,0 +1,36 @@
+$mat-tab-bar-height: 40px !default;
+$mat-tab-animation-duration: 500ms !default;
+
+// Mixin styles for labels that are contained within the tab header.
+@mixin tab-label {
+  display: flex;
+  justify-content: center;
+  line-height: $mat-tab-bar-height;
+  height: $mat-tab-bar-height;
+  padding: 0 20px;
+  margin-right: 8px;
+  cursor: pointer;
+  box-sizing: border-box;
+  min-width: 100px;
+  text-align: center;
+  background-color: #e2e2e2;
+  border: 1px solid #b7b7b8;
+  border-radius: 2px;
+  white-space: nowrap;
+  &:focus {
+    outline: 2px dotted #aeb0b5;
+    outline-offset: 2px;
+  }
+
+  &.mat-tab-disabled {
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+// Mixin styles for the top section of the view; contains the tab labels.
+@mixin tab-header {
+  overflow: hidden;
+  position: relative;
+  flex-shrink: 0;
+}

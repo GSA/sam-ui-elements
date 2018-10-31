@@ -1,5 +1,5 @@
 export { BadgeConfig } from './components/badge';
-export { PageConfig } from './layout/types';
+export { PageConfig } from './layout-deprecated/types';
 
 export interface OptionsType {
   /**
@@ -338,9 +338,42 @@ export interface UploadedFileData {
   /**
    * sets the url
    */
-  url: string;
-    /**
-     * sets the file icon
-     */
+  url?: string;
+  /**
+   * sets the file icon
+   */
   icon: any;
+  /**
+   * Whether link to download should be disabled
+   */
+  disabled?: boolean;
+}
+
+export interface UploadFileActionModalConfig {
+    /**
+     * sets the upload modal title
+     */
+    title?: string,
+    /**
+     * sets the upload modal description
+     */
+    description?: string
+}
+export interface ToggleUploadFileAction {
+    /**
+     * sets the upload file edit action toggle
+     */
+    isEdit?: boolean,
+    /**
+     * sets the upload file secure action toggle
+     */
+    isSecure?: boolean,
+    /**
+     * sets the upload file sort action toggle
+     */
+    isSort?: boolean,
+    /**
+     * sets the upload file remove action toggle
+     */
+    isRemove?: boolean
 }

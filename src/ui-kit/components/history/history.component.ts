@@ -6,6 +6,10 @@ import { HistoryNodeType } from '../../types';
 })
 export class SamHistoryComponent {
   /**
+   * sets the id for history items
+   */
+  @Input() id: string;
+  /**
    * sets the model for generating nodes
    */
   @Input() data: HistoryNodeType[];

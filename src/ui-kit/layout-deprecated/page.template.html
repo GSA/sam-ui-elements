@@ -1,0 +1,55 @@
+<div class="occupy-page" [style.background-color]="theme == 'inside' ? '#F9F9F9' : ''"
+  [style.border-top]=" theme == 'inside' ? '1px solid #F9F9F9' : '' ">
+
+  <div grid [class.stackable]="stackable" class="container">
+
+    <!-- Breadcrumbs -->
+    <div row *ngIf="!headerOptions">
+      <div columns="12">
+        <sam-breadcrumbs *ngIf="breadcrumbs" [crumbs]="breadcrumbs" (crumbAction)="breadcrumbHandler($event)">
+        </sam-breadcrumbs>
+      </div>
+    </div>
+    <div row *ngIf="headerOptions">
+      <div columns="8">
+        <sam-breadcrumbs *ngIf="breadcrumbs" [crumbs]="breadcrumbs" (crumbAction)="breadcrumbHandler($event)">
+        </sam-breadcrumbs>
+      </div>
+      <div columns="4">
+        <ng-content select="[id=headerOptions]"></ng-content>
+      </div>
+    </div>
+
+    <div *ngIf="!breadcrumbs && !headerOptions" class="sam-ui hidden divider"></div>
+
+    <div row class="page-content">
+      <!-- Sidebar -->
+      <div class="page-content-sidebar" *ngIf="sidebar" [columns]="sidebarColumns">
+        <ng-content select="sidebar"></ng-content>
+      </div>
+
+      <!-- Main Content -->
+      <div [columns]="mainContentColumns">
+
+        <ng-content select="[message]"></ng-content>
+
+        <!-- Page Title -->
+        <title-and-section [attr.id]="skipNavID" [title]="title"
+                           [id]="titleId"
+                           [section]="section"
+                           [badge]="badge"
+                           [badgeOptions]="options.badge"
+                           [type]="type"
+                           [typeLabel]="typeLabel"
+                           [caption]="caption"></title-and-section>
+
+        <ng-content></ng-content>
+
+        <div class="sam-ui hidden divider"></div>
+
+      </div>
+    </div>
+
+  </div>
+
+</div>

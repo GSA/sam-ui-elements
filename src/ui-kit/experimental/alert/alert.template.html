@@ -1,0 +1,8 @@
+<div [ngClass]="[selectedType]">
+    <div class="sam-alert-body">
+        <sam-icon [icon]="selectedIcon"></sam-icon>
+        <span class="sr-only">{{this.types[this.type]?.sr}}</span>
+        <ng-content></ng-content>
+    </div>
+</div>
+      

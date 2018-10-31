@@ -3,6 +3,7 @@ export type modelType = {
    * Active filters, each property should be of type 'filterItemModel'
    */
   filters?: {},
+  filterFields?: any[],
   pagination?: paginationModel,
   /**
    * 
@@ -32,6 +33,7 @@ export type paginationModel = {
 
 export const model: modelType = {
   filters: {},
+  filterFields: [],
   pagination: {
     currentPage: undefined,
     pageSize: 10,
@@ -43,27 +45,4 @@ export const model: modelType = {
     active: "",
     direction: ""
   }
-};
-
-/**
- * id - some program friendly identifier
- * 
- */
-export type filterItemModel = {
-  /**
-   * program-friendly string identifier
-   */
-  id: string,
-  /**
-   * visible filter label
-   */
-  label: string,
-  /**
-   * current filter value
-   */
-  value: any,
-  /**
-   * filter category to help group certain ones together
-   */
-  category?: string
 };
