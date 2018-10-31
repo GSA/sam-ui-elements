@@ -7,7 +7,7 @@
   <ul class="usa-unstyled-list">
     <li *ngFor="let comment of comments;">
       <sam-comment [comment]="comment"
-                    [allowDelete]="isDeletable()"
+                    [allowDelete]="isDeletable(comment)"
                     (delete)="onDelete($event)"></sam-comment>
     </li>
   </ul>
