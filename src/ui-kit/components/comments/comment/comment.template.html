@@ -1,13 +1,13 @@
 <article class="sam-comment">
   <header>
     <figure>
-      <span *ngIf="!comment?.image" class="fa fa-2x fa-user"></span>
+      <span *ngIf="!comment?.image" class="fa fa-3x fa-user"></span>
       <img *ngIf="comment?.image" [src]="comment?.image"/>
       <figcaption class="usa-sr-only">Icon for user {{comment.username}}</figcaption>
     </figure>
     <div class="comment-metadata">
       <strong class="username">{{comment?.username}}</strong>
-      <time pubdate datetime="comment.datetime">{{ comment?.datetime | shortDate }}</time>
+      <time pubdate datetime="comment.datetime">{{ comment?.datetime | date:'medium' }}</time>
     </div>
     <button class="usa-button-link remove-comment"
             *ngIf="allowDelete"
