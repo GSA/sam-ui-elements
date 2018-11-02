@@ -13,18 +13,27 @@
   </ul>
   <!-- New Comment Form -->
   <form [formGroup]="form">
+    <div id="current-user-comment-icon">
+      <figure>
+        <span class="fa fa-3x fa-user"></span>
+        <figcaption class="usa-sr-only">Icon for current user</figcaption>
+      </figure>
+    </div>
     
-    <label for="comment-component-input">Write A Comment</label>
-    <textarea #textArea
-              formControlName="text"
-              name="comment"
-              class="sam-text-area"
-              id="comment-component-input">
-    </textarea>
+    <div id="textarea-system-comments">
+      <textarea #textArea
+        formControlName="text"
+        name="comment"
+        class="sam-text-area"
+        placeholder="Type your message and hit Enter"
+        id="comment-component-input">
+      </textarea>
 
-    <p class="char-counter">
-      <span>{{ charsRemaining() }} characters remaining</span>
-    </p>
+      <p class="char-counter">
+        <span>{{ charsRemaining() }} characters remaining</span>
+      </p>
+    </div>
+    
 
   </form>
 </section>
