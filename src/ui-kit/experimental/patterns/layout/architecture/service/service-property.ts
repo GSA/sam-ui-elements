@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 export interface ServicePropertyObj {
   [key: string]: ServiceProperty
