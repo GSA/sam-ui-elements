@@ -34,7 +34,7 @@
     "accessible-html5-video-player": "^1.0.3",
     "core-js": "2.4.1",
     "ie-shim": "0.1.0",
-    "rxjs": "5.0.1",
+    "rxjs": "^6.2.2",
     "zone.js": "0.8.14",
     "moment": "2.19.3"
   },
