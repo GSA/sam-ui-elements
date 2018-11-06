@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
+import { isObservable } from 'rxjs';
 import {
   Component, ElementRef, Input, ViewChild, Renderer2,
   forwardRef, SimpleChanges,  Output,
@@ -516,7 +517,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   _getDeleteRequestForFile(uf: UploadFile) {
     const request = this.deleteRequest(uf);
 
-    if (request instanceof Observable) {
+    if (isObservable(request)) {
       return request.switchMap(req => this.httpClient.request(req));
     } else if (request instanceof HttpRequest) {
       return this.httpClient.request(request);
@@ -529,7 +530,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     const { file, upload } = uf;
     const request = this.uploadRequest(file);
 
-    if (request instanceof Observable) {
+    if (isObservable(request)) {
       return request.switchMap((req: HttpRequest<any>) => {
         upload.request = req;
         return this.httpClient.request(req);
