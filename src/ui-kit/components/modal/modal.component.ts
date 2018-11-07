@@ -98,7 +98,8 @@ export class SamModalComponent implements OnInit {
     'error': { class: 'usa-alert-error', sr: 'error alert'},
     'info': { class: 'usa-alert-info', sr: 'information alert'},
     'plain': { class: 'usa-alert-plain', sr: 'plain alert'},
-    'primary': {class: 'sam-primary'}
+    'primary': {class: 'sam-primary'},
+    'download': { class: 'usa-alert-download', sr: 'download alert'}
   };
   public selectedType: string = this.types.success.class;
 
