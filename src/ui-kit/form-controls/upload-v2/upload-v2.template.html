@@ -27,7 +27,7 @@
         <th scope="col">File Size</th>
         <th scope="col">Security</th>
         <th scope="col" *ngIf="isEditMode()">Actions</th>
-        <th scope="col" *ngIf="!isEditMode()">Posted</th>
+        <th scope="col" *ngIf="!isEditMode()">Updated Date</th>
       </thead>
       <tbody>
         <ng-container *ngFor="let fctrl of fileCtrlConfig; let i = index">
