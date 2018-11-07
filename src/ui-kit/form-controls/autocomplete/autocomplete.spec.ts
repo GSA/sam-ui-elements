@@ -83,7 +83,7 @@ describe('The Sam Autocomplete Component', () => {
     
     it('should handle requests througk input', ()=>{
       let subject = new BehaviorSubject([]);
-      component.httpRequest = subject;//Observable.of(['aaa']);
+      component.httpRequest = subject;//of(['aaa']);
       component.ngOnChanges({httpRequest:true});
       subject.next(['aaa']);
       subject.next(['aaa','bbb']);

@@ -14,6 +14,7 @@ import {
     UploadedFileData
 } from '../../types';
 import * as moment from 'moment';
+import 'rxjs/add/operator/switchMap';
 
 export type RequestGenerator =
   (file: File) => HttpRequest<any> | Observable<HttpRequest<any>>;
