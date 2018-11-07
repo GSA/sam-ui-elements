@@ -17,7 +17,7 @@ import {
   ControlValueAccessor,
   FormControl
 } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject,of } from 'rxjs';
 import { AutocompleteConfig } from '../../types';
 import { AutocompleteService } from './autocomplete.service';
 import { SamFormService } from '../../form-service';
@@ -25,7 +25,7 @@ import { SamFormService } from '../../form-service';
 import { KeyHelper } from '../../utilities/key-helper/key-helper';
 import { areEqual } from '../../utilities/are-equal/are-equal';
 import { AutocompleteCache } from '../autocomplete-multiselect/autocomplete-cache';
-
+import 'rxjs/add/operator/catch';
 const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamAutocompleteComponent),
@@ -147,7 +147,7 @@ export class SamAutocompleteComponent
           input => {
              return this.accessService.getUserAutoComplete(input)
                 .catch(e => {
-                  return Observable.of([]);
+                  return of([]);
                 });
            }
          )
