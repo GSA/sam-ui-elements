@@ -1,0 +1,38 @@
+<nav class="sam pagination" role="navigation" aria-label="Pagination">
+
+  <div class="units-per-page-selector">
+    <label [attr.for]="id + '-select'">{{ printPerPageString() }}</label>
+    <select [attr.id]="id + '-select'"
+      [(ngModel)]="pageSize"
+      [disabled]="disabled">
+      <option *ngFor="let option of options"
+        [attr.value]="option.value"
+        [attr.label]="option.label"
+        [attr.disabled]="option.disabled"
+        [attr.selected]="option.selected">
+        {{ option.label }}
+      </option>
+    </select>
+  </div>
+
+  <span class="units-info">
+    {{ printDisplayingString() }}
+  </span>
+
+  <button class="sam secondary small button" (click)="onPreviousClick()"
+    aria-label="Previous Page"
+    [disabled]="disabled">
+    <sam-icon [icon]="faChevronLeft"></sam-icon>
+  </button>
+
+  <span class="pages-info">
+    {{ paginator.getCurrentPage() }} of {{ paginator.getTotalPages() }}
+  </span>
+
+  <button class="sam secondary small button" (click)="onNextClick()"
+    aria-label="Next Page"
+    [disabled]="disabled">
+    <sam-icon [icon]="faChevronRight"></sam-icon>
+  </button>
+
+</nav>
