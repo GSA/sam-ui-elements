@@ -8,6 +8,7 @@ import { SamIconsModule } from '../../../../ui-kit/experimental/icon/icon.module
     imports: [
         CommonModule,FormsModule,
         SamIconsModule
+        
     ],
     declarations: [
         SamPaginationNextComponent
@@ -19,6 +20,6 @@ import { SamIconsModule } from '../../../../ui-kit/experimental/icon/icon.module
         SamPaginationNextComponent
     ]
 })
-export class SamPaginationModule { }
-
+export class SamPaginationNextModule { }
+export { SamPaginationNextComponent } from './pagination.component';
 export { Paginator } from './paginator';

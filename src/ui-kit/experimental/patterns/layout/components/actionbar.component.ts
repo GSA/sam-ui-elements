@@ -3,7 +3,7 @@ import {
   ContentChild,
   Optional,
 } from '@angular/core';
-import { SamPaginationNextComponent } from './pagination';
+import { SamPaginationNextComponent } from '../../../../layout/components/pagination/pagination.module';
 import { SamPageNextService } from '../architecture';
 
 @Component({
