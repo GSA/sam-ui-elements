@@ -5,8 +5,10 @@ import {
   EventEmitter,
   OnInit,
   SimpleChanges,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
 } from '@angular/core';
+
+
 
 import {
   faChevronLeft,
