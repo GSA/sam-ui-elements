@@ -13,9 +13,7 @@ import { SamLayoutImgComponent } from './layout';
 import { SamListComponent } from './list';
 import { SamListItemComponent } from './list';
 import { SamMasterPageComponent } from './master-page';
-import { SamPageComponent } from './page';
 import { SamSearchComponent } from './search';
-import { SamPageSidebarComponent } from './page';
 import { SamTitleComponent } from './title';
 import { SamYoutubeComponent } from './youtube';
 import { SamPickerComponent, SamPopoverComponent } from './picker';
@@ -28,6 +26,7 @@ import { SamActionsListModule } from './actions-list';
 import { SamButtonNextModule } from './button-next';
 import { SamTabsNextModule } from './tabs';
 import { SamAlertNextModule } from './alert';
+import {SamTitleModule}from './title';
 
 @NgModule({
   imports: [
@@ -42,7 +41,8 @@ import { SamAlertNextModule } from './alert';
     SamButtonNextModule,
     SamVideoPlayerModule,
     SamTabsNextModule,
-    SamAlertNextModule
+    SamAlertNextModule,
+    SamTitleModule
   ],
   declarations: [
     SamBoxComponent,
@@ -54,9 +54,9 @@ import { SamAlertNextModule } from './alert';
     SamListComponent,
     SamListItemComponent,
     SamMasterPageComponent,
-    SamPageComponent,
+  
     SamSearchComponent,
-    SamPageSidebarComponent,
+   
     SamTitleComponent,
     SamYoutubeComponent,
     SamPopoverComponent,
@@ -73,9 +73,9 @@ import { SamAlertNextModule } from './alert';
     SamListComponent,
     SamListItemComponent,
     SamMasterPageComponent,
-    SamPageComponent,
+
     SamSearchComponent,
-    SamPageSidebarComponent,
+
     SamTitleComponent,
     SamYoutubeComponent,
     SamPopoverComponent,
@@ -88,7 +88,8 @@ import { SamAlertNextModule } from './alert';
     SamIconsModule,
     SamButtonNextModule,
     SamTabsNextModule,
-    SamAlertNextModule
+    SamAlertNextModule,
+    SamTitleModule
   ]
 })
 export class SamExperimentalModule {}
