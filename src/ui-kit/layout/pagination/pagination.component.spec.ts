@@ -6,11 +6,11 @@ import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 
-import { SamIconsModule } from '../../../../ui-kit/experimental/icon/icon.module';
+import { SamIconsModule } from '../../../ui-kit/experimental/icon/icon.module';
 
 import { Paginator } from './paginator';
 
-fdescribe('SamPaginationNextComponent', () => {
+describe('SamPaginationNextComponent', () => {
   let component: SamPaginationNextComponent;
   let fixture: ComponentFixture<SamPaginationNextComponent>;
 
