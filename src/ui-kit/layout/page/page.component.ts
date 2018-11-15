@@ -11,8 +11,12 @@ export class SamPageService{
   providers: [SamPageService]
 })
 export class SamPageComponent{
+  /**
+   * 
+   */
   @Input() public title: string;
   @Input() public intro: string;
+
   constructor(public pageService: SamPageService){}
 }
 

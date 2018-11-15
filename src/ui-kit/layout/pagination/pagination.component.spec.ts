@@ -67,28 +67,28 @@ describe('SamPaginationNextComponent', () => {
 
   it('printDisplayingString', () => {
     let paginator = new Paginator("Test Unit", 10, 100);
-    component.paginator = paginator;   
+    component.paginator = paginator;
     expect(component.printDisplayingString()).toBe('1 – 10 of 100');
   });
 
 
-  it('printPerPageString', () => { 
+  it('printPerPageString', () => {
     let paginator = new Paginator("Test Unit", 10, 100);
     component.paginator = paginator;
     expect(component.printPerPageString()).toBe('Test Unit per page');
   });
 
 
-  it('pageSize', () => { 
+  it('pageSize', () => {
     let paginator = new Paginator("Test Unit", 10, 100);
     component.paginator = paginator;
-    component.pageSize =20;
+    component.pageSize = 20;
     expect(component.printDisplayingString()).toBe('1 – 20 of 100');
   });
 
-  it('totalPages', () => { 
+  it('totalPages', () => {
     let paginator = new Paginator("Test Unit", 10, 100);
-    component.paginator = paginator;  
+    component.paginator = paginator;
     expect(component.paginator.getTotalPages()).toBe(10);
   });
 });
