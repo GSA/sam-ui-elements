@@ -2,7 +2,7 @@
 
   <fieldset class="usa-fieldset-inputs usa-sans">
 
-    <label *ngIf="label || required"
+    <legend *ngIf="label || required"
       [class.usa-input-error-label]="displayErrors()">
       {{label}}
       <span *ngIf="required"
@@ -10,7 +10,7 @@
         Required
       </span>
       <ng-content select="[label-right]"></ng-content>
-    </label>
+    </legend>
 
     <div
       #hintContainer
