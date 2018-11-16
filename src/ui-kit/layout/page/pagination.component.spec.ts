@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { } from '../../';
 import { SamPageComponent } from './page.component';
-import { SamTitleModule } from '../../../ui-kit/experimental/title/title.module';
+import { SamExperimentalModule } from '../../../ui-kit/experimental/experimental.module';
 
 fdescribe('SamPageComponent', () => {
   let component: SamPageComponent;
@@ -13,7 +13,7 @@ fdescribe('SamPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SamPageComponent],
-      imports: [FormsModule,SamTitleModule]
+      imports: [FormsModule,SamExperimentalModule]
     })
       .compileComponents();
   }));

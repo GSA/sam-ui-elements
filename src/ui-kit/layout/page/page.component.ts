@@ -41,9 +41,9 @@ export class SamPageComponent {
   `
 })
 export class SamPageSidebarComponent implements OnInit {
-  
+
   constructor(private pageService: SamPageService) { }
-  
+
   ngOnInit() {
     this.pageService.sidebar = true;
   }

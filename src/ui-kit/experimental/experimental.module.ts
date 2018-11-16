@@ -14,7 +14,6 @@ import { SamListComponent } from './list';
 import { SamListItemComponent } from './list';
 import { SamMasterPageComponent } from './master-page';
 import { SamSearchComponent } from './search';
-import { SamTitleComponent } from './title';
 import { SamYoutubeComponent } from './youtube';
 import { SamPickerComponent, SamPopoverComponent } from './picker';
 import { SamVideoPlayerModule } from './video-player';
@@ -26,7 +25,7 @@ import { SamActionsListModule } from './actions-list';
 import { SamButtonNextModule } from './button-next';
 import { SamTabsNextModule } from './tabs';
 import { SamAlertNextModule } from './alert';
-import {SamTitleModule}from './title';
+import { SamTitleModule } from './title';
 
 @NgModule({
   imports: [
@@ -54,10 +53,7 @@ import {SamTitleModule}from './title';
     SamListComponent,
     SamListItemComponent,
     SamMasterPageComponent,
-  
     SamSearchComponent,
-   
-    SamTitleComponent,
     SamYoutubeComponent,
     SamPopoverComponent,
     SamPickerComponent,
@@ -73,10 +69,7 @@ import {SamTitleModule}from './title';
     SamListComponent,
     SamListItemComponent,
     SamMasterPageComponent,
-
     SamSearchComponent,
-
-    SamTitleComponent,
     SamYoutubeComponent,
     SamPopoverComponent,
     SamPickerComponent,
@@ -92,4 +85,4 @@ import {SamTitleModule}from './title';
     SamTitleModule
   ]
 })
-export class SamExperimentalModule {}
+export class SamExperimentalModule { }
