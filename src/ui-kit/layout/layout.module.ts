@@ -5,19 +5,22 @@ import {
 import { SamFiltersWrapperModule } from './filters-wrapper';
 import { SamToolbarsModule } from './toolbar';
 import { SamPaginationNextModule } from './pagination/pagination.module';
+import { SamPageModule } from './page/page.module';
 
 @NgModule({
     imports: [
         SamFilterDrawerModule,
         SamFiltersWrapperModule,
         SamToolbarsModule,
-        SamPaginationNextModule
+        SamPaginationNextModule,
+        SamPageModule
     ],
     exports: [
         SamFilterDrawerModule,
         SamFiltersWrapperModule,
         SamToolbarsModule,
-        SamPaginationNextModule
+        SamPaginationNextModule,
+        SamPageModule
     ]
 })
 export class SamLayoutNextModule { }
