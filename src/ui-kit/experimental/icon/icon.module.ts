@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SamFAIconModule } from './fa-icon';
 import { SamIconComponent } from './icon.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   imports: [
     CommonModule,
-    SamFAIconModule
+    FontAwesomeModule
   ],
   declarations: [
     SamIconComponent

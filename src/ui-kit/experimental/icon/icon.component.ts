@@ -19,14 +19,14 @@ import {
  */
 @Component({
   selector: 'sam-icon',
-  template: `<sam-fa-icon
+  template: `<fa-icon
     [icon]="iconProp"
     [title]="title"
     [spin]="spin"
     [size]="size"
     [fixedWidth]="fixedWidth"
     [rotate]="rotate">
-  </sam-fa-icon>`
+  </fa-icon>`
 })
 export class SamIconComponent {
   // tslint:disable-next-line:no-input-rename
