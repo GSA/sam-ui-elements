@@ -124,6 +124,10 @@ export class SamAutocompleteComponent
    * Allow to insert a customized template for suggestions to use
    */
   @Input() itemTemplate: TemplateRef<any>;
+  /**
+   * Set timer that keyboard input should poll to trigger service calls
+   */
+  @Input() public debounceTime: number = 250;
   /*
    How do define custom http callbacks:
    <sam-autocomplete
@@ -187,7 +191,6 @@ export class SamAutocompleteComponent
 
   public keyValuePairs: any;
   public filteredKeyValuePairs: any;
-  public debounceTime: number = 250;
   public inputTimer;
   public cache: AutocompleteCache = new AutocompleteCache();
 
