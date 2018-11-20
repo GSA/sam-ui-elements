@@ -44,17 +44,4 @@ fdescribe('SamPageComponent', () => {
 
   });
 
-
-  // it('title', () => {
-     
-
-  //   fixture.detectChanges();
-  //   component.title ="test title";  
-  //   fixture.detectChanges();
-  //   const el = fixture.debugElement.query(By.css('sam-title'));
-  //   console.log(el.nativeElement);
-  //   console.log(el);
-  //   expect(el.nativeElement.innerHTML).toContain('test title');
-  // });
-
 });

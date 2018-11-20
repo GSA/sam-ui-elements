@@ -16,12 +16,12 @@ export class SamPageService {
 export class SamPageComponent {
 
   /**
-   * 
+   * Sets the page header for the page
    */
   @Input() public title: string;
 
   /**
-   * 
+   * Sets an introduction to the page
    */
   @Input() public intro: string;
 
