@@ -15,7 +15,7 @@ import { Deprecator } from '../../utilities';
   template: `
   <button
     [attr.id]="id"
-    class="sam button" 
+    class="sam-ui button" 
     [ngClass]="btnClass" 
     [attr.disabled]="isDisabled ? '' : null" 
     (click)="click($event)" 
@@ -119,15 +119,15 @@ export class SamButtonComponent {
   
   private btnClassMap: any = {
     // Types
-    default: 'secondary',
+    default: 'primary',
     primary: 'primary',
     secondary: 'secondary',
-    tertiary: 'tertiary',
-    negative: 'secondary', // (Deprecated)
+    tertiary: 'basic blue',
+    negative: 'negative',
     submit: 'primary',
     // Sizes
-    small: 'small',
-    large: '', // (Deprecated)
+    small: 'tiny',
+    large: 'large',
     // Theme
     dark: 'inverted'
   };
