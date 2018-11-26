@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './hierarchical-tree-filter.component.html',
   styleUrls: ['./hierarchical-tree-filter.component.scss']
 })
-export class HierarchicalTreeFilterComponent implements OnInit {
+export class SamHierarchicalTreeFilterComponent implements OnInit {
 
   constructor() { }
 

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HierarchicalTreeGridComponent } from './hierarchical-tree-grid.component';
+import { SamHierarchicalTreeGridComponent } from './hierarchical-tree-grid.component';
 
-describe('HierarchicalTreeGridComponent', () => {
-  let component: HierarchicalTreeGridComponent;
-  let fixture: ComponentFixture<HierarchicalTreeGridComponent>;
+describe('SamHierarchicalTreeGridComponent', () => {
+  let component: SamHierarchicalTreeGridComponent;
+  let fixture: ComponentFixture<SamHierarchicalTreeGridComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HierarchicalTreeGridComponent ]
+      declarations: [ SamHierarchicalTreeGridComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HierarchicalTreeGridComponent);
+    fixture = TestBed.createComponent(SamHierarchicalTreeGridComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

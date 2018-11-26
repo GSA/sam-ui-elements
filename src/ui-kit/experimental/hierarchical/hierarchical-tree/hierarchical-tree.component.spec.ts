@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HierarchicalTreeComponent } from './hierarchical-tree.component';
+import { SamHierarchicalTreeComponent } from './hierarchical-tree.component';
 
-describe('HierarchicalTreeComponent', () => {
-  let component: HierarchicalTreeComponent;
-  let fixture: ComponentFixture<HierarchicalTreeComponent>;
+describe('SamHierarchicalTreeComponent', () => {
+  let component: SamHierarchicalTreeComponent;
+  let fixture: ComponentFixture<SamHierarchicalTreeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HierarchicalTreeComponent ]
+      declarations: [ SamHierarchicalTreeComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HierarchicalTreeComponent);
+    fixture = TestBed.createComponent(SamHierarchicalTreeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

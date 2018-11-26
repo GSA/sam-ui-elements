@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './selected-result.component.html',
   styleUrls: ['./selected-result.component.scss']
 })
-export class SelectedResultComponent implements OnInit {
+export class SamHierarchicalSelectedResultComponent implements OnInit {
 
   constructor() { }
 

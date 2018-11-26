@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AutocompleteComponent } from './autocomplete.component';
+import { SamHierarchicalAutocompleteComponent } from './autocomplete.component';
 
-describe('AutocompleteComponent', () => {
-  let component: AutocompleteComponent;
-  let fixture: ComponentFixture<AutocompleteComponent>;
+describe('SamHierarchicalAutocompleteComponent', () => {
+  let component: SamHierarchicalAutocompleteComponent;
+  let fixture: ComponentFixture<SamHierarchicalAutocompleteComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AutocompleteComponent ]
+      declarations: [ SamHierarchicalAutocompleteComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AutocompleteComponent);
+    fixture = TestBed.createComponent(SamHierarchicalAutocompleteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

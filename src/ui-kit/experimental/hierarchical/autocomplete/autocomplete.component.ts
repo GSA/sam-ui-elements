@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './autocomplete.component.html',
   styleUrls: ['./autocomplete.component.scss']
 })
-export class AutocompleteComponent implements OnInit {
+export class SamHierarchicalAutocompleteComponent implements OnInit {
 
   constructor() { }
 

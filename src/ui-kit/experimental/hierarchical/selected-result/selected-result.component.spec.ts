@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SelectedResultComponent } from './selected-result.component';
+import { SamHierarchicalSelectedResultComponent } from './selected-result.component';
 
-describe('SelectedResultComponent', () => {
-  let component: SelectedResultComponent;
-  let fixture: ComponentFixture<SelectedResultComponent>;
+describe('SamHierarchicalSelectedResultComponent', () => {
+  let component: SamHierarchicalSelectedResultComponent;
+  let fixture: ComponentFixture<SamHierarchicalSelectedResultComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SelectedResultComponent ]
+      declarations: [ SamHierarchicalSelectedResultComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SelectedResultComponent);
+    fixture = TestBed.createComponent(SamHierarchicalSelectedResultComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
