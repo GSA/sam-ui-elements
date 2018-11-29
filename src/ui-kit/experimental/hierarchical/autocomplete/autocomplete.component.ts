@@ -1,4 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component, OnInit, Input, ViewChild,
+  ElementRef
+} from '@angular/core';
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 
 @Component({
@@ -9,6 +12,8 @@ import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 export class SamHierarchicalAutocompleteComponent implements OnInit {
 
 
+  @ViewChild('input') input: ElementRef;
+
   @Input()
   public service: SamHiercarchicalServiceInterface;
 
@@ -18,6 +23,30 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
 
   ngOnInit() {
 
+    this.service.getDataByText(null).subscribe(
+      (data) => {
+        console.log("Null get data by text");
+        console.log(data);
+      });
+
+
+    this.service.getDataByText("id 7").subscribe(
+      (data) => {
+        console.log("PAss in 7");
+        console.log(data);
+      });
+
+    this.service.getHiercarchicalById(null).subscribe(
+      (data) => {
+        console.log("getHiercarchicalById null");
+        console.log(data);
+      });
+
+    this.service.getHiercarchicalById("8").subscribe(
+      (data) => {
+        console.log("getHiercarchicalById 7");
+        console.log(data);
+      });
   }
 
   public clearInput() { }

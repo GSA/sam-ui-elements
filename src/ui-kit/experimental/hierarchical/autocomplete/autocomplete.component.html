@@ -10,9 +10,9 @@
     <ng-container *ngIf="!input.disabled">
       <span>
         <span role="button" class="fa fa-times-circle" aria-label="Clear input" aria-hidden="false" (click)="clearInput()"
-          (keyup.enter)="clearInput()">
+          (keyup.enter)="clearInput()" class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}">
         </span>
-        <!--  [attr.tabindex]="tabIndex"   class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}" -->
+        <!--  [attr.tabindex]="tabIndex"    -->
       </span>
     </ng-container>
   </div>
