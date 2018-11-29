@@ -3,7 +3,7 @@ import {
   ElementRef
 } from '@angular/core';
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
-
+import { KeyHelper, KEYS } from '../../../utilities/key-helper/key-helper';
 @Component({
   selector: 'sam-hierarchical-autocomplete',
   templateUrl: './autocomplete.component.html',
@@ -14,8 +14,13 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
 
   @ViewChild('input') input: ElementRef;
 
+  /**
+   * Instance of the SamHiercarchicalServiceInterface provided
+   */
   @Input()
   public service: SamHiercarchicalServiceInterface;
+
+  private results: object[];
 
   public inputValue: string;
 
@@ -49,15 +54,58 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
       });
   }
 
-  public clearInput() { }
+  public clearInput() {
+
+    this.inputValue = '';
+    this.updateResults(this.inputValue);
+  }
 
   public onChange() {
 
   }
 
-  public inputFocusHandler() { }
-  public onKeyup() { }
+  public inputFocusHandler() {
 
+
+  }
+
+
+  public onKeyup(event) {
+    if (KeyHelper.is(KEYS.TAB, event)) {
+      console.log(KEYS.TAB);
+    }
+    else if (KeyHelper.is(KEYS.BACKSPACE, event) || KeyHelper.is(KEYS.DELETE, event)) {
+      console.log(KEYS.BACKSPACE);
+      console.log(KEYS.DELETE);
+    }
+    else if (KeyHelper.is(KEYS.DOWN, event)) {
+      console.log(KEYS.DOWN);
+    }
+    else if (KeyHelper.is(KEYS.UP, event)) {
+      console.log(KEYS.UP);
+    }
+    else if (KeyHelper.is(KEYS.ENTER, event)) {
+      console.log(KEYS.ENTER);
+    }
+    else if (KeyHelper.is(KEYS.ESC, event)) {
+      console.log(KEYS.ESC);
+    }
+    else if (KeyHelper.is(KEYS.ENTER, event)) {
+      console.log(KEYS.ENTER);
+    }
+    else {
+      const searchString = event.target.value || '';
+      this.updateResults(searchString);
+    }
+  }
+
+  private updateResults(searchString: string) {
+    this.service.getDataByText(searchString).subscribe(
+      (data) => {
+        this.results = data;
+        console.log(this.results);
+      });
+  }
 }
 
 

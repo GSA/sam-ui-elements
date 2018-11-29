@@ -1,6 +1,3 @@
-<p>
-  autocomplete works!
-</p>
 <sam-label-wrapper #wrapper>
   <!--[label]="labelText" [hint]="hint" [showFullHint]="showFullHint" [name]="id" [required]="required"  [errorMessage]="errorMessage"-->
   <div class="input-container">
@@ -10,9 +7,9 @@
     <ng-container *ngIf="!input.disabled">
       <span>
         <span role="button" class="fa fa-times-circle" aria-label="Clear input" aria-hidden="false" (click)="clearInput()"
-          (keyup.enter)="clearInput()" class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}">
+          (keyup.enter)="clearInput()" >
         </span>
-        <!--  [attr.tabindex]="tabIndex"    -->
+        <!--  [attr.tabindex]="tabIndex"    class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}"-->
       </span>
     </ng-container>
   </div>
