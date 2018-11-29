@@ -7,12 +7,22 @@
     <ng-container *ngIf="!input.disabled">
       <span>
         <span role="button" class="fa fa-times-circle" aria-label="Clear input" aria-hidden="false" (click)="clearInput()"
-          (keyup.enter)="clearInput()" >
+          (keyup.enter)="clearInput()">
         </span>
         <!--  [attr.tabindex]="tabIndex"    class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}"-->
       </span>
     </ng-container>
   </div>
+  <ul class="usa-unstyled-list" *ngIf="(!results || results.length == 0)">
+    <li>No results found</li>
+  </ul>
+  <ul role="listbox" class="usa-unstyled-list" *ngIf="(results && results.length > 0)" aria-label="States">
+    <li role="option" *ngFor="let result of results">
+      {{result['name'] +': '+ result['subtext'] }}
+    </li>
+  </ul>
+
+
 </sam-label-wrapper>
 
 

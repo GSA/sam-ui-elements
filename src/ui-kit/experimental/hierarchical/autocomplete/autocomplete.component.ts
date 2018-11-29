@@ -65,8 +65,8 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
   }
 
   public inputFocusHandler() {
-
-
+    this.inputValue = '';
+    this.updateResults(this.inputValue);
   }
 
 
@@ -74,10 +74,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
     if (KeyHelper.is(KEYS.TAB, event)) {
       console.log(KEYS.TAB);
     }
-    else if (KeyHelper.is(KEYS.BACKSPACE, event) || KeyHelper.is(KEYS.DELETE, event)) {
-      console.log(KEYS.BACKSPACE);
-      console.log(KEYS.DELETE);
-    }
+  
     else if (KeyHelper.is(KEYS.DOWN, event)) {
       console.log(KEYS.DOWN);
     }
@@ -92,6 +89,10 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
     }
     else if (KeyHelper.is(KEYS.ENTER, event)) {
       console.log(KEYS.ENTER);
+    }
+    else if (KeyHelper.is(KEYS.BACKSPACE, event) || KeyHelper.is(KEYS.DELETE, event)) {
+      const searchString = event.target.value || '';
+      this.updateResults(searchString);
     }
     else {
       const searchString = event.target.value || '';
