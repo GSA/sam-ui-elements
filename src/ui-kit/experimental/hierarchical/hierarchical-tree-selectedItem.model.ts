@@ -1,5 +1,5 @@
 export class HierarchicalTreeSelectedItemModel {
-
+    public treeMode: TreeMode;
     private items: object[];
 
     constructor() {
@@ -8,6 +8,10 @@ export class HierarchicalTreeSelectedItemModel {
 
     addItem(item: object, keyField: string) {
         if (!this.contatinsItem(item[keyField], keyField)) {
+
+            if (this.treeMode === TreeMode.SINGLE) {
+                this.clearItems();
+            }
             this.items.push(item);
         }
     }
@@ -27,6 +31,12 @@ export class HierarchicalTreeSelectedItemModel {
         this.items = [];
     }
 
+    getItems(): object[] {
+        return this.items;
 
+    }
+}
 
+export enum TreeMode {
+    SINGLE, MULTIPLE
 }
