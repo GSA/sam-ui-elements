@@ -69,3 +69,7 @@ api-config.json
 config/webpack.local.js
 
 package-lock.json
+
+# Sonarqube
+.scannerwork/
+sonar-project.properties
