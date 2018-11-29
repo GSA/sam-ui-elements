@@ -14,6 +14,10 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
 
   @ViewChild('input') input: ElementRef;
 
+
+  @Input()
+  public settings: SamHierarchicalAutocompleteSettings;
+
   /**
    * Instance of the SamHiercarchicalServiceInterface provided
    */
@@ -27,37 +31,12 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-
-    // this.service.getDataByText(null).subscribe(
-    //   (data) => {
-    //     console.log("Null get data by text");
-    //     console.log(data);
-    //   });
-
-
-    // this.service.getDataByText("id 7").subscribe(
-    //   (data) => {
-    //     console.log("PAss in 7");
-    //     console.log(data);
-    //   });
-
-    // this.service.getHiercarchicalById(null).subscribe(
-    //   (data) => {
-    //     console.log("getHiercarchicalById null");
-    //     console.log(data);
-    //   });
-
-    // this.service.getHiercarchicalById("8").subscribe(
-    //   (data) => {
-    //     console.log("getHiercarchicalById 7");
-    //     console.log(data);
-    //   });
+    //Set defaults for settings
   }
 
   public clearInput() {
-
     this.inputValue = '';
-    this.updateResults(this.inputValue);
+    this.clearAndHideResults();
   }
 
   public onChange() {
@@ -72,23 +51,22 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
 
   public onKeyup(event) {
     if (KeyHelper.is(KEYS.TAB, event)) {
-      console.log(KEYS.TAB);
+      return;
     }
-  
     else if (KeyHelper.is(KEYS.DOWN, event)) {
+      //KEYDOWN FOCUS ITEM  NEXT INDEX
       console.log(KEYS.DOWN);
     }
     else if (KeyHelper.is(KEYS.UP, event)) {
+      //KEYUP FOCUS ITEM  PREV INDEX
       console.log(KEYS.UP);
     }
     else if (KeyHelper.is(KEYS.ENTER, event)) {
+      //SELECT ITEM
       console.log(KEYS.ENTER);
     }
     else if (KeyHelper.is(KEYS.ESC, event)) {
-      console.log(KEYS.ESC);
-    }
-    else if (KeyHelper.is(KEYS.ENTER, event)) {
-      console.log(KEYS.ENTER);
+      this.clearAndHideResults();
     }
     else if (KeyHelper.is(KEYS.BACKSPACE, event) || KeyHelper.is(KEYS.DELETE, event)) {
       const searchString = event.target.value || '';
@@ -100,11 +78,15 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
     }
   }
 
+  private clearAndHideResults() {
+    this.results = [];
+    //hide results box
+  }
+
   private updateResults(searchString: string) {
     this.service.getDataByText(searchString).subscribe(
       (data) => {
         this.results = data;
-        console.log(this.results);
       });
   }
 }
