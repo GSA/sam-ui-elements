@@ -28,30 +28,30 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
 
   ngOnInit() {
 
-    this.service.getDataByText(null).subscribe(
-      (data) => {
-        console.log("Null get data by text");
-        console.log(data);
-      });
+    // this.service.getDataByText(null).subscribe(
+    //   (data) => {
+    //     console.log("Null get data by text");
+    //     console.log(data);
+    //   });
 
 
-    this.service.getDataByText("id 7").subscribe(
-      (data) => {
-        console.log("PAss in 7");
-        console.log(data);
-      });
+    // this.service.getDataByText("id 7").subscribe(
+    //   (data) => {
+    //     console.log("PAss in 7");
+    //     console.log(data);
+    //   });
 
-    this.service.getHiercarchicalById(null).subscribe(
-      (data) => {
-        console.log("getHiercarchicalById null");
-        console.log(data);
-      });
+    // this.service.getHiercarchicalById(null).subscribe(
+    //   (data) => {
+    //     console.log("getHiercarchicalById null");
+    //     console.log(data);
+    //   });
 
-    this.service.getHiercarchicalById("8").subscribe(
-      (data) => {
-        console.log("getHiercarchicalById 7");
-        console.log(data);
-      });
+    // this.service.getHiercarchicalById("8").subscribe(
+    //   (data) => {
+    //     console.log("getHiercarchicalById 7");
+    //     console.log(data);
+    //   });
   }
 
   public clearInput() {
