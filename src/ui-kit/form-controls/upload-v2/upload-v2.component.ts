@@ -154,9 +154,14 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   @Output() public modalChange: EventEmitter<any> = new EventEmitter<any>();
 
   /**
-   * Event emitted on modal submit
+   * Event emitted on modal open
    */
   @Output() public modalOpen: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
+   * Event emitted on toggling file access
+   */
+  @Output() public toggleAccess: EventEmitter<any> = new EventEmitter<any>();
 
   public dragState: DragState = DragState.NotDragging;
 
@@ -287,12 +292,16 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     this.emit();
   }
 
-  initilizeFileCtrl(
-    {name, size, url, icon, disabled},
-    isSecure = false,
-    date = moment().format('MMM DD, YYYY h:mm a')) {
+  initilizeFileCtrl({name, size, url, icon, disabled, isSecure, postedDate}) {
+    if (!isSecure) {
+      isSecure = false;
+    }
+    if (!postedDate) {
+      postedDate = moment().format('MMM DD, YYYY h:mm a');
+    }
+
     return {
-      date,
+      date: postedDate,
       isSecure,
       isNameEditMode: false,
       fileName: name,
@@ -549,6 +558,10 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     // emit the change event if we select a file, deselect that file,
     // and select the same file again
     this.fileInput.nativeElement.value = '';
+  }
+
+  onAccessToggle(fileIndex, secure) {
+    this.toggleAccess.emit({fileIndex, secure});
   }
 
   private setUploadElementIds() {

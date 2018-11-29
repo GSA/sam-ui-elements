@@ -25,7 +25,7 @@
       <thead class="upload-table-header">
         <th scope="col" align="left" class="p_L-4x">Document</th>
         <th scope="col">File Size</th>
-        <th scope="col">Security</th>
+        <th scope="col">Access</th>
         <th scope="col" *ngIf="isEditMode()">Actions</th>
         <th scope="col" *ngIf="!isEditMode()">Updated Date</th>
       </thead>
@@ -62,20 +62,13 @@
               <div [attr.id]="uploadElIds.fileSize + i">{{ fctrl.fileSize | filesize }}</div>
             </td>
             <td class="upload-table-props-col">
-              <div *ngIf="toggleUploadFileAction?.isSecure">
               <ng-container *ngIf="isEditMode(); else secureTag">
-                <input [attr.id]="uploadElIds.fileSecure + i"
-                  name="security-checkbox"
-                  class="secure-cbx"
-                  type="checkbox"
-                  [(ngModel)]="fctrl.isSecure" [attr.aria-label]="uploadElIds.securityCheckboxInput + i"/>
-                <label [attr.id]="uploadElIds.fileSecureLabel + i" class="secure-label">Secure</label>
+                <sam-toggle-switch [attr.id]="uploadElIds.fileSecure + i" [isSwitchOn]="fctrl.isSecure" (switchStatusChange)="onAccessToggle(i, $event)"></sam-toggle-switch>
               </ng-container>
               <ng-template #secureTag>
                 <span class="upload-secure-span" *ngIf="fctrl.isSecure"><i class="fa fa-lock"></i>&nbsp;Secure</span>
                 <span class="upload-secure-span" *ngIf="!fctrl.isSecure"><i class="fa fa-unlock"></i>&nbsp;Not Secure</span>
               </ng-template>
-              </div>
             </td>
             <td class="upload-table-props-col" *ngIf="isEditMode()">
               <div>
