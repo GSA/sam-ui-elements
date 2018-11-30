@@ -71,5 +71,5 @@ config/webpack.local.js
 package-lock.json
 
 # Sonarqube
-sonar-project.properties
 .scannerwork/
+sonar-project.properties
