@@ -26,16 +26,16 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: npm install
+      - run: cd test-app && npm install
       - run: sudo npm install -g @angular/cli@6.2.7
 
       - save_cache:
           paths:
-            - node_modules
+            - test-app/node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
         
       # run tests!
-      - run: npm run test
+      - run: cd test-app && npm run test
       - run: pwd
       - run: ls
 
