@@ -27,7 +27,7 @@ jobs:
           - v1-dependencies-
 
       - run: npm install
-      - run: npm install -g @angular/cli@6.2.7
+      - run: sudo npm install -g @angular/cli@6.2.7
 
       - save_cache:
           paths:
@@ -36,4 +36,4 @@ jobs:
         
       # run tests!
       - run: npm run test
-      
+
