@@ -26,6 +26,8 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
 
   private results: object[];
 
+  private selectedIndex: number;
+
   public inputValue: string;
 
   constructor() { }
