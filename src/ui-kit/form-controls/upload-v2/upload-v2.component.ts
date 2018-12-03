@@ -145,7 +145,6 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
 
   /**
    * Sets modal config for remove action
-   * TODO: rename when releasing breaking version
    */
   @Input() public uploadFileActionModalConfig: ActionModalConfig = {};
 
@@ -156,13 +155,11 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
 
   /**
    * Event emitted on remove action modal submit
-   * TODO: rename when releasing breaking version
    */
   @Output() public modalChange: EventEmitter<any> = new EventEmitter<any>();
 
   /**
    * Event emitted on remove action modal open
-   * TODO: rename when releasing breaking version
    */
   @Output() public modalOpen: EventEmitter<any> = new EventEmitter<any>();
 
