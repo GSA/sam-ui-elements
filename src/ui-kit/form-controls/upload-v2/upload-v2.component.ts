@@ -481,8 +481,8 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   }
 
   onToggleModalSubmit(toggleData) {
-    this.toggleModal.closeModal();
     this.toggleModalChange.emit(toggleData[0]);
+    this.toggleModal.closeModal();
   }
 
   onToggleModalClose(toggleData) {
