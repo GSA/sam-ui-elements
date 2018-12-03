@@ -1,3 +1,30 @@
-<p>
-  hierarchical-tree-grid works!
-</p>
+<div>
+  <div>Heirarchy Grid</div>
+  <div class="grid-body">
+      <div class="report-table">
+          <sam-datatable [dataSource]="dataSource">
+            
+            <ng-container cdkColumnDef="Agency">
+              <sam-header-cell *cdkHeaderCellDef> Agency </sam-header-cell>
+              <sam-cell *cdkCellDef="let row"> {{row.Agency}} </sam-cell>
+            </ng-container>
+            
+            <ng-container cdkColumnDef="Title">
+              <sam-header-cell *cdkHeaderCellDef> Title </sam-header-cell>
+              <sam-cell *cdkCellDef="let row"> {{row.Title}} </sam-cell>
+            </ng-container>
+            
+            <sam-header-row *cdkHeaderRowDef="displayedColumns"></sam-header-row>
+            <sam-row *cdkRowDef="let row; columns: displayedColumns"></sam-row>
+            
+          </sam-datatable>
+        </div>
+
+    <ng-content select=".gridBody"></ng-content>
+  </div>
+  <hr>
+  <div class="grid-footer">
+    <label>Footer</label>
+    <ng-content select=".gridFooter"></ng-content>
+  </div>
+</div>
