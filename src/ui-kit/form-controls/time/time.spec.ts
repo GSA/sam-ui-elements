@@ -73,7 +73,7 @@ describe('The Sam Time component', () => {
       expect(true).toBe(true);
     });
   
-    it('should parse hours and minutes', () => {
+    xit('should parse hours and minutes', () => {
       component.writeValue('14:44');
       component.parseValueString();
       fixture.detectChanges();
