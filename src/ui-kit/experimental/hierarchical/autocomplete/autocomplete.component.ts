@@ -50,7 +50,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    if (this.model) {
+    if (!this.model) {
       this.model = new HierarchicalTreeSelectedItemModel();
     }
     //Set defaults for settings
@@ -82,8 +82,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
       this.onArrowUp();
     }
     else if (KeyHelper.is(KEYS.ENTER, event)) {
-
-      console.log(KEYS.ENTER);
+      this.selectItem(this.selectedItem);
     }
     else if (KeyHelper.is(KEYS.ESC, event)) {
       this.clearAndHideResults();
@@ -98,10 +97,10 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
     }
   }
 
-private selectItem( item:object){
-  this.model.addItem(item, this.settings.keyField);
+  private selectItem(item: object) {
+    this.model.addItem(item, this.settings.keyField);
 
-}
+  }
 
   private clearAndHideResults() {
     this.results = [];
@@ -155,6 +154,6 @@ export class SamHierarchicalAutocompleteSettings {
   public id: string;
   public required: boolean;
   public erorMessage: string;
-  public keyField:string;
+  public keyField: string;
 
 }

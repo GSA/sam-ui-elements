@@ -13,6 +13,8 @@ export class HierarchicalTreeSelectedItemModel {
                 this.clearItems();
             }
             this.items.push(item);
+            console.log('Add item');
+            console.log(item);
         }
     }
 
@@ -28,6 +30,7 @@ export class HierarchicalTreeSelectedItemModel {
     }
 
     clearItems() {
+        console.log('Cleared items');
         this.items = [];
     }
 
