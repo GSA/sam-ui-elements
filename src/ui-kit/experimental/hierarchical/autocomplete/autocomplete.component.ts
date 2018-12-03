@@ -4,6 +4,8 @@ import {
 } from '@angular/core';
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 import { KeyHelper, KEYS } from '../../../utilities/key-helper/key-helper';
+import { HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selectedItem.model';
+
 @Component({
   selector: 'sam-hierarchical-autocomplete',
   templateUrl: './autocomplete.component.html',
@@ -15,6 +17,16 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
   @ViewChild('input') input: ElementRef;
 
 
+  @ViewChild('srOnly') srOnly: ElementRef;
+
+
+
+  @Input()
+  public model: HierarchicalTreeSelectedItemModel;
+
+  /**
+   * 
+   */
   @Input()
   public settings: SamHierarchicalAutocompleteSettings;
 
@@ -23,6 +35,8 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
    */
   @Input()
   public service: SamHiercarchicalServiceInterface;
+
+
 
   private results: object[];
 
@@ -36,6 +50,9 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    if (this.model) {
+      this.model = new HierarchicalTreeSelectedItemModel();
+    }
     //Set defaults for settings
   }
 
@@ -59,14 +76,10 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
       return;
     }
     else if (KeyHelper.is(KEYS.DOWN, event)) {
-      //KEYDOWN FOCUS ITEM  NEXT INDEX
       this.onArrowDown();
-
     }
     else if (KeyHelper.is(KEYS.UP, event)) {
       this.onArrowUp();
-      //KEYUP FOCUS ITEM  PREV INDEX
-
     }
     else if (KeyHelper.is(KEYS.ENTER, event)) {
 
@@ -84,6 +97,11 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
       this.updateResults(searchString);
     }
   }
+
+private selectItem( item:object){
+  this.model.addItem(item, this.settings.keyField);
+
+}
 
   private clearAndHideResults() {
     this.results = [];
@@ -137,5 +155,6 @@ export class SamHierarchicalAutocompleteSettings {
   public id: string;
   public required: boolean;
   public erorMessage: string;
+  public keyField:string;
 
 }
