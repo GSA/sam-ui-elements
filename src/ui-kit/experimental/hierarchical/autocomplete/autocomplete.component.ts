@@ -91,7 +91,6 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
   }
 
   private onArrowUp() {
-    console.log(KEYS.UP);
     if (this.results && this.results.length > 0) {
       if (this.selectedIndex !== 0) {
         this.selectedIndex--;
@@ -108,7 +107,6 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
         this.setSelectedItem(this.results[this.selectedIndex]);
       }
     }
-    console.log(KEYS.DOWN);
   }
 
   private updateResults(searchString: string) {
@@ -120,8 +118,6 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
       });
   }
   private setSelectedItem(item: Object) {
-    console.log(item)
-    //Unhighlight previous item
     if (this.selectedItem) {
       this.selectedItem[this.HighlightedPropertyName] = false;
     }

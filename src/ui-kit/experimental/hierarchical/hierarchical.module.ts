@@ -13,7 +13,7 @@ import { SamWrapperModule } from '../../wrappers';
 
 @NgModule({
   imports: [
-    CommonModule,FormsModule,SamWrapperModule
+    CommonModule, FormsModule, SamWrapperModule
   ],
   declarations: [SamHierarchicalAutocompleteComponent, SamHierarchicalTreeComponent,
     SamHierarchicalTreeGridComponent, SamHierarchicalSelectedResultComponent,
