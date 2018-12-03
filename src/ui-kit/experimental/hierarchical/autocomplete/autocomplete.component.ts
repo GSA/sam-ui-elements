@@ -26,9 +26,12 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
 
   private results: object[];
 
-  private selectedIndex: number;
+  private selectedIndex: number = 0;;
+  private selectedItem: object;
 
   public inputValue: string;
+
+  private HighlightedPropertyName = "highlighted";
 
   constructor() { }
 
@@ -57,14 +60,16 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
     }
     else if (KeyHelper.is(KEYS.DOWN, event)) {
       //KEYDOWN FOCUS ITEM  NEXT INDEX
-      console.log(KEYS.DOWN);
+      this.onArrowDown();
+
     }
     else if (KeyHelper.is(KEYS.UP, event)) {
+      this.onArrowUp();
       //KEYUP FOCUS ITEM  PREV INDEX
-      console.log(KEYS.UP);
+
     }
     else if (KeyHelper.is(KEYS.ENTER, event)) {
-      //SELECT ITEM
+
       console.log(KEYS.ENTER);
     }
     else if (KeyHelper.is(KEYS.ESC, event)) {
@@ -85,12 +90,46 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
     //hide results box
   }
 
+  private onArrowUp() {
+    console.log(KEYS.UP);
+    if (this.results && this.results.length > 0) {
+      if (this.selectedIndex !== 0) {
+        this.selectedIndex--;
+        this.setSelectedItem(this.results[this.selectedIndex]);
+        ;
+      }
+    }
+  }
+
+  private onArrowDown() {
+    if (this.results && this.results.length > 0) {
+      if (this.selectedIndex < this.results.length) {
+        this.selectedIndex++;
+        this.setSelectedItem(this.results[this.selectedIndex]);
+      }
+    }
+    console.log(KEYS.DOWN);
+  }
+
   private updateResults(searchString: string) {
     this.service.getDataByText(searchString).subscribe(
       (data) => {
         this.results = data;
+        this.selectedIndex = 0;
+        this.setSelectedItem(this.results[this.selectedIndex]);
       });
   }
+  private setSelectedItem(item: Object) {
+    console.log(item)
+    //Unhighlight previous item
+    if (this.selectedItem) {
+      this.selectedItem[this.HighlightedPropertyName] = false;
+    }
+    this.selectedItem = item;
+    this.selectedItem[this.HighlightedPropertyName] = true;
+    //Set Selected SR properties
+  }
+
 }
 
 

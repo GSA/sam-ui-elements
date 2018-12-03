@@ -13,14 +13,20 @@
       </span>
     </ng-container>
   </div>
-  <ul class="usa-unstyled-list" >
-   
+  <ul class="usa-unstyled-list">
+
   </ul>
-  <ul  aria-live="polite" aria-relevant="additions" role="listbox" class="usa-unstyled-list" aria-label="States">
-    <li  *ngIf="(results && results.length > 0)" role="option" *ngFor="let result of results">
-      {{result['name'] +': '+ result['subtext'] }}
-    </li>
-    <li *ngIf="(!results || results.length == 0)">No results found</li>
+  <ul aria-live="polite" aria-relevant="additions" role="listbox" class="usa-unstyled-list" aria-label="States">
+    <ng-container *ngIf="(results && results.length > 0)">
+      <li role="option" *ngFor="let result of results">
+        <div>
+          {{result['name'] +': '+ result['subtext'] }} <div *ngIf="result['highlighted']">highlighted</div>
+        </div>
+      </li>
+    </ng-container>
+    <ng-container *ngIf="(!results || results.length == 0)">
+      <li>No results found</li>
+    </ng-container>
   </ul>
 
 
