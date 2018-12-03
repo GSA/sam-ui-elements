@@ -6,7 +6,7 @@ import { } from '../../';
 import { SamPageComponent } from './page.component';
 import { SamExperimentalModule } from '../../../ui-kit/experimental/experimental.module';
 
-fdescribe('SamPageComponent', () => {
+describe('SamPageComponent', () => {
   let component: SamPageComponent;
   let fixture: ComponentFixture<SamPageComponent>;
 
