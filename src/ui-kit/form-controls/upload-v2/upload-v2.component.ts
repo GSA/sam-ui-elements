@@ -470,7 +470,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
 
   onAccessToggle(fileIndex, secure) {
     let toggleData = {fileIndex, secure};
-    if (secure === true) {
+    if (secure) {
         this.toggleModal.openModal(toggleData);
     }
     this.toggleAccess.emit(toggleData);
