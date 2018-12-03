@@ -1,5 +1,5 @@
 <sam-modal *ngIf="uploadFileActionModalConfig"
-  #actionModal
+  #removeModal
   [showClose]="true"
   [closeOnOutsideClick]="true"
   [closeOnEscape]="true"
@@ -8,9 +8,25 @@
   [description]="uploadFileActionModalConfig.description"
   [submitButtonLabel]="'Ok'"
   [cancelButtonLabel]="'Cancel'"
-  (open)="onActionModalOpen($event)"
-  (submit)="onActionModalSubmit($event)">
+  (open)="onRemoveModalOpen($event)"
+  (submit)="onRemoveModalSubmit($event)">
   <ng-content select=".action-modal-content"></ng-content>
+</sam-modal>
+
+<sam-modal *ngIf="toggleAccessActionModalConfig"
+           #toggleModal
+           [showClose]="true"
+           [closeOnOutsideClick]="true"
+           [closeOnEscape]="true"
+           [type]="'warning'"
+           [title]="toggleAccessActionModalConfig.title"
+           [description]="toggleAccessActionModalConfig.description"
+           [submitButtonLabel]="'Ok'"
+           [cancelButtonLabel]="'Cancel'"
+           (open)="onToggleModalOpen($event)"
+           (submit)="onToggleModalSubmit($event)"
+           (close)="onToggleModalClose($event)">
+  <ng-content select=".toggle-modal-content"></ng-content>
 </sam-modal>
 
 <div class="file-container"
@@ -79,7 +95,7 @@
                 <i class="fa fa-chevron-up p_R-1x" [attr.aria-label]="uploadElIds.moveUp + i"></i>
               </button>
              </span>
-              <span *ngIf="toggleUploadFileAction?.isRemove"><button type="button" [attr.id]="uploadElIds.removeId + i" class="clear-button" (click)="onCloseClick(fctrl.fileName, i)">
+              <span *ngIf="toggleUploadFileAction?.isRemove"><button type="button" [attr.id]="uploadElIds.removeId + i" class="clear-button" (click)="onRemoveClick(fctrl.fileName, i)">
                 <i class="fa fa-remove remove-icon" [attr.aria-label]="uploadElIds.removeId + i"></i>
               </button>
                 </span>
