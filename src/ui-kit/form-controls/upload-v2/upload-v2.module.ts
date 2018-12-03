@@ -6,6 +6,7 @@ import { SamProgressModule } from '../../components/progress-bar';
 import { SamDragDropModule } from '../../directives';
 import { SamFilesizeModule } from '../../pipes';
 import {SamModalModule} from '../../components/modal';
+import { SamToggleSwitchModule } from '../toggle-switch';
 
 @NgModule({
     declarations: [ SamUploadComponentV2 ],
@@ -16,7 +17,8 @@ import {SamModalModule} from '../../components/modal';
         SamDragDropModule,
         SamProgressModule,
         SamFilesizeModule,
-        SamModalModule
+        SamModalModule,
+        SamToggleSwitchModule,
     ]
 })
 export class SamUploadV2Module { }

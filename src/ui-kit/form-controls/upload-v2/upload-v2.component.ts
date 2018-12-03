@@ -11,7 +11,7 @@ import { DragState } from '../../directives/drag-drop/drag-drop.directive';
 import { HttpEvent } from '@angular/common/http/src/response';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
-    UploadFileActionModalConfig, ToggleUploadFileAction,
+    ActionModalConfig, ToggleUploadFileAction,
     UploadedFileData
 } from '../../types';
 import * as moment from 'moment';
@@ -143,20 +143,45 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
    */
   @Input() public name = 'upload';
 
-    /**
-     * Sets modal config of upload component
-     */
-  @Input() public uploadFileActionModalConfig: UploadFileActionModalConfig = {};
+  /**
+   * Sets modal config for remove action
+   */
+  @Input() public uploadFileActionModalConfig: ActionModalConfig = {};
 
   /**
-   * Event emitted on modal submit
+   * Sets modal config for toggle access
+   */
+  @Input() public toggleAccessActionModalConfig: ActionModalConfig = {};
+
+  /**
+   * Event emitted on remove action modal submit
    */
   @Output() public modalChange: EventEmitter<any> = new EventEmitter<any>();
 
   /**
-   * Event emitted on modal submit
+   * Event emitted on remove action modal open
    */
   @Output() public modalOpen: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
+   * Event emitted on toggle access modal submit
+   */
+  @Output() public toggleModalChange: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
+   * Event emitted on toggle access modal open
+   */
+  @Output() public toggleModalOpen: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
+   * Event emitted on toggle access modal close/cancel
+   */
+  @Output() public toggleModalClose: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
+   * Event emitted on toggling file access
+   */
+  @Output() public toggleAccess: EventEmitter<any> = new EventEmitter<any>();
 
   public dragState: DragState = DragState.NotDragging;
 
@@ -177,8 +202,9 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   /* The hidden file input dom element */
   @ViewChild('file') private fileInput: ElementRef;
 
-    /* actionModal: If defined and not null, shows a modal with specified title and description when deleting or removing from table*/
-    @ViewChild('actionModal') actionModal;
+  /* get references to modals */
+  @ViewChild('removeModal') removeModal;
+  @ViewChild('toggleModal') toggleModal;
 
   public uploadElIds = {
     tableId: 'tableId',
@@ -230,10 +256,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
 
   setUploadedFiles(uploadedFiles) {
     this.fileCtrlConfig = uploadedFiles
-      .map(uf => this.initilizeFileCtrl(
-        uf,
-        uf.isSecure,
-        uf.postedDate));
+      .map(uf => this.initilizeFileCtrl(uf));
     this.updateFilePos();
   }
 
@@ -287,12 +310,16 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     this.emit();
   }
 
-  initilizeFileCtrl(
-    {name, size, url, icon, disabled},
-    isSecure = false,
-    date = moment().format('MMM DD, YYYY h:mm a')) {
+  initilizeFileCtrl({name, size, url, icon, disabled, isSecure, postedDate}) {
+    if (!isSecure) {
+      isSecure = false;
+    }
+    if (!postedDate) {
+      postedDate = moment().format('MMM DD, YYYY h:mm a');
+    }
+
     return {
-      date,
+      date: postedDate,
       isSecure,
       isNameEditMode: false,
       fileName: name,
@@ -403,16 +430,16 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     curFileConfig.isNameEditMode = false;
   }
 
-  onCloseClick(fileName, index) {
-    this.actionModal.openModal(index);
+  onRemoveClick(fileName, index) {
+    this.removeModal.openModal(index);
   }
 
-  onActionModalOpen(data){
+  onRemoveModalOpen(data){
     this.modalOpen.emit(data);
   }
 
-  onActionModalSubmit(index) {
-    this.actionModal.closeModal();
+  onRemoveModalSubmit(index) {
+    this.removeModal.closeModal();
     const file = this.fileCtrlConfig.splice(index, 1)[0];
     const uf = this._model.find(f => f.file.name === file.originName);
     if (uf) {
@@ -439,6 +466,27 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     // There may be an extra file on the server, but that's
     // not the user's problem
     delete$.subscribe();
+  }
+
+  onAccessToggle(fileIndex, secure) {
+    let toggleData = {fileIndex, secure};
+    if (secure) {
+        this.toggleModal.openModal(toggleData);
+    }
+    this.toggleAccess.emit(toggleData);
+  }
+
+  onToggleModalOpen(toggleData) {
+    this.toggleModalOpen.emit(toggleData[0]);
+  }
+
+  onToggleModalSubmit(toggleData) {
+    this.toggleModalChange.emit(toggleData[0]);
+    this.toggleModal.closeModal();
+  }
+
+  onToggleModalClose(toggleData) {
+    this.toggleModalClose.emit(toggleData[0]);
   }
 
   isEditMode() {
