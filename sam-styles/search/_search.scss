@@ -1,13 +1,13 @@
 .sam.search{
   display: flex;
-  box-shadow: 0 1px 4px 0 rgba(0,0,0,.14);
   input{
-    border: none;
-    flex-grow: 1;
+    margin: 0;
   }
   button{
-    color: #0071bc;
-    box-shadow: none;
+    border: 1px solid #aeb0b5;
+    border-radius: 2px;
+    background-color: white;
+    margin: 0 0 0 3px;
   }
 }
 

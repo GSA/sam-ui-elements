@@ -24,6 +24,10 @@
 @import '../../title/title';
 @import '../../video/video';
 @import '../../modal/modal';
+@import '../../card/card';
+@import '../../segment/segement';
+@import '../../statistic/statistic';
+@import '../../feed/feed';
 
 // Create a theme.
 @mixin sam-gov-theme($theme) {

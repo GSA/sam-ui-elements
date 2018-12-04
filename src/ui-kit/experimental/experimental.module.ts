@@ -27,6 +27,8 @@ import { SamTabsNextModule } from './tabs';
 import { SamAlertNextModule } from './alert';
 import { SamTitleModule } from './title';
 import { SamHierarchicalModule } from './hierarchical/hierarchical.module';
+import { SamCardModule } from './card';
+import { SamSegmentModule } from './segment';
 
 
 @NgModule({
@@ -44,7 +46,9 @@ import { SamHierarchicalModule } from './hierarchical/hierarchical.module';
     SamTabsNextModule,
     SamAlertNextModule,
     SamTitleModule,
-    SamHierarchicalModule
+    SamHierarchicalModule,
+    SamCardModule,
+    SamSegmentModule
   ],
   declarations: [
     SamBoxComponent,
@@ -86,7 +90,9 @@ import { SamHierarchicalModule } from './hierarchical/hierarchical.module';
     SamTabsNextModule,
     SamAlertNextModule,
     SamTitleModule,
-    SamHierarchicalModule
+    SamHierarchicalModule,
+    SamCardModule,
+    SamSegmentModule
   ]
 })
 export class SamExperimentalModule { }
