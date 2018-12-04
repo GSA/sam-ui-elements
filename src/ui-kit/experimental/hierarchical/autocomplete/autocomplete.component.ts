@@ -159,6 +159,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
       this.selectedItem = item;
       this.selectedItem[this.HighlightedPropertyName] = true;
       //Set Selected SR properties
+      
     }
   }
 
