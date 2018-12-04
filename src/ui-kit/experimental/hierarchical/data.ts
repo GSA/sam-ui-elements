@@ -450,3 +450,39 @@ export const RECORDS = [
         'Sep 12, 2008',
         'No']
 ];
+
+export const SampleData = [
+    {
+        'Agency': 'Department Of Agriculture/Agricultural Research Service',
+        'CFDANumber': '10.001',
+        'Title': 'Agricultural Research_Basic and Applied Research',
+        'CurrentStatus': 'Published',
+        'LastUpdatedDate': 'Nov 08, 2016',
+        'ObligationsUpdated': 'No',
+        'OMBReviewDate': 'Oct 30, 2008',
+        'LastPublishedDate': 'Oct 30, 2008',
+        'AutoPublished': 'No'
+      },
+      {
+        'Agency': 'Department Of Agriculture',
+        'CFDANumber': "10.001",
+        'Title': 'Sale of Federal Surplus Personal Property (title change)',
+        'CurrentStatus': 'Published',
+        'LastUpdatedDate': 'Dec 05, 2011',
+        'ObligationsUpdated': 'No',
+        'OMBReviewDate': 'Jun 16, 2009',
+        'LastPublishedDate': 'Jun 16, 2009',
+        'AutoPublished': 'No'
+      },
+      {
+        'Agency': 'Department Of Agriculture/Forest Service',
+        'CFDANumber': "10.003",
+        'Title': 'Water Pollution',
+        'CurrentStatus': 'Published',
+        'LastUpdatedDate': 'Apr 19, 2016',
+        'ObligationsUpdated': 'No',
+        'OMBReviewDate': 'Nov 18, 2011',
+        'LastPublishedDate': 'Nov 30, 2011',
+        'AutoPublished': 'No'
+      }
+];

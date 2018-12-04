@@ -1,51 +1,33 @@
 <div>
   <div>Heirarchy Grid</div>
   <div class="grid-body">
-          <div class="example-container usa-grid">
-              
-              <sam-datatable #table samSort [dataSource]="dataSource">
-                  <!-- Column Definition: agency -->
-                  <ng-container cdkColumnDef="agency">
-                      <th sam-header-cell *cdkHeaderCellDef sam-sort-header>
-                          Agency
-                      </th>
-                      <td sam-cell *cdkCellDef="let row"> {{row.agency}} </td>
-                  </ng-container>
-          
-                  <!-- Column Definition: cfdaNumber -->
-                  <ng-container cdkColumnDef="cfdaNumber">
-                      <th sam-header-cell *cdkHeaderCellDef sam-sort-header>CFDA #
-                      </th>
-                      <td sam-cell *cdkCellDef="let row"> {{row.cfdaNumber}} </td>
-                  </ng-container>
-          
-                  <!-- Column Definition: title -->
-                  <ng-container cdkColumnDef="title">
-                      <th sam-header-cell *cdkHeaderCellDef sam-sort-header>
-                          Title
-                      </th>
-                      <td sam-cell *cdkCellDef="let row"> {{row.title}} </td>
-                  </ng-container>  
-                  <tr sam-header-row *cdkHeaderRowDef="displayedColumns"></tr>
-                  <tr sam-row *cdkRowDef="let row; columns: displayedColumns;
-                      let first = first; let last = last; let even = even; let odd = odd">
-                  </tr>
-              </sam-datatable>
-          
-              <div
-                  class="example-no-results"
-                  [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'"
-                  style="padding:10px 0;">
-                  No users found matching filter.
-              </div>
-              
-          </div>
-
     <ng-content select=".gridBody"></ng-content>
   </div>
   <hr>
   <div class="grid-footer">
-    <label>Footer</label>
+        <sam-datatable samSort [dataSource]="sampleDataSource">
+           
+                <ng-container cdkColumnDef="Agency">
+                  <th sam-header-cell *cdkHeaderCellDef> Agency </th>
+                  <td sam-cell *cdkCellDef="let element"> {{element.Agency}} </td>
+                </ng-container>
+              
+               
+                <ng-container cdkColumnDef="Title">
+                  <th sam-header-cell *cdkHeaderCellDef> Title </th>
+                  <td sam-cell *cdkCellDef="let element"> {{element.Title}} </td>
+                </ng-container>
+              
+             
+                <ng-container cdkColumnDef="CFDANumber">
+                  <th sam-header-cell *cdkHeaderCellDef> CFDA Number </th>
+                  <td sam-cell *cdkCellDef="let element"> {{element.CFDANumber}} </td>
+                </ng-container> 
+              
+                <tr sam-header-row *cdkHeaderRowDef="sampleDisplayedColumns"></tr>
+                <tr sam-row *cdkRowDef="let row; columns: sampleDisplayedColumns;"></tr>
+              </sam-datatable>
+   
     <ng-content select=".gridFooter"></ng-content>
   </div>
 </div>
