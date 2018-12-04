@@ -1,22 +1,22 @@
 <div sam-click-outside (clickOutside)="checkForFocus($event)" sam-tab-outside (tabOutside)="checkForFocus($event)">
-  <sam-label-wrapper #wrapper>
-    <!--[label]="labelText" [hint]="hint" [showFullHint]="showFullHint" [name]="id" [required]="required"  [errorMessage]="errorMessage"-->
+  <sam-label-wrapper #wrapper [label]="settings.labelText" [name]="settings.id">
+    <!--[label]="labelText"  [hint]="hint" [showFullHint]="showFullHint" [name]="id" [required]="required"  [errorMessage]="errorMessage"-->
     <div class="input-container">
-      <input #input autocomplete="off" type="text" (focus)="inputFocusHandler($event)" (keyup)="onKeyup($event)"
+      <input #input [attr.id]="settings.id" autocomplete="off" type="text" (focus)="inputFocusHandler($event)" (keyup)="onKeyup($event)"
         [(ngModel)]="inputValue" (ngModelChange)="onChange()" role="combobox" aria-autocomplete="list" aria-expanded="false"
-        aria-haspopup="true" aria-owns="cb1-listbox">
-      <!-- [attr.placeholder]="config?.placeholder"  [attr.id]="id" [attr.tabindex]="tabIndex"   [attr.title]="config?.title" [attr.name]="name"-->
+        aria-haspopup="true" [attr.aria-owns]="settings.id+ '-listbox'">
+      <!-- [attr.placeholder]="config?.placeholder" [att]  [attr.id]="id"   [attr.title]="config?.title" [attr.name]="name"-->
       <ng-container *ngIf="!input.disabled">
         <span>
           <span role="button" class="fa fa-times-circle" aria-label="Clear input" aria-hidden="false" (click)="clearInput()"
             (keyup.enter)="clearInput()">
           </span>
-          <!--  [attr.tabindex]="tabIndex"    class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}"-->
+          <!--      class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}"-->
         </span>
       </ng-container>
     </div>
-    <ul *ngIf="showResults" id="cb1-listbox" aria-live="polite" aria-relevant="additions" role="listbox" class="usa-unstyled-list"
-      aria-label="States">
+    <ul *ngIf="showResults" [attr.id]="settings.id+ '-listbox'" aria-live="polite" aria-relevant="additions"
+     role="listbox" class="usa-unstyled-list" [attr.aria-label]="settings.labelText">
       <ng-container *ngIf="(results && results.length > 0)">
         <li role="option" *ngFor="let result of results; let i = index" (mouseenter)="listItemHover(i)" (click)="selectItem(result)">
           <div>
@@ -30,5 +30,4 @@
     </ul>
     <ul #srOnly class="usa-sr-only" aria-live="assertive" aria-relevant="additions"></ul>
   </sam-label-wrapper>
-
 </div>
