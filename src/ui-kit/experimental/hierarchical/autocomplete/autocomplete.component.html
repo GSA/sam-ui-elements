@@ -2,15 +2,15 @@
   <sam-label-wrapper #wrapper [label]="settings.labelText" [name]="settings.id" [hint]="settings.labelhint"
     [showFullHint]="settings.labelShowFullHint" [required]="settings.required" [errorMessage]="settings.errorMessage">
     <div class="input-container">
-      <input #input [attr.id]="settings.id" autocomplete="off" type="text" (focus)="inputFocusHandler($event)" (keyup)="onKeyup($event)"
+      <input #input [attr.id]="settings.id" autocomplete="off" type="text" (focus)="inputFocusHandler()" (keyup)="onKeyup($event)"
         [(ngModel)]="inputValue" (ngModelChange)="onChange()" role="combobox" aria-autocomplete="list" aria-expanded="false"
         aria-haspopup="true" [attr.aria-owns]="settings.id+ '-listbox'">
       <ng-container *ngIf="!input.disabled">
         <span>
           <span role="button" class="fa fa-times-circle" aria-label="Clear input" aria-hidden="false" (click)="clearInput()"
-            (keyup.enter)="clearInput()">
+            (keyup.enter)="clearInput()" >
           </span>
-          <!--      class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}"-->
+          <!-- [class]="inputValue.length > 0 ? 'fa fa-times-circle reset-icon-active' : 'fa fa-times-circle reset-icon'" -->
         </span>
       </ng-container>
     </div>

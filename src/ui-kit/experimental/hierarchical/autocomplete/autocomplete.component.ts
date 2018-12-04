@@ -173,7 +173,7 @@ export class SamHierarchicalAutocompleteSettings {
   public labelShowFullHint: boolean;
   public id: string;
   public required: boolean;
-  public erorMessage: string;
+  public errorMessage: string;
   public keyField: string;
 
 }
