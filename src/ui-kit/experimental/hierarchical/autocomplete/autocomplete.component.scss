@@ -1,0 +1,23 @@
+.autocomplete-result
+{
+
+    position: absolute;
+    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+    border: 1px solid #96c8da;
+    border-width: 0px 1px 1px 1px;
+    border-radius: 0 0 .28571429rem .28571429rem;
+    width: 100%;
+    max-height: 30rem;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: #ffffff;
+    z-index: 999;
+    margin-bottom: 1rem;
+    max-width: 46rem;
+}
+
+.selected-item
+{
+background-color: #0071bc;
+color: white;
+}

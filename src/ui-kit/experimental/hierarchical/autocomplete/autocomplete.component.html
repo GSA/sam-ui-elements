@@ -14,12 +14,13 @@
         </span>
       </ng-container>
     </div>
+    <div>
     <ul *ngIf="showResults" [attr.id]="settings.id+ '-listbox'" aria-live="polite" aria-relevant="additions" role="listbox"
-      class="usa-unstyled-list" [attr.aria-label]="settings.labelText">
+      class="usa-unstyled-list autocomplete-result" [attr.aria-label]="settings.labelText">
       <ng-container *ngIf="(results && results.length > 0)">
-        <li role="option" *ngFor="let result of results; let i = index" (mouseenter)="listItemHover(i)" (click)="selectItem(result)">
+        <li role="option" *ngFor="let result of results; let i = index" (mouseenter)="listItemHover(i)" [class]="result['highlighted']? 'selected-item':''" (click)="selectItem(result)">
           <div>
-            {{result['name'] +': '+ result['subtext'] }} <div *ngIf="result['highlighted']">highlighted</div>
+            {{result['name'] +': '+ result['subtext'] }} 
           </div>
         </li>
       </ng-container>
