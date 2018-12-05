@@ -9,6 +9,7 @@ import { Observable,of } from 'rxjs';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { SamModalModule } from '../../components/modal';
+import { SamToggleSwitchModule } from '../toggle-switch';
 
 class MockHttpClient {
   request() {
@@ -41,9 +42,9 @@ describe('The Sam Upload v2 component', () => {
         SamUploadComponentV2, 
         SamDragDropDirective, 
         SamProgress, 
-        FilesizePipe  
+        FilesizePipe
       ],
-      imports: [ FormsModule, ReactiveFormsModule, SamModalModule ],
+      imports: [ FormsModule, ReactiveFormsModule, SamModalModule, SamToggleSwitchModule ],
       providers: [
         { provide: HttpClient, useClass: MockHttpClient },
       ]
@@ -88,9 +89,9 @@ describe('The Sam Upload v2 component', () => {
     component.onFilesChange(<any>list);
     const firstFile = component.fileCtrlConfig[0];
     expect(firstFile).toBeTruthy();
-    component.onCloseClick("",0)
+    component.onRemoveClick("",0)
     fixture.detectChanges();
-    component.onActionModalSubmit(0);
+    component.onRemoveModalSubmit(0);
     fixture.detectChanges();
     expect(component.fileCtrlConfig.length).toBe(0);
   });

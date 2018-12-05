@@ -1,0 +1,52 @@
+
+// STATISTICS
+// --------------------------------
+.sam.statistics{
+  display: flex;
+  flex-wrap: wrap;
+  margin: 15px -30px;
+}
+.sam.statistics > .statistic{
+  margin-right: 30px;
+  margin-left: 30px;
+}
+.sam.statistics > .statistic:hover{
+  text-decoration: none;
+}
+.sam.statistics .statistic > .value {
+  color: #323A45;
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: -0.6px;
+  text-align: center;
+}
+.sam.statistics .statistic > .label {
+  color: #5B616B;
+  font-size: 14px;
+  text-align: center;
+  text-transform: uppercase;
+}
+.sam.statistics .statistic > .value > .circular {
+  display: block;
+  margin: 0 auto;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  line-height: 50px;
+}
+.sam.statistics .green.statistic>.value>.circular {
+  background: #EAF2EB;
+  border: 1px solid #2E8540;
+}
+.sam.statistics .blue.statistic>.value>.circular {
+  background: #E5F0F4;
+  border: 1px solid #00A6D2;
+}
+.sam.statistics .red.statistic>.value>.circular {
+  background: #F4E8E8;
+  border: 1px solid #981B1E;
+}
+.sam.statistics .orange.statistic>.value>.circular {
+  background: #FBEBE6;
+  border: 1px solid #D84009;
+}
