@@ -25,7 +25,6 @@
           <ng-container *ngIf="!itemTemplate">
             <span>{{ result[settings.valueProperty] }}</span>
             <ng-container *ngIf="settings.subValueProperty &&  result[settings.subValueProperty] ">
-              <!--Add if condition for subsection-->
               <br /><span class="secondary-value">{{ result[settings.subValueProperty] }}</span>
             </ng-container>
           </ng-container>
