@@ -13,7 +13,7 @@ import { HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selected
 })
 export class SamHierarchicalAutocompleteComponent implements OnInit {
 
-  @ViewChild('resultsList') resultsList: ElementRef;
+  @ViewChild('resultsList') resultsListElement: ElementRef;
 
   @ViewChild('input') input: ElementRef;
 
@@ -47,6 +47,8 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
   private timeoutNumber: number;
 
   private results: object[];
+
+  private maxResults: number;
 
   private selectedIndex: number = 0;
 
@@ -135,6 +137,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
       if (this.selectedIndex !== 0) {
         this.selectedIndex--;
         this.setSelectedItem(this.results[this.selectedIndex]);
+        this.scrollSelectedItemToTop();
       }
     }
   }
@@ -144,8 +147,10 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
       if (this.selectedIndex < this.results.length) {
         this.selectedIndex++;
         this.setSelectedItem(this.results[this.selectedIndex]);
+        this.scrollSelectedItemToTop();
       }
     }
+
   }
 
   private updateResults(searchString: string): void {
@@ -165,9 +170,23 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
     this.setSelectedItem(this.results[this.selectedIndex]);
   }
 
-  public onScroll(event) {
-    console.log(event);
 
+  onScroll() {
+    if (this.maxResults > this.results.length) {
+      let scrollAreaHeight = this.resultsListElement.nativeElement.offsetHeight;
+      let scrollTopPos = this.resultsListElement.nativeElement.scrollTop;
+      let scrollAreaMaxHeight = this.resultsListElement.nativeElement.scrollHeight;
+      if ((scrollTopPos + scrollAreaHeight * 2) >= scrollAreaMaxHeight) {
+        //Call service
+        //Save data (appened new items to the list)
+        console.log('Get more items');
+      }
+    }
+  }
+
+  private scrollSelectedItemToTop() {
+    //this.selectedItem
+    //this.resultsListElement.nativeElement.scrollTop +=25;
   }
 
   private setSelectedItem(item: Object): void {
