@@ -411,28 +411,3 @@ export class KeyHelper {
   }
 
 }
-
-export enum KEYS {
-  'ENTER' = 'enter',
-  'UP' = 'up',
-  'DOWN' = 'down',
-  'LEFT' = 'left',
-  'RIGHT' = 'right',
-  'TAB' = 'tab',
-  'ESC' = 'esc',
-  'SPACE' = 'space',
-  'SHIFT' = 'shift',
-  'BACKSPACE' = 'backspace',
-  'ONE' = '1',
-  'TWO' = '2',
-  'THREE' = '3',
-  'FOUR' = '4',
-  'FIVE' = '5',
-  'SIX' = '6',
-  'SEVEN' = '7',
-  'EIGHT' = '8',
-  'NINE' = '9',
-  'ZERO' = '0',
-  'DELETE' = 'delete'
-}
-
