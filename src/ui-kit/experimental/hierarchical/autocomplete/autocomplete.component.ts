@@ -173,11 +173,9 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
 export class SamHierarchicalAutocompleteSettings {
 
   public labelText: string;
-  public labelhint: string;
-  public labelShowFullHint: boolean;
   public id: string;
-  public required: boolean;
-  public errorMessage: string;
   public keyField: string;
 
 }
+
+
