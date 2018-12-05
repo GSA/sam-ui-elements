@@ -5,8 +5,6 @@
     <div class="example-container usa-grid">
 
       <sam-datatable #table samSort [dataSource]="dataSource">
-
-        <!-- Column Definition: cfdaNumber -->
         <ng-container cdkColumnDef="cfdaNumber">
           <th sam-header-cell *cdkHeaderCellDef sam-sort-header>CGAC #
           </th>
@@ -19,16 +17,12 @@
             {{row.cfdaNumber}}
           </td>
         </ng-container>
-
-        <!-- Column Definition: agency -->
         <ng-container cdkColumnDef="agency">
           <th sam-header-cell *cdkHeaderCellDef sam-sort-header>
             Name
           </th>
           <td sam-cell *cdkCellDef="let row"> {{row.agency}} </td>
         </ng-container>
-
-        <!-- Column Definition: title -->
         <ng-container cdkColumnDef="title">
           <th sam-header-cell *cdkHeaderCellDef sam-sort-header>
             Title
