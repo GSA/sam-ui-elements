@@ -1,204 +1,33 @@
-<p>
-  autocomplete works!
-</p>
-<sam-label-wrapper #wrapper>
-  <!--[label]="labelText" [hint]="hint" [showFullHint]="showFullHint" [name]="id" [required]="required"  [errorMessage]="errorMessage"-->
-  <div class="input-container">
-    <input #input autocomplete="off" type="text" (focus)="inputFocusHandler()" (keyup)="onKeyup()"
-      [(ngModel)]="inputValue" (ngModelChange)="onChange()">
-    <!-- [attr.placeholder]="config?.placeholder"  [attr.id]="id" [attr.tabindex]="tabIndex"   [attr.title]="config?.title" [attr.name]="name"-->
-    <ng-container *ngIf="!input.disabled">
-      <span>
-        <span role="button" class="fa fa-times-circle" aria-label="Clear input" aria-hidden="false" (click)="clearInput()"
-          (keyup.enter)="clearInput()" class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}">
+
+<div sam-click-outside (clickOutside)="checkForFocus($event)" sam-tab-outside (tabOutside)="checkForFocus($event)">
+  <sam-label-wrapper #wrapper [label]="settings.labelText" [name]="settings.id" [hint]="settings.labelhint"
+    [showFullHint]="settings.labelShowFullHint" [required]="settings.required" [errorMessage]="settings.errorMessage">
+    <div class="input-container">
+      <input #input [attr.id]="settings.id" autocomplete="off" type="text" (focus)="inputFocusHandler()" (keyup)="onKeyup($event)"
+        [(ngModel)]="inputValue" (ngModelChange)="onChange()" role="combobox" aria-autocomplete="list" aria-expanded="false"
+        aria-haspopup="true" [attr.aria-owns]="settings.id+ '-listbox'">
+      <ng-container *ngIf="!input.disabled">
+        <span>
+          <span role="button" class="fa fa-times-circle" aria-label="Clear input" aria-hidden="false" (click)="clearInput()"
+            (keyup.enter)="clearInput()">
+          </span>
+          <!-- [class]="inputValue.length > 0 ? 'fa fa-times-circle reset-icon-active' : 'fa fa-times-circle reset-icon'" -->
         </span>
-        <!--  [attr.tabindex]="tabIndex"    -->
-      </span>
-    </ng-container>
-  </div>
-</sam-label-wrapper>
-
-
-
-<div class="combobox-list">
-  <label for="cb1-input">
-    State
-  </label>
-  <div class="group">
-    <input id="cb1-input" class="cb_edit" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false"
-      aria-haspopup="true" aria-owns="cb1-listbox">
-    <button id="cb1-button" tabindex="-1" aria-label="Open">
-      ▽
-    </button>
-  </div>
-  <ul id="cb1-listbox" role="listbox" aria-label="States">
-    <li id="lb1-al" role="option">
-      Alabama
-    </li>
-    <li id="lb1-ak" role="option">
-      Alaska
-    </li>
-    <li id="lb1-as" role="option">
-      American Samoa
-    </li>
-    <li id="lb1-az" role="option">
-      Arizona
-    </li>
-    <li id="lb1-ar" role="option">
-      Arkansas
-    </li>
-    <li id="lb1-ca" role="option">
-      California
-    </li>
-    <li id="lb1-co" role="option">
-      Colorado
-    </li>
-    <li id="lb1-ct" role="option">
-      Connecticut
-    </li>
-    <li id="lb1-de" role="option">
-      Delaware
-    </li>
-    <li id="lb1-dc" role="option">
-      District of Columbia
-    </li>
-    <li id="lb1-fl" role="option">
-      Florida
-    </li>
-    <li id="lb1-ga" role="option">
-      Georgia
-    </li>
-    <li id="lb1-gm" role="option">
-      Guam
-    </li>
-    <li id="lb1-hi" role="option">
-      Hawaii
-    </li>
-    <li id="lb1-id" role="option">
-      Idaho
-    </li>
-    <li id="lb1-il" role="option">
-      Illinois
-    </li>
-    <li id="lb1-in" role="option">
-      Indiana
-    </li>
-    <li id="lb1-ia" role="option">
-      Iowa
-    </li>
-    <li id="lb1-ks" role="option">
-      Kansas
-    </li>
-    <li id="lb1-ky" role="option">
-      Kentucky
-    </li>
-    <li id="lb1-la" role="option">
-      Louisiana
-    </li>
-    <li id="lb1-me" role="option">
-      Maine
-    </li>
-    <li id="lb1-md" role="option">
-      Maryland
-    </li>
-    <li id="lb1-ma" role="option">
-      Massachusetts
-    </li>
-    <li id="lb1-mi" role="option">
-      Michigan
-    </li>
-    <li id="lb1-mn" role="option">
-      Minnesota
-    </li>
-    <li id="lb1-ms" role="option">
-      Mississippi
-    </li>
-    <li id="lb1-mo" role="option">
-      Missouri
-    </li>
-    <li id="lb1-mt" role="option">
-      Montana
-    </li>
-    <li id="lb1-ne" role="option">
-      Nebraska
-    </li>
-    <li id="lb1-nv" role="option">
-      Nevada
-    </li>
-    <li id="lb1-nh" role="option">
-      New Hampshire
-    </li>
-    <li id="lb1-nj" role="option">
-      New Jersey
-    </li>
-    <li id="lb1-nm" role="option">
-      New Mexico
-    </li>
-    <li id="lb1-ny" role="option">
-      New York
-    </li>
-    <li id="lb1-nc" role="option">
-      North Carolina
-    </li>
-    <li id="lb1-nd" role="option">
-      North Dakota
-    </li>
-    <li id="lb1-nm" role="option">
-      Northern Marianas Islands
-    </li>
-    <li id="lb1-oh" role="option">
-      Ohio
-    </li>
-    <li id="lb1-ok" role="option">
-      Oklahoma
-    </li>
-    <li id="lb1-or" role="option">
-      Oregon
-    </li>
-    <li id="lb1-pa" role="option">
-      Pennsylvania
-    </li>
-    <li id="lb1-pr" role="option">
-      Puerto Rico
-    </li>
-    <li id="lb1-ri" role="option">
-      Rhode Island
-    </li>
-    <li id="lb1-sc" role="option">
-      South Carolina
-    </li>
-    <li id="lb1-sd" role="option">
-      South Dakota
-    </li>
-    <li id="lb1-tn" role="option">
-      Tennessee
-    </li>
-    <li id="lb1-tx" role="option">
-      Texas
-    </li>
-    <li id="lb1-ut" role="option">
-      Utah
-    </li>
-    <li id="lb1-ve" role="option">
-      Vermont
-    </li>
-    <li id="lb1-va" role="option">
-      Virginia
-    </li>
-    <li id="lb1-vi" role="option">
-      Virgin Islands
-    </li>
-    <li id="lb1-wa" role="option">
-      Washington
-    </li>
-    <li id="lb1-wv" role="option">
-      West Virginia
-    </li>
-    <li id="lb1-wi" role="option">
-      Wisconsin
-    </li>
-    <li id="lb1-wy" role="option">
-      Wyoming
-    </li>
-  </ul>
+      </ng-container>
+    </div>
+    <ul *ngIf="showResults" [attr.id]="settings.id+ '-listbox'" aria-live="polite" aria-relevant="additions" role="listbox"
+      class="usa-unstyled-list" [attr.aria-label]="settings.labelText">
+      <ng-container *ngIf="(results && results.length > 0)">
+        <li role="option" *ngFor="let result of results; let i = index" (mouseenter)="listItemHover(i)" (click)="selectItem(result)">
+          <div>
+            {{result['name'] +': '+ result['subtext'] }} <div *ngIf="result['highlighted']">highlighted</div>
+          </div>
+        </li>
+      </ng-container>
+      <ng-container *ngIf="(!results || results.length == 0)">
+        <li>No results found</li>
+      </ng-container>
+    </ul>
+    <ul #srOnly class="usa-sr-only" aria-live="assertive" aria-relevant="additions"></ul>
+  </sam-label-wrapper>
 </div>
