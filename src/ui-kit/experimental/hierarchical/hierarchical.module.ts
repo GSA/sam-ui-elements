@@ -11,10 +11,11 @@ import { SamHierarchicalTreeHeaderComponent } from './hierarchical-tree-header/h
 import { SamHierarchicalTreeFooterComponent } from './hierarchical-tree-footer/hierarchical-tree-footer.component';
 import { SamWrapperModule } from '../../wrappers';
 import { SamDataTableModule } from '../../components';
+import {SamCheckboxModule} from '../../form-controls';
 
 @NgModule({
   imports: [
-    CommonModule, FormsModule, SamWrapperModule,SamDataTableModule
+    CommonModule, FormsModule, SamWrapperModule,SamDataTableModule,SamCheckboxModule
   ],
   declarations: [SamHierarchicalAutocompleteComponent, SamHierarchicalTreeComponent,
     SamHierarchicalTreeGridComponent, SamHierarchicalSelectedResultComponent,

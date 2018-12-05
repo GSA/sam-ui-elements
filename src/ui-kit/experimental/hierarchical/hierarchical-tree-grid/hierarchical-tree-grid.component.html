@@ -5,19 +5,25 @@
     <div class="example-container usa-grid">
 
       <sam-datatable #table samSort [dataSource]="dataSource">
+
+        <!-- Column Definition: cfdaNumber -->
+        <ng-container cdkColumnDef="cfdaNumber">
+          <th sam-header-cell *cdkHeaderCellDef sam-sort-header>CFDA #
+          </th>
+          <td sam-cell *cdkCellDef="let row">
+           
+
+
+            {{row.cfdaNumber}}
+          </td>
+        </ng-container>
+
         <!-- Column Definition: agency -->
         <ng-container cdkColumnDef="agency">
           <th sam-header-cell *cdkHeaderCellDef sam-sort-header>
             Agency
           </th>
           <td sam-cell *cdkCellDef="let row"> {{row.agency}} </td>
-        </ng-container>
-
-        <!-- Column Definition: cfdaNumber -->
-        <ng-container cdkColumnDef="cfdaNumber">
-          <th sam-header-cell *cdkHeaderCellDef sam-sort-header>CFDA #
-          </th>
-          <td sam-cell *cdkCellDef="let row"> {{row.cfdaNumber}} </td>
         </ng-container>
 
         <!-- Column Definition: title -->
@@ -27,6 +33,7 @@
           </th>
           <td sam-cell *cdkCellDef="let row"> {{row.title}} </td>
         </ng-container>
+
         <tr sam-header-row *cdkHeaderRowDef="displayedColumns"></tr>
         <tr sam-row *cdkRowDef="let row; columns: displayedColumns;
                 let first = first; let last = last; let even = even; let odd = odd">

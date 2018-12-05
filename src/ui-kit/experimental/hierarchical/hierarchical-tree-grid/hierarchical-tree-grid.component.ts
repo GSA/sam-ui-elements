@@ -12,12 +12,9 @@ import { ExampleDatabase, ExampleDataSource } from '../data-source';
 })
 
 export class SamHierarchicalTreeGridComponent implements OnInit {
-  pageSize = 10;
-  totalPages = 1;
   displayedColumns = ['agency', 'cfdaNumber', 'title'];
   exampleDatabase = new ExampleDatabase();
   dataSource: ExampleDataSource | null;
-  curPage = 1;
   @ViewChild(SamPaginationComponent) paginator: SamPaginationComponent;
   @ViewChild(SamSortDirective) sort: SamSortDirective;
   @ViewChild('filter') filter: ElementRef;
@@ -27,6 +24,6 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
       this.exampleDatabase,
       this.paginator,
       this.sort
-  );
+    );
   }
 }
