@@ -6,28 +6,18 @@
 
       <sam-datatable #table samSort [dataSource]="dataSource">
 
-         <!-- Column Definition: Select -->
-         <ng-container cdkColumnDef="select">
-            <th sam-header-cell *cdkHeaderCellDef sam-sort-header> 
-            </th>
-            <td sam-cell *cdkCellDef="let row">
-                <sam-checkbox
-                [name]="'radio'"
-                [options]="[
-                  {label: ''}
-                ]"
-              ></sam-checkbox>
-           
-            </td>
-          </ng-container>
-
         <!-- Column Definition: cfdaNumber -->
         <ng-container cdkColumnDef="cfdaNumber">
-          <th sam-header-cell *cdkHeaderCellDef sam-sort-header>CFDA #
+          <th sam-header-cell *cdkHeaderCellDef sam-sort-header>CGAC #
           </th>
           <td sam-cell *cdkCellDef="let row">
            
-
+              <sam-checkbox
+              [name]="'radio'"
+              [options]="[
+                {label: ''}
+              ]"
+            ></sam-checkbox>
 
             {{row.cfdaNumber}}
           </td>
@@ -36,7 +26,7 @@
         <!-- Column Definition: agency -->
         <ng-container cdkColumnDef="agency">
           <th sam-header-cell *cdkHeaderCellDef sam-sort-header>
-            Agency
+            Name
           </th>
           <td sam-cell *cdkCellDef="let row"> {{row.agency}} </td>
         </ng-container>
