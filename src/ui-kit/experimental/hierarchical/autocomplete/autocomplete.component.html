@@ -20,12 +20,14 @@
           (click)="selectItem(result)">
 
           <ng-container *ngIf="itemTemplate">
-              <ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit:result}"></ng-container>
+            <ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit:result}"></ng-container>
           </ng-container>
           <ng-container *ngIf="!itemTemplate">
-            <div>
-              {{result['name'] +': '+ result['subtext'] }}
-            </div>
+            <span>{{ result['name'] }}</span>
+            <ng-container>
+              <!--Add if condition for subsection-->
+              <br /><span class="secondary-value">{{ result['subtext'] }}</span>
+            </ng-container>
           </ng-container>
         </li>
       </ng-container>
