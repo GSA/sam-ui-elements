@@ -13,6 +13,7 @@ import { HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selected
 })
 export class SamHierarchicalAutocompleteComponent implements OnInit {
 
+  @ViewChild('resultsList') resultsList: ElementRef;
 
   @ViewChild('input') input: ElementRef;
 
@@ -164,6 +165,11 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
     this.setSelectedItem(this.results[this.selectedIndex]);
   }
 
+  public onScroll(event) {
+    console.log(event);
+
+  }
+
   private setSelectedItem(item: Object): void {
     if (this.results && this.results.length > 0) {
       if (this.selectedItem) {
@@ -221,5 +227,3 @@ export class SamHierarchicalAutocompleteSettings {
   public debounceTime: number;
 
 }
-
-
