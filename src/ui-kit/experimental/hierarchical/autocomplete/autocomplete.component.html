@@ -4,7 +4,7 @@
 <sam-label-wrapper #wrapper>
   <!--[label]="labelText" [hint]="hint" [showFullHint]="showFullHint" [name]="id" [required]="required"  [errorMessage]="errorMessage"-->
   <div class="input-container">
-    <input #input autocomplete="off" type="text" (focus)="inputFocusHandler($event)" (keyup)="onKeyup($event)"
+    <input #input autocomplete="off" type="text" (focus)="inputFocusHandler()" (keyup)="onKeyup()"
       [(ngModel)]="inputValue" (ngModelChange)="onChange()">
     <!-- [attr.placeholder]="config?.placeholder"  [attr.id]="id" [attr.tabindex]="tabIndex"   [attr.title]="config?.title" [attr.name]="name"-->
     <ng-container *ngIf="!input.disabled">

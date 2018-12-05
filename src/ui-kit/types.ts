@@ -349,13 +349,13 @@ export interface UploadedFileData {
   disabled?: boolean;
 }
 
-export interface UploadFileActionModalConfig {
+export interface ActionModalConfig {
     /**
-     * sets the upload modal title
+     * sets the modal title
      */
     title?: string,
     /**
-     * sets the upload modal description
+     * sets the modal description
      */
     description?: string
 }
