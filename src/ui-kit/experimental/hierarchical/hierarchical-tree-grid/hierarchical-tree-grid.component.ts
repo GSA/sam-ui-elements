@@ -1,9 +1,10 @@
 import {
   Component,
-  OnInit, ViewChild, ElementRef
+  OnInit, ViewChild, ElementRef,Input
 } from '@angular/core';
 import { SamSortDirective, SamPaginationComponent } from '../../../components'
 import { ExampleDatabase, ExampleDataSource } from '../data-source';
+import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 
 @Component({
   selector: 'sam-hierarchical-tree-grid',
@@ -12,6 +13,9 @@ import { ExampleDatabase, ExampleDataSource } from '../data-source';
 })
 
 export class SamHierarchicalTreeGridComponent implements OnInit {
+  @Input()
+  public service: SamHiercarchicalServiceInterface;
+
   displayedColumns = ['cfdaNumber','agency',  'title'];
   exampleDatabase = new ExampleDatabase();
   dataSource: ExampleDataSource | null;
@@ -20,6 +24,11 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   @ViewChild('filter') filter: ElementRef;
 
   ngOnInit() {
+    this.service.getDataByText(null).subscribe(
+      (data) => {
+        console.log("Null get data by text");
+        console.log(data);
+      });
     this.dataSource = new ExampleDataSource(
       this.exampleDatabase,
       this.paginator,

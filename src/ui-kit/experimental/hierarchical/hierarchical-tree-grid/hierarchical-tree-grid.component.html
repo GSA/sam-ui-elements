@@ -11,13 +11,10 @@
           <th sam-header-cell *cdkHeaderCellDef sam-sort-header>CGAC #
           </th>
           <td sam-cell *cdkCellDef="let row">
-           
-              <sam-checkbox
-              [name]="'radio'"
-              [options]="[
+
+            <sam-checkbox [name]="'radio'" [options]="[
                 {label: ''}
-              ]"
-            ></sam-checkbox>
+              ]"></sam-checkbox>
 
             {{row.cfdaNumber}}
           </td>
@@ -48,13 +45,6 @@
       <div class="example-no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'" style="padding:10px 0;">
         No users found matching filter.
       </div>
-
     </div>
-
-  </div>
-  <hr>
-  <div>
-
-    <ng-content select=".gridFooter"></ng-content>
   </div>
 </div>
