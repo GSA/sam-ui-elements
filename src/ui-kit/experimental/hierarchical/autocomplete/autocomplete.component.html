@@ -23,10 +23,10 @@
             <ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit:result}"></ng-container>
           </ng-container>
           <ng-container *ngIf="!itemTemplate">
-            <span>{{ result['name'] }}</span>
-            <ng-container>
+            <span>{{ result[settings.valueProperty] }}</span>
+            <ng-container *ngIf="settings.subValueProperty &&  result[settings.subValueProperty] ">
               <!--Add if condition for subsection-->
-              <br /><span class="secondary-value">{{ result['subtext'] }}</span>
+              <br /><span class="secondary-value">{{ result[settings.subValueProperty] }}</span>
             </ng-container>
           </ng-container>
         </li>

@@ -195,6 +195,18 @@ export class SamHierarchicalAutocompleteSettings {
    */
   public notSelectedableProperty: string;
 
+
+  /**
+   *  
+   */
+  public valueProperty: string;
+
+  /**
+   *  
+   */
+  public subValueProperty: string;
+
+
 }
 
 
