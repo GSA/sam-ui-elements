@@ -43,6 +43,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
   public service: SamHiercarchicalServiceInterface;
 
 
+  private timeoutNumber: number;
 
   private results: object[];
 
@@ -147,12 +148,15 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
   }
 
   private updateResults(searchString: string): void {
-    this.service.getDataByText(searchString).subscribe(
-      (data) => {
-        this.results = data;
-        this.selectedIndex = 0;
-        this.setSelectedItem(this.results[this.selectedIndex]);
-      });
+    window.clearTimeout(this.timeoutNumber);
+    this.timeoutNumber = window.setTimeout(() => {
+      this.service.getDataByText(searchString).subscribe(
+        (data) => {
+          this.results = data;
+          this.selectedIndex = 0;
+          this.setSelectedItem(this.results[this.selectedIndex]);
+        });
+    }, this.settings.debounceTime);
   }
 
   listItemHover(index: number): void {
@@ -174,6 +178,10 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
 
 
 export class SamHierarchicalAutocompleteSettings {
+
+  constructor() {
+    this.debounceTime = 250;
+  }
 
   /**
    * 
@@ -206,6 +214,11 @@ export class SamHierarchicalAutocompleteSettings {
    */
   public subValueProperty: string;
 
+
+  /**
+   * 
+   */
+  public debounceTime: number;
 
 }
 

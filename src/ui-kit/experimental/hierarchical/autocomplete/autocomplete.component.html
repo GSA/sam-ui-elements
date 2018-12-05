@@ -18,7 +18,6 @@
       <ng-container *ngIf="(results && results.length > 0)">
         <li role="option" *ngFor="let result of results; let i = index" (mouseenter)="listItemHover(i)" [class]="result['highlighted']? 'selected-item':''"
           (click)="selectItem(result)">
-
           <ng-container *ngIf="itemTemplate">
             <ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit:result}"></ng-container>
           </ng-container>
