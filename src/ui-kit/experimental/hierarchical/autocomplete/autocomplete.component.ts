@@ -56,6 +56,10 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
     if (!this.model) {
       this.model = new HierarchicalTreeSelectedItemModel();
     }
+    if (!this.settings) {
+      this.settings = new SamHierarchicalAutocompleteSettings();
+
+    }
     //Set defaults for settings
   }
 
@@ -159,7 +163,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
       this.selectedItem = item;
       this.selectedItem[this.HighlightedPropertyName] = true;
       //Set Selected SR properties
-      
+
     }
   }
 
