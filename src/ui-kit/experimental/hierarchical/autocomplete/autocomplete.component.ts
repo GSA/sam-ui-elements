@@ -1,5 +1,5 @@
 import {
-  Component, OnInit, Input, ViewChild,
+  Component, OnInit, Input, ViewChild, TemplateRef,
   ElementRef
 } from '@angular/core';
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
@@ -19,8 +19,14 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
 
   @ViewChild('srOnly') srOnly: ElementRef;
 
+  /**
+   * Allow to insert a customized template for suggestions to use
+   */
+  @Input() itemTemplate: TemplateRef<any>;
 
-
+  /**
+   * 
+   */
   @Input()
   public model: HierarchicalTreeSelectedItemModel;
 
@@ -40,7 +46,8 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
 
   private results: object[];
 
-  private selectedIndex: number = 0;;
+  private selectedIndex: number = 0;
+
   private selectedItem: object;
 
   public inputValue: string;
@@ -63,27 +70,25 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
     //Set defaults for settings
   }
 
-  public clearInput() {
+  public clearInput(): void {
     this.inputValue = '';
     this.clearAndHideResults();
   }
 
-  public onChange() {
 
-  }
 
-  checkForFocus(event) {
+  checkForFocus(event): void {
     this.showResults = false;
   }
 
-  public inputFocusHandler() {
+  public inputFocusHandler(): void {
     this.inputValue = '';
     this.updateResults(this.inputValue);
     this.showResults = true;
   }
 
 
-  public onKeyup(event) {
+  public onKeyup(event): void {
     if (KeyHelper.is(KEYS.TAB, event)) {
       this.showResults = false;
       return;
@@ -112,18 +117,18 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
     }
   }
 
-  private selectItem(item: object) {
+  private selectItem(item: object): void {
     this.model.addItem(item, this.settings.keyField);
     this.showResults = false;
   }
 
-  private clearAndHideResults() {
+  private clearAndHideResults(): void {
     this.results = [];
     this.showResults = false;
     //hide results box
   }
 
-  private onArrowUp() {
+  private onArrowUp(): void {
     if (this.results && this.results.length > 0) {
       if (this.selectedIndex !== 0) {
         this.selectedIndex--;
@@ -132,7 +137,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
     }
   }
 
-  private onArrowDown() {
+  private onArrowDown(): void {
     if (this.results && this.results.length > 0) {
       if (this.selectedIndex < this.results.length) {
         this.selectedIndex++;
@@ -141,7 +146,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
     }
   }
 
-  private updateResults(searchString: string) {
+  private updateResults(searchString: string): void {
     this.service.getDataByText(searchString).subscribe(
       (data) => {
         this.results = data;
@@ -150,12 +155,12 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
       });
   }
 
-  listItemHover(index: number) {
+  listItemHover(index: number): void {
     this.selectedIndex = index;
     this.setSelectedItem(this.results[this.selectedIndex]);
   }
 
-  private setSelectedItem(item: Object) {
+  private setSelectedItem(item: Object): void {
     if (this.results && this.results.length > 0) {
       if (this.selectedItem) {
         this.selectedItem[this.HighlightedPropertyName] = false;
@@ -169,10 +174,27 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
 
 
 export class SamHierarchicalAutocompleteSettings {
+
+  /**
+   * 
+   */
   public labelText: string;
+
+  /**
+   * 
+   */
   public id: string;
+
+  /**
+   * 
+   */
   public keyField: string;
-  public notSelectedProperty:string;
+
+  /**
+   * 
+   */
+  public notSelectedableProperty: string;
+
 }
 
 
