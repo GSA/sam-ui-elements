@@ -8,9 +8,9 @@ describe('SamHierarchicalAutocompleteComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SamHierarchicalAutocompleteComponent ]
+      declarations: [SamHierarchicalAutocompleteComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

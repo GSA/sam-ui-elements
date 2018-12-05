@@ -8,7 +8,6 @@ export class HierarchicalTreeSelectedItemModel {
 
     addItem(item: object, keyField: string) {
         if (!this.contatinsItem(item[keyField], keyField)) {
-
             if (this.treeMode === TreeMode.SINGLE) {
                 this.clearItems();
             }
@@ -36,7 +35,6 @@ export class HierarchicalTreeSelectedItemModel {
 
     getItems(): object[] {
         return this.items;
-
     }
 }
 

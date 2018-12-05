@@ -85,6 +85,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
 
   public onKeyup(event) {
     if (KeyHelper.is(KEYS.TAB, event)) {
+      this.showResults = false;
       return;
     }
     else if (KeyHelper.is(KEYS.DOWN, event)) {
@@ -127,7 +128,6 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
       if (this.selectedIndex !== 0) {
         this.selectedIndex--;
         this.setSelectedItem(this.results[this.selectedIndex]);
-        ;
       }
     }
   }
@@ -163,19 +163,16 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
       this.selectedItem = item;
       this.selectedItem[this.HighlightedPropertyName] = true;
       //Set Selected SR properties
-
     }
   }
-
 }
 
 
 export class SamHierarchicalAutocompleteSettings {
-
   public labelText: string;
   public id: string;
   public keyField: string;
-
+  public notSelectedProperty:string;
 }
 
 

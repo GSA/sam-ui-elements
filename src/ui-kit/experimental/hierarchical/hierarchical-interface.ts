@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 
 export interface SamHiercarchicalServiceInterface {
 
-
     /**
      * 
      * @param searchValue 
