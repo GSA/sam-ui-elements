@@ -1,25 +1,93 @@
 import {
   Component,
-  OnInit, ViewChild, ElementRef, Input
+  OnInit,
+  ViewChild,
+  ElementRef,
+  Input,
+  Output,
+  EventEmitter
 } from '@angular/core';
-import { SamSortDirective, SamPaginationComponent, SamSortable } from '../../../components'
-import { ExampleDatabase, ExampleDataSource } from '../data-source';
-import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
-
+import { FormArray } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs';
 import { DataSource } from '@angular/cdk';
 
+
+import { SamSortDirective, SamPaginationComponent, SamSortable } from '../../../components'
+import { ExampleDatabase, ExampleDataSource } from '../data-source';
+import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
+import { KeyHelper } from 'ui-kit/utilities';
+
+
+
+export interface GridTemplate {
+  
+}
+
+export interface GridTemplateConfiguration {
+  displayedColumns: any[];
+}
+
+export interface GridDataSource {
+  connect: () => void;
+  disconnect: () => void;
+  sortData?: () => void;
+}
+
+export interface GridItem {
+
+}
+
+class Grid {
+  @Input() public template: GridTemplate;
+  @Input() public datasource: GridDataSource;
+  @Input() public templateConfiguration: GridTemplateConfiguration;
+  @Output() public levelChanged = new EventEmitter<GridItem>();
+  @Output() public itemSelected = new EventEmitter<GridItem>();
+
+  public displayedColumns = ['select'];
+  public selected: GridItem;
+  public focusedCell: any; // Should be the table cell
+
+  public ngOnChanges () {
+    this.displayedColumns = [...this.displayedColumns, ...this.templateConfiguration.displayedColumns]
+  }
+
+  public handleClick(): void {}
+
+  public changeLevel(item: GridItem): void {
+    this.levelChanged.emit(item);
+  }
+
+  public handleKeydown(keyEvent: any): void {
+    switch (keyEvent.type) {
+      case KeyHelper.is('down', keyEvent):
+        return this.handleArrowDown(keyEvent);
+      default: 
+        return;
+    }
+  }
+
+
+
+  private handleArrowDown (event): void {}
+
+}
+
+
+
+
+/*************************************************** */
 @Component({
   selector: 'sam-hierarchical-tree-grid',
   templateUrl: './hierarchical-tree-grid.component.html',
   styleUrls: ['./hierarchical-tree-grid.component.scss']
 })
-
 export class SamHierarchicalTreeGridComponent implements OnInit {
-  @Input()
-  public service: SamHiercarchicalServiceInterface;
+  @Input() public service: SamHiercarchicalServiceInterface;
   @Input() public templateConfigurations: any;
+
+  public displayedColumns = ['select'];
 
   exampleDatabase = new ExampleDatabase();
   dataSource: SampleDataSource | null;
@@ -27,6 +95,11 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   @ViewChild(SamSortDirective) sort: SamSortDirective;
   @ViewChild('filter') filter: ElementRef;
   data:any[]=[];
+
+  ngOnChanges () {
+    this.displayedColumns = [...this.displayedColumns, ...this.templateConfigurations.displayedColumns];
+  }
+
   ngOnInit() {
     this.service.getDataByText(null).subscribe(
       (res) => {
