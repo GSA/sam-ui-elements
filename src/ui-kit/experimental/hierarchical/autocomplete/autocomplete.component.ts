@@ -127,17 +127,16 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
   /**
    * Event method used when focus is gained to the input
    */
-  public inputFocusHandler(): void {
+  inputFocusHandler(): void {
     this.inputValue = '';
     this.getResults(this.inputValue);
-
   }
 
   /**
    * Key event
    * @param event 
    */
-  public onKeyup(event): void {
+  onKeyup(event): void {
     if (KeyHelper.is(KEYS.TAB, event)) {
       return;
     }
@@ -322,12 +321,6 @@ export class SamHierarchicalAutocompleteSettings {
   public keyField: string;
 
   /**
-   * 
-   */
-  public notSelectedableProperty: string;
-
-
-  /**
    *  Property from supplied model used for the top part of the basic template
    */
   public valueProperty: string;
@@ -337,10 +330,8 @@ export class SamHierarchicalAutocompleteSettings {
    */
   public subValueProperty: string;
 
-
   /**
    *  Sets the time waited for addional key actions Default is 250 milliseconds
    */
   public debounceTime: number;
-
 }
