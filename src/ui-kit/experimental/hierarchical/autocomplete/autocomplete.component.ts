@@ -130,7 +130,6 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
   private clearAndHideResults(): void {
     this.results = [];
     this.showResults = false;
-    //hide results box
   }
 
   private onArrowUp(): void {
@@ -145,13 +144,12 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
 
   private onArrowDown(): void {
     if (this.results && this.results.length > 0) {
-      if (this.selectedIndex < this.results.length) {
+      if (this.selectedIndex < this.results.length-1) {
         this.selectedIndex++;
         this.setSelectedItem(this.results[this.selectedIndex]);
         this.scrollSelectedItemToTop();
       }
     }
-
   }
 
   private updateResults(searchString: string): void {
