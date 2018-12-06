@@ -28,6 +28,9 @@
 @import '../../segment/segement';
 @import '../../statistic/statistic';
 @import '../../feed/feed';
+@import '../../headers/headers';
+@import '../../utilities/link';
+@import '../../utilities/type';
 
 // Create a theme.
 @mixin sam-gov-theme($theme) {

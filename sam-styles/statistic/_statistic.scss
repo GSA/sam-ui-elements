@@ -4,11 +4,10 @@
 .sam.statistics{
   display: flex;
   flex-wrap: wrap;
-  margin: 15px -30px;
+  margin: 10px -30px;
 }
 .sam.statistics > .statistic{
-  margin-right: 30px;
-  margin-left: 30px;
+  margin: 5px 30px;
 }
 .sam.statistics > .statistic:hover{
   text-decoration: none;
@@ -33,20 +32,42 @@
   height: 50px;
   border-radius: 50%;
   line-height: 50px;
+  transition: all 0.3s ease;
 }
+
+// COLORS
 .sam.statistics .green.statistic>.value>.circular {
   background: #EAF2EB;
   border: 1px solid #2E8540;
 }
+.sam.statistics .green.statistic:hover>.value>.circular {
+  color: white;
+  background: #2E8540;
+}
+
 .sam.statistics .blue.statistic>.value>.circular {
   background: #E5F0F4;
   border: 1px solid #00A6D2;
 }
+.sam.statistics .blue.statistic:hover>.value>.circular {
+  color: white;
+  background: #00A6D2;
+}
+
 .sam.statistics .red.statistic>.value>.circular {
   background: #F4E8E8;
   border: 1px solid #981B1E;
 }
+.sam.statistics .red.statistic:hover>.value>.circular {
+  color: white;
+  background: #981B1E;
+}
+
 .sam.statistics .orange.statistic>.value>.circular {
   background: #FBEBE6;
   border: 1px solid #D84009;
+}
+.sam.statistics .orange.statistic:hover>.value>.circular {
+  color: white;
+  background: #D84009;
 }
