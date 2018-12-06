@@ -8,6 +8,11 @@
     border-radius: 2px;
     background-color: white;
     margin: 0 0 0 3px;
+    transition: all 0.3s ease;
+  }
+  button:hover{
+    color: white !important;
+    background-color: #0071BC !important;
   }
 }
 

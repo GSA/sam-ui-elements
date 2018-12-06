@@ -6,6 +6,7 @@
   border-radius: 4px;
   padding: 10px 15px;
   margin-bottom: 20px;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
   .header{
     display: flex;
     h4{
@@ -18,21 +19,11 @@
       font-weight: 400;
       margin: 0;
       border: 1px solid #0071bc;
+      transition: background-color 0.3s ease;
+    }
+    button:hover{
+      color: white;
+      background-color: #0071bc;
     }
   }
-}
-.sam.card-next.raised{
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
-}
-.sam.link.card-next{
-  border: 1px solid transparent;
-  background-color: transparent;
-  transition: all 0.3s ease;
-}
-.sam.link.card-next:hover{
-  //cursor: pointer;
-  border: 1px solid #979797;
-  background-color: white;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
-  transform: translateY(-2px);
 }
