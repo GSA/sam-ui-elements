@@ -210,8 +210,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
    * @param searchString 
    */
   private getResults(searchString: string): void {
-    if (this.searchString !== searchString) {
-      this.showResults = true;
+    if (this.searchString !== searchString ||this.searchString==='') {
       this.searchString = searchString;
       window.clearTimeout(this.timeoutNumber);
       this.timeoutNumber = window.setTimeout(() => {
@@ -221,6 +220,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
             this.maxResults = result.totalItems;
             this.highlightedIndex = 0;
             this.setHighlightedItem(this.results[this.highlightedIndex]);
+            this.showResults = true;
           });
       }, this.settings.debounceTime);
     }
