@@ -89,7 +89,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
   /**
    * Search string
    */
-  private searchString: string;
+  private searchString: string =null;
 
   /**
    * Determines if the dropdown should be shown
@@ -130,7 +130,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
   public inputFocusHandler(): void {
     this.inputValue = '';
     this.getResults(this.inputValue);
-    this.showResults = true;
+
   }
 
   /**
@@ -154,12 +154,10 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
       this.clearAndHideResults();
     }
     else if (KeyHelper.is(KEYS.BACKSPACE, event) || KeyHelper.is(KEYS.DELETE, event)) {
-      this.showResults = true;
       const searchString = event.target.value || '';
       this.getResults(searchString);
     }
     else {
-      this.showResults = true;
       const searchString = event.target.value || '';
       this.getResults(searchString);
     }
@@ -214,6 +212,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
    */
   private getResults(searchString: string): void {
     if (this.searchString !== searchString) {
+      this.showResults = true;
       this.searchString = searchString;
       window.clearTimeout(this.timeoutNumber);
       this.timeoutNumber = window.setTimeout(() => {
