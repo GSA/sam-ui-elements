@@ -157,8 +157,9 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
     window.clearTimeout(this.timeoutNumber);
     this.timeoutNumber = window.setTimeout(() => {
       this.service.getDataByText(searchString).subscribe(
-        (data) => {
-          this.results = data;
+        (result) => {
+          this.results = result.items;
+          this.maxResults = result.totalItems;
           this.selectedIndex = 0;
           this.setSelectedItem(this.results[this.selectedIndex]);
         });
