@@ -20,14 +20,14 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   @Input()
   public service: SamHiercarchicalServiceInterface;
   @Input() public templateConfigurations: any;
-  displayedColumns = ['cfdaNumber', 'agency', 'title'];
+ // displayedColumns = ['cfdaNumber', 'agency', 'title'];
 
   exampleDatabase = new ExampleDatabase();
   dataSource: SampleDataSource | null;
   @ViewChild(SamPaginationComponent) paginator: SamPaginationComponent;
   @ViewChild(SamSortDirective) sort: SamSortDirective;
   @ViewChild('filter') filter: ElementRef;
-  data:any[];
+  data:any[]=[];
   ngOnInit() {
     this.service.getDataByText(null).subscribe(
       (res) => {
@@ -35,11 +35,11 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
         // console.log("Null get data by text");
         // console.log(res);
       });
-    this.dataSource = new SampleDataSource(
-      this.exampleDatabase,
-      this.paginator,
-      this.sort
-    );
+      this.dataSource = new SampleDataSource(
+        this.exampleDatabase,
+        this.paginator,
+        this.sort
+      );
   }
 }
 
@@ -48,7 +48,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
 export class SampleDatabase {
   dataChange: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   get data(): any[] { return this.dataChange.value; }
-  constructor() {
+  constructor(private reportData: any[]) {
     for (let i = 0; i < 1940; i++) { this.addProgram(); }
   }
   addProgram() {
@@ -57,7 +57,7 @@ export class SampleDatabase {
     this.dataChange.next(copiedData);
   }
   private createNewProgram() {
-   // return ReportData[this.data.length];
+    return this.reportData[this.data.length];
   }
 }
 
@@ -115,3 +115,5 @@ export class SampleDataSource extends DataSource<any> {
    
   }
 }
+
+
