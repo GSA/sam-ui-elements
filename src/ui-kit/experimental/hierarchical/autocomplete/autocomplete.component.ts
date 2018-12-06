@@ -89,7 +89,11 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
   /**
    * Search string
    */
-  private searchString: string =null;
+  private searchString: string = null;
+
+
+  private resultsAvailableMessage: string = ' results available. Use up and down arrows\
+  to scroll through results. Hit enter to select.';
 
   /**
    * Determines if the dropdown should be shown
@@ -168,6 +172,13 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
    */
   private selectItem(item: object): void {
     this.model.addItem(item, this.settings.keyField);
+    let message = item[this.settings.valueProperty];
+    if (this.settings.subValueProperty && item[this.settings.subValueProperty]) {
+      message += ": " + item[this.settings.subValueProperty]
+
+    }
+    message += " selected";
+    this.addScreenReaderMessage(message);
     this.showResults = false;
   }
 
@@ -210,7 +221,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
    * @param searchString 
    */
   private getResults(searchString: string): void {
-    if (this.searchString !== searchString ||this.searchString==='') {
+    if (this.searchString !== searchString || this.searchString === '') {
       this.searchString = searchString;
       window.clearTimeout(this.timeoutNumber);
       this.timeoutNumber = window.setTimeout(() => {
@@ -221,6 +232,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
             this.highlightedIndex = 0;
             this.setHighlightedItem(this.results[this.highlightedIndex]);
             this.showResults = true;
+            this.addScreenReaderMessage(this.maxResults + ' ' + this.resultsAvailableMessage)
           });
       }, this.settings.debounceTime);
     }
@@ -290,7 +302,20 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
       }
       this.highlightedItem = item;
       this.highlightedItem[this.HighlightedPropertyName] = true;
-      //Set Selected SR properties
+      let message = item[this.settings.valueProperty];
+      if (this.settings.subValueProperty && item[this.settings.subValueProperty]) {
+        message += ": " + item[this.settings.subValueProperty]
+
+      }
+      this.addScreenReaderMessage(message);
+    }
+  }
+
+ private addScreenReaderMessage(message: string) {
+    const srResults: HTMLElement = document.createElement('li');
+    srResults.innerText = message;
+    if (this.srOnly && this.srOnly.nativeElement) {
+      this.srOnly.nativeElement.appendChild(srResults);
     }
   }
 }
