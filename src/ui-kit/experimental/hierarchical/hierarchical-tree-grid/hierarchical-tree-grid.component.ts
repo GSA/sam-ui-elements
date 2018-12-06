@@ -20,7 +20,6 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   @Input()
   public service: SamHiercarchicalServiceInterface;
   @Input() public templateConfigurations: any;
- // displayedColumns = ['cfdaNumber', 'agency', 'title'];
 
   exampleDatabase = new ExampleDatabase();
   dataSource: SampleDataSource | null;
@@ -32,8 +31,6 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
     this.service.getDataByText(null).subscribe(
       (res) => {
         this.data = res;
-        // console.log("Null get data by text");
-        // console.log(res);
       });
       this.dataSource = new SampleDataSource(
         this.exampleDatabase,
