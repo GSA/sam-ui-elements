@@ -57,6 +57,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
   public inputValue: string;
 
   private HighlightedPropertyName = "highlighted";
+  private searchString: string;
 
 
   public showResults = false;
@@ -154,9 +155,10 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
   }
 
   private updateResults(searchString: string): void {
+    this.searchString = searchString;
     window.clearTimeout(this.timeoutNumber);
     this.timeoutNumber = window.setTimeout(() => {
-      this.service.getDataByText(searchString).subscribe(
+      this.service.getDataByText(0, searchString).subscribe(
         (result) => {
           this.results = result.items;
           this.maxResults = result.totalItems;
@@ -178,16 +180,31 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
       let scrollTopPos = this.resultsListElement.nativeElement.scrollTop;
       let scrollAreaMaxHeight = this.resultsListElement.nativeElement.scrollHeight;
       if ((scrollTopPos + scrollAreaHeight * 2) >= scrollAreaMaxHeight) {
-        //Call service
-        //Save data (appened new items to the list)
-        console.log('Get more items');
+        this.addResults();
       }
     }
   }
 
+
+  addResults() {
+    this.service.getDataByText(this.results.length, this.searchString).subscribe(
+      (result) => {
+        for (let i = 0; i < result.items.length; i++) {
+          this.addResult(result.items[i]);
+        }
+        this.maxResults = result.totalItems;
+      });
+
+  }
+
+  private addResult(item: object) {
+    //add check to make sure item does not exist
+    this.results.push(item);
+  }
+
   private scrollSelectedItemToTop() {
-    //this.selectedItem
-    //this.resultsListElement.nativeElement.scrollTop +=25;
+    let selectedChild = this.resultsListElement.nativeElement.children[this.selectedIndex];
+    this.resultsListElement.nativeElement.scrollTop = selectedChild.offsetTop;
   }
 
   private setSelectedItem(item: Object): void {

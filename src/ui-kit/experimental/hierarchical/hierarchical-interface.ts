@@ -7,7 +7,7 @@ export interface SamHiercarchicalServiceInterface {
      * 
      * @param searchValue 
      */
-    getDataByText(searchValue?: string): Observable<SearchByTextResult>;
+    getDataByText(currentItems:number, searchValue?: string): Observable<SearchByTextResult>;
 
 
     /**
