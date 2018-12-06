@@ -30,8 +30,8 @@
           <td sam-cell *cdkCellDef="let row"> {{row.title}} </td>
         </ng-container>
 
-        <tr sam-header-row *cdkHeaderRowDef="displayedColumns"></tr>
-        <tr sam-row *cdkRowDef="let row; columns: displayedColumns;
+        <tr sam-header-row *cdkHeaderRowDef="templateConfigurations.displayedColumns"></tr>
+        <tr sam-row *cdkRowDef="let row; columns: templateConfigurations.displayedColumns;
                 let first = first; let last = last; let even = even; let odd = odd">
         </tr>
       </sam-datatable>
