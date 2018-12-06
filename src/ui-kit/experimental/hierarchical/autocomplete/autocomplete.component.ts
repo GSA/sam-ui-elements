@@ -72,14 +72,12 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
       this.settings = new SamHierarchicalAutocompleteSettings();
 
     }
-    //Set defaults for settings
   }
 
   public clearInput(): void {
     this.inputValue = '';
     this.clearAndHideResults();
   }
-
 
 
   checkForFocus(event): void {
@@ -95,7 +93,6 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
 
   public onKeyup(event): void {
     if (KeyHelper.is(KEYS.TAB, event)) {
-      this.showResults = false;
       return;
     }
     else if (KeyHelper.is(KEYS.DOWN, event)) {
@@ -144,7 +141,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
 
   private onArrowDown(): void {
     if (this.results && this.results.length > 0) {
-      if (this.selectedIndex < this.results.length-1) {
+      if (this.selectedIndex < this.results.length - 1) {
         this.selectedIndex++;
         this.setSelectedItem(this.results[this.selectedIndex]);
         this.scrollSelectedItemToTop();
@@ -153,17 +150,19 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
   }
 
   private updateResults(searchString: string): void {
-    this.searchString = searchString;
-    window.clearTimeout(this.timeoutNumber);
-    this.timeoutNumber = window.setTimeout(() => {
-      this.service.getDataByText(0, searchString).subscribe(
-        (result) => {
-          this.results = result.items;
-          this.maxResults = result.totalItems;
-          this.selectedIndex = 0;
-          this.setSelectedItem(this.results[this.selectedIndex]);
-        });
-    }, this.settings.debounceTime);
+    if (this.searchString !== searchString) {
+      this.searchString = searchString;
+      window.clearTimeout(this.timeoutNumber);
+      this.timeoutNumber = window.setTimeout(() => {
+        this.service.getDataByText(0, searchString).subscribe(
+          (result) => {
+            this.results = result.items;
+            this.maxResults = result.totalItems;
+            this.selectedIndex = 0;
+            this.setSelectedItem(this.results[this.selectedIndex]);
+          });
+      }, this.settings.debounceTime);
+    }
   }
 
   listItemHover(index: number): void {
