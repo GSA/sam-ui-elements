@@ -84,7 +84,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
   /**
    * Proprty being set on the object is highlighted
    */
-  private HighlightedPropertyName = "highlighted";
+  private HighlightedPropertyName = 'highlighted';
 
   /**
    * Search string
@@ -174,10 +174,10 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
     this.model.addItem(item, this.settings.keyField);
     let message = item[this.settings.valueProperty];
     if (this.settings.subValueProperty && item[this.settings.subValueProperty]) {
-      message += ": " + item[this.settings.subValueProperty]
+      message += ': ' + item[this.settings.subValueProperty]
 
     }
-    message += " selected";
+    message += ' selected';
     this.addScreenReaderMessage(message);
     this.showResults = false;
   }
@@ -304,7 +304,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
       this.highlightedItem[this.HighlightedPropertyName] = true;
       let message = item[this.settings.valueProperty];
       if (this.settings.subValueProperty && item[this.settings.subValueProperty]) {
-        message += ": " + item[this.settings.subValueProperty]
+        message += ': ' + item[this.settings.subValueProperty]
 
       }
       this.addScreenReaderMessage(message);
