@@ -9,6 +9,8 @@ import { SamHierarchicalSelectedResultComponent } from './selected-result/select
 import { SamHierarchicalTreeFilterComponent } from './hierarchical-tree-filter/hierarchical-tree-filter.component';
 import { SamHierarchicalTreeHeaderComponent } from './hierarchical-tree-header/hierarchical-tree-header.component';
 import { SamHierarchicalTreeFooterComponent } from './hierarchical-tree-footer/hierarchical-tree-footer.component';
+
+//import { } from './autocomplete/autocomplete.component';
 import { SamWrapperModule } from '../../wrappers';
 import { SamDataTableModule } from '../../components';
 import {SamCheckboxModule} from '../../form-controls';

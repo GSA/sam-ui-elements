@@ -3,12 +3,11 @@ import { Observable } from 'rxjs';
 
 export interface SamHiercarchicalServiceInterface {
 
-
     /**
      * 
      * @param searchValue 
      */
-    getDataByText(searchValue?: string): Observable<object[]>;
+    getDataByText(currentItems:number, searchValue?: string): Observable<SearchByTextResult>;
 
 
     /**
@@ -21,4 +20,9 @@ export interface SamHiercarchicalServiceInterface {
 
 
 
+}
+
+export interface SearchByTextResult {
+    items: object[];
+    totalItems: number;
 }
