@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SamHierarchicalAutocompleteComponent } from './autocomplete.component';
+import { SamHierarchicalAutocompleteComponent, SamHierarchicalAutocompleteSettings } from './autocomplete.component';
 import { FormsModule } from '@angular/forms';
-import { HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selectedItem.model';
+import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
 import { SamHiercarchicalServiceInterface, SearchByTextResult } from '../hierarchical-interface';
 import { Observable } from 'rxjs';
 import { By } from '@angular/platform-browser';
@@ -15,7 +15,7 @@ fdescribe('SamHierarchicalAutocompleteComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SamHierarchicalAutocompleteComponent],
-      imports:[FormsModule]
+      imports: [FormsModule]
     })
       .compileComponents();
   }));
@@ -23,6 +23,15 @@ fdescribe('SamHierarchicalAutocompleteComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SamHierarchicalAutocompleteComponent);
     component = fixture.componentInstance;
+    component.service = new HierarchicalDataService();
+    component.model = new HierarchicalTreeSelectedItemModel();
+    component.settings = new SamHierarchicalAutocompleteSettings();
+    component.settings.id = 'autoId';
+    component.settings.keyField = 'id';
+    component.model.treeMode = TreeMode.SINGLE;
+    component.settings.valueProperty = 'name';
+    component.settings.subValueProperty = 'subtext';
+    component.settings.debounceTime = 0;
     fixture.detectChanges();
   });
 
@@ -35,6 +44,19 @@ fdescribe('SamHierarchicalAutocompleteComponent', () => {
     const input = fixture.debugElement.query(By.css('input'));
     expect(input).toBeDefined();
   });
+
+  it('Should have an input id', () => {
+    fixture.detectChanges();
+    const input = fixture.debugElement.query(By.css('input'));
+    expect(input.attributes.id).toBe('autoId');
+  });
+
+  it('Should have empty results not exist', () => {
+    fixture.detectChanges();
+    expect(component.resultsListElement).toBe(undefined);
+  });
+
+  
 });
 
 
@@ -74,7 +96,7 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
   }
 
   getHiercarchicalById(id?: string) {
-   return null;
+    return null;
   }
 
 }
