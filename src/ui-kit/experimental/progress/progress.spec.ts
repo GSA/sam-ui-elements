@@ -2,9 +2,9 @@ import { ProgressComponent, ProgressIndicatorType } from "./progress.component";
 
 describe('The SAM Progress Bar Component', () => {
   let component: ProgressComponent;
-  
+
   beforeEach(() => {
-    const component = new ProgressComponent();
+    component = new ProgressComponent();
     component.min = 0;
     component.max = 100;
     component.label = 'Loading...'

@@ -29,7 +29,7 @@ export class ProgressComponent implements ProgressIndicator {
   @Input() public valueAsText: string;
 
   public calculateWidth (): string {
-    return Math.min((Math.floor((Math.max(0, this.value)/ this.max) * 100) + 1), 100) + '%';
+    return Math.min((Math.floor((Math.max(0, this.value)/ this.max) * 100)), 100) + '%';
   }
 }
 
