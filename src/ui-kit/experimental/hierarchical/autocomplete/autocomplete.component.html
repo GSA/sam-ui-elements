@@ -13,14 +13,15 @@
     </ng-container>
   </div>
   <div>
-    <ul #resultsList  *ngIf="showResults" [attr.id]="settings.id+ '-listbox'" role="listbox"
-      class="usa-unstyled-list autocomplete-result" [attr.aria-label]="settings.labelText" (scroll)="onScroll()">
+    <ul #resultsList *ngIf="showResults" [attr.id]="settings.id+ '-listbox'" role="listbox" class="usa-unstyled-list autocomplete-result"
+      [attr.aria-label]="settings.labelText" (scroll)="onScroll()">
       <ng-container *ngIf="(results && results.length > 0)">
         <li role="option" *ngFor="let result of results; let i = index" (mouseenter)="listItemHover(i)" [class]="result['highlighted']? 'selected-item':''"
           (click)="selectItem(result)">
-          <ng-container *ngIf="itemTemplate">
-            <ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit:result}"></ng-container>
+          <ng-container *ngIf="itemTemplate" [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit:result}">
+            
           </ng-container>
+
           <ng-container *ngIf="!itemTemplate">
             <span>{{ result[settings.valueProperty] }}</span>
             <ng-container *ngIf="settings.subValueProperty &&  result[settings.subValueProperty] ">
