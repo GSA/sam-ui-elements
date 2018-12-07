@@ -3,10 +3,6 @@
 .sam.heading{
   display: flex;
 }
-.sam.heading.mobile.center{
-  flex-direction: column;
+.sam.heading.middle.aligned{
   align-items: center;
-  @media screen and (min-width: $medium-screen){
-    flex-direction: row;
-  }
 }

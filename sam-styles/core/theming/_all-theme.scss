@@ -31,6 +31,8 @@
 @import '../../headers/headers';
 @import '../../utilities/link';
 @import '../../utilities/type';
+@import '../../utilities/color';
+@import '../../utilities/visible';
 
 // Create a theme.
 @mixin sam-gov-theme($theme) {
