@@ -6,6 +6,7 @@
 @import '../../pagination/theme';
 @import '../../sidenav/theme';
 @import '../../expansion/theme';
+@import '../../progress/theme';
 
 @import '../../box/box';
 @import '../../button/button';
@@ -46,4 +47,5 @@
   @include sam-sidenav-theme($theme);
   @include sam-expansion-panel-theme($theme);
   @include sam-tabs-theme($theme);
+  @include sam-progress-theme($theme);
 }
