@@ -1,43 +1,34 @@
-<div>
-  <div>Heirarchy Grid</div>
-  <div class="grid-body">
-    <ng-content select=".gridBody"></ng-content>
-    <div class="example-container usa-grid">
-
-      <sam-datatable #table samSort [dataSource]="dataSource">
-        <ng-container cdkColumnDef="id">
-          <th sam-header-cell *cdkHeaderCellDef sam-sort-header>CGAC #
-          </th>
-          <td sam-cell *cdkCellDef="let row">
-
-            <sam-checkbox [name]="'radio'" [options]="[
-                {label: ''}
-              ]"></sam-checkbox>
-            {{row.id}}
-          </td>
-        </ng-container>
-        <ng-container cdkColumnDef="name">
-          <th sam-header-cell *cdkHeaderCellDef sam-sort-header>
-            Name
-          </th>
-          <td sam-cell *cdkCellDef="let row"> {{row.name}} </td>
-        </ng-container>
-        <ng-container cdkColumnDef="title">
-          <th sam-header-cell *cdkHeaderCellDef sam-sort-header>
-            Title
-          </th>
-          <td sam-cell *cdkCellDef="let row"> {{row.title}} </td>
-        </ng-container>
-
-        <tr sam-header-row *cdkHeaderRowDef="templateConfigurations.displayedColumns"></tr>
-        <tr sam-row *cdkRowDef="let row; columns: templateConfigurations.displayedColumns;
-                let first = first; let last = last; let even = even; let odd = odd">
-        </tr>
-      </sam-datatable>
-
-      <div class="example-no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'" style="padding:10px 0;">
-        No users found matching filter.
-      </div>
-    </div>
-  </div>
+<div class="example-container usa-grid">
+  <ng-container *ngTemplateOutlet="template"></ng-container>
+  <div class="example-no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'" style="padding:10px 0;">No
+    users found matching filter.</div>
 </div>
+
+<ng-template #template>
+  <!-- replace div for form group <div [formGroup]="selected"> -->
+  <div>
+    <sam-datatable #table samSort [dataSource]="dataSource">
+
+      <ng-container cdkColumnDef="select">
+        <th sam-header-cell *cdkHeaderCellDef sam-sort-header>Select</th>
+        <td sam-cell *cdkCellDef="let row">
+          <!-- They should either check a box to srelect the key of the data or click the row and emit the key for the data in the row -->
+          <label [attr.for]="row.value">{{ row.name }}</label>
+          <input [attr.id]="row.value" type="checkbox" name="select">
+        </td>
+      </ng-container>
+
+        <ng-container *ngFor="let col of templateConfigurations.displayedColumns" cdkColumnDef="{{col}}">
+            <th sam-header-cell *cdkHeaderCellDef sam-sort-header>
+             {{col}}
+            </th>
+            <td sam-cell *cdkCellDef="let row"> {{row[col]}} </td>
+          </ng-container>
+     
+      <tr sam-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+      <tr sam-row *cdkRowDef="let row; columns: displayedColumns;
+        let first = first; let last = last; let even = even; let odd = odd"></tr>
+
+    </sam-datatable>
+  </div>
+</ng-template>
