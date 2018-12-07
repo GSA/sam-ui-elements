@@ -1,10 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SamHierarchicalAutocompleteComponent } from './autocomplete.component';
-
+import { FormsModule } from '@angular/forms';
 import { HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selectedItem.model';
 import { SamHiercarchicalServiceInterface, SearchByTextResult } from '../hierarchical-interface';
 import { Observable } from 'rxjs';
+import { By } from '@angular/platform-browser';
 import 'rxjs/add/observable/of';
 
 describe('SamHierarchicalAutocompleteComponent', () => {
@@ -13,7 +14,8 @@ describe('SamHierarchicalAutocompleteComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SamHierarchicalAutocompleteComponent]
+      declarations: [SamHierarchicalAutocompleteComponent],
+      imports:[FormsModule]
     })
       .compileComponents();
   }));
@@ -72,7 +74,7 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
   }
 
   getHiercarchicalById(id?: string) {
-    throw new Error("Method not implemented.");
+   return null;
   }
 
 }
