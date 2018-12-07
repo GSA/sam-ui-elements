@@ -8,12 +8,15 @@ import { SamHierarchicalSelectedResultComponent } from './selected-result/select
 import { SamHierarchicalTreeFilterComponent } from './hierarchical-tree-filter/hierarchical-tree-filter.component';
 import { SamHierarchicalTreeHeaderComponent } from './hierarchical-tree-header/hierarchical-tree-header.component';
 import { SamHierarchicalTreeFooterComponent } from './hierarchical-tree-footer/hierarchical-tree-footer.component';
+
+//import { } from './autocomplete/autocomplete.component';
+
 import { FormsModule } from '@angular/forms';
 import { SamWrapperModule } from '../../wrappers';
 
 @NgModule({
   imports: [
-    CommonModule,FormsModule,SamWrapperModule
+    CommonModule, FormsModule, SamWrapperModule
   ],
   declarations: [SamHierarchicalAutocompleteComponent, SamHierarchicalTreeComponent,
     SamHierarchicalTreeGridComponent, SamHierarchicalSelectedResultComponent,
