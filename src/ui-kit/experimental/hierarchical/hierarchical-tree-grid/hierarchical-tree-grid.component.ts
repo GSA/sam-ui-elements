@@ -12,9 +12,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs';
 import { DataSource } from '@angular/cdk';
 
-
 import { SamSortDirective, SamPaginationComponent, SamSortable } from '../../../components'
-import { ExampleDatabase, ExampleDataSource } from '../data-source';
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 import { KeyHelper } from '../../../../ui-kit/utilities';
 // import { KeyHelper } from 'ui-kit/utilities';
@@ -22,11 +20,12 @@ import { KeyHelper } from '../../../../ui-kit/utilities';
 
 
 export interface GridTemplate {
-  
+
 }
 
 export interface GridTemplateConfiguration {
   displayedColumns: any[];
+  type: string
 }
 
 export interface GridDataSource {
@@ -36,44 +35,43 @@ export interface GridDataSource {
 }
 
 export interface GridItem {
-
 }
 
-class Grid {
-  @Input() public template: GridTemplate;
-  @Input() public datasource: GridDataSource;
-  @Input() public templateConfiguration: GridTemplateConfiguration;
-  @Output() public levelChanged = new EventEmitter<GridItem>();
-  @Output() public itemSelected = new EventEmitter<GridItem>();
+// class Grid {
+//   @Input() public template: GridTemplate;
+//   @Input() public datasource: GridDataSource;
+//   @Input() public templateConfiguration: GridTemplateConfiguration;
+//   @Output() public levelChanged = new EventEmitter<GridItem>();
+//   @Output() public itemSelected = new EventEmitter<GridItem>();
 
-  public displayedColumns = ['select'];
-  public selected: GridItem;
-  public focusedCell: any; // Should be the table cell
+//   public displayedColumns = ['select'];
+//   public selected: GridItem;
+//   public focusedCell: any; // Should be the table cell
 
-  public ngOnChanges () {
-    this.displayedColumns = [...this.displayedColumns, ...this.templateConfiguration.displayedColumns]
-  }
+//   public ngOnChanges () {
+//     this.displayedColumns = [...this.displayedColumns, ...this.templateConfiguration.displayedColumns]
+//   }
 
-  public handleClick(): void {}
+//   public handleClick(): void {}
 
-  public changeLevel(item: GridItem): void {
-    this.levelChanged.emit(item);
-  }
+//   public changeLevel(item: GridItem): void {
+//     this.levelChanged.emit(item);
+//   }
 
-  public handleKeydown(keyEvent: any): void {
-    switch (keyEvent.type) {
-      case KeyHelper.is('down', keyEvent):
-        return this.handleArrowDown(keyEvent);
-      default: 
-        return;
-    }
-  }
+//   public handleKeydown(keyEvent: any): void {
+//     switch (keyEvent.type) {
+//       case KeyHelper.is('down', keyEvent):
+//         return this.handleArrowDown(keyEvent);
+//       default: 
+//         return;
+//     }
+//   }
 
 
 
-  private handleArrowDown (event): void {}
+//   private handleArrowDown (event): void {}
 
-}
+// }
 
 
 
@@ -85,37 +83,63 @@ class Grid {
   styleUrls: ['./hierarchical-tree-grid.component.scss']
 })
 export class SamHierarchicalTreeGridComponent implements OnInit {
-  @Input() public service: SamHiercarchicalServiceInterface;
-  @Input() public templateConfigurations: any;
+  @Input() public templateConfigurations: GridTemplateConfiguration;
+  @Input() public template: GridTemplate;
+  @Input() public dataSource: any;
+
+  @Output() public itemSelected = new EventEmitter<GridItem>();
+  @Output() public levelChanged = new EventEmitter<GridItem>();
+  public selectedItem: GridItem;
+
   
+  selectedItemIndex = 0;
 
   public displayedColumns = ['select'];
+  public samTableDataSource: any | null;
+  dataChange: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public focusedCell: any;
+  public focusedtemIndex = 0;
 
-  exampleDatabase = new ExampleDatabase();
-  dataSource: SampleDataSource | null;
   @ViewChild(SamPaginationComponent) paginator: SamPaginationComponent;
   @ViewChild(SamSortDirective) sort: SamSortDirective;
   @ViewChild('filter') filter: ElementRef;
-  data:any[]=[];
-  dataChange: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
-  ngOnChanges () {
+
+  ngOnChanges() {
     this.displayedColumns = [...this.displayedColumns, ...this.templateConfigurations.displayedColumns];
   }
 
   ngOnInit() {
-    this.service.getDataByText(null).subscribe(
-      (res) => {
-        this.data = res;
-       // console.log(res);
-      this.dataChange.next(this.data);
-      });
-      this.dataSource = new SampleDataSource(
-        this.dataChange,
-        this.paginator,
-        this.sort
-      );
-     
+    this.dataChange.next(this.dataSource);
+    this.samTableDataSource = new SampleDataSource(
+      this.dataChange,
+      this.paginator,
+      this.sort
+    );
+
+  }
+
+  onSelectItem(ev: Event, item: GridItem) {
+    this.selectedItem = item;
+    this.itemSelected.emit(this.selectedItem);
+  }
+  handleKeyup(event) {
+    // event.preventDefault();
+    // if (event.keyCode === 40) {
+    //     this.selectedItem = this.items[++this.focusedtemIndex];
+    // } else if (event.keyCode === 38) {
+    //     this.selectedItem = this.items[--this.focusedtemIndex];
+    // } else return;
+    console.log(event)
+  }
+
+  isSelected(item: any) {
+    return this.selectedItem ?
+      this.focusedCell.id == item.id : false;
+  }
+  public onChangeLevel(ev: Event, item: GridItem): void {
+    this.levelChanged.emit(item);
+
   }
 }
 
@@ -152,13 +176,13 @@ export class SampleDataSource extends DataSource<any> {
       });
       // Sort filtered data
       const sortedData = this.sortData(filteredData.slice());
-     // this.renderedData = sortedData;
+      // this.renderedData = sortedData;
       return filteredData.slice();
     });
   }
   disconnect() { }
   /** Returns a sorted copy of the database data. */
-  sortData(data: any[]): void{
+  sortData(data: any[]): void {
     // if (!this._sort.active) { return data; }
     // return data.sort((a, b) => {
     //   let propertyA: number | string = '';
@@ -170,7 +194,7 @@ export class SampleDataSource extends DataSource<any> {
     //     return (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1);
     //   }
     // });
-   
+
   }
 }
 
