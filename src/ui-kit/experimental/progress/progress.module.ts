@@ -13,3 +13,5 @@ import { ProgressComponent } from "./progress.component";
   exports: [ ProgressComponent ]
 })
 export class SamProgressModule {}
+
+export { ProgressComponent } from './progress.component';
