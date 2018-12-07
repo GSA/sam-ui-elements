@@ -20,6 +20,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   @Input()
   public service: SamHiercarchicalServiceInterface;
   @Input() public templateConfigurations: any;
+  
 
   exampleDatabase = new ExampleDatabase();
   dataSource: SampleDataSource | null;
@@ -27,16 +28,20 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   @ViewChild(SamSortDirective) sort: SamSortDirective;
   @ViewChild('filter') filter: ElementRef;
   data:any[]=[];
+  dataChange: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   ngOnInit() {
     this.service.getDataByText(null).subscribe(
       (res) => {
         this.data = res;
+       // console.log(res);
+      this.dataChange.next(this.data);
       });
       this.dataSource = new SampleDataSource(
-        this.exampleDatabase,
+        this.dataChange,
         this.paginator,
         this.sort
       );
+     
   }
 }
 
@@ -66,7 +71,7 @@ export class SampleDataSource extends DataSource<any> {
   //filteredData: any[] = [];
   renderedData: any[] = [];
 
-  constructor(private _exampleDatabase: any,
+  constructor(private dataChange: any,
     private _paginator: SamPaginationComponent,
     private _sort: SamSortDirective) {
     super();
@@ -74,14 +79,14 @@ export class SampleDataSource extends DataSource<any> {
 
   connect(): Observable<any[]> {
     const displayDataChanges = [
-      this._exampleDatabase.dataChange,
+      this.dataChange,
       this._sort.samSortChange,
       this._filterChange,
     ];
     return Observable.merge(...displayDataChanges).map(() => {
 
-      const filteredData = this._exampleDatabase.data.slice().filter((item: any) => {
-        const searchStr = (item.agency + item.title).toLowerCase();
+      const filteredData = this.dataChange.value.slice().filter((item: any) => {
+        const searchStr = (item.id + item.name).toLowerCase();
         return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
       });
       // set total

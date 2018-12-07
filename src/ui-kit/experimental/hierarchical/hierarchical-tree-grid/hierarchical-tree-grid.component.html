@@ -5,7 +5,7 @@
     <div class="example-container usa-grid">
 
       <sam-datatable #table samSort [dataSource]="dataSource">
-        <ng-container cdkColumnDef="cfdaNumber">
+        <ng-container cdkColumnDef="id">
           <th sam-header-cell *cdkHeaderCellDef sam-sort-header>CGAC #
           </th>
           <td sam-cell *cdkCellDef="let row">
@@ -13,15 +13,14 @@
             <sam-checkbox [name]="'radio'" [options]="[
                 {label: ''}
               ]"></sam-checkbox>
-
-            {{row.cfdaNumber}}
+            {{row.id}}
           </td>
         </ng-container>
-        <ng-container cdkColumnDef="agency">
+        <ng-container cdkColumnDef="name">
           <th sam-header-cell *cdkHeaderCellDef sam-sort-header>
             Name
           </th>
-          <td sam-cell *cdkCellDef="let row"> {{row.agency}} </td>
+          <td sam-cell *cdkCellDef="let row"> {{row.name}} </td>
         </ng-container>
         <ng-container cdkColumnDef="title">
           <th sam-header-cell *cdkHeaderCellDef sam-sort-header>
