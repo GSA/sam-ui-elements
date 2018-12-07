@@ -7,7 +7,7 @@
   <!-- Percent template -->
   <div class="bar">
     <div class="fill animated"
-      [style.width]="calculateWidth()"
+      [style.width]="calculateBarFillPercentage()"
       role="progressbar"
       [attr.aria-valuenow]="value"
       [attr.aria-valuemin]="min"
@@ -19,7 +19,7 @@
   <!-- Text value template -->
   <div class="bar">
     <div class="fill animated"
-      style.width]="calculateWidth()"
+      [style.width]="calculateBarFillPercentage()"
       role="progressbar" 
       [attr.aria-valuenow]="value"
       [attr.aria-valuemin]="min"
