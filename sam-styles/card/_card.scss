@@ -1,15 +1,14 @@
 // CARD
 // --------------------------------
 .sam.card-next{
-  border: 1px solid #979797;
   background-color: white;
   border-radius: 4px;
   padding: 10px 15px;
   margin-bottom: 20px;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+  
   .header{
     display: flex;
-    h4{
+    .sam.heading{
       flex-grow: 1;
       align-self: center;
       padding: 0;
@@ -26,4 +25,8 @@
       background-color: #0071bc;
     }
   }
+}
+.sam.card-next.raised{
+  border: 1px solid #979797;
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
 }

@@ -5,5 +5,5 @@ import {Component, Input} from '@angular/core';
   templateUrl: './card.template.html'
 })
 export class SamCardComponent{
-  @Input() link: boolean;
+  @Input() raised: boolean;
 }
