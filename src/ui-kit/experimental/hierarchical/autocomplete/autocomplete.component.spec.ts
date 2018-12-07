@@ -5,8 +5,9 @@ import { SamHierarchicalAutocompleteComponent } from './autocomplete.component';
 import { HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selectedItem.model';
 import { SamHiercarchicalServiceInterface, SearchByTextResult } from '../hierarchical-interface';
 import { Observable } from 'rxjs';
+import 'rxjs/add/observable/of';
 
-fdescribe('SamHierarchicalAutocompleteComponent', () => {
+describe('SamHierarchicalAutocompleteComponent', () => {
   let component: SamHierarchicalAutocompleteComponent;
   let fixture: ComponentFixture<SamHierarchicalAutocompleteComponent>;
 
@@ -25,6 +26,12 @@ fdescribe('SamHierarchicalAutocompleteComponent', () => {
 
   xit('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('Should have an input', () => {
+    fixture.detectChanges();
+    const input = fixture.debugElement.query(By.css('input'));
+    expect(input).toBeDefined();
   });
 });
 
