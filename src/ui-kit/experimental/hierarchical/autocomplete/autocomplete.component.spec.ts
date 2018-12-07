@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import 'rxjs/add/observable/of';
 
-describe('SamHierarchicalAutocompleteComponent', () => {
+fdescribe('SamHierarchicalAutocompleteComponent', () => {
   let component: SamHierarchicalAutocompleteComponent;
   let fixture: ComponentFixture<SamHierarchicalAutocompleteComponent>;
 
@@ -26,7 +26,7 @@ describe('SamHierarchicalAutocompleteComponent', () => {
     fixture.detectChanges();
   });
 
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
