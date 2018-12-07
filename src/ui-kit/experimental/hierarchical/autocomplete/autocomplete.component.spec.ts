@@ -1,5 +1,5 @@
+/* tslint:disable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SamHierarchicalAutocompleteComponent, SamHierarchicalAutocompleteSettings } from './autocomplete.component';
 import { FormsModule } from '@angular/forms';
 import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
