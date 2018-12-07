@@ -59,7 +59,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
   /**
    *  result set to be rendered
    */
-  private results: object[];
+  results: object[];
 
   /**
    * max number of results to be shown
@@ -141,6 +141,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
    * @param event 
    */
   onKeyup(event): void {
+
     if (KeyHelper.is(KEYS.TAB, event)) {
       return;
     }
@@ -311,7 +312,7 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
     }
   }
 
- private addScreenReaderMessage(message: string) {
+  private addScreenReaderMessage(message: string) {
     const srResults: HTMLElement = document.createElement('li');
     srResults.innerText = message;
     if (this.srOnly && this.srOnly.nativeElement) {
