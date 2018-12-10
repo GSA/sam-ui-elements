@@ -1,3 +1,25 @@
+// BASIC LAYOUT
+// --------------------------------
+
+.sam.padded.vertically{
+  padding: 0 20px;
+}
+.sam.layout.basic{
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: $medium-screen){
+  .sam.layout.basic{
+    flex-direction: row;
+  }
+  .sam.flex-order-1{
+    order: 1;
+  }
+}
+.sam.layout.basic.equal.width > *{
+  flex-grow: 1;
+}
+
 /**********************************************
               <sam-main> 
 ***********************************************/ 
