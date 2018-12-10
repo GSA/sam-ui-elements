@@ -10,7 +10,7 @@ import {
 import { FormArray } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs';
-import { DataSource ,ActiveDescendantKeyManager} from '@angular/cdk';
+import { DataSource } from '@angular/cdk';
 
 import { SamSortDirective, SamPaginationComponent, SamSortable } from '../../../components'
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
@@ -92,7 +92,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   dataChange: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public focusedCell: any;
   public focusedtemIndex = 0;
-  private keyManager: ActiveDescendantKeyManager<any>;
+
 
   @ViewChild(SamPaginationComponent) paginator: SamPaginationComponent;
   @ViewChild(SamSortDirective) sort: SamSortDirective;
@@ -124,8 +124,8 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
       console.log('onDownArrowDown')
     }
 
-     // On up arrow press
-     if (KeyHelper.is('up', event)) {
+    // On up arrow press
+    if (KeyHelper.is('up', event)) {
       console.log('onUpArrowDown')
     }
 
@@ -175,14 +175,18 @@ export class SampleDataSource extends DataSource<any> {
       });
       // Sort filtered data
       const sortedData = this.sortData(filteredData.slice());
-      // this.renderedData = sortedData;
-      return filteredData.slice();
+      this.renderedData = sortedData;
+      return this.renderedData;
     });
   }
   disconnect() { }
   /** Returns a sorted copy of the database data. */
-  sortData(data: any[]): void {
-    // if (!this._sort.active) { return data; }
+  sortData(data: any[]): any {
+    return data;
+    //  if (!this._sort.active) { return data; }
+    //  else {
+    //   return data;
+    //  }
     // return data.sort((a, b) => {
     //   let propertyA: number | string = '';
     //   let propertyB: number | string = '';

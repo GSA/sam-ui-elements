@@ -24,7 +24,7 @@
         <th sam-header-cell *cdkHeaderCellDef sam-sort-header>
           {{col}}
         </th>
-        <td sam-cell *cdkCellDef="let row; let rIndex = index;"> {{rIndex}},{{cIndex}}  - {{row[col]}} </td>
+        <td sam-cell *cdkCellDef="let row; let rIndex = index;"> {{row[col]}} </td>
       </ng-container>
 
       <tr sam-header-row *cdkHeaderRowDef="displayedColumns"></tr>
