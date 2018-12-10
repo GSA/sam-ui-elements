@@ -53,7 +53,7 @@ export class ProgressComponent implements ProgressIndicator {
   /**
    * Calculates the bar fill percentage of the progress bar.
    */
-  public calculateBarFillPercentage (): string {
-    return Math.min((Math.floor((Math.max(0, this.value)/ this.max) * 100)), 100) + '%';
+  public calculateBarFillPercentage(): string {
+    return Math.min((Math.floor((Math.max(0, this.value) / this.max) * 100)), 100) + '%';
   }
 }
