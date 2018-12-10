@@ -10,17 +10,14 @@ import {
 import { FormArray } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs';
-import { DataSource } from '@angular/cdk';
+import { DataSource ,ActiveDescendantKeyManager} from '@angular/cdk';
 
 import { SamSortDirective, SamPaginationComponent, SamSortable } from '../../../components'
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 import { KeyHelper } from '../../../../ui-kit/utilities';
 // import { KeyHelper } from 'ui-kit/utilities';
 
-
-
 export interface GridTemplate {
-
 }
 
 export interface GridTemplateConfiguration {
@@ -73,9 +70,6 @@ export interface GridItem {
 
 // }
 
-
-
-
 /*************************************************** */
 @Component({
   selector: 'sam-hierarchical-tree-grid',
@@ -91,7 +85,6 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   @Output() public levelChanged = new EventEmitter<GridItem>();
   public selectedItem: GridItem;
 
-  
   selectedItemIndex = 0;
 
   public displayedColumns = ['select'];
@@ -99,6 +92,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   dataChange: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public focusedCell: any;
   public focusedtemIndex = 0;
+  private keyManager: ActiveDescendantKeyManager<any>;
 
   @ViewChild(SamPaginationComponent) paginator: SamPaginationComponent;
   @ViewChild(SamSortDirective) sort: SamSortDirective;
@@ -116,21 +110,26 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
       this.paginator,
       this.sort
     );
-
   }
 
   onSelectItem(ev: Event, item: GridItem) {
     this.selectedItem = item;
     this.itemSelected.emit(this.selectedItem);
   }
-  handleKeyup(event) {
-    // event.preventDefault();
-    // if (event.keyCode === 40) {
-    //     this.selectedItem = this.items[++this.focusedtemIndex];
-    // } else if (event.keyCode === 38) {
-    //     this.selectedItem = this.items[--this.focusedtemIndex];
-    // } else return;
-    console.log(event)
+  handleKeyup(ev) {
+    if (KeyHelper.is('tab', event)) {
+      return
+    }
+    if (KeyHelper.is('down', event)) {
+      console.log('onDownArrowDown')
+    }
+
+     // On up arrow press
+     if (KeyHelper.is('up', event)) {
+      console.log('onUpArrowDown')
+    }
+
+    console.log(ev)
   }
 
   isSelected(item: any) {
