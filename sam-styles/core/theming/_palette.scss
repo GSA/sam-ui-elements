@@ -78,4 +78,6 @@ $sam-theme-background: (
   table:             white,
   table-header:      map-get($map: $uswds-cool-gray, $key: 600),
   tab-header:        map-get($map: $uswds-cool-gray, $key: 100),
+  progress-bar-background: map-get($map: $uswds-cool-gray, $key: 200),
+  progress-bar-fill: map-get($map: $uswds-green, $key: 400)
 );

@@ -1,0 +1,29 @@
+<div class="sam progress">
+  <div class="label">{{ valueAsText }}</div>
+  <ng-container *ngTemplateOutlet="type === 'percent' ? percent : time"></ng-container>
+</div>
+
+<ng-template #percent>
+  <!-- Percent template -->
+  <div class="bar">
+    <div class="fill animated"
+      [style.width]="calculateBarFillPercentage()"
+      role="progressbar"
+      [attr.aria-valuenow]="value"
+      [attr.aria-valuemin]="min"
+      [attr.aria-valuemax]="max"></div>
+  </div>
+</ng-template>
+
+<ng-template #time>
+  <!-- Text value template -->
+  <div class="bar">
+    <div class="fill animated"
+      [style.width]="calculateBarFillPercentage()"
+      role="progressbar" 
+      [attr.aria-valuenow]="value"
+      [attr.aria-valuemin]="min"
+      [attr.aria-valuemax]="max"
+      [attr.aria-valuetext]="valueAsText"></div>
+  </div>
+</ng-template>
