@@ -22,8 +22,8 @@ export class SamHierarchicalSelectedResultComponent implements OnInit {
   @ViewChild('resultsList') resultsListElement: ElementRef;
 
   /**
- * Allow to insert a customized template for suggestions to use
- */
+  * Allow to insert a customized template for suggestions to use
+  */
   @Input() itemTemplate: TemplateRef<any>;
 
   /**
@@ -32,6 +32,9 @@ export class SamHierarchicalSelectedResultComponent implements OnInit {
   @Input()
   public model: HierarchicalTreeSelectedItemModel;
 
+  /**
+  * Settings for the Autocomplete control 
+  */
   @Input()
   public settings: SelectedResultSettings;
 

@@ -1,4 +1,4 @@
-<ul>
+<ul class="usa-unstyled-list">
   <li role="option" *ngFor="let result of results; let i = index">
     <ng-container *ngIf="itemTemplate" [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit:result}">
     </ng-container>
