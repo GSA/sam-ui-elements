@@ -29,8 +29,9 @@ export class HierarchicalTreeSelectedItemModel {
     }
 
     clearItems() {
-    
-        this.items = [];
+        while(this.items.length > 0) {
+            this.items.pop();
+        }
     }
 
     getItems(): object[] {

@@ -1,9 +1,7 @@
 <ul>
   <li role="option" *ngFor="let result of results; let i = index">
     <ng-container *ngIf="itemTemplate" [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit:result}">
-            
     </ng-container>
-
     <ng-container *ngIf="!itemTemplate">
       <span>{{ result[settings.valueProperty] }}</span>
       <ng-container *ngIf="settings.subValueProperty &&  result[settings.subValueProperty] ">

@@ -35,8 +35,10 @@ export class SamHierarchicalSelectedResultComponent implements OnInit {
   @Input()
   public settings: SelectedResultSettings;
 
-  ngOnInit() {
+  results: object[];
 
+  ngOnInit() {
+    this.results = this.model.getItems();
   }
 
   removeItem(item: object) {
