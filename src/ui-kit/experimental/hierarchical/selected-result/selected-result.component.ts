@@ -2,8 +2,6 @@ import {
   Component, OnInit, Input, ViewChild, TemplateRef,
   ElementRef
 } from '@angular/core';
-import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
-import { KeyHelper, KEYS } from '../../../utilities/key-helper/key-helper';
 import { HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selectedItem.model';
 
 @Component({
@@ -38,18 +36,26 @@ export class SamHierarchicalSelectedResultComponent implements OnInit {
   @Input()
   public settings: SelectedResultSettings;
 
+
+  /**
+   * 
+   */
   results: object[];
 
+  /**
+   * 
+   */
   ngOnInit() {
     this.results = this.model.getItems();
   }
 
+  /**
+   * Removes item from the model
+   * @param item 
+   */
   removeItem(item: object) {
     this.model.removeItem(item, this.settings.keyField);
   }
-
-
-
 }
 
 export class SelectedResultSettings {

@@ -19,7 +19,7 @@ export class HierarchicalTreeSelectedItemModel {
 
     removeItem(item: object, keyField: string) {
         if (this.contatinsItem(item[keyField], keyField)) {
-
+            this.items.splice(this.items.indexOf(item), 1)
         }
     }
 
@@ -29,7 +29,7 @@ export class HierarchicalTreeSelectedItemModel {
     }
 
     clearItems() {
-        while(this.items.length > 0) {
+        while (this.items.length > 0) {
             this.items.pop();
         }
     }
