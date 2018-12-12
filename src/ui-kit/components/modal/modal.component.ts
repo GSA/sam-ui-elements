@@ -48,6 +48,10 @@ export class SamModalComponent implements OnInit {
    */
   @Input() submitButtonLabel: string = '';
   /**
+   *  Disables the submit button.
+   */
+  @Input() submitButtonDisabled: boolean = true;
+  /**
    * Show/hide the modal close button, defaults to true
    */
   @Input() showClose: boolean = true;
