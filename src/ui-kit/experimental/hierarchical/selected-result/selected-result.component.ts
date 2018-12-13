@@ -1,6 +1,5 @@
 import {
-  Component, OnInit, Input, ViewChild, TemplateRef,
-  ElementRef
+  Component, Input, ViewChild, TemplateRef, ElementRef
 } from '@angular/core';
 import { HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selectedItem.model';
 
@@ -9,10 +8,7 @@ import { HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selected
   templateUrl: './selected-result.component.html',
   styleUrls: ['./selected-result.component.scss']
 })
-export class SamHierarchicalSelectedResultComponent implements OnInit {
-
-  constructor() { }
-
+export class SamHierarchicalSelectedResultComponent {
 
   /**
   * 
@@ -35,19 +31,6 @@ export class SamHierarchicalSelectedResultComponent implements OnInit {
   */
   @Input()
   public settings: SelectedResultSettings;
-
-
-  /**
-   * 
-   */
-  results: object[];
-
-  /**
-   * 
-   */
-  ngOnInit() {
-    this.results = this.model.getItems();
-  }
 
   /**
    * Removes item from the model

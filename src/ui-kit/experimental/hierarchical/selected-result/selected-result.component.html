@@ -1,5 +1,5 @@
 <ul class="usa-unstyled-list" aria-relevant="additions" role="listbox" aria-live="polite">
-  <li role="option" *ngFor="let result of results; let i = index">
+  <li role="option" *ngFor="let result of model.getItems(); let i = index">
     <ng-container *ngIf="itemTemplate" [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit:result}">
     </ng-container>
     <ng-container *ngIf="!itemTemplate">

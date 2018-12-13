@@ -56,7 +56,7 @@ fdescribe('SamHierarchicalAutocompleteComponent', () => {
     expect(component.resultsListElement).toBe(undefined);
   });
 
-  
+
 });
 
 

@@ -8,9 +8,9 @@ describe('SamHierarchicalSelectedResultComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SamHierarchicalSelectedResultComponent ]
+      declarations: [SamHierarchicalSelectedResultComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
