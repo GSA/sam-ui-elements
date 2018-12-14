@@ -1,3 +1,7 @@
-<p>
-  hierarchical-tree-header works!
-</p>
+<div>
+  <sam-select [(ngModel)]="selectModel" name="agency select" [options]="selectConfig.options" [label]="selectConfig.label">
+  </sam-select>
+
+  <sam-text [(ngModel)]="textModel" name="filter text" [(value)]="textModel">
+  </sam-text>
+</div>
