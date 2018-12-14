@@ -360,4 +360,10 @@ export class SamHierarchicalAutocompleteSettings {
    *  Sets the time waited for addional key actions Default is 250 milliseconds
    */
   public debounceTime: number;
+
+  /**
+   * Place holder text for input
+   */
+  public placeHolderText: string;
+
 }

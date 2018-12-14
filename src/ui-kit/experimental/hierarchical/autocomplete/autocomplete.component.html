@@ -2,7 +2,7 @@
   <div class="input-container">
     <input #input [attr.id]="settings.id" autocomplete="off" type="text" (focus)="inputFocusHandler()" (keyup)="onKeyup($event)"
       [(ngModel)]="inputValue" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-haspopup="true"
-      [attr.aria-owns]="settings.id+ '-listbox'">
+      [attr.aria-owns]="settings.id+ '-listbox'" [attr.placeholder]="settings.placeHolderText" >
     <ng-container *ngIf="!input.disabled">
       <span>
         <span role="button" class="fa fa-times-circle" aria-label="Clear input" aria-hidden="false" (click)="clearInput()"
