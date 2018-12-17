@@ -1,8 +1,32 @@
 <div>
-    <sam-button buttonText="up" buttonType="primary"></sam-button>
-  <sam-select [(ngModel)]="selectModel" (change)="onAgencyChange($event)" name="agency select" [options]="selectConfig.options" [label]="selectConfig.label">
+  <sam-button buttonText="up" buttonType="primary"></sam-button>
+
+  <sam-select
+    [(ngModel)]="selectModel"
+    (change)="onAgencyChange($event)"
+    name="agency select"
+    [options]="options"
+    [label]="label">
   </sam-select>
 
-  <sam-text [(ngModel)]="textModel" name="filter text" [(value)]="textModel">
+  <sam-text [(ngModel)]="textModel"
+    name="filter text">
   </sam-text>
 </div>
+
+
+
+
+
+<!-- TO DO: Create Single Form Control
+<ng-template>
+  <sam-button buttonText="up" buttonType="primary"></sam-button>
+
+  <sam-select
+    [(ngModel)]="selectModel"
+    (change)="onAgencyChange($event)"
+    name="agency select"
+    [options]="options"
+    [label]="label">
+  </sam-select>
+</ng-template> -->
