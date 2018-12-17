@@ -57,7 +57,7 @@ fdescribe('SamHierarchicalAutocompleteComponent', () => {
     expect(component.resultsListElement).toBe(undefined);
   });
 
-  it('Should  have empty results', fakeAsync(() => {
+  it('Should have empty results with invalid search', fakeAsync(() => {
 
     const event = {
       "key": "Space",
@@ -72,6 +72,42 @@ fdescribe('SamHierarchicalAutocompleteComponent', () => {
     const emptyItem = fixture.debugElement.query(By.css('.emptyResults'));
     expect(emptyItem).toBeTruthy();
   }));
+
+
+  it('Should have results key press', fakeAsync(() => {
+    const event = {
+      "key": "d",
+      "target": { "value": 'id' }
+    }
+    component.onKeyup(event);
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(list.nativeElement.children.length).toBe(11);
+    expect(component.results[0]['highlighted']).toBeTruthy();
+  }));
+
+
+
+  it('Should have reuslts on focus', fakeAsync(() => {
+    component.inputFocusHandler();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(list.nativeElement.children.length).toBe(11);
+    expect(component.results[0]['highlighted']).toBeTruthy();
+  }));
+
+
+  //Down
+  //UP
+  //DELETE
+  //ENTER
+
+  //listItemHover
+  //clearInput
 
 
 });
