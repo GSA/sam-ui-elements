@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { SamHierarchicalAutocompleteComponent } from './autocomplete/autocomplete.component';
 import { SamHierarchicalTreeComponent } from './hierarchical-tree/hierarchical-tree.component';
@@ -10,13 +11,13 @@ import { SamHierarchicalTreeHeaderComponent } from './hierarchical-tree-header/h
 import { SamHierarchicalTreeFooterComponent } from './hierarchical-tree-footer/hierarchical-tree-footer.component';
 
 //import { } from './autocomplete/autocomplete.component';
-
-import { FormsModule } from '@angular/forms';
 import { SamWrapperModule } from '../../wrappers';
+import { SamDataTableModule } from '../../components';
+import {SamCheckboxModule} from '../../form-controls';
 
 @NgModule({
   imports: [
-    CommonModule, FormsModule, SamWrapperModule
+    CommonModule, FormsModule, SamWrapperModule,SamDataTableModule,SamCheckboxModule
   ],
   declarations: [SamHierarchicalAutocompleteComponent, SamHierarchicalTreeComponent,
     SamHierarchicalTreeGridComponent, SamHierarchicalSelectedResultComponent,
