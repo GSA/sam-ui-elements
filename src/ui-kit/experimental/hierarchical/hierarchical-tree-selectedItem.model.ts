@@ -2,7 +2,7 @@ export class HierarchicalTreeSelectedItemModel {
     /**
      * 
      */
-    public treeMode: TreeMode= TreeMode.SINGLE;
+    public treeMode: TreeMode = TreeMode.SINGLE;
 
     /**
      * 
@@ -30,7 +30,7 @@ export class HierarchicalTreeSelectedItemModel {
                 this.clearItems();
             }
             this.items.push(item);
-                }
+        }
     }
 
     /**
