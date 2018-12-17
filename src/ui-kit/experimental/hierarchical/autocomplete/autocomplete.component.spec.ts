@@ -100,6 +100,33 @@ fdescribe('SamHierarchicalAutocompleteComponent', () => {
     expect(component.results[0]['highlighted']).toBeTruthy();
   }));
 
+  it('Select second item with down and up arrows', fakeAsync(() => {
+    component.inputFocusHandler();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const downEvent = {
+      "key": "Down",
+      "target": { "value": 'id' }
+    }
+    component.onKeyup(downEvent);
+    tick();
+    fixture.detectChanges()
+    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(list.nativeElement.children.length).toBe(11);
+    expect(component.results[1]['highlighted']).toBeTruthy();
+    const upEvent = {
+      "key": "Up",
+      "target": { "value": 'id' }
+    }
+    component.onKeyup(upEvent);
+    tick();
+    fixture.detectChanges();
+    expect(component.results[0]['highlighted']).toBeTruthy();
+
+
+  }));
+
 
   //Down
   //UP
