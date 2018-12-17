@@ -39,6 +39,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   @Input() public templateConfigurations: GridTemplateConfiguration;
   @Input() public template: GridTemplate;
   @Input() public dataSource: any;
+  @Input() public filterText: string;
 
   @Output() public itemSelected = new EventEmitter<GridItem>();
   @Output() public levelChanged = new EventEmitter<GridItem>();
@@ -57,12 +58,10 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   @ViewChild(SamSortDirective) sort: SamSortDirective;
   @ViewChild('filter') filter: ElementRef;
 
-
   ngOnChanges() {
-   this.displayedColumns = [...this.displayedColumns, ...this.templateConfigurations.displayedColumns];
+   
   }
-
-  ngOnInit() {
+  ngAfterViewInit(){
     this.dataChange.next(this.dataSource);
     this.samTableDataSource = new SampleDataSource(
       this.dataChange,
@@ -71,8 +70,11 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
     );
   }
 
-  onSelectItem(ev: Event, item: GridItem) {
+  ngOnInit() {
+    this.displayedColumns = [...this.displayedColumns, ...this.templateConfigurations.displayedColumns];
+  }
 
+  onSelectItem(ev: Event, item: GridItem) {
     this.selectedItem = item;
     this.itemSelected.emit(this.selectedItem);
 
@@ -120,11 +122,10 @@ export class SampleDataSource extends DataSource<any> {
   connect(): Observable<any[]> {
     const displayDataChanges = [
       this.dataChange,
-     //this._sort.samSortChange,
+     this._sort.samSortChange,
       this._filterChange,
     ];
     return Observable.merge(...displayDataChanges).map(() => {
-
       const filteredData = this.dataChange.value.slice().filter((item: any) => {
         const searchStr = (item.id + item.name).toLowerCase();
         return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
@@ -135,52 +136,21 @@ export class SampleDataSource extends DataSource<any> {
         this.totalcost += item.cost;
       });
       // Sort filtered data
-      const sortedData = this.sortData(filteredData.slice());
+      const sortedData = this.getSortedData(filteredData.slice());
       this.renderedData = sortedData;
       return this.renderedData;
     });
   }
   disconnect() { }
   /** Returns a sorted copy of the database data. */
-  sortData(data: any[]): any {
-  //   const active = this._sort.active;
-  //   const direction = this._sort.direction;
-  //    if (!active) { return data; }
-  //  return data.sort((a, b) => {
-  //   let propertyA: number|string = '';
-  //   let propertyB: number|string = '';
-
-
-  //   let comparatorResult = 0;
-  //   if (propertyA != null && propertyB != null) {
-  //     // Check if one value is greater than the other; if equal, comparatorResult should remain 0.
-  //     if (propertyA > propertyB) {
-  //       comparatorResult = 1;
-  //     } else if (propertyA < propertyB) {
-  //       comparatorResult = -1;
-  //     }
-  //   } else if (propertyA != null) {
-  //     comparatorResult = 1;
-  //   } else if (propertyB != null) {
-  //     comparatorResult = -1;
-  //   }
-  //   return comparatorResult * (direction == 'asc' ? 1 : -1);
-  //   });
-  return data;
-  }
 
   getSortedData(data: any[]): any[] {
     if (!this._sort.active || this._sort.direction === '') { return data; }
     return data.sort((a, b) => {
       let propertyA: number|string = '';
       let propertyB: number|string = '';
-      switch (this._sort.active) {
-        case 'id': [propertyA, propertyB] = [a['id'], b['id']]; break;
-        case 'name': [propertyA, propertyB] = [a['name'], b['name']]; break;
-      }
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
       const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
-
       return (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1);
     });
   }

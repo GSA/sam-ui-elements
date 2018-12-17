@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { OptionsType } from '../../../../ui-kit/types';
 
 export interface SelectConfig {
@@ -14,12 +14,16 @@ export interface SelectConfig {
   styleUrls: ['./hierarchical-tree-header.component.scss']
 })
 export class SamHierarchicalTreeHeaderComponent implements OnInit {
-
+  selectModel: any;
   @Input() public selectConfig: SelectConfig;
+  @Output() public selectedAgency = new EventEmitter<number>();
   textModel = 'Search by name CGAC, AAC, or FPDS code';
   constructor() { }
 
   ngOnInit() {
+  }
+  onAgencyChange(ev) {
+    this.selectedAgency.emit(this.selectModel);
   }
 
 }
