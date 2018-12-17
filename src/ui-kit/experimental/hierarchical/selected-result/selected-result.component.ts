@@ -3,17 +3,13 @@ import {
 } from '@angular/core';
 import { HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selectedItem.model';
 
+
 @Component({
   selector: 'sam-selected-result',
   templateUrl: './selected-result.component.html',
   styleUrls: ['./selected-result.component.scss']
 })
 export class SamHierarchicalSelectedResultComponent {
-
-  /**
-  * 
-  */
-  @ViewChild('resultsList') resultsListElement: ElementRef;
 
   /**
   * Allow to insert a customized template for suggestions to use
