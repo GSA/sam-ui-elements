@@ -30,9 +30,7 @@ export class HierarchicalTreeSelectedItemModel {
                 this.clearItems();
             }
             this.items.push(item);
-            console.log('Item Added');
-            console.log(item);
-        }
+                }
     }
 
     /**
