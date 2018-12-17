@@ -59,10 +59,9 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   @ViewChild('filter') filter: ElementRef;
 
   ngOnChanges() {
-   
-  }
-  ngAfterViewInit(){
     this.dataChange.next(this.dataSource);
+  }
+  ngAfterViewInit() {
     this.samTableDataSource = new SampleDataSource(
       this.dataChange,
       this.paginator,
@@ -122,7 +121,7 @@ export class SampleDataSource extends DataSource<any> {
   connect(): Observable<any[]> {
     const displayDataChanges = [
       this.dataChange,
-     this._sort.samSortChange,
+      this._sort.samSortChange,
       this._filterChange,
     ];
     return Observable.merge(...displayDataChanges).map(() => {
@@ -147,8 +146,8 @@ export class SampleDataSource extends DataSource<any> {
   getSortedData(data: any[]): any[] {
     if (!this._sort.active || this._sort.direction === '') { return data; }
     return data.sort((a, b) => {
-      let propertyA: number|string = '';
-      let propertyB: number|string = '';
+      let propertyA: number | string = '';
+      let propertyB: number | string = '';
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
       const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
       return (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1);
