@@ -58,8 +58,8 @@ export class SelectedResultSettings {
    */
   public subValueProperty: string;
 
-   /**
-   * Used to describe the drop down (Text should match the label that will be supplied)
-   */
+  /**
+  * Used to describe the drop down (Text should match the label that will be supplied)
+  */
   public labelText: string;
 }

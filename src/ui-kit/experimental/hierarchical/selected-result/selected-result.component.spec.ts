@@ -1,8 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SamHierarchicalSelectedResultComponent } from './selected-result.component';
+import { SamHierarchicalSelectedResultComponent, SelectedResultSettings } from './selected-result.component';
+import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
 
-describe('SamHierarchicalSelectedResultComponent', () => {
+
+
+fdescribe('SamHierarchicalSelectedResultComponent', () => {
   let component: SamHierarchicalSelectedResultComponent;
   let fixture: ComponentFixture<SamHierarchicalSelectedResultComponent>;
 
@@ -16,6 +19,12 @@ describe('SamHierarchicalSelectedResultComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SamHierarchicalSelectedResultComponent);
     component = fixture.componentInstance;
+    component.model = new HierarchicalTreeSelectedItemModel();
+    component.settings = new SelectedResultSettings();
+    component.settings.keyField = 'id';
+    component.model.treeMode = TreeMode.SINGLE;
+    component.settings.valueProperty = 'name';
+    component.settings.subValueProperty = 'subtext';
     fixture.detectChanges();
   });
 
