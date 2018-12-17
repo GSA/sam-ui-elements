@@ -5,7 +5,7 @@ import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tre
 import { By } from '@angular/platform-browser';
 
 
-fdescribe('SamHierarchicalSelectedResultComponent', () => {
+describe('SamHierarchicalSelectedResultComponent', () => {
   let component: SamHierarchicalSelectedResultComponent;
   let fixture: ComponentFixture<SamHierarchicalSelectedResultComponent>;
 

@@ -1,5 +1,5 @@
 /* tslint:disable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { SamHierarchicalAutocompleteComponent, SamHierarchicalAutocompleteSettings } from './autocomplete.component';
 import { FormsModule } from '@angular/forms';
 import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
@@ -8,7 +8,8 @@ import { Observable } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import 'rxjs/add/observable/of';
 
-describe('SamHierarchicalAutocompleteComponent', () => {
+
+fdescribe('SamHierarchicalAutocompleteComponent', () => {
   let component: SamHierarchicalAutocompleteComponent;
   let fixture: ComponentFixture<SamHierarchicalAutocompleteComponent>;
 
@@ -55,6 +56,22 @@ describe('SamHierarchicalAutocompleteComponent', () => {
     fixture.detectChanges();
     expect(component.resultsListElement).toBe(undefined);
   });
+
+  it('Should  have empty results', fakeAsync(() => {
+
+    const event = {
+      "key": "Space",
+      "target": { "value": 'test search' }
+    }
+    component.onKeyup(event);
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(list.nativeElement.children.length).toBe(1);
+    const emptyItem = fixture.debugElement.query(By.css('.emptyResults'));
+    expect(emptyItem).toBeTruthy();
+  }));
 
 
 });
