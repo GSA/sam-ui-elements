@@ -1,6 +1,13 @@
 <div>
-  <sam-button buttonText="up" buttonType="primary"></sam-button>
 
+  <!-- View Selector-->
+  <!-- <input type="radio" -->
+
+  <!-- Hierarchy Navigator -->
+  <sam-button buttonText="up"
+    buttonType="primary"
+    (click)="navigateToParent()"
+  ></sam-button>
   <sam-select
     [(ngModel)]="selectModel"
     (change)="onAgencyChange($event)"
@@ -9,6 +16,17 @@
     [label]="label">
   </sam-select>
 
+  <!-- 
+
+    <sam-hierarchy-navigator [options]="[...]" <- Options must be in hierachy order, 
+        0th item is current level, n-1 item is the root of the tree
+      [(ngModel)]="..."
+      formControlName="asdf"
+
+    ></sam-hierarchy-navigator>
+  -->
+
+  <!-- Search Control -->
   <sam-text [(ngModel)]="textModel"
     name="filter text">
   </sam-text>

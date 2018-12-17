@@ -21,10 +21,19 @@ export class SamHierarchicalTreeHeaderComponent implements SelectConfig {
   @Output() public selectedAgency = new EventEmitter<number>();
 
   textModel = 'Search by name CGAC, AAC, or FPDS code';
-  selectModel: any;
+  @Input()selectModel: any;
 
   onAgencyChange(ev) {
     this.selectedAgency.emit(this.selectModel);
+  }
+
+  navigateToParent(): void {
+    if (this.options.length > 1) {
+      this.selectedAgency.emit(this.options[1].value);
+    }
+    /**
+     * TODO: The other half of this else statement
+     */
   }
 
 }
