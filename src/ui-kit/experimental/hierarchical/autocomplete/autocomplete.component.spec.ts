@@ -1,5 +1,5 @@
 /* tslint:disable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { SamHierarchicalAutocompleteComponent, SamHierarchicalAutocompleteSettings } from './autocomplete.component';
 import { FormsModule } from '@angular/forms';
 import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
@@ -8,7 +8,8 @@ import { Observable } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import 'rxjs/add/observable/of';
 
-fdescribe('SamHierarchicalAutocompleteComponent', () => {
+
+describe('SamHierarchicalAutocompleteComponent', () => {
   let component: SamHierarchicalAutocompleteComponent;
   let fixture: ComponentFixture<SamHierarchicalAutocompleteComponent>;
 
@@ -56,7 +57,159 @@ fdescribe('SamHierarchicalAutocompleteComponent', () => {
     expect(component.resultsListElement).toBe(undefined);
   });
 
-  
+  it('Should have empty results with invalid search', fakeAsync(() => {
+
+    const event = {
+      "key": "Space",
+      "target": { "value": 'test search' }
+    }
+    component.onKeyup(event);
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(list.nativeElement.children.length).toBe(1);
+    const emptyItem = fixture.debugElement.query(By.css('.emptyResults'));
+    expect(emptyItem).toBeTruthy();
+  }));
+
+
+  it('Should have results key press', fakeAsync(() => {
+    const event = {
+      "key": "d",
+      "target": { "value": 'id' }
+    }
+    component.onKeyup(event);
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(list.nativeElement.children.length).toBe(11);
+    expect(component.results[0]['highlighted']).toBeTruthy();
+  }));
+
+  it('Should have reuslts on focus', fakeAsync(() => {
+    component.inputFocusHandler();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(list.nativeElement.children.length).toBe(11);
+    expect(component.results[0]['highlighted']).toBeTruthy();
+  }));
+
+  it('Select second item with down and up arrows', fakeAsync(() => {
+    component.inputFocusHandler();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const downEvent = {
+      "key": "Down",
+      "target": { "value": 'id' }
+    }
+    component.onKeyup(downEvent);
+    tick();
+    fixture.detectChanges()
+    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(list.nativeElement.children.length).toBe(11);
+    expect(component.results[1]['highlighted']).toBeTruthy();
+    const upEvent = {
+      "key": "Up",
+      "target": { "value": 'id' }
+    }
+    component.onKeyup(upEvent);
+    tick();
+    fixture.detectChanges();
+    expect(component.results[0]['highlighted']).toBeTruthy();
+  }));
+
+  it('Should have delete have results', fakeAsync(() => {
+    const event = {
+      "key": "Delete",
+      "target": { "value": 'id' }
+    }
+    component.onKeyup(event);
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(list.nativeElement.children.length).toBe(11);
+    expect(component.results[0]['highlighted']).toBeTruthy();
+  }));
+
+  it('Should have results key press', fakeAsync(() => {
+    const event = {
+      "key": "d",
+      "target": { "value": 'id' }
+    }
+    component.onKeyup(event);
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(list.nativeElement.children.length).toBe(11);
+    expect(component.results[0]['highlighted']).toBeTruthy();
+  }));
+
+  it('Should have reuslts on focus', fakeAsync(() => {
+    component.inputFocusHandler();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(list.nativeElement.children.length).toBe(11);
+    expect(component.results[0]['highlighted']).toBeTruthy();
+  }));
+
+  it('select item with enter key', fakeAsync(() => {
+    component.inputFocusHandler();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(list.nativeElement.children.length).toBe(11);
+    expect(component.results[0]['highlighted']).toBeTruthy();
+    const event = {
+      "key": "Enter",
+      "target": { "value": 'id' }
+    }
+    component.onKeyup(event);
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    expect(component.model.getItems().length).toBe(1);
+  }));
+
+
+  it('hover over item is highlighted', fakeAsync(() => {
+    component.inputFocusHandler();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(list.nativeElement.children.length).toBe(11);
+    component.listItemHover(10);
+    fixture.detectChanges();
+    tick();
+    expect(component.results[10]['highlighted']).toBeTruthy();
+  }));
+
+
+  it('clearInput and results closed', fakeAsync(() => {
+    component.inputFocusHandler();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(list.nativeElement.children.length).toBe(11);
+    component.clearInput();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const listAfter = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(listAfter).toBeFalsy();
+  }));
+
 });
 
 
