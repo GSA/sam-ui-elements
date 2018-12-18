@@ -27,7 +27,7 @@
       </ng-container>
 
       <tr sam-header-row *cdkHeaderRowDef="displayedColumns"></tr>
-      <tr sam-row *cdkRowDef="let row; columns: displayedColumns;
+      <tr (click)="onAgencyRowChanges(row)" sam-row *cdkRowDef="let row; columns: displayedColumns;
         let first = first; let last = last; let even = even; let odd = odd"></tr>
     </sam-datatable>
   </div>

@@ -76,7 +76,6 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   onSelectItem(ev: Event, item: GridItem) {
     this.selectedItem = item;
     this.itemSelected.emit(this.selectedItem);
-
   }
   handleKeyup(ev) {
     if (KeyHelper.is('tab', event)) {
@@ -101,6 +100,11 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   public onChangeLevel(ev: Event, item: GridItem): void {
     this.levelChanged.emit(item);
 
+  }
+  onAgencyRowChanges(row) {
+    this.selectedItem = row;
+    this.itemSelected.emit(this.selectedItem);
+    console.log(row["id"]);
   }
 }
 
@@ -154,5 +158,3 @@ export class SampleDataSource extends DataSource<any> {
     });
   }
 }
-
-
