@@ -88,8 +88,6 @@ describe('SamHierarchicalAutocompleteComponent', () => {
     expect(component.results[0]['highlighted']).toBeTruthy();
   }));
 
-
-
   it('Should have reuslts on focus', fakeAsync(() => {
     component.inputFocusHandler();
     fixture.detectChanges();

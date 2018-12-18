@@ -1,8 +1,5 @@
-import {
-  Component, Input, ViewChild, TemplateRef, ElementRef
-} from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 import { HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selectedItem.model';
-
 
 @Component({
   selector: 'sam-selected-result',

@@ -11,7 +11,7 @@ import { HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selected
   templateUrl: './autocomplete.component.html',
   styleUrls: ['./autocomplete.component.scss']
 })
-export class SamHierarchicalAutocompleteComponent implements OnInit {
+export class SamHierarchicalAutocompleteComponent {
 
   /**
    * Ul list of elements 
@@ -99,18 +99,6 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
    * Determines if the dropdown should be shown
    */
   public showResults = false;
-
-  /**
-   * Used to set an empty model and settings
-   */
-  ngOnInit() {
-    if (!this.model) {
-      this.model = new HierarchicalTreeSelectedItemModel();
-    }
-    if (!this.settings) {
-      this.settings = new SamHierarchicalAutocompleteSettings();
-    }
-  }
 
   /**
    * Clears the input fields and value
