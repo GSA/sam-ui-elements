@@ -199,8 +199,25 @@ fdescribe('SamHierarchicalAutocompleteComponent', () => {
     tick();
     expect(component.results[10]['highlighted']).toBeTruthy();
   }));
-  
-  //clearInput
+
+
+  it('clearInput' , fakeAsync(() => {
+    component.inputFocusHandler();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(list.nativeElement.children.length).toBe(11);
+    component.clearInput();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const listAfter = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(listAfter).toBeFalsy();
+    
+  }));
+
+
 
 
 });
