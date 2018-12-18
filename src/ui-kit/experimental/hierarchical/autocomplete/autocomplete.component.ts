@@ -14,17 +14,17 @@ import { HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selected
 export class SamHierarchicalAutocompleteComponent implements OnInit {
 
   /**
-   * 
+   * Ul list of elements 
    */
   @ViewChild('resultsList') resultsListElement: ElementRef;
 
   /**
-   * 
+   * input control 
    */
   @ViewChild('input') input: ElementRef;
 
   /**
-   * 
+   * Screen read field
    */
   @ViewChild('srOnly') srOnly: ElementRef;
 
