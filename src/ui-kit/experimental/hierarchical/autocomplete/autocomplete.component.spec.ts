@@ -9,7 +9,7 @@ import { By } from '@angular/platform-browser';
 import 'rxjs/add/observable/of';
 
 
-describe('SamHierarchicalAutocompleteComponent', () => {
+fdescribe('SamHierarchicalAutocompleteComponent', () => {
   let component: SamHierarchicalAutocompleteComponent;
   let fixture: ComponentFixture<SamHierarchicalAutocompleteComponent>;
 
