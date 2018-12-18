@@ -9,7 +9,7 @@ import { By } from '@angular/platform-browser';
 import 'rxjs/add/observable/of';
 
 
-fdescribe('SamHierarchicalAutocompleteComponent', () => {
+describe('SamHierarchicalAutocompleteComponent', () => {
   let component: SamHierarchicalAutocompleteComponent;
   let fixture: ComponentFixture<SamHierarchicalAutocompleteComponent>;
 
@@ -139,8 +139,6 @@ fdescribe('SamHierarchicalAutocompleteComponent', () => {
     expect(component.results[0]['highlighted']).toBeTruthy();
   }));
 
-
-
   it('Should have results key press', fakeAsync(() => {
     const event = {
       "key": "d",
@@ -155,8 +153,6 @@ fdescribe('SamHierarchicalAutocompleteComponent', () => {
     expect(component.results[0]['highlighted']).toBeTruthy();
   }));
 
-
-
   it('Should have reuslts on focus', fakeAsync(() => {
     component.inputFocusHandler();
     fixture.detectChanges();
@@ -167,7 +163,7 @@ fdescribe('SamHierarchicalAutocompleteComponent', () => {
     expect(component.results[0]['highlighted']).toBeTruthy();
   }));
 
-  it('enter key', fakeAsync(() => {
+  it('select item with enter key', fakeAsync(() => {
     component.inputFocusHandler();
     fixture.detectChanges();
     tick();
@@ -187,7 +183,7 @@ fdescribe('SamHierarchicalAutocompleteComponent', () => {
   }));
 
 
-  it('hover over item', fakeAsync(() => {
+  it('hover over item is highlighted', fakeAsync(() => {
     component.inputFocusHandler();
     fixture.detectChanges();
     tick();
@@ -201,7 +197,7 @@ fdescribe('SamHierarchicalAutocompleteComponent', () => {
   }));
 
 
-  it('clearInput' , fakeAsync(() => {
+  it('clearInput and results closed', fakeAsync(() => {
     component.inputFocusHandler();
     fixture.detectChanges();
     tick();
@@ -214,11 +210,7 @@ fdescribe('SamHierarchicalAutocompleteComponent', () => {
     fixture.detectChanges();
     const listAfter = fixture.debugElement.query(By.css('.autocomplete-result'));
     expect(listAfter).toBeFalsy();
-    
   }));
-
-
-
 
 });
 
