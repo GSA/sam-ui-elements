@@ -1,4 +1,5 @@
-<ul   [attr.aria-label]="settings.labelText +' results'" class="usa-unstyled-list resultsList" aria-relevant="additions" role="listbox" aria-live="polite">
+<ul [attr.aria-label]="settings.labelText +' results'" class="usa-unstyled-list resultsList" aria-relevant="additions"
+  role="listbox" aria-live="polite">
   <li role="option" *ngFor="let result of model.getItems(); let i = index">
     <ng-container *ngIf="itemTemplate" [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit:result}">
     </ng-container>
@@ -8,8 +9,8 @@
         <br /><span class="secondary-value">{{ result[settings.subValueProperty] }}</span>
       </ng-container>
     </ng-container>
-    <span tabindex="0" role="button" class="fa fa-times-circle" aria-label="Remove Item" aria-hidden="false"
-     (click)="removeItem(result)" (keyup.enter)="removeItem(result)">
+    <span tabindex="0" role="button" class="fa fa-times-circle" aria-label="Remove Item" aria-hidden="false" (click)="removeItem(result)"
+      (keyup.enter)="removeItem(result)">
     </span>
   </li>
 </ul>
