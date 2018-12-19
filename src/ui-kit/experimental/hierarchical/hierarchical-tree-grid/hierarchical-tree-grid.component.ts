@@ -55,10 +55,14 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   public focusedtemIndex = 0;
 
   @ViewChild(SamSortDirective) sort: SamSortDirective;
-  @ViewChild('filter') filter: ElementRef;
+ // @ViewChild('filter') filter: ElementRef;
 
   ngOnChanges() {
     this.dataChange.next(this.dataSource);
+    if (this.samTableDataSource) {
+      this.samTableDataSource.filter = this.filterText;
+    }
+    // console.log(this.filterText, 'filtertext checking');
   }
   ngAfterViewInit() {
     this.samTableDataSource = new SampleDataSource(
@@ -68,7 +72,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    console.log(this.filterText, ' on ng init filtertext checking');
     this.displayedColumns = [...this.displayedColumns, ...this.templateConfigurations.displayedColumns];
   }
 
@@ -92,7 +96,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
     console.log(ev)
   }
 
-  
+
   isSelected(item: any) {
     return this.selectedItem ?
       this.focusedCell.id == item.id : false;
@@ -126,7 +130,10 @@ export class SampleDataSource extends DataSource<any> {
     ];
     return Observable.merge(...displayDataChanges).map(() => {
       const filteredData = this.dataChange.value.slice().filter((item: any) => {
-        const searchStr = (item.id + item.name).toLowerCase();
+        // const dataStr = Object.keys(this.dataChange.value).reduce((currentTerm: string, key: string) => {
+        //   return currentTerm + (this.dataChange.value as { [key: string]: any })[key];
+        // }, '').toLowerCase();
+         const searchStr = (item.id ).toLowerCase();
         return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
       });
 
