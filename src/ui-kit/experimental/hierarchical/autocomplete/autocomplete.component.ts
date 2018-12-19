@@ -11,20 +11,20 @@ import { HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selected
   templateUrl: './autocomplete.component.html',
   styleUrls: ['./autocomplete.component.scss']
 })
-export class SamHierarchicalAutocompleteComponent implements OnInit {
+export class SamHierarchicalAutocompleteComponent {
 
   /**
-   * 
+   * Ul list of elements 
    */
   @ViewChild('resultsList') resultsListElement: ElementRef;
 
   /**
-   * 
+   * input control 
    */
   @ViewChild('input') input: ElementRef;
 
   /**
-   * 
+   * Screen read field
    */
   @ViewChild('srOnly') srOnly: ElementRef;
 
@@ -99,18 +99,6 @@ export class SamHierarchicalAutocompleteComponent implements OnInit {
    * Determines if the dropdown should be shown
    */
   public showResults = false;
-
-  /**
-   * Used to set an empty model and settings
-   */
-  ngOnInit() {
-    if (!this.model) {
-      this.model = new HierarchicalTreeSelectedItemModel();
-    }
-    if (!this.settings) {
-      this.settings = new SamHierarchicalAutocompleteSettings();
-    }
-  }
 
   /**
    * Clears the input fields and value
@@ -360,4 +348,10 @@ export class SamHierarchicalAutocompleteSettings {
    *  Sets the time waited for addional key actions Default is 250 milliseconds
    */
   public debounceTime: number;
+
+  /**
+   * Place holder text for input
+   */
+  public placeHolderText: string;
+
 }
