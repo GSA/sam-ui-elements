@@ -1,4 +1,4 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, tick,async } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -49,7 +49,7 @@ describe('The Sam Date component', () => {
     let dayEl;
     let yearEl;
     // provide our implementations or mocks to the dependency injector
-    beforeEach(() => {
+    beforeEach(async(() => {
       TestBed.configureTestingModule({
         imports: [SamWrapperModule, FormsModule],
         declarations: [SamDateComponent],
@@ -67,21 +67,22 @@ describe('The Sam Date component', () => {
       monthEl = fixture.debugElement.query(By.css('input[name=date_month]'));
       dayEl = fixture.debugElement.query(By.css('input[name=date_day]'));
       yearEl = fixture.debugElement.query(By.css('input[name=date_year]'));
-    });
+    }));
   
-    it('should initialize Date', function () {
-      expect(true).toBe(true);
-    });
+    // it('should initialize Date', function () {
+    //   expect(true).toBe(true);
+    // });
   
     it('should match specified date', function () {
+   //   tick();
       fixture.detectChanges();
-      fixture.whenStable().then(() => {
+//fixture.whenStable().then(() => {
         expect(component.month.nativeElement.value).toBe('12');
         expect(component.day.nativeElement.value).toBe('29');
         expect(component.year.nativeElement.value).toBe('2016');
         expect(component.isValid()).toBe(true);
         expect(component.isClean()).toBe(false);
-      });
+  //    });
     });
   
     it('should update', function () {
