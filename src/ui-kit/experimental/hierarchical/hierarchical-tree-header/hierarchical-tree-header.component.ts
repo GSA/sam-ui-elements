@@ -18,9 +18,9 @@ export class SamHierarchicalTreeHeaderComponent implements SelectConfig {
   @Input() public disabled: boolean;
   @Input() public label: string;
   @Input() public name: string;
-  @Output() public selectedAgency = new EventEmitter<number>();
+  @Output() public selectedAgency = new EventEmitter<string>();
 
-  textModel = 'Search by name CGAC, AAC, or FPDS code';
+ 
   @Input()selectModel: any;
 
   onAgencyChange(ev) {

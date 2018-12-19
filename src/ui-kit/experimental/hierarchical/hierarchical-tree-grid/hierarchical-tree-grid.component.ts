@@ -43,6 +43,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
 
   @Output() public itemSelected = new EventEmitter<GridItem>();
   @Output() public levelChanged = new EventEmitter<GridItem>();
+  @Output() public rowChanged = new EventEmitter<GridItem>();
   public selectedItem: GridItem;
   public chkSelected: boolean = false;
   selectedItemIndex = 0;
@@ -53,8 +54,6 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   public focusedCell: any;
   public focusedtemIndex = 0;
 
-
-  @ViewChild(SamPaginationComponent) paginator: SamPaginationComponent;
   @ViewChild(SamSortDirective) sort: SamSortDirective;
   @ViewChild('filter') filter: ElementRef;
 
@@ -64,12 +63,12 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   ngAfterViewInit() {
     this.samTableDataSource = new SampleDataSource(
       this.dataChange,
-      this.paginator,
       this.sort
     );
   }
 
   ngOnInit() {
+
     this.displayedColumns = [...this.displayedColumns, ...this.templateConfigurations.displayedColumns];
   }
 
@@ -93,6 +92,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
     console.log(ev)
   }
 
+  
   isSelected(item: any) {
     return this.selectedItem ?
       this.focusedCell.id == item.id : false;
@@ -102,14 +102,11 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
 
   }
   onAgencyRowChanges(row) {
-    this.selectedItem = row;
-    this.itemSelected.emit(this.selectedItem);
-    console.log(row["id"]);
+    this.rowChanged.emit(row['id']);
   }
 }
 
 export class SampleDataSource extends DataSource<any> {
-  totalcost = 0;
   _filterChange = new BehaviorSubject('');
   get filter(): string { return this._filterChange.value; }
   set filter(filter: string) { this._filterChange.next(filter); }
@@ -117,7 +114,6 @@ export class SampleDataSource extends DataSource<any> {
   renderedData: any[] = [];
 
   constructor(private dataChange: any,
-    private _paginator: SamPaginationComponent,
     private _sort: SamSortDirective) {
     super();
   }
@@ -133,11 +129,7 @@ export class SampleDataSource extends DataSource<any> {
         const searchStr = (item.id + item.name).toLowerCase();
         return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
       });
-      // set total
-      this.totalcost = 0;
-      filteredData.map((item: any) => {
-        this.totalcost += item.cost;
-      });
+
       // Sort filtered data
       const sortedData = this.getSortedData(filteredData.slice());
       this.renderedData = sortedData;
