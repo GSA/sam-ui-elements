@@ -1,27 +1,22 @@
 <div>
 
   <!-- View Selector-->
-  <!-- <input type="radio" -->
-
+  <div>
+    <sam-icon [icon]="faThLarge" (click)="onViewChange('card')" size="lg"></sam-icon>
+    <sam-icon [icon]="faListUl" (click)="onViewChange('table')" size="lg"></sam-icon>
+  </div>
   <!-- Hierarchy Navigator -->
-  <sam-button buttonText="up"
-    buttonType="primary"
-    (click)="navigateToParent()"
-  ></sam-button>
-  
-<!-- Agency Level Selector -->
-  <sam-select
-    [(ngModel)]="selectModel"
-    (change)="onAgencyChange($event)"
-    name="agency select"
-    [options]="options"
+  <sam-button buttonText="up" buttonType="primary" (click)="navigateToParent()"></sam-button>
+
+  <!-- Agency Level Selector -->
+  <sam-select [(ngModel)]="selectModel" (change)="onAgencyChange($event)" name="agency select" [options]="options"
     [label]="label">
   </sam-select>
 
   <!-- Search Control -->
 
   <div class="example-header">
-      <input #filter placeholder="Search by name CGAC, AAC, or FPDS code">
+    <input #filter placeholder="Search by name CGAC, AAC, or FPDS code">
   </div>
 
 </div>

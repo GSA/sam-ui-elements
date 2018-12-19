@@ -1,6 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter,ViewChild  ,ElementRef} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { OptionsType } from '../../../../ui-kit/types';
 import { fromEvent } from 'rxjs/observable/fromEvent';
+import {
+  faThLarge,
+  faListUl,
+} from '@fortawesome/free-solid-svg-icons';
 
 export interface SelectConfig {
   options: OptionsType[];
@@ -15,6 +19,8 @@ export interface SelectConfig {
   styleUrls: ['./hierarchical-tree-header.component.scss']
 })
 export class SamHierarchicalTreeHeaderComponent implements SelectConfig {
+  faThLarge = faThLarge;
+  faListUl = faListUl;
   @Input() public options: OptionsType[];
   @Input() public disabled: boolean;
   @Input() public label: string;
@@ -22,17 +28,18 @@ export class SamHierarchicalTreeHeaderComponent implements SelectConfig {
   @Input() public changeType: string = 'keyup';
   @Output() public selectedAgency = new EventEmitter<string>();
   @Output() public filterText = new EventEmitter<string>();
+  @Output() public viewType = new EventEmitter<string>();
 
-  @Input()selectModel: any;
+  @Input() selectModel: any;
   @ViewChild('filter') filter: ElementRef;
 
   ngOnInit() {
     fromEvent(this.filter.nativeElement, this.changeType)
-        .debounceTime(150)
-        .distinctUntilChanged()
-        .subscribe(() => {
-          this.filterText.emit(this.filter.nativeElement.value);
-        });
+      .debounceTime(150)
+      .distinctUntilChanged()
+      .subscribe(() => {
+        this.filterText.emit(this.filter.nativeElement.value);
+      });
   }
 
   onAgencyChange(ev) {
@@ -47,5 +54,7 @@ export class SamHierarchicalTreeHeaderComponent implements SelectConfig {
      * TODO: The other half of this else statement
      */
   }
-
+  onViewChange(type: string) {
+    this.viewType.emit(type)
+  }
 }
