@@ -208,6 +208,26 @@ describe('SamHierarchicalAutocompleteComponent', () => {
     expect(component.results[0]['highlighted']).toBeTruthy();
   }));
 
+
+  it('Should have results Escape press', fakeAsync(() => {
+    component.inputFocusHandler();
+    tick();
+    fixture.detectChanges();
+    const listBefore = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(listBefore.nativeElement.children.length).toBe(11);
+    const event = {
+      "key": "Escape",
+      "target": { "value": 'id' }
+    }
+    component.onKeyup(event);
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const listAfter = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(listAfter).toBeFalsy();
+ 
+  }));
+
   it('Should have reuslts on focus', fakeAsync(() => {
     component.inputFocusHandler();
     fixture.detectChanges();
