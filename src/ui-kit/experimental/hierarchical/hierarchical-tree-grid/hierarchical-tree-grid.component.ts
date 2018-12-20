@@ -51,6 +51,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   public samTableDataSource: any | null;
   dataChange: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public focusedCell: any;
+  public selectedList : any[] =[];
 
   @ViewChild(SamSortDirective) sort: SamSortDirective;
 
@@ -71,10 +72,21 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
     this.displayedColumns = [...this.displayedColumns, ...this.templateConfigurations.displayedColumns];
   }
 
+  onChecked(ev, row) {
+    console.log(ev,'checkbox changed');
+    if (ev.target.checked) {
+      this.selectedList = [...this.selectedList, row];
+    } else {
+      const index: number = this.selectedList.indexOf(row);
+      if (index !== -1) {
+        this.selectedList = this.selectedList.filter(item => item !== row);
+      }
+    }
+  }
   onSelectItem(ev,item: GridItem) {
     // this.selectedItem = item;
     // this.itemSelected.emit(this.selectedItem);
-    console.log(item,'selected')
+    console.log(ev,'selected')
   }
 
   isSelected(item: any) {
@@ -86,7 +98,10 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
 
   }
   onRowChange(ev, row) {
+    console.log(ev,'row changed');
     if (ev.target.type !== 'checkbox') {
+     
+      this.selectedList = [];
       this.rowChanged.emit(row['id']);
     }
   }
