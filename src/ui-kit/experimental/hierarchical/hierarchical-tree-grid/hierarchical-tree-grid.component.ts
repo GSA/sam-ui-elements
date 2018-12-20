@@ -46,12 +46,14 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   @Output() public levelChanged = new EventEmitter<GridItem>();
   @Output() public rowChanged = new EventEmitter<GridItem>();
 
+
   public selectedItem: GridItem;
   public displayedColumns = ['select'];
   public samTableDataSource: any | null;
   dataChange: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public focusedCell: any;
-  public selectedList : any[] =[];
+
+  @Input() public selectedList: any[] = [];
 
   @ViewChild(SamSortDirective) sort: SamSortDirective;
 
@@ -73,7 +75,6 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   }
 
   onChecked(ev, row) {
-    console.log(ev,'checkbox changed');
     if (ev.target.checked) {
       this.selectedList = [...this.selectedList, row];
     } else {
@@ -82,11 +83,6 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
         this.selectedList = this.selectedList.filter(item => item !== row);
       }
     }
-  }
-  onSelectItem(ev,item: GridItem) {
-    // this.selectedItem = item;
-    // this.itemSelected.emit(this.selectedItem);
-    console.log(ev,'selected')
   }
 
   isSelected(item: any) {
@@ -98,9 +94,9 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
 
   }
   onRowChange(ev, row) {
-    console.log(ev,'row changed');
+    console.log(ev, 'row changed');
     if (ev.target.type !== 'checkbox') {
-     
+
       this.selectedList = [];
       this.rowChanged.emit(row['id']);
     }
