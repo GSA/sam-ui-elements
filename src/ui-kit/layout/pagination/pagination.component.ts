@@ -87,8 +87,11 @@ export class SamPaginationNextComponent implements OnInit {
    * Event emitted when units per page is changed
    */
   @Output() public unitsChange = new EventEmitter<number>();
-    
-  private _defaultSize = 10;
+  /**
+   * Sets the default size of the units displayed
+   * defaults to 10
+   */
+  @Input public defaultSize = 10;
   private _defaultOptions = [
     { value: '5', label: '5' },
     { value: '10', label: '10' },
@@ -129,6 +132,11 @@ export class SamPaginationNextComponent implements OnInit {
   }
 
   private _processChanges (c: SimpleChanges): void {
+
+    if (c.defaultSize) {
+      this.paginator.setUnitsPerPage(this.defaultSize);
+    }
+    
     if (c.unit) {
       this.paginator.unit = this.unit;
     }
@@ -146,7 +154,7 @@ export class SamPaginationNextComponent implements OnInit {
   private _setupPagination (): void {
     this.paginator = new Paginator(
       this.unit,
-      this._defaultSize,
+      this.defaultSize,
       this.totalUnits
     );
   }
