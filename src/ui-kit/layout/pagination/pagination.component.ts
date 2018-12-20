@@ -80,6 +80,11 @@ export class SamPaginationNextComponent implements OnInit {
    */
   @Input() public unit: string = 'Items';
   /**
+   * Sets the default size of the units displayed
+   * defaults to 10
+   */
+  @Input public defaultSize = 10;
+  /**
    * Event emitted when current page is changed
    */
   @Output() public pageChange = new EventEmitter<number>();
@@ -87,11 +92,7 @@ export class SamPaginationNextComponent implements OnInit {
    * Event emitted when units per page is changed
    */
   @Output() public unitsChange = new EventEmitter<number>();
-  /**
-   * Sets the default size of the units displayed
-   * defaults to 10
-   */
-  @Input public defaultSize = 10;
+
   private _defaultOptions = [
     { value: '5', label: '5' },
     { value: '10', label: '10' },
