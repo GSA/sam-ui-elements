@@ -11,14 +11,14 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs';
 import { DataSource } from '@angular/cdk';
 import { SamSortDirective, SamPaginationComponent, SamSortable } from '../../../components'
-import { KeyHelper } from '../../../../ui-kit/utilities';
 
 export interface GridTemplate {
 }
 
 export interface GridTemplateConfiguration {
   displayedColumns: any[];
-  type: string
+  type: string,
+  filterText: string
 }
 
 export interface GridDataSource {
@@ -38,22 +38,19 @@ export interface GridItem {
 export class SamHierarchicalTreeGridComponent implements OnInit {
   @Input() public templateConfigurations: GridTemplateConfiguration;
   @Input() public template: GridTemplate;
-  @Input() public dataSource: any;
+  @Input() public dataSource: any[] = [];
   @Input() public filterText: string;
+  @Input() public viewTye: string;
 
   @Output() public itemSelected = new EventEmitter<GridItem>();
   @Output() public levelChanged = new EventEmitter<GridItem>();
   @Output() public rowChanged = new EventEmitter<GridItem>();
-  public selectedItem: GridItem;
-  public chkSelected: boolean = false;
-  selectedItemIndex = 0;
 
+  public selectedItem: GridItem;
   public displayedColumns = ['select'];
   public samTableDataSource: any | null;
   dataChange: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public focusedCell: any;
-  public focusedtemIndex = 0;
-  @Input() public viewTye: string;
 
   @ViewChild(SamSortDirective) sort: SamSortDirective;
 
@@ -74,23 +71,10 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
     this.displayedColumns = [...this.displayedColumns, ...this.templateConfigurations.displayedColumns];
   }
 
-  onSelectItem(ev: Event, item: GridItem) {
-    this.selectedItem = item;
-    this.itemSelected.emit(this.selectedItem);
-  }
-  handleKeyup(ev) {
-    if (KeyHelper.is('tab', event)) {
-      return
-    }
-    if (KeyHelper.is('down', event)) {
-      console.log('onDownArrowDown')
-    }
-
-    // On up arrow press
-    if (KeyHelper.is('up', event)) {
-      console.log('onUpArrowDown')
-    }
-    console.log(ev)
+  onSelectItem(ev,item: GridItem) {
+    // this.selectedItem = item;
+    // this.itemSelected.emit(this.selectedItem);
+    console.log(item,'selected')
   }
 
   isSelected(item: any) {
@@ -101,8 +85,10 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
     this.levelChanged.emit(item);
 
   }
-  onAgencyRowChanges(row) {
-    this.rowChanged.emit(row['id']);
+  onRowChange(ev, row) {
+    if (ev.target.type !== 'checkbox') {
+      this.rowChanged.emit(row['id']);
+    }
   }
 }
 
@@ -127,7 +113,6 @@ export class SampleDataSource extends DataSource<any> {
     return Observable.merge(...displayDataChanges).map(() => {
       const filteredData = this.dataChange.value.slice().filter((item: any) => {
         const searchStr = JSON.stringify(item).toLowerCase();
-        // const searchStr = (item.id ).toLowerCase();
         return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
       });
 
@@ -143,11 +128,16 @@ export class SampleDataSource extends DataSource<any> {
   getSortedData(data: any[]): any[] {
     if (!this._sort.active || this._sort.direction === '') { return data; }
     return data.sort((a, b) => {
-      let propertyA: number | string = '';
-      let propertyB: number | string = '';
+      let propertyA = this.sortingDataAccessor(a, this._sort.active);
+      let propertyB = this.sortingDataAccessor(b, this._sort.active)
       const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
       const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
       return (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1);
     });
   }
+  sortingDataAccessor: ((data: any, sortHeaderId: string) => string | number) =
+    (data: any, sortHeaderId: string): string | number => {
+      const value = (data as { [key: string]: any })[sortHeaderId];
+      return value;
+    }
 }

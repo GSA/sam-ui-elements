@@ -11,5 +11,7 @@ export class SamHierarchicalTreeFooterComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  onSelect(){
+    console.log("select working");
+  }
 }

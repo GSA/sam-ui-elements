@@ -27,6 +27,7 @@ import { SamIconsModule } from '../icon';
     SamHierarchicalTreeFilterComponent, SamHierarchicalTreeHeaderComponent,
     SamHierarchicalTreeFooterComponent],
   exports: [SamHierarchicalAutocompleteComponent, SamHierarchicalSelectedResultComponent,
-    SamHierarchicalTreeComponent, SamHierarchicalTreeGridComponent, SamHierarchicalTreeHeaderComponent]
+    SamHierarchicalTreeComponent, SamHierarchicalTreeGridComponent, SamHierarchicalTreeHeaderComponent,
+    SamHierarchicalTreeFooterComponent]
 })
 export class SamHierarchicalModule { }
