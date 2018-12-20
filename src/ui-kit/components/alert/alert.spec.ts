@@ -108,14 +108,14 @@ describe('The Sam Alert component', () => {
     });
     it('type check', () => {
       fixture.detectChanges();
-      fixture.whenStable().then(() => {
+      //fixture.whenStable().then(() => {
         expect(
           fixture.debugElement.query(
             By.css('.usa-alert')
           ).nativeElement.className
         )
         .toContain('usa-alert-success');
-      });
+    //  });
     });
   });
 });
