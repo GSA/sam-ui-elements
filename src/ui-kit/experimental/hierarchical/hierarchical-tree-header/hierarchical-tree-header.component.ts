@@ -6,31 +6,38 @@ import {
   faListUl,
 } from '@fortawesome/free-solid-svg-icons';
 
-export interface SelectConfig {
-  options: OptionsType[];
-  disabled: boolean;
-  label: string;
-  name: string;
-}
-
 @Component({
   selector: 'sam-hierarchical-tree-header',
   templateUrl: './hierarchical-tree-header.component.html',
   styleUrls: ['./hierarchical-tree-header.component.scss']
 })
-export class SamHierarchicalTreeHeaderComponent implements SelectConfig {
+export class SamHierarchicalTreeHeaderComponent {
   faThLarge = faThLarge;
   faListUl = faListUl;
-  @Input() public options: OptionsType[];
-  @Input() public disabled: boolean;
-  @Input() public label: string;
-  @Input() public name: string;
-  @Input() public changeType: string = 'keyup';
-  @Output() public selectedAgency = new EventEmitter<string>();
-  @Output() public filterText = new EventEmitter<string>();
-  @Output() public viewType = new EventEmitter<string>();
 
-  @Input() selectModel: any;
+  /**
+  * Options for the Dropdown
+  */
+  @Input() public options: OptionsType[];
+    /**
+  * Lable for the options dropdown
+  */
+  @Input() public label: string;
+    /**
+  * Whether Search should happned on click or keyup
+  */
+  @Input() public changeType: string = 'keyup';
+
+    /**
+  * Event emitted when level change is clicked
+  */
+  @Output() public selectedAgency = new EventEmitter<string>();
+    /**
+  * Event emitted when level change is clicked
+  */
+  @Output() public filterText = new EventEmitter<string>();
+
+  public selectModel: any;
   @ViewChild('filter') filter: ElementRef;
 
   ngOnInit() {
@@ -42,7 +49,7 @@ export class SamHierarchicalTreeHeaderComponent implements SelectConfig {
       });
   }
 
-  onAgencyChange(ev) {
+  onLevelChange(ev) {
     this.selectedAgency.emit(this.selectModel);
   }
 
@@ -50,11 +57,5 @@ export class SamHierarchicalTreeHeaderComponent implements SelectConfig {
     if (this.options.length > 1) {
       this.selectedAgency.emit(this.options[1].value.toString());
     }
-    /**
-     * TODO: The other half of this else statement
-     */
-  }
-  onViewChange(type: string) {
-    this.viewType.emit(type)
   }
 }

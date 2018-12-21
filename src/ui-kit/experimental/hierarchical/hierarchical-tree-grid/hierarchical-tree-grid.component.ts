@@ -37,31 +37,50 @@ export interface GridItem {
 })
 export class SamHierarchicalTreeGridComponent implements OnInit {
   @Input() public templateConfigurations: GridTemplateConfiguration;
-   /**
-   * Allow to insert a customized template for suggestions to use
-   */
+  /**
+  * Allow to insert a customized template for suggestions to use
+  */
   @Input() public template: GridTemplate;
-  @Input() public dataSource: any[] = [];
-  @Input() public filterText: string;
-  @Input() public viewTye: string;
 
+  /**
+  * Data for the Table.
+  *  Simple data array
+  * Stream that emit a array each time when the item is selected.
+  * Stream that changes each time when click action trigger on row.
+  */
+  @Input() public gridData: any[] = [];
+
+  /**
+  * Allow to search the data on the table.
+  */
+  @Input() public filterText: string;
+
+   /**
+  * Event emitted when level change is clicked
+  */
   @Output() public levelChanged = new EventEmitter<GridItem>();
+
+   /**
+  * Event emitted when row is clicked
+  */
   @Output() public rowChanged = new EventEmitter<GridItem>();
+
+  /**
+  * Event emitted when row set is selected.
+  */
   @Output() selectResults = new EventEmitter<any[]>();
 
-
-  public selectedItem: GridItem;
+  // public selectedItem: GridItem;
   public displayedColumns = ['select'];
   public samTableDataSource: any | null;
-  dataChange: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public dataChange: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public focusedCell: any;
-
   public selectedList: any[] = [];
 
   @ViewChild(SamSortDirective) sort: SamSortDirective;
 
   ngOnChanges() {
-    this.dataChange.next(this.dataSource);
+    this.dataChange.next(this.gridData);
     if (this.samTableDataSource) {
       this.samTableDataSource.filter = this.filterText;
     }
@@ -77,6 +96,9 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
     this.displayedColumns = [...this.displayedColumns, ...this.templateConfigurations.displayedColumns];
   }
 
+  /**
+   * On select the results
+   */
   onChecked(ev, row) {
     if (ev.target.checked) {
       this.selectedList = [...this.selectedList, row];
@@ -89,14 +111,17 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
     this.selectResults.emit(this.selectedList);
   }
 
-  isSelected(item: any) {
-    return this.selectedItem ?
-      this.focusedCell.id == item.id : false;
-  }
+
+  /**
+   * On level change 
+   */
   public onChangeLevel(ev: Event, item: GridItem): void {
     this.levelChanged.emit(item);
 
   }
+  /**
+  * when the row is click updates the table data
+  */
   onRowChange(ev, row) {
     if (ev.target.type !== 'checkbox') {
       this.selectedList = [];
@@ -105,6 +130,9 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   }
 }
 
+/**
+ * Preparing the data source
+ */
 export class SampleDataSource extends DataSource<any> {
   _filterChange = new BehaviorSubject('');
   get filter(): string { return this._filterChange.value; }

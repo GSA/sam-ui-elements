@@ -11,7 +11,7 @@
         <th sam-header-cell *cdkHeaderCellDef sam-sort-header>Select</th>
         <td sam-cell *cdkCellDef="let row">
           <!-- They should either check a box to srelect the key of the data or click the row and emit the key for the data in the row -->
-          <input type="checkbox" style="width:2em;" id="selectId" [class.selected]="isSelected(item)" (change)="onChecked($event,row)"
+          <input type="checkbox" style="width:2em;" id="selectId" (change)="onChecked($event,row)"
             name="select">
           <label style="width:2em;" for="selectId"></label>
         </td>
