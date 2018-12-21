@@ -2,7 +2,7 @@
 
   <!-- View Selector-->
   <div>
-    <sam-icon [icon]="faThLarge" (click)="onViewChange('card')" size="lg"></sam-icon>
+    <sam-icon style="margin-right:10px;" [icon]="faThLarge" (click)="onViewChange('card')" size="lg"></sam-icon>
     <sam-icon [icon]="faListUl" (click)="onViewChange('table')" size="lg"></sam-icon>
   </div>
   <!-- Hierarchy Navigator -->
@@ -15,8 +15,8 @@
 
   <!-- Search Control -->
 
-  <div class="example-header">
-    <input #filter placeholder="Search by name CGAC, AAC, or FPDS code">
+  <div>
+    <input #filter aria-label="search" placeholder="Search by name CGAC, AAC, or FPDS code">
   </div>
 
 </div>

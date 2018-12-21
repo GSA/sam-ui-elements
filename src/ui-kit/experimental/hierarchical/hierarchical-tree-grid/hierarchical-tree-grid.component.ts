@@ -37,14 +37,17 @@ export interface GridItem {
 })
 export class SamHierarchicalTreeGridComponent implements OnInit {
   @Input() public templateConfigurations: GridTemplateConfiguration;
+   /**
+   * Allow to insert a customized template for suggestions to use
+   */
   @Input() public template: GridTemplate;
   @Input() public dataSource: any[] = [];
   @Input() public filterText: string;
   @Input() public viewTye: string;
 
-  @Output() public itemSelected = new EventEmitter<GridItem>();
   @Output() public levelChanged = new EventEmitter<GridItem>();
   @Output() public rowChanged = new EventEmitter<GridItem>();
+  @Output() selectResults = new EventEmitter<any[]>();
 
 
   public selectedItem: GridItem;
@@ -53,7 +56,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   dataChange: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public focusedCell: any;
 
-  @Input() public selectedList: any[] = [];
+  public selectedList: any[] = [];
 
   @ViewChild(SamSortDirective) sort: SamSortDirective;
 
@@ -83,6 +86,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
         this.selectedList = this.selectedList.filter(item => item !== row);
       }
     }
+    this.selectResults.emit(this.selectedList);
   }
 
   isSelected(item: any) {
@@ -94,9 +98,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
 
   }
   onRowChange(ev, row) {
-    console.log(ev, 'row changed');
     if (ev.target.type !== 'checkbox') {
-
       this.selectedList = [];
       this.rowChanged.emit(row['id']);
     }
