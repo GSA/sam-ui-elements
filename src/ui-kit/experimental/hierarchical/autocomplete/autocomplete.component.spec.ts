@@ -123,9 +123,66 @@ describe('SamHierarchicalAutocompleteComponent', () => {
     expect(component.results[0]['highlighted']).toBeTruthy();
   }));
 
+  it('Up arrow when on first item', fakeAsync(() => {
+    component.inputFocusHandler();
+    tick();
+    fixture.detectChanges();
+    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(list.nativeElement.children.length).toBe(11);
+    expect(component.results[0]['highlighted']).toBeTruthy();
+    const upEvent = {
+      "key": "Up",
+      "target": { "value": 'id' }
+    }
+    component.onKeyup(upEvent);
+    tick();
+    fixture.detectChanges();
+    expect(component.results[0]['highlighted']).toBeTruthy();
+  }));
+
+
+  it('Down arrow when on over lists item', fakeAsync(() => {
+    component.inputFocusHandler();
+    tick();
+    fixture.detectChanges();
+
+    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(list.nativeElement.children.length).toBe(11);
+    expect(component.results[0]['highlighted']).toBeTruthy();
+    component.listItemHover(component.results.length-1);
+    fixture.detectChanges();
+    tick();
+    expect(component.results[component.results.length-1]['highlighted']).toBeTruthy();
+    const upEvent = {
+      "key": "Down",
+      "target": { "value": 'id' }
+    }
+    component.onKeyup(upEvent);
+    tick();
+    fixture.detectChanges();
+
+    expect(component.results[10]['highlighted']).toBeTruthy();
+  }));
+
+
   it('Should have delete have results', fakeAsync(() => {
     const event = {
       "key": "Delete",
+      "target": { "value": 'id' }
+    }
+    component.onKeyup(event);
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(list.nativeElement.children.length).toBe(11);
+    expect(component.results[0]['highlighted']).toBeTruthy();
+  }));
+
+  it('Should have backspace have results', fakeAsync(() => {
+    component.settings.subValueProperty = undefined;
+    const event = {
+      "key": "Backspace",
       "target": { "value": 'id' }
     }
     component.onKeyup(event);
@@ -149,6 +206,26 @@ describe('SamHierarchicalAutocompleteComponent', () => {
     const list = fixture.debugElement.query(By.css('.autocomplete-result'));
     expect(list.nativeElement.children.length).toBe(11);
     expect(component.results[0]['highlighted']).toBeTruthy();
+  }));
+
+
+  it('Should have results Escape press', fakeAsync(() => {
+    component.inputFocusHandler();
+    tick();
+    fixture.detectChanges();
+    const listBefore = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(listBefore.nativeElement.children.length).toBe(11);
+    const event = {
+      "key": "Escape",
+      "target": { "value": 'id' }
+    }
+    component.onKeyup(event);
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const listAfter = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(listAfter).toBeFalsy();
+ 
   }));
 
   it('Should have reuslts on focus', fakeAsync(() => {
