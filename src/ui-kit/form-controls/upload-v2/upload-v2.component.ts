@@ -248,10 +248,11 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     if (!this.isEditMode()) {
       this.fileCtrlConfig.forEach(fctrl => fctrl.isNameEditMode = false);
     }
+
+    if(changes && changes['uploadedFiles'] && changes['uploadedFiles'].previousValue != changes['uploadedFiles'].currentValue) {
       this.fileCtrlConfig = [];
-      if(changes && changes['uploadedFiles'] && changes['uploadedFiles'].previousValue != changes['uploadedFiles'].currentValue) {
-         this.setUploadTableData(changes['uploadedFiles'].currentValue);
-      }
+      this.setUploadTableData(changes['uploadedFiles'].currentValue);
+    }
   }
 
   setUploadedFiles(uploadedFiles) {
