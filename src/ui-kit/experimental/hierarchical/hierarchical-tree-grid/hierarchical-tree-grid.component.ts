@@ -17,8 +17,7 @@ export interface GridTemplate {
 
 export interface GridTemplateConfiguration {
   displayedColumns: any[];
-  type: string,
-  filterText: string
+  primaryKey: string
 }
 
 export interface GridDataSource {
@@ -36,7 +35,12 @@ export interface GridItem {
   styleUrls: ['./hierarchical-tree-grid.component.scss']
 })
 export class SamHierarchicalTreeGridComponent implements OnInit {
+
+  /**
+  * Table configurations 
+  */
   @Input() public templateConfigurations: GridTemplateConfiguration;
+
   /**
   * Allow to insert a customized template for suggestions to use
   */
@@ -55,14 +59,14 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   */
   @Input() public filterText: string;
 
-   /**
-  * Event emitted when level change is clicked
-  */
+  /**
+ * Event emitted when level change is clicked
+ */
   @Output() public levelChanged = new EventEmitter<GridItem>();
 
-   /**
-  * Event emitted when row is clicked
-  */
+  /**
+ * Event emitted when row is clicked
+ */
   @Output() public rowChanged = new EventEmitter<GridItem>();
 
   /**
@@ -125,7 +129,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   onRowChange(ev, row) {
     if (ev.target.type !== 'checkbox') {
       this.selectedList = [];
-      this.rowChanged.emit(row['id']);
+      this.rowChanged.emit(row[this.templateConfigurations.primaryKey]);
     }
   }
 }
