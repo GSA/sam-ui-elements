@@ -1,8 +1,8 @@
 <div class="example-container usa-grid" style="max-height: 400px; overflow-y: scroll;">
-  <ng-container *ngTemplateOutlet="template"></ng-container>
+  <ng-container *ngTemplateOutlet="gridTemplate"></ng-container>
 </div>
 
-<ng-template #template>
+<ng-template #gridTemplate>
   <!-- replace div for form group <div [formGroup]="selected"> -->
   <div>
     <sam-datatable #table samSort [dataSource]="samTableDataSource" (keyup)="handleKeyup($event)">

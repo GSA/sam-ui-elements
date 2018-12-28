@@ -44,7 +44,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   /**
   * Allow to insert a customized template for suggestions to use
   */
-  @Input() public template: GridTemplate;
+  @Input() public gridTemplate: GridTemplate;
 
   /**
   * Data for the Table.

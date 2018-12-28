@@ -2,7 +2,6 @@
   <ng-container *ngTemplateOutlet="template"></ng-container>
 </div>
 
-
 <ng-template #template>
   <div>
     <sam-hierarchical-tree-header 
@@ -13,7 +12,7 @@
 
     <sam-hierarchical-tree-grid 
       [templateConfigurations]="hierarchyConfiguration" 
-      [gridData]="gridData | async" 
+      [gridData]="gridData" 
       [filterText]="hierarchyConfiguration.filterText"
       (rowChanged)="selectedAgency$.next($event)" 
       (selectResults)="selectResults$.next($event)">
