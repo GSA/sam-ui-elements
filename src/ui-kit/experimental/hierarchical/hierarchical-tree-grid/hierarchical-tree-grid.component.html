@@ -5,7 +5,7 @@
 <ng-template #gridTemplate>
   <!-- replace div for form group <div [formGroup]="selected"> -->
   <div>
-    <sam-datatable #table samSort [dataSource]="samTableDataSource" (keyup)="handleKeyup($event)">
+    <sam-datatable #table samSort [dataSource]="samDataSource" (keyup)="handleKeyup($event)">
 
       <ng-container cdkColumnDef="select">
         <th sam-header-cell *cdkHeaderCellDef sam-sort-header>Select</th>

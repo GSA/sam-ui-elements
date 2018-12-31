@@ -52,13 +52,20 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   * Stream that emit a array each time when the item is selected.
   * Stream that changes each time when click action trigger on row.
   */
-  @Input() public gridData: any[] = [];
+   @Input() public gridData: any[] = [];
 
   /**
   * Allow to search the data on the table.
   */
   @Input() public filterText: string;
 
+    /**
+  * Data for the Table.
+  *  Simple data array
+  * Stream that emit a array each time when the item is selected.
+  * Stream that changes each time when click action trigger on row.
+  */
+  @Input() public samDataSource : any | null;
   /**
  * Event emitted when level change is clicked
  */
@@ -85,15 +92,15 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
 
   ngOnChanges() {
     this.dataChange.next(this.gridData);
-    if (this.samTableDataSource) {
-      this.samTableDataSource.filter = this.filterText;
+    if (this.samDataSource) {
+      this.samDataSource.filter = this.filterText;
     }
   }
   ngAfterViewInit() {
-    this.samTableDataSource = new SampleDataSource(
-      this.dataChange,
-      this.sort
-    );
+    // this.samTableDataSource = new SampleDataSource(
+    //   this.dataChange,
+    //   this.sort
+    // );
   }
 
   ngOnInit() {
