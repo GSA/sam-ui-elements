@@ -3,14 +3,11 @@
 </div>
 
 <ng-template #gridTemplate>
-  <!-- replace div for form group <div [formGroup]="selected"> -->
   <div>
-    <sam-datatable #table samSort [dataSource]="samDataSource" (keyup)="handleKeyup($event)">
-
+    <sam-datatable #table samSort [dataSource]="samDataSource">
       <ng-container cdkColumnDef="select">
         <th sam-header-cell *cdkHeaderCellDef sam-sort-header>Select</th>
         <td sam-cell *cdkCellDef="let row">
-          <!-- They should either check a box to srelect the key of the data or click the row and emit the key for the data in the row -->
           <input type="checkbox" style="width:2em;" id="selectId" (change)="onChecked($event,row)"
             name="select">
           <label style="width:2em;" for="selectId"></label>

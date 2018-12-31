@@ -41,9 +41,6 @@ export class SamHierarchicalTreeComponent implements OnInit {
   * Stream that changes each time when click action trigger on row.
   */
  @Input() samDataSource: any[];
- @Input() gridData: any[];
- 
-
   /**
   * Event emitted when row is clicked
   */
