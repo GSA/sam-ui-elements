@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, TemplateRef } from '@angular/core';
 import { SamHierarchicalAutocompleteSettings } from '../autocomplete/autocomplete.component';
 import { SelectedResultSettings } from '../selected-result/selected-result.component';
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
@@ -28,6 +28,18 @@ export class SamHierarchicalComponent implements OnInit {
  */
   @Input()
   public model: HierarchicalTreeSelectedItemModel;
+
+
+  /**
+ * Allow to insert a customized template for suggestions results
+ */
+  @Input() suggestionTemplate: TemplateRef<any>;
+
+
+  /**
+ * Allow to insert a customized template for selected items
+ */
+  @Input() selectedItemTemplate: TemplateRef<any>;
 
 
   constructor() { }
