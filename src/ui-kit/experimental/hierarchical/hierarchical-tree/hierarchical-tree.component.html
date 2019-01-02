@@ -12,7 +12,7 @@
 
     <sam-hierarchical-tree-grid 
       [templateConfigurations]="hierarchyConfiguration" 
-      [samDataSource] ="samDataSource"
+      [gridData]="gridData"
       [filterText]="hierarchyConfiguration.filterText"
       (rowChanged)="selectedAgency$.next($event)" 
       (selectResults)="selectResults$.next($event)">

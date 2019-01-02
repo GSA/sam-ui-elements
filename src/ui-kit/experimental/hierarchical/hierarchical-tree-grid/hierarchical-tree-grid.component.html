@@ -4,7 +4,7 @@
 
 <ng-template #gridTemplate>
   <div>
-    <sam-datatable #table samSort [dataSource]="samDataSource">
+    <sam-datatable #table samSort [dataSource]="hierarchicalDataSource">
       <ng-container cdkColumnDef="select">
         <th sam-header-cell *cdkHeaderCellDef sam-sort-header>Select</th>
         <td sam-cell *cdkCellDef="let row">

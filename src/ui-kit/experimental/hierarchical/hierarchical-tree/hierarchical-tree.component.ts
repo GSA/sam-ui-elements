@@ -13,7 +13,6 @@ export interface HierarchyConfiguration {
   displayedColumns: any[],
   primaryKey: string,
   options: OptionsType[],
-  // gridData: any[],
   filterText: string
 }
 
@@ -40,7 +39,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   * Stream that emit a array each time when the item is selected.
   * Stream that changes each time when click action trigger on row.
   */
- @Input() samDataSource: any[];
+  @Input() gridData: any[];
   /**
   * Event emitted when row is clicked
   */

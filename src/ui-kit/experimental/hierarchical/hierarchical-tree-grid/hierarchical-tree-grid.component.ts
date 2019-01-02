@@ -1,10 +1,16 @@
 import {
   Component,
   OnInit,
+  ViewChild,
+  ElementRef,
   Input,
   Output,
   EventEmitter
 } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs';
+import { DataSource } from '@angular/cdk';
+import { SamSortDirective, SamPaginationComponent, SamSortable } from '../../../components'
 
 export interface GridTemplate {
 }
@@ -51,7 +57,8 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   * Stream that emit a array each time when the item is selected.
   * Stream that changes each time when click action trigger on row.
   */
-  @Input() public samDataSource : any | null;
+  @Input() public gridData: any[] = [];
+
   /**
  * Event emitted when level change is clicked
  */
@@ -70,10 +77,14 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   public displayedColumns = ['select'];
 
   public selectedList: any[] = [];
+  public hierarchicalDataSource: HierarchicalDataSource | null;
+  public dataChange: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  @ViewChild(SamSortDirective) sort: SamSortDirective;
 
   ngOnChanges() {
-    if (this.samDataSource) {
-      this.samDataSource.filter = this.filterText;
+    this.dataChange.next(this.gridData);
+    if (this.hierarchicalDataSource) {
+      this.hierarchicalDataSource.filter = this.filterText;
     }
   }
 
@@ -81,6 +92,12 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
     this.displayedColumns = [...this.displayedColumns, ...this.templateConfigurations.displayedColumns];
   }
 
+  ngAfterViewInit() {
+    this.hierarchicalDataSource = new HierarchicalDataSource(
+      this.dataChange,
+      this.sort
+    );
+  }
   /**
    * On select the results
    */
@@ -112,4 +129,55 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
       this.rowChanged.emit(row[this.templateConfigurations.primaryKey]);
     }
   }
+}
+
+// preparing data source for the hierarchical grid
+export class HierarchicalDataSource extends DataSource<any> {
+  _filterChange = new BehaviorSubject('');
+  get filter(): string { return this._filterChange.value; }
+  set filter(filter: string) { this._filterChange.next(filter); }
+  filteredData: any[] = [];
+  renderedData: any[] = [];
+
+  constructor(private dataChange: any,
+    private _sort: SamSortDirective) {
+    super();
+  }
+
+  connect(): Observable<any[]> {
+    const displayDataChanges = [
+      this.dataChange,
+      this._sort.samSortChange,
+      this._filterChange,
+    ];
+    return Observable.merge(...displayDataChanges).map(() => {
+      const filteredData = this.dataChange.value.slice().filter((item: any) => {
+        const searchStr = JSON.stringify(item).toLowerCase();
+        return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
+      });
+
+      // Sort filtered data
+      const sortedData = this.getSortedData(filteredData.slice());
+      this.renderedData = sortedData;
+      return this.renderedData;
+    });
+  }
+  disconnect() { }
+  /** Returns a sorted copy of the database data. */
+
+  getSortedData(data: any[]): any[] {
+    if (!this._sort.active || this._sort.direction === '') { return data; }
+    return data.sort((a, b) => {
+      let propertyA = this.sortingDataAccessor(a, this._sort.active);
+      let propertyB = this.sortingDataAccessor(b, this._sort.active)
+      const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
+      const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
+      return (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1);
+    });
+  }
+  sortingDataAccessor: ((data: any, sortHeaderId: string) => string | number) =
+    (data: any, sortHeaderId: string): string | number => {
+      const value = (data as { [key: string]: any })[sortHeaderId];
+      return value;
+    }
 }
