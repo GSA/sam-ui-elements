@@ -1,5 +1,5 @@
 import {
-  Component, OnInit, Input, ViewChild, TemplateRef,
+  Component, Input, ViewChild, TemplateRef,
   ElementRef
 } from '@angular/core';
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
