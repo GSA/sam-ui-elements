@@ -10,7 +10,7 @@ export interface GridTemplateConfiguration {
   primaryKey: string;
 }
 
-fdescribe('SamHierarchicalTreeGridComponent', () => {
+describe('SamHierarchicalTreeGridComponent', () => {
   let component: SamHierarchicalTreeGridComponent;
   component = new SamHierarchicalTreeGridComponent();
   let fixture: ComponentFixture<SamHierarchicalTreeGridComponent>;
