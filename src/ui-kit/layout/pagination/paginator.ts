@@ -20,8 +20,10 @@ export class Paginator {
     return this._totalUnits;
   }
 
-  public setTotalUnits (total: number): void {
+  public setTotalUnits (total: number,currPage? : number): void {
     this._totalUnits = total;
+    // Need to recalc since page nums are changing
+    this._recalculatePagination(currPage);
   }
 
   public getTotalPages (): number{
@@ -110,8 +112,8 @@ export class Paginator {
     return min > max ? max : min;
   }
 
-  private _recalculatePagination (): void {
+  private _recalculatePagination (currPage ?:number ): void {
     // Call when units per page or total units change
-    this._currentPage = 1;
+    this._currentPage = currPage || 1;
   }
 }
