@@ -24,9 +24,9 @@ export interface HierarchyConfiguration {
 
 export class SamHierarchicalTreeComponent implements OnInit {
 
-  public selectedAgency$ = new BehaviorSubject<any>(null);
-  public selectResults$ = new BehaviorSubject<any[]>([]);
-  public filterText$ = new BehaviorSubject<any>('');
+  public selectedAgency$ = new BehaviorSubject<object>(null);
+  public selectResults$ = new BehaviorSubject<object[]>([]);
+  public filterText$ = new BehaviorSubject<object>('');
   public results : object[];
   /**
   * hierarchy tree picker configurations 
@@ -39,11 +39,11 @@ export class SamHierarchicalTreeComponent implements OnInit {
   * Stream that emit a array each time when the item is selected.
   * Stream that changes each time when click action trigger on row.
   */
-  @Input() gridData: any[];
+  @Input() gridData: object[];
   /**
   * Event emitted when row is clicked
   */
-  @Output() public rowChanged = new EventEmitter<any>();
+  @Output() public rowChanged = new EventEmitter<object>();
 
   /**
   * Event emitted when level change is clicked
@@ -53,7 +53,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   /**
   * Event emitted when row set is selected.
   */
-  @Output() selectResults = new EventEmitter<any[]>();
+  @Output() selectResults = new EventEmitter<object[]>();
 
 
   public ngOnInit() {

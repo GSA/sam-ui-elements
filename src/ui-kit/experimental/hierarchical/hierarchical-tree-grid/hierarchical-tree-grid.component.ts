@@ -20,15 +20,6 @@ export interface GridTemplateConfiguration {
   primaryKey: string
 }
 
-export interface GridDataSource {
-  connect: () => void;
-  disconnect: () => void;
-  sortData?: () => void;
-}
-
-export interface GridItem {
-}
-
 @Component({
   selector: 'sam-hierarchical-tree-grid',
   templateUrl: './hierarchical-tree-grid.component.html',
@@ -57,28 +48,28 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
 * Stream that emit a array each time when the item is selected.
 * Stream that changes each time when click action trigger on row.
 */
-  @Input() public gridData: any[] = [];
+  @Input() public gridData: object[] = [];
 
   /**
  * Event emitted when level change is clicked
  */
-  @Output() public levelChanged = new EventEmitter<GridItem>();
+  @Output() public levelChanged = new EventEmitter<object>();
 
   /**
  * Event emitted when row is clicked
  */
-  @Output() public rowChanged = new EventEmitter<GridItem>();
+  @Output() public rowChanged = new EventEmitter<object>();
 
   /**
   * Event emitted when row set is selected.
   */
-  @Output() selectResults = new EventEmitter<any[]>();
+  @Output() selectResults = new EventEmitter<object[]>();
 
   public displayedColumns = ['select'];
 
   public selectedList: object[] = [];
   public hierarchicalDataSource: HierarchicalDataSource | null;
-  public dataChange: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public dataChange: BehaviorSubject<object[]> = new BehaviorSubject<object[]>([]);
   @ViewChild(SamSortDirective) sort: SamSortDirective;
 
   ngOnChanges() {
@@ -101,7 +92,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   /**
    * On select the results
    */
-  onChecked(ev, row: any): void {
+  onChecked(ev, row: object): void {
     if (ev.target.checked) {
       this.selectedList = [...this.selectedList, row];
     } else {
@@ -116,7 +107,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   /**
    * On level change 
    */
-  public onChangeLevel(ev: Event, item: GridItem): void {
+  public onChangeLevel(ev: Event, item: object): void {
     this.levelChanged.emit(item);
 
   }
