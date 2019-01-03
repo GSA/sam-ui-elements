@@ -143,7 +143,7 @@ export class SamPaginationNextComponent implements OnInit {
     }
 
     if (c.totalUnits) {
-      this.paginator.setTotalUnits(this.totalUnits);
+      this.paginator.setTotalUnits(this.totalUnits,this.currentPage);
     }
 
     if (c.currentPage) {
