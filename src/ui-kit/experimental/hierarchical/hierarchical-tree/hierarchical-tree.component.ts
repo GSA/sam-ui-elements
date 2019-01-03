@@ -7,10 +7,11 @@ import {
 } from '@angular/core';
 import { OptionsType } from '../../../../ui-kit/types';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { GridDisplayedColumn } from '../hierarchical-tree-grid/hierarchical-tree-grid.component';
 
 
 export interface HierarchyConfiguration {
-  displayedColumns: string[],
+  gridDisplayedColumn: GridDisplayedColumn[],
   primaryKey: string,
   options: OptionsType[],
   filterText: string

@@ -14,9 +14,9 @@
         </td>
       </ng-container>
 
-      <ng-container *ngFor="let col of templateConfigurations.displayedColumns;let cIndex = index;" cdkColumnDef="{{col}}">
+      <ng-container *ngFor="let col of columnFieldName;let cIndex = index;" cdkColumnDef="{{col}}">
         <th sam-header-cell *cdkHeaderCellDef sam-sort-header>
-          {{col}}
+         {{columnHeaderText[cIndex]}}
         </th>
         <td sam-cell *cdkCellDef="let row; let rIndex = index;"> {{row[col]}} </td>
       </ng-container>

@@ -16,8 +16,14 @@ export interface GridTemplate {
 }
 
 export interface GridTemplateConfiguration {
-  displayedColumns: string[];
-  primaryKey: string
+  gridDisplayedColumn: GridDisplayedColumn[]
+  primaryKey: string;
+}
+
+export interface GridDisplayedColumn {
+  headerText: string, 
+  fieldName: string,
+  displayOrder: number
 }
 
 @Component({
@@ -66,6 +72,8 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   @Output() selectResults = new EventEmitter<object[]>();
 
   public displayedColumns = ['select'];
+  public columnFieldName =[];
+  public columnHeaderText = [];
 
   public selectedList: object[] = [];
   public hierarchicalDataSource: HierarchicalDataSource | null;
@@ -80,7 +88,15 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.displayedColumns = [...this.displayedColumns, ...this.templateConfigurations.displayedColumns];
+    const col =[];
+    const text =[];
+    this.templateConfigurations.gridDisplayedColumn.forEach(item =>{
+      col.push(item.fieldName);
+      text.push(item.headerText);
+    })
+    this.displayedColumns = [...this.displayedColumns,...col]
+    this.columnFieldName = [...col];
+    this.columnHeaderText =[... text]
   }
 
   ngAfterViewInit() {
