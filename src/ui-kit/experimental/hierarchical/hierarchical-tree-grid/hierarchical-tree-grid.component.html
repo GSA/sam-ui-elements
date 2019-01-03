@@ -1,4 +1,4 @@
-<div class="example-container usa-grid" style="max-height: 400px; overflow-y: scroll;">
+<div class="example-container usa-grid">
   <ng-container *ngTemplateOutlet="gridTemplate"></ng-container>
 </div>
 
@@ -8,9 +8,9 @@
       <ng-container cdkColumnDef="select">
         <th sam-header-cell *cdkHeaderCellDef sam-sort-header>Select</th>
         <td sam-cell *cdkCellDef="let row">
-          <input type="checkbox" style="width:2em;" id="selectId" (change)="onChecked($event,row)"
+          <input type="checkbox" id="selectId" (change)="onChecked($event,row)"
             name="select">
-          <label style="width:2em;" for="selectId"></label>
+          <label for="selectId"></label>
         </td>
       </ng-container>
 

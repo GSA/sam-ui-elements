@@ -16,7 +16,7 @@ export interface GridTemplate {
 }
 
 export interface GridTemplateConfiguration {
-  displayedColumns: any[];
+  displayedColumns: string[];
   primaryKey: string
 }
 
@@ -51,12 +51,12 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   */
   @Input() public filterText: string;
 
-    /**
-  * Data for the Table.
-  *  Simple data array
-  * Stream that emit a array each time when the item is selected.
-  * Stream that changes each time when click action trigger on row.
-  */
+  /**
+* Data for the Table.
+*  Simple data array
+* Stream that emit a array each time when the item is selected.
+* Stream that changes each time when click action trigger on row.
+*/
   @Input() public gridData: any[] = [];
 
   /**
@@ -76,7 +76,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
 
   public displayedColumns = ['select'];
 
-  public selectedList: any[] = [];
+  public selectedList: object[] = [];
   public hierarchicalDataSource: HierarchicalDataSource | null;
   public dataChange: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   @ViewChild(SamSortDirective) sort: SamSortDirective;
@@ -101,7 +101,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   /**
    * On select the results
    */
-  onChecked(ev, row) {
+  onChecked(ev, row: any): void {
     if (ev.target.checked) {
       this.selectedList = [...this.selectedList, row];
     } else {
@@ -123,7 +123,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   /**
   * when the row is click updates the table data
   */
-  onRowChange(ev, row) {
+  onRowChange(ev, row): void {
     if (ev.target.type !== 'checkbox') {
       this.selectedList = [];
       this.rowChanged.emit(row[this.templateConfigurations.primaryKey]);

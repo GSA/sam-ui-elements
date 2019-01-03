@@ -10,7 +10,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 
 
 export interface HierarchyConfiguration {
-  displayedColumns: any[],
+  displayedColumns: string[],
   primaryKey: string,
   options: OptionsType[],
   filterText: string
@@ -27,7 +27,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   public selectedAgency$ = new BehaviorSubject<any>(null);
   public selectResults$ = new BehaviorSubject<any[]>([]);
   public filterText$ = new BehaviorSubject<any>('');
-  public results : any[];
+  public results : object[];
   /**
   * hierarchy tree picker configurations 
   */
@@ -70,7 +70,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
       text => this.hierarchyConfiguration.filterText = text);
   }
 
-  onSelect(){
+  onSelect(): void{
     this.selectResults.emit(this.results)
   }
 

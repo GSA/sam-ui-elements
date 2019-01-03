@@ -26,7 +26,7 @@ export class SamHierarchicalTreeHeaderComponent {
     /**
   * Whether Search should happned on click or keyup
   */
-  @Input() public changeType: string = 'keyup';
+  @Input() private changeType: string = 'keyup';
 
     /**
   * Event emitted when level change is clicked
@@ -37,7 +37,7 @@ export class SamHierarchicalTreeHeaderComponent {
   */
   @Output() public filterText = new EventEmitter<string>();
 
-  public selectModel: any;
+  public selectModel: object;
   @ViewChild('filter') filter: ElementRef;
 
   ngOnInit() {
@@ -49,7 +49,7 @@ export class SamHierarchicalTreeHeaderComponent {
       });
   }
 
-  onLevelChange(ev) {
+  onLevelChange(ev: Event): void {
     this.selectedAgency.emit(this.selectModel);
   }
 
