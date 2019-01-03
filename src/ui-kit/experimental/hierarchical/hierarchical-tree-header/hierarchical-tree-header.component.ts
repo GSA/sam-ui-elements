@@ -37,7 +37,7 @@ export class SamHierarchicalTreeHeaderComponent {
   */
   @Output() public filterText = new EventEmitter<string>();
 
-  public selectModel: object;
+  public selectModel: string;
   @ViewChild('filter') filter: ElementRef;
 
   ngOnInit() {

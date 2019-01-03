@@ -24,9 +24,9 @@ export interface HierarchyConfiguration {
 
 export class SamHierarchicalTreeComponent implements OnInit {
 
-  public selectedAgency$ = new BehaviorSubject<object>(null);
+  public selectedAgency$ = new BehaviorSubject<string>(null);
   public selectResults$ = new BehaviorSubject<object[]>([]);
-  public filterText$ = new BehaviorSubject<object>('');
+  public filterText$ = new BehaviorSubject<string>('');
   public results : object[];
   /**
   * hierarchy tree picker configurations 
