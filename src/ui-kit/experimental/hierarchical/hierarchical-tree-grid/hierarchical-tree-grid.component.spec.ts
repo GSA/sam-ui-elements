@@ -93,4 +93,32 @@ describe('The Sam Data Table Tests', () => {
     it('should compile`', function () {
         expect(true).toBe(true);
     });
+    it('should displayedColumns length', function () {
+        component.gridDisplayedColumn = [
+            { headerText: 'Id',  fieldName: 'id' , displayOrder: 1},
+            { headerText: 'Name',  fieldName: 'name' , displayOrder: 2},
+        ]
+        component.ngOnInit();
+        fixture.detectChanges();
+        expect(component.displayedColumns.length).toBe(3);
+    });
+    it('should not be displayedColumns length', function () {
+        component.gridDisplayedColumn = [
+            { headerText: 'Id',  fieldName: 'id' , displayOrder: 1},
+            { headerText: 'Name',  fieldName: 'name' , displayOrder: 2},
+        ]
+        component.ngOnInit();
+        fixture.detectChanges();
+        expect(component.displayedColumns.length).not.toBe(4);
+    });
+
+    it('should column Field Name length', function () {
+        component.gridDisplayedColumn = [
+            { headerText: 'Id',  fieldName: 'id' , displayOrder: 1},
+            { headerText: 'Name',  fieldName: 'name' , displayOrder: 2},
+        ]
+        component.ngOnInit();
+        fixture.detectChanges();
+        expect(component.columnFieldName.length).toBe(component.gridDisplayedColumn.length);
+    });
 });
