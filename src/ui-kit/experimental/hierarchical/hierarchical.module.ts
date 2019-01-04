@@ -20,7 +20,7 @@ import { SamIconsModule } from '../icon';
 @NgModule({
   imports: [
     CommonModule, FormsModule, SamWrapperModule, SamDataTableModule, SamCheckboxModule, SamSelectModule, SamButtonModule,
-    SamTextInputModule, SamIconsModule
+    SamTextInputModule
   ],
   declarations: [SamHierarchicalAutocompleteComponent, SamHierarchicalTreeComponent,
     SamHierarchicalTreeGridComponent, SamHierarchicalSelectedResultComponent,
