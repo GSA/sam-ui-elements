@@ -11,23 +11,19 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs';
 import { DataSource } from '@angular/cdk';
 import { SamSortDirective, SamPaginationComponent, SamSortable } from '../../../components'
-import { KeyHelper } from '../../../../ui-kit/utilities';
 
 export interface GridTemplate {
 }
 
 export interface GridTemplateConfiguration {
-  displayedColumns: any[];
-  type: string
+  gridDisplayedColumn: GridDisplayedColumn[]
+  primaryKey: string;
 }
 
-export interface GridDataSource {
-  connect: () => void;
-  disconnect: () => void;
-  sortData?: () => void;
-}
-
-export interface GridItem {
+export interface GridDisplayedColumn {
+  headerText: string, 
+  fieldName: string,
+  displayOrder: number
 }
 
 @Component({
@@ -36,75 +32,110 @@ export interface GridItem {
   styleUrls: ['./hierarchical-tree-grid.component.scss']
 })
 export class SamHierarchicalTreeGridComponent implements OnInit {
-  @Input() public templateConfigurations: GridTemplateConfiguration;
-  @Input() public template: GridTemplate;
-  @Input() public dataSource: any;
 
-  @Output() public itemSelected = new EventEmitter<GridItem>();
-  @Output() public levelChanged = new EventEmitter<GridItem>();
-  public selectedItem: GridItem;
-  public chkSelected: boolean = false;
-  selectedItemIndex = 0;
+  /**
+  * Table configurations 
+  */
+  @Input() public templateConfigurations: GridTemplateConfiguration;
+
+  /**
+  * Allow to insert a customized template for suggestions to use
+  */
+  @Input() public gridTemplate: GridTemplate;
+
+  /**
+  * Allow to search the data on the table.
+  */
+  @Input() public filterText: string;
+
+  /**
+* Data for the Table.
+*  Simple data array
+* Stream that emit a array each time when the item is selected.
+* Stream that changes each time when click action trigger on row.
+*/
+  @Input() public gridData: object[] = [];
+
+  /**
+ * Event emitted when level change is clicked
+ */
+  @Output() public levelChanged = new EventEmitter<object>();
+
+  /**
+ * Event emitted when row is clicked
+ */
+  @Output() public rowChanged = new EventEmitter<object>();
+
+  /**
+  * Event emitted when row set is selected.
+  */
+  @Output() selectResults = new EventEmitter<object[]>();
 
   public displayedColumns = ['select'];
-  public samTableDataSource: any | null;
-  dataChange: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-  public focusedCell: any;
-  public focusedtemIndex = 0;
+  public columnFieldName =[];
+  public columnHeaderText = [];
 
-
-  @ViewChild(SamPaginationComponent) paginator: SamPaginationComponent;
+  public selectedList: object[] = [];
+  public hierarchicalDataSource: HierarchicalDataSource | null;
+  public dataChange: BehaviorSubject<object[]> = new BehaviorSubject<object[]>([]);
   @ViewChild(SamSortDirective) sort: SamSortDirective;
-  @ViewChild('filter') filter: ElementRef;
-
 
   ngOnChanges() {
-    this.displayedColumns = [...this.displayedColumns, ...this.templateConfigurations.displayedColumns];
+    this.dataChange.next(this.gridData);
+    if (this.hierarchicalDataSource) {
+      this.hierarchicalDataSource.filter = this.filterText;
+    }
   }
 
   ngOnInit() {
-    this.dataChange.next(this.dataSource);
-    this.samTableDataSource = new SampleDataSource(
+    this.templateConfigurations.gridDisplayedColumn.forEach(item =>{
+      this.columnFieldName.push(item.fieldName);
+      this.columnHeaderText.push(item.headerText);
+    })
+    this.displayedColumns = [...this.displayedColumns,...this.columnFieldName]
+  }
+
+  ngAfterViewInit() {
+    this.hierarchicalDataSource = new HierarchicalDataSource(
       this.dataChange,
-      this.paginator,
       this.sort
     );
   }
-
-  onSelectItem(ev: Event, item: GridItem) {
-
-    this.selectedItem = item;
-    this.itemSelected.emit(this.selectedItem);
-
-  }
-  handleKeyup(ev) {
-    if (KeyHelper.is('tab', event)) {
-      return
+  /**
+   * On select the results
+   */
+  onChecked(ev, row: object): void {
+    if (ev.target.checked) {
+      this.selectedList = [...this.selectedList, row];
+    } else {
+      const index: number = this.selectedList.indexOf(row);
+      if (index !== -1) {
+        this.selectedList = this.selectedList.filter(item => item !== row);
+      }
     }
-    if (KeyHelper.is('down', event)) {
-      console.log('onDownArrowDown')
-    }
-
-    // On up arrow press
-    if (KeyHelper.is('up', event)) {
-      console.log('onUpArrowDown')
-    }
-
-    console.log(ev)
+    this.selectResults.emit(this.selectedList);
   }
 
-  isSelected(item: any) {
-    return this.selectedItem ?
-      this.focusedCell.id == item.id : false;
-  }
-  public onChangeLevel(ev: Event, item: GridItem): void {
+  /**
+   * On level change 
+   */
+  public onChangeLevel(ev: Event, item: object): void {
     this.levelChanged.emit(item);
 
   }
+  /**
+  * when the row is click updates the table data
+  */
+  onRowChange(ev, row): void {
+    if (ev.target.type !== 'checkbox') {
+      this.selectedList = [];
+      this.rowChanged.emit(row[this.templateConfigurations.primaryKey]);
+    }
+  }
 }
 
-export class SampleDataSource extends DataSource<any> {
-  totalcost = 0;
+// preparing data source for the hierarchical grid
+export class HierarchicalDataSource extends DataSource<any> {
   _filterChange = new BehaviorSubject('');
   get filter(): string { return this._filterChange.value; }
   set filter(filter: string) { this._filterChange.next(filter); }
@@ -112,7 +143,6 @@ export class SampleDataSource extends DataSource<any> {
   renderedData: any[] = [];
 
   constructor(private dataChange: any,
-    private _paginator: SamPaginationComponent,
     private _sort: SamSortDirective) {
     super();
   }
@@ -120,32 +150,37 @@ export class SampleDataSource extends DataSource<any> {
   connect(): Observable<any[]> {
     const displayDataChanges = [
       this.dataChange,
-      //this._sort.samSortChange,
+      this._sort.samSortChange,
       this._filterChange,
     ];
     return Observable.merge(...displayDataChanges).map(() => {
-
       const filteredData = this.dataChange.value.slice().filter((item: any) => {
-        const searchStr = (item.id + item.name).toLowerCase();
+        const searchStr = JSON.stringify(item).toLowerCase();
         return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
       });
-      // set total
-      this.totalcost = 0;
-      filteredData.map((item: any) => {
-        this.totalcost += item.cost;
-      });
+
       // Sort filtered data
-      const sortedData = this.sortData(filteredData.slice());
+      const sortedData = this.getSortedData(filteredData.slice());
       this.renderedData = sortedData;
       return this.renderedData;
     });
   }
   disconnect() { }
   /** Returns a sorted copy of the database data. */
-  sortData(data: any[]): any {
-    return data;
 
+  getSortedData(data: any[]): any[] {
+    if (!this._sort.active || this._sort.direction === '') { return data; }
+    return data.sort((a, b) => {
+      let propertyA = this.sortingDataAccessor(a, this._sort.active);
+      let propertyB = this.sortingDataAccessor(b, this._sort.active)
+      const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
+      const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
+      return (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1);
+    });
   }
+  sortingDataAccessor: ((data: any, sortHeaderId: string) => string | number) =
+    (data: any, sortHeaderId: string): string | number => {
+      const value = (data as { [key: string]: any })[sortHeaderId];
+      return value;
+    }
 }
-
-
