@@ -38,11 +38,13 @@ export class SamHierarchicalTreeHeaderComponent {
   @Output() public filterText = new EventEmitter<string>();
 
   public selectModel: string;
+  private debounceTime = 150;
+
   @ViewChild('filter') filter: ElementRef;
 
   ngOnInit() {
     fromEvent(this.filter.nativeElement, this.changeType)
-      .debounceTime(150)
+      .debounceTime(this.debounceTime)
       .distinctUntilChanged()
       .subscribe(() => {
         this.filterText.emit(this.filter.nativeElement.value);
