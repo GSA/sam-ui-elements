@@ -18,12 +18,12 @@ export class Paginator {
 
   public getTotalUnits (): number {
     return this._totalUnits;
-    // Need to recalc since page nums are changing
-    this._recalculatePagination();
   }
 
   public setTotalUnits (total: number): void {
     this._totalUnits = total;
+    // Need to recalc since page nums are changing
+    this._recalculatePagination();
   }
 
   public getTotalPages (): number{
