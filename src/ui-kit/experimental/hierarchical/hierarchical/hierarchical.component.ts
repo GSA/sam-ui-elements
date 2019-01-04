@@ -57,6 +57,12 @@ export class SamHierarchicalComponent implements OnInit {
     this.modal.openModal();
   }
 
+  onModalSubmitClick() {
+
+    this.modal.closeModal();
+    // Add in code to get selected items from tree and add it to the selected item model
+  }
+
 }
 
 
@@ -67,6 +73,8 @@ export class SamHierarchicalSettings implements SamHierarchicalAutocompleteSetti
     */
   constructor() {
     this.debounceTime = 250;
+    this.modalCancelButtonLabel = "Cancel";
+    this.modalSelectButtonLabel = "Select";
   }
 
   /**
@@ -109,4 +117,13 @@ export class SamHierarchicalSettings implements SamHierarchicalAutocompleteSetti
    */
   public modalTitle: string;
 
+  /**
+   * 
+   */
+  public modalSelectButtonLabel: string;
+
+  /**
+   * 
+   */
+  public modalCancelButtonLabel: string;
 }
