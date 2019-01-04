@@ -70,7 +70,7 @@ class TestComponent {
 
 }
 
-fdescribe('The Sam Data Table Tests', () => {
+describe('The Sam Data Table Tests', () => {
     let component: TestComponent, 
         fixture: ComponentFixture<TestComponent>;
 
