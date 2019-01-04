@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, TemplateRef } from '@angular/core';
+import { Component, OnInit, Input, TemplateRef, ViewChild } from '@angular/core';
 import { SamHierarchicalAutocompleteSettings } from '../autocomplete/autocomplete.component';
 import { SelectedResultSettings } from '../selected-result/selected-result.component';
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
@@ -10,6 +10,9 @@ import { HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selected
   styleUrls: ['./hierarchical.component.scss']
 })
 export class SamHierarchicalComponent implements OnInit {
+
+
+  @ViewChild('modal') modal;
 
   /**
    * Settings for the Autocomplete control 
@@ -42,9 +45,16 @@ export class SamHierarchicalComponent implements OnInit {
   @Input() selectedItemTemplate: TemplateRef<any>;
 
 
+
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+
+  onModalClick() {
+    this.modal.openModal();
   }
 
 }
@@ -93,5 +103,10 @@ export class SamHierarchicalSettings implements SamHierarchicalAutocompleteSetti
    * Place holder text for input
    */
   public placeHolderText: string;
+
+  /**
+   * 
+   */
+  public modalTitle: string;
 
 }

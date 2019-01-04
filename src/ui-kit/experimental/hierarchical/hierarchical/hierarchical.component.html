@@ -1,2 +1,13 @@
-<sam-hierarchical-autocomplete [service]="service" [model]="model" [settings]="settings" [itemTemplate]="suggestionTemplate"></sam-hierarchical-autocomplete>
-<sam-selected-result [model]="model" [settings]="settings" [itemTemplate]="selectedItemTemplate"></sam-selected-result>
+<div>
+    <a (click)="onModalClick()">Advanced</a>
+    <sam-hierarchical-autocomplete [service]="service" [model]="model" [settings]="settings" [itemTemplate]="suggestionTemplate"></sam-hierarchical-autocomplete>
+    <sam-selected-result [model]="model" [settings]="settings" [itemTemplate]="selectedItemTemplate"></sam-selected-result>
+    <sam-modal [showClose]="true" #modal [title]="settings.modalTitle" [type]="'primary'">
+        <div>Test</div>
+    </sam-modal>
+</div>
+<!-- 
+[submitButtonLabel]="'Yes'"
+[cancelButtonLabel]="'No'"
+(onClose)="message='Warning modal closed'"
+(onSubmit)="onModal3Close()" -->
