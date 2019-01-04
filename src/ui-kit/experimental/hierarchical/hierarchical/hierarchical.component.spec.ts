@@ -12,7 +12,7 @@ import 'rxjs/add/observable/of';
 
 
 
-fdescribe('SamHierarchicalComponent', () => {
+describe('SamHierarchicalComponent', () => {
   let component: SamHierarchicalComponent;
   let fixture: ComponentFixture<SamHierarchicalComponent>;
 
