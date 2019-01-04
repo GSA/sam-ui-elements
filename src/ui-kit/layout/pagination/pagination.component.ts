@@ -83,7 +83,7 @@ export class SamPaginationNextComponent implements OnInit {
    * Sets the default size of the units displayed
    * Defaults to 10
    */
-  @Input public defaultSize = 10;
+  @Input() public defaultSize = 10;
   /**
    * Event emitted when current page is changed
    */
