@@ -4,6 +4,12 @@ import { SamHierarchicalComponent, SamHierarchicalSettings } from './hierarchica
 
 import { TreeMode, HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selectedItem.model';
 
+import { SamHiercarchicalServiceInterface, SearchByTextResult } from '../hierarchical-interface';
+
+import { Observable } from 'rxjs';
+import { By } from '@angular/platform-browser';
+import 'rxjs/add/observable/of';
+
 
 
 describe('SamHierarchicalComponent', () => {
@@ -25,8 +31,7 @@ describe('SamHierarchicalComponent', () => {
 
 
     component.model = new HierarchicalTreeSelectedItemModel();
-
-
+    component.service = new HierarchicalDataService();
     component.settings.keyField = 'id';
     component.settings.id = 'autocomplete1';
     component.settings.labelText = 'Autocomplete 1';
@@ -34,9 +39,6 @@ describe('SamHierarchicalComponent', () => {
     component.settings.subValueProperty = 'subtext';
     component.settings.placeHolderText = "Enter text";
     component.settings.modalTitle = "Advanced Lookup";
-
-
-
     component.model.treeMode = TreeMode.SINGLE;
     fixture.detectChanges();
   });
@@ -45,3 +47,47 @@ describe('SamHierarchicalComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
+
+export class HierarchicalDataService implements SamHiercarchicalServiceInterface {
+
+  getDataByText(currentItems: number, searchValue?: string): Observable<SearchByTextResult> {
+    let itemIncrease = 25;
+    let data = Observable.of(SampleHierarchicalData);
+    let itemsOb: Observable<Object[]>;
+    if (searchValue) {
+      itemsOb = data.map(items => items.filter(itm =>
+        (itm.name.indexOf(searchValue) !== -1 ||
+          itm.subtext.indexOf(searchValue) !== -1
+        )));
+    } else {
+      itemsOb = data;
+    }
+    let items: object[];
+    itemsOb.subscribe(
+      (result) => {
+        items = result;
+      }
+    );
+    let totalItemCount = items.length;
+
+    let maxSectionPosition = currentItems + itemIncrease;
+    if (maxSectionPosition > totalItemCount) {
+      maxSectionPosition = totalItemCount;
+    }
+    let subItemsitems = items.slice(currentItems, maxSectionPosition);
+
+    let returnItem = {
+      items: subItemsitems,
+      totalItems: totalItemCount
+    };
+    return Observable.of(returnItem);
+  }
+
+  getHiercarchicalById(id?: string) {
+    return null;
+  }
+
+}
+
+export let SampleHierarchicalData = [
