@@ -10,7 +10,7 @@ import { SamHierarchicalTreeFilterComponent } from './hierarchical-tree-filter/h
 import { SamHierarchicalTreeHeaderComponent } from './hierarchical-tree-header/hierarchical-tree-header.component';
 import { SamHierarchicalTreeFooterComponent } from './hierarchical-tree-footer/hierarchical-tree-footer.component';
 
-//import { } from './autocomplete/autocomplete.component';
+import { SamHierarchicalComponent } from './hierarchical/hierarchical.component';
 import { SamWrapperModule } from '../../wrappers';
 import { SamDataTableModule, SamModalModule } from '../../components';
 import { SamCheckboxModule, SamSelectModule, SamTextInputModule } from '../../form-controls';
@@ -25,9 +25,9 @@ import { SamIconsModule } from '../icon';
   declarations: [SamHierarchicalAutocompleteComponent, SamHierarchicalTreeComponent,
     SamHierarchicalTreeGridComponent, SamHierarchicalSelectedResultComponent,
     SamHierarchicalTreeFilterComponent, SamHierarchicalTreeHeaderComponent,
-    SamHierarchicalTreeFooterComponent],
+    SamHierarchicalTreeFooterComponent, SamHierarchicalComponent],
   exports: [SamHierarchicalAutocompleteComponent, SamHierarchicalSelectedResultComponent,
     SamHierarchicalTreeComponent, SamHierarchicalTreeGridComponent, SamHierarchicalTreeHeaderComponent,
-    SamHierarchicalTreeFooterComponent]
+    SamHierarchicalTreeFooterComponent, SamHierarchicalTreeFilterComponent, SamHierarchicalComponent]
 })
 export class SamHierarchicalModule { }
