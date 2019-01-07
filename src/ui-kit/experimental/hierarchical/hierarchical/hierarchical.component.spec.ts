@@ -1,15 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SamHierarchicalComponent, SamHierarchicalSettings } from './hierarchical.component';
-
 import { TreeMode, HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selectedItem.model';
-
 import { SamHiercarchicalServiceInterface, SearchByTextResult } from '../hierarchical-interface';
 import { FormsModule } from '@angular/forms';
 import { SamHierarchicalAutocompleteComponent } from '../autocomplete/autocomplete.component';
 import { SamHierarchicalSelectedResultComponent } from '../selected-result/selected-result.component';
-import {SamModalModule } from '../../../components/modal';
-
+import { SamModalModule } from '../../../components/modal';
 
 import { Observable } from 'rxjs';
 import { By } from '@angular/platform-browser';
@@ -24,7 +21,7 @@ describe('SamHierarchicalComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SamHierarchicalComponent, SamHierarchicalAutocompleteComponent, SamHierarchicalSelectedResultComponent],
-      imports: [FormsModule,SamModalModule]
+      imports: [FormsModule, SamModalModule]
     })
       .compileComponents();
   }));
