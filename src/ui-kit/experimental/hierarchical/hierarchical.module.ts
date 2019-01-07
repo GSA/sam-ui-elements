@@ -10,21 +10,24 @@ import { SamHierarchicalTreeFilterComponent } from './hierarchical-tree-filter/h
 import { SamHierarchicalTreeHeaderComponent } from './hierarchical-tree-header/hierarchical-tree-header.component';
 import { SamHierarchicalTreeFooterComponent } from './hierarchical-tree-footer/hierarchical-tree-footer.component';
 
-import { SamHierarchicalComponent } from './hierarchical/hierarchical.component';
+//import { } from './autocomplete/autocomplete.component';
 import { SamWrapperModule } from '../../wrappers';
 import { SamDataTableModule, SamModalModule } from '../../components';
-import { SamCheckboxModule } from '../../form-controls';
-
+import { SamCheckboxModule, SamSelectModule, SamTextInputModule } from '../../form-controls';
+import { SamButtonModule } from '../../elements';
+import { SamIconsModule } from '../icon';
 
 @NgModule({
   imports: [
-    CommonModule, FormsModule, SamWrapperModule, SamDataTableModule, SamCheckboxModule, SamModalModule
+    CommonModule, FormsModule, SamWrapperModule, SamDataTableModule, SamCheckboxModule, SamSelectModule, SamButtonModule,
+    SamTextInputModule, SamIconsModule, SamModalModule
   ],
   declarations: [SamHierarchicalAutocompleteComponent, SamHierarchicalTreeComponent,
     SamHierarchicalTreeGridComponent, SamHierarchicalSelectedResultComponent,
     SamHierarchicalTreeFilterComponent, SamHierarchicalTreeHeaderComponent,
-    SamHierarchicalComponent, SamHierarchicalTreeFooterComponent],
+    SamHierarchicalTreeFooterComponent],
   exports: [SamHierarchicalAutocompleteComponent, SamHierarchicalSelectedResultComponent,
-    SamHierarchicalTreeComponent, SamHierarchicalTreeGridComponent, SamHierarchicalComponent]
+    SamHierarchicalTreeComponent, SamHierarchicalTreeGridComponent, SamHierarchicalTreeHeaderComponent,
+    SamHierarchicalTreeFooterComponent]
 })
 export class SamHierarchicalModule { }
