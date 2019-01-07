@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SamHierarchicalTreeFooterComponent } from './hierarchical-tree-footer.component';
 
-describe('SamHierarchicalTreeFooterComponent', () => {
+xdescribe('SamHierarchicalTreeFooterComponent', () => {
   let component: SamHierarchicalTreeFooterComponent;
   let fixture: ComponentFixture<SamHierarchicalTreeFooterComponent>;
 

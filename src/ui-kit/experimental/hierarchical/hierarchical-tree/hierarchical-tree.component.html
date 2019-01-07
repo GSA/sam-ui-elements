@@ -1,3 +1,28 @@
-<p>
-  hierarchical-tree works!
-</p>
+<div class="example-container usa-grid">
+  <ng-container *ngTemplateOutlet="template"></ng-container>
+</div>
+
+<ng-template #template>
+  <div>
+    <sam-hierarchical-tree-header 
+      [options]="hierarchyConfiguration.options" 
+      (selectedAgency)="selectedAgency$.next($event)" 
+      (filterText)="filterText$.next($event)">
+    </sam-hierarchical-tree-header>
+
+    <sam-hierarchical-tree-grid 
+      [templateConfigurations]="hierarchyConfiguration" 
+      [gridData]="gridData"
+      [filterText]="hierarchyConfiguration.filterText"
+      (rowChanged)="selectedAgency$.next($event)" 
+      (selectResults)="selectResults$.next($event)">
+    </sam-hierarchical-tree-grid>
+
+    <sam-hierarchical-tree-footer>
+      <sam-button buttonText="Select" 
+      (click)="onSelect()" 
+      buttonType="primary">
+    </sam-button>
+    </sam-hierarchical-tree-footer>
+  </div>
+</ng-template>
