@@ -3,7 +3,7 @@
   <sam-button buttonText="up" buttonType="primary" (click)="navigateToParent()"></sam-button>
 
   <!-- Agency Level Selector -->
-  <sam-select [(ngModel)]="selectModel" (change)="onLevelChange($event)" name="level select" [options]="options"
+  <sam-select [(ngModel)]="selectModel" (change)="onLevelChange($event)" name="levelSelect" class="levelSelect" [options]="options"
     [label]="label">
   </sam-select>
 

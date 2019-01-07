@@ -5,7 +5,8 @@ import {
   ElementRef,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
+  ChangeDetectorRef
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs';
@@ -80,10 +81,13 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   public dataChange: BehaviorSubject<object[]> = new BehaviorSubject<object[]>([]);
   @ViewChild(SamSortDirective) sort: SamSortDirective;
 
+  constructor (private cdr: ChangeDetectorRef) {}
+
   ngOnChanges() {
     this.dataChange.next(this.gridData);
     if (this.hierarchicalDataSource) {
       this.hierarchicalDataSource.filter = this.filterText;
+      this.cdr.detectChanges();
     }
   }
 
@@ -100,6 +104,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
       this.dataChange,
       this.sort
     );
+    this.cdr.detectChanges();
   }
   /**
    * On select the results
