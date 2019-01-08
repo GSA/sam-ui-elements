@@ -8,8 +8,8 @@ ViewChild,
 EventEmitter
 } from '@angular/core';
 import {CdkTableModule} from '@angular/cdk';
-import { SamDataTableModule,SamSortDirective } from '../../../components/data-table';
-import { HierarchicalDataSource, GridDisplayedColumn } from './hierarchical-tree-grid.component';
+import { SamDataTableModule, SamSortDirective } from '../../../components/data-table';
+import { HierarchicalDataSource , SamHierarchicalTreeGridComponent, GridTemplateConfiguration } from './hierarchical-tree-grid.component';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 const gridData = [
@@ -23,57 +23,16 @@ const gridData = [
   {'id': '8', 'parentId': '7', 'name': 'Level 2', 'subtext': 'id 4585', 'type': 'Level 2'},
   {'id': '9', 'parentId': '8', 'name': 'Level 1', 'subtext': 'id 4586', 'type': 'Level 1'}
  ];
- 
-@Component({
-    selector: 'test-cmp',
-    template: `
-    <sam-datatable #table samSort [dataSource]="hierarchicalDataSource">
-    <ng-container cdkColumnDef="select">
-      <th sam-header-cell *cdkHeaderCellDef sam-sort-header>Select</th>
-      <td sam-cell *cdkCellDef="let row">
-        <input type="checkbox" id="selectId" (change)="onChecked($event,row)"
-          name="select">
-        <label for="selectId"></label>
-      </td>
-    </ng-container>
 
-    <ng-container *ngFor="let col of columnFieldName;let cIndex = index;" cdkColumnDef="{{col}}">
-      <th sam-header-cell *cdkHeaderCellDef sam-sort-header>
-       {{columnHeaderText[cIndex]}}
-      </th>
-      <td sam-cell *cdkCellDef="let row; let rIndex = index;"> {{row[col]}} </td>
-    </ng-container>
-
-    <tr sam-header-row *cdkHeaderRowDef="displayedColumns"></tr>
-    <tr (click)="onRowChange($event,row)" sam-row *cdkRowDef="let row; columns: displayedColumns;
-      let first = first; let last = last; let even = even; let odd = odd"></tr>
-  </sam-datatable>
-    `
-})
-class TestComponent {
-  @Input() gridDisplayedColumn: GridDisplayedColumn[] = [];
-  public displayedColumns = ['select'];
-  public columnFieldName =[];
-  public columnHeaderText = [];
-  dataChange: BehaviorSubject<object[]> = new BehaviorSubject<object[]>(gridData);
-  hierarchicalDataSource:  HierarchicalDataSource | null;
-    @ViewChild(SamSortDirective) sort: SamSortDirective;
-    ngOnInit(){
-        this.hierarchicalDataSource = new HierarchicalDataSource(this.dataChange, this.sort);
-        this.gridDisplayedColumn.forEach(item =>{
-          this.columnFieldName.push(item.fieldName);
-          this.columnHeaderText.push(item.headerText);
-        })
-        this.displayedColumns = [...this.displayedColumns,...this.columnFieldName]
-
-    }
-
-}
+const config: GridTemplateConfiguration = {
+    gridDisplayedColumn: [],
+    primaryKey: 'id',
+  };
 
 describe('The Sam Data Table Tests', () => {
-    let component: TestComponent, 
-        fixture: ComponentFixture<TestComponent>;
-
+    let component: SamHierarchicalTreeGridComponent,
+        fixture: ComponentFixture<SamHierarchicalTreeGridComponent>;
+ 
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
@@ -81,44 +40,161 @@ describe('The Sam Data Table Tests', () => {
                 SamDataTableModule
             ],
             declarations: [
-                TestComponent
+                SamHierarchicalTreeGridComponent
             ],
         });
 
-        fixture = TestBed.createComponent(TestComponent);
+        fixture = TestBed.createComponent(SamHierarchicalTreeGridComponent);
         component = fixture.componentInstance;
+        component.displayedColumns = ['select'];
+        component.templateConfigurations = config;
         fixture.detectChanges();
     });
 
-    it('should compile`', function () {
-        expect(true).toBe(true);
-    });
     it('should displayedColumns length', function () {
-        component.gridDisplayedColumn = [
+        component.templateConfigurations.gridDisplayedColumn = [
             { headerText: 'Id',  fieldName: 'id' , displayOrder: 1},
             { headerText: 'Name',  fieldName: 'name' , displayOrder: 2},
-        ]
+        ];
         component.ngOnInit();
         fixture.detectChanges();
         expect(component.displayedColumns.length).toBe(3);
     });
-    it('should not be displayedColumns length', function () {
-        component.gridDisplayedColumn = [
-            { headerText: 'Id',  fieldName: 'id' , displayOrder: 1},
-            { headerText: 'Name',  fieldName: 'name' , displayOrder: 2},
-        ]
-        component.ngOnInit();
+
+    it('should initial datachange length', function () {
+        component.dataChange.next(gridData);
+        component.ngOnChanges();
         fixture.detectChanges();
-        expect(component.displayedColumns.length).not.toBe(4);
+        expect(component.dataChange.value.length).toBe(0);
     });
 
-    it('should column Field Name length', function () {
-        component.gridDisplayedColumn = [
-            { headerText: 'Id',  fieldName: 'id' , displayOrder: 1},
-            { headerText: 'Name',  fieldName: 'name' , displayOrder: 2},
-        ]
-        component.ngOnInit();
+    it('should be datachange length is equal to data length', function () {
+        component.dataChange.next(gridData);
+        component.ngAfterViewInit();
         fixture.detectChanges();
-        expect(component.columnFieldName.length).toBe(component.gridDisplayedColumn.length);
+        expect(component.dataChange.value.length).toBe(gridData.length);
     });
+
+    it('should be datasoruce length grid data length', function () {
+        component.dataChange.next(gridData);
+        component.hierarchicalDataSource = new HierarchicalDataSource(
+            component.dataChange,
+            component.sort
+          );
+        component.ngAfterViewInit();
+        fixture.detectChanges();
+        expect(component.hierarchicalDataSource.renderedData.length).toBe(gridData.length);
+    });
+
+    it('Should emit primary on row changed', () => {
+        const row = { 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' };
+        const dummyUpEvent = {
+            preventDefault: function(){},
+            stopPropagation: function(){},
+            target: {
+                type: 'checkbox'
+            }
+          };
+        component.templateConfigurations = config;
+        component.rowChanged.subscribe((res: any) => {
+          expect(res).toBe(row[component.templateConfigurations.primaryKey]);
+        });
+        component.onRowChange(dummyUpEvent, row);
+      });
+
+      it('Should emit on checkbox selected', () => {
+         const results = [{ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }];
+        const row = { 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' };
+        const dummyUpEvent = {
+            preventDefault: function(){},
+            stopPropagation: function(){},
+            target: {
+                type: 'checkbox',
+                checked : true
+            }
+          };
+          component.selectedList = results;
+        component.templateConfigurations = config;
+        component.onChecked(dummyUpEvent, row);
+        expect(component.selectedList.length).toBe(2);
+      });
+
+      it('Should emit on checkbox unselected', () => {
+        const results = [{ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }];
+       const row = { 'id': '2', 'parentId': 1, 'name': 'Level 2', 'subtext': 'id 2', 'type': 'Level 1' };
+       const dummyUpEvent = {
+           preventDefault: function(){},
+           stopPropagation: function(){},
+           target: {
+               type: 'checkbox',
+               checked : false
+           }
+         };
+         component.selectedList = results;
+       component.templateConfigurations = config;
+       component.onChecked(dummyUpEvent, row);
+       expect(component.selectedList.length).toBe(1);
+     });
+
+     it('Should emit primary on row changed', () => {
+        const row = { 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' };
+        const dummyUpEvent = {
+            preventDefault: function(){},
+            stopPropagation: function(){},
+            target: {
+                type: 'lable'
+            }
+          };
+        component.templateConfigurations = config;
+        component.onRowChange(dummyUpEvent, row);
+        component.rowChanged.subscribe((res: any) => {
+          expect(res).toBe(row[component.templateConfigurations.primaryKey]);
+        });
+      });
+      it('Should emit on checkbox unselected', () => {
+        const results = [{ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }];
+       const row = { 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' };
+       const dummyUpEvent = {
+           preventDefault: function(){},
+           stopPropagation: function(){},
+           target: {
+               type: 'checkbox',
+               checked : false
+           }
+         };
+         component.selectedList = results;
+       component.templateConfigurations = config;
+       component.onChecked(dummyUpEvent, row);
+       fixture.detectChanges();
+       expect(component.selectedList.length).toBe(1);
+     });
+
+     it('should emit on ChangeLevel', function () {
+        const row = { 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' };
+        const mockEvent = {
+            currentTarget: {
+              value: undefined
+            }
+          };
+        component.onChangeLevel(mockEvent, row);
+        fixture.detectChanges();
+        component.levelChanged.subscribe((res: any) => {
+            expect(res).toBe(row);
+          });
+    });
+
+    it('should emit on ChangeLevel', function () {
+        const row = { 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' };
+        const mockEvent = {
+            currentTarget: {
+              value: undefined
+            }
+          };
+        component.onChangeLevel(mockEvent, row);
+        fixture.detectChanges();
+        component.levelChanged.subscribe((res: any) => {
+            expect(res).toBe(row);
+          });
+    });
+    
 });

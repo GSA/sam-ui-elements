@@ -73,7 +73,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   @Output() selectResults = new EventEmitter<object[]>();
 
   public displayedColumns = ['select'];
-  public columnFieldName =[];
+  public columnFieldName = [];
   public columnHeaderText = [];
 
   public selectedList: object[] = [];
@@ -92,11 +92,11 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.templateConfigurations.gridDisplayedColumn.forEach(item =>{
+    this.templateConfigurations.gridDisplayedColumn.forEach(item => {
       this.columnFieldName.push(item.fieldName);
       this.columnHeaderText.push(item.headerText);
-    })
-    this.displayedColumns = [...this.displayedColumns,...this.columnFieldName]
+    });
+    this.displayedColumns = [...this.displayedColumns, ...this.columnFieldName];
   }
 
   ngAfterViewInit() {
@@ -122,9 +122,9 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   }
 
   /**
-   * On level change 
+   * On level change
    */
-  public onChangeLevel(ev: Event, item: object): void {
+  public onChangeLevel(ev, item: object): void {
     this.levelChanged.emit(item);
 
   }
