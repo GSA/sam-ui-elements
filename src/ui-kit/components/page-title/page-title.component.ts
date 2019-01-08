@@ -7,7 +7,7 @@ import {
 @Component({
   selector: 'sam-page-title',
   template: `
-    <h1 class="sam heading" [attr.id]="id" [attr.tabindex]="tabIndex" [class.inverted]="inverted">
+    <h1 class="sam heading flex-column" [attr.id]="id" [attr.tabindex]="tabIndex" [class.inverted]="inverted">
       <span class="intro">{{ super }}</span> 
       {{ title }} 
     </h1>
