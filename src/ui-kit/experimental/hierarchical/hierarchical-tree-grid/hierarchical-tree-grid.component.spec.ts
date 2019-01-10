@@ -115,20 +115,6 @@ describe('The Sam hierarchical grid component', () => {
             });
         });
 
-        it('should emit on ChangeLevel', function () {
-            const row = { 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' };
-            const mockEvent = {
-                currentTarget: {
-                    value: undefined
-                }
-            };
-            component.onChangeLevel(mockEvent, row);
-            fixture.detectChanges();
-            component.levelChanged.subscribe((res: any) => {
-                expect(res).toBe(row);
-            });
-        });
-
         it('Should emit primary on row changed', () => {
             const row = { 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' };
             const dummyUpEvent = {
@@ -215,6 +201,26 @@ describe('The Sam hierarchical grid component', () => {
             component.onChecked(dummyUpEvent, row);
         });
 
+        it('Should emit on checkbox unselected with index', () => {
+            const results = [{ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }];
+            const row = { 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' };
+            const dummyUpEvent = {
+                preventDefault: function () { },
+                stopPropagation: function () { },
+                target: {
+                    type: 'checkbox',
+                    checked: false
+                }
+            };
+            component.selectedList = results;
+            component.templateConfigurations = config;
+            fixture.detectChanges();
+            component.selectResults.subscribe((g) => {
+                expect(g.length).toBe(1);
+            });
+            component.onChecked(dummyUpEvent, row);
+        });
+
 
         it('Should emit on checkbox unselected', () => {
             const results = [{ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }];
@@ -234,15 +240,71 @@ describe('The Sam hierarchical grid component', () => {
             component.onChecked(dummyUpEvent, row);
         });
     });
-    describe('isolated tests', () => {
+
+    describe('Isolation tests', () => {
         let component: SamHierarchicalTreeGridComponent;
+        // fixture: ComponentFixture<SamHierarchicalTreeGridComponent>;
         const cdr: ChangeDetectorRef = undefined;
         beforeEach(() => {
             component = new SamHierarchicalTreeGridComponent(cdr);
+          //  fixture = TestBed.createComponent(SamHierarchicalTreeGridComponent);
+        });
+
+        it('should be datachange length is equal to data length', function () {
+            component.displayedColumns = ['default'];
+            expect(component.displayedColumns.length).toBe(1);
+            expect(component.hierarchicalDataSource).toBe(undefined);
+            expect(component.columnFieldName.length).toBe(0);
+            expect(component.dataChange.value.length).toBe(0);
+            expect(component.selectedList.length).toBe(0);
+            expect(component.columnHeaderText.length).toBe(0);
         });
         it('test', () => {
-            expect(true).toBe(true);
-        })
+            const sort: SamSortDirective = new SamSortDirective();
+            component.dataChange.next(gridData);
+
+            const dataSource = new HierarchicalDataSource(
+                component.dataChange,
+                sort
+            );
+            dataSource.connect();
+            expect(dataSource.renderedData.length).toBe(0);
+
+        });
+        it('Data Source get Sorted Data', () => {
+            const sort: SamSortDirective = new SamSortDirective();
+            component.dataChange.next(gridData);
+
+            const dataSource = new HierarchicalDataSource(
+                component.dataChange,
+                sort
+            );
+            const result = dataSource.getSortedData(gridData).length;
+            expect(result).toBe(gridData.length);
+        });
+        it('Data Source sorting Data Accessor', () => {
+            const row = { 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' };
+            const sort: SamSortDirective = new SamSortDirective();
+            component.dataChange.next(gridData);
+
+            const dataSource = new HierarchicalDataSource(
+                component.dataChange,
+                sort
+            );
+            const result = dataSource.sortingDataAccessor(row, 'id');
+            expect(result).toBe(row['id']);
+        });
+        // it('Data Source disconnect', () => {
+        //     const row = { 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' };
+        //     const sort: SamSortDirective = new SamSortDirective();
+        //     component.dataChange.next(gridData);
+
+        //     const dataSource = new HierarchicalDataSource(
+        //         component.dataChange,
+        //         sort
+        //     );
+        //  expect(dataSource.disconnect()).toHaveBeenCalled();
+        // });
     });
 });
 
