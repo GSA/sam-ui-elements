@@ -236,11 +236,9 @@ describe('The Sam hierarchical grid component', () => {
 
     describe('Isolation tests', () => {
         let component: SamHierarchicalTreeGridComponent;
-        // fixture: ComponentFixture<SamHierarchicalTreeGridComponent>;
         const cdr: ChangeDetectorRef = undefined;
         beforeEach(() => {
             component = new SamHierarchicalTreeGridComponent(cdr);
-          //  fixture = TestBed.createComponent(SamHierarchicalTreeGridComponent);
         });
 
         it('should be datachange length is equal to data length', function () {
@@ -287,17 +285,7 @@ describe('The Sam hierarchical grid component', () => {
             const result = dataSource.sortingDataAccessor(row, 'id');
             expect(result).toBe(row['id']);
         });
-        // it('Data Source disconnect', () => {
-        //     const row = { 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' };
-        //     const sort: SamSortDirective = new SamSortDirective();
-        //     component.dataChange.next(gridData);
-
-        //     const dataSource = new HierarchicalDataSource(
-        //         component.dataChange,
-        //         sort
-        //     );
-        //  expect(dataSource.disconnect()).toHaveBeenCalled();
-        // });
+     
     });
 });
 

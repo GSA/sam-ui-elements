@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { DataSource } from '@angular/cdk';
-import { SamSortDirective, SamPaginationComponent, SamSortable } from '../../../components'
+import { SamSortDirective } from '../../../components';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 // preparing data source for the hierarchical grid
