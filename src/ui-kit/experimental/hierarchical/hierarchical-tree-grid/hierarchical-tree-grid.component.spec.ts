@@ -1,19 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-    Component,
-    Output,
-    Input,
-    ViewChild,
-    EventEmitter
-} from '@angular/core';
 import { CdkTableModule } from '@angular/cdk';
 import { SamDataTableModule, SamSortDirective } from '../../../components/data-table';
-import { HierarchicalDataSource, SamHierarchicalTreeGridComponent, GridTemplateConfiguration } from './hierarchical-tree-grid.component';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { SamHierarchicalTreeGridComponent, GridTemplateConfiguration } from './hierarchical-tree-grid.component';
 import {
     ChangeDetectorRef
 } from '@angular/core/src/change_detection/change_detector_ref';
+import { HierarchicalDataSource } from './data-source';
 
 const gridData = [
     { 'id': '1', 'parentId': 'null', 'name': 'Level 6', 'subtext': 'id 4578', 'type': 'Level 6' },
