@@ -121,7 +121,7 @@ export class SamHierarchicalAutocompleteComponent {
    * Event method used when focus is gained to the input
    */
   inputFocusHandler(): void {
-    this.getResults(this.inputValue);
+    this.getResults(this.inputValue || '');
   }
 
   /**
@@ -129,7 +129,6 @@ export class SamHierarchicalAutocompleteComponent {
    * @param event 
    */
   onKeyup(event): void {
-
     if (KeyHelper.is(KEYS.TAB, event)) {
       return;
     }
