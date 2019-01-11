@@ -121,7 +121,6 @@ export class SamHierarchicalAutocompleteComponent {
    * Event method used when focus is gained to the input
    */
   inputFocusHandler(): void {
-    this.inputValue = '';
     this.getResults(this.inputValue);
   }
 
@@ -176,7 +175,7 @@ export class SamHierarchicalAutocompleteComponent {
     }
   }
 
-  
+
   /**
    *  clears the results and closes result drop down
    */
@@ -186,7 +185,11 @@ export class SamHierarchicalAutocompleteComponent {
 
     if (this.model.treeMode === TreeMode.SINGLE) {
       if (this.model.getItems().length > 0) {
-        this.inputValue = this.model.getItems()[0][this.settings.valueProperty]
+        if (this.inputValue.length === 0) {
+          this.model.clearItems();
+        } else {
+          this.inputValue = this.model.getItems()[0][this.settings.valueProperty]
+        }
       }
     }
   }
@@ -222,7 +225,7 @@ export class SamHierarchicalAutocompleteComponent {
    * @param searchString 
    */
   private getResults(searchString: string): void {
-    if (this.searchString !== searchString || this.searchString === '') {
+    if (this.searchString !== searchString || (this.searchString === searchString && !this.showResults) || this.searchString === '') {
       this.searchString = searchString;
       window.clearTimeout(this.timeoutNumber);
       this.timeoutNumber = window.setTimeout(() => {
