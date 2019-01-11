@@ -43,9 +43,25 @@
 .autocomplete-result .header{
     display: block;
     font-weight: 600;
-  }
+}
 
 .selected-item{
     background-color: #0071bc;
     color: white;
+}
+
+.input-container{
+    position: relative;
+    max-width: 46rem;
+}
+
+.close{
+    position: absolute;
+    top: 7px;
+    right: 10px;
+}
+
+.sam.input{
+    margin-bottom: 5px;
+    padding-right: 30px;
 }
