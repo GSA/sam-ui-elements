@@ -5,7 +5,8 @@ import {
   ElementRef,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
+  ChangeDetectorRef
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs';
@@ -72,7 +73,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   @Output() selectResults = new EventEmitter<object[]>();
 
   public displayedColumns = ['select'];
-  public columnFieldName =[];
+  public columnFieldName = [];
   public columnHeaderText = [];
 
   public selectedList: object[] = [];
@@ -80,19 +81,22 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   public dataChange: BehaviorSubject<object[]> = new BehaviorSubject<object[]>([]);
   @ViewChild(SamSortDirective) sort: SamSortDirective;
 
+  constructor (private cdr: ChangeDetectorRef) {}
+
   ngOnChanges() {
     this.dataChange.next(this.gridData);
     if (this.hierarchicalDataSource) {
       this.hierarchicalDataSource.filter = this.filterText;
+      this.cdr.detectChanges();
     }
   }
 
   ngOnInit() {
-    this.templateConfigurations.gridDisplayedColumn.forEach(item =>{
+    this.templateConfigurations.gridDisplayedColumn.forEach(item => {
       this.columnFieldName.push(item.fieldName);
       this.columnHeaderText.push(item.headerText);
-    })
-    this.displayedColumns = [...this.displayedColumns,...this.columnFieldName]
+    });
+    this.displayedColumns = [...this.displayedColumns, ...this.columnFieldName];
   }
 
   ngAfterViewInit() {
@@ -100,6 +104,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
       this.dataChange,
       this.sort
     );
+    this.cdr.detectChanges();
   }
   /**
    * On select the results
@@ -117,9 +122,9 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   }
 
   /**
-   * On level change 
+   * On level change
    */
-  public onChangeLevel(ev: Event, item: object): void {
+  public onChangeLevel(ev, item: object): void {
     this.levelChanged.emit(item);
 
   }

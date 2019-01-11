@@ -34,6 +34,7 @@
 @import '../../utilities/type';
 @import '../../utilities/color';
 @import '../../utilities/visible';
+@import '../../utilities/flex';
 
 // Create a theme.
 @mixin sam-gov-theme($theme) {

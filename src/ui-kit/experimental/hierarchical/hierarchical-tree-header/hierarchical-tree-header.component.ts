@@ -1,10 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { OptionsType } from '../../../../ui-kit/types';
 import { fromEvent } from 'rxjs/observable/fromEvent';
-import {
-  faThLarge,
-  faListUl,
-} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'sam-hierarchical-tree-header',
@@ -12,8 +8,6 @@ import {
   styleUrls: ['./hierarchical-tree-header.component.scss']
 })
 export class SamHierarchicalTreeHeaderComponent {
-  faThLarge = faThLarge;
-  faListUl = faListUl;
 
   /**
   * Options for the Dropdown

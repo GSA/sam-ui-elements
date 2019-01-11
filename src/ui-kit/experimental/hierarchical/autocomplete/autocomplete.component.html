@@ -1,11 +1,11 @@
 <div sam-click-outside (clickOutside)="checkForFocus($event)" sam-tab-outside (tabOutside)="checkForFocus($event)">
   <div class="input-container">
-    <input #input [attr.id]="settings.id" autocomplete="off" type="text" (focus)="inputFocusHandler()" (keyup)="onKeyup($event)"
+    <input class="sam input"  #input [attr.id]="settings.id" autocomplete="off" type="text" (focus)="inputFocusHandler()" (keyup)="onKeyup($event)"
       [(ngModel)]="inputValue" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-haspopup="true"
       [attr.aria-owns]="settings.id+ '-listbox'" [attr.placeholder]="settings.placeHolderText">
     <ng-container *ngIf="!input.disabled">
-      <span>
-        <span role="button" class="fa fa-times-circle" aria-label="Clear input" aria-hidden="false" (click)="clearInput()"
+      <span class="close">
+        <span role="button" class="fa fa-close" aria-label="Clear input" aria-hidden="false" (click)="clearInput()"
           (keyup.enter)="clearInput()">
         </span>
         <!-- [class]="inputValue.length > 0 ? 'fa fa-times-circle reset-icon-active' : 'fa fa-times-circle reset-icon'" -->
@@ -23,9 +23,9 @@
           </ng-container>
 
           <ng-container *ngIf="!itemTemplate">
-            <span>{{ result[settings.valueProperty] }}</span>
+            <span class="header">{{ result[settings.valueProperty] }}</span>
             <ng-container *ngIf="settings.subValueProperty &&  result[settings.subValueProperty] ">
-              <br /><span class="secondary-value">{{ result[settings.subValueProperty] }}</span>
+              <span class="description">{{ result[settings.subValueProperty] }}</span>
             </ng-container>
           </ng-container>
         </li>
