@@ -1,7 +1,7 @@
 <div>
     <a (click)="onModalClick()">Advanced Lookup</a>
     <sam-hierarchical-autocomplete [service]="service" [model]="model" [settings]="settings" [itemTemplate]="suggestionTemplate"></sam-hierarchical-autocomplete>
-    <sam-selected-result [model]="model" [settings]="settings" [itemTemplate]="selectedItemTemplate"></sam-selected-result>
+    <sam-selected-result *ngIf="!isSingleMode()" [model]="model" [settings]="settings" [itemTemplate]="selectedItemTemplate"></sam-selected-result>
     <sam-modal [showClose]="true" #modal [title]="settings.modalTitle" [type]="'primary'" [submitButtonLabel]="settings.modalSelectButtonLabel"
         [cancelButtonLabel]="settings.modalCancelButtonLabel" (onSubmit)="onModalSubmitClick()">
         <div>Test</div>

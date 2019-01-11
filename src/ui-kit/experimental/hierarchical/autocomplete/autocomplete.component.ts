@@ -4,7 +4,8 @@ import {
 } from '@angular/core';
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 import { KeyHelper, KEYS } from '../../../utilities/key-helper/key-helper';
-import { HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selectedItem.model';
+import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
+
 
 @Component({
   selector: 'sam-hierarchical-autocomplete',
@@ -161,6 +162,7 @@ export class SamHierarchicalAutocompleteComponent {
    */
   private selectItem(item: object): void {
     this.model.addItem(item, this.settings.keyField);
+
     let message = item[this.settings.valueProperty];
     if (this.settings.subValueProperty && item[this.settings.subValueProperty]) {
       message += ': ' + item[this.settings.subValueProperty]
@@ -169,14 +171,24 @@ export class SamHierarchicalAutocompleteComponent {
     message += ' selected';
     this.addScreenReaderMessage(message);
     this.showResults = false;
+    if (this.model.treeMode === TreeMode.SINGLE) {
+      this.inputValue = item[this.settings.valueProperty]
+    }
   }
 
+  
   /**
    *  clears the results and closes result drop down
    */
   private clearAndHideResults(): void {
     this.results = [];
     this.showResults = false;
+
+    if (this.model.treeMode === TreeMode.SINGLE) {
+      if (this.model.getItems().length > 0) {
+        this.inputValue = this.model.getItems()[0][this.settings.valueProperty]
+      }
+    }
   }
 
   /**
