@@ -3,7 +3,7 @@ import { SamHierarchicalAutocompleteSettings } from '../autocomplete/autocomplet
 import { SelectedResultSettings } from '../selected-result/selected-result.component';
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 import { HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selectedItem.model';
-
+import { HierarchyConfiguration } from '../hierarchical-tree/hierarchical-tree.component';
 @Component({
   selector: 'sam-hierarchical',
   templateUrl: './hierarchical.component.html',

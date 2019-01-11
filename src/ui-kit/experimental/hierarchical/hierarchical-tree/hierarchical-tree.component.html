@@ -6,15 +6,15 @@
   <div>
     <sam-hierarchical-tree-header 
       [options]="hierarchyConfiguration.options" 
-      (selectedAgency)="selectedAgency$.next($event)" 
-      (filterText)="filterText$.next($event)">
+      (selectedAgency)="selecteHierarchyLevel.next($event)" 
+      (filterText)="filterTextSubject.next($event)">
     </sam-hierarchical-tree-header>
 
     <sam-hierarchical-tree-grid 
       [templateConfigurations]="hierarchyConfiguration" 
       [gridData]="gridData"
       [filterText]="hierarchyConfiguration.filterText"
-      (rowChanged)="selectedAgency$.next($event)" 
+      (rowChanged)="selecteHierarchyLevel.next($event)" 
       (selectResults)="selectResults$.next($event)">
     </sam-hierarchical-tree-grid>
 

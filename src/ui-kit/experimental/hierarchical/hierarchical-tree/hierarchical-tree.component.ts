@@ -8,13 +8,14 @@ import {
 import { OptionsType } from '../../../../ui-kit/types';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { GridDisplayedColumn } from '../hierarchical-tree-grid/hierarchical-tree-grid.component';
-
+import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 
 export interface HierarchyConfiguration {
   gridDisplayedColumn: GridDisplayedColumn[],
   primaryKey: string,
   options: OptionsType[],
-  filterText: string
+  filterPlaceholder: string,
+  topLevelText: string;
 }
 
 @Component({
@@ -25,10 +26,20 @@ export interface HierarchyConfiguration {
 
 export class SamHierarchicalTreeComponent implements OnInit {
 
-  public selectedAgency$ = new BehaviorSubject<string>(null);
+  public selecteHierarchyLevel = new BehaviorSubject<string>(null);
   public selectResults$ = new BehaviorSubject<object[]>([]);
-  public filterText$ = new BehaviorSubject<string>('');
-  public results : object[];
+  public filterTextSubject = new BehaviorSubject<string>('');
+  public results: object[];
+
+
+  private selectedResults: object[];
+  private filterText: string;
+  private selectedValue:string;
+
+
+
+  @Input() service: SamHiercarchicalServiceInterface;
+
   /**
   * hierarchy tree picker configurations 
   */
@@ -58,20 +69,28 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
 
   public ngOnInit() {
-    this.selectedAgency$.subscribe(
-      value => this.selectedAgency.emit(value)
+
+    // .pipe(
+    //   switchMap(id => this.service.getHiercarchicalById(id)),    );
+
+    this.selecteHierarchyLevel.subscribe(
+      //clear out the filter
+      value => this.service.getHiercarchicalById(value,this.filterText)
+      
+      //this.selectedAgency.emit(value)
     );
     this.selectResults$.subscribe(
       res => {
         this.results = [];
-        this.results = res
+        this.results = res;
       }
     );
-    this.filterText$.subscribe(
-      text => this.hierarchyConfiguration.filterText = text);
+    this.filterTextSubject.subscribe(
+      text => this.filterText = text
+      );
   }
 
-  onSelect(): void{
+  onSelect(): void {
     this.selectResults.emit(this.results)
   }
 
