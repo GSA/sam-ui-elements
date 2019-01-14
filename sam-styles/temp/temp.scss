@@ -192,6 +192,7 @@
      color: #212121;
      display: inline-block;
      width: 100%;
+     vertical-align: bottom;
    }
    .sam.workspace.nav li:hover {
      color: #323A45;
@@ -200,7 +201,15 @@
    }
    .sam.workspace.nav a {
     text-decoration: none;
-    display: block;
+    display: block-inline;
+    vertical-align: bottom;
+    width: 100%;
+  }
+  .sam.workspace.nav img{
+    text-align: center;
+    padding: 5%;
+    margin: auto;
+    width: 50%;
   }
 
    .sidenav-icon{
@@ -228,7 +237,6 @@
 
     .notif.content{
       width: 100%;
-
       display: flex;
       flex-direction: row;
       justify-content: space-between;
