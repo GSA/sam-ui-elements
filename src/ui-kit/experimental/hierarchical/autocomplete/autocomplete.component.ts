@@ -80,7 +80,7 @@ export class SamHierarchicalAutocompleteComponent {
   /**
    * value of the input field 
    */
-  public inputValue: string;
+  public inputValue: string = '';
 
   /**
    * Proprty being set on the object is highlighted
@@ -114,12 +114,24 @@ export class SamHierarchicalAutocompleteComponent {
    * @param event 
    */
   checkForFocus(event): void {
-    if (this.model.treeMode === TreeMode.SINGLE && this.model.getItems().length > 0) {
-
-      this.inputValue = this.model.getItems()[0][this.settings.valueProperty];
-    }
+    this.focusRemoved();
     this.showResults = false;
+  }
 
+  private focusRemoved() {
+    if (this.model.treeMode === TreeMode.SINGLE) {
+      if (this.model.getItems().length > 0) {
+        if (this.inputValue.length === 0) {
+          this.model.clearItems();
+        } else {
+          this.inputValue = this.model.getItems()[0][this.settings.valueProperty];
+        }
+      } else {
+        this.inputValue = '';
+      }
+    } else {
+      this.inputValue = '';
+    }
   }
 
   /**
@@ -166,15 +178,13 @@ export class SamHierarchicalAutocompleteComponent {
   private selectItem(item: object): void {
     this.model.addItem(item, this.settings.keyField);
     let message = item[this.settings.valueProperty];
+    this.inputValue = message;
     if (this.settings.subValueProperty && item[this.settings.subValueProperty]) {
       message += ': ' + item[this.settings.subValueProperty];
     }
     message += ' selected';
     this.addScreenReaderMessage(message);
-
-    if (this.model.treeMode === TreeMode.SINGLE) {
-      this.inputValue = item[this.settings.valueProperty]
-    }
+    this.focusRemoved();
     this.showResults = false;
   }
 
@@ -185,16 +195,7 @@ export class SamHierarchicalAutocompleteComponent {
   private clearAndHideResults(): void {
     this.results = [];
     this.showResults = false;
-
-    if (this.model.treeMode === TreeMode.SINGLE) {
-      if (this.model.getItems().length > 0) {
-        if (this.inputValue.length === 0) {
-          this.model.clearItems();
-        } else {
-          this.inputValue = this.model.getItems()[0][this.settings.valueProperty];
-        }
-      }
-    }
+    this.focusRemoved();
   }
 
   /**
