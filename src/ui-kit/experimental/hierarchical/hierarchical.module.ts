@@ -16,11 +16,12 @@ import { SamDataTableModule, SamModalModule } from '../../components';
 import { SamCheckboxModule, SamSelectModule, SamTextInputModule } from '../../form-controls';
 import { SamButtonModule } from '../../elements';
 import { SamIconsModule } from '../icon';
+import { SamDirectivesModule } from '../../directives';
 
 @NgModule({
   imports: [
     CommonModule, FormsModule, SamWrapperModule, SamDataTableModule, SamCheckboxModule, SamSelectModule, SamButtonModule,
-    SamTextInputModule, SamIconsModule, SamModalModule
+    SamTextInputModule, SamIconsModule, SamModalModule, SamDirectivesModule
   ],
   declarations: [SamHierarchicalAutocompleteComponent, SamHierarchicalTreeComponent,
     SamHierarchicalTreeGridComponent, SamHierarchicalSelectedResultComponent,
