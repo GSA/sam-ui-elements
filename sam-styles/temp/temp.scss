@@ -16,15 +16,6 @@
     flex: 1 100%;
   }
 
-  .sam.search.cards{
-    display: none;
-    visibility: hidden;
-  }
-  .sam.workspace.role{
-    display: none;
-    visibility: hidden;
-  }
-
   /*****************flex: stretch & align**************************/
   .workspace.dash.body{
     align-items: stretch;
@@ -39,7 +30,12 @@
   .sam.workspace.aside {
     flex: 1 0 40%;
   }
-
+  .sam.search.cards{
+    flex: 1 0 40%;
+  }
+  .sam.workspace.role{
+    flex: 1 0 40%;
+  }
   /*****************item order******************************/
   .sam.workspace.nav{
     /* put the nav on the left */
@@ -59,16 +55,27 @@
       display: flex;
       flex-wrap: wrap;
     }
-    /*.sam.workspace.cards{
+    .sam.workspace.cards{
       flex: 3 0px;
-    }*/
+    }
+    .sam.workspace.aside>.sam.workspace.role{
+      visibility: visible;
+      display: flex;
+    }
     .sam.search.cards{
       display: none;
+      visibility: hidden;
     }
     .sam.workspace.role{
       display: none;
+      visibility: hidden;
     }
 
+    .workspace.dash.body :nth-child(1) { order: 1; }
+    .workspace.dash.body :nth-child(2) { order: 2; }
+    .workspace.dash.body :nth-child(3) { order: 4; }
+    .workspace.dash.body :nth-child(4) { order: 3; }
+    .workspace.dash.body :nth-child(5) { order: 5; }
 /*********************************************/
   }
   @media all and (max-width: 799px) and (min-width: 600px){
@@ -78,7 +85,7 @@
     }
     .sam.workspace.nav{
       /* em is the width of the columns*/
-      flex: 0 0 10em;
+      flex: 0 0 7em;
     }
     .sam.workspace.cards {
       flex: 1 0 40%;
@@ -102,13 +109,26 @@
        margin: 0;
        padding: 0;
      }
-     .sam.workspace.cards .sam-segment{
+     .sam.workspace.cards>.userdir ,
+     .sam.workspace.cards>.fedassist{
+       display: none;
+       visibility: hidden;
+     }
+     .sam.workspace.aside>.sam.workspace.role{
+       visibility: hidden;
        display: none;
      }
 
+    .workspace.dash.body :nth-child(1) { order: 1; }
+    .workspace.dash.body :nth-child(2) { order: 2; }
+    .workspace.dash.body :nth-child(3) { order: 4; }
+    .workspace.dash.body :nth-child(4) { order: 3; }
+    .workspace.dash.body :nth-child(5) { order: 5; }
 
 
   }
+
+
   @media all and (max-width: 599px){
     .workspace.dash.body{
       display: flex;
@@ -137,6 +157,21 @@
      .sam.workspace.cards .sam-segment{
        display: none;
      }
+     .sam.workspace.cards>.userdir ,
+     .sam.workspace.cards>.fedassist{
+       display: none;
+       visibility: hidden;
+     }
+     .sam.workspace.aside>.sam.workspace.role{
+       visibility: hidden;
+       display: none;
+     }
+
+     .workspace.dash.body :nth-child(1) { order: 1; }
+     .workspace.dash.body :nth-child(2) { order: 3; }
+     .workspace.dash.body :nth-child(3) { order: 4; }
+     .workspace.dash.body :nth-child(4) { order: 2; }
+     .workspace.dash.body :nth-child(5) { order: 5; }
   }
 
 
@@ -243,7 +278,7 @@
       padding: 20px;
       width: 30%;
     }
-/*
+
     .sam.search.cards{
       display: flex;
       flex-direction: column;
@@ -256,5 +291,17 @@
     .hierarchy.search{
       width: 100%;
     }
-*/
+    /************statistic************/
+    .sam.statistics.visible.tablet.up{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    .sam.statistics.visible.tablet.up :nth-child(1) { order: 1; }
+    .sam.statistics.visible.tablet.up :nth-child(2) { order: 2; }
+    .sam.statistics.visible.tablet.up :nth-child(3) { order: 3; }
+    .sam.statistics.visible.tablet.up :nth-child(4) { order: 4; }
+    .sam.statistics.visible.tablet.up :nth-child(5) { order: 5; }
+    .sam.statistics.visible.tablet.up :nth-child(6) { order: 6; }
+    /************************************/
 }
