@@ -114,7 +114,12 @@ export class SamHierarchicalAutocompleteComponent {
    * @param event 
    */
   checkForFocus(event): void {
+    if (this.model.treeMode === TreeMode.SINGLE && this.model.getItems().length > 0) {
+
+      this.inputValue = this.model.getItems()[0][this.settings.valueProperty];
+    }
     this.showResults = false;
+
   }
 
   /**
@@ -160,18 +165,17 @@ export class SamHierarchicalAutocompleteComponent {
    */
   private selectItem(item: object): void {
     this.model.addItem(item, this.settings.keyField);
-
     let message = item[this.settings.valueProperty];
     if (this.settings.subValueProperty && item[this.settings.subValueProperty]) {
-      message += ': ' + item[this.settings.subValueProperty]
-
+      message += ': ' + item[this.settings.subValueProperty];
     }
     message += ' selected';
     this.addScreenReaderMessage(message);
-    this.showResults = false;
+
     if (this.model.treeMode === TreeMode.SINGLE) {
       this.inputValue = item[this.settings.valueProperty]
     }
+    this.showResults = false;
   }
 
 
@@ -187,7 +191,7 @@ export class SamHierarchicalAutocompleteComponent {
         if (this.inputValue.length === 0) {
           this.model.clearItems();
         } else {
-          this.inputValue = this.model.getItems()[0][this.settings.valueProperty]
+          this.inputValue = this.model.getItems()[0][this.settings.valueProperty];
         }
       }
     }
@@ -224,7 +228,9 @@ export class SamHierarchicalAutocompleteComponent {
    * @param searchString 
    */
   private getResults(searchString: string): void {
-    if (this.searchString !== searchString || (this.searchString === searchString && !this.showResults) || this.searchString === '') {
+    if (!this.matchPastSearchString(searchString) ||
+      (this.matchPastSearchString(searchString) && !this.showResults)
+      || this.matchPastSearchString('')) {
       this.searchString = searchString;
       window.clearTimeout(this.timeoutNumber);
       this.timeoutNumber = window.setTimeout(() => {
@@ -239,6 +245,10 @@ export class SamHierarchicalAutocompleteComponent {
           });
       }, this.settings.debounceTime);
     }
+  }
+
+  private matchPastSearchString(searchString: string) {
+    return this.searchString === searchString;
   }
 
   /**
