@@ -3,7 +3,8 @@ import {
   OnInit,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
+  ChangeDetectorRef
 } from '@angular/core';
 import { OptionsType } from '../../../../ui-kit/types';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -31,13 +32,17 @@ export class SamHierarchicalTreeComponent implements OnInit {
   public filterTextSubject = new BehaviorSubject<string>('');
   public results: object[];
 
+  public gridResults: Observable<object[]>;
+
 
   private selectedResults: object[];
   private filterText: string;
-  private selectedValue:string;
+  private selectedValue: string;
 
 
-
+  /**
+   * 
+   */
   @Input() service: SamHiercarchicalServiceInterface;
 
   /**
@@ -51,33 +56,44 @@ export class SamHierarchicalTreeComponent implements OnInit {
   * Stream that emit a array each time when the item is selected.
   * Stream that changes each time when click action trigger on row.
   */
-  @Input() gridData: object[];
+  //@Input() 
+  gridData: object[];
   /**
   * Event emitted when row is clicked
   */
-  @Output() public rowChanged = new EventEmitter<object>();
+  //@Output() public rowChanged = new EventEmitter<object>();
 
   /**
   * Event emitted when level change is clicked
   */
-  @Output() public selectedAgency = new EventEmitter<string>();
+  //@Output() public selectedAgency = new EventEmitter<string>();
 
   /**
   * Event emitted when row set is selected.
   */
   @Output() selectResults = new EventEmitter<object[]>();
 
+  constructor(private cdr: ChangeDetectorRef) { }
 
   public ngOnInit() {
 
-    // .pipe(
-    //   switchMap(id => this.service.getHiercarchicalById(id)),    );
-
     this.selecteHierarchyLevel.subscribe(
-      //clear out the filter
-      value => this.service.getHiercarchicalById(value,this.filterText)
-      
-      //this.selectedAgency.emit(value)
+      value => {
+
+        //clearFilter
+
+        if (value) {
+          this.selectedValue = value[this.hierarchyConfiguration.primaryKey];
+        } else {
+          this.selectedValue = null;
+        }
+
+        console.log('SamHierarchicalTreeComponent')
+        console.log(value);
+        console.log(this.selectedValue);
+        this.getResults();
+      }
+
     );
     this.selectResults$.subscribe(
       res => {
@@ -86,12 +102,32 @@ export class SamHierarchicalTreeComponent implements OnInit {
       }
     );
     this.filterTextSubject.subscribe(
-      text => this.filterText = text
-      );
+      text => {
+        this.filterText = text;
+        this.getResults();
+      }
+    );
   }
 
   onSelect(): void {
     this.selectResults.emit(this.results)
   }
+
+
+  getResults() {
+    this.gridResults = this.service.getHiercarchicalById(this.selectedValue, this.filterText);
+    this.cdr.detectChanges();
+    this.gridResults.subscribe(
+   
+          (result) => {
+    //       this.gridData = result;
+      console.log('New Results');
+      console.log(this.gridData);
+      this.cdr.detectChanges();
+
+      });
+  }
+
+
 
 }

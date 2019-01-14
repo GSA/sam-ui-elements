@@ -20,8 +20,7 @@ const options = [{ 'name': 'Level 2', 'id': '1', 'value': '237', 'label': 'Level
 const config: HierarchyConfiguration = {
   gridDisplayedColumn: [],
   primaryKey: 'id',
-  options: options,
-  filterText: ''
+  options: options
 };
 
 // const data = [{ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' },

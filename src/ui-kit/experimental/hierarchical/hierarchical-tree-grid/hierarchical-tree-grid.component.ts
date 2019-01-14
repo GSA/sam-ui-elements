@@ -22,7 +22,7 @@ export interface GridTemplateConfiguration {
 }
 
 export interface GridDisplayedColumn {
-  headerText: string, 
+  headerText: string,
   fieldName: string,
   displayOrder: number
 }
@@ -81,14 +81,14 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   public dataChange: BehaviorSubject<object[]> = new BehaviorSubject<object[]>([]);
   @ViewChild(SamSortDirective) sort: SamSortDirective;
 
-  constructor (private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnChanges() {
-    this.dataChange.next(this.gridData);
-    if (this.hierarchicalDataSource) {
-      this.hierarchicalDataSource.filter = this.filterText;
-      this.cdr.detectChanges();
-    }
+     this.dataChange.next(this.gridData);
+    // if (this.hierarchicalDataSource) {
+    //   this.hierarchicalDataSource.filter = this.filterText;
+    this.cdr.detectChanges();
+
   }
 
   ngOnInit() {
@@ -97,6 +97,10 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
       this.columnHeaderText.push(item.headerText);
     });
     this.displayedColumns = [...this.displayedColumns, ...this.columnFieldName];
+    console.log('Data');
+    console.log(this.gridData);
+    // this.dataChange.next(this.gridData);
+    // this.cdr.detectChanges();
   }
 
   ngAfterViewInit() {
@@ -134,7 +138,8 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   onRowChange(ev, row): void {
     if (ev.target.type !== 'checkbox') {
       this.selectedList = [];
-      this.rowChanged.emit(row[this.templateConfigurations.primaryKey]);
+      console.log(row);
+      this.rowChanged.emit(row);
     }
   }
 }
@@ -159,14 +164,15 @@ export class HierarchicalDataSource extends DataSource<any> {
       this._filterChange,
     ];
     return Observable.merge(...displayDataChanges).map(() => {
-      const filteredData = this.dataChange.value.slice().filter((item: any) => {
-        const searchStr = JSON.stringify(item).toLowerCase();
-        return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
-      });
+      //const filteredData = this.dataChange.value.slice().filter((item: any) => {
+      //   const searchStr = JSON.stringify(item).toLowerCase();
+      //   return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
+      // });
 
       // Sort filtered data
-      const sortedData = this.getSortedData(filteredData.slice());
+      const sortedData = this.getSortedData(this.dataChange.value.slice());
       this.renderedData = sortedData;
+      //  this.renderedData =this.dataChange.value.slice()
       return this.renderedData;
     });
   }
