@@ -2,16 +2,14 @@ import {
   Component,
   OnInit,
   ViewChild,
-  ElementRef,
   Input,
   Output,
   EventEmitter,
   ChangeDetectorRef
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs';
-import { DataSource } from '@angular/cdk';
-import { SamSortDirective, SamPaginationComponent, SamSortable } from '../../../components'
+import { SamSortDirective } from '../../../components'
+import { HierarchicalDataSource } from './data-source';
 
 export interface GridTemplate {
 }
@@ -75,7 +73,6 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   public displayedColumns = ['select'];
   public columnFieldName = [];
   public columnHeaderText = [];
-
   public selectedList: object[] = [];
   public hierarchicalDataSource: HierarchicalDataSource | null;
   public dataChange: BehaviorSubject<object[]> = new BehaviorSubject<object[]>([]);
@@ -84,10 +81,10 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnChanges() {
-     this.dataChange.next(this.gridData);
+    this.dataChange.next(this.gridData);
     // if (this.hierarchicalDataSource) {
     //   this.hierarchicalDataSource.filter = this.filterText;
-    this.cdr.detectChanges();
+    //  this.cdr.detectChanges();
 
   }
 
@@ -97,8 +94,6 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
       this.columnHeaderText.push(item.headerText);
     });
     this.displayedColumns = [...this.displayedColumns, ...this.columnFieldName];
-    console.log('Data');
-    console.log(this.gridData);
     // this.dataChange.next(this.gridData);
     // this.cdr.detectChanges();
   }
@@ -138,60 +133,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   onRowChange(ev, row): void {
     if (ev.target.type !== 'checkbox') {
       this.selectedList = [];
-      console.log(row);
       this.rowChanged.emit(row);
     }
   }
-}
-
-// preparing data source for the hierarchical grid
-export class HierarchicalDataSource extends DataSource<any> {
-  _filterChange = new BehaviorSubject('');
-  get filter(): string { return this._filterChange.value; }
-  set filter(filter: string) { this._filterChange.next(filter); }
-  filteredData: any[] = [];
-  renderedData: any[] = [];
-
-  constructor(private dataChange: any,
-    private _sort: SamSortDirective) {
-    super();
-  }
-
-  connect(): Observable<any[]> {
-    const displayDataChanges = [
-      this.dataChange,
-      this._sort.samSortChange,
-      this._filterChange,
-    ];
-    return Observable.merge(...displayDataChanges).map(() => {
-      //const filteredData = this.dataChange.value.slice().filter((item: any) => {
-      //   const searchStr = JSON.stringify(item).toLowerCase();
-      //   return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
-      // });
-
-      // Sort filtered data
-      const sortedData = this.getSortedData(this.dataChange.value.slice());
-      this.renderedData = sortedData;
-      //  this.renderedData =this.dataChange.value.slice()
-      return this.renderedData;
-    });
-  }
-  disconnect() { }
-  /** Returns a sorted copy of the database data. */
-
-  getSortedData(data: any[]): any[] {
-    if (!this._sort.active || this._sort.direction === '') { return data; }
-    return data.sort((a, b) => {
-      let propertyA = this.sortingDataAccessor(a, this._sort.active);
-      let propertyB = this.sortingDataAccessor(b, this._sort.active)
-      const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
-      const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
-      return (valueA < valueB ? -1 : 1) * (this._sort.direction === 'asc' ? 1 : -1);
-    });
-  }
-  sortingDataAccessor: ((data: any, sortHeaderId: string) => string | number) =
-    (data: any, sortHeaderId: string): string | number => {
-      const value = (data as { [key: string]: any })[sortHeaderId];
-      return value;
-    }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, TemplateRef, ViewChild } from '@angular/core'
 import { SamHierarchicalAutocompleteSettings } from '../autocomplete/autocomplete.component';
 import { SelectedResultSettings } from '../selected-result/selected-result.component';
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
-import { HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selectedItem.model';
+import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
 import { HierarchyConfiguration } from '../hierarchical-tree/hierarchical-tree.component';
 @Component({
   selector: 'sam-hierarchical',
@@ -61,6 +61,11 @@ export class SamHierarchicalComponent implements OnInit {
 
     this.modal.closeModal();
     // Add in code to get selected items from tree and add it to the selected item model
+  }
+
+
+  isSingleMode(): boolean {
+    return this.model.treeMode === TreeMode.SINGLE;
   }
 
 }

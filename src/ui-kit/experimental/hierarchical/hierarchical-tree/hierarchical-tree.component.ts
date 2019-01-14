@@ -75,6 +75,8 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
   constructor(private cdr: ChangeDetectorRef) { }
 
+  private breadcrumbStack: object[] = [];
+
   public ngOnInit() {
 
     this.selecteHierarchyLevel.subscribe(
@@ -88,9 +90,14 @@ export class SamHierarchicalTreeComponent implements OnInit {
           this.selectedValue = null;
         }
 
-        console.log('SamHierarchicalTreeComponent')
-        console.log(value);
-        console.log(this.selectedValue);
+        let breadcrumbStackPostion = this.breadcrumbStack.indexOf(value);
+        if (breadcrumbStackPostion === -1) {
+          this.breadcrumbStack.unshift(value);
+          console.log("breadcrumbStack not found");
+        } else {
+          console.log("breadcrumbStack");
+          console.log(breadcrumbStackPostion);
+        }
         this.getResults();
       }
 
@@ -116,16 +123,6 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
   getResults() {
     this.gridResults = this.service.getHiercarchicalById(this.selectedValue, this.filterText);
-    this.cdr.detectChanges();
-    this.gridResults.subscribe(
-   
-          (result) => {
-    //       this.gridData = result;
-      console.log('New Results');
-      console.log(this.gridData);
-      this.cdr.detectChanges();
-
-      });
   }
 
 
