@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, TemplateRef, ViewChild } from '@angular/core';
-import { SamHierarchicalAutocompleteSettings } from '../autocomplete/autocomplete.component';
-import { SelectedResultSettings } from '../selected-result/selected-result.component';
+
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
-import { HierarchyConfiguration } from '../hierarchical-tree/hierarchical-tree.component';
+import { SamHierarchicalConfiguration } from '../models/SamHierarchicalConfiguration';
+
+
 @Component({
   selector: 'sam-hierarchical',
   templateUrl: './hierarchical.component.html',
@@ -18,7 +19,7 @@ export class SamHierarchicalComponent implements OnInit {
    * Settings for the Autocomplete control 
    */
   @Input()
-  public settings: SamHierarchicalSettings;
+  public settings: SamHierarchicalConfiguration;
 
   /**
   * Instance of the SamHiercarchicalServiceInterface provided
@@ -47,10 +48,10 @@ export class SamHierarchicalComponent implements OnInit {
 
   public hierarchyConfiguration: any = {
     primaryKey: 'id',
-    gridDisplayedColumn:  [
-      { headerText: 'Id',  fieldName: 'id' , displayOrder: 1},
-      { headerText: 'Name',  fieldName: 'name' , displayOrder: 2},
-      { headerText: 'Sub Text',  fieldName: 'subtext' , displayOrder: 3}
+    gridDisplayedColumn: [
+      { headerText: 'Id', fieldName: 'id', displayOrder: 1 },
+      { headerText: 'Name', fieldName: 'name', displayOrder: 2 },
+      { headerText: 'Sub Text', fieldName: 'subtext', displayOrder: 3 }
     ]
   };
 
@@ -77,65 +78,3 @@ export class SamHierarchicalComponent implements OnInit {
 
 }
 
-
-export class SamHierarchicalSettings implements SamHierarchicalAutocompleteSettings, SelectedResultSettings {
-
-  /**
-    * sets the default debounce time to 250 milliseconds 
-    */
-  constructor() {
-    this.debounceTime = 250;
-    this.modalCancelButtonLabel = "Cancel";
-    this.modalSelectButtonLabel = "Select";
-  }
-
-  /**
-   * Used to describe the drop down (Text should match the label that will be supplied)
-   */
-  public labelText: string;
-
-  /**
-   * Used for the Id of the control
-   */
-  public id: string;
-
-  /**
-   *  This is the primary field used to identify each object in the results
-   */
-  public keyField: string;
-
-  /**
-   *  Property from supplied model used for the top part of the basic template
-   */
-  public valueProperty: string;
-
-  /**
-   *  Property from supplied model used for the bottom part of the basic template
-   */
-  public subValueProperty: string;
-
-  /**
-   *  Sets the time waited for addional key actions Default is 250 milliseconds
-   */
-  public debounceTime: number;
-
-  /**
-   * Place holder text for input
-   */
-  public placeHolderText: string;
-
-  /**
-   * 
-   */
-  public modalTitle: string;
-
-  /**
-   * 
-   */
-  public modalSelectButtonLabel: string;
-
-  /**
-   * 
-   */
-  public modalCancelButtonLabel: string;
-}

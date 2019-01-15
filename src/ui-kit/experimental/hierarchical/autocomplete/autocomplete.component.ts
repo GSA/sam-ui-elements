@@ -5,6 +5,7 @@ import {
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 import { KeyHelper, KEYS } from '../../../utilities/key-helper/key-helper';
 import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
+import { SamHierarchicalAutocompleteConfiguration } from '../models/SamHierarchicalAutocompleteConfiguration';
 
 
 @Component({
@@ -44,7 +45,7 @@ export class SamHierarchicalAutocompleteComponent {
    * Settings for the Autocomplete control 
    */
   @Input()
-  public settings: SamHierarchicalAutocompleteSettings;
+  public settings: SamHierarchicalAutocompleteConfiguration;
 
   /**
    * Instance of the SamHiercarchicalServiceInterface provided
@@ -332,51 +333,4 @@ export class SamHierarchicalAutocompleteComponent {
       this.srOnly.nativeElement.appendChild(srResults);
     }
   }
-}
-
-
-export class SamHierarchicalAutocompleteSettings {
-
-  /**
-   * sets the default debounce time to 250 milliseconds 
-   */
-  constructor() {
-    this.debounceTime = 250;
-  }
-
-  /**
-   * Used to describe the drop down (Text should match the label that will be supplied)
-   */
-  public labelText: string;
-
-  /**
-   * Used for the Id of the control
-   */
-  public id: string;
-
-  /**
-   *  This is the primary field used to identify each object in the results
-   */
-  public keyField: string;
-
-  /**
-   *  Property from supplied model used for the top part of the basic template
-   */
-  public valueProperty: string;
-
-  /**
-   *  Property from supplied model used for the bottom part of the basic template
-   */
-  public subValueProperty: string;
-
-  /**
-   *  Sets the time waited for addional key actions Default is 250 milliseconds
-   */
-  public debounceTime: number;
-
-  /**
-   * Place holder text for input
-   */
-  public placeHolderText: string;
-
 }

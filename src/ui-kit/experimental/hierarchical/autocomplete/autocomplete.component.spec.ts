@@ -1,6 +1,7 @@
 /* tslint:disable */
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { SamHierarchicalAutocompleteComponent, SamHierarchicalAutocompleteSettings } from './autocomplete.component';
+import { SamHierarchicalAutocompleteComponent } from './autocomplete.component';
+import { SamHierarchicalAutocompleteConfiguration } from '../models/SamHierarchicalAutocompleteConfiguration';
 import { FormsModule } from '@angular/forms';
 import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
 import { SamHiercarchicalServiceInterface, SearchByTextResult } from '../hierarchical-interface';
@@ -26,7 +27,7 @@ describe('SamHierarchicalAutocompleteComponent', () => {
     component = fixture.componentInstance;
     component.service = new HierarchicalDataService();
     component.model = new HierarchicalTreeSelectedItemModel();
-    component.settings = new SamHierarchicalAutocompleteSettings();
+    component.settings = new SamHierarchicalAutocompleteConfiguration();
     component.settings.id = 'autoId';
     component.settings.keyField = 'id';
     component.model.treeMode = TreeMode.SINGLE;
@@ -149,10 +150,10 @@ describe('SamHierarchicalAutocompleteComponent', () => {
     const list = fixture.debugElement.query(By.css('.autocomplete-result'));
     expect(list.nativeElement.children.length).toBe(11);
     expect(component.results[0]['highlighted']).toBeTruthy();
-    component.listItemHover(component.results.length-1);
+    component.listItemHover(component.results.length - 1);
     fixture.detectChanges();
     tick();
-    expect(component.results[component.results.length-1]['highlighted']).toBeTruthy();
+    expect(component.results[component.results.length - 1]['highlighted']).toBeTruthy();
     const upEvent = {
       "key": "Down",
       "target": { "value": 'id' }
@@ -225,7 +226,7 @@ describe('SamHierarchicalAutocompleteComponent', () => {
     fixture.detectChanges();
     const listAfter = fixture.debugElement.query(By.css('.autocomplete-result'));
     expect(listAfter).toBeFalsy();
- 
+
   }));
 
   it('Should have reuslts on focus', fakeAsync(() => {

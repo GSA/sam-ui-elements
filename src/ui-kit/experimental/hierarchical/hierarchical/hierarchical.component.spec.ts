@@ -1,12 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SamHierarchicalComponent, SamHierarchicalSettings } from './hierarchical.component';
+import { SamHierarchicalComponent } from './hierarchical.component';
 import { TreeMode, HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selectedItem.model';
 import { SamHiercarchicalServiceInterface, SearchByTextResult } from '../hierarchical-interface';
 import { FormsModule } from '@angular/forms';
 import { SamHierarchicalAutocompleteComponent } from '../autocomplete/autocomplete.component';
 import { SamHierarchicalSelectedResultComponent } from '../selected-result/selected-result.component';
 import { SamModalModule } from '../../../components/modal';
+import { SamHierarchicalConfiguration } from '../models/SamHierarchicalConfiguration';
+
 
 import { Observable } from 'rxjs';
 import { By } from '@angular/platform-browser';
@@ -30,7 +32,7 @@ describe('SamHierarchicalComponent', () => {
     fixture = TestBed.createComponent(SamHierarchicalComponent);
     component = fixture.componentInstance;
 
-    component.settings = new SamHierarchicalSettings();
+    component.settings = new SamHierarchicalConfiguration();
 
 
     component.model = new HierarchicalTreeSelectedItemModel();
