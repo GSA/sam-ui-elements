@@ -1,23 +1,20 @@
 .workspace.dash{
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
 
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-
-
-  .workspace.dash.body {
+  .workspace.dash.content {
     display: flex;
     flex: 1;
     flex-direction: row;
     flex-wrap: wrap;
   }
-  .workspace.dash.body> * {
+  .workspace.dash.content> * {
     padding: 10px;
-    flex: 1 100%;
   }
 
   /*****************flex: stretch & align**************************/
-  .workspace.dash.body{
+  .workspace.dash.content{
     align-items: stretch;
   }
   .sam.workspace.nav{
@@ -49,11 +46,12 @@
     order: 2;
   }
 
-/***********************************************/
   @media all and (min-width: 800px) {
     .sam.dash.body{
       display: flex;
       flex-wrap: wrap;
+      flex-direction: row;
+      flex: 1;
     }
     .sam.workspace.cards{
       flex: 3 0px;
@@ -71,15 +69,16 @@
       visibility: hidden;
     }
 
-    .workspace.dash.body :nth-child(1) { order: 1; }
-    .workspace.dash.body :nth-child(2) { order: 2; }
-    .workspace.dash.body :nth-child(3) { order: 4; }
-    .workspace.dash.body :nth-child(4) { order: 3; }
-    .workspace.dash.body :nth-child(5) { order: 5; }
-/*********************************************/
+    .workspace.dash.content :nth-child(1) { order: 1; }
+    .workspace.dash.content :nth-child(2) { order: 2; }
+    .workspace.dash.content :nth-child(3) { order: 4; }
+    .workspace.dash.content :nth-child(4) { order: 3; }
+    .workspace.dash.content :nth-child(5) { order: 5; }
   }
+
+
   @media all and (max-width: 799px) and (min-width: 600px){
-    .workspace.dash.body{
+    .workspace.dash.content{
       display: flex;
       flex-direction: column;
     }
@@ -99,10 +98,7 @@
       padding: 0;
       height: 100%;
      }
-     .sam.workspace.nav a{
-       height: 100%;
-     }
-     .sidenav-icon{
+     .nav-icon{
        max-height: 80%;
        height: auto;
        display: block;
@@ -119,18 +115,16 @@
        display: none;
      }
 
-    .workspace.dash.body :nth-child(1) { order: 1; }
-    .workspace.dash.body :nth-child(2) { order: 2; }
-    .workspace.dash.body :nth-child(3) { order: 4; }
-    .workspace.dash.body :nth-child(4) { order: 3; }
-    .workspace.dash.body :nth-child(5) { order: 5; }
-
-
+    .workspace.dash.content :nth-child(1) { order: 1; }
+    .workspace.dash.content :nth-child(2) { order: 2; }
+    .workspace.dash.content :nth-child(3) { order: 4; }
+    .workspace.dash.content :nth-child(4) { order: 3; }
+    .workspace.dash.content :nth-child(5) { order: 5; }
   }
 
 
   @media all and (max-width: 599px){
-    .workspace.dash.body{
+    .workspace.dash.content{
       display: flex;
       flex-direction: column;
     }
@@ -144,10 +138,7 @@
       padding: 0;
       height: 100%;
      }
-     .sam.workspace.nav a{
-       height: 100%;
-     }
-     .sidenav-icon{
+     .nav-icon{
        max-height: 80%;
        height: auto;
        display: block;
@@ -167,37 +158,32 @@
        display: none;
      }
 
-     .workspace.dash.body :nth-child(1) { order: 1; }
-     .workspace.dash.body :nth-child(2) { order: 3; }
-     .workspace.dash.body :nth-child(3) { order: 4; }
-     .workspace.dash.body :nth-child(4) { order: 2; }
-     .workspace.dash.body :nth-child(5) { order: 5; }
+     .workspace.dash.content :nth-child(1) { order: 1; }
+     .workspace.dash.content :nth-child(2) { order: 3; }
+     .workspace.dash.content :nth-child(3) { order: 4; }
+     .workspace.dash.content :nth-child(4) { order: 2; }
+     .workspace.dash.content :nth-child(5) { order: 5; }
   }
 
 
   /*STYLE*/
   .sam.workspace.nav {
-    order: -1;
     background-color: white;
     box-shadow: 0 0 4px 0;
     list-style-type: none;
     margin: 0;
     padding: 0;
-    width: 100%;
    }
-
    .sam.workspace.nav li {
      font-size: 14px;
      text-align: center;
      color: #212121;
      display: inline-block;
-     width: 100%;
      vertical-align: bottom;
    }
    .sam.workspace.nav li:hover {
      color: #323A45;
      background-color: #F1F1F1;
-     width: 100%;
    }
    .sam.workspace.nav a {
     text-decoration: none;
@@ -211,14 +197,12 @@
     margin: auto;
     width: 50%;
   }
-
-   .sidenav-icon{
+   .nav-icon{
      width: 50%;
      display: block;
      margin: auto;
      padding: 10%;
    }
-
    .profile.content{
      text-align: center;
    }
@@ -229,12 +213,11 @@
      text-align: justify;
    }
    .profile{
-    font-size: 20px;
-    line-height: 1.6;
-    display: inline-block;
-    text-align: justify;
+     font-size: 20px;
+     line-height: 1.6;
+     display: inline-block;
+     text-align: justify;
     }
-
     .notif.content{
       width: 100%;
       display: flex;
@@ -261,7 +244,6 @@
       min-width: 100px;
       height: 25px;
     }
-
     .sam.role.request{
       margin-right: 40px;
     }
