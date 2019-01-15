@@ -54,10 +54,6 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
 
   ngOnChanges() {
     this.dataChange.next(this.gridData);
-    // if (this.hierarchicalDataSource) {
-    //   this.hierarchicalDataSource.filter = this.filterText;
-    //  this.cdr.detectChanges();
-
   }
 
   ngOnInit() {
@@ -66,8 +62,6 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
       this.columnHeaderText.push(item.headerText);
     });
     this.displayedColumns = [...this.displayedColumns, ...this.columnFieldName];
-    // this.dataChange.next(this.gridData);
-    // this.cdr.detectChanges();
   }
 
   ngAfterViewInit() {
@@ -77,6 +71,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
     );
     this.cdr.detectChanges();
   }
+
   /**
    * On select the results
    */

@@ -8,13 +8,9 @@ import { SamHierarchicalAutocompleteComponent } from '../autocomplete/autocomple
 import { SamHierarchicalSelectedResultComponent } from '../selected-result/selected-result.component';
 import { SamModalModule } from '../../../components/modal';
 import { SamHierarchicalConfiguration } from '../models/SamHierarchicalConfiguration';
-
-
 import { Observable } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import 'rxjs/add/observable/of';
-
-
 
 describe('SamHierarchicalComponent', () => {
   let component: SamHierarchicalComponent;

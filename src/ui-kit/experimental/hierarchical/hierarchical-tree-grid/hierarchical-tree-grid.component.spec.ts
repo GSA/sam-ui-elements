@@ -45,12 +45,12 @@ describe('The Sam hierarchical grid component', () => {
             fixture = TestBed.createComponent(SamHierarchicalTreeGridComponent);
             component = fixture.componentInstance;
             component.displayedColumns = ['select'];
-            component.templateConfigurations = config;
+            component.configuration = config;
             fixture.detectChanges();
         });
 
         it('should displayedColumns length', function () {
-            component.templateConfigurations.gridDisplayedColumn = [
+            component.configuration.gridDisplayedColumn = [
                 { headerText: 'Id', fieldName: 'id' },
                 { headerText: 'Name', fieldName: 'name' },
             ];
@@ -119,10 +119,10 @@ describe('The Sam hierarchical grid component', () => {
                     type: 'lable'
                 }
             };
-            component.templateConfigurations = config;
+            component.configuration = config;
             component.onRowChange(dummyUpEvent, row);
             component.rowChanged.subscribe((res: any) => {
-                expect(res).toBe(row[component.templateConfigurations.primaryKey]);
+                expect(res).toBe(row[component.configuration.primaryKey]);
             });
         });
 
@@ -135,9 +135,9 @@ describe('The Sam hierarchical grid component', () => {
                     type: 'checkbox'
                 }
             };
-            component.templateConfigurations = config;
+            component.configuration = config;
             component.rowChanged.subscribe((res: any) => {
-                expect(res).toBe(row[component.templateConfigurations.primaryKey]);
+                expect(res).toBe(row[component.configuration.primaryKey]);
             });
             component.onRowChange(dummyUpEvent, row);
         });
@@ -154,7 +154,7 @@ describe('The Sam hierarchical grid component', () => {
                 }
             };
             component.selectedList = results;
-            component.templateConfigurations = config;
+            component.configuration = config;
             component.onChecked(dummyUpEvent, row);
             expect(component.selectedList.length).toBe(2);
         });
@@ -171,7 +171,7 @@ describe('The Sam hierarchical grid component', () => {
                 }
             };
             component.selectedList = results;
-            component.templateConfigurations = config;
+            component.configuration = config;
             component.onChecked(dummyUpEvent, row);
             expect(component.selectedList.length).toBe(1);
         });
@@ -188,7 +188,7 @@ describe('The Sam hierarchical grid component', () => {
                 }
             };
             component.selectedList = results;
-            component.templateConfigurations = config;
+            component.configuration = config;
             fixture.detectChanges();
             component.selectResults.subscribe((g) => {
                 expect(g.length).toBe(1);
@@ -208,7 +208,7 @@ describe('The Sam hierarchical grid component', () => {
                 }
             };
             component.selectedList = results;
-            component.templateConfigurations = config;
+            component.configuration = config;
             fixture.detectChanges();
             component.selectResults.subscribe((g) => {
                 expect(g.length).toBe(1);

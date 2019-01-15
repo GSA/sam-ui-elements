@@ -6,9 +6,7 @@ import { SamHierarchicalAutocompleteComponent } from './autocomplete/autocomplet
 import { SamHierarchicalTreeComponent } from './hierarchical-tree/hierarchical-tree.component';
 import { SamHierarchicalTreeGridComponent } from './hierarchical-tree-grid/hierarchical-tree-grid.component';
 import { SamHierarchicalSelectedResultComponent } from './selected-result/selected-result.component';
-import { SamHierarchicalTreeFilterComponent } from './hierarchical-tree-filter/hierarchical-tree-filter.component';
 import { SamHierarchicalTreeHeaderComponent } from './hierarchical-tree-header/hierarchical-tree-header.component';
-import { SamHierarchicalTreeFooterComponent } from './hierarchical-tree-footer/hierarchical-tree-footer.component';
 
 import { SamHierarchicalComponent } from './hierarchical/hierarchical.component';
 import { SamWrapperModule } from '../../wrappers';
@@ -20,15 +18,14 @@ import { SamDirectivesModule } from '../../directives';
 
 @NgModule({
   imports: [
-    CommonModule, FormsModule, SamWrapperModule, SamDataTableModule, SamCheckboxModule, SamSelectModule, SamButtonModule,
-    SamTextInputModule, SamIconsModule, SamModalModule, SamDirectivesModule
+    CommonModule, FormsModule, SamWrapperModule, SamDataTableModule, SamCheckboxModule, SamSelectModule,
+    SamButtonModule, SamTextInputModule, SamIconsModule, SamModalModule, SamDirectivesModule
   ],
   declarations: [SamHierarchicalAutocompleteComponent, SamHierarchicalTreeComponent,
     SamHierarchicalTreeGridComponent, SamHierarchicalSelectedResultComponent,
-    SamHierarchicalTreeFilterComponent, SamHierarchicalTreeHeaderComponent,
-    SamHierarchicalTreeFooterComponent, SamHierarchicalComponent],
-  exports: [SamHierarchicalAutocompleteComponent, SamHierarchicalSelectedResultComponent,
-    SamHierarchicalTreeComponent, SamHierarchicalTreeGridComponent, SamHierarchicalTreeHeaderComponent,
-    SamHierarchicalTreeFooterComponent, SamHierarchicalTreeFilterComponent, SamHierarchicalComponent]
+    SamHierarchicalTreeHeaderComponent, SamHierarchicalComponent],
+  exports: [SamHierarchicalAutocompleteComponent, SamHierarchicalTreeComponent,
+    SamHierarchicalTreeGridComponent, SamHierarchicalSelectedResultComponent,
+    SamHierarchicalTreeHeaderComponent, SamHierarchicalComponent]
 })
 export class SamHierarchicalModule { }
