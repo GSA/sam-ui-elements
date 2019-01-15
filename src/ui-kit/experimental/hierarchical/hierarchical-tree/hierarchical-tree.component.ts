@@ -14,9 +14,8 @@ import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 export interface HierarchyConfiguration {
   gridDisplayedColumn: GridDisplayedColumn[],
   primaryKey: string,
-  options: OptionsType[],
   filterPlaceholder: string,
-  topLevelText: string;
+  topBreadcrumbLevelText: string;
 }
 
 @Component({
@@ -82,7 +81,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
 
   public ngOnInit() {
-
+    this.addInitialBreadcrumb();
     this.selecteHierarchyLevel.subscribe(
       value => this.selectItem(value)
 
@@ -91,11 +90,18 @@ export class SamHierarchicalTreeComponent implements OnInit {
     this.selectBreadcrumb.subscribe(
       value => {
         let item = this.breadcrumbStack.find(itm => itm[this.hierarchyConfiguration.primaryKey] === value);
+        let pos = this.breadcrumbStack.indexOf(item);
+        if (pos === -1) {
+          pos = this.breadcrumbStack.length;
+        }
+        for (let i = 0; i <= pos; i++) {
+          this.breadcrumbStack.shift();
+          this.breadcrumbStackSelectable.shift();
+        }
         this.selectItem(item);
-        //Clean out stacks 
-
-        // this.breadcrumbStackSelectable.unshift(breadCrumbItem);
-        // this.breadcrumbStack.unshift(value);
+        if (this.breadcrumbStackSelectable.length === 0) {
+          this.addInitialBreadcrumb();
+        }
       }
     );
     this.selectResults$.subscribe(
@@ -107,21 +113,24 @@ export class SamHierarchicalTreeComponent implements OnInit {
     this.filterTextSubject.subscribe(
       text => {
         this.filterText = text;
-        console.log('filterTextSubject');
-        console.log(text)
         this.getResults();
       }
     );
   }
 
 
-
+  private addInitialBreadcrumb(): void {
+    const breadCrumbItem = {};
+    breadCrumbItem['name'] = "All Departments";
+    breadCrumbItem['id'] = null;
+    breadCrumbItem['value'] = null;
+    breadCrumbItem['label'] = "All Departments";
+    this.breadcrumbStackSelectable.unshift(breadCrumbItem);
+  }
 
 
 
   selectItem(value: object) {
-    //clearFilter
-
     if (value) {
       this.selectedValue = value[this.hierarchyConfiguration.primaryKey];
     } else {
@@ -136,20 +145,10 @@ export class SamHierarchicalTreeComponent implements OnInit {
       breadCrumbItem['value'] = value[this.hierarchyConfiguration.primaryKey];
       breadCrumbItem['label'] = value['name'];
     }
-    // else{
-    //   breadCrumbItem['name'] = 'Top Level';
-    //   breadCrumbItem['id'] = null;
-    //   breadCrumbItem['value']  = null;
-    //   breadCrumbItem['label'] =  'Top Level';
-
-    // }
     let breadcrumbStackPostion = this.breadcrumbStack.indexOf(breadCrumbItem);
     if (breadcrumbStackPostion === -1 && value) {
       this.breadcrumbStackSelectable.unshift(breadCrumbItem);
       this.breadcrumbStack.unshift(value);
-    } else {
-      console.log("breadcrumbStack");
-      console.log(breadcrumbStackPostion);
     }
     this.getResults();
   }

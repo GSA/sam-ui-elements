@@ -17,13 +17,11 @@ export class SamHierarchicalTreeHeaderComponent {
 * Lable for the options dropdown
 */
   @Input() public label: string;
+
   /**
 * Whether Search should happned on click or keyup
 */
   @Input() private changeType: string = 'keyup';
-
-
-  @Input() public breadcrumbStack: object[] = [];
 
   /**
 * Event emitted when level change is clicked
@@ -54,7 +52,11 @@ export class SamHierarchicalTreeHeaderComponent {
 
   navigateToParent(): void {
     if (this.options.length > 1) {
-      this.selectBreadcrumb.emit(this.options[1].value.toString());
+      if (this.options[1].value) {
+        this.selectBreadcrumb.emit(this.options[1].value.toString());
+      } else {
+        this.selectBreadcrumb.emit(null);
+      }
     }
   }
 }
