@@ -11,7 +11,7 @@
     </sam-hierarchical-tree-header>
 
     <sam-hierarchical-tree-grid 
-      [templateConfigurations]="hierarchyConfiguration" 
+      [configuration]="configuration" 
       [gridData]="gridResults | async"
       (rowChanged)="selecteHierarchyLevel.next($event)" 
       (selectResults)="selectResults$.next($event)">

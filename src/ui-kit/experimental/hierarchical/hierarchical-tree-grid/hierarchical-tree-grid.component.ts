@@ -17,7 +17,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   /**
   * Table configurations 
   */
-  @Input() public templateConfigurations: SamHierarchicalTreeGridConfiguration;
+  @Input() public configuration: SamHierarchicalTreeGridConfiguration;
 
   /**
 * Data for the Table.
@@ -61,7 +61,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.templateConfigurations.gridDisplayedColumn.forEach(item => {
+    this.configuration.gridDisplayedColumn.forEach(item => {
       this.columnFieldName.push(item.fieldName);
       this.columnHeaderText.push(item.headerText);
     });

@@ -44,7 +44,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   /**
   * hierarchy tree picker configurations 
   */
-  @Input() hierarchyConfiguration: SamHierarchicalTreeConfiguration;
+  @Input() configuration: SamHierarchicalTreeConfiguration;
 
   /**
   * Data for the Table.
@@ -79,12 +79,11 @@ export class SamHierarchicalTreeComponent implements OnInit {
     this.addInitialBreadcrumb();
     this.selecteHierarchyLevel.subscribe(
       value => this.selectItem(value)
-
     );
 
     this.selectBreadcrumb.subscribe(
       value => {
-        let item = this.breadcrumbStack.find(itm => itm[this.hierarchyConfiguration.primaryKey] === value);
+        let item = this.breadcrumbStack.find(itm => itm[this.configuration.primaryKey] === value);
         let pos = this.breadcrumbStack.indexOf(item);
         if (pos === -1) {
           pos = this.breadcrumbStack.length;
@@ -122,17 +121,17 @@ export class SamHierarchicalTreeComponent implements OnInit {
     this.breadcrumbStackSelectable.unshift(breadCrumbItem);
   }
 
-  selectItem(value: object) {
+  private selectItem(value: object) {
     if (value) {
-      this.selectedValue = value[this.hierarchyConfiguration.primaryKey];
+      this.selectedValue = value[this.configuration.primaryKey];
     } else {
       this.selectedValue = null;
     }
     const breadCrumbItem = {};
     if (value) {
       breadCrumbItem['name'] = value['name'];
-      breadCrumbItem['id'] = value[this.hierarchyConfiguration.primaryKey];
-      breadCrumbItem['value'] = value[this.hierarchyConfiguration.primaryKey];
+      breadCrumbItem['id'] = value[this.configuration.primaryKey];
+      breadCrumbItem['value'] = value[this.configuration.primaryKey];
       breadCrumbItem['label'] = value['name'];
     }
     let breadcrumbStackPostion = this.breadcrumbStack.indexOf(breadCrumbItem);

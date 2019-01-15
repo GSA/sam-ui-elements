@@ -4,6 +4,6 @@
     <sam-selected-result *ngIf="!isSingleMode()" [model]="model" [configuration]="configuration" [itemTemplate]="selectedItemTemplate"></sam-selected-result>
     <sam-modal [showClose]="true" #modal [title]="configuration.modalTitle" [type]="'primary'" [submitButtonLabel]="configuration.modalSelectButtonLabel"
         [cancelButtonLabel]="configuration.modalCancelButtonLabel" (onSubmit)="onModalSubmitClick()">
-        <sam-hierarchical-tree [hierarchyConfiguration]="hierarchyConfiguration" [service]="service"></sam-hierarchical-tree>
+        <sam-hierarchical-tree [configuration]="hierarchyConfiguration" [service]="service"></sam-hierarchical-tree>
     </sam-modal>
 </div>
