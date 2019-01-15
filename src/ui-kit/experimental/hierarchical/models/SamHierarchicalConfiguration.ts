@@ -1,9 +1,10 @@
 import { SamHierarchicalAutocompleteConfiguration } from './SamHierarchicalAutocompleteConfiguration';
 import { SelectedResultConfiguration } from './SamHierarchicalSelectedResultConfiguration';
+import { SamHierarchicalTreeConfiguration } from './SamHierarchicalTreeConfiguration';
+import { SamHierarchicalTreeGridColumn } from './SamHierarchicalTreeGridColumn';
 
 
-
-export class SamHierarchicalConfiguration implements SamHierarchicalAutocompleteConfiguration, SelectedResultConfiguration {
+export class SamHierarchicalConfiguration implements SamHierarchicalAutocompleteConfiguration, SelectedResultConfiguration, SamHierarchicalTreeConfiguration {
 
     /**
       * sets the default debounce time to 250 milliseconds 
@@ -63,4 +64,14 @@ export class SamHierarchicalConfiguration implements SamHierarchicalAutocomplete
      * 
      */
     public modalCancelButtonLabel: string;
+
+    /**
+     * 
+     */
+    public gridDisplayedColumn: SamHierarchicalTreeGridColumn[]
+
+    /**
+     * 
+     */
+    public primaryKey: string;
 }

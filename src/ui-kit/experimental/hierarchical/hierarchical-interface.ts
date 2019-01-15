@@ -16,10 +16,6 @@ export interface SamHiercarchicalServiceInterface {
      */
     getHiercarchicalById(id?: string, searchValue?: string): Observable<object[]>;
 
-
-
-
-
 }
 
 export interface SearchByTextResult {

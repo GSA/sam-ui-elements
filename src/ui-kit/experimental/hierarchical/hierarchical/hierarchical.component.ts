@@ -45,16 +45,6 @@ export class SamHierarchicalComponent implements OnInit {
  */
   @Input() selectedItemTemplate: TemplateRef<any>;
 
-
-  public hierarchyConfiguration: any = {
-    primaryKey: 'id',
-    gridDisplayedColumn: [
-      { headerText: 'Id', fieldName: 'id', displayOrder: 1 },
-      { headerText: 'Name', fieldName: 'name', displayOrder: 2 },
-      { headerText: 'Sub Text', fieldName: 'subtext', displayOrder: 3 }
-    ]
-  };
-
   constructor() { }
 
   ngOnInit() {
@@ -66,7 +56,6 @@ export class SamHierarchicalComponent implements OnInit {
   }
 
   onModalSubmitClick() {
-
     this.modal.closeModal();
     // Add in code to get selected items from tree and add it to the selected item model
   }

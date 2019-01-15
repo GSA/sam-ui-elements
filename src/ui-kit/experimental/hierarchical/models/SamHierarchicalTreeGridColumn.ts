@@ -3,11 +3,11 @@ export class SamHierarchicalTreeGridColumn {
     /**
      * 
      */
-    headerText: string;
+    public headerText: string;
 
     /**
      * 
      */
-    fieldName: string;
+    public fieldName: string;
 
 }
