@@ -8,15 +8,10 @@ import {
 } from '@angular/core';
 import { OptionsType } from '../../../../ui-kit/types';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { GridDisplayedColumn } from '../hierarchical-tree-grid/hierarchical-tree-grid.component';
-import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 
-export interface HierarchyConfiguration {
-  gridDisplayedColumn: GridDisplayedColumn[],
-  primaryKey: string,
-  filterPlaceholder: string,
-  topBreadcrumbLevelText: string;
-}
+import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
+import { SamHierarchicalTreeConfiguration } from '../models/SamHierarchicalTreeConfiguration';
+
 
 @Component({
   selector: 'sam-hierarchical-tree',
@@ -49,7 +44,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   /**
   * hierarchy tree picker configurations 
   */
-  @Input() hierarchyConfiguration: HierarchyConfiguration;
+  @Input() hierarchyConfiguration: SamHierarchicalTreeConfiguration;
 
   /**
   * Data for the Table.
@@ -118,7 +113,6 @@ export class SamHierarchicalTreeComponent implements OnInit {
     );
   }
 
-
   private addInitialBreadcrumb(): void {
     const breadCrumbItem = {};
     breadCrumbItem['name'] = "All Departments";
@@ -128,16 +122,12 @@ export class SamHierarchicalTreeComponent implements OnInit {
     this.breadcrumbStackSelectable.unshift(breadCrumbItem);
   }
 
-
-
   selectItem(value: object) {
     if (value) {
       this.selectedValue = value[this.hierarchyConfiguration.primaryKey];
     } else {
       this.selectedValue = null;
     }
-
-
     const breadCrumbItem = {};
     if (value) {
       breadCrumbItem['name'] = value['name'];

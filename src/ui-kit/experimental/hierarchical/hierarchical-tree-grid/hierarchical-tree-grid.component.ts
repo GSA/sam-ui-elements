@@ -1,29 +1,11 @@
 import {
-  Component,
-  OnInit,
-  ViewChild,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectorRef
+  Component, OnInit, ViewChild, Input,
+  Output, EventEmitter, ChangeDetectorRef
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { SamSortDirective } from '../../../components'
 import { HierarchicalDataSource } from './data-source';
-
-export interface GridTemplate {
-}
-
-export interface GridTemplateConfiguration {
-  gridDisplayedColumn: GridDisplayedColumn[]
-  primaryKey: string;
-}
-
-export interface GridDisplayedColumn {
-  headerText: string,
-  fieldName: string,
-  displayOrder: number
-}
+import { SamHierarchicalTreeGridConfiguration } from '../models/SamHierarchicalTreeGridConfiguration';
 
 @Component({
   selector: 'sam-hierarchical-tree-grid',
@@ -35,17 +17,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   /**
   * Table configurations 
   */
-  @Input() public templateConfigurations: GridTemplateConfiguration;
-
-  /**
-  * Allow to insert a customized template for suggestions to use
-  */
-  @Input() public gridTemplate: GridTemplate;
-
-  /**
-  * Allow to search the data on the table.
-  */
-  @Input() public filterText: string;
+  @Input() public templateConfigurations: SamHierarchicalTreeGridConfiguration;
 
   /**
 * Data for the Table.

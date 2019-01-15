@@ -13,6 +13,7 @@ export class SamHierarchicalTreeHeaderComponent {
   * Options for the Dropdown
   */
   @Input() public options: OptionsType[];
+
   /**
 * Lable for the options dropdown
 */

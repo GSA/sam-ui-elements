@@ -21,16 +21,16 @@ export class SamHierarchicalSelectedResultComponent {
   public model: HierarchicalTreeSelectedItemModel;
 
   /**
-  * Settings for the Selected Results control 
+  * Configuration for the Selected Results control 
   */
   @Input()
-  public settings: SelectedResultConfiguration;
+  public configuration: SelectedResultConfiguration;
 
   /**
    * Removes item from the model
    * @param item 
    */
   removeItem(item: object) {
-    this.model.removeItem(item, this.settings.keyField);
+    this.model.removeItem(item, this.configuration.keyField);
   }
 }

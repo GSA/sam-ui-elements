@@ -2,7 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CdkTableModule } from '@angular/cdk';
 import { SamDataTableModule, SamSortDirective } from '../../../components/data-table';
-import { SamHierarchicalTreeGridComponent, GridTemplateConfiguration } from './hierarchical-tree-grid.component';
+import { SamHierarchicalTreeGridComponent } from './hierarchical-tree-grid.component';
+import { SamHierarchicalTreeGridConfiguration } from '../models/SamHierarchicalTreeGridConfiguration';
+
 import {
     ChangeDetectorRef
 } from '@angular/core/src/change_detection/change_detector_ref';
@@ -20,7 +22,7 @@ const gridData = [
     { 'id': '9', 'parentId': '8', 'name': 'Level 1', 'subtext': 'id 4586', 'type': 'Level 1' }
 ];
 
-const config: GridTemplateConfiguration = {
+const config: SamHierarchicalTreeGridConfiguration = {
     gridDisplayedColumn: [],
     primaryKey: 'id',
 };
@@ -49,8 +51,8 @@ describe('The Sam hierarchical grid component', () => {
 
         it('should displayedColumns length', function () {
             component.templateConfigurations.gridDisplayedColumn = [
-                { headerText: 'Id', fieldName: 'id', displayOrder: 1 },
-                { headerText: 'Name', fieldName: 'name', displayOrder: 2 },
+                { headerText: 'Id', fieldName: 'id' },
+                { headerText: 'Name', fieldName: 'name' },
             ];
             component.ngOnInit();
             fixture.detectChanges();
@@ -73,12 +75,12 @@ describe('The Sam hierarchical grid component', () => {
 
         it('should be fitler text changes', function () {
             component.dataChange.next(gridData);
-            component.filterText = '1';
+          
             component.hierarchicalDataSource = new HierarchicalDataSource(
                 component.dataChange,
                 component.sort
             );
-            component.hierarchicalDataSource.filter = component.filterText;
+            
             fixture.detectChanges();
             expect(component.hierarchicalDataSource.renderedData.length).toBe(3);
         });
@@ -285,7 +287,7 @@ describe('The Sam hierarchical grid component', () => {
             const result = dataSource.sortingDataAccessor(row, 'id');
             expect(result).toBe(row['id']);
         });
-     
+
     });
 });
 

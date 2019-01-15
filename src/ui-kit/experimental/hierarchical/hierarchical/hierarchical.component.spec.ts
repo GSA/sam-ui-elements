@@ -32,18 +32,18 @@ describe('SamHierarchicalComponent', () => {
     fixture = TestBed.createComponent(SamHierarchicalComponent);
     component = fixture.componentInstance;
 
-    component.settings = new SamHierarchicalConfiguration();
+    component.configuration = new SamHierarchicalConfiguration();
 
 
     component.model = new HierarchicalTreeSelectedItemModel();
     component.service = new HierarchicalDataService();
-    component.settings.keyField = 'id';
-    component.settings.id = 'autocomplete1';
-    component.settings.labelText = 'Autocomplete 1';
-    component.settings.valueProperty = 'name';
-    component.settings.subValueProperty = 'subtext';
-    component.settings.placeHolderText = "Enter text";
-    component.settings.modalTitle = "Advanced Lookup";
+    component.configuration.keyField = 'id';
+    component.configuration.id = 'autocomplete1';
+    component.configuration.labelText = 'Autocomplete 1';
+    component.configuration.valueProperty = 'name';
+    component.configuration.subValueProperty = 'subtext';
+    component.configuration.placeHolderText = "Enter text";
+    component.configuration.modalTitle = "Advanced Lookup";
     component.model.treeMode = TreeMode.SINGLE;
     fixture.detectChanges();
   });

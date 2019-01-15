@@ -42,10 +42,10 @@ export class SamHierarchicalAutocompleteComponent {
   public model: HierarchicalTreeSelectedItemModel;
 
   /**
-   * Settings for the Autocomplete control 
+   * Configuration for the Autocomplete control 
    */
   @Input()
-  public settings: SamHierarchicalAutocompleteConfiguration;
+  public configuration: SamHierarchicalAutocompleteConfiguration;
 
   /**
    * Instance of the SamHiercarchicalServiceInterface provided
@@ -125,7 +125,7 @@ export class SamHierarchicalAutocompleteComponent {
         if (this.inputValue.length === 0) {
           this.model.clearItems();
         } else {
-          this.inputValue = this.model.getItems()[0][this.settings.valueProperty];
+          this.inputValue = this.model.getItems()[0][this.configuration.valueProperty];
         }
       } else {
         this.inputValue = '';
@@ -177,11 +177,11 @@ export class SamHierarchicalAutocompleteComponent {
    * @param item 
    */
   private selectItem(item: object): void {
-    this.model.addItem(item, this.settings.keyField);
-    let message = item[this.settings.valueProperty];
+    this.model.addItem(item, this.configuration.keyField);
+    let message = item[this.configuration.valueProperty];
     this.inputValue = message;
-    if (this.settings.subValueProperty && item[this.settings.subValueProperty]) {
-      message += ': ' + item[this.settings.subValueProperty];
+    if (this.configuration.subValueProperty && item[this.configuration.subValueProperty]) {
+      message += ': ' + item[this.configuration.subValueProperty];
     }
     message += ' selected';
     this.addScreenReaderMessage(message);
@@ -245,7 +245,7 @@ export class SamHierarchicalAutocompleteComponent {
             this.showResults = true;
             this.addScreenReaderMessage(this.maxResults + ' ' + this.resultsAvailableMessage)
           });
-      }, this.settings.debounceTime);
+      }, this.configuration.debounceTime);
     }
   }
 
@@ -317,9 +317,9 @@ export class SamHierarchicalAutocompleteComponent {
       }
       this.highlightedItem = item;
       this.highlightedItem[this.HighlightedPropertyName] = true;
-      let message = item[this.settings.valueProperty];
-      if (this.settings.subValueProperty && item[this.settings.subValueProperty]) {
-        message += ': ' + item[this.settings.subValueProperty]
+      let message = item[this.configuration.valueProperty];
+      if (this.configuration.subValueProperty && item[this.configuration.subValueProperty]) {
+        message += ': ' + item[this.configuration.subValueProperty]
 
       }
       this.addScreenReaderMessage(message);

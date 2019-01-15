@@ -21,11 +21,11 @@ describe('SamHierarchicalSelectedResultComponent', () => {
     fixture = TestBed.createComponent(SamHierarchicalSelectedResultComponent);
     component = fixture.componentInstance;
     component.model = new HierarchicalTreeSelectedItemModel();
-    component.settings = new SelectedResultConfiguration();
-    component.settings.keyField = 'id';
+    component.configuration = new SelectedResultConfiguration();
+    component.configuration.keyField = 'id';
     component.model.treeMode = TreeMode.SINGLE;
-    component.settings.valueProperty = 'name';
-    component.settings.subValueProperty = 'subtext';
+    component.configuration.valueProperty = 'name';
+    component.configuration.subValueProperty = 'subtext';
     fixture.detectChanges();
   });
 

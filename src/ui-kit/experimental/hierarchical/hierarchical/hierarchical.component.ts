@@ -16,10 +16,10 @@ export class SamHierarchicalComponent implements OnInit {
   @ViewChild('modal') modal;
 
   /**
-   * Settings for the Autocomplete control 
+   * Configuration for the control 
    */
   @Input()
-  public settings: SamHierarchicalConfiguration;
+  public configuration: SamHierarchicalConfiguration;
 
   /**
   * Instance of the SamHiercarchicalServiceInterface provided

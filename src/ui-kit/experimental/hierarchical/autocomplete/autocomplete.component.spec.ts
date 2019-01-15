@@ -27,13 +27,13 @@ describe('SamHierarchicalAutocompleteComponent', () => {
     component = fixture.componentInstance;
     component.service = new HierarchicalDataService();
     component.model = new HierarchicalTreeSelectedItemModel();
-    component.settings = new SamHierarchicalAutocompleteConfiguration();
-    component.settings.id = 'autoId';
-    component.settings.keyField = 'id';
+    component.configuration = new SamHierarchicalAutocompleteConfiguration();
+    component.configuration.id = 'autoId';
+    component.configuration.keyField = 'id';
     component.model.treeMode = TreeMode.SINGLE;
-    component.settings.valueProperty = 'name';
-    component.settings.subValueProperty = 'subtext';
-    component.settings.debounceTime = 0;
+    component.configuration.valueProperty = 'name';
+    component.configuration.subValueProperty = 'subtext';
+    component.configuration.debounceTime = 0;
     fixture.detectChanges();
   });
 
@@ -181,7 +181,7 @@ describe('SamHierarchicalAutocompleteComponent', () => {
   }));
 
   it('Should have backspace have results', fakeAsync(() => {
-    component.settings.subValueProperty = undefined;
+    component.configuration.subValueProperty = undefined;
     const event = {
       "key": "Backspace",
       "target": { "value": 'id' }
