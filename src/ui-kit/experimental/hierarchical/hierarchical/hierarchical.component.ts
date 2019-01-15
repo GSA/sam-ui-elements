@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
 
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
@@ -10,10 +10,13 @@ import { SamHierarchicalConfiguration } from '../models/SamHierarchicalConfigura
   templateUrl: './hierarchical.component.html',
   styleUrls: ['./hierarchical.component.scss']
 })
-export class SamHierarchicalComponent implements OnInit {
+export class SamHierarchicalComponent {
 
 
   @ViewChild('modal') modal;
+
+
+  @ViewChild('hierarchicaltree') hierarchicaltree;
 
   /**
    * Configuration for the control 
@@ -47,8 +50,6 @@ export class SamHierarchicalComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
 
 
   onModalClick() {
@@ -57,7 +58,7 @@ export class SamHierarchicalComponent implements OnInit {
 
   onModalSubmitClick() {
     this.modal.closeModal();
-    // Add in code to get selected items from tree and add it to the selected item model
+    this.model.addItems(<object[]>this.hierarchicaltree.results, this.configuration.keyField);
   }
 
 

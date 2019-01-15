@@ -1,38 +1,27 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectorRef
-} from '@angular/core';
-import { OptionsType } from '../../../../ui-kit/types';
-import { Observable, BehaviorSubject } from 'rxjs';
-
-import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
-import { SamHierarchicalTreeConfiguration } from '../models/SamHierarchicalTreeConfiguration';
-
+import { Component, OnInit, Input } from "@angular/core";
+import { Observable, BehaviorSubject } from "rxjs";
+import { SamHiercarchicalServiceInterface } from "../hierarchical-interface";
+import { SamHierarchicalTreeConfiguration } from "../models/SamHierarchicalTreeConfiguration";
 
 @Component({
-  selector: 'sam-hierarchical-tree',
-  templateUrl: './hierarchical-tree.component.html',
-  styleUrls: ['./hierarchical-tree.component.scss']
+  selector: "sam-hierarchical-tree",
+  templateUrl: "./hierarchical-tree.component.html",
+  styleUrls: ["./hierarchical-tree.component.scss"]
 })
 
 export class SamHierarchicalTreeComponent implements OnInit {
 
   public selecteHierarchyLevel = new BehaviorSubject<object>(null);
   public selectResults$ = new BehaviorSubject<object[]>([]);
-  public filterTextSubject = new BehaviorSubject<string>('');
+  public filterTextSubject = new BehaviorSubject<string>("");
   public selectBreadcrumb = new BehaviorSubject<string>(null);
 
   public results: object[];
 
   public gridResults: Observable<object[]>;
 
-
-  private selectedResults: object[];
   private filterText: string;
+
   private selectedValue: string;
 
 
@@ -46,30 +35,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   */
   @Input() configuration: SamHierarchicalTreeConfiguration;
 
-  /**
-  * Data for the Table.
-  *  Observable data array
-  * Stream that emit a array each time when the item is selected.
-  * Stream that changes each time when click action trigger on row.
-  */
-  //@Input() 
-  gridData: object[];
-  /**
-  * Event emitted when row is clicked
-  */
-  //@Output() public rowChanged = new EventEmitter<object>();
-
-  /**
-  * Event emitted when level change is clicked
-  */
-  //@Output() public selectedAgency = new EventEmitter<string>();
-
-  /**
-  * Event emitted when row set is selected.
-  */
-  @Output() selectResults = new EventEmitter<object[]>();
-
-  constructor(private cdr: ChangeDetectorRef) { }
+  constructor() { }
 
   private breadcrumbStack: object[] = [];
   private breadcrumbStackSelectable: object[] = [];
@@ -114,10 +80,10 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
   private addInitialBreadcrumb(): void {
     const breadCrumbItem = {};
-    breadCrumbItem['name'] = "All Departments";
-    breadCrumbItem['id'] = null;
-    breadCrumbItem['value'] = null;
-    breadCrumbItem['label'] = "All Departments";
+    breadCrumbItem["name"] = "All Departments";
+    breadCrumbItem["id"] = null;
+    breadCrumbItem["value"] = null;
+    breadCrumbItem["label"] = "All Departments";
     this.breadcrumbStackSelectable.unshift(breadCrumbItem);
   }
 
@@ -129,10 +95,10 @@ export class SamHierarchicalTreeComponent implements OnInit {
     }
     const breadCrumbItem = {};
     if (value) {
-      breadCrumbItem['name'] = value['name'];
-      breadCrumbItem['id'] = value[this.configuration.primaryKey];
-      breadCrumbItem['value'] = value[this.configuration.primaryKey];
-      breadCrumbItem['label'] = value['name'];
+      breadCrumbItem["name"] = value["name"];
+      breadCrumbItem["id"] = value[this.configuration.primaryKey];
+      breadCrumbItem["value"] = value[this.configuration.primaryKey];
+      breadCrumbItem["label"] = value["name"];
     }
     let breadcrumbStackPostion = this.breadcrumbStack.indexOf(breadCrumbItem);
     if (breadcrumbStackPostion === -1 && value) {
@@ -141,11 +107,6 @@ export class SamHierarchicalTreeComponent implements OnInit {
     }
     this.getResults();
   }
-
-  onSelect(): void {
-    this.selectResults.emit(this.results)
-  }
-
 
   getResults() {
     this.gridResults = this.service.getHiercarchicalById(this.selectedValue, this.filterText);
