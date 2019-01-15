@@ -27,9 +27,11 @@ export interface HierarchyConfiguration {
 
 export class SamHierarchicalTreeComponent implements OnInit {
 
-  public selecteHierarchyLevel = new BehaviorSubject<string>(null);
+  public selecteHierarchyLevel = new BehaviorSubject<object>(null);
   public selectResults$ = new BehaviorSubject<object[]>([]);
   public filterTextSubject = new BehaviorSubject<string>('');
+  public selectBreadcrumb = new BehaviorSubject<string>(null);
+
   public results: object[];
 
   public gridResults: Observable<object[]>;
@@ -76,31 +78,25 @@ export class SamHierarchicalTreeComponent implements OnInit {
   constructor(private cdr: ChangeDetectorRef) { }
 
   private breadcrumbStack: object[] = [];
+  private breadcrumbStackSelectable: object[] = [];
+
 
   public ngOnInit() {
 
     this.selecteHierarchyLevel.subscribe(
+      value => this.selectItem(value)
+
+    );
+
+    this.selectBreadcrumb.subscribe(
       value => {
+        let item = this.breadcrumbStack.find(itm => itm[this.hierarchyConfiguration.primaryKey] === value);
+        this.selectItem(item);
+        //Clean out stacks 
 
-        //clearFilter
-
-        if (value) {
-          this.selectedValue = value[this.hierarchyConfiguration.primaryKey];
-        } else {
-          this.selectedValue = null;
-        }
-
-        let breadcrumbStackPostion = this.breadcrumbStack.indexOf(value);
-        if (breadcrumbStackPostion === -1) {
-          this.breadcrumbStack.unshift(value);
-          console.log("breadcrumbStack not found");
-        } else {
-          console.log("breadcrumbStack");
-          console.log(breadcrumbStackPostion);
-        }
-        this.getResults();
+        // this.breadcrumbStackSelectable.unshift(breadCrumbItem);
+        // this.breadcrumbStack.unshift(value);
       }
-
     );
     this.selectResults$.subscribe(
       res => {
@@ -111,9 +107,51 @@ export class SamHierarchicalTreeComponent implements OnInit {
     this.filterTextSubject.subscribe(
       text => {
         this.filterText = text;
+        console.log('filterTextSubject');
+        console.log(text)
         this.getResults();
       }
     );
+  }
+
+
+
+
+
+
+  selectItem(value: object) {
+    //clearFilter
+
+    if (value) {
+      this.selectedValue = value[this.hierarchyConfiguration.primaryKey];
+    } else {
+      this.selectedValue = null;
+    }
+
+
+    const breadCrumbItem = {};
+    if (value) {
+      breadCrumbItem['name'] = value['name'];
+      breadCrumbItem['id'] = value[this.hierarchyConfiguration.primaryKey];
+      breadCrumbItem['value'] = value[this.hierarchyConfiguration.primaryKey];
+      breadCrumbItem['label'] = value['name'];
+    }
+    // else{
+    //   breadCrumbItem['name'] = 'Top Level';
+    //   breadCrumbItem['id'] = null;
+    //   breadCrumbItem['value']  = null;
+    //   breadCrumbItem['label'] =  'Top Level';
+
+    // }
+    let breadcrumbStackPostion = this.breadcrumbStack.indexOf(breadCrumbItem);
+    if (breadcrumbStackPostion === -1 && value) {
+      this.breadcrumbStackSelectable.unshift(breadCrumbItem);
+      this.breadcrumbStack.unshift(value);
+    } else {
+      console.log("breadcrumbStack");
+      console.log(breadcrumbStackPostion);
+    }
+    this.getResults();
   }
 
   onSelect(): void {

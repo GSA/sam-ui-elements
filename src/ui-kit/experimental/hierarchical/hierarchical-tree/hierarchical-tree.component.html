@@ -5,9 +5,10 @@
 <ng-template #template>
   <div>
     <sam-hierarchical-tree-header 
-      [options]="hierarchyConfiguration.options" 
-      (selectedAgency)="selecteHierarchyLevel.next($event)" 
-      (filterText)="filterTextSubject.next($event)">
+    [options]="breadcrumbStackSelectable"    
+      (selectBreadcrumb)="selectBreadcrumb.next($event)" 
+      (filterText)="filterTextSubject.next($event)"
+      [breadcrumbStack]="breadcrumbStack">
     </sam-hierarchical-tree-header>
 
     <sam-hierarchical-tree-grid 

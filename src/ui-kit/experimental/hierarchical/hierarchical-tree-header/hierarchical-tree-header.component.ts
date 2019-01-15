@@ -13,22 +13,25 @@ export class SamHierarchicalTreeHeaderComponent {
   * Options for the Dropdown
   */
   @Input() public options: OptionsType[];
-    /**
-  * Lable for the options dropdown
-  */
+  /**
+* Lable for the options dropdown
+*/
   @Input() public label: string;
-    /**
-  * Whether Search should happned on click or keyup
-  */
+  /**
+* Whether Search should happned on click or keyup
+*/
   @Input() private changeType: string = 'keyup';
 
-    /**
-  * Event emitted when level change is clicked
-  */
-  @Output() public selectedAgency = new EventEmitter<string>();
-    /**
-  * Event emitted when level change is clicked
-  */
+
+  @Input() public breadcrumbStack: object[] = [];
+
+  /**
+* Event emitted when level change is clicked
+*/
+  @Output() public selectBreadcrumb = new EventEmitter<string>();
+  /**
+* Event emitted when level change is clicked
+*/
   @Output() public filterText = new EventEmitter<string>();
 
   public selectModel: string;
@@ -46,12 +49,12 @@ export class SamHierarchicalTreeHeaderComponent {
   }
 
   onLevelChange(ev: Event): void {
-    this.selectedAgency.emit(this.selectModel);
+    this.selectBreadcrumb.emit(this.selectModel);
   }
 
   navigateToParent(): void {
     if (this.options.length > 1) {
-      this.selectedAgency.emit(this.options[1].value.toString());
+      this.selectBreadcrumb.emit(this.options[1].value.toString());
     }
   }
 }
