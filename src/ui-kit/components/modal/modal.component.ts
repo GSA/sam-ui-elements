@@ -117,7 +117,6 @@ export class SamModalComponent implements OnInit {
   private _allFocusableElements: NodeListOf<Element>;
   private _modalFocusableElements: NodeListOf<Element>;
   private _scrollHelpers: any;
-  private styleTag: HTMLStyleElement;
 
   private args = undefined;
   public modalElIds = {
@@ -128,10 +127,10 @@ export class SamModalComponent implements OnInit {
 
   constructor(private hostElement: ElementRef, private cdr: ChangeDetectorRef) {
     this.internalId = Date.now();
-    this.styleTag = this.buildStyleElements();
   }
 
   ngOnInit() {
+    document.body.appendChild(this.hostElement.nativeElement);
     this._scrollHelpers = ScrollHelpers(window);
     if (!this.typeNotDefined()) {
       this.selectedType = this.types[this.type].class;
@@ -211,8 +210,7 @@ export class SamModalComponent implements OnInit {
     this.open.emit(this.args);
     if (document && document.body) {
       this.createBackdrop();
-      document.body.appendChild(this.styleTag);
-    //  this._scrollHelpers.disableScroll();
+      this.disableScroll();
       document.body.appendChild(this.backdropElement);
     }
     this._focusModalElement = true;
@@ -221,8 +219,7 @@ export class SamModalComponent implements OnInit {
   }
 
   closeModal(emit: boolean = true) {
-    // this._scrollHelpers.enableScroll();
-    document.body.removeChild(this.styleTag);
+    this.enableScroll();
     this.show = false;
     if(emit){
       this.onClose.emit(this.args);
@@ -266,12 +263,15 @@ export class SamModalComponent implements OnInit {
       this.modalElIds.submitId = this.id + 'Submit';
     }
   }
-  private buildStyleElements(): HTMLStyleElement {
-    let style = document.createElement("style");
-    style.type = "text/css";
-    style.textContent = `body{
-      overflow:hidden!important;
-    }`;
-    return (style);
+  // enable modal Scroll when opened
+  enableScroll(): void {
+    this.hostElement.nativeElement.style.display = 'none';
+    document.body.classList.remove('modal-open');
+  }
+  // disable modal scroll when closed
+  disableScroll(): void {
+    this.hostElement.nativeElement.style.display = 'block';
+    document.body.classList.add('modal-open');
+   
   }
 }
