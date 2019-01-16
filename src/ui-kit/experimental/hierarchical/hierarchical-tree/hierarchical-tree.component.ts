@@ -87,7 +87,8 @@ export class SamHierarchicalTreeComponent implements OnInit {
     this.breadcrumbStackSelectable.unshift(breadCrumbItem);
   }
 
-  private selectItem(value: object) {
+  public selectItem(value: object) {
+    this.filterText='';
     if (value) {
       this.selectedValue = value[this.configuration.primaryKey];
     } else {

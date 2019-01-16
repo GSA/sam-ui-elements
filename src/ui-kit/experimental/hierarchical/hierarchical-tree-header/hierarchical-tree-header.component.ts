@@ -31,7 +31,10 @@ export class SamHierarchicalTreeHeaderComponent {
   /**
 * Event emitted when level change is clicked
 */
-  @Output() public filterText = new EventEmitter<string>();
+  @Output() public filterTextChange = new EventEmitter<string>();
+
+
+  @Input() public filterText ='';
 
   public selectModel: string;
   private debounceTime = 150;
@@ -43,7 +46,7 @@ export class SamHierarchicalTreeHeaderComponent {
       .debounceTime(this.debounceTime)
       .distinctUntilChanged()
       .subscribe(() => {
-        this.filterText.emit(this.filter.nativeElement.value);
+        this.filterTextChange.emit(this.filter.nativeElement.value);
       });
   }
 

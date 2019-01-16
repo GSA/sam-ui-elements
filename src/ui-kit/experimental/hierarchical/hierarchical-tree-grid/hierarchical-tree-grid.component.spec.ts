@@ -75,12 +75,12 @@ describe('The Sam hierarchical grid component', () => {
 
         it('should be fitler text changes', function () {
             component.dataChange.next(gridData);
-          
+
             component.hierarchicalDataSource = new HierarchicalDataSource(
                 component.dataChange,
                 component.sort
             );
-            
+
             fixture.detectChanges();
             expect(component.hierarchicalDataSource.renderedData.length).toBe(3);
         });

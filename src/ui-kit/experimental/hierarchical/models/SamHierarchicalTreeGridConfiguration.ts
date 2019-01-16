@@ -11,4 +11,9 @@ export class SamHierarchicalTreeGridConfiguration {
      */
     public primaryKey: string;
 
+    /**
+     * 
+     */
+    public childCountField:string;
+
 }

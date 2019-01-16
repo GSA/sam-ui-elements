@@ -5,7 +5,7 @@
 <ng-template #template>
   <div>
     <sam-hierarchical-tree-header [options]="breadcrumbStackSelectable" (selectBreadcrumb)="selectBreadcrumb.next($event)"
-      (filterText)="filterTextSubject.next($event)">
+      (filterTextChange)="filterTextSubject.next($event)" [filterText]="filterText">
     </sam-hierarchical-tree-header>
 
     <sam-hierarchical-tree-grid [configuration]="configuration" [gridData]="gridResults | async" (rowChanged)="selecteHierarchyLevel.next($event)"

@@ -92,15 +92,17 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
    */
   public onChangeLevel(ev, item: object): void {
     this.levelChanged.emit(item);
-
   }
+
   /**
   * when the row is click updates the table data
   */
   onRowChange(ev, row): void {
     if (ev.target.type !== 'checkbox') {
-      this.selectedList = [];
-      this.rowChanged.emit(row);
+      if (row[this.configuration.childCountField] > 0) {
+        this.selectedList = [];
+        this.rowChanged.emit(row);
+      }
     }
   }
 }

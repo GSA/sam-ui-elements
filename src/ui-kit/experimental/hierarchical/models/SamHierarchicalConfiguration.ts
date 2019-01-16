@@ -74,4 +74,9 @@ export class SamHierarchicalConfiguration implements SamHierarchicalAutocomplete
      * 
      */
     public primaryKey: string;
+
+    /**
+    * 
+    */
+    public childCountField: string;
 }

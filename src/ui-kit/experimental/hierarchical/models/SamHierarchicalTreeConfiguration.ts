@@ -8,11 +8,16 @@ export class SamHierarchicalTreeConfiguration implements SamHierarchicalTreeGrid
     /**
      * 
      */
-    gridDisplayedColumn: SamHierarchicalTreeGridColumn[]
+    public gridDisplayedColumn: SamHierarchicalTreeGridColumn[]
 
     /**
      * 
      */
-    primaryKey: string;
+    public primaryKey: string;
+
+    /**
+    * 
+    */
+    public childCountField: string;
 
 }
