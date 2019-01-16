@@ -3,7 +3,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SamHierarchicalTreeComponent } from './hierarchical-tree.component';
 import { SamHierarchicalTreeGridComponent } from '../hierarchical-tree-grid/hierarchical-tree-grid.component';
 import { SamHierarchicalTreeHeaderComponent } from '../hierarchical-tree-header/hierarchical-tree-header.component';
-import { SamHierarchicalTreeFooterComponent } from '../hierarchical-tree-footer/hierarchical-tree-footer.component';
 import { SamButtonModule } from '../../../elements';
 import { SamSelectModule } from '../../../form-controls';
 import { SamFormService } from '../../../form-service';
@@ -19,7 +18,8 @@ const options = [{ 'name': 'Level 2', 'id': '1', 'value': '237', 'label': 'Level
 
 const config: SamHierarchicalTreeConfiguration = {
   gridDisplayedColumn: [],
-  primaryKey: 'id'
+  primaryKey: 'id',
+  childCountField: ""
 };
 
 
@@ -39,8 +39,7 @@ describe('SamHierarchicalTreeComponent', () => {
       ],
       declarations: [SamHierarchicalTreeComponent,
         SamHierarchicalTreeGridComponent,
-        SamHierarchicalTreeHeaderComponent,
-        SamHierarchicalTreeFooterComponent],
+        SamHierarchicalTreeHeaderComponent],
       providers: [SamFormService]
     })
       .compileComponents();

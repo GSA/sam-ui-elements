@@ -47,7 +47,7 @@ describe('SamHierarchicalTreeHeaderComponent', () => {
   it('Should emit when select changes', () => {
     const button = de.query(By.css('button'));
     let emittedAction: any;
-    component.selectedAgency.subscribe((_: any) => { emittedAction = _; });
+    component.filterTextChange.subscribe((_: any) => { emittedAction = _; });
     fixture.detectChanges();
 
     button.triggerEventHandler('click', undefined);
