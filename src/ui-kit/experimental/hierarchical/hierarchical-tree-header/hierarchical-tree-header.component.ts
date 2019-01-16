@@ -15,26 +15,27 @@ export class SamHierarchicalTreeHeaderComponent {
   @Input() public options: OptionsType[];
 
   /**
-* Lable for the options dropdown
-*/
+  * Lable for the options dropdown
+  */
   @Input() public label: string;
 
   /**
-* Whether Search should happned on click or keyup
-*/
+  * Whether Search should happned on click or keyup
+  */
   @Input() private changeType: string = 'keyup';
 
   /**
-* Event emitted when level change is clicked
-*/
+  * Event emitted when level change is clicked
+  */
   @Output() public selectBreadcrumb = new EventEmitter<string>();
+
   /**
-* Event emitted when level change is clicked
-*/
+   * Event emitted when level change is clicked
+   */
   @Output() public filterTextChange = new EventEmitter<string>();
 
 
-  @Input() public filterText ='';
+  @Input() public filterText = '';
 
   public selectModel: string;
   private debounceTime = 150;

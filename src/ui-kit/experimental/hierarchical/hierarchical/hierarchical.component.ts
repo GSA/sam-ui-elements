@@ -55,6 +55,7 @@ export class SamHierarchicalComponent {
   onModalClick() {
     this.modal.openModal();
     this.hierarchicaltree.selectItem(null);
+    this.hierarchicaltree.breadcrumbSelected(null);
   }
 
   onModalSubmitClick() {

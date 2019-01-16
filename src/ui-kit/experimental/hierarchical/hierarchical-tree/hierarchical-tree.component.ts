@@ -49,19 +49,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
     this.selectBreadcrumb.subscribe(
       value => {
-        let item = this.breadcrumbStack.find(itm => itm[this.configuration.primaryKey] === value);
-        let pos = this.breadcrumbStack.indexOf(item);
-        if (pos === -1) {
-          pos = this.breadcrumbStack.length;
-        }
-        for (let i = 0; i <= pos; i++) {
-          this.breadcrumbStack.shift();
-          this.breadcrumbStackSelectable.shift();
-        }
-        this.selectItem(item);
-        if (this.breadcrumbStackSelectable.length === 0) {
-          this.addInitialBreadcrumb();
-        }
+        this.breadcrumbSelected(value);
       }
     );
     this.selectResults$.subscribe(
@@ -78,6 +66,22 @@ export class SamHierarchicalTreeComponent implements OnInit {
     );
   }
 
+  public breadcrumbSelected(value: string) {
+    let item = this.breadcrumbStack.find(itm => itm[this.configuration.primaryKey] === value);
+    let pos = this.breadcrumbStack.indexOf(item);
+    if (pos === -1) {
+      pos = this.breadcrumbStack.length;
+    }
+    for (let i = 0; i <= pos; i++) {
+      this.breadcrumbStack.shift();
+      this.breadcrumbStackSelectable.shift();
+    }
+    this.selectItem(item);
+    if (this.breadcrumbStackSelectable.length === 0) {
+      this.addInitialBreadcrumb();
+    }
+  }
+
   private addInitialBreadcrumb(): void {
     const breadCrumbItem = {};
     breadCrumbItem["name"] = "All Departments";
@@ -88,12 +92,17 @@ export class SamHierarchicalTreeComponent implements OnInit {
   }
 
   public selectItem(value: object) {
-    this.filterText='';
+    this.filterText = '';
     if (value) {
       this.selectedValue = value[this.configuration.primaryKey];
     } else {
       this.selectedValue = null;
     }
+    this.createBreadcrumb(value);
+    this.getResults();
+  }
+
+  private createBreadcrumb(value: object) {
     const breadCrumbItem = {};
     if (value) {
       breadCrumbItem["name"] = value["name"];
@@ -106,7 +115,6 @@ export class SamHierarchicalTreeComponent implements OnInit {
       this.breadcrumbStackSelectable.unshift(breadCrumbItem);
       this.breadcrumbStack.unshift(value);
     }
-    this.getResults();
   }
 
   getResults() {
