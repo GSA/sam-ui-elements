@@ -1,10 +1,11 @@
 import {
-  Component, OnInit, Input, ViewChild, TemplateRef,
+  Component, Input, ViewChild, TemplateRef,
   ElementRef
 } from '@angular/core';
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 import { KeyHelper, KEYS } from '../../../utilities/key-helper/key-helper';
-import { HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selectedItem.model';
+import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
+
 
 @Component({
   selector: 'sam-hierarchical-autocomplete',
@@ -79,7 +80,7 @@ export class SamHierarchicalAutocompleteComponent {
   /**
    * value of the input field 
    */
-  public inputValue: string;
+  public inputValue: string = '';
 
   /**
    * Proprty being set on the object is highlighted
@@ -113,15 +114,31 @@ export class SamHierarchicalAutocompleteComponent {
    * @param event 
    */
   checkForFocus(event): void {
+    this.focusRemoved();
     this.showResults = false;
+  }
+
+  private focusRemoved() {
+    if (this.model.treeMode === TreeMode.SINGLE) {
+      if (this.model.getItems().length > 0) {
+        if (this.inputValue.length === 0) {
+          this.model.clearItems();
+        } else {
+          this.inputValue = this.model.getItems()[0][this.settings.valueProperty];
+        }
+      } else {
+        this.inputValue = '';
+      }
+    } else {
+      this.inputValue = '';
+    }
   }
 
   /**
    * Event method used when focus is gained to the input
    */
   inputFocusHandler(): void {
-    this.inputValue = '';
-    this.getResults(this.inputValue);
+    this.getResults(this.inputValue || '');
   }
 
   /**
@@ -129,7 +146,6 @@ export class SamHierarchicalAutocompleteComponent {
    * @param event 
    */
   onKeyup(event): void {
-
     if (KeyHelper.is(KEYS.TAB, event)) {
       return;
     }
@@ -162,14 +178,16 @@ export class SamHierarchicalAutocompleteComponent {
   private selectItem(item: object): void {
     this.model.addItem(item, this.settings.keyField);
     let message = item[this.settings.valueProperty];
+    this.inputValue = message;
     if (this.settings.subValueProperty && item[this.settings.subValueProperty]) {
-      message += ': ' + item[this.settings.subValueProperty]
-
+      message += ': ' + item[this.settings.subValueProperty];
     }
     message += ' selected';
     this.addScreenReaderMessage(message);
+    this.focusRemoved();
     this.showResults = false;
   }
+
 
   /**
    *  clears the results and closes result drop down
@@ -177,6 +195,7 @@ export class SamHierarchicalAutocompleteComponent {
   private clearAndHideResults(): void {
     this.results = [];
     this.showResults = false;
+    this.focusRemoved();
   }
 
   /**
@@ -210,7 +229,9 @@ export class SamHierarchicalAutocompleteComponent {
    * @param searchString 
    */
   private getResults(searchString: string): void {
-    if (this.searchString !== searchString || this.searchString === '') {
+    if (!this.matchPastSearchString(searchString) ||
+      (this.matchPastSearchString(searchString) && !this.showResults)
+      || this.matchPastSearchString('')) {
       this.searchString = searchString;
       window.clearTimeout(this.timeoutNumber);
       this.timeoutNumber = window.setTimeout(() => {
@@ -225,6 +246,10 @@ export class SamHierarchicalAutocompleteComponent {
           });
       }, this.settings.debounceTime);
     }
+  }
+
+  private matchPastSearchString(searchString: string) {
+    return this.searchString === searchString;
   }
 
   /**

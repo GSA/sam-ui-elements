@@ -1,16 +1,18 @@
 <ul [attr.aria-label]="settings.labelText +' results'" class="usa-unstyled-list resultsList" aria-relevant="additions"
   role="listbox" aria-live="polite">
   <li role="option" *ngFor="let result of model.getItems(); let i = index">
-    <ng-container *ngIf="itemTemplate" [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit:result}">
-    </ng-container>
-    <ng-container *ngIf="!itemTemplate">
-      <span>{{ result[settings.valueProperty] }}</span>
-      <ng-container *ngIf="settings.subValueProperty &&  result[settings.subValueProperty] ">
-        <br /><span class="secondary-value">{{ result[settings.subValueProperty] }}</span>
+    <div class="selected-item">
+      <ng-container *ngIf="itemTemplate" [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit:result}">
       </ng-container>
-    </ng-container>
-    <span tabindex="0" role="button" class="fa fa-times-circle" aria-label="Remove Item" aria-hidden="false" (click)="removeItem(result)"
-      (keyup.enter)="removeItem(result)">
-    </span>
+      <ng-container *ngIf="!itemTemplate">
+        <span class="header">{{ result[settings.valueProperty] }}</span>
+        <ng-container *ngIf="settings.subValueProperty &&  result[settings.subValueProperty] ">
+          <span class="secondary-value">{{ result[settings.subValueProperty] }}</span>
+        </ng-container>
+      </ng-container>
+      <span tabindex="0" role="button" class="close fa fa-close" aria-label="Remove Item" aria-hidden="false" (click)="removeItem(result)"
+        (keyup.enter)="removeItem(result)">
+      </span>
+    </div>
   </li>
 </ul>
