@@ -68,7 +68,7 @@ td[sam-cell], th[sam-header-cell] {
   display: flex;
   align-items: center;
   // overflow: hidden;
-  word-wrap: break-word;
+  word-break: break-word;
   min-height: inherit;
 }
 
