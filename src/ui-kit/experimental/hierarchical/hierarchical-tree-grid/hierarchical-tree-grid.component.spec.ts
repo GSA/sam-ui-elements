@@ -74,17 +74,17 @@ describe('The Sam hierarchical grid component', () => {
             expect(component.dataChange.value.length).toBe(gridData.length);
         });
 
-        it('should be fitler text changes', function () {
-            component.dataChange.next(gridData);
+        // it('should be fitler text changes', function () {
+        //     component.dataChange.next(gridData);
 
-            component.hierarchicalDataSource = new HierarchicalDataSource(
-                component.dataChange,
-                component.sort
-            );
+        //     component.hierarchicalDataSource = new HierarchicalDataSource(
+        //         component.dataChange,
+        //         component.sort
+        //     );
 
-            fixture.detectChanges();
-            expect(component.hierarchicalDataSource.renderedData.length).toBe(3);
-        });
+        //     fixture.detectChanges();
+        //     expect(component.hierarchicalDataSource.renderedData.length).toBe(3);
+        // });
 
         it('should be datasoruce length grid data length', function () {
             component.dataChange.next(gridData);
