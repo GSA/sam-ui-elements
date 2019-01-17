@@ -2,7 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CdkTableModule } from '@angular/cdk';
 import { SamDataTableModule, SamSortDirective } from '../../../components/data-table';
-import { SamHierarchicalTreeGridComponent, GridTemplateConfiguration } from './hierarchical-tree-grid.component';
+import { SamHierarchicalTreeGridComponent } from './hierarchical-tree-grid.component';
+import { SamHierarchicalTreeGridConfiguration } from '../models/SamHierarchicalTreeGridConfiguration';
+
 import {
     ChangeDetectorRef
 } from '@angular/core/src/change_detection/change_detector_ref';
@@ -20,9 +22,10 @@ const gridData = [
     { 'id': '9', 'parentId': '8', 'name': 'Level 1', 'subtext': 'id 4586', 'type': 'Level 1' }
 ];
 
-const config: GridTemplateConfiguration = {
+const config: SamHierarchicalTreeGridConfiguration = {
     gridDisplayedColumn: [],
     primaryKey: 'id',
+    childCountField:''
 };
 describe('The Sam hierarchical grid component', () => {
     describe('The Sam Data Table Tests', () => {
@@ -43,14 +46,14 @@ describe('The Sam hierarchical grid component', () => {
             fixture = TestBed.createComponent(SamHierarchicalTreeGridComponent);
             component = fixture.componentInstance;
             component.displayedColumns = ['select'];
-            component.templateConfigurations = config;
+            component.configuration = config;
             fixture.detectChanges();
         });
 
         it('should displayedColumns length', function () {
-            component.templateConfigurations.gridDisplayedColumn = [
-                { headerText: 'Id', fieldName: 'id', displayOrder: 1 },
-                { headerText: 'Name', fieldName: 'name', displayOrder: 2 },
+            component.configuration.gridDisplayedColumn = [
+                { headerText: 'Id', fieldName: 'id' },
+                { headerText: 'Name', fieldName: 'name' },
             ];
             component.ngOnInit();
             fixture.detectChanges();
@@ -71,17 +74,17 @@ describe('The Sam hierarchical grid component', () => {
             expect(component.dataChange.value.length).toBe(gridData.length);
         });
 
-        it('should be fitler text changes', function () {
-            component.dataChange.next(gridData);
-            component.filterText = '1';
-            component.hierarchicalDataSource = new HierarchicalDataSource(
-                component.dataChange,
-                component.sort
-            );
-            component.hierarchicalDataSource.filter = component.filterText;
-            fixture.detectChanges();
-            expect(component.hierarchicalDataSource.renderedData.length).toBe(3);
-        });
+        // it('should be fitler text changes', function () {
+        //     component.dataChange.next(gridData);
+
+        //     component.hierarchicalDataSource = new HierarchicalDataSource(
+        //         component.dataChange,
+        //         component.sort
+        //     );
+
+        //     fixture.detectChanges();
+        //     expect(component.hierarchicalDataSource.renderedData.length).toBe(3);
+        // });
 
         it('should be datasoruce length grid data length', function () {
             component.dataChange.next(gridData);
@@ -117,10 +120,10 @@ describe('The Sam hierarchical grid component', () => {
                     type: 'lable'
                 }
             };
-            component.templateConfigurations = config;
+            component.configuration = config;
             component.onRowChange(dummyUpEvent, row);
             component.rowChanged.subscribe((res: any) => {
-                expect(res).toBe(row[component.templateConfigurations.primaryKey]);
+                expect(res).toBe(row[component.configuration.primaryKey]);
             });
         });
 
@@ -133,9 +136,9 @@ describe('The Sam hierarchical grid component', () => {
                     type: 'checkbox'
                 }
             };
-            component.templateConfigurations = config;
+            component.configuration = config;
             component.rowChanged.subscribe((res: any) => {
-                expect(res).toBe(row[component.templateConfigurations.primaryKey]);
+                expect(res).toBe(row[component.configuration.primaryKey]);
             });
             component.onRowChange(dummyUpEvent, row);
         });
@@ -152,7 +155,7 @@ describe('The Sam hierarchical grid component', () => {
                 }
             };
             component.selectedList = results;
-            component.templateConfigurations = config;
+            component.configuration = config;
             component.onChecked(dummyUpEvent, row);
             expect(component.selectedList.length).toBe(2);
         });
@@ -169,7 +172,7 @@ describe('The Sam hierarchical grid component', () => {
                 }
             };
             component.selectedList = results;
-            component.templateConfigurations = config;
+            component.configuration = config;
             component.onChecked(dummyUpEvent, row);
             expect(component.selectedList.length).toBe(1);
         });
@@ -186,7 +189,7 @@ describe('The Sam hierarchical grid component', () => {
                 }
             };
             component.selectedList = results;
-            component.templateConfigurations = config;
+            component.configuration = config;
             fixture.detectChanges();
             component.selectResults.subscribe((g) => {
                 expect(g.length).toBe(1);
@@ -206,7 +209,7 @@ describe('The Sam hierarchical grid component', () => {
                 }
             };
             component.selectedList = results;
-            component.templateConfigurations = config;
+            component.configuration = config;
             fixture.detectChanges();
             component.selectResults.subscribe((g) => {
                 expect(g.length).toBe(1);
@@ -285,7 +288,7 @@ describe('The Sam hierarchical grid component', () => {
             const result = dataSource.sortingDataAccessor(row, 'id');
             expect(result).toBe(row['id']);
         });
-     
+
     });
 });
 

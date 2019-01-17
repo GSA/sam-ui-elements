@@ -9,14 +9,15 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 
-const options = [ { "name": "Level 2", "id": "1", "value": "237", "label": "Level 2" },
-     { "name": "Level 1", "id": null, "value": "1", "label": "Level 1" } ];
+const options = [{ "name": "Level 2", "id": "2", "value": "2", "label": "Level 2" },
+{ "name": "Level 1", "id": "1", "value": "1", "label": "Level 1" },
+{ "name": "TOP", "id": null, "value": null, "label": "TOP" }];
 
 describe('SamHierarchicalTreeHeaderComponent', () => {
   let component: SamHierarchicalTreeHeaderComponent;
   let fixture: ComponentFixture<SamHierarchicalTreeHeaderComponent>;
   let de: DebugElement;
- 
+
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -47,20 +48,35 @@ describe('SamHierarchicalTreeHeaderComponent', () => {
   it('Should emit when select changes', () => {
     const button = de.query(By.css('button'));
     let emittedAction: any;
-    component.selectedAgency.subscribe((_: any) => { emittedAction = _; });
+    component.filterTextChange.subscribe((_: any) => { emittedAction = _; });
     fixture.detectChanges();
-
     button.triggerEventHandler('click', undefined);
-
     expect(emittedAction).toBe(component.selectModel);
   });
-  it('Should emit when up button is clicked', () => {
-   
-    let emittedAction = '1';
-    component.navigateToParent();
-   // component.selectedAgency.subscribe((_: any) => { emittedAction = _; });
-    fixture.detectChanges();
-        expect(emittedAction).toBe(component.options[1].value.toString());
 
+  it('navigateToParent with child', () => {
+    spyOn(component.selectBreadcrumb, 'emit');
+    component.navigateToParent();
+    fixture.detectChanges();
+    expect(component.selectBreadcrumb.emit).toHaveBeenCalledWith('1');
   });
+
+
+  it('navigateToParent with top level navigation', () => {
+    spyOn(component.selectBreadcrumb, 'emit');
+    options.shift();
+    component.navigateToParent();
+    fixture.detectChanges();
+    expect(component.selectBreadcrumb.emit).toHaveBeenCalledWith(null);
+  });
+
+
+  it('onLevelChange', () => {
+    component.selectModel = '1';
+    spyOn(component.selectBreadcrumb, 'emit');
+    component.onLevelChange(null);
+    fixture.detectChanges();
+    expect(component.selectBreadcrumb.emit).toHaveBeenCalledWith('1');
+  });
+
 });

@@ -1,5 +1,6 @@
 import { Component, Input, TemplateRef } from '@angular/core';
 import { HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selectedItem.model';
+import { SelectedResultConfiguration } from '../models/SamHierarchicalSelectedResultConfiguration';
 
 @Component({
   selector: 'sam-selected-result',
@@ -20,39 +21,16 @@ export class SamHierarchicalSelectedResultComponent {
   public model: HierarchicalTreeSelectedItemModel;
 
   /**
-  * Settings for the Selected Results control 
+  * Configuration for the Selected Results control 
   */
   @Input()
-  public settings: SelectedResultSettings;
+  public configuration: SelectedResultConfiguration;
 
   /**
    * Removes item from the model
    * @param item 
    */
   removeItem(item: object) {
-    this.model.removeItem(item, this.settings.keyField);
+    this.model.removeItem(item, this.configuration.keyField);
   }
-}
-
-export class SelectedResultSettings {
-
-  /**
-   *  This is the primary field used to identify each object in the results
-   */
-  public keyField: string;
-
-  /**
-   *  Property from supplied model used for the top part of the basic template
-   */
-  public valueProperty: string;
-
-  /**
-   *  Property from supplied model used for the bottom part of the basic template
-   */
-  public subValueProperty: string;
-
-  /**
-  * Used to describe the drop down (Text should match the label that will be supplied)
-  */
-  public labelText: string;
 }

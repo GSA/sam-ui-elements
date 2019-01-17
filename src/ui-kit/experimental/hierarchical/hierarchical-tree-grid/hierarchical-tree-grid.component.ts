@@ -1,29 +1,11 @@
 import {
-  Component,
-  OnInit,
-  ViewChild,
-  Input,
-  Output,
-  EventEmitter,
-  ChangeDetectorRef
+  Component, OnInit, ViewChild, Input,
+  Output, EventEmitter, ChangeDetectorRef
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { SamSortDirective } from '../../../components'
 import { HierarchicalDataSource } from './data-source';
-
-export interface GridTemplate {
-}
-
-export interface GridTemplateConfiguration {
-  gridDisplayedColumn: GridDisplayedColumn[]
-  primaryKey: string;
-}
-
-export interface GridDisplayedColumn {
-  headerText: string, 
-  fieldName: string,
-  displayOrder: number
-}
+import { SamHierarchicalTreeGridConfiguration } from '../models/SamHierarchicalTreeGridConfiguration';
 
 @Component({
   selector: 'sam-hierarchical-tree-grid',
@@ -35,17 +17,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   /**
   * Table configurations 
   */
-  @Input() public templateConfigurations: GridTemplateConfiguration;
-
-  /**
-  * Allow to insert a customized template for suggestions to use
-  */
-  @Input() public gridTemplate: GridTemplate;
-
-  /**
-  * Allow to search the data on the table.
-  */
-  @Input() public filterText: string;
+  @Input() public configuration: SamHierarchicalTreeGridConfiguration;
 
   /**
 * Data for the Table.
@@ -78,18 +50,14 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   public dataChange: BehaviorSubject<object[]> = new BehaviorSubject<object[]>([]);
   @ViewChild(SamSortDirective) sort: SamSortDirective;
 
-  constructor (private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnChanges() {
     this.dataChange.next(this.gridData);
-    if (this.hierarchicalDataSource) {
-      this.hierarchicalDataSource.filter = this.filterText;
-      this.cdr.detectChanges();
-    }
   }
 
   ngOnInit() {
-    this.templateConfigurations.gridDisplayedColumn.forEach(item => {
+    this.configuration.gridDisplayedColumn.forEach(item => {
       this.columnFieldName.push(item.fieldName);
       this.columnHeaderText.push(item.headerText);
     });
@@ -103,6 +71,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
     );
     this.cdr.detectChanges();
   }
+
   /**
    * On select the results
    */
@@ -123,15 +92,17 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
    */
   public onChangeLevel(ev, item: object): void {
     this.levelChanged.emit(item);
-
   }
+
   /**
   * when the row is click updates the table data
   */
   onRowChange(ev, row): void {
     if (ev.target.type !== 'checkbox') {
-      this.selectedList = [];
-      this.rowChanged.emit(row[this.templateConfigurations.primaryKey]);
+      if (row[this.configuration.childCountField] > 0) {
+        this.selectedList = [];
+        this.rowChanged.emit(row);
+      }
     }
   }
 }

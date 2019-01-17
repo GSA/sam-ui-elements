@@ -5,6 +5,7 @@ import {
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 import { KeyHelper, KEYS } from '../../../utilities/key-helper/key-helper';
 import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
+import { SamHierarchicalAutocompleteConfiguration } from '../models/SamHierarchicalAutocompleteConfiguration';
 
 
 @Component({
@@ -41,10 +42,10 @@ export class SamHierarchicalAutocompleteComponent {
   public model: HierarchicalTreeSelectedItemModel;
 
   /**
-   * Settings for the Autocomplete control 
+   * Configuration for the Autocomplete control 
    */
   @Input()
-  public settings: SamHierarchicalAutocompleteSettings;
+  public configuration: SamHierarchicalAutocompleteConfiguration;
 
   /**
    * Instance of the SamHiercarchicalServiceInterface provided
@@ -124,7 +125,7 @@ export class SamHierarchicalAutocompleteComponent {
         if (this.inputValue.length === 0) {
           this.model.clearItems();
         } else {
-          this.inputValue = this.model.getItems()[0][this.settings.valueProperty];
+          this.inputValue = this.model.getItems()[0][this.configuration.valueProperty];
         }
       } else {
         this.inputValue = '';
@@ -176,11 +177,11 @@ export class SamHierarchicalAutocompleteComponent {
    * @param item 
    */
   private selectItem(item: object): void {
-    this.model.addItem(item, this.settings.keyField);
-    let message = item[this.settings.valueProperty];
+    this.model.addItem(item, this.configuration.keyField);
+    let message = item[this.configuration.valueProperty];
     this.inputValue = message;
-    if (this.settings.subValueProperty && item[this.settings.subValueProperty]) {
-      message += ': ' + item[this.settings.subValueProperty];
+    if (this.configuration.subValueProperty && item[this.configuration.subValueProperty]) {
+      message += ': ' + item[this.configuration.subValueProperty];
     }
     message += ' selected';
     this.addScreenReaderMessage(message);
@@ -244,7 +245,7 @@ export class SamHierarchicalAutocompleteComponent {
             this.showResults = true;
             this.addScreenReaderMessage(this.maxResults + ' ' + this.resultsAvailableMessage)
           });
-      }, this.settings.debounceTime);
+      }, this.configuration.debounceTime);
     }
   }
 
@@ -316,9 +317,9 @@ export class SamHierarchicalAutocompleteComponent {
       }
       this.highlightedItem = item;
       this.highlightedItem[this.HighlightedPropertyName] = true;
-      let message = item[this.settings.valueProperty];
-      if (this.settings.subValueProperty && item[this.settings.subValueProperty]) {
-        message += ': ' + item[this.settings.subValueProperty]
+      let message = item[this.configuration.valueProperty];
+      if (this.configuration.subValueProperty && item[this.configuration.subValueProperty]) {
+        message += ': ' + item[this.configuration.subValueProperty]
 
       }
       this.addScreenReaderMessage(message);
@@ -332,51 +333,4 @@ export class SamHierarchicalAutocompleteComponent {
       this.srOnly.nativeElement.appendChild(srResults);
     }
   }
-}
-
-
-export class SamHierarchicalAutocompleteSettings {
-
-  /**
-   * sets the default debounce time to 250 milliseconds 
-   */
-  constructor() {
-    this.debounceTime = 250;
-  }
-
-  /**
-   * Used to describe the drop down (Text should match the label that will be supplied)
-   */
-  public labelText: string;
-
-  /**
-   * Used for the Id of the control
-   */
-  public id: string;
-
-  /**
-   *  This is the primary field used to identify each object in the results
-   */
-  public keyField: string;
-
-  /**
-   *  Property from supplied model used for the top part of the basic template
-   */
-  public valueProperty: string;
-
-  /**
-   *  Property from supplied model used for the bottom part of the basic template
-   */
-  public subValueProperty: string;
-
-  /**
-   *  Sets the time waited for addional key actions Default is 250 milliseconds
-   */
-  public debounceTime: number;
-
-  /**
-   * Place holder text for input
-   */
-  public placeHolderText: string;
-
 }

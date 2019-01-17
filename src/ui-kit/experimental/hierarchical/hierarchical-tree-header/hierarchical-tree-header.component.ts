@@ -13,23 +13,29 @@ export class SamHierarchicalTreeHeaderComponent {
   * Options for the Dropdown
   */
   @Input() public options: OptionsType[];
-    /**
+
+  /**
   * Lable for the options dropdown
   */
   @Input() public label: string;
-    /**
+
+  /**
   * Whether Search should happned on click or keyup
   */
   @Input() private changeType: string = 'keyup';
 
-    /**
+  /**
   * Event emitted when level change is clicked
   */
-  @Output() public selectedAgency = new EventEmitter<string>();
-    /**
-  * Event emitted when level change is clicked
-  */
-  @Output() public filterText = new EventEmitter<string>();
+  @Output() public selectBreadcrumb = new EventEmitter<string>();
+
+  /**
+   * Event emitted when level change is clicked
+   */
+  @Output() public filterTextChange = new EventEmitter<string>();
+
+
+  @Input() public filterText = '';
 
   public selectModel: string;
   private debounceTime = 150;
@@ -41,17 +47,21 @@ export class SamHierarchicalTreeHeaderComponent {
       .debounceTime(this.debounceTime)
       .distinctUntilChanged()
       .subscribe(() => {
-        this.filterText.emit(this.filter.nativeElement.value);
+        this.filterTextChange.emit(this.filter.nativeElement.value);
       });
   }
 
   onLevelChange(ev: Event): void {
-    this.selectedAgency.emit(this.selectModel);
+    this.selectBreadcrumb.emit(this.selectModel);
   }
 
   navigateToParent(): void {
     if (this.options.length > 1) {
-      this.selectedAgency.emit(this.options[1].value.toString());
+      if (this.options[1].value) {
+        this.selectBreadcrumb.emit(this.options[1].value.toString());
+      } else {
+        this.selectBreadcrumb.emit(null);
+      }
     }
   }
 }

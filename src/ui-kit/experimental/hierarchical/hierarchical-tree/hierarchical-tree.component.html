@@ -4,25 +4,12 @@
 
 <ng-template #template>
   <div>
-    <sam-hierarchical-tree-header 
-      [options]="hierarchyConfiguration.options" 
-      (selectedAgency)="selectedAgency$.next($event)" 
-      (filterText)="filterText$.next($event)">
+    <sam-hierarchical-tree-header [options]="breadcrumbStackSelectable" (selectBreadcrumb)="selectBreadcrumb.next($event)"
+      (filterTextChange)="filterTextSubject.next($event)" [filterText]="filterText">
     </sam-hierarchical-tree-header>
 
-    <sam-hierarchical-tree-grid 
-      [templateConfigurations]="hierarchyConfiguration" 
-      [gridData]="gridData"
-      [filterText]="hierarchyConfiguration.filterText"
-      (rowChanged)="selectedAgency$.next($event)" 
+    <sam-hierarchical-tree-grid [configuration]="configuration" [gridData]="gridResults | async" (rowChanged)="selecteHierarchyLevel.next($event)"
       (selectResults)="selectResults$.next($event)">
     </sam-hierarchical-tree-grid>
-
-    <sam-hierarchical-tree-footer>
-      <sam-button buttonText="Select" 
-      (click)="onSelect()" 
-      buttonType="primary">
-    </sam-button>
-    </sam-hierarchical-tree-footer>
   </div>
 </ng-template>

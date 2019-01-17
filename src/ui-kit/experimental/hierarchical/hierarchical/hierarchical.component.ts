@@ -1,24 +1,28 @@
-import { Component, OnInit, Input, TemplateRef, ViewChild } from '@angular/core';
-import { SamHierarchicalAutocompleteSettings } from '../autocomplete/autocomplete.component';
-import { SelectedResultSettings } from '../selected-result/selected-result.component';
+import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
+
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
+import { SamHierarchicalConfiguration } from '../models/SamHierarchicalConfiguration';
+
 
 @Component({
   selector: 'sam-hierarchical',
   templateUrl: './hierarchical.component.html',
   styleUrls: ['./hierarchical.component.scss']
 })
-export class SamHierarchicalComponent implements OnInit {
+export class SamHierarchicalComponent {
 
 
   @ViewChild('modal') modal;
 
+
+  @ViewChild('hierarchicaltree') hierarchicaltree;
+
   /**
-   * Settings for the Autocomplete control 
+   * Configuration for the control 
    */
   @Input()
-  public settings: SamHierarchicalSettings;
+  public configuration: SamHierarchicalConfiguration;
 
   /**
   * Instance of the SamHiercarchicalServiceInterface provided
@@ -44,23 +48,19 @@ export class SamHierarchicalComponent implements OnInit {
  */
   @Input() selectedItemTemplate: TemplateRef<any>;
 
-
-
-
   constructor() { }
 
-  ngOnInit() {
-  }
 
 
   onModalClick() {
     this.modal.openModal();
+    this.hierarchicaltree.selectItem(null);
+    this.hierarchicaltree.breadcrumbSelected(null);
   }
 
   onModalSubmitClick() {
-
     this.modal.closeModal();
-    // Add in code to get selected items from tree and add it to the selected item model
+    this.model.addItems(<object[]>this.hierarchicaltree.results, this.configuration.keyField);
   }
 
 
@@ -70,65 +70,3 @@ export class SamHierarchicalComponent implements OnInit {
 
 }
 
-
-export class SamHierarchicalSettings implements SamHierarchicalAutocompleteSettings, SelectedResultSettings {
-
-  /**
-    * sets the default debounce time to 250 milliseconds 
-    */
-  constructor() {
-    this.debounceTime = 250;
-    this.modalCancelButtonLabel = "Cancel";
-    this.modalSelectButtonLabel = "Select";
-  }
-
-  /**
-   * Used to describe the drop down (Text should match the label that will be supplied)
-   */
-  public labelText: string;
-
-  /**
-   * Used for the Id of the control
-   */
-  public id: string;
-
-  /**
-   *  This is the primary field used to identify each object in the results
-   */
-  public keyField: string;
-
-  /**
-   *  Property from supplied model used for the top part of the basic template
-   */
-  public valueProperty: string;
-
-  /**
-   *  Property from supplied model used for the bottom part of the basic template
-   */
-  public subValueProperty: string;
-
-  /**
-   *  Sets the time waited for addional key actions Default is 250 milliseconds
-   */
-  public debounceTime: number;
-
-  /**
-   * Place holder text for input
-   */
-  public placeHolderText: string;
-
-  /**
-   * 
-   */
-  public modalTitle: string;
-
-  /**
-   * 
-   */
-  public modalSelectButtonLabel: string;
-
-  /**
-   * 
-   */
-  public modalCancelButtonLabel: string;
-}
