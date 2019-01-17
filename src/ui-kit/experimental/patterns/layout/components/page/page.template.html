@@ -7,7 +7,7 @@
   </div>
   <ng-content select="sam-page-title"></ng-content>
   <div *ngIf="backButtonText" class="backBtn-right">
-    <button class="sam button inverted secondary" (click)="backBtnClick()"
+    <button class="sam button inverted secondary" (click)="backBtnClick()" aria-label="close icon button"
       [attr.title]="backButtonText">
       <sam-icon [icon]="closeIcon" size="lg"></sam-icon>
     </button>
