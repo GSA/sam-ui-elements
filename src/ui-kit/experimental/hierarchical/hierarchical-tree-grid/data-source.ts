@@ -4,8 +4,6 @@ import { SamSortDirective } from '../../../components';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 // preparing data source for the hierarchical grid
-
-// preparing data source for the hierarchical grid
 export class HierarchicalDataSource extends DataSource<any> {
   _filterChange = new BehaviorSubject('');
   get filter(): string { return this._filterChange.value; }
@@ -25,15 +23,7 @@ export class HierarchicalDataSource extends DataSource<any> {
       this._filterChange,
     ];
     return Observable.merge(...displayDataChanges).map(() => {
-      //const filteredData = this.dataChange.value.slice().filter((item: any) => {
-      //   const searchStr = JSON.stringify(item).toLowerCase();
-      //   return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
-      // });
-
-      // Sort filtered data
-      const sortedData = this.getSortedData(this.dataChange.value.slice());
-      this.renderedData = sortedData;
-      //  this.renderedData =this.dataChange.value.slice()
+      this.renderedData = this.getSortedData(this.dataChange.value.slice());;
       return this.renderedData;
     });
   }
