@@ -1,6 +1,12 @@
-<div>
+<div class="sam-hierarchical-tree-header">
   <!-- Hierarchy Navigator -->
-  <sam-button buttonText="up" buttonType="primary" (click)="navigateToParent()"></sam-button>
+  <div class="hierarchy-views">
+    <h4> Views </h4>
+    <a> <img src="#"> Cards </a>
+    <a> <img src="#"> List </a>
+  </div>
+
+  <button type="button" class="order-results">Up</button>
 
   <!-- Agency Level Selector -->
   <sam-select [(ngModel)]="selectModel" (change)="onLevelChange($event)" name="levelSelect" class="levelSelect"

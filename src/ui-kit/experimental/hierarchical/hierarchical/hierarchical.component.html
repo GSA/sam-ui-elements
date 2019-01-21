@@ -1,4 +1,4 @@
-<div>
+<div class="hierarchical component">
     <a (click)="onModalClick()">Advanced Lookup</a>
     <sam-hierarchical-autocomplete [service]="service" [model]="model" [configuration]="configuration" [itemTemplate]="suggestionTemplate"></sam-hierarchical-autocomplete>
     <sam-selected-result *ngIf="!isSingleMode()" [model]="model" [configuration]="configuration" [itemTemplate]="selectedItemTemplate"></sam-selected-result>
