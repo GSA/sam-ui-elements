@@ -1,14 +1,9 @@
 import { Observable } from 'rxjs';
 import { DataSource } from '@angular/cdk';
 import { SamSortDirective } from '../../../components';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 // preparing data source for the hierarchical grid
 export class HierarchicalDataSource extends DataSource<any> {
-  _filterChange = new BehaviorSubject('');
-  get filter(): string { return this._filterChange.value; }
-  set filter(filter: string) { this._filterChange.next(filter); }
-  filteredData: any[] = [];
   renderedData: any[] = [];
 
   constructor(private dataChange: any,
@@ -19,8 +14,7 @@ export class HierarchicalDataSource extends DataSource<any> {
   connect(): Observable<any[]> {
     const displayDataChanges = [
       this.dataChange,
-      this._sort.samSortChange,
-      this._filterChange,
+      this._sort.samSortChange
     ];
     return Observable.merge(...displayDataChanges).map(() => {
       this.renderedData = this.getSortedData(this.dataChange.value.slice());;
