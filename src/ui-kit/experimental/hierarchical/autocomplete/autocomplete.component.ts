@@ -176,7 +176,7 @@ export class SamHierarchicalAutocompleteComponent {
    * selects the item adding it to the model and closes the results
    * @param item 
    */
-  private selectItem(item: object): void {
+  public selectItem(item: object): void {
     this.model.addItem(item, this.configuration.keyField);
     let message = item[this.configuration.valueProperty];
     this.inputValue = message;

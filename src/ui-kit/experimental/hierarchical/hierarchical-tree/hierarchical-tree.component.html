@@ -9,8 +9,8 @@
       [filterText]="filterText" [configuration]="configuration">
     </sam-hierarchical-tree-header>
 
-    <sam-hierarchical-tree-grid [configuration]="configuration" [gridData]="gridResults | async" (rowChanged)="selecteHierarchyLevel.next($event)"
-      (selectResults)="selectResults$.next($event)">
+    <sam-hierarchical-tree-grid [configuration]="configuration" [isSingleMode]="isSingleMode" [gridData]="gridResults | async"
+      (rowChanged)="selecteHierarchyLevel.next($event)" (selectResults)="selectResults$.next($event)">
     </sam-hierarchical-tree-grid>
   </div>
 </ng-template>

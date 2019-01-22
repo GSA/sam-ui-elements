@@ -8,15 +8,14 @@
       <ng-container cdkColumnDef="select">
         <th sam-header-cell *cdkHeaderCellDef sam-sort-header>Select</th>
         <td sam-cell *cdkCellDef="let row">
-          <input type="checkbox" id="selectId" (change)="onChecked($event,row)"
-            name="select">
+          <input [attr.type]="selectionMode" id="selectId" (change)="onChecked($event,row)" name="select">
           <label for="selectId"></label>
         </td>
       </ng-container>
 
       <ng-container *ngFor="let col of columnFieldName;let cIndex = index;" cdkColumnDef="{{col}}">
         <th sam-header-cell *cdkHeaderCellDef sam-sort-header>
-         {{columnHeaderText[cIndex]}}
+          {{columnHeaderText[cIndex]}}
         </th>
         <td sam-cell *cdkCellDef="let row; let rIndex = index;"> {{row[col]}} </td>
       </ng-container>

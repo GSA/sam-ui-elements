@@ -27,6 +27,10 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
 */
   @Input() public gridData: object[] = [];
 
+  @Input() public isSingleMode: boolean;
+
+  selectionMode: string = "checkbox";
+
   /**
  * Event emitted when row is clicked
  */
@@ -57,6 +61,9 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
       this.columnHeaderText.push(item.headerText);
     });
     this.displayedColumns = [...this.displayedColumns, ...this.columnFieldName];
+    if (this.isSingleMode) {
+      this.selectionMode = "radio";
+    }
   }
 
   ngAfterViewInit() {
@@ -72,7 +79,11 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
    */
   onChecked(ev, row: object): void {
     if (ev.target.checked) {
-      this.selectedList = [...this.selectedList, row];
+      if (this.isSingleMode) {
+        this.selectedList = [row];
+      } else {
+        this.selectedList = [...this.selectedList, row];
+      }
     } else {
       const index: number = this.selectedList.indexOf(row);
       if (index !== -1) {
@@ -86,7 +97,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   * when the row is click updates the table data
   */
   onRowChange(ev, row): void {
-    if (ev.target.type !== 'checkbox') {
+    if (ev.target.type !== 'checkbox' && ev.target.type !== 'radio') {
       if (row[this.configuration.childCountField] > 0) {
         this.selectedList = [];
         this.rowChanged.emit(row);

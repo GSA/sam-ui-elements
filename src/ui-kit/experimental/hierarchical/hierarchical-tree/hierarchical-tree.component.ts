@@ -24,6 +24,8 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
   public selectedValue: string;
 
+  @Input() public isSingleMode: boolean;
+
 
   /**
    * 

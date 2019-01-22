@@ -15,6 +15,7 @@ export class SamHierarchicalComponent {
 
   @ViewChild('modal') modal;
 
+  @ViewChild('autocomplete') autocomplete
 
   @ViewChild('hierarchicaltree') hierarchicaltree;
 
@@ -50,8 +51,6 @@ export class SamHierarchicalComponent {
 
   constructor() { }
 
-
-
   onModalClick() {
     this.modal.openModal();
     this.hierarchicaltree.selectItem(null);
@@ -60,7 +59,13 @@ export class SamHierarchicalComponent {
 
   onModalSubmitClick() {
     this.modal.closeModal();
-    this.model.addItems(<object[]>this.hierarchicaltree.results, this.configuration.keyField);
+    if (this.hierarchicaltree.results.length > 0) {
+      if (this.isSingleMode()) {
+        this.autocomplete.selectItem(this.hierarchicaltree.results[0])
+      } else {
+        this.model.addItems(<object[]>this.hierarchicaltree.results, this.configuration.keyField);
+      }
+    }
   }
 
 
