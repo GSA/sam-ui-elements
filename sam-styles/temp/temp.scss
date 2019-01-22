@@ -295,3 +295,10 @@
     .sam.statistics.visible.tablet.up :nth-child(6) { order: 6; }
     /************************************/
 }
+
+
+// Modal temp styles (sam-hierarchical-tree modal)
+
+.sam-hierarchical-tree-modal .modal-content{
+  max-width: 90%;
+}
