@@ -87,10 +87,10 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
   private addInitialBreadcrumb(): void {
     const breadCrumbItem = {};
-    breadCrumbItem["name"] = "All Departments";
+    breadCrumbItem["name"] = this.configuration.topLevelBreadcrumbText;
     breadCrumbItem["id"] = null;
     breadCrumbItem["value"] = null;
-    breadCrumbItem["label"] = "All Departments";
+    breadCrumbItem["label"] = this.configuration.topLevelBreadcrumbText;
     this.breadcrumbStackSelectable.unshift(breadCrumbItem);
   }
 
@@ -108,10 +108,11 @@ export class SamHierarchicalTreeComponent implements OnInit {
   private createBreadcrumb(value: object) {
     const breadCrumbItem = {};
     if (value) {
-      breadCrumbItem["name"] = value["name"];
+
+      breadCrumbItem["name"] = value[this.configuration.valueProperty];
       breadCrumbItem["id"] = value[this.configuration.primaryKey];
       breadCrumbItem["value"] = value[this.configuration.primaryKey];
-      breadCrumbItem["label"] = value["name"];
+      breadCrumbItem["label"] = value[this.configuration.valueProperty];
     }
     let breadcrumbStackPostion = this.breadcrumbStack.indexOf(breadCrumbItem);
     if (breadcrumbStackPostion === -1 && value) {

@@ -24,4 +24,14 @@ export class SamHierarchicalTreeConfiguration implements SamHierarchicalTreeGrid
     */
     public childCountField: string;
 
+    /**
+    *  Property from supplied model used for the top part of the basic template
+    */
+    public valueProperty: string;
+
+    /**
+     *  Top Level Breadcrumb Text 
+     */
+    public topLevelBreadcrumbText: string;
+
 }
