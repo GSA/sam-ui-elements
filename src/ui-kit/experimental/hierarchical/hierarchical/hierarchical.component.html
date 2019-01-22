@@ -1,8 +1,13 @@
+<<<<<<< HEAD
 <div class="hierarchical component">
     <a (click)="onModalClick()">Advanced Lookup</a>
+=======
+<div>
+    <a class="advanced-link" (click)="onModalClick()">Advanced Lookup</a>
+>>>>>>> 0caf92f9270ef299c1f663effbf92214d965eac0
     <sam-hierarchical-autocomplete [service]="service" [model]="model" [configuration]="configuration" [itemTemplate]="suggestionTemplate"></sam-hierarchical-autocomplete>
     <sam-selected-result *ngIf="!isSingleMode()" [model]="model" [configuration]="configuration" [itemTemplate]="selectedItemTemplate"></sam-selected-result>
-    <sam-modal [showClose]="true" #modal [title]="configuration.modalTitle" [type]="'primary'" [submitButtonLabel]="configuration.modalSelectButtonLabel"
+    <sam-modal class="sam-hierarchical-tree-modal" [showClose]="true" #modal [title]="configuration.modalTitle" [type]="'primary'" [submitButtonLabel]="configuration.modalSelectButtonLabel"
         [cancelButtonLabel]="configuration.modalCancelButtonLabel" (onSubmit)="onModalSubmitClick()">
         <sam-hierarchical-tree #hierarchicaltree [configuration]="configuration" [service]="service"></sam-hierarchical-tree>
     </sam-modal>

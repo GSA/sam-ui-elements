@@ -1,22 +1,20 @@
-.example-container.usa-grid{
-  display: flex;
-  flex-direction: row-wrap;
-  flex-wrap: wrap;
-}
+
 .hierarchical.template{
-  position: relative;
   overflow: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+
 }
 .sam-hierarchical-tree-header{
   padding: 10px;
+  width: 100%;
   position: relative;
+  align-self: flex-end;
 }
 .sam-hierarchical-tree-grid{
   padding: 10px;
-  flex: 1 1 auto;
-  position: relative;
-}
-.sam-hierarchical-tree-footer{
-  padding: 10px;
+  width: 100%;
   position: relative;
 }

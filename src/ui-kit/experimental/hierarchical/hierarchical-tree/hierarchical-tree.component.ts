@@ -22,7 +22,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
   private filterText: string;
 
-  private selectedValue: string;
+  public selectedValue: string;
 
 
   /**
@@ -35,10 +35,9 @@ export class SamHierarchicalTreeComponent implements OnInit {
   */
   @Input() configuration: SamHierarchicalTreeConfiguration;
 
-  constructor() { }
 
-  private breadcrumbStack: object[] = [];
-  private breadcrumbStackSelectable: object[] = [];
+  breadcrumbStack: object[] = [];
+  breadcrumbStackSelectable: object[] = [];
 
 
   public ngOnInit() {
@@ -54,8 +53,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
     );
     this.selectResults$.subscribe(
       res => {
-        this.results = [];
-        this.results = res;
+        this.setSelectedResults(res);
       }
     );
     this.filterTextSubject.subscribe(
@@ -64,6 +62,11 @@ export class SamHierarchicalTreeComponent implements OnInit {
         this.getResults();
       }
     );
+  }
+
+  private setSelectedResults(res: any) {
+    this.results = [];
+    this.results = res;
   }
 
   public breadcrumbSelected(value: string) {
@@ -117,7 +120,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
     }
   }
 
-  getResults() {
+  private getResults() {
     this.gridResults = this.service.getHiercarchicalById(this.selectedValue, this.filterText);
   }
 
