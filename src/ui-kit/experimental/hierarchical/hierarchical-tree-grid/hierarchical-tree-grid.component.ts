@@ -28,11 +28,6 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   @Input() public gridData: object[] = [];
 
   /**
- * Event emitted when level change is clicked
- */
-  @Output() public levelChanged = new EventEmitter<object>();
-
-  /**
  * Event emitted when row is clicked
  */
   @Output() public rowChanged = new EventEmitter<object>();
@@ -87,12 +82,6 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
     this.selectResults.emit(this.selectedList);
   }
 
-  /**
-   * On level change
-   */
-  public onChangeLevel(ev, item: object): void {
-    this.levelChanged.emit(item);
-  }
 
   /**
   * when the row is click updates the table data

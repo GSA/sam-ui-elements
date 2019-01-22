@@ -8,9 +8,18 @@ import { SamHierarchicalAutocompleteComponent } from '../autocomplete/autocomple
 import { SamHierarchicalSelectedResultComponent } from '../selected-result/selected-result.component';
 import { SamModalModule } from '../../../components/modal';
 import { SamHierarchicalConfiguration } from '../models/SamHierarchicalConfiguration';
+import { SamHierarchicalTreeComponent } from '../hierarchical-tree/hierarchical-tree.component';
+import { SamHierarchicalTreeGridComponent } from '../hierarchical-tree-grid/hierarchical-tree-grid.component';
+import { SamHierarchicalTreeHeaderComponent } from '../hierarchical-tree-header/hierarchical-tree-header.component';
+import { SamDataTableModule, SamSortDirective } from '../../../components/data-table';
+import { SamElementsModule } from '../../../elements/elements.module';
 import { Observable } from 'rxjs';
+import { CdkTableModule } from '@angular/cdk';
+import { SamSelectModule } from '../../../form-controls';
+import { SamFormService } from '../../../form-service';
 import { By } from '@angular/platform-browser';
 import 'rxjs/add/observable/of';
+//import {  SamHierarchicalTreeConfiguration  } from '../../../../../test-app/src/components/ui-kit/experimental/hierarchical/models/SamHierarchicalTreeConfiguration';
 
 describe('SamHierarchicalComponent', () => {
   let component: SamHierarchicalComponent;
@@ -18,8 +27,12 @@ describe('SamHierarchicalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SamHierarchicalComponent, SamHierarchicalAutocompleteComponent, SamHierarchicalSelectedResultComponent],
-      imports: [FormsModule, SamModalModule]
+      declarations: [SamHierarchicalComponent, SamHierarchicalAutocompleteComponent,
+        SamHierarchicalSelectedResultComponent, SamHierarchicalTreeComponent,
+        SamHierarchicalTreeGridComponent, SamHierarchicalTreeHeaderComponent],
+      imports: [FormsModule, SamModalModule, CdkTableModule,
+        SamDataTableModule, SamElementsModule, SamSelectModule],
+            providers: [SamFormService]
     })
       .compileComponents();
   }));
@@ -33,24 +46,44 @@ describe('SamHierarchicalComponent', () => {
 
     component.model = new HierarchicalTreeSelectedItemModel();
     component.service = new HierarchicalDataService();
-    component.configuration.keyField = 'id';
-    component.configuration.id = 'autocomplete1';
-    component.configuration.labelText = 'Autocomplete 1';
-    component.configuration.valueProperty = 'name';
-    component.configuration.subValueProperty = 'subtext';
+    component.model.treeMode = TreeMode.MULTIPLE;
+    component.configuration.keyField = "id";
+    component.configuration.id = "autocomplete1";
+    component.configuration.labelText = "Autocomplete 1";
+    component.configuration.valueProperty = "name";
+    component.configuration.subValueProperty = "subtext";
     component.configuration.placeHolderText = "Enter text";
     component.configuration.modalTitle = "Advanced Lookup";
-    component.model.treeMode = TreeMode.SINGLE;
+    component.configuration.primaryKey = "id";
+    component.configuration.gridDisplayedColumn = [
+      { headerText: "Id", fieldName: "id" },
+      { headerText: "Name", fieldName: "name" },
+      { headerText: "Sub Text", fieldName: "subtext" },
+      { headerText: "Children", fieldName: "childCount" }
+    ];
+    component.configuration.childCountField = "childCount";
     fixture.detectChanges();
   });
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });
 
 
 export class HierarchicalDataService implements SamHiercarchicalServiceInterface {
+
+  private loadedData;
+  constructor() {
+    const data = SampleHierarchicalData;
+    for (let i = 0; i < data.length; i++) {
+
+      let item = data[i];
+      let results = data.filter(it => it.parentId === item.id);
+      item['childCount'] = results.length;
+    }
+    this.loadedData = data;
+  }
 
   getDataByText(currentItems: number, searchValue?: string): Observable<SearchByTextResult> {
     let itemIncrease = 25;
@@ -85,8 +118,13 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
     return Observable.of(returnItem);
   }
 
-  getHiercarchicalById(id?: string) {
-    return null;
+  getHiercarchicalById(id?: string, searchValue?: string): Observable<object[]> {
+    let data = Observable.of(this.loadedData);
+    if (searchValue) {
+      return data.map(items => items.filter(itm => itm.parentId === id && (itm.name.indexOf(searchValue) !== -1 || itm.subtext.indexOf(searchValue) !== -1)));
+    } else {
+      return data.map(items => items.filter(itm => itm.parentId === id));
+    }
   }
 
 }

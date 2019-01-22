@@ -1,14 +1,13 @@
 <div sam-click-outside (clickOutside)="checkForFocus($event)" sam-tab-outside (tabOutside)="checkForFocus($event)">
   <div class="input-container">
-    <input class="sam input"  #input [attr.id]="configuration.id" autocomplete="off" type="text" (focus)="inputFocusHandler()" (keyup)="onKeyup($event)"
-      [(ngModel)]="inputValue" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-haspopup="true"
-      [attr.aria-owns]="configuration.id+ '-listbox'" [attr.placeholder]="configuration.placeHolderText">
+    <input class="sam input" #input [attr.id]="configuration.id" autocomplete="off" type="text" (focus)="inputFocusHandler()"
+      (keyup)="onKeyup($event)" [(ngModel)]="inputValue" autocomplete="off" role="combobox" aria-autocomplete="list"
+      aria-expanded="false" aria-haspopup="true" [attr.aria-owns]="configuration.id+ '-listbox'" [attr.placeholder]="configuration.placeHolderText">
     <ng-container *ngIf="!input.disabled">
       <span class="close">
         <span role="button" class="fa fa-close" aria-label="Clear input" aria-hidden="false" (click)="clearInput()"
           (keyup.enter)="clearInput()">
         </span>
-        <!-- [class]="inputValue.length > 0 ? 'fa fa-times-circle reset-icon-active' : 'fa fa-times-circle reset-icon'" -->
       </span>
     </ng-container>
   </div>
