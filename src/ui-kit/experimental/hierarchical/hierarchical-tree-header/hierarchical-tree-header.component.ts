@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { OptionsType } from '../../../../ui-kit/types';
+import { SamHierarchicalTreeHeaderConfiguration } from '../models/SamHierarchicalTreeHeaderConfiguration';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 
 @Component({
@@ -15,14 +16,14 @@ export class SamHierarchicalTreeHeaderComponent {
   @Input() public options: OptionsType[];
 
   /**
-  * Lable for the options dropdown
-  */
-  @Input() public label: string;
-
-  /**
   * Whether Search should happned on click or keyup
   */
   @Input() private changeType: string = 'keyup';
+
+  /**
+   * 
+   */
+  @Input() public configuration: SamHierarchicalTreeHeaderConfiguration;
 
   /**
   * Event emitted when level change is clicked
