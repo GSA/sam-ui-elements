@@ -82,7 +82,6 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
     this.selectResults.emit(this.selectedList);
   }
 
-
   /**
   * when the row is click updates the table data
   */

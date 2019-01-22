@@ -37,7 +37,7 @@ export class SamHierarchicalTreeHeaderComponent {
 
   @Input() public filterText = '';
 
-  public selectModel: string;
+  @Input() public selectModel: string;
   private debounceTime = 150;
 
   @ViewChild('filter') filter: ElementRef;

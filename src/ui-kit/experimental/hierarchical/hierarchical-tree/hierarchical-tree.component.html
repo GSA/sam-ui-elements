@@ -4,7 +4,7 @@
 
 <ng-template #template>
   <div>
-    <sam-hierarchical-tree-header [options]="breadcrumbStackSelectable" (selectBreadcrumb)="selectBreadcrumb.next($event)"
+    <sam-hierarchical-tree-header [selectModel]="selectedValue" [options]="breadcrumbStackSelectable" (selectBreadcrumb)="selectBreadcrumb.next($event)"
       (filterTextChange)="filterTextSubject.next($event)" [filterText]="filterText">
     </sam-hierarchical-tree-header>
 

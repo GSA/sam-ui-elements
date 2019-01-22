@@ -96,12 +96,12 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
   public selectItem(value: object) {
     this.filterText = '';
+    let selected = null;
     if (value) {
-      this.selectedValue = value[this.configuration.primaryKey];
-    } else {
-      this.selectedValue = null;
+      selected = value[this.configuration.primaryKey];
     }
     this.createBreadcrumb(value);
+    this.selectedValue = selected;
     this.getResults();
   }
 
@@ -117,13 +117,11 @@ export class SamHierarchicalTreeComponent implements OnInit {
     if (breadcrumbStackPostion === -1 && value) {
       this.breadcrumbStackSelectable.unshift(breadCrumbItem);
       this.breadcrumbStack.unshift(value);
+
     }
   }
 
   private getResults() {
     this.gridResults = this.service.getHiercarchicalById(this.selectedValue, this.filterText);
   }
-
-
-
 }
