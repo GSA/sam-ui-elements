@@ -24,6 +24,8 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
   public selectedValue: string;
 
+  @Input() public isSingleMode: boolean;
+
 
   /**
    * 
@@ -87,43 +89,42 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
   private addInitialBreadcrumb(): void {
     const breadCrumbItem = {};
-    breadCrumbItem["name"] = "All Departments";
+    breadCrumbItem["name"] = this.configuration.topLevelBreadcrumbText;
     breadCrumbItem["id"] = null;
     breadCrumbItem["value"] = null;
-    breadCrumbItem["label"] = "All Departments";
+    breadCrumbItem["label"] = this.configuration.topLevelBreadcrumbText;
     this.breadcrumbStackSelectable.unshift(breadCrumbItem);
   }
 
   public selectItem(value: object) {
     this.filterText = '';
+    let selected = null;
     if (value) {
-      this.selectedValue = value[this.configuration.primaryKey];
-    } else {
-      this.selectedValue = null;
+      selected = value[this.configuration.primaryKey];
     }
     this.createBreadcrumb(value);
+    this.selectedValue = selected;
     this.getResults();
   }
 
   private createBreadcrumb(value: object) {
     const breadCrumbItem = {};
     if (value) {
-      breadCrumbItem["name"] = value["name"];
+
+      breadCrumbItem["name"] = value[this.configuration.valueProperty];
       breadCrumbItem["id"] = value[this.configuration.primaryKey];
       breadCrumbItem["value"] = value[this.configuration.primaryKey];
-      breadCrumbItem["label"] = value["name"];
+      breadCrumbItem["label"] = value[this.configuration.valueProperty];
     }
     let breadcrumbStackPostion = this.breadcrumbStack.indexOf(breadCrumbItem);
     if (breadcrumbStackPostion === -1 && value) {
       this.breadcrumbStackSelectable.unshift(breadCrumbItem);
       this.breadcrumbStack.unshift(value);
+
     }
   }
 
   private getResults() {
     this.gridResults = this.service.getHiercarchicalById(this.selectedValue, this.filterText);
   }
-
-
-
 }

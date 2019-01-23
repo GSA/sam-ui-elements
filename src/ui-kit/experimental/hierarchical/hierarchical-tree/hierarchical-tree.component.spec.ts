@@ -19,7 +19,10 @@ import 'rxjs/add/observable/of';
 const config: SamHierarchicalTreeConfiguration = {
   gridDisplayedColumn: [],
   primaryKey: 'id',
-  childCountField: "childCount"
+  childCountField: "childCount",
+  filterPlaceholderText: "",
+  topLevelBreadcrumbText: "All Departments",
+  valueProperty: "name"
 };
 
 
@@ -62,7 +65,7 @@ describe('SamHierarchicalTreeComponent', () => {
     expect(component.breadcrumbStack.length).toBe(1);
     expect(component.breadcrumbStackSelectable.length).toBe(2);
     expect(component.selectedValue).toBe(SampleHierarchicalData[0].id);
-});
+  });
 
 
 });

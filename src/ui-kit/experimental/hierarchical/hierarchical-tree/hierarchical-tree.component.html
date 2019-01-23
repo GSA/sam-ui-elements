@@ -4,12 +4,13 @@
 
 <ng-template #template>
   <div>
-    <sam-hierarchical-tree-header [options]="breadcrumbStackSelectable" (selectBreadcrumb)="selectBreadcrumb.next($event)"
-      (filterTextChange)="filterTextSubject.next($event)" [filterText]="filterText">
+    <sam-hierarchical-tree-header [selectModel]="selectedValue" [options]="breadcrumbStackSelectable"
+      (selectBreadcrumb)="selectBreadcrumb.next($event)" (filterTextChange)="filterTextSubject.next($event)"
+      [filterText]="filterText" [configuration]="configuration">
     </sam-hierarchical-tree-header>
 
-    <sam-hierarchical-tree-grid [configuration]="configuration" [gridData]="gridResults | async" (rowChanged)="selecteHierarchyLevel.next($event)"
-      (selectResults)="selectResults$.next($event)">
+    <sam-hierarchical-tree-grid [configuration]="configuration" [isSingleMode]="isSingleMode" [gridData]="gridResults | async"
+      (rowChanged)="selecteHierarchyLevel.next($event)" (selectResults)="selectResults$.next($event)">
     </sam-hierarchical-tree-grid>
   </div>
 </ng-template>
