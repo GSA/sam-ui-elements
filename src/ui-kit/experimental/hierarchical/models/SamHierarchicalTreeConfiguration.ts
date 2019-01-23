@@ -17,7 +17,7 @@ export class SamHierarchicalTreeConfiguration implements SamHierarchicalTreeGrid
     /**
      * 
      */
-    public primaryKey: string;
+    public primaryKeyField: string;
 
     /**
     * 

@@ -18,7 +18,7 @@ import 'rxjs/add/observable/of';
 
 const config: SamHierarchicalTreeConfiguration = {
   gridDisplayedColumn: [],
-  primaryKey: 'id',
+  primaryKeyField: 'id',
   childCountField: "childCount",
   filterPlaceholderText: "",
   topLevelBreadcrumbText: "All Departments",

@@ -47,14 +47,13 @@ describe('SamHierarchicalComponent', () => {
     component.model = new HierarchicalTreeSelectedItemModel();
     component.service = new HierarchicalDataService();
     component.model.treeMode = TreeMode.MULTIPLE;
-    component.configuration.keyField = "id";
+    component.configuration.primaryKeyField = "id";
     component.configuration.id = "autocomplete1";
     component.configuration.labelText = "Autocomplete 1";
     component.configuration.valueProperty = "name";
     component.configuration.subValueProperty = "subtext";
     component.configuration.placeHolderText = "Enter text";
     component.configuration.modalTitle = "Advanced Lookup";
-    component.configuration.primaryKey = "id";
     component.configuration.gridDisplayedColumn = [
       { headerText: "Id", fieldName: "id" },
       { headerText: "Name", fieldName: "name" },

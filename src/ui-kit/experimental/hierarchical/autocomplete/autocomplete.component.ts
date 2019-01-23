@@ -177,7 +177,7 @@ export class SamHierarchicalAutocompleteComponent {
    * @param item 
    */
   public selectItem(item: object): void {
-    this.model.addItem(item, this.configuration.keyField);
+    this.model.addItem(item, this.configuration.primaryKeyField);
     let message = item[this.configuration.valueProperty];
     this.inputValue = message;
     if (this.configuration.subValueProperty && item[this.configuration.subValueProperty]) {

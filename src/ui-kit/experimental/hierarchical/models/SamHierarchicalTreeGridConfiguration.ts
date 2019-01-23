@@ -9,7 +9,7 @@ export class SamHierarchicalTreeGridConfiguration {
     /**
      * 
      */
-    public primaryKey: string;
+    public primaryKeyField: string;
 
     /**
      * 
