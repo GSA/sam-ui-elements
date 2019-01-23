@@ -111,10 +111,10 @@ export class SamHierarchicalTreeComponent implements OnInit {
     const breadCrumbItem = {};
     if (value) {
 
-      breadCrumbItem["name"] = value[this.configuration.valueProperty];
+      breadCrumbItem["name"] = value[this.configuration.primaryTextField];
       breadCrumbItem["id"] = value[this.configuration.primaryKeyField];
       breadCrumbItem["value"] = value[this.configuration.primaryKeyField];
-      breadCrumbItem["label"] = value[this.configuration.valueProperty];
+      breadCrumbItem["label"] = value[this.configuration.primaryTextField];
     }
     let breadcrumbStackPostion = this.breadcrumbStack.indexOf(breadCrumbItem);
     if (breadcrumbStackPostion === -1 && value) {

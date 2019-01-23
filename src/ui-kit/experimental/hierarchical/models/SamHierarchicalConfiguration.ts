@@ -35,7 +35,7 @@ export class SamHierarchicalConfiguration implements SamHierarchicalAutocomplete
     /**
      *  Property from supplied model used for the top part of the basic template
      */
-    public valueProperty: string;
+    public primaryTextField: string;
 
     /**
      *  Property from supplied model used for the bottom part of the basic template

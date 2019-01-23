@@ -50,7 +50,7 @@ describe('SamHierarchicalComponent', () => {
     component.configuration.primaryKeyField = "id";
     component.configuration.id = "autocomplete1";
     component.configuration.labelText = "Autocomplete 1";
-    component.configuration.valueProperty = "name";
+    component.configuration.primaryTextField = "name";
     component.configuration.subValueProperty = "subtext";
     component.configuration.placeHolderText = "Enter text";
     component.configuration.modalTitle = "Advanced Lookup";
@@ -62,7 +62,7 @@ describe('SamHierarchicalComponent', () => {
     ];
     component.configuration.childCountField = "childCount";
     component.configuration.topLevelBreadcrumbText = "All Departments";
-    component.configuration.valueProperty = "name";
+
     fixture.detectChanges();
   });
 

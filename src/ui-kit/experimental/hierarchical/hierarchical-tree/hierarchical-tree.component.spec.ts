@@ -22,7 +22,7 @@ const config: SamHierarchicalTreeConfiguration = {
   childCountField: "childCount",
   filterPlaceholderText: "",
   topLevelBreadcrumbText: "All Departments",
-  valueProperty: "name"
+  primaryTextField: "name"
 };
 
 

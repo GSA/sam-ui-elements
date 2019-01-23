@@ -24,7 +24,7 @@ describe('SamHierarchicalSelectedResultComponent', () => {
     component.configuration = new SelectedResultConfiguration();
     component.configuration.primaryKeyField = 'id';
     component.model.treeMode = TreeMode.SINGLE;
-    component.configuration.valueProperty = 'name';
+    component.configuration.primaryTextField = 'name';
     component.configuration.subValueProperty = 'subtext';
     fixture.detectChanges();
   });

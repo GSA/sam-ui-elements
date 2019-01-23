@@ -31,7 +31,7 @@ describe('SamHierarchicalAutocompleteComponent', () => {
     component.configuration.id = 'autoId';
     component.configuration.primaryKeyField = 'id';
     component.model.treeMode = TreeMode.SINGLE;
-    component.configuration.valueProperty = 'name';
+    component.configuration.primaryTextField = 'name';
     component.configuration.subValueProperty = 'subtext';
     component.configuration.debounceTime = 0;
     fixture.detectChanges();
