@@ -32,7 +32,7 @@ describe('SamHierarchicalAutocompleteComponent', () => {
     component.configuration.primaryKeyField = 'id';
     component.model.treeMode = TreeMode.SINGLE;
     component.configuration.primaryTextField = 'name';
-    component.configuration.subValueProperty = 'subtext';
+    component.configuration.secondaryTextField = 'subtext';
     component.configuration.debounceTime = 0;
     fixture.detectChanges();
   });
@@ -181,7 +181,7 @@ describe('SamHierarchicalAutocompleteComponent', () => {
   }));
 
   it('Should have backspace have results', fakeAsync(() => {
-    component.configuration.subValueProperty = undefined;
+    component.configuration.secondaryTextField = undefined;
     const event = {
       "key": "Backspace",
       "target": { "value": 'id' }

@@ -40,7 +40,7 @@ export class SamHierarchicalConfiguration implements SamHierarchicalAutocomplete
     /**
      *  Property from supplied model used for the bottom part of the basic template
      */
-    public subValueProperty: string;
+    public secondaryTextField: string;
 
     /**
      *  Sets the time waited for addional key actions Default is 250 milliseconds

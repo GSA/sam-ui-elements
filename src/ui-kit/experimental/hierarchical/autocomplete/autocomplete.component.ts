@@ -180,8 +180,8 @@ export class SamHierarchicalAutocompleteComponent {
     this.model.addItem(item, this.configuration.primaryKeyField);
     let message = item[this.configuration.primaryTextField];
     this.inputValue = message;
-    if (this.configuration.subValueProperty && item[this.configuration.subValueProperty]) {
-      message += ': ' + item[this.configuration.subValueProperty];
+    if (this.configuration.secondaryTextField && item[this.configuration.secondaryTextField]) {
+      message += ': ' + item[this.configuration.secondaryTextField];
     }
     message += ' selected';
     this.addScreenReaderMessage(message);
@@ -318,8 +318,8 @@ export class SamHierarchicalAutocompleteComponent {
       this.highlightedItem = item;
       this.highlightedItem[this.HighlightedPropertyName] = true;
       let message = item[this.configuration.primaryTextField];
-      if (this.configuration.subValueProperty && item[this.configuration.subValueProperty]) {
-        message += ': ' + item[this.configuration.subValueProperty]
+      if (this.configuration.secondaryTextField && item[this.configuration.secondaryTextField]) {
+        message += ': ' + item[this.configuration.secondaryTextField]
 
       }
       this.addScreenReaderMessage(message);

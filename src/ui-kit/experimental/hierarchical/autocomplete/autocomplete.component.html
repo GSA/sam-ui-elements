@@ -22,9 +22,9 @@
           </ng-container>
 
           <ng-container *ngIf="!itemTemplate">
-            <span class="header">{{ result[configuration.valueProperty] }}</span>
-            <ng-container *ngIf="configuration.subValueProperty &&  result[configuration.subValueProperty] ">
-              <span class="description">{{ result[configuration.subValueProperty] }}</span>
+            <span class="header">{{ result[configuration.primaryTextField] }}</span>
+            <ng-container *ngIf="configuration.secondaryTextField &&  result[configuration.secondaryTextField] ">
+              <span class="description">{{ result[configuration.secondaryTextField] }}</span>
             </ng-container>
           </ng-container>
         </li>

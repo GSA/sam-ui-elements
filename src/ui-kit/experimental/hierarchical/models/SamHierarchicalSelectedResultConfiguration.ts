@@ -13,7 +13,7 @@ export class SelectedResultConfiguration {
     /**
      *  Property from supplied model used for the bottom part of the basic template
      */
-    public subValueProperty: string;
+    public secondaryTextField: string;
   
     /**
     * Used to describe the drop down (Text should match the label that will be supplied)
