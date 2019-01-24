@@ -21,7 +21,7 @@ export class SamHierarchicalTreeHeaderComponent {
   @Input() private changeType: string = 'keyup';
 
   /**
-   * 
+   * configuration for the control
    */
   @Input() public configuration: SamHierarchicalTreeHeaderConfiguration;
 
@@ -36,27 +36,27 @@ export class SamHierarchicalTreeHeaderComponent {
   @Output() public filterTextChange = new EventEmitter<string>();
 
   /**
-   * 
+   * Filter text
    */
   @Input() public filterText = '';
 
   /**
-   * 
+   * Selected model (breadcrumb item selected)
    */
   @Input() public selectModel: string;
 
   /**
-   * 
+   * Time to wait for more input to be made
    */
   private debounceTime = 150;
 
   /**
-   * 
+   * Filter input reference
    */
   @ViewChild('filter') filter: ElementRef;
 
   /**
-   * 
+   * ngOnInit
    */
   ngOnInit() {
     fromEvent(this.filter.nativeElement, this.changeType)
@@ -68,7 +68,7 @@ export class SamHierarchicalTreeHeaderComponent {
   }
   
   /**
-   * 
+   * emits the breadcrumb selected for a given item
    * @param ev 
    */
   onLevelChange(ev: Event): void {
@@ -76,7 +76,7 @@ export class SamHierarchicalTreeHeaderComponent {
   }
 
   /**
-   * 
+   * Emit event to go up one level
    */
   navigateToParent(): void {
     if (this.options.length > 1) {

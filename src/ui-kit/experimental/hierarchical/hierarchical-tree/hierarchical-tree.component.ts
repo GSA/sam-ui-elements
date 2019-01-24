@@ -11,19 +11,49 @@ import { SamHierarchicalTreeConfiguration } from "../models/SamHierarchicalTreeC
 
 export class SamHierarchicalTreeComponent implements OnInit {
 
+  /**
+   * 
+   */
   public selecteHierarchyLevel = new BehaviorSubject<object>(null);
+
+  /**
+   * 
+   */
   public selectResults$ = new BehaviorSubject<object[]>([]);
+
+  /**
+   * 
+   */
   public filterTextSubject = new BehaviorSubject<string>("");
+
+  /**
+   * 
+   */
   public selectBreadcrumb = new BehaviorSubject<string>(null);
 
+  /**
+   * 
+   */
   public results: object[];
 
+  /**
+   * 
+   */
   public gridResults: Observable<object[]>;
 
+  /**
+   * 
+   */
   private filterText: string;
 
+  /**
+   * 
+   */
   public selectedValue: string;
 
+  /**
+   * 
+   */
   @Input() public isSingleMode: boolean;
 
 
@@ -50,7 +80,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
 
   /**
-   * 
+   * ngOnInit
    */
   public ngOnInit() {
     this.addInitialBreadcrumb();
@@ -76,7 +106,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   }
 
   /**
-   * 
+   * Sets the selected items 
    * @param res 
    */
   private setSelectedResults(res: any) {
@@ -85,7 +115,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   }
 
   /**
-   * 
+   * Breadvrum selected 
    * @param value 
    */
   public breadcrumbSelected(value: string) {
@@ -105,7 +135,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   }
 
   /**
-   * 
+   * Creates the top level breadcrumb 
    */
   private addInitialBreadcrumb(): void {
     const breadCrumbItem = {};
@@ -117,7 +147,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   }
 
   /**
-   * 
+   *  Selects a new item
    * @param value 
    */
   public selectItem(value: object) {
@@ -132,7 +162,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   }
 
   /**
-   * 
+   * Creats a new breadcrumb item and adds a new breadcrumb
    * @param value 
    */
   private createBreadcrumb(value: object) {
@@ -151,7 +181,8 @@ export class SamHierarchicalTreeComponent implements OnInit {
   }
 
   /**
-   * 
+   * Calls the provided service to get the results for the girdbased on
+   * the primary id of the selected   * and the filter
    */
   private getResults() {
     this.gridResults = this.service.getHiercarchicalById(this.selectedValue, this.filterText);
