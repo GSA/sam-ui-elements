@@ -4,7 +4,7 @@ export class SamHierarchicalTreeGridConfiguration {
     /**
      * 
      */
-    public gridDisplayedColumn: SamHierarchicalTreeGridColumn[]
+    public gridColumnsDisplayed: SamHierarchicalTreeGridColumn[]
 
     /**
      * 

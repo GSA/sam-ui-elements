@@ -12,7 +12,7 @@ export class SamHierarchicalTreeConfiguration implements SamHierarchicalTreeGrid
     /**
      * 
      */
-    public gridDisplayedColumn: SamHierarchicalTreeGridColumn[]
+    public gridColumnsDisplayed: SamHierarchicalTreeGridColumn[]
 
     /**
      * 

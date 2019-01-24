@@ -48,9 +48,9 @@ export class SamHierarchicalConfiguration implements SamHierarchicalAutocomplete
     public debounceTime: number;
 
     /**
-     * Place holder text for input
+     * Place holder text for autocomplete input
      */
-    public placeHolderText: string;
+    public autocompletePlaceHolderText: string;
 
     /**
      * 
@@ -70,7 +70,7 @@ export class SamHierarchicalConfiguration implements SamHierarchicalAutocomplete
     /**
      * 
      */
-    public gridDisplayedColumn: SamHierarchicalTreeGridColumn[]
+    public gridColumnsDisplayed: SamHierarchicalTreeGridColumn[]
 
     /**
     * 

@@ -52,9 +52,9 @@ describe('SamHierarchicalComponent', () => {
     component.configuration.labelText = "Autocomplete 1";
     component.configuration.primaryTextField = "name";
     component.configuration.secondaryTextField = "subtext";
-    component.configuration.placeHolderText = "Enter text";
+    component.configuration.autocompletePlaceHolderText = "Enter text";
     component.configuration.modalTitle = "Advanced Lookup";
-    component.configuration.gridDisplayedColumn = [
+    component.configuration.gridColumnsDisplayed = [
       { headerText: "Id", fieldName: "id" },
       { headerText: "Name", fieldName: "name" },
       { headerText: "Sub Text", fieldName: "subtext" },

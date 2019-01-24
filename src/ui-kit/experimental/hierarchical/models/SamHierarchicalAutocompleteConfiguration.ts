@@ -40,7 +40,7 @@ export class SamHierarchicalAutocompleteConfiguration {
     /**
      * Place holder text for input
      */
-    public placeHolderText: string;
+    public autocompletePlaceHolderText: string;
   
   }
   

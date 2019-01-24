@@ -22,7 +22,7 @@ const gridData = [
 ];
 
 const config: SamHierarchicalTreeGridConfiguration = {
-    gridDisplayedColumn: [],
+    gridColumnsDisplayed: [],
     primaryKeyField: 'id',
     childCountField: 'childCount'
 };

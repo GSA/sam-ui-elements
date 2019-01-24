@@ -17,7 +17,7 @@ import { SamHiercarchicalServiceInterface, SearchByTextResult } from '../hierarc
 import 'rxjs/add/observable/of';
 
 const config: SamHierarchicalTreeConfiguration = {
-  gridDisplayedColumn: [],
+  gridColumnsDisplayed: [],
   primaryKeyField: 'id',
   childCountField: "childCount",
   filterPlaceholderText: "",

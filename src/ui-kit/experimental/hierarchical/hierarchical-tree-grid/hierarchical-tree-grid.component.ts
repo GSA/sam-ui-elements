@@ -56,7 +56,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.configuration.gridDisplayedColumn.forEach(item => {
+    this.configuration.gridColumnsDisplayed.forEach(item => {
       this.columnFieldName.push(item.fieldName);
       this.columnHeaderText.push(item.headerText);
     });

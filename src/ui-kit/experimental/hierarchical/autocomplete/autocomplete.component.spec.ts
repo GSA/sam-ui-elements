@@ -34,6 +34,7 @@ describe('SamHierarchicalAutocompleteComponent', () => {
     component.configuration.primaryTextField = 'name';
     component.configuration.secondaryTextField = 'subtext';
     component.configuration.debounceTime = 0;
+    component.configuration.autocompletePlaceHolderText = '';
     fixture.detectChanges();
   });
 
