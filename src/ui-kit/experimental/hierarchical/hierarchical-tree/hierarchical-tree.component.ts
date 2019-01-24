@@ -72,7 +72,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   }
 
   public breadcrumbSelected(value: string) {
-    let item = this.breadcrumbStack.find(itm => itm[this.configuration.primaryKey] === value);
+    let item = this.breadcrumbStack.find(itm => itm[this.configuration.primaryKeyField] === value);
     let pos = this.breadcrumbStack.indexOf(item);
     if (pos === -1) {
       pos = this.breadcrumbStack.length;
@@ -100,7 +100,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
     this.filterText = '';
     let selected = null;
     if (value) {
-      selected = value[this.configuration.primaryKey];
+      selected = value[this.configuration.primaryKeyField];
     }
     this.createBreadcrumb(value);
     this.selectedValue = selected;
@@ -111,10 +111,10 @@ export class SamHierarchicalTreeComponent implements OnInit {
     const breadCrumbItem = {};
     if (value) {
 
-      breadCrumbItem["name"] = value[this.configuration.valueProperty];
-      breadCrumbItem["id"] = value[this.configuration.primaryKey];
-      breadCrumbItem["value"] = value[this.configuration.primaryKey];
-      breadCrumbItem["label"] = value[this.configuration.valueProperty];
+      breadCrumbItem["name"] = value[this.configuration.primaryTextField];
+      breadCrumbItem["id"] = value[this.configuration.primaryKeyField];
+      breadCrumbItem["value"] = value[this.configuration.primaryKeyField];
+      breadCrumbItem["label"] = value[this.configuration.primaryTextField];
     }
     let breadcrumbStackPostion = this.breadcrumbStack.indexOf(breadCrumbItem);
     if (breadcrumbStackPostion === -1 && value) {

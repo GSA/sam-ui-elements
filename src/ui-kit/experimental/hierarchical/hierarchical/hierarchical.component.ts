@@ -63,7 +63,7 @@ export class SamHierarchicalComponent {
       if (this.isSingleMode()) {
         this.autocomplete.selectItem(this.hierarchicaltree.results[0])
       } else {
-        this.model.addItems(<object[]>this.hierarchicaltree.results, this.configuration.keyField);
+        this.model.addItems(<object[]>this.hierarchicaltree.results, this.configuration.primaryKeyField);
       }
     }
   }

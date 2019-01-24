@@ -125,7 +125,7 @@ export class SamHierarchicalAutocompleteComponent {
         if (this.inputValue.length === 0) {
           this.model.clearItems();
         } else {
-          this.inputValue = this.model.getItems()[0][this.configuration.valueProperty];
+          this.inputValue = this.model.getItems()[0][this.configuration.primaryTextField];
         }
       } else {
         this.inputValue = '';
@@ -177,11 +177,11 @@ export class SamHierarchicalAutocompleteComponent {
    * @param item 
    */
   public selectItem(item: object): void {
-    this.model.addItem(item, this.configuration.keyField);
-    let message = item[this.configuration.valueProperty];
+    this.model.addItem(item, this.configuration.primaryKeyField);
+    let message = item[this.configuration.primaryTextField];
     this.inputValue = message;
-    if (this.configuration.subValueProperty && item[this.configuration.subValueProperty]) {
-      message += ': ' + item[this.configuration.subValueProperty];
+    if (this.configuration.secondaryTextField && item[this.configuration.secondaryTextField]) {
+      message += ': ' + item[this.configuration.secondaryTextField];
     }
     message += ' selected';
     this.addScreenReaderMessage(message);
@@ -317,9 +317,9 @@ export class SamHierarchicalAutocompleteComponent {
       }
       this.highlightedItem = item;
       this.highlightedItem[this.HighlightedPropertyName] = true;
-      let message = item[this.configuration.valueProperty];
-      if (this.configuration.subValueProperty && item[this.configuration.subValueProperty]) {
-        message += ': ' + item[this.configuration.subValueProperty]
+      let message = item[this.configuration.primaryTextField];
+      if (this.configuration.secondaryTextField && item[this.configuration.secondaryTextField]) {
+        message += ': ' + item[this.configuration.secondaryTextField]
 
       }
       this.addScreenReaderMessage(message);

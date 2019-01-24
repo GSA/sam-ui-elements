@@ -20,17 +20,17 @@ export class SamHierarchicalAutocompleteConfiguration {
     /**
      *  This is the primary field used to identify each object in the results
      */
-    public keyField: string;
+    public primaryKeyField: string;
   
     /**
      *  Property from supplied model used for the top part of the basic template
      */
-    public valueProperty: string;
+    public primaryTextField: string;
   
     /**
      *  Property from supplied model used for the bottom part of the basic template
      */
-    public subValueProperty: string;
+    public secondaryTextField: string;
   
     /**
      *  Sets the time waited for addional key actions Default is 250 milliseconds
@@ -40,7 +40,7 @@ export class SamHierarchicalAutocompleteConfiguration {
     /**
      * Place holder text for input
      */
-    public placeHolderText: string;
+    public autocompletePlaceHolderText: string;
   
   }
   

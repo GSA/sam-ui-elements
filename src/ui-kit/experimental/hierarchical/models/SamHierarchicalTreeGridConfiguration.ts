@@ -4,12 +4,12 @@ export class SamHierarchicalTreeGridConfiguration {
     /**
      * 
      */
-    public gridDisplayedColumn: SamHierarchicalTreeGridColumn[]
+    public gridColumnsDisplayed: SamHierarchicalTreeGridColumn[]
 
     /**
      * 
      */
-    public primaryKey: string;
+    public primaryKeyField: string;
 
     /**
      * 

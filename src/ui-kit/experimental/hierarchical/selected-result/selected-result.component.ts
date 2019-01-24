@@ -31,6 +31,6 @@ export class SamHierarchicalSelectedResultComponent {
    * @param item 
    */
   removeItem(item: object) {
-    this.model.removeItem(item, this.configuration.keyField);
+    this.model.removeItem(item, this.configuration.primaryKeyField);
   }
 }

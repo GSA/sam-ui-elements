@@ -5,9 +5,9 @@
       <ng-container *ngIf="itemTemplate" [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit:result}">
       </ng-container>
       <ng-container *ngIf="!itemTemplate">
-        <span class="header">{{ result[configuration.valueProperty] }}</span>
-        <ng-container *ngIf="configuration.subValueProperty &&  result[configuration.subValueProperty] ">
-          <span class="secondary-value">{{ result[configuration.subValueProperty] }}</span>
+        <span class="header">{{ result[configuration.primaryTextField] }}</span>
+        <ng-container *ngIf="configuration.secondaryTextField &&  result[configuration.secondaryTextField] ">
+          <span class="secondary-value">{{ result[configuration.secondaryTextField] }}</span>
         </ng-container>
       </ng-container>
       <span tabindex="0" role="button" class="close fa fa-close" aria-label="Remove Item" aria-hidden="false" (click)="removeItem(result)"

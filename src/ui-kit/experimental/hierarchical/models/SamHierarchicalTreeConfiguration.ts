@@ -12,12 +12,12 @@ export class SamHierarchicalTreeConfiguration implements SamHierarchicalTreeGrid
     /**
      * 
      */
-    public gridDisplayedColumn: SamHierarchicalTreeGridColumn[]
+    public gridColumnsDisplayed: SamHierarchicalTreeGridColumn[]
 
     /**
      * 
      */
-    public primaryKey: string;
+    public primaryKeyField: string;
 
     /**
     * 
@@ -27,7 +27,7 @@ export class SamHierarchicalTreeConfiguration implements SamHierarchicalTreeGrid
     /**
     *  Property from supplied model used for the top part of the basic template
     */
-    public valueProperty: string;
+    public primaryTextField: string;
 
     /**
      *  Top Level Breadcrumb Text 

@@ -47,15 +47,14 @@ describe('SamHierarchicalComponent', () => {
     component.model = new HierarchicalTreeSelectedItemModel();
     component.service = new HierarchicalDataService();
     component.model.treeMode = TreeMode.MULTIPLE;
-    component.configuration.keyField = "id";
+    component.configuration.primaryKeyField = "id";
     component.configuration.id = "autocomplete1";
     component.configuration.labelText = "Autocomplete 1";
-    component.configuration.valueProperty = "name";
-    component.configuration.subValueProperty = "subtext";
-    component.configuration.placeHolderText = "Enter text";
+    component.configuration.primaryTextField = "name";
+    component.configuration.secondaryTextField = "subtext";
+    component.configuration.autocompletePlaceHolderText = "Enter text";
     component.configuration.modalTitle = "Advanced Lookup";
-    component.configuration.primaryKey = "id";
-    component.configuration.gridDisplayedColumn = [
+    component.configuration.gridColumnsDisplayed = [
       { headerText: "Id", fieldName: "id" },
       { headerText: "Name", fieldName: "name" },
       { headerText: "Sub Text", fieldName: "subtext" },
@@ -63,7 +62,7 @@ describe('SamHierarchicalComponent', () => {
     ];
     component.configuration.childCountField = "childCount";
     component.configuration.topLevelBreadcrumbText = "All Departments";
-    component.configuration.valueProperty = "name";
+
     fixture.detectChanges();
   });
 
