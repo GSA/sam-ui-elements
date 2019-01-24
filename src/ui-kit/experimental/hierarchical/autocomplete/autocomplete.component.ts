@@ -119,6 +119,9 @@ export class SamHierarchicalAutocompleteComponent {
     this.showResults = false;
   }
 
+  /**
+   * 
+   */
   private focusRemoved() {
     if (this.model.treeMode === TreeMode.SINGLE) {
       if (this.model.getItems().length > 0) {
@@ -326,6 +329,10 @@ export class SamHierarchicalAutocompleteComponent {
     }
   }
 
+  /**
+   * 
+   * @param message 
+   */
   private addScreenReaderMessage(message: string) {
     const srResults: HTMLElement = document.createElement('li');
     srResults.innerText = message;
