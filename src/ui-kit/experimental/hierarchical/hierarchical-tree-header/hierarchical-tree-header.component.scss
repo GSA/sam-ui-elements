@@ -17,7 +17,7 @@
   align-items: center;
   text-decoration: none;
   color: #205493;
-
+  //hide the "views options" until we have two views ready//
   display: none;
 }
 .hierarchy-views> *{
@@ -43,7 +43,8 @@
 }
 sam-select{
   width: 100%;
+  align-self: center;
 }
 .sam-hierarchical-tree-header> input{
-  margin-right: 60px;
+  align-self: right;
 }

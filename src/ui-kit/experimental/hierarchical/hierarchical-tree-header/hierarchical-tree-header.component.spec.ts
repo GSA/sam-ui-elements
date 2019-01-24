@@ -7,7 +7,7 @@ import { SamSelectModule } from '../../../form-controls';
 import { SamFormService } from '../../../form-service';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-
+import { SamHierarchicalTreeHeaderConfiguration } from '../models/SamHierarchicalTreeHeaderConfiguration';
 
 const options = [{ "name": "Level 2", "id": "2", "value": "2", "label": "Level 2" },
 { "name": "Level 1", "id": "1", "value": "1", "label": "Level 1" },
@@ -38,6 +38,9 @@ describe('SamHierarchicalTreeHeaderComponent', () => {
     component = fixture.componentInstance;
     de = fixture.debugElement;
     component.options = options;
+
+    let config = new SamHierarchicalTreeHeaderConfiguration();
+    component.configuration = config;
     fixture.detectChanges();
   });
 

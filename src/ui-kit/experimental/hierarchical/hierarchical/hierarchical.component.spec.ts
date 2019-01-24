@@ -32,7 +32,7 @@ describe('SamHierarchicalComponent', () => {
         SamHierarchicalTreeGridComponent, SamHierarchicalTreeHeaderComponent],
       imports: [FormsModule, SamModalModule, CdkTableModule,
         SamDataTableModule, SamElementsModule, SamSelectModule],
-            providers: [SamFormService]
+      providers: [SamFormService]
     })
       .compileComponents();
   }));
@@ -62,6 +62,8 @@ describe('SamHierarchicalComponent', () => {
       { headerText: "Children", fieldName: "childCount" }
     ];
     component.configuration.childCountField = "childCount";
+    component.configuration.topLevelBreadcrumbText = "All Departments";
+    component.configuration.valueProperty = "name";
     fixture.detectChanges();
   });
 

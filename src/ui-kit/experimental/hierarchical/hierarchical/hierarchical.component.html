@@ -4,10 +4,12 @@
 
 <div>
     <a class="advanced-link" (click)="onModalClick()">Advanced Lookup</a>
-    <sam-hierarchical-autocomplete [service]="service" [model]="model" [configuration]="configuration" [itemTemplate]="suggestionTemplate"></sam-hierarchical-autocomplete>
+    <sam-hierarchical-autocomplete #autocomplete [service]="service" [model]="model" [configuration]="configuration"
+        [itemTemplate]="suggestionTemplate"></sam-hierarchical-autocomplete>
     <sam-selected-result *ngIf="!isSingleMode()" [model]="model" [configuration]="configuration" [itemTemplate]="selectedItemTemplate"></sam-selected-result>
-    <sam-modal class="sam-hierarchical-tree-modal" [showClose]="true" #modal [title]="configuration.modalTitle" [type]="'primary'" [submitButtonLabel]="configuration.modalSelectButtonLabel"
-        [cancelButtonLabel]="configuration.modalCancelButtonLabel" (onSubmit)="onModalSubmitClick()">
-        <sam-hierarchical-tree #hierarchicaltree [configuration]="configuration" [service]="service"></sam-hierarchical-tree>
+    <sam-modal class="sam-hierarchical-tree-modal" [showClose]="true" #modal [title]="configuration.modalTitle" [type]="'primary'"
+        [submitButtonLabel]="configuration.modalSelectButtonLabel" [cancelButtonLabel]="configuration.modalCancelButtonLabel"
+        (onSubmit)="onModalSubmitClick()">
+        <sam-hierarchical-tree #hierarchicaltree [configuration]="configuration" [service]="service" [isSingleMode]="isSingleMode()"></sam-hierarchical-tree>
     </sam-modal>
 </div>
