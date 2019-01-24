@@ -14,7 +14,7 @@
     </div>
   </div>
 
-  <button type="button" class="order-results">Up</button>
+  <button type="button" class="order-results" (click)="navigateToParent()">Up</button>
 
   <!-- Agency Level Selector -->
   <sam-select [(ngModel)]="selectModel" (change)="onLevelChange($event)" name="levelSelect" class="levelSelect"
