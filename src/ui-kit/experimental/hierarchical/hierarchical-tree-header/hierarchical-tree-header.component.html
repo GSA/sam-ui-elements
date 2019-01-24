@@ -22,6 +22,5 @@
   </sam-select>
 
   <!-- Search Control -->
-  <input #filter aria-label="search" placeholder="Search by name CGAC, AAC, or FPDS code" [(ngModel)]="filterText">
-  <!-- [attr.placeholder] -->
+  <input #filter aria-label="search"  [attr.placeholder]="configuration.filterPlaceholderText" autocomplete="off" [(ngModel)]="filterText">
 </div>
