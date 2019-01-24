@@ -20,20 +20,20 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   @Input() public configuration: SamHierarchicalTreeGridConfiguration;
 
   /**
-* Data for the Table.
-*  Simple data array
-* Stream that emit a array each time when the item is selected.
-* Stream that changes each time when click action trigger on row.
-*/
+   * 
+   */
   @Input() public gridData: object[] = [];
 
+  /**
+   * 
+   */
   @Input() public isSingleMode: boolean;
 
-  selectionMode: string = "checkbox";
+
 
   /**
- * Event emitted when row is clicked
- */
+   * 
+   */
   @Output() public rowChanged = new EventEmitter<object>();
 
   /**
@@ -41,20 +41,62 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   */
   @Output() selectResults = new EventEmitter<object[]>();
 
+  /**
+   * 
+   */
   public displayedColumns = ['select'];
+
+  /**
+   * 
+   */
   public columnFieldName = [];
+
+  /**
+   * 
+   */
   public columnHeaderText = [];
+
+  /**
+   * 
+   */
   public selectedList: object[] = [];
+
+  /**
+   * 
+   */
   public hierarchicalDataSource: HierarchicalDataSource | null;
+
+  /**
+   * 
+   */
   public dataChange: BehaviorSubject<object[]> = new BehaviorSubject<object[]>([]);
+
+  /**
+   * 
+   */
+  selectionMode: string = "checkbox";
+
+  /**
+   * 
+   */
   @ViewChild(SamSortDirective) sort: SamSortDirective;
 
+  /**
+   * 
+   * @param cdr 
+   */
   constructor(private cdr: ChangeDetectorRef) { }
 
+  /**
+   * 
+   */
   ngOnChanges() {
     this.dataChange.next(this.gridData);
   }
 
+  /**
+   * 
+   */
   ngOnInit() {
     this.configuration.gridColumnsDisplayed.forEach(item => {
       this.columnFieldName.push(item.fieldName);
@@ -66,6 +108,9 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
     }
   }
 
+  /**
+   * 
+   */
   ngAfterViewInit() {
     this.hierarchicalDataSource = new HierarchicalDataSource(
       this.dataChange,

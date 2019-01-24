@@ -1,6 +1,7 @@
 export class HierarchicalTreeSelectedItemModel {
+
     /**
-     * 
+     * Mode of the model either allows a single item or multiple items
      */
     public treeMode: TreeMode = TreeMode.SINGLE;
 

@@ -28,7 +28,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
 
   /**
-   * 
+   * Copy of the service
    */
   @Input() service: SamHiercarchicalServiceInterface;
 
@@ -38,16 +38,25 @@ export class SamHierarchicalTreeComponent implements OnInit {
   @Input() configuration: SamHierarchicalTreeConfiguration;
 
 
+  /**
+   * 
+   */
   breadcrumbStack: object[] = [];
+
+  /**
+   * 
+   */
   breadcrumbStackSelectable: object[] = [];
 
 
+  /**
+   * 
+   */
   public ngOnInit() {
     this.addInitialBreadcrumb();
     this.selecteHierarchyLevel.subscribe(
       value => this.selectItem(value)
     );
-
     this.selectBreadcrumb.subscribe(
       value => {
         this.breadcrumbSelected(value);
@@ -66,11 +75,19 @@ export class SamHierarchicalTreeComponent implements OnInit {
     );
   }
 
+  /**
+   * 
+   * @param res 
+   */
   private setSelectedResults(res: any) {
     this.results = [];
     this.results = res;
   }
 
+  /**
+   * 
+   * @param value 
+   */
   public breadcrumbSelected(value: string) {
     let item = this.breadcrumbStack.find(itm => itm[this.configuration.primaryKeyField] === value);
     let pos = this.breadcrumbStack.indexOf(item);
@@ -87,6 +104,9 @@ export class SamHierarchicalTreeComponent implements OnInit {
     }
   }
 
+  /**
+   * 
+   */
   private addInitialBreadcrumb(): void {
     const breadCrumbItem = {};
     breadCrumbItem["name"] = this.configuration.topLevelBreadcrumbText;
@@ -96,6 +116,10 @@ export class SamHierarchicalTreeComponent implements OnInit {
     this.breadcrumbStackSelectable.unshift(breadCrumbItem);
   }
 
+  /**
+   * 
+   * @param value 
+   */
   public selectItem(value: object) {
     this.filterText = '';
     let selected = null;
@@ -107,10 +131,13 @@ export class SamHierarchicalTreeComponent implements OnInit {
     this.getResults();
   }
 
+  /**
+   * 
+   * @param value 
+   */
   private createBreadcrumb(value: object) {
     const breadCrumbItem = {};
     if (value) {
-
       breadCrumbItem["name"] = value[this.configuration.primaryTextField];
       breadCrumbItem["id"] = value[this.configuration.primaryKeyField];
       breadCrumbItem["value"] = value[this.configuration.primaryKeyField];
@@ -120,10 +147,12 @@ export class SamHierarchicalTreeComponent implements OnInit {
     if (breadcrumbStackPostion === -1 && value) {
       this.breadcrumbStackSelectable.unshift(breadCrumbItem);
       this.breadcrumbStack.unshift(value);
-
     }
   }
 
+  /**
+   * 
+   */
   private getResults() {
     this.gridResults = this.service.getHiercarchicalById(this.selectedValue, this.filterText);
   }

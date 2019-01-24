@@ -35,14 +35,29 @@ export class SamHierarchicalTreeHeaderComponent {
    */
   @Output() public filterTextChange = new EventEmitter<string>();
 
-
+  /**
+   * 
+   */
   @Input() public filterText = '';
 
+  /**
+   * 
+   */
   @Input() public selectModel: string;
+
+  /**
+   * 
+   */
   private debounceTime = 150;
 
+  /**
+   * 
+   */
   @ViewChild('filter') filter: ElementRef;
 
+  /**
+   * 
+   */
   ngOnInit() {
     fromEvent(this.filter.nativeElement, this.changeType)
       .debounceTime(this.debounceTime)
@@ -51,11 +66,18 @@ export class SamHierarchicalTreeHeaderComponent {
         this.filterTextChange.emit(this.filter.nativeElement.value);
       });
   }
-
+  
+  /**
+   * 
+   * @param ev 
+   */
   onLevelChange(ev: Event): void {
     this.selectBreadcrumb.emit(this.selectModel);
   }
 
+  /**
+   * 
+   */
   navigateToParent(): void {
     if (this.options.length > 1) {
       if (this.options[1].value) {
