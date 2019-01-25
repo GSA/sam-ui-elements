@@ -11,19 +11,49 @@ import { SamHierarchicalTreeConfiguration } from "../models/SamHierarchicalTreeC
 
 export class SamHierarchicalTreeComponent implements OnInit {
 
+  /**
+   * Hierarchy level changes event 
+   */
   public selecteHierarchyLevel = new BehaviorSubject<object>(null);
+
+  /**
+   * Event when something is checked/selected in the grid
+   */
   public selectResults$ = new BehaviorSubject<object[]>([]);
+
+  /**
+   * Filter change event handler
+   */
   public filterTextSubject = new BehaviorSubject<string>("");
+
+  /**
+   * Event for when breadcrumb item is selected
+   */
   public selectBreadcrumb = new BehaviorSubject<string>(null);
 
+  /**
+   * Items selected 
+   */
   public results: object[];
 
+  /**
+   * Observable Results for the grid
+   */
   public gridResults: Observable<object[]>;
 
+  /**
+   * Filter text
+   */
   private filterText: string;
 
+  /**
+   * Selected Values Primiary Id
+   */
   public selectedValue: string;
 
+  /**
+   * is single mode if a single or multiple item selection
+   */
   @Input() public isSingleMode: boolean;
 
 
@@ -39,19 +69,15 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
 
   /**
-   * 
+   * selected items from service in the breadcrumb
    */
   breadcrumbStack: object[] = [];
 
   /**
-   * 
+   * List of breadcrumb items that will display in the breadcrumb
    */
   breadcrumbStackSelectable: object[] = [];
 
-
-  /**
-   * 
-   */
   public ngOnInit() {
     this.addInitialBreadcrumb();
     this.selecteHierarchyLevel.subscribe(
@@ -76,7 +102,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   }
 
   /**
-   * 
+   * Sets the selected items 
    * @param res 
    */
   private setSelectedResults(res: any) {
@@ -85,7 +111,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   }
 
   /**
-   * 
+   * Selects a breadcrum and remove all crumbs above it in the stack
    * @param value 
    */
   public breadcrumbSelected(value: string) {
@@ -105,7 +131,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   }
 
   /**
-   * 
+   * Creates the top level breadcrumb 
    */
   private addInitialBreadcrumb(): void {
     const breadCrumbItem = {};
@@ -117,7 +143,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   }
 
   /**
-   * 
+   *  Selects a new item
    * @param value 
    */
   public selectItem(value: object) {
@@ -132,7 +158,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   }
 
   /**
-   * 
+   * Creats a new breadcrumb item and adds a new breadcrumb
    * @param value 
    */
   private createBreadcrumb(value: object) {
@@ -151,7 +177,8 @@ export class SamHierarchicalTreeComponent implements OnInit {
   }
 
   /**
-   * 
+   * Calls the provided service to get the results for the girdbased on
+   * the primary id of the selected   * and the filter
    */
   private getResults() {
     this.gridResults = this.service.getHiercarchicalById(this.selectedValue, this.filterText);

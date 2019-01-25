@@ -20,19 +20,17 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   @Input() public configuration: SamHierarchicalTreeGridConfiguration;
 
   /**
-   * 
+   * Data for the grid
    */
   @Input() public gridData: object[] = [];
 
   /**
-   * 
+   * Mode to determine if single or multiple selection
    */
   @Input() public isSingleMode: boolean;
 
-
-
   /**
-   * 
+   * Row change event
    */
   @Output() public rowChanged = new EventEmitter<object>();
 
@@ -42,61 +40,52 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   @Output() selectResults = new EventEmitter<object[]>();
 
   /**
-   * 
+   * Columns to be displayed
    */
   public displayedColumns = ['select'];
 
   /**
-   * 
+   * column fields that will display for each column 
    */
   public columnFieldName = [];
 
   /**
-   * 
+   * Column header text list
    */
   public columnHeaderText = [];
 
   /**
-   * 
+   * List of the items selected by the checkboxes or the radio buttons
    */
   public selectedList: object[] = [];
 
   /**
-   * 
+   * Hierarchical data source
    */
   public hierarchicalDataSource: HierarchicalDataSource | null;
 
   /**
-   * 
+   * event called when data changed
    */
   public dataChange: BehaviorSubject<object[]> = new BehaviorSubject<object[]>([]);
 
   /**
-   * 
+   * Selection mode default is checkbox
    */
   selectionMode: string = "checkbox";
 
   /**
-   * 
+   * Sort Directive
    */
   @ViewChild(SamSortDirective) sort: SamSortDirective;
 
-  /**
-   * 
-   * @param cdr 
-   */
+
   constructor(private cdr: ChangeDetectorRef) { }
 
-  /**
-   * 
-   */
   ngOnChanges() {
     this.dataChange.next(this.gridData);
   }
 
-  /**
-   * 
-   */
   ngOnInit() {
     this.configuration.gridColumnsDisplayed.forEach(item => {
       this.columnFieldName.push(item.fieldName);
@@ -108,9 +97,6 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
     }
   }
 
-  /**
-   * 
-   */
   ngAfterViewInit() {
     this.hierarchicalDataSource = new HierarchicalDataSource(
       this.dataChange,
