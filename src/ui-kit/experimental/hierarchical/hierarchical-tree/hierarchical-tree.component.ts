@@ -78,10 +78,6 @@ export class SamHierarchicalTreeComponent implements OnInit {
    */
   breadcrumbStackSelectable: object[] = [];
 
-
-  /**
-   * ngOnInit
-   */
   public ngOnInit() {
     this.addInitialBreadcrumb();
     this.selecteHierarchyLevel.subscribe(

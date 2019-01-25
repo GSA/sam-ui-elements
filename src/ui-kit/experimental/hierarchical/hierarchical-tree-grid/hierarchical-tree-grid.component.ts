@@ -79,22 +79,13 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
    */
   @ViewChild(SamSortDirective) sort: SamSortDirective;
 
-  /**
-   * constructor
-   * @param cdr 
-   */
+
   constructor(private cdr: ChangeDetectorRef) { }
 
-  /**
-   * ngOnChanges 
-   */
   ngOnChanges() {
     this.dataChange.next(this.gridData);
   }
 
-  /**
-   * ngOnInit
-   */
   ngOnInit() {
     this.configuration.gridColumnsDisplayed.forEach(item => {
       this.columnFieldName.push(item.fieldName);
@@ -106,9 +97,6 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
     }
   }
 
-  /**
-   *   ngAfterViewInit 
-   */
   ngAfterViewInit() {
     this.hierarchicalDataSource = new HierarchicalDataSource(
       this.dataChange,

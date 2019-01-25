@@ -55,9 +55,6 @@ export class SamHierarchicalTreeHeaderComponent {
    */
   @ViewChild('filter') filter: ElementRef;
 
-  /**
-   * ngOnInit
-   */
   ngOnInit() {
     fromEvent(this.filter.nativeElement, this.changeType)
       .debounceTime(this.debounceTime)
