@@ -115,7 +115,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   }
 
   /**
-   * Breadvrum selected 
+   * Selects a breadcrum and remove all crumbs above it in the stack
    * @param value 
    */
   public breadcrumbSelected(value: string) {
