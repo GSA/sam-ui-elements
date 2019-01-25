@@ -12,47 +12,47 @@ import { SamHierarchicalTreeConfiguration } from "../models/SamHierarchicalTreeC
 export class SamHierarchicalTreeComponent implements OnInit {
 
   /**
-   * 
+   * Hierarchy level changes event 
    */
   public selecteHierarchyLevel = new BehaviorSubject<object>(null);
 
   /**
-   * 
+   * Event when something is checked/selected in the grid
    */
   public selectResults$ = new BehaviorSubject<object[]>([]);
 
   /**
-   * 
+   * Filter change event handler
    */
   public filterTextSubject = new BehaviorSubject<string>("");
 
   /**
-   * 
+   * Event for when breadcrumb item is selected
    */
   public selectBreadcrumb = new BehaviorSubject<string>(null);
 
   /**
-   * 
+   * Items selected 
    */
   public results: object[];
 
   /**
-   * 
+   * Observable Results for the grid
    */
   public gridResults: Observable<object[]>;
 
   /**
-   * 
+   * Filter text
    */
   private filterText: string;
 
   /**
-   * 
+   * Selected Values Primiary Id
    */
   public selectedValue: string;
 
   /**
-   * 
+   * is single mode if a single or multiple item selection
    */
   @Input() public isSingleMode: boolean;
 
@@ -69,12 +69,12 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
 
   /**
-   * 
+   * selected items from service in the breadcrumb
    */
   breadcrumbStack: object[] = [];
 
   /**
-   * 
+   * List of breadcrumb items that will display in the breadcrumb
    */
   breadcrumbStackSelectable: object[] = [];
 

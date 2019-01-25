@@ -82,7 +82,6 @@ export class SamHierarchicalConfiguration implements SamHierarchicalAutocomplete
      */
     public filterPlaceholderText: String;
 
-
     /**
      * Top Level Breadcrumb Text 
      */
