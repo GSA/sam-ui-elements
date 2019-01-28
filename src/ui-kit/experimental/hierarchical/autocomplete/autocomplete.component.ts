@@ -192,7 +192,6 @@ export class SamHierarchicalAutocompleteComponent {
     this.showResults = false;
   }
 
-
   /**
    *  clears the results and closes result drop down
    */
@@ -252,6 +251,10 @@ export class SamHierarchicalAutocompleteComponent {
     }
   }
 
+  /**
+   * Checks if the new search string matches the old search string
+   * @param searchString 
+   */
   private matchPastSearchString(searchString: string) {
     return this.searchString === searchString;
   }
@@ -330,7 +333,7 @@ export class SamHierarchicalAutocompleteComponent {
   }
 
   /**
-   * 
+   * Adds message to be read by screen reader
    * @param message 
    */
   private addScreenReaderMessage(message: string) {
