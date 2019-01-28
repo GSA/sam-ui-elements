@@ -30,6 +30,7 @@ import { SamHierarchicalModule } from './hierarchical/hierarchical.module';
 import { SamCardModule } from './card';
 import { SamSegmentModule } from './segment';
 import { SamProgressModule } from './progress/progress.module';
+import { SamSideNavigationToolbarModule } from './sideNavigationToolbar/sideNavigationToolbar.module';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { SamProgressModule } from './progress/progress.module';
     SamHierarchicalModule,
     SamCardModule,
     SamSegmentModule,
-    SamProgressModule
+    SamProgressModule,
+    SamSideNavigationToolbarModule
   ],
   declarations: [
     SamBoxComponent,
@@ -95,7 +97,8 @@ import { SamProgressModule } from './progress/progress.module';
     SamHierarchicalModule,
     SamCardModule,
     SamSegmentModule,
-    SamProgressModule
+    SamProgressModule,
+    SamSideNavigationToolbarModule
   ]
 })
 export class SamExperimentalModule { }
