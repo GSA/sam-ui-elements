@@ -176,7 +176,7 @@ export class SamAutocompleteComponent
    */
   @Input() public httpRequest: Observable<any>;
 
-  public results: Array<string>;
+  public results: Array<string> =[];
   public innerValue: any = '';
   public inputValue: any = '';
   public selectedInputValue: any;
@@ -190,7 +190,7 @@ export class SamAutocompleteComponent
   public lastReturnedResults: Array<string>;
 
   public keyValuePairs: any;
-  public filteredKeyValuePairs: any;
+  public filteredKeyValuePairs: any[]= [];
   public inputTimer;
   public cache: AutocompleteCache = new AutocompleteCache();
 
