@@ -1,0 +1,46 @@
+<!-- <div class="sidePanel">
+    <ul class="buttonList">
+        <li class="listItem">
+            <button class="imageButton">
+                <div>Image 1</div>
+                <div>BTN 1</div>
+            </button>
+            <div class="slideOutPanelOpen">
+
+                <ng-content select="[section1]"></ng-content>
+            </div>
+        </li>
+        <li class="listItem">
+            <button class="imageButton">
+                <div>Image 2</div>
+                <div>BTN 2</div>
+            </button>
+        </li>
+        <div class="slideOutPanelClosed">
+
+            <ng-content select="[section2]"></ng-content>
+        </div>
+    </ul>
+</div>
+
+<div *ngFor="let item of samSideNavigationToolbarItems">
+    {{item.title}}
+</div> -->
+
+
+
+<div class="sidePanel">
+    <ul class="buttonList" >
+        <ng-content></ng-content>
+        <!-- <li class="listItem">
+            <button class="imageButton">
+                <div>{{item.icon}}</div>
+                <div>{{item.title}}</div>
+            </button>
+            <div class="slideOutPanelOpen">
+                <ng-content *ngTemplateOutletContext="item.templateName"></ng-content>
+
+            </div>
+        </li> -->
+    </ul>
+</div>

@@ -1,0 +1,10 @@
+<li class="listItem">
+    <button (click)="selected()" class="imageButton">
+        <div>{{icon}}</div>
+        <div>{{title}}</div>
+    </button>
+    <div class="slideOutPanelOpen">
+        <ng-content></ng-content>
+
+    </div>
+</li>
