@@ -147,18 +147,3 @@ input.sam.input.error{
 [type=radio].sam:disabled + label::before {
   box-shadow: 0 0 0 2px #f1f1f1, 0 0 0 3px #aeb0b5;
 }
-
-
-//.ng-star-inserted> input, textarea, select {
-//.ng-star-inserted> input{
-.datatable-checkbox> *{
-  max-width: 4rem !important;
-  max-height: 4rem !important;
-  overflow: hidden !important;
-  text-align: left;
-  padding: 10px;
-}
-
-td sam-cell{
-  padding: 0 !important;
-}
