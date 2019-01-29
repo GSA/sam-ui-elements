@@ -53,35 +53,34 @@ export class SamHierarchicalConfiguration implements SamHierarchicalAutocomplete
     public autocompletePlaceHolderText: string;
 
     /**
-     * 
+     * Title property for the modal window
      */
     public modalTitle: string;
 
     /**
-     * 
+     * Label for the select button on the modal
      */
     public modalSelectButtonLabel: string;
 
     /**
-     * 
+     * Label for the cancel button on the modal
      */
     public modalCancelButtonLabel: string;
 
     /**
-     * 
+     * Column definitions to be displayed
      */
     public gridColumnsDisplayed: SamHierarchicalTreeGridColumn[]
 
     /**
-    * 
+    *  Field for model that determines number of child elements
     */
     public childCountField: string;
 
     /**
-     * 
+     * Placeholder text for the Filter in the grid
      */
     public filterPlaceholderText: String;
-
 
     /**
      * Top Level Breadcrumb Text 
