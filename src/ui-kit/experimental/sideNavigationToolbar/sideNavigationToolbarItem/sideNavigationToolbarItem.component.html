@@ -1,10 +1,14 @@
 <li class="listItem">
-    <button (click)="selected()" class="imageButton">
+    <button (click)="open()" class="imageButton">
         <div>{{icon}}</div>
         <div>{{title}}</div>
     </button>
-    <div class="slideOutPanelOpen">
+    <div [attr.class]="showSection? 'visibleSection' : 'hiddenSection'">
+        <span class="close">
+            <span role="button" class="fa fa-close" aria-label="Clear input" aria-hidden="false" (click)="close()"
+                (keyup.enter)="close()">
+            </span>
+        </span>
         <ng-content></ng-content>
-
     </div>
 </li>

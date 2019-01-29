@@ -19,13 +19,7 @@ export class SamSideNavigationToolbarComponent {
 
   selectedItem(item: SamSideNavigationToolbarItemComponent) {
     this.items.toArray().forEach((menuItem: SamSideNavigationToolbarItemComponent) => {
-      if (item !== menuItem) {
-        console.log('NOT SELECTED');
-        console.log(menuItem.title);
-      } else {
-        console.log('SELECTED');
-        console.log(menuItem.title);
-      }
+      menuItem.showSection = item === menuItem
     });
   }
 }
