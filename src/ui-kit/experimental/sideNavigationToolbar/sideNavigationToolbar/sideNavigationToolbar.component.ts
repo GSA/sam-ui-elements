@@ -2,7 +2,7 @@ import { Component, Input, TemplateRef, ViewChild, ContentChildren, QueryList } 
 import { SamSideNavigationToolbarItemComponent } from '../sideNavigationToolbarItem/sideNavigationToolbarItem.component';
 
 @Component({
-  selector: 'samSideNavigationToolbar',
+  selector: 'sam-side-navigation-toolbar',
   templateUrl: './sideNavigationToolbar.component.html',
   styleUrls: ['./sideNavigationToolbar.component.scss']
 })
