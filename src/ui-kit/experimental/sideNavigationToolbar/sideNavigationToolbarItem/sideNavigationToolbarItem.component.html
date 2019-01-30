@@ -1,6 +1,6 @@
 <li class="listItem">
     <a role="menuitem" href="javascript:void(0)" (click)="open()" class="imageButton">
-        <div>{{icon}}</div>
+        <div [attr.class]="icon"></div>
         <div>{{title}}</div>
     </a>
     <div [attr.class]="showSection? 'visibleSection' : 'hiddenSection'">
