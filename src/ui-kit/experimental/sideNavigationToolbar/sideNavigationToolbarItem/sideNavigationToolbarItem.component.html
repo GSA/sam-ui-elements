@@ -1,8 +1,8 @@
 <li class="listItem">
-    <button (click)="open()" class="imageButton">
+    <a role="menuitem" href="javascript:void(0)" (click)="open()" class="imageButton">
         <div>{{icon}}</div>
         <div>{{title}}</div>
-    </button>
+    </a>
     <div [attr.class]="showSection? 'visibleSection' : 'hiddenSection'">
         <span class="close">
             <span role="button" class="fa fa-close" aria-label="Clear input" aria-hidden="false" (click)="close()"
