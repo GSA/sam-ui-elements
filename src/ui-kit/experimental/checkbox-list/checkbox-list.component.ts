@@ -15,6 +15,7 @@ export interface OptionModel {
   value: string;
   label: any;
   required: boolean;
+  checked: boolean;
 }
 @Component({
   selector: 'sam-checkbox-list',
@@ -34,22 +35,23 @@ export class SamCheckboxListComponent  {
   @Input() public isSingleMode: boolean;
 
   @Input() options: OptionModel[] = [
-    { name: 'id1', value: 'test', label: 'test-id1', required: false },
-    { name: 'id2', value: 'test', label: 'test-id2', required: true },
-    { name: 'id3', value: 'test', label: 'test-id3', required: false },
-    { name: 'id4', value: 'test', label: 'test-id4', required: false },
-    { name: 'id5', value: 'test', label: 'test-id5', required: false },
-    { name: 'id6', value: 'test', label: 'test-id6', required: false },
-    { name: 'id7', value: 'test', label: 'test-id7', required: false },
-    { name: 'id8', value: 'test', label: 'test-id8', required: false },
+    { name: 'id1', value: 'test', label: 'test-id1', required: false, checked: false },
+    { name: 'id2', value: 'test', label: 'test-id2', required: true,  checked: true },
+    { name: 'id3', value: 'test', label: 'test-id3', required: false, checked: false },
+    { name: 'id4', value: 'test', label: 'test-id4', required: false, checked: false },
+    { name: 'id5', value: 'test', label: 'test-id5', required: false, checked: true },
+    { name: 'id6', value: 'test', label: 'test-id6', required: false, checked: false },
+    { name: 'id7', value: 'test', label: 'test-id7', required: false, checked: false },
+    { name: 'id8', value: 'test', label: 'test-id8', required: false, checked: false },
   ];
 
    /**
    * Ul list of elements 
    */
   @ViewChild('checkboxList') checkboxListElement: ElementRef;
+
   private highlightedIndex: number = 0;
-  private highlightedItem: object;
+  private highlightedItem: OptionModel;
   private HighlightedPropertyName = 'highlighted';
 
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
@@ -67,38 +69,39 @@ export class SamCheckboxListComponent  {
   }
   else if (KeyHelper.is(KEYS.DOWN, event)) {
     this.onArrowDown();
-  }
+    }
   else if (KeyHelper.is(KEYS.UP, event)) {
     this.onArrowUp();
   }
   else if (KeyHelper.is(KEYS.SPACE, event)) {
    this.selectItem(this.highlightedItem);
   }
- 
+  event.stopPropagation();
  }
 
   private onArrowUp(): void {
-
-  
-
-    
+    if (this.options && this.options.length > 0) {
+      if (this.highlightedIndex !== 0) {
+        this.highlightedIndex--;
+        console.log(this.highlightedIndex);
+        this.setHighlightedItem(this.options[this.highlightedIndex]);
+        this.scrollSelectedItemToTop();
+      }
+    }
   }
 
-  /**
-   *  handles the arrow down key event
-   */
   private onArrowDown(): void {
-    console.log('keyevent happend');
-    // if (this.options && this.options.length > 0) {
-    //   if (this.highlightedIndex !== 0) {
-    //     this.highlightedIndex--;
-    //     this.setHighlightedItem(this.options[this.highlightedIndex]);
-        
-    //   }
-    // }
+    if (this.options && this.options.length > 0) {
+      if (this.highlightedIndex < this.options.length - 1) {
+        this.highlightedIndex++;
+        console.log(this.highlightedIndex);
+        this.setHighlightedItem(this.options[this.highlightedIndex]);
+        this.scrollSelectedItemToTop();
+      }
+    }
   }
 
-  private setHighlightedItem(item: Object): void {
+  private setHighlightedItem(item: OptionModel): void {
     if (this.options && this.options.length > 0) {
       if (this.highlightedItem) {
         this.highlightedItem[this.HighlightedPropertyName] = false;
@@ -108,8 +111,23 @@ export class SamCheckboxListComponent  {
     }
   }
 
-  public selectItem(item: object): void {
-  console.log(item,'selected results')
+
+  private scrollSelectedItemToTop() {
+    let selectedChild = this.checkboxListElement.nativeElement.children[this.highlightedIndex];
+    this.checkboxListElement.nativeElement.scrollTop = selectedChild.offsetTop;
   }
+  
+ 
+  listItemHover(index: number): void {
+    this.highlightedIndex = index;
+    this.setHighlightedItem(this.options[this.highlightedIndex]);
+  }
+
+  public selectItem(item: OptionModel): void {
+  item.checked = !item.checked;
+  console.log(item,'selected results');
+  }
+
+  
 
 }
