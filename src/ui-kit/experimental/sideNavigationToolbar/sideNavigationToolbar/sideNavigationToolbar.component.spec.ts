@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SamSideNavigationToolbarComponent } from './sideNavigationToolbar.component';
+import { SamSideNavigationToolbarItemComponent } from '../sideNavigationToolbarItem/sideNavigationToolbarItem.component';
+import { CommonModule } from '@angular/common';
 import { By } from '@angular/platform-browser';
 import 'rxjs/add/observable/of';
 
@@ -10,8 +12,8 @@ describe('SamSideNavigationToolbarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [],
-      imports: [],
+      declarations: [SamSideNavigationToolbarComponent,SamSideNavigationToolbarItemComponent],
+      imports: [CommonModule],
       providers: []
     })
       .compileComponents();
