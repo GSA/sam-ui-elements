@@ -1,5 +1,5 @@
-<sam-accordion (keyup)="onKeyup($event)">
-  <sam-accordion-section headerText="{{headerText}}" name="aria-friendly-section-name">
+<sam-accordion>
+  <sam-accordion-section headerText="{{accordionText}}" (keyup)="onKeyup($event)" name="aria-friendly-section-name">
     <ng-container *ngTemplateOutlet="listTemplate"></ng-container>
   </sam-accordion-section>
 </sam-accordion>
@@ -7,16 +7,16 @@
  <ng-template #listTemplate>
   <div sam-click-outside>
     <ul #checkboxList class="usa-unstyled-list checkbox-container">
-      <li [class]="option['highlighted']? 'selected-item':''" *ngFor="let option of options; let i = index;" 
-      (mouseenter)="listItemHover(i)" (click)="selectItem(option)">
-        <input (keyup)="onKeyup($event)" [disabled]="option.disabled"
+      <li [class]="option['highlighted']? 'selected-item':''" *ngFor="let option of options; let i = index;"
+      (mouseenter)="listItemHover(i)">
+        <input [disabled]="option.disabled"
          [attr.id]="option.name"
          [attr.value]="option.value"
          [attr.type]="optionsMode"
          [attr.aria-label]="option.label"
          [required]="option.required"
          [checked]="option.checked"
-         (on)>
+         (change)="onChecked($event,option)">
         <label [attr.for]="option.name">{{option.label}}</label>
       </li>
     </ul>
