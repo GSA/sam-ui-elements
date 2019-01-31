@@ -8,8 +8,10 @@
       <ng-container cdkColumnDef="select">
         <th sam-header-cell *cdkHeaderCellDef sam-sort-header>Select</th>
         <td sam-cell *cdkCellDef="let row">
-          <input [attr.type]="selectionMode" id="selectId" (change)="onChecked($event,row)" name="select">
-          <label for="selectId"></label>
+          <div class="datatable-checkbox">
+            <input [attr.type]="selectionMode" id="selectId" (change)="onChecked($event,row)" name="select">
+            <label for="selectId"></label>
+          </div>
         </td>
       </ng-container>
 
