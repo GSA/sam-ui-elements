@@ -13,6 +13,9 @@ export class SamSideNavigationToolbarItemComponent {
   @Input()
   public icon: string;
 
+  @Input()
+  public id:string;
+
   public showSection: boolean = false;
 
   @Output() public sideNavigationToolbarItemSelected = new EventEmitter<SamSideNavigationToolbarItemComponent>();
