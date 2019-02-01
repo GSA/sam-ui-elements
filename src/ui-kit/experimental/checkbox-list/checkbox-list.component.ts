@@ -37,7 +37,7 @@ export class SamCheckboxListComponent {
   /**
   * List of the items selected by the checkboxes or the radio buttons
   */
-  public selectedList: OptionModel[] = [];
+  public selected = [];
 
   /**
  * Event emitted when row set is selected.
@@ -59,22 +59,16 @@ export class SamCheckboxListComponent {
 
   optionsMode: string = 'checkbox';
   ngOnInit() {
-    let list =[];
-    this.options.forEach(item=>{
-      if(item.checked) {
-        list = [...list, item];
-        // this.selectedList = list;
-        this.selectResults.emit(list);
-       // this.emitSelectedList(item);
-      } 
+    this.options.forEach(item => {
+      if (item.checked) {
+        this.selected = this.selected.length >0 ?[...this.selected, item] : [item];
+      }
     })
+    this.selectResults.emit(this.selected);
     this.optionsMode = this.isSingleMode ? 'radio' : 'checkbox';
   }
 
-  emitSelectedList(option: OptionModel): void {
-    this.selectedList = [...this.selectedList, option];
-    this.selectResults.emit(this.selectedList);
-  }
+
 
   onKeyup(event) {
     if (KeyHelper.is(KEYS.TAB, event)) {
@@ -88,10 +82,10 @@ export class SamCheckboxListComponent {
     }
     else if (KeyHelper.is(KEYS.SPACE, event)) {
       console.log('space clicked')
-     
+
     }
-    
-    event.stopPropagation();
+
+    // event.stopPropagation();
   }
 
   /**
@@ -100,24 +94,24 @@ export class SamCheckboxListComponent {
   onChecked(ev, option: OptionModel): void {
     if (ev.target.checked) {
       if (this.isSingleMode) {
-        this.selectedList = [option];
+        this.selected = [option];
       } else {
-        this.selectedList = [...this.selectedList, option];
+        this.selected = [...this.selected, option];
       }
     } else {
-      const index: number = this.selectedList.indexOf(option);
+      const index: number = this.selected.indexOf(option);
       if (index !== -1) {
-        this.selectedList = this.selectedList.filter(item => item !== option);
+        this.selected = this.selected.filter(item => item !== option);
       }
     }
-    this.selectResults.emit(this.selectedList);
+    this.selectResults.emit(this.selected);
   }
 
   private onArrowUp(): void {
     if (this.options && this.options.length > 0) {
       if (this.highlightedIndex !== 0) {
         this.highlightedIndex--;
-       
+
         this.setHighlightedItem(this.options[this.highlightedIndex]);
         this.scrollSelectedItemToTop();
       }
