@@ -1,10 +1,7 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { SamCheckboxListComponent } from './checkbox-list.component';
 import { SamAccordionComponent, SamAccordionSection } from '../../components/accordion/accordion.component';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-
 
 const options = [
   { name: 'id1', value: 'test1', label: 'test-id1', required: false, checked: false },
@@ -17,7 +14,7 @@ const options = [
   { name: 'id8', value: 'test8', label: 'test-id8', required: false, checked: false },
 ];
 
-describe('CheckboxListComponent', () => {
+describe('SamCheckboxListComponent', () => {
   let component: SamCheckboxListComponent;
   let fixture: ComponentFixture<SamCheckboxListComponent>;
 
@@ -36,10 +33,7 @@ describe('CheckboxListComponent', () => {
     fixture = TestBed.createComponent(SamCheckboxListComponent);
     component = fixture.componentInstance;
     component.options = options;
-    // fixture.detectChanges();
-    // component.ngOnInit();
   });
-
 
   it('on init', () => {
     component.options = options;
@@ -49,7 +43,6 @@ describe('CheckboxListComponent', () => {
       expect(res.length).toBe(2);
     });
   });
-
 
   it('Should have reuslts on focus', fakeAsync(() => {
     component.options = options;
@@ -72,16 +65,14 @@ describe('CheckboxListComponent', () => {
     spyOn(component.selectResults, 'emit');
     component.onChecked(ev, row);
     fixture.detectChanges();
-    expect(component.selectedList.length).toBe(1);
-    expect(component.selectResults.emit).toHaveBeenCalledWith(component.selectedList);
+    expect(component.selected.length).toBe(1);
+    expect(component.selectResults.emit).toHaveBeenCalledWith(component.selected);
     ev.target.checked = false;
     component.onChecked(ev, row);
     fixture.detectChanges();
-    expect(component.selectedList.length).toBe(0);
-    expect(component.selectResults.emit).toHaveBeenCalledWith(component.selectedList);
+    expect(component.selected.length).toBe(0);
+    expect(component.selectResults.emit).toHaveBeenCalledWith(component.selected);
   });
-
-
 
   it('should process arrow up and down keypresses', fakeAsync(() => {
     component.options = options;
@@ -133,7 +124,7 @@ describe('CheckboxListComponent', () => {
     fixture.detectChanges();
 
     const list = fixture.debugElement.query(By.css('.checkbox-container'));
-    
+
     expect(component.options[0]['highlighted']).toBeTruthy();
     component.listItemHover(component.options.length - 1);
     fixture.detectChanges();
