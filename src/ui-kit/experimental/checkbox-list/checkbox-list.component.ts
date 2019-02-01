@@ -85,7 +85,7 @@ export class SamCheckboxListComponent {
     }
     else if (KeyHelper.is(KEYS.SPACE, event)) {
       console.log('space clicked')
-      this.onChecked(event,this.highlightedItem);
+     
     }
     
     event.stopPropagation();
