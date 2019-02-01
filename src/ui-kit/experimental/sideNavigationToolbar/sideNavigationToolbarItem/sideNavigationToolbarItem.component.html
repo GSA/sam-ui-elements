@@ -1,9 +1,12 @@
-<li class="listItem">
-    <a role="menuitem" href="javascript:void(0)" (click)="open()" class="imageButton">
+<dt role="heading" aria-level="3">
+    <button aria-expanded="true" (click)="open()" class="Accordion-trigger" aria-controls="sect1" id="accordion1id"
+        type="button">
         <div [attr.class]="icon"></div>
         <div>{{title}}</div>
-    </a>
-    <div [attr.class]="showSection? 'visibleSection' : 'hiddenSection'">
+    </button>
+</dt>
+<dd id="sect1" role="region" aria-labelledby="accordion1id" class="Accordion-panel" [attr.class]="showSection? 'visibleSection' : 'hiddenSection'">
+    <div>
         <span class="close">
             <span role="button" class="fa fa-close" aria-label="Clear input" aria-hidden="false" (click)="close()"
                 (keyup.enter)="close()">
@@ -11,4 +14,4 @@
         </span>
         <ng-content></ng-content>
     </div>
-</li>
+</dd>
