@@ -4,11 +4,11 @@
 
  <ng-template #listTemplate>
   <div sam-click-outside>
-    <ul role="listbox" tabindex="0"  (keyup)="onKeyup($event)" aria-label="option list" #checkboxList class="usa-unstyled-list checkbox-container">
+    <ul role="listbox"  (keyup)="onKeyup($event)" aria-label="option list" #checkboxList class="usa-unstyled-list checkbox-container">
       <li [class]="option['highlighted']? 'selected-item':''" *ngFor="let option of options; let i = index;"
-      (mouseenter)="listItemHover(i)" tabindex="-1" role="option" aria-checked="false">
+      (mouseenter)="listItemHover(i)" role="option" aria-checked="false">
         <input 
-         tabindex="-1"  
+        
          [disabled]="option.disabled"
          [attr.id]="option.name"
          [attr.value]="option.value"

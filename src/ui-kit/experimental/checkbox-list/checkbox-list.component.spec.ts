@@ -44,14 +44,20 @@ fdescribe('CheckboxListComponent', () => {
     component.options = options;
     component.ngOnInit();
     fixture.detectChanges();
-    expect(component.selectedList.length).toBe(2);
+   
+    
+    component.selectResults.subscribe((res: any) => {
+                   expect(res.length).toBe(2);
+              });
+
+   // expect(component.selectedList.length).toBe(2);
     // expect(component.selectResults.emit).toHaveBeenCalledWith(component.selectedList);
   });
   it('Up arrow when on first item', fakeAsync(() => {
     component.options = options;
     fixture.detectChanges();
     const container = fixture.debugElement.query(By.css('.checkbox-container'));
-    expect(container.nativeElement.children.length).toBe(4);
+    expect(container.nativeElement.children.length).toBe(2);
     expect(component.options[0]['highlighted']).toBeTruthy();
     const upEvent = {
       "key": "Up",
@@ -60,6 +66,16 @@ fdescribe('CheckboxListComponent', () => {
     component.onKeyup(upEvent);
     tick();
     fixture.detectChanges();
+    expect(component.options[0]['highlighted']).toBeTruthy();
+  }));
+
+  it('Should have reuslts on focus', fakeAsync(() => {
+   component.options = options;
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(list.nativeElement.children.length).toBe(11);
     expect(component.options[0]['highlighted']).toBeTruthy();
   }));
 });

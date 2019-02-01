@@ -30,7 +30,6 @@ export interface OptionModel {
 
 
 export class SamCheckboxListComponent {
-  @Input() accordionText: string;
 
   @Input() public isSingleMode: boolean;
 
@@ -60,9 +59,13 @@ export class SamCheckboxListComponent {
 
   optionsMode: string = 'checkbox';
   ngOnInit() {
+    let list =[];
     this.options.forEach(item=>{
       if(item.checked) {
-        this.emitSelectedList(item);
+        list = [...list, item];
+        // this.selectedList = list;
+        this.selectResults.emit(list);
+       // this.emitSelectedList(item);
       } 
     })
     this.optionsMode = this.isSingleMode ? 'radio' : 'checkbox';
