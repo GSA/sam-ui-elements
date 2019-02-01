@@ -31,16 +31,23 @@ export interface OptionModel {
 
 export class SamCheckboxListComponent {
 
+  /**
+  * Mode to determine if single or multiple selection
+  */
   @Input() public isSingleMode: boolean;
 
+  /**
+  * Sets the array of checkbox values and labels (see OptionModel[])
+  */
   @Input() options: OptionModel[];
+
   /**
   * List of the items selected by the checkboxes or the radio buttons
   */
   public selected = [];
 
   /**
- * Event emitted when row set is selected.
+ * Event emitted when row set is selected/unselected.
  */
   @Output() selectResults = new EventEmitter<OptionModel[]>();
 
@@ -49,47 +56,36 @@ export class SamCheckboxListComponent {
   */
   @ViewChild('checkboxList') checkboxListElement: ElementRef;
 
-  private highlightedIndex: number = 0;
-  private highlightedItem: OptionModel;
+  /**
+    * current index
+    */
+  private currentIndex: number = 0;
+  /**
+   * current Item
+   */
+  private currentItem: OptionModel;
+
+  /**
+ * Screen read field
+ */
+  @ViewChild('srOnly') srOnly: ElementRef;
+
   private HighlightedPropertyName = 'highlighted';
-
-  @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
-
   optionsMode: string = 'checkbox';
+
+
   ngOnInit() {
     this.options.forEach(item => {
       if (item.checked) {
-        this.selected = this.selected.length >0 ?[...this.selected, item] : [item];
+        this.selected = this.selected.length > 0 ? [...this.selected, item] : [item];
       }
     })
     this.selectResults.emit(this.selected);
     this.optionsMode = this.isSingleMode ? 'radio' : 'checkbox';
   }
 
-
-
-  onKeyup(event) {
-    if (KeyHelper.is(KEYS.TAB, event)) {
-      return;
-    }
-    else if (KeyHelper.is(KEYS.DOWN, event)) {
-      this.onArrowDown();
-    }
-    else if (KeyHelper.is(KEYS.UP, event)) {
-      this.onArrowUp();
-    }
-    else if (KeyHelper.is(KEYS.SPACE, event)) {
-      console.log('space clicked')
-
-    }
-
-    // event.stopPropagation();
-  }
-
   /**
-    * On select the results
+    * On select/unselect the results
     */
   onChecked(ev, option: OptionModel): void {
     if (ev.target.checked) {
@@ -107,47 +103,94 @@ export class SamCheckboxListComponent {
     this.selectResults.emit(this.selected);
   }
 
-  private onArrowUp(): void {
-    if (this.options && this.options.length > 0) {
-      if (this.highlightedIndex !== 0) {
-        this.highlightedIndex--;
+  /**
+    * Handling Keyboard Interaction 
+    */
+  onKeyDown(evt): void {
+    if (KeyHelper.is(KEYS.TAB, evt)) {
+      return;
+    }
+    else if (KeyHelper.is(KEYS.DOWN, evt)) {
+      evt.preventDefault();
+      if (this.currentIndex < this.options.length - 1) {
+        this.currentIndex += 1;
+        this.checkboxListElement.nativeElement.scrollTop = this.checkboxListElement.nativeElement.getElementsByTagName("li")[this.currentIndex].offsetTop;
+        this.setHighlightedItem(this.options[this.currentIndex]);
 
-        this.setHighlightedItem(this.options[this.highlightedIndex]);
-        this.scrollSelectedItemToTop();
       }
     }
-  }
-
-  private onArrowDown(): void {
-    if (this.options && this.options.length > 0) {
-      if (this.highlightedIndex < this.options.length - 1) {
-        this.highlightedIndex++;
-        this.setHighlightedItem(this.options[this.highlightedIndex]);
-        this.scrollSelectedItemToTop();
+    else if (KeyHelper.is(KEYS.UP, evt)) {
+      evt.preventDefault();
+      if (this.currentIndex > 0) {
+        this.currentIndex -= 1;
+        this.checkboxListElement.nativeElement.scrollTop = this.checkboxListElement.nativeElement.getElementsByTagName("li")[this.currentIndex].offsetTop;
+        this.setHighlightedItem(this.options[this.currentIndex]);
       }
     }
+    else if (KeyHelper.is(KEYS.SPACE, evt)) {
+
+      this.setSelectedItem(this.currentItem);
+    }
+    // else if (KeyHelper.is(KEYS.ESC, event)) {
+    //   this.clearAndHideResults();
+    // }
+    // else if (KeyHelper.is(KEYS.BACKSPACE, event) || KeyHelper.is(KEYS.DELETE, event)) {
+    //   const searchString = event.target.value || '';
+    //   this.getResults(searchString);
+    // }
+    // else {
+    //   const searchString = event.target.value || '';
+    //   this.getResults(searchString);
+    // }
   }
 
+
+  /**
+    * on hovering set current index 
+    */
+  onHover(index: number): void {
+    this.currentIndex = index;
+    this.setHighlightedItem(this.options[this.currentIndex]);
+  }
+
+  /**
+    * set selected item and emit on keyboard interaction
+    */
+  private setSelectedItem(item: OptionModel) {
+    if (item.checked) {
+      this.selected = [...this.selected, item];
+    } else {
+      const index: number = this.selected.indexOf(item);
+      if (index !== -1) {
+        this.selected = this.selected.filter(res => res !== item);
+      }
+    }
+    this.selectResults.emit(this.selected);
+  }
+
+  /**
+    * set selected item and emit on keyboard interaction
+    */
   private setHighlightedItem(item: OptionModel): void {
     if (this.options && this.options.length > 0) {
-      if (this.highlightedItem) {
-        this.highlightedItem[this.HighlightedPropertyName] = false;
+      if (this.currentItem) {
+        this.currentItem[this.HighlightedPropertyName] = false;
       }
-      this.highlightedItem = item;
-      this.highlightedItem[this.HighlightedPropertyName] = true;
+      this.currentItem = item;
+      this.currentItem[this.HighlightedPropertyName] = true;
+      let message = item['lable'];
+      this.addScreenReaderMessage(message);
     }
   }
 
-
-  private scrollSelectedItemToTop() {
-    let selectedChild = this.checkboxListElement.nativeElement.children[this.highlightedIndex];
-    this.checkboxListElement.nativeElement.scrollTop = selectedChild.offsetTop;
+    /**
+    * adding Screen Reader Message
+    */
+  private addScreenReaderMessage(message: string) {
+    const srResults: HTMLElement = document.createElement('li');
+    srResults.innerText = message;
+    if (this.srOnly && this.srOnly.nativeElement) {
+      this.srOnly.nativeElement.appendChild(srResults);
+    }
   }
-
-
-  listItemHover(index: number): void {
-    this.highlightedIndex = index;
-    this.setHighlightedItem(this.options[this.highlightedIndex]);
-  }
-
 }

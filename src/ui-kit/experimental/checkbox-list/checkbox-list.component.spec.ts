@@ -85,7 +85,7 @@ describe('SamCheckboxListComponent', () => {
       "key": "Down",
       "target": { "value": 'id' }
     }
-    component.onKeyup(downEvent);
+    component.onKeyDown(downEvent);
     tick();
     fixture.detectChanges();
     const list = fixture.debugElement.query(By.css('.checkbox-container'));
@@ -95,7 +95,7 @@ describe('SamCheckboxListComponent', () => {
       "key": "Up",
       "target": { "value": 'id' }
     }
-    component.onKeyup(upEvent);
+    component.onKeyDown(upEvent);
     tick();
     fixture.detectChanges();
     expect(component.options[0]['highlighted']).toBeTruthy();
@@ -112,7 +112,7 @@ describe('SamCheckboxListComponent', () => {
       "key": "Up",
       "target": { "value": 'id' }
     }
-    component.onKeyup(upEvent);
+    component.onKeyDown(upEvent);
     tick();
     fixture.detectChanges();
     expect(component.options[0]['highlighted']).toBeTruthy();
@@ -126,7 +126,7 @@ describe('SamCheckboxListComponent', () => {
     const list = fixture.debugElement.query(By.css('.checkbox-container'));
 
     expect(component.options[0]['highlighted']).toBeTruthy();
-    component.listItemHover(component.options.length - 1);
+    component.onHover(component.options.length - 1);
     fixture.detectChanges();
     tick();
     expect(component.options[component.options.length - 1]['highlighted']).toBeTruthy();
@@ -134,7 +134,7 @@ describe('SamCheckboxListComponent', () => {
       "key": "Down",
       "target": { "value": 'id' }
     }
-    component.onKeyup(upEvent);
+    component.onKeyDown(upEvent);
     tick();
     fixture.detectChanges();
 
