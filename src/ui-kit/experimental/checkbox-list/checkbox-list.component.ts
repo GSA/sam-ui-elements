@@ -77,7 +77,7 @@ export class SamCheckboxListComponent {
   ngOnInit() {
     this.options.forEach(item => {
       if (item.checked) {
-        this.selected = this.selected.length > 0 ? [...this.selected, item] : [item];
+        this.selected = (this.selected.length > 0 && !this.isSingleMode )? [...this.selected, item] : [item];
       }
     })
     this.selectResults.emit(this.selected);
