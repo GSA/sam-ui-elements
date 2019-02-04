@@ -8,6 +8,9 @@ import { SamSideNavigationToolbarItemComponent } from '../sideNavigationToolbarI
 })
 export class SamSideNavigationToolbarComponent {
 
+  /**
+   * 
+   */
   @ContentChildren(SamSideNavigationToolbarItemComponent) items: QueryList<SamSideNavigationToolbarItemComponent>;
 
 
@@ -17,6 +20,10 @@ export class SamSideNavigationToolbarComponent {
     });
   }
 
+  /**
+   * 
+   * @param item 
+   */
   selectedItem(item: SamSideNavigationToolbarItemComponent) {
     this.items.toArray().forEach((menuItem: SamSideNavigationToolbarItemComponent) => {
       menuItem.showSection = item === menuItem
