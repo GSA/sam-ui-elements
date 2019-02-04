@@ -31,6 +31,7 @@ import { SamCardModule } from './card';
 import { SamSegmentModule } from './segment';
 import { SamProgressModule } from './progress/progress.module';
 import { SamCheckboxListModule } from './checkbox-list/checkbox-list.module';
+import { SamSideNavigationToolbarModule } from './sideNavigationToolbar/sideNavigationToolbar.module';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { SamCheckboxListModule } from './checkbox-list/checkbox-list.module';
     SamCheckboxListModule,
     SamCardModule,
     SamSegmentModule,
-    SamProgressModule
+    SamProgressModule,
+    SamSideNavigationToolbarModule
   ],
   declarations: [
     SamBoxComponent,
@@ -98,7 +100,8 @@ import { SamCheckboxListModule } from './checkbox-list/checkbox-list.module';
     SamCheckboxListModule,
     SamCardModule,
     SamSegmentModule,
-    SamProgressModule
+    SamProgressModule,
+    SamSideNavigationToolbarModule
   ]
 })
 export class SamExperimentalModule { }

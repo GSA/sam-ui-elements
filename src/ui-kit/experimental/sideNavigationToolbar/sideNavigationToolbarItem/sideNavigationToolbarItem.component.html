@@ -1,0 +1,17 @@
+<dt role="heading" aria-level="3">
+    <button [attr.aria-expanded]="showSection" (click)="open()" class="Accordion-trigger" [attr.aria-controls]="id+'section'"
+        [attr.id]="id" type="button">
+        <div [attr.class]="icon"></div>
+        <div>{{title}}</div>
+    </button>
+</dt>
+<dd [attr.id]="id+'section'" role="region" [attr.aria-labelledby]="id" class="Accordion-panel" [attr.class]="showSection? 'visibleSection' : 'hiddenSection'">
+    <div>
+        <span class="close">
+            <span role="button" class="fa fa-close" aria-label="Close section" aria-hidden="false" (click)="close()"
+                (keyup.enter)="close()">
+            </span>
+        </span>
+        <ng-content></ng-content>
+    </div>
+</dd>
