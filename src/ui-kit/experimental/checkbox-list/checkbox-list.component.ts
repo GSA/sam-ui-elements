@@ -28,7 +28,6 @@ export interface OptionModel {
   }]
 })
 
-
 export class SamCheckboxListComponent {
 
   /**
@@ -45,6 +44,23 @@ export class SamCheckboxListComponent {
   * List of the items selected by the checkboxes or the radio buttons
   */
   public selected = [];
+
+  /**
+  * Sets the label text
+  */
+  @Input() label: string;
+  /**
+    * Sets the form control error message
+    */
+  @Input() errorMessage: string;
+  /**
+  * Sets helpful text for the using the component
+  */
+  @Input() hint: string;
+  /**
+  * Sets required text on component
+  */
+  @Input() required: boolean = false;
 
   /**
  * Event emitted when row set is selected/unselected.
@@ -73,11 +89,10 @@ export class SamCheckboxListComponent {
   private HighlightedPropertyName = 'highlighted';
   optionsMode: string = 'checkbox';
 
-
   ngOnInit() {
     this.options.forEach(item => {
       if (item.checked) {
-        this.selected = (this.selected.length > 0 && !this.isSingleMode )? [...this.selected, item] : [item];
+        this.selected = (this.selected.length > 0 && !this.isSingleMode) ? [...this.selected, item] : [item];
       }
     })
     this.selectResults.emit(this.selected);
@@ -116,7 +131,7 @@ export class SamCheckboxListComponent {
         this.currentIndex += 1;
         this.checkboxListElement.nativeElement.scrollTop = this.checkboxListElement.nativeElement.getElementsByTagName("li")[this.currentIndex].offsetTop;
         this.setHighlightedItem(this.options[this.currentIndex]);
-
+        this.setfocus();
       }
     }
     else if (KeyHelper.is(KEYS.UP, evt)) {
@@ -125,31 +140,20 @@ export class SamCheckboxListComponent {
         this.currentIndex -= 1;
         this.checkboxListElement.nativeElement.scrollTop = this.checkboxListElement.nativeElement.getElementsByTagName("li")[this.currentIndex].offsetTop;
         this.setHighlightedItem(this.options[this.currentIndex]);
+        this.setfocus();
       }
     }
     else if (KeyHelper.is(KEYS.SPACE, evt)) {
-
       this.setSelectedItem(this.currentItem);
     }
-    // else if (KeyHelper.is(KEYS.ESC, event)) {
-    //   this.clearAndHideResults();
-    // }
-    // else if (KeyHelper.is(KEYS.BACKSPACE, event) || KeyHelper.is(KEYS.DELETE, event)) {
-    //   const searchString = event.target.value || '';
-    //   this.getResults(searchString);
-    // }
-    // else {
-    //   const searchString = event.target.value || '';
-    //   this.getResults(searchString);
-    // }
   }
-
 
   /**
     * on hovering set current index 
     */
   onHover(index: number): void {
     this.currentIndex = index;
+    this.setfocus();
     this.setHighlightedItem(this.options[this.currentIndex]);
   }
 
@@ -183,14 +187,17 @@ export class SamCheckboxListComponent {
     }
   }
 
-    /**
-    * adding Screen Reader Message
-    */
+  /**
+  * adding Screen Reader Message
+  */
   private addScreenReaderMessage(message: string) {
     const srResults: HTMLElement = document.createElement('li');
     srResults.innerText = message;
     if (this.srOnly && this.srOnly.nativeElement) {
       this.srOnly.nativeElement.appendChild(srResults);
     }
+  }
+  private setfocus() {
+    this.checkboxListElement.nativeElement.getElementsByTagName("li")[this.currentIndex].getElementsByTagName("input")[0].focus();
   }
 }

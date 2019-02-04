@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testin
 import { SamCheckboxListComponent } from './checkbox-list.component';
 import { SamAccordionComponent, SamAccordionSection } from '../../components/accordion/accordion.component';
 import { By } from '@angular/platform-browser';
+import { SamWrapperModule } from '../../../ui-kit/wrappers';
 
 const options = [
   { name: 'id1', value: 'test1', label: 'test-id1', required: false, checked: false },
@@ -21,7 +22,7 @@ describe('SamCheckboxListComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-
+        SamWrapperModule
       ],
       declarations: [
         SamCheckboxListComponent,
@@ -29,19 +30,44 @@ describe('SamCheckboxListComponent', () => {
         SamAccordionComponent,
       ],
     });
-
     fixture = TestBed.createComponent(SamCheckboxListComponent);
     component = fixture.componentInstance;
     component.options = options;
   });
 
-  it('on init', () => {
+  it('on init with singlemode', () => {
+    component.options = options;
+    component.isSingleMode = true;
+    component.ngOnInit();
+    fixture.detectChanges();
+    component.selectResults.subscribe((res: any) => {
+      expect(res.length).toBe(1);
+    });
+  });
+
+  it('on init without single mode', () => {
     component.options = options;
     component.ngOnInit();
     fixture.detectChanges();
     component.selectResults.subscribe((res: any) => {
       expect(res.length).toBe(2);
     });
+  });
+
+  it('onCheck with single mode', () => {
+    let ev = {
+      target: {
+        checked: true
+      }
+    };
+    component.isSingleMode = true;
+    component.options = options;
+    const row = options[6];
+    spyOn(component.selectResults, 'emit');
+    component.onChecked(ev, row);
+    fixture.detectChanges();
+    expect(component.selected.length).toBe(1);
+    expect(component.selectResults.emit).toHaveBeenCalledWith(component.selected);
   });
 
   it('Should have reuslts on focus', fakeAsync(() => {
@@ -51,7 +77,6 @@ describe('SamCheckboxListComponent', () => {
     fixture.detectChanges();
     const container = fixture.debugElement.query(By.css('.checkbox-container'));
     expect(container.nativeElement.children.length).toBe(8);
-
   }));
 
   it('onChecked checked/unchecked', () => {
@@ -65,12 +90,12 @@ describe('SamCheckboxListComponent', () => {
     spyOn(component.selectResults, 'emit');
     component.onChecked(ev, row);
     fixture.detectChanges();
-    expect(component.selected.length).toBe(1);
+    expect(component.selected.length).toBe(3);
     expect(component.selectResults.emit).toHaveBeenCalledWith(component.selected);
     ev.target.checked = false;
     component.onChecked(ev, row);
     fixture.detectChanges();
-    expect(component.selected.length).toBe(0);
+    expect(component.selected.length).toBe(2);
     expect(component.selectResults.emit).toHaveBeenCalledWith(component.selected);
   });
 
@@ -83,17 +108,18 @@ describe('SamCheckboxListComponent', () => {
     expect(container.nativeElement.children.length).toBe(8);
     const downEvent = {
       "key": "Down",
-      "target": { "value": 'id' }
+      "target": { "value": 'id' },
+      preventDefault: function () { },
     }
     component.onKeyDown(downEvent);
     tick();
     fixture.detectChanges();
     const list = fixture.debugElement.query(By.css('.checkbox-container'));
     expect(component.options[1]['highlighted']).toBeTruthy();
-
     const upEvent = {
       "key": "Up",
-      "target": { "value": 'id' }
+      "target": { "value": 'id' },
+      preventDefault: function () { },
     }
     component.onKeyDown(upEvent);
     tick();
@@ -110,7 +136,8 @@ describe('SamCheckboxListComponent', () => {
     expect(component.options[0]['highlighted']).toBeTruthy();
     const upEvent = {
       "key": "Up",
-      "target": { "value": 'id' }
+      "target": { "value": 'id' },
+      preventDefault: function () { },
     }
     component.onKeyDown(upEvent);
     tick();
@@ -122,9 +149,7 @@ describe('SamCheckboxListComponent', () => {
     component.options = options;
     tick();
     fixture.detectChanges();
-
     const list = fixture.debugElement.query(By.css('.checkbox-container'));
-
     expect(component.options[0]['highlighted']).toBeTruthy();
     component.onHover(component.options.length - 1);
     fixture.detectChanges();
@@ -132,12 +157,27 @@ describe('SamCheckboxListComponent', () => {
     expect(component.options[component.options.length - 1]['highlighted']).toBeTruthy();
     const upEvent = {
       "key": "Down",
-      "target": { "value": 'id' }
+      "target": { "value": 'id' },
+      preventDefault: function () { },
     }
     component.onKeyDown(upEvent);
     tick();
     fixture.detectChanges();
-
     expect(component.options[7]['highlighted']).toBeTruthy();
   }));
+
+  it('Should remove item from selected reuslts', fakeAsync(() => {
+    let ev = {
+      target: {
+        checked: false
+      }
+    };
+    component.selected.push(options[1]);
+    spyOn(component.selectResults, 'emit');
+    component.onChecked(ev, options[1]);
+    fixture.detectChanges();
+    expect(component.selected.length).toBe(2);
+    expect(component.selectResults.emit).toHaveBeenCalledWith(component.selected);
+  }));
+
 });
