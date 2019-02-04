@@ -12,7 +12,7 @@
 <dd [attr.id]="id+'section'" role="region" [attr.aria-labelledby]="id" [attr.class]="showSection? 'sam-accordion-panel display-block' : 'sam-accordion-panel display-none'">
     <div>
         <span class="close">
-            <span role="button" class="fa fa-close" aria-label="Close section" aria-hidden="false" (click)="close()"
+            <span role="button" class="fa fa-arrow-left" tabindex="0" aria-label="Close section" aria-hidden="false" (click)="close()"
                 (keyup.enter)="close()">
             </span>
         </span>
