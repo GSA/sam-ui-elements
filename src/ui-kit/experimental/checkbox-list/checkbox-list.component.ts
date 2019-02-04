@@ -31,6 +31,16 @@ export interface OptionModel {
 export class SamCheckboxListComponent {
 
   /**
+  * Deprecated, Sets the bound value of the component
+  */
+ @Input() model: any = [];
+
+  /**
+  * Sets the angular FormControl
+  */
+ @Input() control: FormControl;
+
+  /**
   * Mode to determine if single or multiple selection
   */
   @Input() public isSingleMode: boolean;
@@ -62,6 +72,11 @@ export class SamCheckboxListComponent {
   */
   @Input() required: boolean = false;
 
+   /**
+  * Sets disabled state
+  */
+ @Input() disabled: boolean;
+
   /**
  * Event emitted when row set is selected/unselected.
  */
@@ -81,10 +96,30 @@ export class SamCheckboxListComponent {
    */
   private currentItem: OptionModel;
 
+ /**
+  * Deprecated, Event emitted when the model value changes
+  */
+ @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
+
+ @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
+
+
   /**
  * Screen read field
  */
   @ViewChild('srOnly') srOnly: ElementRef;
+  onChange: any = (c) => undefined;
+  onTouched: any = () => undefined;
+  get value() {
+    return this.model;
+  }
+
+  set value(val) {
+    
+    this.setSelectedItem(val);
+    this.onChange(this.model);
+    this.onTouched();
+  }
 
   private HighlightedPropertyName = 'highlighted';
   optionsMode: string = 'checkbox';
@@ -103,6 +138,7 @@ export class SamCheckboxListComponent {
     * On select/unselect the results
     */
   onChecked(ev, option: OptionModel): void {
+    this.onTouched();
     if (ev.target.checked) {
       if (this.isSingleMode) {
         this.selected = [option];
@@ -115,7 +151,15 @@ export class SamCheckboxListComponent {
         this.selected = this.selected.filter(item => item !== option);
       }
     }
-    this.selectResults.emit(this.selected);
+    this.emitModel();
+   // this.selectResults.emit(this.selected);
+  }
+
+  emitModel() {
+
+    this.modelChange.emit(this.model);
+  
+    // this.optionSelected.emit({model : this.model, selected: this.optionChange, id: this.optionId});
   }
 
   /**
@@ -169,7 +213,8 @@ export class SamCheckboxListComponent {
         this.selected = this.selected.filter(res => res !== item);
       }
     }
-    this.selectResults.emit(this.selected);
+    this.model = this.selected;
+   // this.selectResults.emit(this.selected);
   }
 
   /**
@@ -199,5 +244,26 @@ export class SamCheckboxListComponent {
   }
   private setfocus() {
     this.checkboxListElement.nativeElement.getElementsByTagName("li")[this.currentIndex].getElementsByTagName("input")[0].focus();
+  }
+
+  setDisabledState(disabled) {
+    this.disabled = disabled;
+  }
+
+  registerOnChange(fn) {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn) {
+    this.onTouched = fn;
+  }
+
+  writeValue(value) {
+    let returnValue = value;
+    if (!returnValue) {
+      returnValue = [];
+    }
+
+    this.setSelectedItem(returnValue);
   }
 }
