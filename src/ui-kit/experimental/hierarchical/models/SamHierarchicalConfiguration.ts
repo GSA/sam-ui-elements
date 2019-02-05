@@ -15,6 +15,7 @@ export class SamHierarchicalConfiguration implements SamHierarchicalAutocomplete
         this.debounceTime = 250;
         this.modalCancelButtonLabel = "Cancel";
         this.modalSelectButtonLabel = "Select";
+        this.minimumCharacterCountSearch = 0;
     }
 
     /**
@@ -86,5 +87,16 @@ export class SamHierarchicalConfiguration implements SamHierarchicalAutocomplete
      * Top Level Breadcrumb Text 
      */
     public topLevelBreadcrumbText: string;
+
+    /**
+     * Mininumn Characters for search
+     */
+    public minimumCharacterCountSearch: number;
+
+
+    /**
+     * Determines if the the advanced lookup is hidden
+     */
+    public hideAdvancedLookup: boolean;
 
 }
