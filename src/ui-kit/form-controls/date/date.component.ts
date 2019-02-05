@@ -380,7 +380,7 @@ export class SamDateComponent
       maxDate = thirty;
     }
 
-    if (this.month.nativeElement.value === 2) {
+    if (month === 2) {
       maxDate = februaryLeap;
       if (this.year.nativeElement.value
         && !this._isLeapYear(this.year.nativeElement.value)) {
