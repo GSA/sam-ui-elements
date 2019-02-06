@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 100%;
+  width: 80%;
 }
 .sam-hierarchical-tree-header> *{
   align-self: center;
@@ -20,6 +20,7 @@
   //hide the "views options" until we have two views ready//
   display: none;
 }
+/*
 .hierarchy-views> *{
   padding: 10px;
 }
@@ -33,6 +34,7 @@
   text-decoration: none;
   width: 80px;
 }
+*/
 .order-results{
   margin-left: 150px;
   width: 50px;

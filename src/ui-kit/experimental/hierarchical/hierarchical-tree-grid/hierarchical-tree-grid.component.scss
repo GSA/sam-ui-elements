@@ -5,8 +5,6 @@ sam-datatable{
   display: flex;
   flex-direction: row;
 }
-//.ng-star-inserted> input, textarea, select {
-//.ng-star-inserted> input{
 .datatable-checkbox> *{
   max-width: 4rem !important;
   max-height: 4rem !important;
@@ -15,6 +13,22 @@ sam-datatable{
   padding: 10px;
 }
 
-td sam-cell{
-  padding: 0 !important;
+.h-select-col th:nth-child(1){
+  max-width: 100px !important;
+  text-align: center !important;
 }
+
+.h-select-col sam-datatable td:nth-child(1){
+  max-width: 100px !important;
+  text-align: center;
+}
+/*
+.h-select-col th{
+  display: flex;
+  justify-content: center !important;
+}
+.h-select-col td{
+  display: flex;
+  justify-content: center !important;
+}
+*/

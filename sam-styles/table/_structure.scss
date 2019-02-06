@@ -68,6 +68,7 @@ td[sam-cell], th[sam-header-cell] {
   display: flex;
   align-items: center;
   // overflow: hidden;
+  word-wrap: break-word;
   word-break: break-word;
   min-height: inherit;
 }
@@ -84,21 +85,21 @@ sam-header-cell{
  $sam-sort-header-arrow-pointer-length: 6px;
  $sam-sort-header-arrow-thickness: 2px;
  $sam-sort-header-arrow-hint-opacity: 0.38;
- 
+
  .sam-sort-header-container {
    display: flex;
    cursor: pointer;
    align-items: center;
- 
+
    .sam-sort-header-disabled & {
      cursor: default;
    }
  }
- 
+
  .sam-sort-header-position-before {
    flex-direction: row-reverse;
  }
- 
+
  .sam-sort-header-button {
    border: none;
    background: 0 0;
@@ -109,7 +110,7 @@ sam-header-cell{
    outline: 0;
    font: inherit;
    color: currentColor;
-   min-width: 200px;
+   min-width: 100px;
    span.fa{
      padding-left: 5px;
     }
@@ -119,25 +120,25 @@ sam-header-cell{
       box-shadow: none;
     }
  }
- 
+
  .sam-sort-header-arrow {
    height: $sam-sort-header-arrow-container-size;
    width: $sam-sort-header-arrow-container-size;
    min-width: $sam-sort-header-arrow-container-size;
    position: relative;
    display: flex;
- 
+
    &,
    [dir='rtl'] .sam-sort-header-position-before & {
      margin: 0 0 0 $sam-sort-header-arrow-margin;
    }
- 
+
    .sam-sort-header-position-before &,
    [dir='rtl'] & {
      margin: 0 $sam-sort-header-arrow-margin 0 0;
    }
  }
- 
+
  .sam-sort-header-stem {
    background: currentColor;
    height: $sam-sort-header-arrow-stem-size;
@@ -146,7 +147,7 @@ sam-header-cell{
    display: flex;
    align-items: center;
  }
- 
+
  .sam-sort-header-indicator {
    width: 100%;
    height: $sam-sort-header-arrow-thickness;
@@ -156,7 +157,7 @@ sam-header-cell{
    top: 0;
    left: 0;
  }
- 
+
  .sam-sort-header-pointer-middle {
    margin: auto;
    height: $sam-sort-header-arrow-thickness;
@@ -164,7 +165,7 @@ sam-header-cell{
    background: currentColor;
    transform: rotate(45deg);
  }
- 
+
  .sam-sort-header-pointer-left,
  .sam-sort-header-pointer-right {
    background: currentColor;
@@ -173,12 +174,12 @@ sam-header-cell{
    position: absolute;
    top: 0;
  }
- 
+
  .sam-sort-header-pointer-left {
    transform-origin: right;
    left: 0;
  }
- 
+
  .sam-sort-header-pointer-right {
    transform-origin: left;
    right: 0;
@@ -192,7 +193,7 @@ sam-header-cell{
  }
 
 .sam-datatable-horizontal{
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 .sam-datatable-horizontal::-webkit-scrollbar {
   height: 7px;
