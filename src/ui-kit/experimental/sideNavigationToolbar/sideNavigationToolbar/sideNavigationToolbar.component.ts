@@ -8,6 +8,9 @@ import { SamSideNavigationToolbarItemComponent } from '../sideNavigationToolbarI
 })
 export class SamSideNavigationToolbarComponent {
 
+  /**
+   * Containter of all the children of type SamSideNavigationToolbarItemComponent
+   */
   @ContentChildren(SamSideNavigationToolbarItemComponent) items: QueryList<SamSideNavigationToolbarItemComponent>;
 
 
@@ -17,6 +20,10 @@ export class SamSideNavigationToolbarComponent {
     });
   }
 
+  /**
+   * When Item is selected it closes all other sections
+   * @param item 
+   */
   selectedItem(item: SamSideNavigationToolbarItemComponent) {
     this.items.toArray().forEach((menuItem: SamSideNavigationToolbarItemComponent) => {
       menuItem.showSection = item === menuItem
