@@ -32,6 +32,7 @@ import { SamSegmentModule } from './segment';
 import { SamProgressModule } from './progress/progress.module';
 import { SamListboxModule } from './listbox/listbox.module';
 import { SamSideNavigationToolbarModule } from './sideNavigationToolbar/sideNavigationToolbar.module';
+import { SamDateRangeV2Module } from './date-range-v2/date-range-v2.module';
 
 
 @NgModule({
@@ -101,6 +102,7 @@ import { SamSideNavigationToolbarModule } from './sideNavigationToolbar/sideNavi
     SamCardModule,
     SamSegmentModule,
     SamProgressModule,
+    SamDateRangeV2Module,
     SamSideNavigationToolbarModule
   ]
 })
