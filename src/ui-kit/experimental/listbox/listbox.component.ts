@@ -222,11 +222,15 @@ export class SamListBoxComponent implements ControlValueAccessor {
         }
         i++;
       }
-      const clone = this.model.indexOf('') > -1
-        ? this.model.slice(1)
-        : this.model.slice(0);
-      clone.splice(i, 0, option);
-      this.value = clone;
+      if (this.isSingleMode) {
+        this.value = [option]
+      } else {
+        const clone = this.model.indexOf('') > -1
+          ? this.model.slice(1)
+          : this.model.slice(0);
+        clone.splice(i, 0, option);
+        this.value = clone;
+      }
     }
     this.emitModel();
   }
