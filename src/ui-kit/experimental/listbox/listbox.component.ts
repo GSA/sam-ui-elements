@@ -20,18 +20,18 @@ export interface OptionModel {
   disabled: boolean;
 }
 @Component({
-  selector: 'sam-checkbox-list',
-  templateUrl: './checkbox-list.component.html',
-  styleUrls: ['./checkbox-list.component.scss'],
+  selector: 'sam-listbox',
+  templateUrl: './listbox.component.html',
+  styleUrls: ['./listbox.component.scss'],
   providers: [{
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => SamCheckboxListComponent),
+    useExisting: forwardRef(() => SamListBoxComponent),
     multi: true
   }]
 })
 
 
-export class SamCheckboxListComponent implements ControlValueAccessor {
+export class SamListBoxComponent implements ControlValueAccessor {
   /**
   * Deprecated, Sets the bound value of the component
   */
