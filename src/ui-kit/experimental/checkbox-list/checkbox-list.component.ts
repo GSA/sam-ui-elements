@@ -152,32 +152,12 @@ export class SamCheckboxListComponent implements ControlValueAccessor {
     }
     // don't select options that are disabled
     for (const idx in this.options) {
-
-
-      if (this.options[idx].checked) {
-        if (this.isSingleMode) {
-          returnVal=[this.options[idx]];
-        } else {
-          returnVal.push(this.options[idx]);
-        }
-      } else {
-        const index: number = returnVal.indexOf(this.options[idx]);
-        if (index !== -1) {
-          returnVal = returnVal.filter(item => item !== this.options[idx]);
-        }
+      const lookup = returnVal.findIndex((value) => {
+        return value === this.options[idx].value;
+      });
+      if (this.options[idx].disabled && lookup !== -1) {
+        returnVal.splice(lookup, 1);
       }
-
-
-      // if (this.options[idx].checked) {
-      //   returnVal.push(this.options[idx]);
-      // }
-      // const lookup = returnVal.findIndex((value) => {
-      //   return value === this.options[idx].value;
-      // });
-      // if (this.options[idx].disabled && lookup !== -1) {
-      //   returnVal.splice(lookup, 1);
-      // }
-    
     }
     this.model = returnVal;
   }
@@ -226,30 +206,27 @@ export class SamCheckboxListComponent implements ControlValueAccessor {
 
   onChecked(ev, option) {
     this.onTouched();
-    // if (!ev.target.checked) {
-    //   // If the option was unchecked, remove it from the model
-    //   this.value = this.model.filter(val => val !== option);
-    // } else {
-    //   // Else, insert the checked item into the model in the correct order
-    //   let i = 0;
-    //   const thisOrder = this._ordering[option];
-    //   while (i < this.model.length) {
-    //     const otherValue = this.model[i];
-    //     // If the item being inserted is after the current value, break and
-    //     // insert it.
-    //     if (thisOrder <= this._ordering[otherValue]) {
-    //       break;
-    //     }
-    //     i++;
-    //   }
-    //   const clone = this.model.indexOf('') > -1
-    //     ? this.model.slice(1)
-    //     : this.model.slice(0);
-    //   clone.splice(i, 0, option);
-    //   this.value = clone;
-    // }
-    if (!ev.target.checked){
-      console.log('unchecked')
+    if (!ev.target.checked) {
+      // If the option was unchecked, remove it from the model
+      this.value = this.model.filter(val => val !== option);
+    } else {
+      // Else, insert the checked item into the model in the correct order
+      let i = 0;
+      const thisOrder = this._ordering[option];
+      while (i < this.model.length) {
+        const otherValue = this.model[i];
+        // If the item being inserted is after the current value, break and
+        // insert it.
+        if (thisOrder <= this._ordering[otherValue]) {
+          break;
+        }
+        i++;
+      }
+      const clone = this.model.indexOf('') > -1
+        ? this.model.slice(1)
+        : this.model.slice(0);
+      clone.splice(i, 0, option);
+      this.value = clone;
     }
     this.emitModel();
   }
@@ -302,7 +279,6 @@ export class SamCheckboxListComponent implements ControlValueAccessor {
     if (!returnValue) {
       returnValue = [];
     }
-    console.log(returnValue);
     this.setSelectedItem(returnValue);
   }
 }
