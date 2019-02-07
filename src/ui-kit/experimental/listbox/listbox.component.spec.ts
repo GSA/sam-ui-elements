@@ -14,7 +14,7 @@ const options = [
   { name: 'id8', value: 'test8', label: 'test-id8', required: false, checked: false, disabled: false },
 ];
 
-fdescribe('SamListBoxComponent', () => {
+describe('SamListBoxComponent', () => {
   let component: SamListBoxComponent;
   let fixture: ComponentFixture<SamListBoxComponent>;
 
