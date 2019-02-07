@@ -116,6 +116,7 @@ export class SamListBoxComponent implements ControlValueAccessor {
   private _ordering: any = {};
   onChange: any = (c) => undefined;
   onTouched: any = () => undefined;
+   private disabled: boolean;
   get value() {
     return this.model;
   }
@@ -269,6 +270,10 @@ export class SamListBoxComponent implements ControlValueAccessor {
 
   registerOnTouched(fn) {
     this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
   }
 
   writeValue(value) {
