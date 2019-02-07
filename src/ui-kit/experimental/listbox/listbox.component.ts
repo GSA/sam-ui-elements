@@ -64,10 +64,7 @@ export class SamListBoxComponent implements ControlValueAccessor {
   * Sets the angular FormControl
   */
   @Input() control: FormControl;
-  /**
-  * Sets disabled state
-  */
-  @Input() disabled: boolean;
+  
   /**
    * Sets the id
    */
@@ -272,10 +269,6 @@ export class SamListBoxComponent implements ControlValueAccessor {
 
   registerOnTouched(fn) {
     this.onTouched = fn;
-  }
-
-  setDisabledState(disabled) {
-    this.disabled = disabled;
   }
 
   writeValue(value) {

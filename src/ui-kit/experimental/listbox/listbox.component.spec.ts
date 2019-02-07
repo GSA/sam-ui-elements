@@ -84,11 +84,11 @@ describe('SamListBoxComponent', () => {
   });
 
   it('should disable', function () {
-    component.disabled = true;
+    component.options[0].disabled = true;
     fixture.detectChanges();
     const value = component.checkboxListElement.nativeElement.getElementsByTagName("input")[0];
     expect(value.disabled).toBe(true);
-    component.disabled = false;
+    component.options[0].disabled = false;
     fixture.detectChanges();
     expect(value.disabled).toBe(false);
   });
@@ -98,7 +98,6 @@ describe('SamListBoxComponent', () => {
     component.onTouched();
     component.registerOnChange((_) => undefined);
     component.registerOnTouched(() => undefined);
-    component.setDisabledState(false);
     component.writeValue(['test']);
     expect(component.model[0]).toBe('test');
 

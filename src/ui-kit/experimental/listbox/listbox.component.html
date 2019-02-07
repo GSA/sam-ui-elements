@@ -10,7 +10,7 @@
         <li (mouseenter)="onHover(i)" [class]="option['highlighted']? 'selected-item':''" *ngFor="let option of options; let i = index;"
           role="option" aria-checked="false">
 
-          <input [disabled]="option.disabled || disabled?'disabled':null" [attr.id]="option.name" [attr.value]="option.value" [attr.type]="optionsMode"
+          <input [disabled]="option.disabled" [attr.id]="option.name" [attr.value]="option.value" [attr.type]="optionsMode"
             [attr.aria-label]="option.name" [required]="option.required" [checked]="option.checked" name="option"
             (change)="onChecked($event,option)">
           <label [attr.for]="option.name">{{option.label}}</label>
