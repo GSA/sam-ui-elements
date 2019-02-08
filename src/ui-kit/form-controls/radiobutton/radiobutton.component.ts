@@ -4,7 +4,8 @@ import {
   Output,
   EventEmitter,
   ViewChild,
-  forwardRef
+  forwardRef,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
 import { OptionsType } from '../../types';
@@ -73,6 +74,8 @@ export class SamRadioButtonComponent  {
   public disabled = undefined;
 
 
+  constructor(private cdr: ChangeDetectorRef) {}
+
   public ngOnInit() {
     if (!this.name) {
       throw new Error('<sam-radio-button> requires a [name]\
@@ -82,12 +85,15 @@ export class SamRadioButtonComponent  {
     if (!this.control) {
       return;
     }
+  }
 
+  public ngAfterViewInit() {
     this.control.valueChanges.subscribe(() => {
       this.wrapper.formatErrors(this.control);
     });
 
     this.wrapper.formatErrors(this.control);
+    this.cdr.detectChanges();
   }
 
   public onRadioChange(value) {
