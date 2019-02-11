@@ -81,19 +81,17 @@ export class SamRadioButtonComponent  {
       throw new Error('<sam-radio-button> requires a [name]\
        parameter for 508 compliance');
     }
-
-    if (!this.control) {
-      return;
-    }
   }
 
   public ngAfterViewInit() {
-    this.control.valueChanges.subscribe(() => {
-      this.wrapper.formatErrors(this.control);
-    });
+    if (this.control) {
+      this.control.valueChanges.subscribe(() => {
+        this.wrapper.formatErrors(this.control);
+      });
 
-    this.wrapper.formatErrors(this.control);
-    this.cdr.detectChanges();
+      this.wrapper.formatErrors(this.control);
+      this.cdr.detectChanges();
+    }
   }
 
   public onRadioChange(value) {
