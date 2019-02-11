@@ -82,12 +82,13 @@ export class SamRadioButtonComponent  {
        parameter for 508 compliance');
     }
 
-    if (!this.control) {
-      return;
-    }
   }
 
   public ngAfterViewInit() {
+    if (!this.control) {
+      return;
+    }
+    
     this.control.valueChanges.subscribe(() => {
       this.wrapper.formatErrors(this.control);
     });
