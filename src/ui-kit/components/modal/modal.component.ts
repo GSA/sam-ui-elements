@@ -125,7 +125,7 @@ export class SamModalComponent implements OnInit {
     cancelId: ''
   };
 
-  constructor(private hostElement: ElementRef, private cdr: ChangeDetectorRef) {
+  constructor(private hostElement: ElementRef, public cdr: ChangeDetectorRef) {
     this.internalId = Date.now();
   }
 
@@ -186,10 +186,15 @@ export class SamModalComponent implements OnInit {
 
   ngOnDestroy() {
     // if (this.show) {
+    //   this.show = false;
     //   this.removeBackdrop();
     // }
     this.show = false;
     this.cdr.detach();
+  }
+
+  ngAfterViewChecked() {
+    this.cdr.detectChanges();
   }
 
   typeNotDefined() {
@@ -217,7 +222,7 @@ export class SamModalComponent implements OnInit {
     }
     this._focusModalElement = true;
     this.set508();
-    this.cdr.detectChanges();
+    // this.cdr.detectChanges();
   }
 
   closeModal(emit: boolean = true) {
@@ -236,7 +241,7 @@ export class SamModalComponent implements OnInit {
     for (let j = 0; j < this._modalFocusableElements.length; j++) {
       this.removeTabbable(this._modalFocusableElements[j]);
     }
-    this.cdr.detectChanges();
+    // this.cdr.detectChanges();
   }
 
   submitBtnClick() {
@@ -244,16 +249,16 @@ export class SamModalComponent implements OnInit {
     this.submit.emit(this.args);
   }
 
-  // private createBackdrop() {
-  //   this.backdropElement = document.createElement('div');
-  //   this.backdropElement.classList.add('modal-backdrop');
-  // }
+  private createBackdrop() {
+    // this.backdropElement = document.createElement('div');
+    // this.backdropElement.classList.add('modal-backdrop');
+  }
 
-  // private removeBackdrop() {
-  //   if (document && document.body) {
-  //     document.body.removeChild(this.backdropElement);
-  //   }
-  // }
+  private removeBackdrop() {
+    // if (document && document.body) {
+    //   document.body.removeChild(this.backdropElement);
+    // }
+  }
 
   private preventClosing(evt) {
     evt.stopPropagation();
