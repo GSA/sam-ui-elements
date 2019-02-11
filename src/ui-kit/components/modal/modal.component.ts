@@ -130,7 +130,7 @@ export class SamModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    document.body.appendChild(this.hostElement.nativeElement);
+    // document.body.appendChild(this.hostElement.nativeElement);
     this._scrollHelpers = ScrollHelpers(window);
     if (!this.typeNotDefined()) {
       this.selectedType = this.types[this.type].class;
@@ -185,9 +185,11 @@ export class SamModalComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    if (this.show) {
-      this.removeBackdrop();
-    }
+    // if (this.show) {
+    //   this.removeBackdrop();
+    // }
+    this.show = false;
+    this.cdr.detach();
   }
 
   typeNotDefined() {
@@ -209,9 +211,9 @@ export class SamModalComponent implements OnInit {
     this.onOpen.emit(this.args);
     this.open.emit(this.args);
     if (document && document.body) {
-      this.createBackdrop();
+      // this.createBackdrop();
       this.disableScroll();
-      document.body.appendChild(this.backdropElement);
+      // document.body.appendChild(this.backdropElement);
     }
     this._focusModalElement = true;
     this.set508();
@@ -226,7 +228,7 @@ export class SamModalComponent implements OnInit {
       this.close.emit(this.args);
     }
     this.args = undefined;
-    this.removeBackdrop();
+    // this.removeBackdrop();
     for (let i = 0; i < this._allFocusableElements.length; i++) {
       this.reinsertTabbable(this._allFocusableElements[i]);
     }
@@ -242,16 +244,16 @@ export class SamModalComponent implements OnInit {
     this.submit.emit(this.args);
   }
 
-  private createBackdrop() {
-    this.backdropElement = document.createElement('div');
-    this.backdropElement.classList.add('modal-backdrop');
-  }
+  // private createBackdrop() {
+  //   this.backdropElement = document.createElement('div');
+  //   this.backdropElement.classList.add('modal-backdrop');
+  // }
 
-  private removeBackdrop() {
-    if (document && document.body) {
-      document.body.removeChild(this.backdropElement);
-    }
-  }
+  // private removeBackdrop() {
+  //   if (document && document.body) {
+  //     document.body.removeChild(this.backdropElement);
+  //   }
+  // }
 
   private preventClosing(evt) {
     evt.stopPropagation();
