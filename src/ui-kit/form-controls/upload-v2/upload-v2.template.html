@@ -1,5 +1,5 @@
 <sam-modal *ngIf="uploadFileActionModalConfig"
-  #actionModal
+  #removeModal
   [showClose]="true"
   [closeOnOutsideClick]="true"
   [closeOnEscape]="true"
@@ -8,9 +8,25 @@
   [description]="uploadFileActionModalConfig.description"
   [submitButtonLabel]="'Ok'"
   [cancelButtonLabel]="'Cancel'"
-  (open)="onActionModalOpen($event)"
-  (submit)="onActionModalSubmit($event)">
+  (open)="onRemoveModalOpen($event)"
+  (submit)="onRemoveModalSubmit($event)">
   <ng-content select=".action-modal-content"></ng-content>
+</sam-modal>
+
+<sam-modal *ngIf="toggleAccessActionModalConfig"
+           #toggleModal
+           [showClose]="true"
+           [closeOnOutsideClick]="true"
+           [closeOnEscape]="true"
+           [type]="'warning'"
+           [title]="toggleAccessActionModalConfig.title"
+           [description]="toggleAccessActionModalConfig.description"
+           [submitButtonLabel]="'Apply'"
+           [cancelButtonLabel]="'Cancel'"
+           (open)="onToggleModalOpen($event)"
+           (submit)="onToggleModalSubmit($event)"
+           (close)="onToggleModalClose($event)">
+  <ng-content select=".toggle-modal-content"></ng-content>
 </sam-modal>
 
 <div class="file-container"
@@ -25,9 +41,9 @@
       <thead class="upload-table-header">
         <th scope="col" align="left" class="p_L-4x">Document</th>
         <th scope="col">File Size</th>
-        <th scope="col">Security</th>
+        <th scope="col">Access</th>
         <th scope="col" *ngIf="isEditMode()">Actions</th>
-        <th scope="col" *ngIf="!isEditMode()">Posted</th>
+        <th scope="col" *ngIf="!isEditMode()">Updated Date</th>
       </thead>
       <tbody>
         <ng-container *ngFor="let fctrl of fileCtrlConfig; let i = index">
@@ -62,20 +78,13 @@
               <div [attr.id]="uploadElIds.fileSize + i">{{ fctrl.fileSize | filesize }}</div>
             </td>
             <td class="upload-table-props-col">
-              <div *ngIf="toggleUploadFileAction?.isSecure">
               <ng-container *ngIf="isEditMode(); else secureTag">
-                <input [attr.id]="uploadElIds.fileSecure + i"
-                  name="security-checkbox"
-                  class="secure-cbx"
-                  type="checkbox"
-                  [(ngModel)]="fctrl.isSecure" [attr.aria-label]="uploadElIds.securityCheckboxInput + i"/>
-                <label [attr.id]="uploadElIds.fileSecureLabel + i" class="secure-label">Secure</label>
+                <sam-toggle-switch [attr.id]="uploadElIds.fileSecure + i" [isSwitchOn]="fctrl.isSecure" (switchStatusChange)="onAccessToggle(i, $event)"></sam-toggle-switch>
               </ng-container>
               <ng-template #secureTag>
                 <span class="upload-secure-span" *ngIf="fctrl.isSecure"><i class="fa fa-lock"></i>&nbsp;Secure</span>
                 <span class="upload-secure-span" *ngIf="!fctrl.isSecure"><i class="fa fa-unlock"></i>&nbsp;Not Secure</span>
               </ng-template>
-              </div>
             </td>
             <td class="upload-table-props-col" *ngIf="isEditMode()">
               <div>
@@ -86,7 +95,7 @@
                 <i class="fa fa-chevron-up p_R-1x" [attr.aria-label]="uploadElIds.moveUp + i"></i>
               </button>
              </span>
-              <span *ngIf="toggleUploadFileAction?.isRemove"><button type="button" [attr.id]="uploadElIds.removeId + i" class="clear-button" (click)="onCloseClick(fctrl.fileName, i)">
+              <span *ngIf="toggleUploadFileAction?.isRemove"><button type="button" [attr.id]="uploadElIds.removeId + i" class="clear-button" (click)="onRemoveClick(fctrl.fileName, i)">
                 <i class="fa fa-remove remove-icon" [attr.aria-label]="uploadElIds.removeId + i"></i>
               </button>
                 </span>

@@ -195,7 +195,7 @@ export class MdSidenav implements AfterContentInit, OnDestroy {
   @Input()
   get opened(): boolean { return this._opened; }
   set opened(v: boolean) {
-    this.toggle(coerceBooleanProperty(v));
+   // this.toggle(coerceBooleanProperty(v));
   }
 
 

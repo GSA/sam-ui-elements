@@ -42,7 +42,7 @@ describe('The Sam Radio Buttons component', () => {
     let component: SamRadioButtonComponent;
     let fixture: any;
   
-    const options: [any] = [
+    const options: any[] = [
       {value: 'dc', label: 'Washington DC', name: 'dc'},
       {value: 'ma', label: 'Maryland', name: 'dc'},
       {value: 'va', label: 'Virginia', name: 'virginia'},

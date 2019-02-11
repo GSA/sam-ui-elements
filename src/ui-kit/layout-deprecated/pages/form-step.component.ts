@@ -66,6 +66,7 @@ import {
       <div grid>
         <div columns="12" class="right aligned">
           <sam-button 
+            [isDisabled]="disabled"
             [buttonId]="'fal-form-nav-cancel'" 
             buttonType="tertiary" 
             buttonText="Cancel" 
@@ -73,6 +74,7 @@ import {
           </sam-button>
           
           <sam-button 
+            [isDisabled]="disabled"
             [buttonId]="'fal-form-nav-back'" 
             buttonType="secondary" 
             *ngIf="sectionIndex - 1 >= 0" 
@@ -80,7 +82,8 @@ import {
             (onClick)="formAction('back')">
           </sam-button>
           
-          <sam-button 
+          <sam-button
+            [isDisabled]="disabled" 
             [buttonId]="'fal-form-nav-next'"
             buttonType="secondary" 
             *ngIf="sectionIndex + 1 < numberOfSections" 
@@ -88,7 +91,8 @@ import {
             (onClick)="formAction('next')">
           </sam-button>
           
-          <sam-button 
+          <sam-button
+            [isDisabled]="disabled" 
             [buttonId]="'fal-form-nav-done'" 
             buttonText="Done" 
             (onClick)="formAction('done')">
@@ -169,6 +173,10 @@ export class FormStepComponent implements OnChanges, AfterViewInit {
    * Passes in an Alerts model
    */
   @Input() alerts: any;
+  /**
+   * Disables form buttons
+   */
+  @Input() disabled: boolean = false;
   /**
    * Emitter for general events
    */

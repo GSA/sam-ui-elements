@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { ScrollHelpers } from '../../dom-helpers';
 import {
-    IconProp
+  IconProp
 } from '@fortawesome/fontawesome-svg-core';
 
 /**
@@ -47,6 +47,10 @@ export class SamModalComponent implements OnInit {
    * Sets the submit button text
    */
   @Input() submitButtonLabel: string = '';
+  /**
+   *  Disables the submit button.
+   */
+  @Input() submitButtonDisabled: boolean = false;
   /**
    * Show/hide the modal close button, defaults to true
    */
@@ -98,7 +102,8 @@ export class SamModalComponent implements OnInit {
     'error': { class: 'usa-alert-error', sr: 'error alert'},
     'info': { class: 'usa-alert-info', sr: 'information alert'},
     'plain': { class: 'usa-alert-plain', sr: 'plain alert'},
-    'primary': {class: 'sam-primary'}
+    'primary': {class: 'sam-primary'},
+    'download': { class: 'usa-alert-download'}
   };
   public selectedType: string = this.types.success.class;
 
@@ -125,6 +130,7 @@ export class SamModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    document.body.appendChild(this.hostElement.nativeElement);
     this._scrollHelpers = ScrollHelpers(window);
     if (!this.typeNotDefined()) {
       this.selectedType = this.types[this.type].class;
@@ -204,7 +210,7 @@ export class SamModalComponent implements OnInit {
     this.open.emit(this.args);
     if (document && document.body) {
       this.createBackdrop();
-      this._scrollHelpers.disableScroll();
+      this.disableScroll();
       document.body.appendChild(this.backdropElement);
     }
     this._focusModalElement = true;
@@ -213,7 +219,7 @@ export class SamModalComponent implements OnInit {
   }
 
   closeModal(emit: boolean = true) {
-    this._scrollHelpers.enableScroll();
+    this.enableScroll();
     this.show = false;
     if(emit){
       this.onClose.emit(this.args);
@@ -256,5 +262,16 @@ export class SamModalComponent implements OnInit {
       this.modalElIds.closeId = this.id + 'Close';
       this.modalElIds.submitId = this.id + 'Submit';
     }
+  }
+  // enable modal Scroll when opened
+  enableScroll(): void {
+    this.hostElement.nativeElement.style.display = 'none';
+    document.body.classList.remove('modal-open');
+  }
+  // disable modal scroll when closed
+  disableScroll(): void {
+    this.hostElement.nativeElement.style.display = 'block';
+    document.body.classList.add('modal-open');
+   
   }
 }

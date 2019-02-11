@@ -9,7 +9,7 @@ export * from './pipes';
 export * from './utilities';
 export * from './wrappers';
 export * from './filters';
-
+export * from './layout';
 export * from './types';
 export * from './form-service';
 export * from './type-check-helpers';

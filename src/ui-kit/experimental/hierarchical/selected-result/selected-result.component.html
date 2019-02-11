@@ -1,0 +1,18 @@
+<ul [attr.aria-label]="configuration.labelText +' results'" class="usa-unstyled-list resultsList" aria-relevant="additions"
+  role="listbox" aria-live="polite">
+  <li role="option" *ngFor="let result of model.getItems(); let i = index">
+    <div class="selected-item">
+      <ng-container *ngIf="itemTemplate" [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit:result}">
+      </ng-container>
+      <ng-container *ngIf="!itemTemplate">
+        <span class="header">{{ result[configuration.primaryTextField] }}</span>
+        <ng-container *ngIf="configuration.secondaryTextField &&  result[configuration.secondaryTextField] ">
+          <span class="secondary-value">{{ result[configuration.secondaryTextField] }}</span>
+        </ng-container>
+      </ng-container>
+      <span tabindex="0" role="button" class="close fa fa-close" aria-label="Remove Item" aria-hidden="false" (click)="removeItem(result)"
+        (keyup.enter)="removeItem(result)">
+      </span>
+    </div>
+  </li>
+</ul>

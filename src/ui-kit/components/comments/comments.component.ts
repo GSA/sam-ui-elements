@@ -12,8 +12,15 @@ import {
   Validators,
   ControlValueAccessor
 } from '@angular/forms';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/mergeMap';
 
-import { Observable, Subscription, Subject } from 'rxjs';
+
+import { Observable, Subscription, Subject ,of} from 'rxjs';
+import 'rxjs/add/operator/merge';
+import 'rxjs/add/operator/catch';
+
+
 import * as moment from 'moment';
 
 import { SamAccordionComponent } from '../accordion';
@@ -106,14 +113,14 @@ export class SamCommentsComponent implements OnInit {
       this.showButtonStream
       .flatMap(event => {
         return this.commentsService.getComments()
-              .catch(error => Observable.of(error));
+              .catch(error => of(error));
       });
 
     this.collapseCommentsStream =
       this.hideCommentsStream
       .flatMap(event => {
         return this.commentsService.getInitialState()
-              .catch(error => Observable.of(error));
+              .catch(error => of(error));
       });
 
     this.submitStream =
@@ -122,20 +129,20 @@ export class SamCommentsComponent implements OnInit {
         if (event.key === 'Enter' || event.keyIdentified === 'Enter') {
           this.form.controls.datetime.setValue(Date.now());
           return this.commentsService.postComment(this.form.value)
-                .catch(error => Observable.of(error));
+                .catch(error => of(error));
         } else {
-          return Observable.of(undefined);
+          return of(undefined);
         }
       })
       .flatMap(event => {
         if (event instanceof Error) {
-          return Observable.of(this.comments);
+          return of(this.comments);
         } else if (event === null || event === undefined) {
-          return Observable.of(this.comments);
+          return of(this.comments);
         } else {
           this.form.controls.text.setValue('');
-          return Observable.of(event)
-            .catch(error => Observable.of(error));
+          return of(event)
+            .catch(error => of(error));
         }
       });
 
@@ -143,14 +150,14 @@ export class SamCommentsComponent implements OnInit {
       this.deleteStream
       .flatMap((comment) => {
         return this.commentsService.deleteComment(comment)
-               .catch(err => Observable.of(err));
+               .catch(err => of(err));
       })
       .flatMap((event) => {
         if (event instanceof Error) {
-          return Observable.of(this.comments);
+          return of(this.comments);
         } else {
-        return Observable.of(event)
-               .catch(err => Observable.of(err));
+        return of(event)
+               .catch(err => of(err));
         }
       });
 

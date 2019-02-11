@@ -5,19 +5,15 @@ import {
     ViewChild,
     forwardRef,
     Output,
-    EventEmitter,
-    OnInit,
-    OnDestroy,
-    AfterViewInit
+    EventEmitter
   } from '@angular/core';
 import {
   NG_VALUE_ACCESSOR,
-  ControlValueAccessor,
-  FormControl,
   Validators,
   ValidatorFn
 } from '@angular/forms';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { SamFormService } from '../../form-service';
 import { KeyHelper } from '../../utilities/key-helper/key-helper';
@@ -86,7 +82,11 @@ export class SamDollarComponent extends SamFormControl {
     this.control.setValidators(validators);
 
     if (!this.useFormService) {
-      this.control.statusChanges.takeUntil(this.ngUnsubscribe).subscribe(() => {
+      this.control.statusChanges
+      .pipe(
+        takeUntil(this.ngUnsubscribe)
+      )
+      .subscribe(() => {
         this.wrapper.formatErrors(this.control);
         this.cdr.detectChanges();
       });

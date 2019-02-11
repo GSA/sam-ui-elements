@@ -5,13 +5,14 @@ import { SamDragDropDirective } from '../../directives/drag-drop/drag-drop.direc
 import { FilesizePipe } from '../../pipes/filesize/filesize.pipe';
 import { SamProgress } from '../../components/progress-bar/progress-bar.component';
 import { HttpClient, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable ,of} from 'rxjs';
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
+
 class MockHttpClient {
   request() {
-    return Observable.of('success');
+    return of('success');
   }
 }
 

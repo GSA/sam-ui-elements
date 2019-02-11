@@ -29,7 +29,7 @@ describe('The Sam Modal component', () => {
     });
   });
 
-  describe('rendered tests', () => {
+  xdescribe('rendered tests', () => {
     let component: SamModalComponent;
     let fixture: any;
 
