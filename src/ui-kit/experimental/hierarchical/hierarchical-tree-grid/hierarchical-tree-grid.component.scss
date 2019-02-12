@@ -24,7 +24,10 @@ sam-datatable{
 }
 .h-select-col{
   min-height: 350px;
-}
+  max-height: 400px !important;
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
+ }
 /*
 .h-select-col th{
   display: flex;
