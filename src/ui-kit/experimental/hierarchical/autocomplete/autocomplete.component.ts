@@ -232,22 +232,24 @@ export class SamHierarchicalAutocompleteComponent {
    * @param searchString 
    */
   private getResults(searchString: string): void {
-    if (!this.matchPastSearchString(searchString) ||
-      (this.matchPastSearchString(searchString) && !this.showResults)
-      || this.matchPastSearchString('')) {
-      this.searchString = searchString;
-      window.clearTimeout(this.timeoutNumber);
-      this.timeoutNumber = window.setTimeout(() => {
-        this.service.getDataByText(0, searchString).subscribe(
-          (result) => {
-            this.results = result.items;
-            this.maxResults = result.totalItems;
-            this.highlightedIndex = 0;
-            this.setHighlightedItem(this.results[this.highlightedIndex]);
-            this.showResults = true;
-            this.addScreenReaderMessage(this.maxResults + ' ' + this.resultsAvailableMessage)
-          });
-      }, this.configuration.debounceTime);
+    if (searchString.length >= this.configuration.minimumCharacterCountSearch) {
+      if (!this.matchPastSearchString(searchString) ||
+        (this.matchPastSearchString(searchString) && !this.showResults)
+        || this.matchPastSearchString('')) {
+        this.searchString = searchString;
+        window.clearTimeout(this.timeoutNumber);
+        this.timeoutNumber = window.setTimeout(() => {
+          this.service.getDataByText(0, searchString).subscribe(
+            (result) => {
+              this.results = result.items;
+              this.maxResults = result.totalItems;
+              this.highlightedIndex = 0;
+              this.setHighlightedItem(this.results[this.highlightedIndex]);
+              this.showResults = true;
+              this.addScreenReaderMessage(this.maxResults + ' ' + this.resultsAvailableMessage)
+            });
+        }, this.configuration.debounceTime);
+      }
     }
   }
 

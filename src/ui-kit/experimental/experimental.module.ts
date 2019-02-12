@@ -30,7 +30,7 @@ import { SamHierarchicalModule } from './hierarchical/hierarchical.module';
 import { SamCardModule } from './card';
 import { SamSegmentModule } from './segment';
 import { SamProgressModule } from './progress/progress.module';
-import { SamCheckboxListModule } from './checkbox-list/checkbox-list.module';
+import { SamListboxModule } from './listbox/listbox.module';
 import { SamSideNavigationToolbarModule } from './sideNavigationToolbar/sideNavigationToolbar.module';
 
 
@@ -50,7 +50,7 @@ import { SamSideNavigationToolbarModule } from './sideNavigationToolbar/sideNavi
     SamAlertNextModule,
     SamTitleModule,
     SamHierarchicalModule,
-    SamCheckboxListModule,
+    SamListboxModule,
     SamCardModule,
     SamSegmentModule,
     SamProgressModule,
@@ -97,7 +97,7 @@ import { SamSideNavigationToolbarModule } from './sideNavigationToolbar/sideNavi
     SamAlertNextModule,
     SamTitleModule,
     SamHierarchicalModule,
-    SamCheckboxListModule,
+    SamListboxModule,
     SamCardModule,
     SamSegmentModule,
     SamProgressModule,

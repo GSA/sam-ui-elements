@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SamWrapperModule } from '../../wrappers';
-import { SamCheckboxListComponent } from './checkbox-list.component';
+import { SamListBoxComponent } from './listbox.component';
 import { AccordionsModule } from  '../../components/accordion';
 
 
@@ -13,7 +13,7 @@ import { AccordionsModule } from  '../../components/accordion';
         AccordionsModule,
         ReactiveFormsModule
     ],
-    declarations: [SamCheckboxListComponent],
-    exports: [SamCheckboxListComponent]
+    declarations: [SamListBoxComponent],
+    exports: [SamListBoxComponent]
 })
-export class SamCheckboxListModule { }
+export class SamListboxModule { }

@@ -75,6 +75,25 @@ describe('SamHierarchicalAutocompleteComponent', () => {
     expect(emptyItem).toBeTruthy();
   }));
 
+  it('Should have results with minimumCharacterCountSearch', fakeAsync(() => {
+
+    const event = {
+      "key": "Space",
+      "target": { "value": 'Level 7' }
+    }
+    component.configuration.minimumCharacterCountSearch = 3;
+    component.onKeyup(event);
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(list.nativeElement.children.length).toBe(3);
+
+  }));
+
+
+
+
 
   it('Should have results key press', fakeAsync(() => {
     const event = {
@@ -89,6 +108,24 @@ describe('SamHierarchicalAutocompleteComponent', () => {
     expect(list.nativeElement.children.length).toBe(11);
     expect(component.results[0]['highlighted']).toBeTruthy();
   }));
+
+
+
+  it('Should have empty results key press minimumCharacterCountSearch', fakeAsync(() => {
+    const event = {
+      "key": "d",
+      "target": { "value": 'id' }
+    }
+    component.configuration.minimumCharacterCountSearch = 3;
+    component.onKeyup(event);
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
+    expect(list).toBe(null);
+  }));
+
+
 
   it('Should have reuslts on focus', fakeAsync(() => {
     component.inputFocusHandler();
