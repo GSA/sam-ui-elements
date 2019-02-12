@@ -6,12 +6,14 @@ import { SamRadioButtonComponent } from './radiobutton.component';
 import { SamWrapperModule } from '../../wrappers';
 import { SamFormService } from '../../form-service';
 import { FormsModule, FormControl } from '@angular/forms';
+import { ChangeDetectorRef } from '@angular/core';
 
 describe('The Sam Radio Buttons component', () => {
   describe('isolated tests', () => {
     let component: SamRadioButtonComponent;
+    let cdr: ChangeDetectorRef;
     beforeEach(() => {
-      component = new SamRadioButtonComponent();
+      component = new SamRadioButtonComponent(cdr);
     });
 
     it('should implement controlvalueaccessor', () => {
