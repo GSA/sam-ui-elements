@@ -142,7 +142,8 @@ export class SamDollarComponent extends SamFormControl {
   }
 
   public dollarToStr(value) {
-    let strValue = value.replace(/\$/g, '');
+    let strValue = value ? value : "";
+    strValue = strValue.replace(/\$/g, '');
     strValue = strValue.replace(/,/g, '');
     return strValue;
   }
