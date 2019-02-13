@@ -14,6 +14,7 @@ export class HierarchicalDataSource extends DataSource<any> {
       this.dataChange
     ];
     return Observable.merge(...displayDataChanges).map(() => {
+      console.log('Data Changed');
       this.renderedData = this.dataChange.value;
       return this.renderedData;
     });

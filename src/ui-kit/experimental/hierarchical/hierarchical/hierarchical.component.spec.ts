@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SamHierarchicalComponent } from './hierarchical.component';
 import { TreeMode, HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selectedItem.model';
-import { SamHiercarchicalServiceInterface, SearchByTextResult } from '../hierarchical-interface';
+import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceResult } from '../hierarchical-interface';
 import { FormsModule } from '@angular/forms';
 import { SamHierarchicalAutocompleteComponent } from '../autocomplete/autocomplete.component';
 import { SamHierarchicalSelectedResultComponent } from '../selected-result/selected-result.component';
@@ -86,7 +86,7 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
     this.loadedData = data;
   }
 
-  getDataByText(currentItems: number, searchValue?: string): Observable<SearchByTextResult> {
+  getDataByText(currentItems: number, searchValue?: string): Observable<SamHiercarchicalServiceResult> {
     let itemIncrease = 25;
     let data = Observable.of(SampleHierarchicalData);
     let itemsOb: Observable<Object[]>;

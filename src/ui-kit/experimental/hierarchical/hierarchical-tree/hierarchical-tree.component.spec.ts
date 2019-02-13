@@ -13,7 +13,7 @@ import { SamDataTableModule, SamSortDirective } from '../../../components/data-t
 import { SamHierarchicalTreeConfiguration } from '../models/SamHierarchicalTreeConfiguration';
 import { ExpectedConditions } from 'protractor';
 import { Observable } from 'rxjs';
-import { SamHiercarchicalServiceInterface, SearchByTextResult } from '../hierarchical-interface';
+import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceResult } from '../hierarchical-interface';
 import 'rxjs/add/observable/of';
 import { Sort, SortDirection } from "../../../components/data-table/sort.directive";
 
@@ -134,7 +134,7 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
     this.loadedData = data;
   }
 
-  getDataByText(currentItems: number, searchValue?: string): Observable<SearchByTextResult> {
+  getDataByText(currentItems: number, searchValue?: string): Observable<SamHiercarchicalServiceResult> {
     return null;
   }
 
