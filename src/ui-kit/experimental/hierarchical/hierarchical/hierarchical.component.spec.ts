@@ -18,8 +18,8 @@ import { CdkTableModule } from '@angular/cdk';
 import { SamSelectModule } from '../../../form-controls';
 import { SamFormService } from '../../../form-service';
 import { By } from '@angular/platform-browser';
+import { Sort } from '../../../components/data-table/sort.directive';
 import 'rxjs/add/observable/of';
-//import {  SamHierarchicalTreeConfiguration  } from '../../../../../test-app/src/components/ui-kit/experimental/hierarchical/models/SamHierarchicalTreeConfiguration';
 
 describe('SamHierarchicalComponent', () => {
   let component: SamHierarchicalComponent;
@@ -119,7 +119,7 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
     return Observable.of(returnItem);
   }
 
-  getHiercarchicalById(id?: string, searchValue?: string): Observable<object[]> {
+  getHiercarchicalById(id: string, searchValue: string, sort: Sort, currentItemCount: number): Observable<SamHiercarchicalServiceResult> {
     let data = Observable.of(this.loadedData);
     if (searchValue) {
       return data.map(items => items.filter(itm => itm.parentId === id && (itm.name.indexOf(searchValue) !== -1 || itm.subtext.indexOf(searchValue) !== -1)));

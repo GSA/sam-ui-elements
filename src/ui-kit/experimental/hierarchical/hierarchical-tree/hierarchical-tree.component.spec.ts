@@ -28,7 +28,7 @@ const config: SamHierarchicalTreeConfiguration = {
 };
 
 
-fdescribe('SamHierarchicalTreeComponent', () => {
+describe('SamHierarchicalTreeComponent', () => {
   let component: SamHierarchicalTreeComponent;
   let fixture: ComponentFixture<SamHierarchicalTreeComponent>;
 
@@ -62,8 +62,6 @@ fdescribe('SamHierarchicalTreeComponent', () => {
 
     component.selectItem(SampleHierarchicalData[0]);
     fixture.detectChanges();
-
-    console.log(component.breadcrumbStack)
     expect(component.breadcrumbStack.length).toBe(1);
     expect(component.breadcrumbStackSelectable.length).toBe(2);
     expect(component.selectedValue).toBe(SampleHierarchicalData[0].id);
@@ -75,7 +73,10 @@ fdescribe('SamHierarchicalTreeComponent', () => {
     component.sortLevel.next(null);
     let list = [];
     component.gridResults.subscribe(
-      value => list = value
+      value => {
+        list = value
+        console.log()
+      }
     );
     fixture.detectChanges();
     tick();
@@ -135,16 +136,89 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
   }
 
   getDataByText(currentItems: number, searchValue?: string): Observable<SamHiercarchicalServiceResult> {
-    return null;
+    let itemIncrease = 25;
+    let data = Observable.of(this.loadedData);
+    let itemsOb: Observable<Object[]>;
+    if (searchValue) {
+      itemsOb = data.map(items => items.filter(itm =>
+        (itm.name.indexOf(searchValue) !== -1 ||
+          itm.subtext.indexOf(searchValue) !== -1
+        )));
+    } else {
+      itemsOb = data;
+    }
+    let items: object[];
+    itemsOb.subscribe(
+      (result) => {
+        items = result;
+      }
+    );
+    let totalItemCount = items.length;
+
+    let maxSectionPosition = currentItems + itemIncrease;
+    if (maxSectionPosition > totalItemCount) {
+      maxSectionPosition = totalItemCount;
+    }
+    let subItemsitems = items.slice(currentItems, maxSectionPosition);
+
+    let returnItem = {
+      items: subItemsitems,
+      totalItems: totalItemCount
+    };
+    return Observable.of(returnItem);
   }
 
-  getHiercarchicalById(id: string, searchValue: string, sort: Sort): Observable<object[]> {
-    let data = Observable.of(this.loadedData);
+  getHiercarchicalById(id: string, searchValue: string, sort: Sort, currentItemCount: number): Observable<SamHiercarchicalServiceResult> {
+    let itemIncrease = 15;
+    let temp = this.getSortedData(this.loadedData, sort);
+    let data = Observable.of(temp);
+    let itemsOb: Observable<Object[]>;
     if (searchValue) {
-      return data.map(items => items.filter(itm => itm.parentId === id && (itm.name.indexOf(searchValue) !== -1 || itm.subtext.indexOf(searchValue) !== -1)));
+      itemsOb = data.map(items => items.filter(itm =>
+        itm.parentId === id &&
+        (itm.name.indexOf(searchValue) !== -1 ||
+          itm.subtext.indexOf(searchValue) !== -1
+        )));
     } else {
-      return data.map(items => items.filter(itm => itm.parentId === id));
+      itemsOb = data.map(items => items.filter(itm => itm.parentId === id));
     }
+    let items: object[];
+    itemsOb.subscribe(
+      (result) => {
+        items = result;
+      }
+    );
+    let totalItemCount = items.length;
+
+    let maxSectionPosition = currentItemCount + itemIncrease;
+    if (maxSectionPosition > totalItemCount) {
+      maxSectionPosition = totalItemCount;
+    }
+    let subItemsitems = items.slice(currentItemCount, maxSectionPosition);
+
+    let returnItem = {
+      items: subItemsitems,
+      totalItems: totalItemCount
+    };
+    return Observable.of(returnItem);
   }
+
+
+  private getSortedData(data: any[], sort: Sort): any[] {
+    if (!sort || (!sort.active || sort.direction === '')) { return data; }
+    return data.sort((a, b) => {
+      let propertyA = this.sortingDataAccessor(a, sort.active);
+      let propertyB = this.sortingDataAccessor(b, sort.active)
+      const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
+      const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
+      return (valueA < valueB ? -1 : 1) * (sort.direction === 'asc' ? 1 : -1);
+    });
+  }
+
+  private sortingDataAccessor: ((data: any, sortHeaderId: string) => string | number) =
+    (data: any, sortHeaderId: string): string | number => {
+      const value = (data as { [key: string]: any })[sortHeaderId];
+      return value;
+    }
 
 }

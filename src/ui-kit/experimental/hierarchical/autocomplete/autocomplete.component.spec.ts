@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
 import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceResult } from '../hierarchical-interface';
 import { Observable } from 'rxjs';
+import { Sort } from "../../../components/data-table/sort.directive";
 import { By } from '@angular/platform-browser';
 import 'rxjs/add/observable/of';
 
@@ -364,7 +365,7 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
     return Observable.of(returnItem);
   }
 
-  getHiercarchicalById(id?: string) {
+  getHiercarchicalById(id: string, searchValue: string, sort: Sort, currentItemCount: number): Observable<SamHiercarchicalServiceResult> {
     return null;
   }
 
