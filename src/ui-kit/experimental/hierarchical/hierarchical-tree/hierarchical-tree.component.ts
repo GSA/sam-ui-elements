@@ -226,7 +226,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   private getResults(isScroll?: boolean) {
     if (isScroll) {
       if (this.totalItems > this.resultItems.length) {
-        this.service.getHiercarchicalById(this.selectedValue, this.filterText, this.sort, this.items.length).subscribe(
+        this.service.getHiercarchicalById(this.selectedValue, this.filterText, this.sort, this.resultItems.length).subscribe(
           (result: SamHiercarchicalServiceResult) => {
             if (result) {
               this.resultItems = this.resultItems.concat(result.items)
