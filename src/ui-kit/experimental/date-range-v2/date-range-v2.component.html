@@ -1,3 +1,13 @@
 <p>
   date-range-v2 works!
 </p>
+
+<sam-datepicker-v2 
+#model4="ngModel"
+[control]="model4.control"
+[placeholder]="'mm/dd/yyyy'"
+[label]="'Datepicker prototype'"
+[hint]="'Forked 3rd party picker'"
+[name]="'example4'"
+[(ngModel)]="example4"></sam-datepicker-v2>
+<p>Model value: {{ example4 | json }}</p>
