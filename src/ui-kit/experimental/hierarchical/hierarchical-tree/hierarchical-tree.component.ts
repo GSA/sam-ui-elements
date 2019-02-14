@@ -25,7 +25,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   /**
    * Hierarchy level changes event 
    */
-  public selecteHierarchyLevel = new BehaviorSubject<object>(null);
+  public selectHierarchyLevel = new BehaviorSubject<object>(null);
 
   /**
    * Hierarchy level Sort Level
@@ -104,7 +104,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
   public ngOnInit() {
     this.addInitialBreadcrumb();
-    this.selecteHierarchyLevel.subscribe(
+    this.selectHierarchyLevel.subscribe(
       value => this.selectItem(value)
     );
     this.selectBreadcrumb.subscribe(
