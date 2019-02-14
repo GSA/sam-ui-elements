@@ -85,6 +85,19 @@ export class HierarchicalTreeSelectedItemModel {
     getItems(): object[] {
         return this.items;
     }
+    /**
+     * updates an array of items to the list and will not add duplicate items
+     * keyfield is used to determine uniqueness of the item added
+     * @param items 
+     * @param keyField 
+     */
+    updateItems(items: object[], keyField: string) {
+        this.items =[];
+        console.log(items,'selected items')
+        for (let i = 0; i < items.length; i++) {
+            this.addItem(items[i], keyField);
+        }
+    }
 }
 
 export enum TreeMode {
