@@ -93,10 +93,7 @@ export class HierarchicalTreeSelectedItemModel {
      */
     updateItems(items: object[], keyField: string) {
         this.items =[];
-        console.log(items,'selected items')
-        for (let i = 0; i < items.length; i++) {
-            this.addItem(items[i], keyField);
-        }
+      this.addItems(items, keyField);
     }
 }
 
