@@ -91,9 +91,14 @@ export class HierarchicalTreeSelectedItemModel {
      * @param items 
      * @param keyField 
      */
-    updateItems(items: object[], keyField: string) {
-        this.items =[];
-      this.addItems(items, keyField);
+    updateItems(selectedItems: object[], keyField: string) {
+        if (this.items.length > 0) {
+           this.items =[];
+           this.addItems(selectedItems, keyField);
+        }
+        else {
+            this.addItems(selectedItems, keyField);
+        }
     }
 }
 
