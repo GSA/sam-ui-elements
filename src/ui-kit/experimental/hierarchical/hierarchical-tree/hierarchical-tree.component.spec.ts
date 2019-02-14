@@ -75,7 +75,6 @@ describe('SamHierarchicalTreeComponent', () => {
     component.gridResults.subscribe(
       value => {
         list = value
-        console.log()
       }
     );
     fixture.detectChanges();

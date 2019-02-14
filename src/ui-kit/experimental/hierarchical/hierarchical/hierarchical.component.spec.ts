@@ -69,6 +69,13 @@ describe('SamHierarchicalComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+
+  it('single mode', () => {
+    expect(component.isSingleMode()).toBe(false);
+    component.model.treeMode = TreeMode.SINGLE;
+    expect(component.isSingleMode()).toBeTruthy();
+  });
 });
 
 
