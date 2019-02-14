@@ -4,7 +4,7 @@ import { SamHierarchicalAutocompleteComponent } from './autocomplete.component';
 import { SamHierarchicalAutocompleteConfiguration } from '../models/SamHierarchicalAutocompleteConfiguration';
 import { FormsModule } from '@angular/forms';
 import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
-import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceResult } from '../hierarchical-interface';
+import { SamHiercarchicalServiceInterface,SamHiercarchicalServiceSearchItem, SamHiercarchicalServiceResult } from '../hierarchical-interface';
 import { Observable } from 'rxjs';
 import { Sort } from "../../../components/data-table/sort.directive";
 import { By } from '@angular/platform-browser';
@@ -365,7 +365,7 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
     return Observable.of(returnItem);
   }
 
-  getHiercarchicalById(id: string, searchValue: string, sort: Sort, currentItemCount: number): Observable<SamHiercarchicalServiceResult> {
+  getHiercarchicalById(item: SamHiercarchicalServiceSearchItem): Observable<SamHiercarchicalServiceResult> {
     return null;
   }
 

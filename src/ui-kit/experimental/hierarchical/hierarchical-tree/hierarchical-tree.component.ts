@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Observable, BehaviorSubject } from "rxjs";
-import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceResult } from "../hierarchical-interface";
+import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceSearchItem, SamHiercarchicalServiceResult } from "../hierarchical-interface";
 import { SamHierarchicalTreeConfiguration } from "../models/SamHierarchicalTreeConfiguration";
 import { Sort } from "../../../components/data-table/sort.directive";
 
@@ -226,7 +226,13 @@ export class SamHierarchicalTreeComponent implements OnInit {
   private getResults(isScroll?: boolean) {
     if (isScroll) {
       if (this.totalItems > this.resultItems.length) {
-        this.service.getHiercarchicalById(this.selectedValue, this.filterText, this.sort, this.resultItems.length).subscribe(
+        let item = {
+          id: this.selectedValue,
+          searchValue: this.filterText,
+          sort: this.sort,
+          currentItemCount: this.resultItems.length
+        }
+        this.service.getHiercarchicalById(item).subscribe(
           (result: SamHiercarchicalServiceResult) => {
             if (result) {
               this.resultItems = this.resultItems.concat(result.items)
@@ -237,7 +243,13 @@ export class SamHierarchicalTreeComponent implements OnInit {
         );
       }
     } else {
-      this.service.getHiercarchicalById(this.selectedValue, this.filterText, this.sort, 0).subscribe(
+      let item = {
+        id: this.selectedValue,
+        searchValue: this.filterText,
+        sort: this.sort,
+        currentItemCount: 0
+      }
+      this.service.getHiercarchicalById(item).subscribe(
         (result: SamHiercarchicalServiceResult) => {
           if (result) {
             this.resultItems = result.items;

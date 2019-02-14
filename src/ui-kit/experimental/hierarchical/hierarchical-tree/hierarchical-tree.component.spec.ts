@@ -13,7 +13,7 @@ import { SamDataTableModule, SamSortDirective } from '../../../components/data-t
 import { SamHierarchicalTreeConfiguration } from '../models/SamHierarchicalTreeConfiguration';
 import { ExpectedConditions } from 'protractor';
 import { Observable } from 'rxjs';
-import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceResult } from '../hierarchical-interface';
+import { SamHiercarchicalServiceInterface,SamHiercarchicalServiceSearchItem, SamHiercarchicalServiceResult } from '../hierarchical-interface';
 import 'rxjs/add/observable/of';
 import { Sort, SortDirection } from "../../../components/data-table/sort.directive";
 
@@ -168,19 +168,19 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
     return Observable.of(returnItem);
   }
 
-  getHiercarchicalById(id: string, searchValue: string, sort: Sort, currentItemCount: number): Observable<SamHiercarchicalServiceResult> {
+  getHiercarchicalById(item : SamHiercarchicalServiceSearchItem): Observable<SamHiercarchicalServiceResult> {
     let itemIncrease = 15;
-    let temp = this.getSortedData(this.loadedData, sort);
+    let temp = this.getSortedData(this.loadedData, item.sort);
     let data = Observable.of(temp);
     let itemsOb: Observable<Object[]>;
-    if (searchValue) {
+    if (item.searchValue) {
       itemsOb = data.map(items => items.filter(itm =>
-        itm.parentId === id &&
-        (itm.name.indexOf(searchValue) !== -1 ||
-          itm.subtext.indexOf(searchValue) !== -1
+        itm.parentId === item.id &&
+        (itm.name.indexOf(item.searchValue) !== -1 ||
+          itm.subtext.indexOf(item.searchValue) !== -1
         )));
     } else {
-      itemsOb = data.map(items => items.filter(itm => itm.parentId === id));
+      itemsOb = data.map(items => items.filter(itm => itm.parentId === item.id));
     }
     let items: object[];
     itemsOb.subscribe(
@@ -190,11 +190,11 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
     );
     let totalItemCount = items.length;
 
-    let maxSectionPosition = currentItemCount + itemIncrease;
+    let maxSectionPosition = item.currentItemCount + itemIncrease;
     if (maxSectionPosition > totalItemCount) {
       maxSectionPosition = totalItemCount;
     }
-    let subItemsitems = items.slice(currentItemCount, maxSectionPosition);
+    let subItemsitems = items.slice(item.currentItemCount, maxSectionPosition);
 
     let returnItem = {
       items: subItemsitems,

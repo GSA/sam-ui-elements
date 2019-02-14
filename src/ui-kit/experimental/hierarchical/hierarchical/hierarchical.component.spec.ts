@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SamHierarchicalComponent } from './hierarchical.component';
 import { TreeMode, HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selectedItem.model';
-import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceResult } from '../hierarchical-interface';
+import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceSearchItem, SamHiercarchicalServiceResult } from '../hierarchical-interface';
 import { FormsModule } from '@angular/forms';
 import { SamHierarchicalAutocompleteComponent } from '../autocomplete/autocomplete.component';
 import { SamHierarchicalSelectedResultComponent } from '../selected-result/selected-result.component';
@@ -119,12 +119,14 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
     return Observable.of(returnItem);
   }
 
-  getHiercarchicalById(id: string, searchValue: string, sort: Sort, currentItemCount: number): Observable<SamHiercarchicalServiceResult> {
+  getHiercarchicalById(item: SamHiercarchicalServiceSearchItem): Observable<SamHiercarchicalServiceResult> {
     let data = Observable.of(this.loadedData);
-    if (searchValue) {
-      return data.map(items => items.filter(itm => itm.parentId === id && (itm.name.indexOf(searchValue) !== -1 || itm.subtext.indexOf(searchValue) !== -1)));
+    if (item.searchValue) {
+      return data.map(items =>
+        items.filter(itm => itm.parentId === item.id && (itm.name.indexOf(item.searchValue) !== -1
+          || itm.subtext.indexOf(item.searchValue) !== -1)));
     } else {
-      return data.map(items => items.filter(itm => itm.parentId === id));
+      return data.map(items => items.filter(itm => itm.parentId === item.id));
     }
   }
 

@@ -14,11 +14,42 @@ export interface SamHiercarchicalServiceInterface {
      * 
      * @param id 
      */
-    getHiercarchicalById(id: string, searchValue: string, sort: Sort, currentItemCount: number): Observable<SamHiercarchicalServiceResult>;
+    getHiercarchicalById(item :SamHiercarchicalServiceSearchItem): Observable<SamHiercarchicalServiceResult>;
 
 }
 
 export interface SamHiercarchicalServiceResult {
+    /**
+     * 
+     */
     items: object[];
+    
+    /**
+     * 
+     */
     totalItems: number;
 }
+
+export class SamHiercarchicalServiceSearchItem {
+
+    /**
+     * 
+     */
+    id: string;
+
+    /**
+     * 
+     */
+    searchValue: string;
+
+    /**
+     * 
+     */
+    sort: Sort;
+
+    /**
+     * 
+     */
+    currentItemCount: number;
+}
+
