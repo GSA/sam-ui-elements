@@ -102,8 +102,37 @@ describe('The Sam hierarchical grid component', () => {
 
         });
 
+
+        it('Scroll raised', () => {
+            spyOn(component.scrolled, 'emit');
+            let item = {
+                target: {
+                    offsetHeight: 300,
+                    scrollTop: 400,
+                    scrollHeight: 500
+                }
+            }
+            component.onScroll(item);
+            fixture.detectChanges();
+            expect(component.scrolled.emit).toHaveBeenCalledWith(null);
+        });
+
+        it('Scroll not raised', () => {
+            spyOn(component.scrolled, 'emit');
+            let item = {
+                target: {
+                    offsetHeight: 300,
+                    scrollTop: 0,
+                    scrollHeight: 700
+                }
+            }
+            component.onScroll(item);
+            fixture.detectChanges();
+            expect(component.scrolled.emit).not.toHaveBeenCalled();
+        });
+
     });
-   
+
     describe('Isolation tests', () => {
         let component: SamHierarchicalTreeGridComponent;
         const cdr: ChangeDetectorRef = undefined;
@@ -121,17 +150,17 @@ describe('The Sam hierarchical grid component', () => {
             expect(component.columnHeaderText.length).toBe(0);
         });
         it('test', () => {
-                        component.dataChange.next(gridData);
+            component.dataChange.next(gridData);
 
             const dataSource = new HierarchicalDataSource(
                 component.dataChange
-                
+
             );
             dataSource.connect();
             expect(dataSource.renderedData.length).toBe(0);
 
         });
-     
+
 
     });
 });
