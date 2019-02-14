@@ -237,7 +237,6 @@ export class SamHierarchicalTreeComponent implements OnInit {
             if (result) {
               this.resultItems = this.resultItems.concat(result.items)
             }
-            console.log(this.resultItems.length);
             this.gridResults = Observable.of(this.resultItems);
           }
         );
