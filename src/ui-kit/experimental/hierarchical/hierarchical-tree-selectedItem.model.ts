@@ -92,7 +92,7 @@ export class HierarchicalTreeSelectedItemModel {
      * @param keyField 
      */
 
-    replaceItems(selectedItems: object[], keyField: string, secondaryField: string) {
+    replaceItems(selectedItems: object[], keyField: string) {
         //Clears Old List
         this.clearItems();
         //Adds new List
