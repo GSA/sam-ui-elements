@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DateRangeV2Component } from './date-range-v2.component';
+import { SamDateRangeV2Component } from './date-range-v2.component';
 
-describe('DateRangeV2Component', () => {
-  let component: DateRangeV2Component;
-  let fixture: ComponentFixture<DateRangeV2Component>;
+fdescribe('DateRangeV2Component', () => {
+  let component: SamDateRangeV2Component;
+  let fixture: ComponentFixture<SamDateRangeV2Component>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DateRangeV2Component ]
+      declarations: [ SamDateRangeV2Component ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DateRangeV2Component);
+    fixture = TestBed.createComponent(SamDateRangeV2Component);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
