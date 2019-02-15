@@ -1,4 +1,4 @@
-<ul [attr.aria-label]="configuration.labelText +' results'" class="usa-unstyled-list resultsList" aria-relevant="additions"
+<ul *ngIf="model"  [attr.aria-label]="configuration.labelText +' results'" class="usa-unstyled-list resultsList" aria-relevant="additions"
   role="listbox" aria-live="polite">
   <li role="option" *ngFor="let result of model.getItems(); let i = index">
     <div class="selected-item">
