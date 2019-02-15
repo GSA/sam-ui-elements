@@ -92,21 +92,13 @@ export class HierarchicalTreeSelectedItemModel {
      * @param keyField 
      */
 
-    updateItems(selectedItems: object[], keyField: string, secondaryField: string) {
-        if (this.items.length > 0) {
-            selectedItems.forEach(item => {
-                if (!this.contatinsItem(item[keyField], keyField)) {
-                    const modifiedLabel = item[secondaryField];
-                    const oldValue = this.items.find(o => o[secondaryField] === modifiedLabel);
-                    this.removeItem(oldValue, keyField);
-                    this.addItem(item, keyField);
-                }
-            })
-        }
-        else {
-            this.addItems(selectedItems, keyField);
-        }
+    replaceItems(selectedItems: object[], keyField: string, secondaryField: string) {
+        //Clears Old List
+        this.clearItems();
+        //Adds new List
+        this.addItems(selectedItems, keyField);
     }
+
 }
 
 export enum TreeMode {
