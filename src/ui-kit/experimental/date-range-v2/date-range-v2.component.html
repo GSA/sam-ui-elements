@@ -1,9 +1,24 @@
-<sam-datepicker-v2
-#model4="ngModel"
-[control]="model4.control"
-[placeholder]="'mm/dd/yyyy'"
-[label]="'Datepicker prototype'"
-[hint]="'Forked 3rd party picker'"
-[name]="'example4'"
-[(ngModel)]="example4"></sam-datepicker-v2>
-<p>Model value: {{ example4 | json }}</p>
+<div>
+    <sam-datepicker-v2 
+        #startDatePicker="ngModel" 
+        [control]="startDatePicker.control" 
+        [placeholder]="startDateConfig.placeholder"
+        [label]="startDateConfig.label" 
+        [hint]="startDateConfig.hint" 
+        [name]="startDateConfig.name" 
+        [ngModel]="startDateConfig.date"
+        (ngModelChange)="startDateChange($event)">
+    </sam-datepicker-v2>
+
+    <sam-datepicker-v2 
+        #endDatePicker="ngModel" 
+        [control]="endDatePicker.control" 
+        [placeholder]="endDateConfig.placeholder"
+        [label]="endDateConfig.label" 
+        [hint]="endDateConfig.hint" 
+        [name]="endDateConfig.name" 
+        [ngModel]="endDateConfig.date"
+        (ngModelChange)="endDateChange($event)">
+    </sam-datepicker-v2>
+
+</div>
