@@ -13,11 +13,5 @@ import { SamInputMaskModule } from '../input-mask';
     exports: [ DatepickerComponent, SamDateRangeV2Component ],
 })
 export class SamDateRangeV2Module { 
-  example1;
-  example2 = '12/12/2017';
-  example3;
-  example4;
-  picker;
-  resultPicker2;
-  date;
+
 }

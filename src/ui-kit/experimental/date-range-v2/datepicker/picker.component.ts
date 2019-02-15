@@ -5,13 +5,13 @@ import {
   FormControl, Validators, ControlValueAccessor,
   AbstractControl, NG_VALUE_ACCESSOR, ValidatorFn
 } from '@angular/forms';
-
+import * as moment from 'moment/moment';
 import { Calendar } from './calendar';
-import * as moment from 'moment';
+
 
 import { trigger, transition, animate, keyframes, style } from '@angular/animations';
-import { SamFormControl } from '../../../../ui-kit/form-controls/sam-form-control/sam-form-control';
-import { SamFormService } from '../../../../ui-kit/form-service';
+import { SamFormControl } from '../../../form-controls/sam-form-control/sam-form-control';
+import { SamFormService } from '../../../form-service';
 
 type DateFormatFunction = (date: Date) => string;
 
