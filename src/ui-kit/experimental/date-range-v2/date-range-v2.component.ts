@@ -16,7 +16,7 @@ export interface SelectedModel {
   templateUrl: './date-range-v2.component.html',
   styleUrls: ['./date-range-v2.component.scss']
 })
-export class SamDateRangeV2Component {
+export class SamDateRangeV2Component implements OnInit{
 
   public selectedModel: any = {};
 
@@ -24,6 +24,15 @@ export class SamDateRangeV2Component {
 
   @Input() endDateConfig: DateConfig;
 
+  ngOnInit(){
+    this.selectedModel.startDate = this.startDateConfig.date;
+    this.selectedModel.endDate = this.endDateConfig.date;
+    this.emit()
+  }
+
+  emit(){
+    this.selectedDates.emit(this.selectedModel);
+  }
   /**
   * Event emitted when row set is selected.
   */
@@ -31,11 +40,11 @@ export class SamDateRangeV2Component {
 
   startDateChange(newStartDate) {
     this.selectedModel.startDate = newStartDate;
-    this.selectedDates.emit(this.selectedModel);
+    this.emit()
   }
 
   endDateChange(newEndDate) {
     this.selectedModel.endDate = newEndDate;
-    this.selectedDates.emit(this.selectedModel);
+    this.emit()
   }
 }
