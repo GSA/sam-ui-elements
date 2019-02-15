@@ -3,7 +3,7 @@
 </div>
 
 <ng-template #gridTemplate>
-  <div class="h-select-col">
+   <div class="h-select-col" (scroll)="onScroll($event)">
     <sam-datatable #table samSort [dataSource]="hierarchicalDataSource">
       <ng-container cdkColumnDef="select">
         <th sam-header-cell *cdkHeaderCellDef sam-sort-header>Select</th>
