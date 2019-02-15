@@ -1,8 +1,10 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Observable, BehaviorSubject } from "rxjs";
+
 import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceSearchItem, SamHiercarchicalServiceResult } from "../hierarchical-interface";
 import { SamHierarchicalTreeConfiguration } from "../models/SamHierarchicalTreeConfiguration";
 import { Sort } from "../../../components/data-table/sort.directive";
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: "sam-hierarchical-tree",
@@ -232,7 +234,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
           sort: this.sort,
           currentItemCount: this.resultItems.length
         }
-        this.service.getHiercarchicalById(item).subscribe(
+        this.service.getHiercarchicalById(item).pipe(first()).subscribe(
           (result: SamHiercarchicalServiceResult) => {
             if (result) {
               this.resultItems = this.resultItems.concat(result.items)
@@ -248,7 +250,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
         sort: this.sort,
         currentItemCount: 0
       }
-      this.service.getHiercarchicalById(item).subscribe(
+      this.service.getHiercarchicalById(item).pipe(first()).subscribe(
         (result: SamHiercarchicalServiceResult) => {
           if (result) {
             this.resultItems = result.items;
