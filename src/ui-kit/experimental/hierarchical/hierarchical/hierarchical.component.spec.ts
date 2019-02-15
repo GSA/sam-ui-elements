@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SamHierarchicalComponent } from './hierarchical.component';
 import { TreeMode, HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selectedItem.model';
-import { SamHiercarchicalServiceInterface, SearchByTextResult } from '../hierarchical-interface';
+import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceSearchItem, SamHiercarchicalServiceResult } from '../hierarchical-interface';
 import { FormsModule } from '@angular/forms';
 import { SamHierarchicalAutocompleteComponent } from '../autocomplete/autocomplete.component';
 import { SamHierarchicalSelectedResultComponent } from '../selected-result/selected-result.component';
@@ -18,8 +18,8 @@ import { CdkTableModule } from '@angular/cdk';
 import { SamSelectModule } from '../../../form-controls';
 import { SamFormService } from '../../../form-service';
 import { By } from '@angular/platform-browser';
+import { Sort } from '../../../components/data-table/sort.directive';
 import 'rxjs/add/observable/of';
-//import {  SamHierarchicalTreeConfiguration  } from '../../../../../test-app/src/components/ui-kit/experimental/hierarchical/models/SamHierarchicalTreeConfiguration';
 
 describe('SamHierarchicalComponent', () => {
   let component: SamHierarchicalComponent;
@@ -69,6 +69,13 @@ describe('SamHierarchicalComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+
+  it('single mode', () => {
+    expect(component.isSingleMode()).toBe(false);
+    component.model.treeMode = TreeMode.SINGLE;
+    expect(component.isSingleMode()).toBeTruthy();
+  });
 });
 
 
@@ -86,7 +93,7 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
     this.loadedData = data;
   }
 
-  getDataByText(currentItems: number, searchValue?: string): Observable<SearchByTextResult> {
+  getDataByText(currentItems: number, searchValue?: string): Observable<SamHiercarchicalServiceResult> {
     let itemIncrease = 25;
     let data = Observable.of(SampleHierarchicalData);
     let itemsOb: Observable<Object[]>;
@@ -119,12 +126,14 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
     return Observable.of(returnItem);
   }
 
-  getHiercarchicalById(id?: string, searchValue?: string): Observable<object[]> {
+  getHiercarchicalById(item: SamHiercarchicalServiceSearchItem): Observable<SamHiercarchicalServiceResult> {
     let data = Observable.of(this.loadedData);
-    if (searchValue) {
-      return data.map(items => items.filter(itm => itm.parentId === id && (itm.name.indexOf(searchValue) !== -1 || itm.subtext.indexOf(searchValue) !== -1)));
+    if (item.searchValue) {
+      return data.map(items =>
+        items.filter(itm => itm.parentId === item.id && (itm.name.indexOf(item.searchValue) !== -1
+          || itm.subtext.indexOf(item.searchValue) !== -1)));
     } else {
-      return data.map(items => items.filter(itm => itm.parentId === id));
+      return data.map(items => items.filter(itm => itm.parentId === item.id));
     }
   }
 
