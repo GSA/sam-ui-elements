@@ -6,7 +6,7 @@
         [label]="startDateConfig.label" 
         [hint]="startDateConfig.hint" 
         [name]="startDateConfig.name" 
-        [ngModel]="startDateConfig.date"
+        [ngModel]="selectedModel.startDate"
         (ngModelChange)="startDateChange($event)">
     </sam-datepicker-v2>
 
@@ -17,7 +17,7 @@
         [label]="endDateConfig.label" 
         [hint]="endDateConfig.hint" 
         [name]="endDateConfig.name" 
-        [ngModel]="endDateConfig.date"
+        [ngModel]="selectedModel.endDate"
         (ngModelChange)="endDateChange($event)">
     </sam-datepicker-v2>
 
