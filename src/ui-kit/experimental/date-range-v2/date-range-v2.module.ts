@@ -6,12 +6,9 @@ import { DatepickerComponent } from './datepicker/picker.component';
 import { SamWrapperModule } from '../../../ui-kit/wrappers/wrappers.module';
 import { SamInputMaskModule } from '../input-mask';
 
-
 @NgModule({
   imports: [  CommonModule, FormsModule, ReactiveFormsModule,SamWrapperModule ,SamInputMaskModule],
     declarations: [ DatepickerComponent ,SamDateRangeV2Component],
     exports: [ DatepickerComponent, SamDateRangeV2Component ],
 })
-export class SamDateRangeV2Module { 
-
-}
+export class SamDateRangeV2Module { }

@@ -43,6 +43,9 @@ export interface DateRangeSettings {
 })
 export class SamDateRangeV2Component implements OnInit, ControlValueAccessor {
 
+ /**
+  * Date Range settings
+  */
   @Input() dateRangeConfig: DateRangeSettings;
 
   /**
@@ -68,7 +71,6 @@ export class SamDateRangeV2Component implements OnInit, ControlValueAccessor {
   */
   @Input() control: FormControl;
 
-
   @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
 
   private disabled: boolean;
@@ -83,7 +85,6 @@ export class SamDateRangeV2Component implements OnInit, ControlValueAccessor {
   }
   onChange: any = (c) => undefined;
   onTouched: any = () => undefined;
-
 
   ngOnInit() {
     if (this.control) {
