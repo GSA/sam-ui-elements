@@ -1,6 +1,6 @@
 import {
   Component,
-  OnInit, Input, Output, EventEmitter, forwardRef
+  OnInit, Input, Output, EventEmitter, forwardRef, ViewChild
 } from '@angular/core';
 
 import {
@@ -8,6 +8,7 @@ import {
  NG_VALUE_ACCESSOR,
  FormControl,
 } from '@angular/forms';
+import { LabelWrapper } from '../../../ui-kit/wrappers/label-wrapper';
 
 export interface DateConfig {
   name: string,
@@ -32,12 +33,12 @@ export interface SelectedModel {
 })
 export class SamDateRangeV2Component implements OnInit, ControlValueAccessor {
 
+ @Input() dateRangeConfig: any = {};
+
   /**
 * Deprecated, Sets the bound value of the component
 */
-@Input() model: any = {};
-
-  public selectedModel: any = {};
+  @Input() model: any = {};
 
   @Input() startDateConfig: DateConfig;
 
@@ -47,10 +48,9 @@ export class SamDateRangeV2Component implements OnInit, ControlValueAccessor {
   */
  @Input() control: FormControl;
  
-  /**
-  * Deprecated, Event emitted when the model value changes
-  */
- @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
+ @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
+ 
+ private disabled: boolean;
 
   get value() {
     return this.model;
@@ -62,32 +62,24 @@ export class SamDateRangeV2Component implements OnInit, ControlValueAccessor {
   }
   onChange: any = (c) => undefined;
   onTouched: any = () => undefined;
+  
 
   ngOnInit() {
-    this.selectedModel.startDate = this.model.startDate;
-    this.selectedModel.endDate = this.model.endDate;
+    if (this.control) {
+      this.control.valueChanges.subscribe(() => {
+        this.wrapper.formatErrors(this.control);
+      });
+      this.wrapper.formatErrors(this.control);
+    }
   }
 
-  emit() {
-    this.selectedModel = this.model;
-    this.modelChange.emit(this.model);
-  }
-
-  startDateChange(newStartDate) {
-    this.model.startDate = newStartDate;
-   this.emit()
-  }
-
-  endDateChange(newEndDate) {
-    this.model.endDate = newEndDate;
-    this.emit()
+  onDateChange() {
+    this.onChange(this.model);
   }
 
   setSelectedDate(val: any) {
     this.model.startDate = val.startDate;
     this.model.endDate = val.endDate;
-    this.selectedModel = this.model;
-   this.emit()
   }
   registerOnChange(fn) {
     this.onChange = fn;
@@ -101,7 +93,10 @@ export class SamDateRangeV2Component implements OnInit, ControlValueAccessor {
     if (!returnValue) {
       returnValue = {};
     }
-    
     this.setSelectedDate(returnValue);
+  }
+
+  setDisabledState(isDisabled: boolean) {
+    this.disabled = isDisabled;
   }
 }

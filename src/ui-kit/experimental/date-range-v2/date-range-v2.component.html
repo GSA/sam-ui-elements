@@ -1,4 +1,8 @@
-<div>
+<sam-label-wrapper
+    #wrapper
+    [label]='dateRangeConfig.label'
+    [hint]="dateRangeConfig.hint"
+    [name]="dateRangeConfig.name">
     <sam-datepicker-v2 
         #startDatePicker="ngModel" 
         [control]="startDatePicker.control" 
@@ -6,8 +10,10 @@
         [label]="startDateConfig.label" 
         [hint]="startDateConfig.hint" 
         [name]="startDateConfig.name" 
-        [ngModel]="selectedModel.startDate"
-        (ngModelChange)="startDateChange($event)">
+        [(ngModel)]="model.startDate"
+        (ngModelChange)="onDateChange()"
+        [disabled]="startDateConfig.disabled || disabled?'disabled':null "
+       >
     </sam-datepicker-v2>
 
     <sam-datepicker-v2 
@@ -17,8 +23,9 @@
         [label]="endDateConfig.label" 
         [hint]="endDateConfig.hint" 
         [name]="endDateConfig.name" 
-        [ngModel]="selectedModel.endDate"
-        (ngModelChange)="endDateChange($event)">
+        [(ngModel)]="model.endDate"
+        (ngModelChange)="onDateChange()"
+        [disabled]="endDateConfig.disabled || disabled?'disabled':null "
+        >
     </sam-datepicker-v2>
-
-</div>
+</sam-label-wrapper>
