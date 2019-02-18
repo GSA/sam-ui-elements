@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SamDateRangeV2Component } from './date-range-v2.component';
 
-fdescribe('DateRangeV2Component', () => {
+xdescribe('DateRangeV2Component', () => {
   let component: SamDateRangeV2Component;
   let fixture: ComponentFixture<SamDateRangeV2Component>;
 
