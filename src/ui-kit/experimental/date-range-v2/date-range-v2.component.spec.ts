@@ -51,7 +51,7 @@ const endDateConfig = {
   disabled: false
 };
 
-describe('The Sam Date Range component', () => {
+describe('The Sam Date Range V2 component', () => {
   describe('isolated tests', () => {
     let component: SamDateRangeV2Component;
 
@@ -65,7 +65,7 @@ describe('The Sam Date Range component', () => {
     });
 
   });
-  fdescribe('rendered tests', () => {
+  describe('rendered tests', () => {
     let component: SamDateRangeV2Component;
     let fixture: any;
     beforeEach(() => {
