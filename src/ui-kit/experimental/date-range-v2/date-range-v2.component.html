@@ -1,8 +1,10 @@
-<sam-label-wrapper
+ <sam-fieldset-wrapper 
     #wrapper
     [label]='dateRangeConfig.label'
     [hint]="dateRangeConfig.hint"
-    [name]="dateRangeConfig.name">
+    [errorMessage]="dateRangeConfig.errorMessage" 
+    [required]="dateRangeConfig.required"> 
+   
     <sam-datepicker-v2 
         #startDatePicker="ngModel" 
         [control]="startDatePicker.control" 
@@ -36,4 +38,4 @@
         [dateFormat]= "endDateConfig.dateFormat"
         [disabled]="endDateConfig.disabled || disabled?'disabled':null ">
     </sam-datepicker-v2>
-</sam-label-wrapper>
+</sam-fieldset-wrapper>>

@@ -8,7 +8,7 @@ import {
   NG_VALUE_ACCESSOR,
   FormControl,
 } from '@angular/forms';
-import { LabelWrapper } from '../../../ui-kit/wrappers/label-wrapper';
+import { FieldsetWrapper } from '../../../ui-kit/wrappers/fieldset-wrapper';
 
 export interface DateConfig {
   name: string,
@@ -27,8 +27,9 @@ export interface DateConfig {
 export interface DateRangeSettings {
   label: string,
   hint: string,
-  name: string,
-  cancelText: string
+  cancelText: string,
+  errorMessage: string,
+  required:string
 }
 
 @Component({
@@ -71,7 +72,8 @@ export class SamDateRangeV2Component implements OnInit, ControlValueAccessor {
   */
   @Input() control: FormControl;
 
-  @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
+  @ViewChild(FieldsetWrapper)
+  public wrapper: FieldsetWrapper;
 
   private disabled: boolean;
 
