@@ -4,9 +4,9 @@ import {
 } from '@angular/core';
 
 import {
- ControlValueAccessor,
- NG_VALUE_ACCESSOR,
- FormControl,
+  ControlValueAccessor,
+  NG_VALUE_ACCESSOR,
+  FormControl,
 } from '@angular/forms';
 import { LabelWrapper } from '../../../ui-kit/wrappers/label-wrapper';
 
@@ -15,12 +15,22 @@ export interface DateConfig {
   placeholder: string,
   label: string,
   hint: string,
-  date: any
+  date: Date,
+  rangeStart: Date,
+  rangeEnd: Date,
+  showCalendar: boolean,
+  weekStart: number,
+  dateFormat: string,
+  disabled: boolean
 }
-export interface SelectedModel {
-  startDate: any,
-  endDate: any
+
+export interface DateRangeSettings {
+  label: string,
+  hint: string,
+  name: string,
+  cancelText: string
 }
+
 @Component({
   selector: 'sam-date-range-v2',
   templateUrl: './date-range-v2.component.html',
@@ -33,24 +43,35 @@ export interface SelectedModel {
 })
 export class SamDateRangeV2Component implements OnInit, ControlValueAccessor {
 
- @Input() dateRangeConfig: any = {};
+  @Input() dateRangeConfig: DateRangeSettings;
 
   /**
-* Deprecated, Sets the bound value of the component
-*/
+  * Deprecated, Sets the bound value of the component
+  */
   @Input() model: any = {};
 
+  /**
+  * Start date configurations
+  */
   @Input() startDateConfig: DateConfig;
 
+  /**
+  * End date configurations
+  */
   @Input() endDateConfig: DateConfig;
- /**
+  /**
+   * Sets the angular FormControl
+   */
+
+  /**
   * Sets the angular FormControl
   */
- @Input() control: FormControl;
- 
- @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
- 
- private disabled: boolean;
+  @Input() control: FormControl;
+
+
+  @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
+
+  private disabled: boolean;
 
   get value() {
     return this.model;
@@ -62,7 +83,7 @@ export class SamDateRangeV2Component implements OnInit, ControlValueAccessor {
   }
   onChange: any = (c) => undefined;
   onTouched: any = () => undefined;
-  
+
 
   ngOnInit() {
     if (this.control) {
