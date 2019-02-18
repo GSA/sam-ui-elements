@@ -14,3 +14,50 @@
 @mixin sam-core-theme($theme) {
   @include sam-typography-theme($theme);
 }
+
+/**********************************************
+              <core-layout>
+***********************************************
+
+.core-layout{
+  display: grid;
+  grid-gap: 10px;
+
+  float: right;
+  width: 93%;
+}
+.core-layout .grid-row>*{
+  background-color: #F1F1F1;
+  border: solid white 2px;
+  text-align: center;
+}
+.primary-row>*{
+  height: 60px;
+}
+.secondary-row>*{
+  height: 60px;
+}
+.core>*{
+  height: 350px;
+}
+*/
+.usa-core-data-section{
+  display: block;
+  float: right;
+  width: 93%;
+}
+.core-nav{
+  height: 50px;
+}
+.core-nav>.grid-row>div>div{
+  margin: 0 !important;
+}
+.usa-core-data-section> .grid-row>*{
+  background-color: #F1F1F1;
+  border: solid white 2px;
+  text-align: center;
+}
+.sampledata{
+  display: inline-block;
+  height: 300px;
+}
