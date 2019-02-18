@@ -52,6 +52,7 @@ const endDateConfig = {
 };
 
 describe('The Sam Date Range V2 component', () => {
+
   describe('isolated tests', () => {
     let component: SamDateRangeV2Component;
 
