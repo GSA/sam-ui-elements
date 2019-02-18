@@ -15,6 +15,41 @@ const dateModel = {
 };
 
 
+const dateRangeSettings = {
+  label: 'Date Range',
+  hint: 'Date range for ad-hoc report',
+  cancelText: 'Close',
+  errorMessage: 'Invalid',
+  required: 'true'
+};
+
+const startDateConfig = {
+  name: 'Start Date',
+  placeholder: 'Start Date',
+  label: 'start',
+  hint: '',
+
+  rangeStart: new Date(),
+  rangeEnd: new Date(),
+  showCalendar: true,
+  weekStart: 0,
+  dateFormat: 'M/DD/YYYY',
+  disabled: false
+};
+
+const endDateConfig = {
+  name: 'End Date',
+  placeholder: 'End Date',
+  label: 'end',
+  hint: '',
+
+  rangeStart: new Date(),
+  rangeEnd: new Date(),
+  showCalendar: true,
+  weekStart: 0,
+  dateFormat: 'M/DD/YYYY',
+  disabled: false
+};
 
 describe('The Sam Date Range component', () => {
   describe('isolated tests', () => {
@@ -28,41 +63,41 @@ describe('The Sam Date Range component', () => {
       component.ngOnInit();
       expect(component.model.startDate).toBe(undefined);
     });
-  
+
   });
   fdescribe('rendered tests', () => {
     let component: SamDateRangeV2Component;
     let fixture: any;
-    // provide our implementations or mocks to the dependency injector
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [FormsModule, SamWrapperModule, SamInputMaskModule, CommonModule, ReactiveFormsModule],
         declarations: [
           SamDateRangeV2Component,
           DatepickerComponent,
-          // SamTimeComponent,
-          // SamDateTimeComponent
         ],
         providers: [SamFormService]
       });
-
+      component = new SamDateRangeV2Component();
       fixture = TestBed.createComponent(SamDateRangeV2Component);
       component = fixture.componentInstance;
-      component.startDateConfig.label = 'test';
-      component.writeValue({startDate: '12/21/01', endDate: '12/21/2021'});
-      component.onDateChange();
       fixture.detectChanges();
+      component.startDateConfig = startDateConfig;
+      component.endDateConfig = endDateConfig;
+      component.model = dateModel;
+      component.dateRangeConfig = dateRangeSettings;
+      component.writeValue({ startDate: '12/21/01', endDate: '12/21/2021' });
+      component.onDateChange();
     });
-  
-   it('should match specified date', function () {
-      expect(component.model.startDate.month).toBe(12);
+
+    it('should match specified date', function () {
+      expect(component.model.startDate).toBe('12/21/01');
       // expect(component.startModel.day).toBe(29);
       // expect(component.startModel.year).toBe(2016);
       // expect(component.endModel.month).toBe(4);
       // expect(component.endModel.day).toBe(1);
       // expect(component.endModel.year).toBe(2017);
     });
-  
+
   });
 });
 

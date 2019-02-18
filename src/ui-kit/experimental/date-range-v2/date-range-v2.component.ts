@@ -10,12 +10,16 @@ import {
 } from '@angular/forms';
 import { FieldsetWrapper } from '../../../ui-kit/wrappers/fieldset-wrapper';
 
+
+export interface DateModel {
+  startDate: string,
+  endDate: string
+};
 export interface DateConfig {
   name: string,
   placeholder: string,
   label: string,
   hint: string,
-  date: Date,
   rangeStart: Date,
   rangeEnd: Date,
   showCalendar: boolean,
@@ -52,7 +56,10 @@ export class SamDateRangeV2Component implements OnInit, ControlValueAccessor {
   /**
   * Deprecated, Sets the bound value of the component
   */
-  @Input() model: any = {};
+  @Input() model: DateModel = {
+    startDate: '',
+    endDate: ''
+  };
 
   /**
   * Start date configurations
