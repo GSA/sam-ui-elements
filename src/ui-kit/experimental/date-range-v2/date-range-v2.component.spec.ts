@@ -62,7 +62,7 @@ describe('The Sam Date Range V2 component', () => {
 
     it('should get a moment-based date', () => {
       component.ngOnInit();
-      expect(component.model.startDate).toBe(undefined);
+      expect(component.model.startDate).toBe('');
     });
 
   });
@@ -92,11 +92,7 @@ describe('The Sam Date Range V2 component', () => {
 
     it('should match specified date', function () {
       expect(component.model.startDate).toBe('12/21/01');
-      // expect(component.startModel.day).toBe(29);
-      // expect(component.startModel.year).toBe(2016);
-      // expect(component.endModel.month).toBe(4);
-      // expect(component.endModel.day).toBe(1);
-      // expect(component.endModel.year).toBe(2017);
+       expect(component.model.endDate).toBe('12/21/2021');
     });
 
   });
