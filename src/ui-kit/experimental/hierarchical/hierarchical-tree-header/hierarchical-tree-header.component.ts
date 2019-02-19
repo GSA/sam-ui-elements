@@ -60,10 +60,13 @@ export class SamHierarchicalTreeHeaderComponent {
       .debounceTime(this.debounceTime)
       .distinctUntilChanged()
       .subscribe(() => {
-        this.filterTextChange.emit(this.filter.nativeElement.value);
+        let value = this.filter.nativeElement.value;
+        if (value.length >= this.configuration.minimumCharacterCountSearch) {
+          this.filterTextChange.emit(value);
+        }
       });
   }
-  
+
   /**
    * emits the breadcrumb selected for a given item
    * @param ev 
