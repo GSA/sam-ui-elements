@@ -1,0 +1,41 @@
+ <sam-fieldset-wrapper 
+    #wrapper
+    [label]='dateRangeConfig?.label'
+    [hint]="dateRangeConfig?.hint"
+    [errorMessage]="dateRangeConfig?.errorMessage" 
+    [required]="dateRangeConfig?.required"> 
+   
+    <sam-datepicker-v2 
+        #startDatePicker="ngModel" 
+        [control]="startDatePicker.control" 
+        [placeholder]="startDateConfig?.placeholder"
+        [label]="startDateConfig?.label" 
+        [hint]="startDateConfig?.hint" 
+        [name]="startDateConfig?.name" 
+        [(ngModel)]="model.startDate"
+        (ngModelChange)="onDateChange()"
+        [showCalendar] = "startDateConfig?.showCalendar"
+        [rangeStart] = "startDateConfig?.rangeStart"
+        [rangeEnd] = "startDateConfig?.rangeEnd"
+        [weekStart] = "startDateConfig?.weekStart?startDateConfig.weekStart : 0"
+        [dateFormat]= "startDateConfig?.dateFormat"
+        [disabled]="startDateConfig?.disabled || disabled?'disabled':null ">
+    </sam-datepicker-v2>
+
+    <sam-datepicker-v2 
+        #endDatePicker="ngModel" 
+        [control]="endDatePicker.control" 
+        [placeholder]="endDateConfig?.placeholder"
+        [label]="endDateConfig?.label" 
+        [hint]="endDateConfig?.hint" 
+        [name]="endDateConfig?.name" 
+        [(ngModel)]="model.endDate"
+        (ngModelChange)="onDateChange()"
+        [showCalendar] = "endDateConfig?.showCalendar"
+        [rangeStart] = "endDateConfig?.rangeStart"
+        [rangeEnd] = "endDateConfig?.rangeEnd"
+        [weekStart] = "endDateConfig?.weekStart?endDateConfig.weekStart : 0"
+        [dateFormat]= "endDateConfig?.dateFormat"
+        [disabled]="endDateConfig?.disabled || disabled?'disabled':null ">
+    </sam-datepicker-v2>
+</sam-fieldset-wrapper>
