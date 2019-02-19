@@ -24,7 +24,8 @@ const config: SamHierarchicalTreeConfiguration = {
   childCountField: "childCount",
   filterPlaceholderText: "",
   topLevelBreadcrumbText: "All Departments",
-  primaryTextField: "name"
+  primaryTextField: "name",
+  minimumCharacterCountSearch: 0
 };
 
 
