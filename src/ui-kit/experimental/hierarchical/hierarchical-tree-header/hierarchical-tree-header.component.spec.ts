@@ -13,7 +13,7 @@ const options = [{ "name": "Level 2", "id": "2", "value": "2", "label": "Level 2
 { "name": "Level 1", "id": "1", "value": "1", "label": "Level 1" },
 { "name": "TOP", "id": null, "value": null, "label": "TOP" }];
 
-fdescribe('SamHierarchicalTreeHeaderComponent', () => {
+describe('SamHierarchicalTreeHeaderComponent', () => {
   let component: SamHierarchicalTreeHeaderComponent;
   let fixture: ComponentFixture<SamHierarchicalTreeHeaderComponent>;
   let de: DebugElement;
@@ -199,7 +199,7 @@ fdescribe('SamHierarchicalTreeHeaderComponent', () => {
     spyOn(component.filterTextChange, 'emit');
     component.onKeyup(event);
     fixture.detectChanges();
-    expect(component.filterTextChange.emit).not.toHaveBeenCalled();
+    expect(component.filterTextChange.emit).not.toHaveBeenCalled(s);
   });
 
 });
