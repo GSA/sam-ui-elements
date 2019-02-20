@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef }
 import { OptionsType } from '../../../../ui-kit/types';
 import { SamHierarchicalTreeHeaderConfiguration } from '../models/SamHierarchicalTreeHeaderConfiguration';
 import { fromEvent } from 'rxjs/observable/fromEvent';
+import { KeyHelper, KEYS } from '../../../utilities/key-helper/key-helper';
 
 @Component({
   selector: 'sam-hierarchical-tree-header',
@@ -14,11 +15,6 @@ export class SamHierarchicalTreeHeaderComponent {
   * Options for the Dropdown
   */
   @Input() public options: OptionsType[];
-
-  /**
-  * Whether Search should happned on click or keyup
-  */
-  @Input() private changeType: string = 'keyup';
 
   /**
    * configuration for the control
@@ -46,24 +42,36 @@ export class SamHierarchicalTreeHeaderComponent {
   @Input() public selectModel: string;
 
   /**
-   * Time to wait for more input to be made
-   */
-  private debounceTime = 150;
-
-  /**
    * Filter input reference
    */
   @ViewChild('filter') filter: ElementRef;
 
-  ngOnInit() {
-    fromEvent(this.filter.nativeElement, this.changeType)
-      .debounceTime(this.debounceTime)
-      .distinctUntilChanged()
-      .subscribe(() => {
-        this.filterTextChange.emit(this.filter.nativeElement.value);
-      });
+
+  /**
+   * 
+   * @param event 
+   */
+  onKeyup(event): void {
+    if (KeyHelper.is(KEYS.TAB, event)) {
+      return;
+    }
+    else if (KeyHelper.is(KEYS.BACKSPACE, event) || KeyHelper.is(KEYS.DELETE, event)) {
+      const searchString = event.target.value || '';
+      if (searchString.length >= this.configuration.minimumCharacterCountSearch) {
+        this.filterTextChange.emit(searchString);
+      } else {
+        this.filterTextChange.emit('');
+      }
+    }
+    else {
+      const searchString = event.target.value || '';
+      if (searchString.length >= this.configuration.minimumCharacterCountSearch) {
+        this.filterTextChange.emit(searchString);
+      }
+    }
+
   }
-  
+
   /**
    * emits the breadcrumb selected for a given item
    * @param ev 

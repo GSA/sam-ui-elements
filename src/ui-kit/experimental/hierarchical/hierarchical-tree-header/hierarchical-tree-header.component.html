@@ -22,5 +22,5 @@
   </sam-select>
 
   <!-- Search Control -->
-  <input #filter aria-label="search"  [attr.placeholder]="configuration.filterPlaceholderText" autocomplete="off" [(ngModel)]="filterText">
+  <input  (keyup)="onKeyup($event)"  #filter aria-label="search"  [attr.placeholder]="configuration.filterPlaceholderText" autocomplete="off" [(ngModel)]="filterText">
 </div>
