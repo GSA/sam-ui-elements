@@ -162,6 +162,9 @@ export class SamDollarComponent extends SamFormControl {
   }
 
   public strToDollar(value) {
+    if(!value){
+      return "";
+    }
     let dollarVal = value.trim();
     if (dollarVal !== '') {
         dollarVal = this.roundForCurrency(dollarVal);
