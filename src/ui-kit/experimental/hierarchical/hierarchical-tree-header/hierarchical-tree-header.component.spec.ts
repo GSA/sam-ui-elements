@@ -199,7 +199,7 @@ describe('SamHierarchicalTreeHeaderComponent', () => {
     spyOn(component.filterTextChange, 'emit');
     component.onKeyup(event);
     fixture.detectChanges();
-    expect(component.filterTextChange.emit).not.toHaveBeenCalled(s);
+    expect(component.filterTextChange.emit).not.toHaveBeenCalled();
   });
 
 });
