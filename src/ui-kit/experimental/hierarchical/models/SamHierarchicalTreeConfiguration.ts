@@ -5,6 +5,11 @@ import { SamHierarchicalTreeGridColumn } from './SamHierarchicalTreeGridColumn';
 export class SamHierarchicalTreeConfiguration implements SamHierarchicalTreeGridConfiguration, SamHierarchicalTreeHeaderConfiguration {
 
     /**
+     * Mininumn Characters for search
+     */
+    public minimumCharacterCountSearch: number;
+
+    /**
      *  This is the primary field used to identify each object in the results
      */
     public primaryKeyField: string;
