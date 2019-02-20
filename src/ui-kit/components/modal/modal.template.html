@@ -1,3 +1,4 @@
+<div *ngIf="show" class="modal-backdrop"></div>
 <div aria-live="assertive" #modalRoot *ngIf="show" [attr.id]="id" tabindex="-1" role="dialog" class="modal-dialog" (keydown.esc)="closeOnEscape ? closeModal() : 0" (click)="closeOnOutsideClick ? closeModal() : 0">
 	<div #modalContent class="modal-content" (click)="preventClosing($event)">
 		<div *ngIf="this.type !== 'primary'" class="usa-alert {{this.types[type].class}}">

@@ -99,8 +99,11 @@ export class SamCheckboxComponent implements ControlValueAccessor {
    * value is before another value
    */
   private _ordering: any = {};
+
   onChange: any = (c) => undefined;
+
   onTouched: any = () => undefined;
+  
   get value() {
     return this.model;
   }

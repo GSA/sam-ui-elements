@@ -70,7 +70,7 @@
 
 .sam-accordion-panel {
   margin: 0;
-  padding: 10px 15px;
+  padding: 20px;
   position: absolute;
   top: 0;
   left: 80px;
@@ -79,6 +79,13 @@
   overflow-y: auto;
   background-color: #f1f1f1;
   border-right: 1px solid #ccd6df;
+}
+
+.sam-accordion-panel .close{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
 }
 
 /* width */

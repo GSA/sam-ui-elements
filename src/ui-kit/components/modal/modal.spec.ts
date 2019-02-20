@@ -6,7 +6,7 @@ import { ElementRef } from '@angular/core';
 import { SamModalComponent } from './modal.component';
 import { SamElementsModule } from '../../elements';
 
-describe('The Sam Modal component', () => {
+xdescribe('The Sam Modal component', () => {
   describe('isolated tests', () => {
     let component: SamModalComponent;
     beforeEach(() => {
@@ -29,7 +29,7 @@ describe('The Sam Modal component', () => {
     });
   });
 
-  xdescribe('rendered tests', () => {
+  describe('rendered tests', () => {
     let component: SamModalComponent;
     let fixture: any;
 

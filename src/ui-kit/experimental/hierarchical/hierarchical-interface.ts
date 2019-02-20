@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-
+import { Sort } from '../../components/data-table/sort.directive';
 
 export interface SamHiercarchicalServiceInterface {
 
@@ -7,18 +7,49 @@ export interface SamHiercarchicalServiceInterface {
      * 
      * @param searchValue 
      */
-    getDataByText(currentItems: number, searchValue?: string): Observable<SearchByTextResult>;
+    getDataByText(currentItems: number, searchValue?: string): Observable<SamHiercarchicalServiceResult>;
 
 
     /**
      * 
      * @param id 
      */
-    getHiercarchicalById(id?: string, searchValue?: string): Observable<object[]>;
+    getHiercarchicalById(item :SamHiercarchicalServiceSearchItem): Observable<SamHiercarchicalServiceResult>;
 
 }
 
-export interface SearchByTextResult {
+export interface SamHiercarchicalServiceResult {
+    /**
+     * 
+     */
     items: object[];
+    
+    /**
+     * 
+     */
     totalItems: number;
 }
+
+export class SamHiercarchicalServiceSearchItem {
+
+    /**
+     * 
+     */
+    id: string;
+
+    /**
+     * 
+     */
+    searchValue: string;
+
+    /**
+     * 
+     */
+    sort: Sort;
+
+    /**
+     * 
+     */
+    currentItemCount: number;
+}
+
