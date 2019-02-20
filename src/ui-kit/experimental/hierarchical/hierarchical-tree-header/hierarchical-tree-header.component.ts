@@ -57,8 +57,10 @@ export class SamHierarchicalTreeHeaderComponent {
     }
     else if (KeyHelper.is(KEYS.BACKSPACE, event) || KeyHelper.is(KEYS.DELETE, event)) {
       const searchString = event.target.value || '';
-      if (searchString.length >= this.configuration.minimumCharacterCountSearch || searchString.length === 0) {
+      if (searchString.length >= this.configuration.minimumCharacterCountSearch) {
         this.filterTextChange.emit(searchString);
+      } else {
+        this.filterTextChange.emit('');
       }
     }
     else {

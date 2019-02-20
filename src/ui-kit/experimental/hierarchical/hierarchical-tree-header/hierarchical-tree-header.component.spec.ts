@@ -134,7 +134,7 @@ describe('SamHierarchicalTreeHeaderComponent', () => {
     spyOn(component.filterTextChange, 'emit');
     component.onKeyup(event);
     fixture.detectChanges();
-    expect(component.filterTextChange.emit).not.toHaveBeenCalled();
+    expect(component.filterTextChange.emit).toHaveBeenCalledWith('');
 
   });
 
@@ -147,7 +147,7 @@ describe('SamHierarchicalTreeHeaderComponent', () => {
     spyOn(component.filterTextChange, 'emit');
     component.onKeyup(event);
     fixture.detectChanges();
-    expect(component.filterTextChange.emit).not.toHaveBeenCalled();
+    expect(component.filterTextChange.emit).toHaveBeenCalledWith('');
   });
 
 
