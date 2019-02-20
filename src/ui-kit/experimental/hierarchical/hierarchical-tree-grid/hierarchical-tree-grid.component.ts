@@ -39,8 +39,15 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   */
   @Output() selectResults = new EventEmitter<object[]>();
 
-
+  /**
+   * 
+   */
   @Output() public sorted = new EventEmitter<object>();
+
+  /**
+   * 
+   */
+  @Output() public scrolled = new EventEmitter<object>();
 
   /**
    * Columns to be displayed
@@ -102,8 +109,6 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
 
   ngAfterViewInit() {
     this.hierarchicalDataSource = new HierarchicalDataSource(this.dataChange);
-
-
     this.sortDirective.samSortChange.subscribe(
       value => {
         this.sorted.emit(value);
@@ -129,6 +134,16 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
       }
     }
     this.selectResults.emit(this.selectedList);
+  }
+
+
+  onScroll(event) {
+    let scrollAreaHeight = event.target.offsetHeight;
+    let scrollTopPos = event.target.scrollTop;
+    let scrollAreaMaxHeight = event.target.scrollHeight;
+    if ((scrollTopPos + scrollAreaHeight * 2) >= scrollAreaMaxHeight) {
+      this.scrolled.emit(null);
+    }
   }
 
   /**

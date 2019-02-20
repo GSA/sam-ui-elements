@@ -7,18 +7,49 @@ export interface SamHiercarchicalServiceInterface {
      * 
      * @param searchValue 
      */
-    getDataByText(currentItems: number, searchValue?: string): Observable<SearchByTextResult>;
+    getDataByText(currentItems: number, searchValue?: string): Observable<SamHiercarchicalServiceResult>;
 
 
     /**
      * 
      * @param id 
      */
-    getHiercarchicalById(id: string, searchValue: string, sort: Sort): Observable<object[]>;
+    getHiercarchicalById(item :SamHiercarchicalServiceSearchItem): Observable<SamHiercarchicalServiceResult>;
 
 }
 
-export interface SearchByTextResult {
+export interface SamHiercarchicalServiceResult {
+    /**
+     * 
+     */
     items: object[];
+    
+    /**
+     * 
+     */
     totalItems: number;
 }
+
+export class SamHiercarchicalServiceSearchItem {
+
+    /**
+     * 
+     */
+    id: string;
+
+    /**
+     * 
+     */
+    searchValue: string;
+
+    /**
+     * 
+     */
+    sort: Sort;
+
+    /**
+     * 
+     */
+    currentItemCount: number;
+}
+
