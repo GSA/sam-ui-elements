@@ -143,7 +143,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
       if (this.model.getItems().length > 0) {
         if (this.inputValue.length === 0) {
           this.model.clearItems();
-          this.propogateChange(this.model.getItems());
+          this.propogateChange(this.model);
         } else {
           this.inputValue = this.model.getItems()[0][this.configuration.primaryTextField];
         }
@@ -199,7 +199,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
    */
   public selectItem(item: object): void {
     this.model.addItem(item, this.configuration.primaryKeyField);
-    this.propogateChange(this.model.getItems());
+    this.propogateChange(this.model);
     let message = item[this.configuration.primaryTextField];
     this.inputValue = message;
     if (this.configuration.secondaryTextField && item[this.configuration.secondaryTextField]) {

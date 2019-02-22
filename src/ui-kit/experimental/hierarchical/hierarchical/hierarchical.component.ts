@@ -95,9 +95,11 @@ export class SamHierarchicalComponent implements ControlValueAccessor {
     this.modal.closeModal();
     if (this.hierarchicaltree.results.length > 0) {
       if (this.isSingleMode()) {
-        this.autocomplete.selectItem(this.hierarchicaltree.results[0])
+        this.autocomplete.selectItem(this.hierarchicaltree.results[0]);
+        this.propogateChange(this.model);
       } else {
         this.model.addItems(<object[]>this.hierarchicaltree.results, this.configuration.primaryKeyField);
+        this.propogateChange(this.model);
       }
     }
   }

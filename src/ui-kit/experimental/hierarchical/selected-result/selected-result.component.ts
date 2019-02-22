@@ -24,7 +24,6 @@ export class SamHierarchicalSelectedResultComponent implements ControlValueAcces
   /**
    * The data model that has the selected item
    */
-  @Input()
   public model: HierarchicalTreeSelectedItemModel;
 
   /**
@@ -52,7 +51,7 @@ export class SamHierarchicalSelectedResultComponent implements ControlValueAcces
    */
   removeItem(item: object) {
     this.model.removeItem(item, this.configuration.primaryKeyField);
-    this.propogateChange(this.model.getItems());
+    this.propogateChange(this.model);
     this.onTouchedCallback();
   }
 
