@@ -7,7 +7,7 @@
       <span>{{crumb.breadcrumb}}</span>
     </ng-container>
     <ng-container *ngIf="crumb.urlmock">
-      <a tabindex="0" class="crumb-cursor-pointer" (click)="crumbHandler(crumb.breadcrumb)" (keyup.enter)="crumbHandler(crumb.breadcrumb)">{{crumb.breadcrumb}}</a>
+      <a class="crumb-cursor-pointer" (click)="crumbHandler(crumb.breadcrumb)">{{crumb.breadcrumb}}</a>
     </ng-container>
   </li>
 </ul>
