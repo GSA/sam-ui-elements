@@ -1,14 +1,26 @@
-import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, TemplateRef, ViewChild, forwardRef } from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
 import { SamHierarchicalConfiguration } from '../models/SamHierarchicalConfiguration';
+const Hierarchical_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => SamHierarchicalComponent),
+  multi: true
+};
 
 @Component({
   selector: 'sam-hierarchical',
   templateUrl: './hierarchical.component.html',
-  styleUrls: ['./hierarchical.component.scss']
+  styleUrls: ['./hierarchical.component.scss'],
+  providers: [Hierarchical_VALUE_ACCESSOR]
 })
-export class SamHierarchicalComponent {
+export class SamHierarchicalComponent implements ControlValueAccessor {
+
+  /**
+   * 
+   */
+  @ViewChild('advancedLookup') advancedLookup;
 
   /**
   * modal component 
@@ -26,6 +38,18 @@ export class SamHierarchicalComponent {
   @ViewChild('hierarchicaltree') hierarchicaltree;
 
   /**
+   * Stored Event for ControlValueAccessor
+   */
+  private onTouchedCallback: () => void = () => null;
+
+  /**
+   * Stored Event for ControlValueAccessor
+   */
+  public propogateChange: (_: any) => void = (_: any) => null;
+
+  public disabled: boolean;
+
+  /**
    * Configuration for the control 
    */
   @Input()
@@ -40,7 +64,6 @@ export class SamHierarchicalComponent {
   /**
   * The data model that has the selected item
   */
-  @Input()
   public model: HierarchicalTreeSelectedItemModel;
 
   /**
@@ -58,9 +81,12 @@ export class SamHierarchicalComponent {
   * Open modal click
   */
   onModalClick() {
-    this.modal.openModal();
-    this.hierarchicaltree.selectItem(null);
-    this.hierarchicaltree.breadcrumbSelected(null);
+    if (!this.disabled) {
+      this.onTouchedCallback();
+      this.modal.openModal();
+      this.hierarchicaltree.selectItem(null);
+      this.hierarchicaltree.breadcrumbSelected(null);
+    }
   }
 
   /**
@@ -70,9 +96,10 @@ export class SamHierarchicalComponent {
     this.modal.closeModal();
     if (this.hierarchicaltree.results.length > 0) {
       if (this.isSingleMode()) {
-        this.autocomplete.selectItem(this.hierarchicaltree.results[0])
+        this.autocomplete.selectItem(this.hierarchicaltree.results[0]);
       } else {
         this.model.addItems(<object[]>this.hierarchicaltree.results, this.configuration.primaryKeyField);
+        this.propogateChange(this.model);
       }
     }
   }
@@ -82,6 +109,30 @@ export class SamHierarchicalComponent {
   * Determines if it is single select mode
   */
   isSingleMode(): boolean {
-    return this.model.treeMode === TreeMode.SINGLE;
+    if (this.model) {
+      return this.model.treeMode === TreeMode.SINGLE;
+    }
+    else {
+      return false;
+    }
+  }
+
+
+  writeValue(obj: any): void {
+    if (obj instanceof HierarchicalTreeSelectedItemModel) {
+      this.model = obj as HierarchicalTreeSelectedItemModel;
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this.propogateChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouchedCallback = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
   }
 }
