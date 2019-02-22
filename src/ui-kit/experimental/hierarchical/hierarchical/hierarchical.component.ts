@@ -1,9 +1,5 @@
 import { Component, Input, TemplateRef, ViewChild, forwardRef } from '@angular/core';
-import {
-  NG_VALUE_ACCESSOR,
-  ControlValueAccessor,
-  FormControl
-} from '@angular/forms';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
 import { SamHierarchicalConfiguration } from '../models/SamHierarchicalConfiguration';
@@ -41,11 +37,18 @@ export class SamHierarchicalComponent implements ControlValueAccessor {
   */
   @ViewChild('hierarchicaltree') hierarchicaltree;
 
+  /**
+   * Stored Event for ControlValueAccessor
+   */
+  private onTouchedCallback: () => void = () => null;
 
-  public onTouchedCallback: () => void = () => null;
-  public propogateChange: (_: any) => void = (_: any) => null;
+  /**
+   * Stored Event for ControlValueAccessor
+   */
+  private propogateChange: (_: any) => void = (_: any) => null;
 
   public disabled: boolean;
+
   /**
    * Configuration for the control 
    */
@@ -129,8 +132,5 @@ export class SamHierarchicalComponent implements ControlValueAccessor {
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
-    console.log(isDisabled);
-    //this.advancedLookup.nativeElement.disabled = isDisabled;
-    //    this.input.nativeElement.disabled = isDisabled;
   }
 }
