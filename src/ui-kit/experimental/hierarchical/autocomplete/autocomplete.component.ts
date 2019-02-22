@@ -41,7 +41,6 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
   /**
    * The data model that has the selected item
    */
-  @Input()
   public model: HierarchicalTreeSelectedItemModel;
 
   /**
