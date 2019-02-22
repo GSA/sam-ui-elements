@@ -82,10 +82,12 @@ export class SamHierarchicalComponent implements ControlValueAccessor {
   * Open modal click
   */
   onModalClick() {
-    this.onTouchedCallback();
-    this.modal.openModal();
-    this.hierarchicaltree.selectItem(null);
-    this.hierarchicaltree.breadcrumbSelected(null);
+    if (!this.disabled) {
+      this.onTouchedCallback();
+      this.modal.openModal();
+      this.hierarchicaltree.selectItem(null);
+      this.hierarchicaltree.breadcrumbSelected(null);
+    }
   }
 
   /**
@@ -95,7 +97,7 @@ export class SamHierarchicalComponent implements ControlValueAccessor {
     this.modal.closeModal();
     if (this.hierarchicaltree.results.length > 0) {
       if (this.isSingleMode()) {
-        this.autocomplete.selectItem(this.hierarchicaltree.results[0]);  
+        this.autocomplete.selectItem(this.hierarchicaltree.results[0]);
       } else {
         this.model.addItems(<object[]>this.hierarchicaltree.results, this.configuration.primaryKeyField);
         this.propogateChange(this.model);
