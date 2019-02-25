@@ -11,7 +11,8 @@
           <div class="datatable-checkbox">
             <input [attr.type]="selectionMode" [attr.id]="row[configuration.primaryKeyField]+'id'"
               (change)="onChecked($event,row)" name="select">
-            <label [attr.for]="row[configuration.primaryKeyField]+'id'">{{'Select '+ row[configuration.primaryTextField]}}
+            <label
+              [attr.for]="row[configuration.primaryKeyField]+'id'">{{'Select '+ row[configuration.primaryTextField]}}
             </label>
             <button (click)="onRowChange($event,row)"
               class="usa-sr-only">{{configuration.navigateScreenReaderText + ' '+row[configuration.primaryTextField]}}</button>
