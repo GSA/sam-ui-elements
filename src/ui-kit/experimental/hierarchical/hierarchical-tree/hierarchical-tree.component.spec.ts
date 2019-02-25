@@ -25,7 +25,8 @@ const config: SamHierarchicalTreeConfiguration = {
   filterPlaceholderText: "",
   topLevelBreadcrumbText: "All Departments",
   primaryTextField: "name",
-  minimumCharacterCountSearch: 0
+  minimumCharacterCountSearch: 0,
+  navigateScreenReaderText:''
 };
 
 
