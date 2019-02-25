@@ -102,7 +102,6 @@ export class SamHierarchicalComponent implements ControlValueAccessor {
         this.propogateChange(this.model);
       }
     }
-    this.advancedLookup.nativeElement.focus();
   }
 
 
