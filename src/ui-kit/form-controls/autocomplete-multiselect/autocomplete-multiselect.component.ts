@@ -232,6 +232,11 @@ export class SamAutocompleteMultiselectComponent
     if (this.list.length > 0) {
       this.list = this.sortByCategory(this.list);
     }
+    
+  }
+
+  public ngAfterViewInit()
+  {
     if (!this.control) {
       return;
     }
