@@ -18,8 +18,8 @@ import {
   ValidatorFn
 } from '@angular/forms';
 
-import { Subject } from 'rxjs/Subject'
-import { Subscription } from 'rxjs/Subscription';
+import { Subject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { SamFormService } from '../../form-service';
@@ -196,7 +196,9 @@ export class SamTextComponent implements ControlValueAccessor,
 
     if (!this.useFormService) {
       this.control.statusChanges
-      .takeUntil(this.ngUnsubscribe)
+      .pipe(
+        takeUntil(this.ngUnsubscribe)
+      )
       .subscribe(() => {
         this.wrapper.formatErrors(this.control);
         this.cdr.detectChanges();
@@ -216,9 +218,12 @@ export class SamTextComponent implements ControlValueAccessor,
   private _unsubscribe (): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
-
-    this._focusSubscription.unsubscribe();
-    this._changeSubsription.unsubscribe();
+    if(this._focusSubscription){
+      this._focusSubscription.unsubscribe();
+    }
+    if(this._changeSubsription){
+      this._changeSubsription.unsubscribe();
+    }
   }
 
   private _trimWhitespace () {

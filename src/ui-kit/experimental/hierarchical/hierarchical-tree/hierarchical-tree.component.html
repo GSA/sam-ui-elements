@@ -1,0 +1,16 @@
+<div class="example-container usa-grid">
+  <ng-container *ngTemplateOutlet="template"></ng-container>
+</div>
+
+<ng-template #template>
+  <div class="hierarchical template">
+    <sam-hierarchical-tree-header [selectModel]="selectedValue" [options]="breadcrumbStackSelectable"
+      (selectBreadcrumb)="selectBreadcrumb.next($event)" (filterTextChange)="filterTextSubject.next($event)"
+      [filterText]="filterText" [configuration]="configuration">
+    </sam-hierarchical-tree-header>
+
+    <sam-hierarchical-tree-grid [configuration]="configuration" [isSingleMode]="isSingleMode" [gridData]="gridResults | async"
+      (rowChanged)="selectHierarchyLevel.next($event)" (selectResults)="selectResults$.next($event)" (sorted)="sortLevel.next($event)" (scrolled)="scrolled.next($event)">
+    </sam-hierarchical-tree-grid>
+  </div>
+</ng-template>

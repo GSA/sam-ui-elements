@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable,of } from 'rxjs';
 
 @Injectable()
 export class AutocompleteService {
@@ -8,6 +8,6 @@ export class AutocompleteService {
   }
 
   fetch(val: string, pageEnd: boolean, serviceOptions?: any): Observable<any> {
-    return Observable.of([]).map(o => o);
+    return of([]).map(o => o);
   }
 }

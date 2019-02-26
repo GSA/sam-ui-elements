@@ -5,7 +5,7 @@ import { Component,
          Input,
          Output,
          EventEmitter } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription,merge } from 'rxjs';
 
 @Component({
   selector: 'sam-image',

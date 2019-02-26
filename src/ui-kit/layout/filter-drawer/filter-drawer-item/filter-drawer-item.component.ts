@@ -8,16 +8,14 @@ import {
 @Component({
   selector: 'sam-filter-drawer-item',
   template: `
-    {{ label }}
-    <ul>
-      <li *ngFor="let value of values">
-        <sam-filter-drawer-chip
-          [label]="value"
-          [disabled]="disabled"
-          (remove)="removeFilter(value)"
-        ></sam-filter-drawer-chip>
-      </li>
-    </ul>
+  <div class="title">{{ label }}</div>
+  <ng-container *ngFor="let value of values">
+    <sam-filter-drawer-chip
+      [label]="value"
+      [disabled]="disabled"
+      (remove)="removeFilter(value)"
+    ></sam-filter-drawer-chip>
+  </ng-container>
   `
  })
 export class SamFilterDrawerItemComponent {

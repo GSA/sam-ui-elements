@@ -1,0 +1,40 @@
+sam-datatable th{
+  background-color: #205493;
+}
+sam-datatable{
+  display: flex;
+  flex-direction: row;
+}
+.datatable-checkbox> *{
+  max-width: 4rem !important;
+  max-height: 4rem !important;
+  overflow: hidden !important;
+  text-align: left;
+  padding: 10px;
+}
+
+.h-select-col th:nth-child(1){
+  max-width: 100px !important;
+  text-align: center !important;
+}
+
+.h-select-col sam-datatable td:nth-child(1){
+  max-width: 100px !important;
+  text-align: center;
+}
+.h-select-col{
+  min-height: 350px;
+  max-height: 400px !important;
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
+ }
+/*
+.h-select-col th{
+  display: flex;
+  justify-content: center !important;
+}
+.h-select-col td{
+  display: flex;
+  justify-content: center !important;
+}
+*/

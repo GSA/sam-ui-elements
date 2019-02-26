@@ -1,3 +1,4 @@
+<div *ngIf="show" class="modal-backdrop"></div>
 <div aria-live="assertive" #modalRoot *ngIf="show" [attr.id]="id" tabindex="-1" role="dialog" class="modal-dialog" (keydown.esc)="closeOnEscape ? closeModal() : 0" (click)="closeOnOutsideClick ? closeModal() : 0">
 	<div #modalContent class="modal-content" (click)="preventClosing($event)">
 		<div *ngIf="this.type !== 'primary'" class="usa-alert {{this.types[type].class}}">
@@ -18,8 +19,8 @@
 		  <p *ngIf="description">{{description}}</p>
 			<ng-content></ng-content>
 			<div *ngIf="cancelButtonLabel || submitButtonLabel" class="usa-modal-content-btn-area">
-				<sam-button buttonType="tertiary" class="usa-button-outline usa-modal-content-cancel-btn" *ngIf="cancelButtonLabel" (click)="closeModal()" [buttonText]="cancelButtonLabel" [attr.id]="modalElIds?.cancelId"></sam-button>
-				<sam-button buttonType="secondary" class="usa-modal-content-submit-btn" *ngIf="submitButtonLabel" (click)="submitBtnClick()" [buttonText]="submitButtonLabel" [attr.id]="modalElIds?.submitId"></sam-button>
+				<sam-button buttonType="tertiary" class="usa-button-outline usa-modal-content-cancel-btn" *ngIf="cancelButtonLabel" (onClick)="closeModal()" [buttonText]="cancelButtonLabel" [attr.id]="modalElIds?.cancelId"></sam-button>
+				<sam-button buttonType="secondary" class="usa-modal-content-submit-btn" *ngIf="submitButtonLabel" (onClick)="submitBtnClick()" [buttonText]="submitButtonLabel" [attr.id]="modalElIds?.submitId" [isDisabled]="submitButtonDisabled"></sam-button>
 			</div>
 		</div>
 	</div>

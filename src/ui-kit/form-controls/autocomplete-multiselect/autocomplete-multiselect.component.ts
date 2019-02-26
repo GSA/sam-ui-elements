@@ -7,13 +7,8 @@ import {
   Optional,
   forwardRef,
   TemplateRef,
-  trigger,
-  state,
-  style,
-  transition,
-  animate,
-  keyframes
 } from '@angular/core';
+import { animate, state, style, transition, trigger , keyframes} from '@angular/animations';
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
@@ -963,8 +958,14 @@ export class SamAutocompleteMultiselectComponent
     }
   }
 
-  public listItemHover(listIndex){
+  public listItemHover(category, listIndex){
     let elements = this.getResults();
+    
+    // Converts category list index to getResults() list index
+    for(let i = 0; i < category; i++){
+      listIndex += this.list[i].length;
+    }
+
     if(this.selectedEl){
       this.selectedEl.classList.remove('selected');
     }
