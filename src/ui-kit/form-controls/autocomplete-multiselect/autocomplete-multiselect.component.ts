@@ -232,7 +232,6 @@ export class SamAutocompleteMultiselectComponent
     if (this.list.length > 0) {
       this.list = this.sortByCategory(this.list);
     }
-    
   }
 
   public ngAfterViewInit()
@@ -245,6 +244,7 @@ export class SamAutocompleteMultiselectComponent
         this.wrapper.formatErrors(this.control);
       });
       this.wrapper.formatErrors(this.control);
+      this.ref.detectChanges();
     } else {
       this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
         if ( (!evt.root || evt.root === this.control.root) &&

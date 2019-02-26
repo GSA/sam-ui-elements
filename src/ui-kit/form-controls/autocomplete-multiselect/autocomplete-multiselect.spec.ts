@@ -1,6 +1,6 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -193,5 +193,14 @@ describe('The Sam Autocomplete Multiselect Component', () => {
         fixture.detectChanges();
         expect(component.value[0]).toBe(component.options[0]);
     });
+
+    it('Should load control error message on init', () => {
+      component.control = new FormControl("");
+      //component.control.setValue("");
+      component.control.markAsDirty();
+      component.control.setErrors({ testValidation: { message: "testMessage"}});
+      fixture.detectChanges();
+      expect(component.wrapper.errorMessage).toBe("testMessage");
+  });
   });
 });
