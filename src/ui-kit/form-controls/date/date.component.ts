@@ -116,6 +116,7 @@ export class SamDateComponent
   private maxMonth = 12;
   private maxDay = 31;
 
+  public isTabPressed: boolean = false;
   private keys: KeyHelper = new KeyHelper(...this.allowChars);
 
   get inputModel() {
@@ -289,7 +290,19 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
+    if(this.isTabPressed && event){
+      this.month.nativeElement.value = '';
+    }
+    this.isTabPressed = (key === 'Tab') ? true : false;
     const inputNum = KeyHelper.getNumberFromKey(event);
+    if(this.month.nativeElement.selectionStart &&  this.keys.isAllowed(event)){
+
+      const val = (this.month.nativeElement.selectionStart === 0) ?
+      inputNum + this.month.nativeElement.value :  this.month.nativeElement.value + inputNum;
+      if (val <= this.maxMonth) {
+      this.month.nativeElement.value = val;
+      }
+    }
     const possibleNum =
       this.getPossibleNum(this.month.nativeElement.value, event);
     
@@ -340,6 +353,11 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
+
+    if(this.isTabPressed && event){
+      this.day.nativeElement.value = '';
+    }
+    this.isTabPressed = (key === 'Tab') ? true : false;
     const inputNum = KeyHelper.getNumberFromKey(event);
     const possibleNum =
       this.getPossibleNum(this.day.nativeElement.value, event);
@@ -413,6 +431,10 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
+    if(this.isTabPressed && event){
+      this.year.nativeElement.value = '';
+    }
+    this.isTabPressed = (key === 'Tab') ? true : false;
     const inputNum = KeyHelper.getNumberFromKey(event);
     const possibleNum =
       this.getPossibleNum(this.year.nativeElement.value, event);
@@ -490,19 +512,19 @@ export class SamDateComponent
   }
 
   triggerTouch() {
-    this.onTouched();
+   // this.onTouched();
   }
 
   triggerMonthTouch(event) {
-    if (event.target.value.substring(0, 1) === '0') {
-      this.month.nativeElement.value = event.target.value.substring(1);
-    }
+    // if (event.target.value.substring(0, 1) === '0') {
+    //   this.month.nativeElement.value = event.target.value.substring(1);
+    // }
     this.onTouched();
   }
   triggerDayTouch(event) {
-    if (event.target.value.substring(0, 1) === '0') {
-      this.day.nativeElement.value = event.target.value.substring(1);
-    }
+    // if (event.target.value.substring(0, 1) === '0') {
+    //   this.day.nativeElement.value = event.target.value.substring(1);
+    // }
     this.onTouched();
   }
 
