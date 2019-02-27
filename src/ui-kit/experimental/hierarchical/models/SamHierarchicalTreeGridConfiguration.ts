@@ -15,4 +15,15 @@ export class SamHierarchicalTreeGridConfiguration {
     *  Field for model that determines number of child elements
     */
     public childCountField: string;
+
+
+    /**
+    *  Property from supplied model used for the top part of the basic template
+    */
+    public primaryTextField: string;
+
+    /**
+     * Used for the Grid hidden button Screen Reader text to traverse down the tree
+     */
+    public navigateScreenReaderText: string = 'Go to';
 }
