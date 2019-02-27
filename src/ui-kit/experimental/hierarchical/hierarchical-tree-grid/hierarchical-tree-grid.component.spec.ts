@@ -46,6 +46,7 @@ describe('The Sam hierarchical grid component', () => {
             component = fixture.componentInstance;
             component.displayedColumns = ['select'];
             component.configuration = config;
+            component.gridData = [gridData[0]];
             fixture.detectChanges();
             component.ngOnInit();
         });

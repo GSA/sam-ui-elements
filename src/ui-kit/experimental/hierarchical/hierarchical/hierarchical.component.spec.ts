@@ -40,10 +40,7 @@ describe('SamHierarchicalComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SamHierarchicalComponent);
     component = fixture.componentInstance;
-
     component.configuration = new SamHierarchicalConfiguration();
-
-
     component.model = new HierarchicalTreeSelectedItemModel();
     component.service = new HierarchicalDataService();
     component.model.treeMode = TreeMode.MULTIPLE;
