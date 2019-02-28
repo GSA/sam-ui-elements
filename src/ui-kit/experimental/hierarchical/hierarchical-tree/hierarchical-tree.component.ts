@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Observable, BehaviorSubject } from "rxjs";
-
 import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceSearchItem, SamHiercarchicalServiceResult } from "../hierarchical-interface";
 import { SamHierarchicalTreeConfiguration } from "../models/SamHierarchicalTreeConfiguration";
 import { Sort } from "../../../components/data-table/sort.directive";
@@ -215,11 +214,6 @@ export class SamHierarchicalTreeComponent implements OnInit {
       this.breadcrumbStack.unshift(value);
     }
   }
-
-
-
-
-
 
   /**
    * Calls the provided service to get the results for the girdbased on

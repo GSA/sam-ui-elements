@@ -1,19 +1,22 @@
-import {
-  Component, Input, ViewChild, TemplateRef,
-  ElementRef
-} from '@angular/core';
+import { Component, Input, ViewChild, TemplateRef, ElementRef, forwardRef } from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 import { KeyHelper, KEYS } from '../../../utilities/key-helper/key-helper';
 import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
 import { SamHierarchicalAutocompleteConfiguration } from '../models/SamHierarchicalAutocompleteConfiguration';
-
+const Hierarchical_Autocomplete_VALUE_ACCESSOR: any = {
+  provide: NG_VALUE_ACCESSOR,
+  useExisting: forwardRef(() => SamHierarchicalAutocompleteComponent),
+  multi: true
+};
 
 @Component({
   selector: 'sam-hierarchical-autocomplete',
   templateUrl: './autocomplete.component.html',
-  styleUrls: ['./autocomplete.component.scss']
+  styleUrls: ['./autocomplete.component.scss'],
+  providers: [Hierarchical_Autocomplete_VALUE_ACCESSOR]
 })
-export class SamHierarchicalAutocompleteComponent {
+export class SamHierarchicalAutocompleteComponent implements ControlValueAccessor {
 
   /**
    * Ul list of elements 
@@ -38,7 +41,6 @@ export class SamHierarchicalAutocompleteComponent {
   /**
    * The data model that has the selected item
    */
-  @Input()
   public model: HierarchicalTreeSelectedItemModel;
 
   /**
@@ -93,6 +95,18 @@ export class SamHierarchicalAutocompleteComponent {
    */
   private searchString: string = null;
 
+  /**
+   * Stored Event for ControlValueAccessor
+   */
+  private onTouchedCallback: () => void = () => null;
+
+  /**
+   * Stored Event for ControlValueAccessor
+   */
+  private propogateChange: (_: any) => void = (_: any) => null;
+
+  @Input()
+  public disabled: boolean;
 
   private resultsAvailableMessage: string = ' results available. Use up and down arrows\
   to scroll through results. Hit enter to select.';
@@ -107,6 +121,7 @@ export class SamHierarchicalAutocompleteComponent {
    */
   public clearInput(): void {
     this.inputValue = '';
+    this.onTouchedCallback();
     this.clearAndHideResults();
   }
 
@@ -127,6 +142,7 @@ export class SamHierarchicalAutocompleteComponent {
       if (this.model.getItems().length > 0) {
         if (this.inputValue.length === 0) {
           this.model.clearItems();
+          this.propogateChange(this.model);
         } else {
           this.inputValue = this.model.getItems()[0][this.configuration.primaryTextField];
         }
@@ -143,6 +159,7 @@ export class SamHierarchicalAutocompleteComponent {
    */
   inputFocusHandler(): void {
     this.getResults(this.inputValue || '');
+    this.onTouchedCallback();
   }
 
   /**
@@ -181,6 +198,7 @@ export class SamHierarchicalAutocompleteComponent {
    */
   public selectItem(item: object): void {
     this.model.addItem(item, this.configuration.primaryKeyField);
+    this.propogateChange(this.model);
     let message = item[this.configuration.primaryTextField];
     this.inputValue = message;
     if (this.configuration.secondaryTextField && item[this.configuration.secondaryTextField]) {
@@ -344,5 +362,24 @@ export class SamHierarchicalAutocompleteComponent {
     if (this.srOnly && this.srOnly.nativeElement) {
       this.srOnly.nativeElement.appendChild(srResults);
     }
+  }
+
+
+  writeValue(obj: any): void {
+    if (obj instanceof HierarchicalTreeSelectedItemModel) {
+      this.model = obj as HierarchicalTreeSelectedItemModel;
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this.propogateChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouchedCallback = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
   }
 }

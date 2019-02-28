@@ -11,7 +11,6 @@ import { FormsModule } from '@angular/forms';
 import { CdkTableModule } from '@angular/cdk';
 import { SamDataTableModule, SamSortDirective } from '../../../components/data-table';
 import { SamHierarchicalTreeConfiguration } from '../models/SamHierarchicalTreeConfiguration';
-import { ExpectedConditions } from 'protractor';
 import { Observable } from 'rxjs';
 import { SamHiercarchicalServiceInterface,SamHiercarchicalServiceSearchItem, SamHiercarchicalServiceResult } from '../hierarchical-interface';
 import 'rxjs/add/observable/of';
@@ -24,7 +23,9 @@ const config: SamHierarchicalTreeConfiguration = {
   childCountField: "childCount",
   filterPlaceholderText: "",
   topLevelBreadcrumbText: "All Departments",
-  primaryTextField: "name"
+  primaryTextField: "name",
+  minimumCharacterCountSearch: 0,
+  navigateScreenReaderText:''
 };
 
 
