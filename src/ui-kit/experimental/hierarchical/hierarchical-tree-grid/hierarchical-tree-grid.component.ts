@@ -109,11 +109,13 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
 
   ngAfterViewInit() {
     this.hierarchicalDataSource = new HierarchicalDataSource(this.dataChange);
-    this.sortDirective.samSortChange.subscribe(
-      value => {
-        this.sorted.emit(value);
-      }
-    );
+    if (this.sortDirective) {
+      this.sortDirective.samSortChange.subscribe(
+        value => {
+          this.sorted.emit(value);
+        }
+      );
+    }
     this.cdr.detectChanges();
   }
 

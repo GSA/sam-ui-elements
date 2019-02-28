@@ -12,7 +12,7 @@ import { CdkTableModule } from '@angular/cdk';
 import { SamDataTableModule, SamSortDirective } from '../../../components/data-table';
 import { SamHierarchicalTreeConfiguration } from '../models/SamHierarchicalTreeConfiguration';
 import { Observable } from 'rxjs';
-import { SamHiercarchicalServiceInterface,SamHiercarchicalServiceSearchItem, SamHiercarchicalServiceResult } from '../hierarchical-interface';
+import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceSearchItem, SamHiercarchicalServiceResult } from '../hierarchical-interface';
 import 'rxjs/add/observable/of';
 import { Sort, SortDirection } from "../../../components/data-table/sort.directive";
 
@@ -25,7 +25,7 @@ const config: SamHierarchicalTreeConfiguration = {
   topLevelBreadcrumbText: "All Departments",
   primaryTextField: "name",
   minimumCharacterCountSearch: 0,
-  navigateScreenReaderText:''
+  navigateScreenReaderText: ''
 };
 
 
@@ -168,7 +168,7 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
     return Observable.of(returnItem);
   }
 
-  getHiercarchicalById(item : SamHiercarchicalServiceSearchItem): Observable<SamHiercarchicalServiceResult> {
+  getHiercarchicalById(item: SamHiercarchicalServiceSearchItem): Observable<SamHiercarchicalServiceResult> {
     let itemIncrease = 15;
     let temp = this.getSortedData(this.loadedData, item.sort);
     let data = Observable.of(temp);
