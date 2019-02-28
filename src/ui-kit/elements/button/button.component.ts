@@ -17,7 +17,7 @@ import { Deprecator } from '../../utilities';
     [attr.id]="id"
     class="sam-ui button" 
     [ngClass]="btnClass" 
-    [attr.disabled]="isDisabled ? '' : null" 
+    [disabled]="isDisabled" 
     (click)="click($event)" 
     [type]="action=='submit' ? 'submit' : 'button'">
     {{ buttonText }}
