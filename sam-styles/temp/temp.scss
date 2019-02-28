@@ -301,8 +301,6 @@
 /**********************************************
               <core-layout>
 ***********************************************/
-
-
 .usa-core-data-content{
   display: grid;
   position: relative;
@@ -387,4 +385,127 @@
       }
     }
   }
+}
+/**********************************************
+              <splash-page>
+***********************************************/
+#splash-page{
+  background-color: white;
+}
+#splash-banner{
+  width: 100%;
+  height: 100px;
+}
+#splash-banner-logo{
+  text-align: center;
+  margin: auto;
+  border: solid black 1px;
+}
+.splash-banner-logo{
+  padding: 20px;
+}
+#splash-logo{
+  margin-top:30px;
+}
+#splash-id{
+  height: 100px;
+}
+#wdol-id{
+  width: 50%;
+  height: 110px;
+  margin: auto;
+  text-align: center;
+}
+#splash-sam-logo{
+  width: 50%;
+  height: 130px;
+  margin: auto;
+  text-align: center;
+}
+#splash-wdol-summary{
+  text-align: center;
+  height: 130px;
+  width: 100%;
+}
+#splash-page> hr{
+  align-self: center;
+  width: 150px;
+}
+#splash-button-content{
+  background-color: #F9F9F9;
+  padding-bottom: 30px;
+}
+#sam-url{
+  text-align: center;
+  height: 80px;
+  width: 100%;
+  margin-top: 40px;
+}
+#buttons-summary{
+  text-align: center;
+  width: 100%;
+  margin: 35px;
+}
+#buttons-summary> p{
+  font-size: 20px;
+  color: #5F5F5F;
+  line-height: 1.5;
+  font-stretch: semi-condensed;
+}
+#splash-button{
+  margin: 10px auto 10px auto;
+  width: 230px;
+}
+.splash-button{
+  background-color: inherit;
+  border: solid 2px #287DB6;
+  border-radius: 8px;
+  height:60px;
+}
+.splash-button:hover{
+  background-color: inherit;
+  border: solid 3px #1f618e;
+}
+.splash-btn-icon{
+  float: left;
+  margin: auto;
+}
+.splash-button> p{
+  color: #287DB6;
+  margin: auto;
+  font-weight: bold;
+}
+#video-summary{
+  width: 100%;
+  margin: 35px;
+}
+.video-summary{
+  color: #323B44;
+  text-align: center;
+  line-height: 1.5;
+  font-size: 20px;
+}
+#video{
+  width: 100%;
+  margin: auto;
+}
+#splash-footer{
+  background-color: #D8E8F7;
+  color: #01538F;
+  text-align: center;
+  padding: 35px;
+  margin-top: 35px;
+  width: 100%;
+}
+.splash-gsa-logo{
+  margin: auto;
+}
+.splash-footer-title{
+  text-align: center;
+  font-size: 20px;
+}
+.splash-footer-summary{
+  text-align: center;
+  padding: 35px;
+  color: #8B8F91;
 }
