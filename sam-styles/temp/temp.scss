@@ -404,7 +404,7 @@
   padding: 20px;
 }
 #splash-logo{
-  margin-top:30px;
+  margin:30px auto 30px auto;
 }
 #splash-id{
   height: 100px;
@@ -414,6 +414,7 @@
   height: 110px;
   margin: auto;
   text-align: center;
+  vertical-align: center;
 }
 #splash-sam-logo{
   width: 50%;
@@ -528,6 +529,42 @@
     max-width: 30%;
     float: left;
     margin: 0;
+  }
+  #splash-header-content{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  #splash-logo{
+    width: 100%;
+  }
+  #splash-wdol{
+    width: 50%;
+  }
+  #splash-sam-url{
+    width: 50%;
+  }
+  .splash-line{
+    display: none;
+  }
+  #splash-button-content{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  #splash-btn-sum{
+    width: 600px;
+    margin: auto 150px auto 150px;
+    max-height: 100px;
+  }
+  #splash-btn{
+    margin: 20px;
+  }
+  #splash-video-content{
+    display: flex;
+    flex-direction: column-reverse;
+    max-width: 600px;
+    margin: auto;
+    padding-top: 50px;
   }
 
 }
