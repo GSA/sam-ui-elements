@@ -399,7 +399,6 @@
 #splash-banner-logo{
   text-align: center;
   margin: auto;
-  border: solid black 1px;
 }
 .splash-banner-logo{
   padding: 20px;
@@ -427,7 +426,10 @@
   height: 130px;
   width: 100%;
 }
-#splash-page> hr{
+.wdol-sum{
+  font-weight: 600;
+}
+.splash-line{
   align-self: center;
   width: 150px;
 }
@@ -439,7 +441,10 @@
   text-align: center;
   height: 80px;
   width: 100%;
-  margin-top: 40px;
+  margin-top: 30px;
+}
+#sam-url>h2{
+  font-weight: 600;
 }
 #buttons-summary{
   text-align: center;
@@ -472,12 +477,21 @@
 }
 .splash-button> p{
   color: #287DB6;
-  margin: auto;
-  font-weight: bold;
+  font-weight: 700;
+  text-align: left;
+  letter-spacing: -0.5px;
+  line-height: 1;
+  margin-left: 50px;
 }
 #video-summary{
-  width: 100%;
   margin: 35px;
+  width: 100%;
+}
+.video-summary{
+  font-size: 20px;
+  color: #5F5F5F;
+  line-height: 1.5;
+  font-stretch: semi-condensed;
 }
 .video-summary{
   color: #323B44;
@@ -508,4 +522,12 @@
   text-align: center;
   padding: 35px;
   color: #8B8F91;
+}
+@media all and (min-width: 500px){
+  .splash-banner-logo{
+    max-width: 30%;
+    float: left;
+    margin: 0;
+  }
+
 }
