@@ -297,7 +297,6 @@ export class SamDateComponent
     const inputNum = KeyHelper.getNumberFromKey(event);
 
     const possibleNum = this.getPossibleNum(this.month.nativeElement, event);
-
     if (possibleNum > this.maxMonth
       || !this.keys.isAllowed(event)) {
       event.preventDefault();
@@ -321,9 +320,7 @@ export class SamDateComponent
   }
 
   getPossibleNum(item, event): number {
-
     let possibleNum;
-    const ten = 10; // What is this number?
     const inputNum = KeyHelper.getNumberFromKey(event);
     if (this.keys.isAllowed(event)) {
       const position = parseInt(item.selectionStart);
