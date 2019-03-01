@@ -9,6 +9,7 @@
           [attr.aria-labelledby]="name"
           [attr.aria-expanded]="showActions ? 'true' : undefined"
           [attr.id]="name"
+          [attr.alt]="alt"
           (click)="toggleActions()"
           (keydown)="leadKeyDownHandler($event)"
           [ngClass]="buttonType === 'primary' ? 'usa-button-primary' : ''"
