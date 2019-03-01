@@ -323,10 +323,10 @@ export class SamDateComponent
     let possibleNum;
     const inputNum = KeyHelper.getNumberFromKey(event);
     if (this.keys.isAllowed(event)) {
-      const position = parseInt(item.selectionStart);
+      const position = parseInt(item.selectionStart,10);
       possibleNum = item.value.substring(0, position) + inputNum + item.value.substring(position);
     }
-    return parseInt(possibleNum);
+    return parseInt(possibleNum,10);
   }
 
   onDayBlur(event) {
@@ -499,19 +499,19 @@ export class SamDateComponent
   }
 
   triggerTouch() {
-    // this.onTouched();
+    this.onTouched();
   }
 
   triggerMonthTouch(event) {
-    // if (event.target.value.substring(0, 1) === '0') {
-    //   this.month.nativeElement.value = event.target.value.substring(1);
-    // }
+    if (event.target.value.substring(0, 1) === '0') {
+      this.month.nativeElement.value = event.target.value.substring(1);
+    }
     this.onTouched();
   }
   triggerDayTouch(event) {
-    // if (event.target.value.substring(0, 1) === '0') {
-    //   this.day.nativeElement.value = event.target.value.substring(1);
-    // }
+    if (event.target.value.substring(0, 1) === '0') {
+      this.day.nativeElement.value = event.target.value.substring(1);
+    }
     this.onTouched();
   }
 
