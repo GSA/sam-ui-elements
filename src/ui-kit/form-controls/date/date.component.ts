@@ -116,7 +116,7 @@ export class SamDateComponent
   private maxMonth = 12;
   private maxDay = 31;
 
-  public isTabPressed: boolean = false;
+  private isTabPressed: boolean = false;
   private keys: KeyHelper = new KeyHelper(...this.allowChars);
 
   get inputModel() {
@@ -293,7 +293,7 @@ export class SamDateComponent
     if(this.isTabPressed && event){
       this.month.nativeElement.value = '';
     }
-    this.isTabPressed = (key === 'Tab') ? true : false;
+    this.isTabPressed = KeyHelper.is('tab', event) ? true : false;;
     const inputNum = KeyHelper.getNumberFromKey(event);
 
     const possibleNum = this.getPossibleNum(this.month.nativeElement, event);
@@ -344,7 +344,7 @@ export class SamDateComponent
     if (this.isTabPressed && event) {
       this.day.nativeElement.value = '';
     }
-    this.isTabPressed = (key === 'Tab') ? true : false;
+    this.isTabPressed = KeyHelper.is('tab', event) ? true : false;;
     const inputNum = KeyHelper.getNumberFromKey(event);
     const possibleNum =
       this.getPossibleNum(this.day.nativeElement, event);
@@ -421,7 +421,7 @@ export class SamDateComponent
     if(this.isTabPressed && event){
       this.year.nativeElement.value = '';
     }
-    this.isTabPressed = (key === 'Tab') ? true : false;
+    this.isTabPressed = KeyHelper.is('tab', event) ? true : false;;
     const inputNum = KeyHelper.getNumberFromKey(event);
     const possibleNum =
       this.getPossibleNum(this.year.nativeElement, event);
