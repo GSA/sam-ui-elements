@@ -100,7 +100,7 @@ export class SamDateComponent
   @ViewChild('wrapper') public wrapper;
 
   public allowChars = [
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
     'backspace', 'left', 'right', 'tab', 'delete'
   ];
 
@@ -139,7 +139,7 @@ export class SamDateComponent
       return undefined;
     };
   }
-  
+
   static dateValidation() {
     // Does this code even run?!
     // Where is c getting passed in?
@@ -295,17 +295,9 @@ export class SamDateComponent
     }
     this.isTabPressed = (key === 'Tab') ? true : false;
     const inputNum = KeyHelper.getNumberFromKey(event);
-    if(this.month.nativeElement.selectionStart &&  this.keys.isAllowed(event)){
 
-      const val = (this.month.nativeElement.selectionStart === 0) ?
-      inputNum + this.month.nativeElement.value :  this.month.nativeElement.value + inputNum;
-      if (val <= this.maxMonth) {
-      this.month.nativeElement.value = val;
-      }
-    }
-    const possibleNum =
-      this.getPossibleNum(this.month.nativeElement.value, event);
-    
+    const possibleNum = this.getPossibleNum(this.month.nativeElement, event);
+
     if (possibleNum > this.maxMonth
       || !this.keys.isAllowed(event)) {
       event.preventDefault();
@@ -328,18 +320,16 @@ export class SamDateComponent
     }
   }
 
-  getPossibleNum(value, event): number {
+  getPossibleNum(item, event): number {
+
     let possibleNum;
     const ten = 10; // What is this number?
     const inputNum = KeyHelper.getNumberFromKey(event);
-    if (!isNaN(value)
-      && value !== '') {
-      possibleNum = (parseInt(value, undefined) * ten)
-        + inputNum;
-    } else {
-      possibleNum = inputNum;
+    if (this.keys.isAllowed(event)) {
+      const position = parseInt(item.selectionStart);
+      possibleNum = item.value.substring(0, position) + inputNum + item.value.substring(position);
     }
-    return possibleNum;
+    return parseInt(possibleNum);
   }
 
   onDayBlur(event) {
@@ -354,19 +344,19 @@ export class SamDateComponent
       return;
     }
 
-    if(this.isTabPressed && event){
+    if (this.isTabPressed && event) {
       this.day.nativeElement.value = '';
     }
     this.isTabPressed = (key === 'Tab') ? true : false;
     const inputNum = KeyHelper.getNumberFromKey(event);
     const possibleNum =
-      this.getPossibleNum(this.day.nativeElement.value, event);
+      this.getPossibleNum(this.day.nativeElement, event);
     const maxDate = this.getMaxDate();
     const numJumpThreshold =
       this.getNumJumpThreshold(this.month.nativeElement.value);
 
     if (possibleNum > maxDate
-        || !this.keys.isAllowed(event)) {
+      || !this.keys.isAllowed(event)) {
       event.preventDefault();
       return;
     }
@@ -394,7 +384,7 @@ export class SamDateComponent
       undefined
     );
 
-    if (this.thirtyDayMonths.indexOf(month) !== -1 ) {
+    if (this.thirtyDayMonths.indexOf(month) !== -1) {
       maxDate = thirty;
     }
 
@@ -417,7 +407,7 @@ export class SamDateComponent
     if (this.year.nativeElement.value === '0') {
       this.year.nativeElement.value = '';
     }
-    if (this.year.nativeElement.value 
+    if (this.year.nativeElement.value
       && !this._isLeapYear(this.year.nativeElement.value)
       && this.month.nativeElement.value === '2'
       && this.day.nativeElement.value === '29') {
@@ -437,7 +427,7 @@ export class SamDateComponent
     this.isTabPressed = (key === 'Tab') ? true : false;
     const inputNum = KeyHelper.getNumberFromKey(event);
     const possibleNum =
-      this.getPossibleNum(this.year.nativeElement.value, event);
+      this.getPossibleNum(this.year.nativeElement, event);
 
     if (possibleNum > maxValue
       || !this.keys.isAllowed(event)) {
@@ -485,13 +475,13 @@ export class SamDateComponent
     }
     return (isNaN(dupModel.day)
       || dupModel.day === undefined
-      || dupModel.day === '' )
-    && (isNaN(dupModel.month)
-      || dupModel.month === undefined
-      || dupModel.month === '')
-    && (isNaN(dupModel.year)
-      || dupModel.year === undefined
-      || dupModel.year === '');
+      || dupModel.day === '')
+      && (isNaN(dupModel.month)
+        || dupModel.month === undefined
+        || dupModel.month === '')
+      && (isNaN(dupModel.year)
+        || dupModel.year === undefined
+        || dupModel.year === '');
   }
 
   isValid() {
@@ -512,7 +502,7 @@ export class SamDateComponent
   }
 
   triggerTouch() {
-   // this.onTouched();
+    // this.onTouched();
   }
 
   triggerMonthTouch(event) {
@@ -563,9 +553,9 @@ export class SamDateComponent
     if ((this.thirtyDayMonths.indexOf(parseInt(num, undefined)) !== -1
       && this.day.nativeElement.value === '31')
       || (num === '2'
-      && this.nonFebruaryDays.indexOf(
-        parseInt(this.day.nativeElement.value, undefined)
-      ) !== -1)) {
+        && this.nonFebruaryDays.indexOf(
+          parseInt(this.day.nativeElement.value, undefined)
+        ) !== -1)) {
       return true;
     }
   }
