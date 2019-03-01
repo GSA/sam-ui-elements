@@ -24,7 +24,9 @@ const gridData = [
 const config: SamHierarchicalTreeGridConfiguration = {
     gridColumnsDisplayed: [],
     primaryKeyField: 'id',
-    childCountField: 'childCount'
+    childCountField: 'childCount',
+    navigateScreenReaderText: '',
+    primaryTextField: ''
 };
 describe('The Sam hierarchical grid component', () => {
     describe('The Sam Data Table Tests', () => {

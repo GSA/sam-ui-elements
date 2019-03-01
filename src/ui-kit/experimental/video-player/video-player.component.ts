@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ContentChildren, QueryList, ElementRef, forwardRef, Renderer2} from '@angular/core';
+import { Component, Input, OnInit, ContentChildren, QueryList, ElementRef, forwardRef, Renderer2, Output, EventEmitter} from '@angular/core';
 import GLOBAL_STRINGS from 'accessible-html5-video-player/js/strings.js'
 import * as InitPxVideo from 'accessible-html5-video-player/js/px-video.js';
 declare var InitPxVideo: any;
@@ -15,7 +15,10 @@ interface InitPxVideoConfig {
 
 @Component({
   selector: 'sam-video-player',
-  templateUrl: './video-player.template.html'
+  templateUrl: './video-player.template.html',
+  host: {
+    '(document:fullscreenchange)': 'onToggleFullScreen($event)'
+  }
 })
 
 export class SamVideoPlayerComponent {
@@ -27,6 +30,7 @@ export class SamVideoPlayerComponent {
   @Input() public title: string;
   @Input() public captionOption: boolean;
   @Input() public seekInterval: number;
+  @Output() public onFullScreenChange: EventEmitter<any> = new EventEmitter<any>();
   private config: InitPxVideoConfig;
 
   constructor(private render: Renderer2, private template:ElementRef) {}
@@ -57,6 +61,11 @@ export class SamVideoPlayerComponent {
     this.setElementAttribute(progressEl, 'role', 'progressbar');
     this.setElementAttribute(videoEl, 'name', this.videoId);
     this.setElementAttribute(videoEl, 'role', 'presentation');
+  }
+
+  onToggleFullScreen(event) {
+    const isFullScreen = document['fullscreen'];
+    this.onFullScreenChange.emit(isFullScreen);
   }
 
   ngOnDestroy() {
