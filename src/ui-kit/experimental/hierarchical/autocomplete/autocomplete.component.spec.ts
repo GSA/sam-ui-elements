@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
 import { By } from '@angular/platform-browser';
 import 'rxjs/add/observable/of';
-import { HierarchicalDataService, SampleHierarchicalData } from '../hierarchical-test-service.spec';
+import { HierarchicalDataService } from '../hierarchical-test-service.spec';
 
 
 describe('SamHierarchicalAutocompleteComponent', () => {

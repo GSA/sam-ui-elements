@@ -8,11 +8,11 @@ import { SamFormService } from '../../../form-service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CdkTableModule } from '@angular/cdk';
-import { SamDataTableModule, SamSortDirective } from '../../../components/data-table';
+import { SamDataTableModule } from '../../../components/data-table';
 import { SamHierarchicalTreeConfiguration } from '../models/SamHierarchicalTreeConfiguration';
 import { HierarchicalDataService, SampleHierarchicalData } from '../hierarchical-test-service.spec';
 import 'rxjs/add/observable/of';
-import { Sort, SortDirection } from "../../../components/data-table/sort.directive";
+import { SortDirection } from "../../../components/data-table/sort.directive";
 
 const sortOrder: SortDirection[] = ['asc', 'desc'];
 const config: SamHierarchicalTreeConfiguration = {
