@@ -1,7 +1,12 @@
 <div class="example-container usa-grid">
-  <ng-container *ngTemplateOutlet="gridTemplate"></ng-container>
+  <ng-container *ngTemplateOutlet="gridData.length===0 ? noResults: gridTemplate"></ng-container>
 </div>
 
+<ng-template #noResults>
+  <div class="h-select-col">
+    <p>No results avalible</p>
+  </div>
+</ng-template>
 <ng-template #gridTemplate>
   <div class="h-select-col" (scroll)="onScroll($event)">
     <sam-datatable #table samSort [dataSource]="hierarchicalDataSource">
