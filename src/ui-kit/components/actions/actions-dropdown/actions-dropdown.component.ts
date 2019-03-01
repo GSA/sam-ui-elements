@@ -34,7 +34,6 @@ export class SamActionsDropdownComponent {
    */
   @Input() public buttonType: 'primary'|'default' = 'default';
   @Input() public text: string = 'Actions';
-  @Input() public alt: string = 'Alt';
   /**
    * Emits event when action changes
    */
