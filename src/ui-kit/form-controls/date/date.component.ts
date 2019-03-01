@@ -293,7 +293,7 @@ export class SamDateComponent
     if(this.isTabPressed && event){
       this.month.nativeElement.value = '';
     }
-    this.isTabPressed = KeyHelper.is('tab', event) ? true : false;;
+    this.isTabPressed = KeyHelper.is('tab', event);
     const inputNum = KeyHelper.getNumberFromKey(event);
 
     const possibleNum = this.getPossibleNum(this.month.nativeElement, event);
@@ -344,7 +344,7 @@ export class SamDateComponent
     if (this.isTabPressed && event) {
       this.day.nativeElement.value = '';
     }
-    this.isTabPressed = KeyHelper.is('tab', event) ? true : false;;
+    this.isTabPressed = KeyHelper.is('tab', event);
     const inputNum = KeyHelper.getNumberFromKey(event);
     const possibleNum =
       this.getPossibleNum(this.day.nativeElement, event);
@@ -421,7 +421,7 @@ export class SamDateComponent
     if(this.isTabPressed && event){
       this.year.nativeElement.value = '';
     }
-    this.isTabPressed = KeyHelper.is('tab', event) ? true : false;;
+    this.isTabPressed = KeyHelper.is('tab', event);
     const inputNum = KeyHelper.getNumberFromKey(event);
     const possibleNum =
       this.getPossibleNum(this.year.nativeElement, event);
