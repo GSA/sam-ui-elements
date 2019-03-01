@@ -1,11 +1,7 @@
 /* tslint:disable */
 import { Observable } from 'rxjs';
-import {
-  SamHiercarchicalServiceInterface,
-  SamHiercarchicalServiceSearchItem,
-  SamHiercarchicalServiceResult
-} from './hierarchical-interface';
-import { Sort, SortDirection } from "../../components/data-table/sort.directive";
+import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceSearchItem, SamHiercarchicalServiceResult } from './hierarchical-interface';
+import { Sort } from "../../components/data-table/sort.directive";
 import 'rxjs/add/observable/of';
 
 export class HierarchicalDataService implements SamHiercarchicalServiceInterface {
@@ -14,17 +10,10 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
   constructor() {
     const data = SampleHierarchicalData;
     for (let i = 0; i < data.length; i++) {
-
       let item = data[i];
       let results = data.filter(it => it.parentId === item.id);
       item['childCount'] = results.length;
-
-      if (results.length === 0) {
-        item['childCount'] = 27;
-      }
     }
-
-
     this.loadedData = data;
   }
 
@@ -40,18 +29,10 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
     } else {
       itemsOb = data;
     }
-    let items: object[];
-    itemsOb.subscribe(
-      (result) => {
-        items = result;
-      }
-    );
+    let items: object[] = this.itemsListOutofObservable(itemsOb);
     let totalItemCount = items.length;
 
-    let maxSectionPosition = currentItems + itemIncrease;
-    if (maxSectionPosition > totalItemCount) {
-      maxSectionPosition = totalItemCount;
-    }
+    let maxSectionPosition = this.getMaxSectionPosition(currentItems, itemIncrease, totalItemCount);
     let subItemsitems = items.slice(currentItems, maxSectionPosition);
 
     let returnItem = {
@@ -66,27 +47,11 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
     let temp = this.getSortedData(this.loadedData, item.sort);
     let data = Observable.of(temp);
     let itemsOb: Observable<Object[]>;
-    if (item.searchValue) {
-      itemsOb = data.map(items => items.filter(itm =>
-        itm.parentId === item.id &&
-        (itm.name.indexOf(item.searchValue) !== -1 ||
-          itm.subtext.indexOf(item.searchValue) !== -1
-        )));
-    } else {
-      itemsOb = data.map(items => items.filter(itm => itm.parentId === item.id));
-    }
-    let items: object[];
-    itemsOb.subscribe(
-      (result) => {
-        items = result;
-      }
-    );
+    itemsOb = this.filterItemsByAllFields(item, itemsOb, data);
+    let items: object[] = this.itemsListOutofObservable(itemsOb);
     let totalItemCount = items.length;
 
-    let maxSectionPosition = item.currentItemCount + itemIncrease;
-    if (maxSectionPosition > totalItemCount) {
-      maxSectionPosition = totalItemCount;
-    }
+    let maxSectionPosition = this.getMaxSectionPosition(item.currentItemCount, itemIncrease, totalItemCount);
     let subItemsitems = items.slice(item.currentItemCount, maxSectionPosition);
 
     let returnItem = {
@@ -96,6 +61,34 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
     return Observable.of(returnItem);
   }
 
+
+  private itemsListOutofObservable(itemsOb: any) {
+    let items: object[];
+    itemsOb.subscribe((result) => {
+      items = result;
+    });
+    return items;
+  }
+
+  private getMaxSectionPosition(currentItemCount: number, itemIncrease: number, totalItemCount: number) {
+    let maxSectionPosition = currentItemCount + itemIncrease;
+    if (maxSectionPosition > totalItemCount) {
+      maxSectionPosition = totalItemCount;
+    }
+    return maxSectionPosition;
+  }
+
+  private filterItemsByAllFields(item: SamHiercarchicalServiceSearchItem, itemsOb: any, data: any) {
+    if (item.searchValue) {
+      itemsOb = data.map(items => items.filter(itm => itm.parentId === item.id &&
+        (itm.name.indexOf(item.searchValue) !== -1 ||
+          itm.subtext.indexOf(item.searchValue) !== -1)));
+    }
+    else {
+      itemsOb = data.map(items => items.filter(itm => itm.parentId === item.id));
+    }
+    return itemsOb;
+  }
 
   private getSortedData(data: any[], sort: Sort): any[] {
     if (!sort || (!sort.active || sort.direction === '')) { return data; }
@@ -108,15 +101,12 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
     });
   }
 
-  private sortingDataAccessor: ((data: any, sortHeaderId: string) => string | number) =
-    (data: any, sortHeaderId: string): string | number => {
-      const value = (data as { [key: string]: any })[sortHeaderId];
-      return value;
-    }
+  private sortingDataAccessor(data: any, sortHeaderId: string) {
+    const value = (data as { [key: string]: any })[sortHeaderId];
+    return value;
+  }
 
 }
-
-
 
 export let SampleHierarchicalData = [
   { 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' },
