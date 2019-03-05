@@ -3,8 +3,8 @@
 </div>
 
 <ng-template #noResults>
-  <div class="h-select-col">
-    <p>No results avalible</p>
+  <div class="empty-results">
+    {{configuration.emptyResultText}}
   </div>
 </ng-template>
 <ng-template #gridTemplate>

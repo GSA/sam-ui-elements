@@ -11,6 +11,12 @@
   position: relative;
 }
 
+.selected-item-disabled{
+  background: #d6d7d9;
+  cursor: not-allowed;
+  border: 1px solid #aeb0b5;
+}
+
 .header{
   display: block;
   font-weight: 600;
@@ -20,4 +26,10 @@
   position: absolute;
   top: 6px;
   right: 6px;
+}
+
+.close-disabled{
+  color: #aeb0b5;
+  
+  border:hidden;
 }

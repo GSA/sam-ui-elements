@@ -254,8 +254,5 @@ export class SamHierarchicalTreeComponent implements OnInit {
         }
       );
     }
-
-
-
   }
 }

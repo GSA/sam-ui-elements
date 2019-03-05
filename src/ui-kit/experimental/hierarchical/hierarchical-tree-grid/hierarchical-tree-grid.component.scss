@@ -29,13 +29,10 @@ sam-datatable{
   overflow-y: scroll !important;
   overflow-x: hidden !important;
  }
-/*
-.h-select-col th{
-  display: flex;
-  justify-content: center !important;
-}
-.h-select-col td{
-  display: flex;
-  justify-content: center !important;
-}
-*/
+ .empty-results{
+  min-height: 350px;
+  max-height: 400px !important;
+  overflow-y: hidden !important;
+  overflow-x: hidden !important;
+  border-top: 3px solid #cacaca;
+ }

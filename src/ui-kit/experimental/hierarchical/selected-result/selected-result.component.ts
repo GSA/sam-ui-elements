@@ -50,9 +50,11 @@ export class SamHierarchicalSelectedResultComponent implements ControlValueAcces
    * @param item 
    */
   removeItem(item: object) {
-    this.model.removeItem(item, this.configuration.primaryKeyField);
-    this.propogateChange(this.model);
-    this.onTouchedCallback();
+    if (!this.disabled) {
+      this.model.removeItem(item, this.configuration.primaryKeyField);
+      this.propogateChange(this.model);
+      this.onTouchedCallback();
+    }
   }
 
   writeValue(obj: any): void {
