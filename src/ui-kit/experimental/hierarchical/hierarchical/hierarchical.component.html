@@ -1,7 +1,7 @@
 <div class="hierarchical component">
     <a #advancedLookup *ngIf="!configuration.hideAdvancedLookup"
-        [attr.class]="disabled? 'advanced-link advanced-link-disabled' : 'advanced-link'"
-        (click)="onModalClick()">Advanced Lookup</a>
+        [attr.class]="disabled? 'advanced-link advanced-link-disabled' : 'advanced-link'" (click)="onModalClick()"
+        href="javascript:void(0)">Advanced Lookup</a>
     <sam-hierarchical-autocomplete [disabled]="disabled" (ngModelChange)="propogateChange($event)" #autocomplete
         [service]="service" [(ngModel)]="model" [configuration]="configuration" [itemTemplate]="suggestionTemplate">
     </sam-hierarchical-autocomplete>
