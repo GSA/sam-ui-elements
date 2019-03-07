@@ -6,21 +6,24 @@ sam-datatable{
   flex-direction: row;
 }
 .datatable-checkbox{
-  height: 20px !important;
-  width: 20px !important;
-  box-sizing: inherit;
-  //overflow: hidden;
+  //border: 2px solid black;
+  //border-radius: 4px;
+  height: 20px;
+  width: 20px;
+  //display: flex;
+  //align-content: center;
 }
 .datatable-checkbox> *{
-  margin: 0;
-  color:transparent;
-  box-sizing: inherit;
-  height: 20px !important;
-  width: 20px !important;
+  position: relative !important;
+  margin: 0 !important;
+  width: 20px;
+  height: 20px;
+  color: transparent;
+}
+.datatable-checkbox> label{
+  transform: translate(1px, -20px)
 }
 .datatable-checkbox> input{
-  //position: unset !important;
-  margin-left: 0;
   z-index: 1;
 }
 .h-select-col th:nth-child(1){
@@ -36,5 +39,5 @@ sam-datatable{
   min-height: 350px;
   max-height: 400px !important;
   overflow-y: scroll !important;
-  overflow-x: hidden !important;
+  overflow-x: scroll !important;
  }
