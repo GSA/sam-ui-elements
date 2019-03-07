@@ -11,6 +11,6 @@
         [type]="'primary'" [submitButtonLabel]="configuration.modalSelectButtonLabel"
         [cancelButtonLabel]="configuration.modalCancelButtonLabel" (onSubmit)="onModalSubmitClick()">
         <sam-hierarchical-tree #hierarchicaltree [configuration]="configuration" [service]="service"
-            [isSingleMode]="isSingleMode()"></sam-hierarchical-tree>
+            [isSingleMode]="singleMode"></sam-hierarchical-tree>
     </sam-modal>
 </div>

@@ -1,4 +1,4 @@
-import { Component, Input, TemplateRef, ViewChild, forwardRef } from '@angular/core';
+import { Component, Input, TemplateRef, ViewChild, forwardRef, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
@@ -15,7 +15,7 @@ const Hierarchical_VALUE_ACCESSOR: any = {
   styleUrls: ['./hierarchical.component.scss'],
   providers: [Hierarchical_VALUE_ACCESSOR]
 })
-export class SamHierarchicalComponent implements ControlValueAccessor {
+export class SamHierarchicalComponent implements AfterViewChecked, ControlValueAccessor {
 
   /**
    * 
@@ -76,6 +76,16 @@ export class SamHierarchicalComponent implements ControlValueAccessor {
   * Allow to insert a customized template for selected items
   */
   @Input() selectedItemTemplate: TemplateRef<any>;
+
+  constructor(private cdr: ChangeDetectorRef) {
+
+  }
+  public singleMode: boolean = false;
+
+  ngAfterViewChecked() {
+    this.singleMode = this.isSingleMode();
+    this.cdr.detectChanges();
+  }
 
   /**
   * Open modal click
