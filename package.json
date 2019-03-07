@@ -6,6 +6,9 @@
     "type" : "git",
     "url" : "https://github.com/GSA/sam-ui-elements.git"
   },
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "keywords": [
     "angular",
     "webpack",
