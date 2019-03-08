@@ -290,7 +290,7 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
-    if(this.isTabPressed && event){
+    if(this.isTabPressed && event && !(KeyHelper.is('shift', event))){
       this.month.nativeElement.value = '';
     }
     this.isTabPressed = KeyHelper.is('tab', event);
@@ -341,7 +341,7 @@ export class SamDateComponent
       return;
     }
 
-    if (this.isTabPressed && event) {
+    if (this.isTabPressed && event && !(KeyHelper.is('shift', event))) {
       this.day.nativeElement.value = '';
     }
     this.isTabPressed = KeyHelper.is('tab', event);
@@ -418,7 +418,7 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
-    if(this.isTabPressed && event){
+    if(this.isTabPressed && event && !(KeyHelper.is('shift', event))){
       this.year.nativeElement.value = '';
     }
     this.isTabPressed = KeyHelper.is('tab', event);
