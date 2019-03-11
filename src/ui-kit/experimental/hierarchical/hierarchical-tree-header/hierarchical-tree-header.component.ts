@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, ChangeDetectionStrategy ,OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { OptionsType } from '../../../../ui-kit/types';
 import { SamHierarchicalTreeHeaderConfiguration } from '../models/SamHierarchicalTreeHeaderConfiguration';
 import { fromEvent } from 'rxjs/observable/fromEvent';
@@ -7,7 +7,8 @@ import { KeyHelper, KEYS } from '../../../utilities/key-helper/key-helper';
 @Component({
   selector: 'sam-hierarchical-tree-header',
   templateUrl: './hierarchical-tree-header.component.html',
-  styleUrls: ['./hierarchical-tree-header.component.scss']
+  styleUrls: ['./hierarchical-tree-header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SamHierarchicalTreeHeaderComponent {
 

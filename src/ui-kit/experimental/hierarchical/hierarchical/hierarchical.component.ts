@@ -1,4 +1,4 @@
-import { Component, Input, TemplateRef, ViewChild, forwardRef, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewChild, forwardRef, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
 import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
 import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
@@ -13,7 +13,8 @@ const Hierarchical_VALUE_ACCESSOR: any = {
   selector: 'sam-hierarchical',
   templateUrl: './hierarchical.component.html',
   styleUrls: ['./hierarchical.component.scss'],
-  providers: [Hierarchical_VALUE_ACCESSOR]
+  providers: [Hierarchical_VALUE_ACCESSOR],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SamHierarchicalComponent implements AfterViewChecked, ControlValueAccessor {
 
