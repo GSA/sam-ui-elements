@@ -44,4 +44,9 @@ export class SamHierarchicalTreeConfiguration implements SamHierarchicalTreeGrid
     */
     public navigateScreenReaderText: string = 'Go to';
 
+    /**
+    * Text when no results in advanced
+    */
+    public emptyResultText: string = 'There are no results. Try again with another selection.';
+
 }

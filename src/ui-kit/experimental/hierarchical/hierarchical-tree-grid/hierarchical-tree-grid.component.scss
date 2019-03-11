@@ -41,3 +41,10 @@ sam-datatable{
   overflow-y: scroll !important;
   overflow-x: scroll !important;
  }
+ .empty-results{
+  min-height: 350px;
+  max-height: 400px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  border-top: 3px solid #cacaca;
+ }
