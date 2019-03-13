@@ -1,6 +1,6 @@
 import {
-  Component, OnInit, ViewChild, Input,
-  Output, EventEmitter, ChangeDetectorRef
+  Component, OnInit, ViewChild, Input, AfterViewChecked,
+  Output, EventEmitter, ChangeDetectorRef, ChangeDetectionStrategy
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { SamSortDirective } from '../../../components'
@@ -10,9 +10,10 @@ import { SamHierarchicalTreeGridConfiguration } from '../models/SamHierarchicalT
 @Component({
   selector: 'sam-hierarchical-tree-grid',
   templateUrl: './hierarchical-tree-grid.component.html',
-  styleUrls: ['./hierarchical-tree-grid.component.scss']
+  styleUrls: ['./hierarchical-tree-grid.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SamHierarchicalTreeGridComponent implements OnInit {
+export class SamHierarchicalTreeGridComponent implements OnInit, AfterViewChecked {
 
   /**
   * Table configurations 
@@ -102,9 +103,14 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
       this.columnHeaderText.push(item.headerText);
     });
     this.displayedColumns = [...this.displayedColumns, ...this.columnFieldName];
+
+  }
+
+  ngAfterViewChecked(): void {
     if (this.isSingleMode) {
       this.selectionMode = "radio";
-    }
+      this.cdr.detectChanges();
+    }  
   }
 
   ngAfterViewInit() {
