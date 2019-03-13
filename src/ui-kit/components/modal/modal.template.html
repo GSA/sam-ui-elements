@@ -11,7 +11,9 @@
 		<div *ngIf="this.type === 'primary'" class="primary-model-body">
 			<button class="sam-primary-button pull-right" *ngIf="showClose" (click)="closeModal()"><span class="fa fa-times-circle" [attr.id]="modalElIds?.closeId"></span><span class="usa-sr-only">close modal</span></button>
 			<div class="sam-primary-title">
-				<sam-icon *ngIf="icon" [icon]="icon" size="2x"></sam-icon>
+				<ng-container *ngIf="icon">
+					<sam-icon [icon]="icon" size="2x"></sam-icon>
+				</ng-container>
 				<h3>{{title}}</h3>
 			</div>
 		</div>
