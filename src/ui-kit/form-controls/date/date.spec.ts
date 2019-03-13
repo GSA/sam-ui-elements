@@ -109,7 +109,7 @@ describe('The Sam Date component', () => {
     });
   });
 
-  describe('Isolated tests', () => {
+  describe('Tab key tests', () => {
     let component: SamDateComponent;
     const cdr: ChangeDetectorRef = undefined;
     beforeEach(() => {
