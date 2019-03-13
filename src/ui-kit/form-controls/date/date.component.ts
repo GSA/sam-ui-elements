@@ -116,7 +116,7 @@ export class SamDateComponent
   private maxMonth = 12;
   private maxDay = 31;
 
-  private isTabPressed: boolean = false;
+  public isTabPressed: boolean = false;
   private keys: KeyHelper = new KeyHelper(...this.allowChars);
 
   get inputModel() {
