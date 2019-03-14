@@ -116,7 +116,7 @@ export class SamDateComponent
   private maxMonth = 12;
   private maxDay = 31;
 
-  private isTabPressed: boolean = false;
+  public isTabPressed: boolean = false;
   private keys: KeyHelper = new KeyHelper(...this.allowChars);
 
   get inputModel() {
@@ -210,7 +210,7 @@ export class SamDateComponent
   }
 
   ngOnChanges(changes) {
-    if(changes && changes['value']){
+    if (changes && changes['value']) {
       this.parseValueString();
     }
   }
@@ -290,7 +290,7 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
-    if(this.isTabPressed && event){
+    if (this.isTabPressed && event && !(KeyHelper.is('shift', event))) {
       this.month.nativeElement.value = '';
     }
     this.isTabPressed = KeyHelper.is('tab', event);
@@ -323,10 +323,10 @@ export class SamDateComponent
     let possibleNum;
     const inputNum = KeyHelper.getNumberFromKey(event);
     if (this.keys.isAllowed(event)) {
-      const position = parseInt(item.selectionStart,10);
+      const position = parseInt(item.selectionStart, 10);
       possibleNum = item.value.substring(0, position) + inputNum + item.value.substring(position);
     }
-    return parseInt(possibleNum,10);
+    return parseInt(possibleNum, 10);
   }
 
   onDayBlur(event) {
@@ -341,7 +341,7 @@ export class SamDateComponent
       return;
     }
 
-    if (this.isTabPressed && event) {
+    if (this.isTabPressed && event && !(KeyHelper.is('shift', event))) {
       this.day.nativeElement.value = '';
     }
     this.isTabPressed = KeyHelper.is('tab', event);
@@ -418,7 +418,7 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
-    if(this.isTabPressed && event){
+    if (this.isTabPressed && event && !(KeyHelper.is('shift', event))) {
       this.year.nativeElement.value = '';
     }
     this.isTabPressed = KeyHelper.is('tab', event);
