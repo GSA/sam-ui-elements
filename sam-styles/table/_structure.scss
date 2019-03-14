@@ -66,6 +66,7 @@ sam-cell, sam-header-cell, .sam-footer-cell,
 td[sam-cell], th[sam-header-cell] {
   flex: 1;
   display: flex;
+  flex: 1 1 auto;
   align-items: center;
   // overflow: hidden;
   word-wrap: break-word;
