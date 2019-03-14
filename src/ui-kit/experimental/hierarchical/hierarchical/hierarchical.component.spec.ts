@@ -64,10 +64,54 @@ describe('SamHierarchicalComponent', () => {
     expect(component).toBeTruthy();
   });
 
-
   it('single mode', () => {
     expect(component.isSingleMode()).toBe(false);
     component.model.treeMode = TreeMode.SINGLE;
     expect(component.isSingleMode()).toBeTruthy();
   });
+
+  it('single mode var', () => {
+    expect(component.isSingleMode).toBeTruthy();
+    component.model.treeMode = TreeMode.MULTIPLE;
+    expect(component.isSingleMode()).toBe(false);
+  });
+
+  it('single mode empty', () => {
+    component.model = null;
+    expect(component.isSingleMode()).toBe(false);
+  });
+
+  it('write value', () => {
+    let model = new HierarchicalTreeSelectedItemModel();
+    component.writeValue(model);
+    expect(component.model).toBe(model);
+  });
+
+  it('disabled state', () => {
+    component.setDisabledState(true);
+    expect(component.disabled).toBeTruthy();
+    component.setDisabledState(false);
+    expect(component.disabled).toBe(false);
+  });
+
+  it('onModalClick', () => {
+    component.onModalClick();
+    expect(component.modal.show).toBeTruthy();
+  });
+
+  it('onModalClick disabled', () => {
+    component.setDisabledState(true);
+    component.onModalClick();
+    expect(component.modal.show).toBe(false);
+  });
+  
+
+  it('onModalSubmitClick', () => {
+    component.onModalClick();
+    expect(component.modal.show).toBeTruthy();
+    component.onModalSubmitClick();
+    expect(component.modal.show).toBe(false);
+  });
+
+
 });
