@@ -55,8 +55,6 @@ describe('SamHierarchicalComponent', () => {
     ];
     component.configuration.childCountField = "childCount";
     component.configuration.topLevelBreadcrumbText = "All Departments";
-
-
     fixture.detectChanges();
   });
 
@@ -103,8 +101,7 @@ describe('SamHierarchicalComponent', () => {
     component.setDisabledState(true);
     component.onModalClick();
     expect(component.modal.show).toBe(false);
-  });
-  
+  }); 
 
   it('onModalSubmitClick', () => {
     component.onModalClick();
@@ -112,6 +109,4 @@ describe('SamHierarchicalComponent', () => {
     component.onModalSubmitClick();
     expect(component.modal.show).toBe(false);
   });
-
-
 });
