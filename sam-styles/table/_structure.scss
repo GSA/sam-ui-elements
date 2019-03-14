@@ -57,7 +57,7 @@ td[sam-cell]:last-child, th[sam-header-cell]:last-child {
   padding-right: $sam-row-horizontal-padding;
 
   [dir='rtl'] & {
-    padding-right: 0;
+    padding-right: 5px;
     padding-left: $sam-row-horizontal-padding;
   }
 }
@@ -66,14 +66,16 @@ sam-cell, sam-header-cell, .sam-footer-cell,
 td[sam-cell], th[sam-header-cell] {
   flex: 1;
   display: flex;
-  flex: 1 1 auto;
+  //flex: 1 1 auto;
   align-items: center;
   // overflow: hidden;
   word-wrap: break-word;
   word-break: break-word;
   min-height: inherit;
 }
-
+sam-cell, sam-header-cell, th[sam-header-cell]{
+  flex: 1 1 auto;
+}
 sam-header-cell{
   overflow: visible;
 }
