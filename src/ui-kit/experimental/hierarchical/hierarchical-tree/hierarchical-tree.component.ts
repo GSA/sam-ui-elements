@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { Observable, BehaviorSubject } from "rxjs";
-import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceSearchItem, SamHiercarchicalServiceResult } from "../hierarchical-interface";
+import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceResult } from "../hierarchical-interface";
 import { SamHierarchicalTreeConfiguration } from "../models/SamHierarchicalTreeConfiguration";
 import { Sort } from "../../../components/data-table/sort.directive";
 import { first } from 'rxjs/operators';
@@ -8,8 +8,7 @@ import { first } from 'rxjs/operators';
 @Component({
   selector: "sam-hierarchical-tree",
   templateUrl: "./hierarchical-tree.component.html",
-  styleUrls: ["./hierarchical-tree.component.scss"],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ["./hierarchical-tree.component.scss"]
 })
 
 export class SamHierarchicalTreeComponent implements OnInit {
@@ -251,6 +250,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
             this.resultItems = result.items;
             this.totalItems = result.totalItems;
           }
+          this.results = [];
           this.gridResults = Observable.of(this.resultItems);
         }
       );
