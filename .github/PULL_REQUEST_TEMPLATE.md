@@ -12,7 +12,7 @@
 <!-- If there is no existing JIRA ticket or Github issue, please provide why this change is required and what problem it solves -->
 <!--- Otherwise, link to the ticket or issue here. -->
 
-## Types of Changes
+## Type of Change (Select One and Apply Github Label)
 <!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
 - [ ] Bug fix (non-breaking change which fixes an issue) -> Apply bugfix label
 - [ ] New feature (non-breaking change which adds functionality) -> Apply enhancement label
