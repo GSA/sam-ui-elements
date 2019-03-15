@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import { OptionsType } from '../../../../ui-kit/types';
+import { OptionsType } from '../../../ui-kit/types';
 import { SamHierarchicalTreeHeaderConfiguration } from '../models/SamHierarchicalTreeHeaderConfiguration';
 
-import { KeyHelper, KEYS } from '../../../utilities/key-helper/key-helper';
+import { KeyHelper, KEYS } from '../../utilities/key-helper/key-helper';
 
 @Component({
   selector: 'sam-hierarchical-tree-header',

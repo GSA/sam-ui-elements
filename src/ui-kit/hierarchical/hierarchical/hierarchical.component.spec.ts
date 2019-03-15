@@ -4,16 +4,16 @@ import { TreeMode, HierarchicalTreeSelectedItemModel } from '../hierarchical-tre
 import { FormsModule } from '@angular/forms';
 import { SamHierarchicalAutocompleteComponent } from '../autocomplete/autocomplete.component';
 import { SamHierarchicalSelectedResultComponent } from '../selected-result/selected-result.component';
-import { SamModalModule } from '../../../components/modal';
+import { SamModalModule } from '../../components/modal';
 import { SamHierarchicalConfiguration } from '../models/SamHierarchicalConfiguration';
 import { SamHierarchicalTreeComponent } from '../hierarchical-tree/hierarchical-tree.component';
 import { SamHierarchicalTreeGridComponent } from '../hierarchical-tree-grid/hierarchical-tree-grid.component';
 import { SamHierarchicalTreeHeaderComponent } from '../hierarchical-tree-header/hierarchical-tree-header.component';
-import { SamDataTableModule } from '../../../components/data-table';
-import { SamElementsModule } from '../../../elements/elements.module';
+import { SamDataTableModule } from '../../components/data-table';
+import { SamElementsModule } from '../../elements/elements.module';
 import { CdkTableModule } from '@angular/cdk';
-import { SamSelectModule } from '../../../form-controls';
-import { SamFormService } from '../../../form-service';
+import { SamSelectModule } from '../../form-controls';
+import { SamFormService } from '../../form-service';
 import { HierarchicalDataService } from '../hierarchical-test-service.spec';
 import 'rxjs/add/observable/of';
 

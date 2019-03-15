@@ -7,16 +7,19 @@ import { SamHierarchicalTreeGridComponent } from './hierarchical-tree-grid/hiera
 import { SamHierarchicalSelectedResultComponent } from './selected-result/selected-result.component';
 import { SamHierarchicalTreeHeaderComponent } from './hierarchical-tree-header/hierarchical-tree-header.component';
 import { SamHierarchicalComponent } from './hierarchical/hierarchical.component';
-import { SamWrapperModule } from '../../wrappers';
-import { SamDataTableModule, SamModalModule } from '../../components';
-import { SamCheckboxModule, SamSelectModule, SamTextInputModule } from '../../form-controls';
-import { SamButtonModule } from '../../elements';
-import { SamIconsModule } from '../icon';
-import { SamDirectivesModule } from '../../directives';
+import { SamDataTableModule } from '../components/data-table';
+import { SamModalModule } from '../components/modal';
+import { SamTextInputModule } from '../form-controls/text';
+import { SamCheckboxModule } from '../form-controls/checkbox';
+import { SamSelectModule } from '../form-controls/select';
+import { SamButtonModule } from '../elements';
+import { SamIconsModule } from '../experimental/icon';
+import { SamDirectivesModule } from '../directives';
 
 @NgModule({
   imports: [
-    CommonModule, FormsModule, SamWrapperModule, SamDataTableModule, SamCheckboxModule, SamSelectModule,
+    CommonModule, FormsModule,
+    SamDataTableModule, SamCheckboxModule, SamSelectModule,
     SamButtonModule, SamTextInputModule, SamIconsModule, SamModalModule, SamDirectivesModule
   ],
   declarations: [SamHierarchicalAutocompleteComponent, SamHierarchicalTreeComponent,

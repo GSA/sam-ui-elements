@@ -1,7 +1,7 @@
 /* tslint:disable */
 import { Observable } from 'rxjs';
 import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceSearchItem, SamHiercarchicalServiceResult } from './hierarchical-interface';
-import { Sort } from "../../components/data-table/sort.directive";
+import { Sort } from "../components/data-table/sort.directive";
 import 'rxjs/add/observable/of';
 
 export class HierarchicalDataService implements SamHiercarchicalServiceInterface {

@@ -2,9 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SamHierarchicalTreeHeaderComponent } from './hierarchical-tree-header.component';
-import { SamButtonModule } from '../../../elements';
-import { SamSelectModule } from '../../../form-controls';
-import { SamFormService } from '../../../form-service';
+import { SamButtonModule } from '../../elements';
+import { SamSelectModule } from '../../form-controls';
+import { SamFormService } from '../../form-service';
 import { SamHierarchicalTreeHeaderConfiguration } from '../models/SamHierarchicalTreeHeaderConfiguration';
 
 const options = [{ "name": "Level 2", "id": "2", "value": "2", "label": "Level 2" },

@@ -13,6 +13,7 @@ import { SamExperimentalModule } from './experimental';
 import { SamPipesModule } from './pipes';
 import { SamFormService } from './form-service';
 import { SamLayoutNextModule } from './layout';
+import { SamHierarchicalModule } from './hierarchical/hierarchical.module';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { SamLayoutNextModule } from './layout';
     SamLayoutModule,
     SamExperimentalModule,
     SamPipesModule,
-    SamLayoutNextModule
+    SamLayoutNextModule,
+    SamHierarchicalModule
   ],
   exports: [
     SamComponentsModule,
@@ -37,7 +39,8 @@ import { SamLayoutNextModule } from './layout';
     SamLayoutModule,
     SamExperimentalModule,
     SamPipesModule,
-    SamLayoutNextModule
+    SamLayoutNextModule,
+    SamHierarchicalModule
   ],
   providers: [SamFormService]
 })

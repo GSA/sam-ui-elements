@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Sort } from '../../components/data-table/sort.directive';
+import { Sort } from '../components/data-table/sort.directive';
 
 export interface SamHiercarchicalServiceInterface {
 

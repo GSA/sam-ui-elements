@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CdkTableModule } from '@angular/cdk';
-import { SamDataTableModule, SamSortDirective } from '../../../components/data-table';
+import { SamDataTableModule } from '../../components/data-table';
 import { SamHierarchicalTreeGridComponent } from './hierarchical-tree-grid.component';
 import { SamHierarchicalTreeGridConfiguration } from '../models/SamHierarchicalTreeGridConfiguration';
 
@@ -27,7 +27,7 @@ const config: SamHierarchicalTreeGridConfiguration = {
     childCountField: 'childCount',
     navigateScreenReaderText: '',
     primaryTextField: '',
-    emptyResultText:''
+    emptyResultText: ''
 };
 describe('The Sam hierarchical grid component', () => {
     describe('The Sam Data Table Tests', () => {

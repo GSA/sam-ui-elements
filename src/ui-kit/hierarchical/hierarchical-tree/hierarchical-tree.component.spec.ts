@@ -2,17 +2,17 @@ import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core
 import { SamHierarchicalTreeComponent } from './hierarchical-tree.component';
 import { SamHierarchicalTreeGridComponent } from '../hierarchical-tree-grid/hierarchical-tree-grid.component';
 import { SamHierarchicalTreeHeaderComponent } from '../hierarchical-tree-header/hierarchical-tree-header.component';
-import { SamButtonModule } from '../../../elements';
-import { SamSelectModule } from '../../../form-controls';
-import { SamFormService } from '../../../form-service';
+import { SamButtonModule } from '../../elements';
+import { SamSelectModule } from '../../form-controls';
+import { SamFormService } from '../../form-service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CdkTableModule } from '@angular/cdk';
-import { SamDataTableModule } from '../../../components/data-table';
+import { SamDataTableModule } from '../../components/data-table';
 import { SamHierarchicalTreeConfiguration } from '../models/SamHierarchicalTreeConfiguration';
 import { HierarchicalDataService, SampleHierarchicalData } from '../hierarchical-test-service.spec';
 import 'rxjs/add/observable/of';
-import { SortDirection } from "../../../components/data-table/sort.directive";
+import { SortDirection } from "../../components/data-table/sort.directive";
 
 const sortOrder: SortDirection[] = ['asc', 'desc'];
 const config: SamHierarchicalTreeConfiguration = {

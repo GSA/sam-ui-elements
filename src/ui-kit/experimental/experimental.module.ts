@@ -26,7 +26,6 @@ import { SamButtonNextModule } from './button-next';
 import { SamTabsNextModule } from './tabs';
 import { SamAlertNextModule } from './alert';
 import { SamTitleModule } from './title';
-import { SamHierarchicalModule } from './hierarchical/hierarchical.module';
 import { SamCardModule } from './card';
 import { SamSegmentModule } from './segment';
 import { SamProgressModule } from './progress/progress.module';
@@ -50,7 +49,6 @@ import { SamDateRangeV2Module } from './date-range-v2/date-range-v2.module';
     SamTabsNextModule,
     SamAlertNextModule,
     SamTitleModule,
-    SamHierarchicalModule,
     SamListboxModule,
     SamCardModule,
     SamSegmentModule,
@@ -97,7 +95,6 @@ import { SamDateRangeV2Module } from './date-range-v2/date-range-v2.module';
     SamTabsNextModule,
     SamAlertNextModule,
     SamTitleModule,
-    SamHierarchicalModule,
     SamListboxModule,
     SamCardModule,
     SamSegmentModule,
