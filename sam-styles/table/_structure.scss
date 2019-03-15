@@ -66,15 +66,15 @@ sam-cell, sam-header-cell, .sam-footer-cell,
 td[sam-cell], th[sam-header-cell] {
   flex: 1;
   display: flex;
-  //flex: 1 1 auto;
   align-items: center;
-   overflow: hidden;
+  overflow: hidden;
   word-wrap: break-word;
   word-break: break-word;
   min-height: inherit;
+  padding: 0 10px 0 10px;
 }
 sam-cell, sam-header-cell, th[sam-header-cell]{
-  flex: 1 1 auto;
+  flex: 1 0 auto;
 }
 sam-header-cell{
   overflow: visible;
