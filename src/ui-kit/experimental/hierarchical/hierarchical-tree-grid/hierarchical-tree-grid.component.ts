@@ -1,6 +1,6 @@
 import {
   Component, OnInit, ViewChild, Input, AfterViewChecked,
-  Output, EventEmitter, ChangeDetectorRef, ChangeDetectionStrategy
+  Output, EventEmitter, ChangeDetectorRef
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { SamSortDirective } from '../../../components'
@@ -10,8 +10,7 @@ import { SamHierarchicalTreeGridConfiguration } from '../models/SamHierarchicalT
 @Component({
   selector: 'sam-hierarchical-tree-grid',
   templateUrl: './hierarchical-tree-grid.component.html',
-  styleUrls: ['./hierarchical-tree-grid.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./hierarchical-tree-grid.component.scss']
 })
 export class SamHierarchicalTreeGridComponent implements OnInit, AfterViewChecked {
 

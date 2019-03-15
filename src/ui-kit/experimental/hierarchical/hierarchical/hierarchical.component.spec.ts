@@ -55,8 +55,6 @@ describe('SamHierarchicalComponent', () => {
     ];
     component.configuration.childCountField = "childCount";
     component.configuration.topLevelBreadcrumbText = "All Departments";
-
-
     fixture.detectChanges();
   });
 
@@ -64,10 +62,51 @@ describe('SamHierarchicalComponent', () => {
     expect(component).toBeTruthy();
   });
 
-
-  it('single mode', () => {
+  it('Should change to multiple mode when the model is updated and given a value of multiple', () => {
     expect(component.isSingleMode()).toBe(false);
     component.model.treeMode = TreeMode.SINGLE;
     expect(component.isSingleMode()).toBeTruthy();
+  });
+
+  it('Should change to  mode when the model is updated and given a value of multiple', () => {
+    expect(component.isSingleMode).toBeTruthy();
+    component.model.treeMode = TreeMode.MULTIPLE;
+    expect(component.isSingleMode()).toBe(false);
+  });
+
+  it('Should be set as not single mode when the model is null', () => {
+    component.model = null;
+    expect(component.isSingleMode()).toBe(false);
+  });
+
+  it('Should set the model property when the value is written ', () => {
+    let model = new HierarchicalTreeSelectedItemModel();
+    component.writeValue(model);
+    expect(component.model).toBe(model);
+  });
+
+  it('Should change state to disabled state', () => {
+    component.setDisabledState(true);
+    expect(component.disabled).toBeTruthy();
+    component.setDisabledState(false);
+    expect(component.disabled).toBe(false);
+  });
+
+  it('Should change to show mode when the modal is opened', () => {
+    component.onModalClick();
+    expect(component.modal.show).toBeTruthy();
+  });
+
+  it('Should not change to show mode when the modal is opened when disabled', () => {
+    component.setDisabledState(true);
+    component.onModalClick();
+    expect(component.modal.show).toBe(false);
+  }); 
+
+  it('Should change to not show mode when the modal is closed', () => {
+    component.onModalClick();
+    expect(component.modal.show).toBeTruthy();
+    component.onModalSubmitClick();
+    expect(component.modal.show).toBe(false);
   });
 });

@@ -72,7 +72,6 @@ export class SamHierarchicalComponent implements AfterViewChecked, ControlValueA
   */
   @Input() suggestionTemplate: TemplateRef<any>;
 
-
   /**
   * Allow to insert a customized template for selected items
   */
@@ -115,7 +114,6 @@ export class SamHierarchicalComponent implements AfterViewChecked, ControlValueA
     }
   }
 
-
   /**
   * Determines if it is single select mode
   */
@@ -127,7 +125,6 @@ export class SamHierarchicalComponent implements AfterViewChecked, ControlValueA
       return false;
     }
   }
-
 
   writeValue(obj: any): void {
     if (obj instanceof HierarchicalTreeSelectedItemModel) {

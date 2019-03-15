@@ -8,8 +8,9 @@
     <sam-selected-result (ngModelChange)="propogateChange($event)" [disabled]="disabled" *ngIf="!isSingleMode()"
         [(ngModel)]="model" [configuration]="configuration" [itemTemplate]="selectedItemTemplate"></sam-selected-result>
     <sam-modal class="sam-hierarchical-tree-modal" [showClose]="true" #modal [title]="configuration.modalTitle"
-        [type]="'primary'" [submitButtonLabel]="configuration.modalSelectButtonLabel" [icon]="false" 
-        [cancelButtonLabel]="configuration.modalCancelButtonLabel" (onSubmit)="onModalSubmitClick()">
+        [type]="'primary'" [submitButtonLabel]="configuration.modalSelectButtonLabel"       
+        [cancelButtonLabel]="configuration.modalCancelButtonLabel" (onSubmit)="onModalSubmitClick()"
+        [submitButtonDisabled]="hierarchicaltree.results ? hierarchicaltree.results.length === 0 : false">
         <sam-hierarchical-tree #hierarchicaltree [configuration]="configuration" [service]="service"
             [isSingleMode]="singleMode"></sam-hierarchical-tree>
     </sam-modal>
