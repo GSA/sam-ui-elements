@@ -37,11 +37,11 @@
     - [ ] JS/TS POJOs or functions should be exported from their respective files inside an appropriately named folder that includes unit tests, interfaces, or any other code related to that.
   - [ ] Barrel files (index.js/ts) are avoided (this creates complications with Angular Package Format)
   - Code Smells
-    - [ ] Classes and templates that exceed ~1-300 LOC require careful review
+    - [ ] Classes and templates that exceed a few hundred lines of code require careful review
     - [ ] Templates that make excessive use of conditionals require careful review
-    - [ ] Modules do not have large numbers of declarations (> 5 requires careful review)
+    - [ ] Modules do not have large numbers of declarations (more than 5 is considered large and requires careful review)
       - [ ] If more than 5 declarations, ensure that the module cannot be broken down into smaller modules and composed together again with imports
-    - [ ] Modules do not export large numbers of components (> 1-3 requires careful review)
+    - [ ] Modules do not export large numbers of components (> 3 requires careful review)
       - [ ] If there are more than 3 exports, ensure there is value in exporting each member in terms of reusability and long term maintenance
     - [ ] Routes that are not lazy loaded require careful review
     - [ ] Routes with no children require careful review
