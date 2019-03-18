@@ -47,6 +47,18 @@ describe('The Sam Date component', () => {
       expect(component.day.nativeElement.value).toBe('');
     });
 
+    it('Should not change the date value when tab is pressed', function () {
+      const dumEvent = {
+        "key": "Tab",
+        preventDefault: function () { },
+      };
+      component.isTabPressed = true;
+      component.onDayInput(dumEvent);
+
+      fixture.detectChanges();
+      expect(component.day.nativeElement.value).toBe('29');
+    });
+
     it('The date should not changes on Shift key', function () {
       component.isTabPressed = true;
       const event = {
@@ -86,6 +98,18 @@ describe('The Sam Date component', () => {
 
     });
 
+    it('The month should not changes on Tab key', function () {
+      component.isTabPressed = true;
+      const event = {
+        "key": "Tab",
+        preventDefault: function () { },
+      };
+     component.onMonthInput(event);
+      fixture.detectChanges();
+      expect(component.month.nativeElement.value).toBe('12');
+
+    });
+
     it('Should year value to be empty when tab is pressed', function () {
       const event = {
         "key": "5",
@@ -107,6 +131,18 @@ describe('The Sam Date component', () => {
       fixture.detectChanges();
       expect(component.year.nativeElement.value).toBe('2016');
     });
+
+    it('The year should not changes on Tab key', function () {
+      component.isTabPressed = true;
+      const event = {
+        "key": "Tab",
+        preventDefault: function () { },
+      };
+     component.onYearInput(event);
+      fixture.detectChanges();
+      expect(component.year.nativeElement.value).toBe('2016');
+    });
+
   });
 
   describe('Tab key tests', () => {
