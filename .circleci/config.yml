@@ -38,7 +38,7 @@ jobs:
       # run tests!
       - run: cd test-app && npm run test --collectCoverage=true
       - store_artifacts:
-          path: coverage
+          path: test-app/coverage
       - run: pwd
       - run: ls
 
