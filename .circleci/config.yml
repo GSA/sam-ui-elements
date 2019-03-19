@@ -39,7 +39,7 @@ jobs:
       - run: cd test-app && npm run test
       - run:
           name: "Run Jest and Collect Coverage Reports"
-          command: cd test-app && je./node_modules/.bin/jest st --collectCoverage=true
+          command: cd test-app && ./node_modules/.bin/jest --collectCoverage=true
       - store_artifacts:
           path: coverage
       - run: pwd
