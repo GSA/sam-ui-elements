@@ -36,10 +36,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
         
       # run tests!
-      - run: cd test-app && npm run test
-      - run:
-          name: "Run Jest and Collect Coverage Reports"
-          command: cd test-app && ./node_modules/.bin/jest --collectCoverage=true
+      - run: cd test-app && npm run test --collectCoverage=true
       - store_artifacts:
           path: coverage
       - run: pwd
