@@ -36,7 +36,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
         
       # run tests!
-      - run: cd test-app && npm run test --collectCoverage=true
+      - run: cd test-app && npm run test
       - store_artifacts:
           path: test-app/coverage
       - run: pwd
