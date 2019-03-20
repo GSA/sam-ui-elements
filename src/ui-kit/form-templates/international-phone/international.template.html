@@ -18,5 +18,12 @@
       formControlName="phone"
       [countryCode]="countryCode"
     ></sam-telephone>
+    <sam-extension *ngIf="hasExtension"
+    [label]="extensionLabel"
+    [name]="extensionName"
+    class="sam-international-extension"
+    formControlName="extension"
+    >
+    </sam-extension>
   </div>
 </sam-fieldset-wrapper>

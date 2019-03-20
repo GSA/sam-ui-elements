@@ -26,7 +26,12 @@ import { SamFormService } from '../../form-service';
     }
 
     .sam-international-phone-prefix {
-      max-width: 12rem;
+      max-width: 15rem;
+    }
+
+    .sam-international-extension {
+      margin-left: 1rem;
+      flex-grow: 4;
     }
 
     .sam-international-phone-container * {
@@ -35,7 +40,19 @@ import { SamFormService } from '../../form-service';
 
     .sam-international-telephone {
       margin-left: 1rem;
-      flex-grow: 3;
+      flex-grow: 4;
+    }
+
+    .sam-extension {
+      width: 100%;
+    }
+
+    .sam-extension div {
+      width: 100%;
+    }
+
+    .sam-extension .label-wrapper-container {
+      width: 100%;
     }
 
     .sam-telephone {
@@ -62,12 +79,16 @@ export class SamIntlPhoneGroup extends SamFieldset
   @Input() public phoneName: string;
   @Input() public prefixName: string;
   @Input() public phoneLabel = 'Phone';
+  @Input() public extensionLabel = 'Extension';
+  @Input() public hasExtension: boolean = false;
+  @Input() public extensionName: string;
   @Input() public prefixLabel = 'Country Code';
 
   @ViewChild(FieldsetWrapper) public wrapper: FieldsetWrapper;
   
   public prefixControl: AbstractControl;
   public phoneControl: AbstractControl;
+  public extensionControl: AbstractControl;
   public prefixError: string = '';
   public hint =
     'Country Code is 1 for USA and North America';
@@ -82,7 +103,7 @@ export class SamIntlPhoneGroup extends SamFieldset
   public ngOnInit () {
     const msg = 'Phone and Prefix names required for 508 compliance';
     
-    if (!this.phoneName || !this.prefixName) {
+    if (!this.phoneName || !this.prefixName ||!this.extensionName ) {
       throw new TypeError(msg);
     }
 
@@ -103,6 +124,7 @@ export class SamIntlPhoneGroup extends SamFieldset
 
     this.prefixControl = this.group.controls.prefix;
     this.phoneControl = this.group.controls.phone;
+    this.extensionControl = this.group.controls.extension;
   }
 
   private _setValidationStrategy () {
@@ -124,7 +146,8 @@ export class SamIntlPhoneGroup extends SamFieldset
 
             this.wrapper.formatErrors(
               this.group.controls.prefix,
-              this.group.controls.phone
+              this.group.controls.phone,
+              this.group.controls.extension
             );
 
           } else if ((!evt.root
@@ -146,7 +169,8 @@ export class SamIntlPhoneGroup extends SamFieldset
 
           this.wrapper.formatErrors(
             this.group.controls.prefix,
-            this.group.controls.phone
+            this.group.controls.phone,
+            this.group.controls.extension
           );
         }
     );
