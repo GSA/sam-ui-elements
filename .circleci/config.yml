@@ -39,6 +39,7 @@ jobs:
       - run: cd test-app && npm run test
       - store_artifacts:
           path: test-app/coverage
+          destination : codeCoverage
       - run: pwd
       - run: ls
 
