@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import {
   FormsModule,
   FormControl,
-  ReactiveFormsModule } from '@angular/forms'; 
+  ReactiveFormsModule
+} from '@angular/forms';
 import { TestBed } from '@angular/core/testing';
 
 import { SamFormService } from '../../../form-service';
-import { SamWrapperModule } from '../../../wrappers'; 
+import { SamWrapperModule } from '../../../wrappers';
 import { SamFormControlsModule } from '../../../form-controls';
 
 const mockEvent = {
@@ -17,7 +18,7 @@ const mockEvent = {
   }
 };
 
-describe('Sam International Prefix', () => {
+describe('Sam extension', () => {
 
   let component: SamExtension;
 
@@ -25,33 +26,21 @@ describe('Sam International Prefix', () => {
 
     beforeEach(() => {
       component = new SamExtension(null, null);
-      component.name = 'tel';
-      component.label = 'Phone';
+      component.name = 'extension';
+      component.label = 'Extension';
     });
-  
+
     it('should validate country code less than 999', () => {
       const value = 5;
       const control = new FormControl();
       control.setValue(value);
-  
+
       const errs = component.validate(control);
-  
+
       expect(errs).toBe(null);
     });
-  
-    it('should invalidate country code > 999', () => {
-      const value = 1000;
-      const errMsg = 'Country codes must be 3 numbers or fewer';
-      const control = new FormControl();
-      control.setValue(value);
-  
-      const errs = component.validate(control);
-  
-      expect(errs.extension.message).toBe(errMsg);
-    });
+
   })
-
-
 
   describe('Rendered tests', () => {
     let fixture;
@@ -74,11 +63,11 @@ describe('Sam International Prefix', () => {
           ChangeDetectorRef
         ]
       });
-  
+
       fixture = TestBed.createComponent(SamExtension);
       component = fixture.componentInstance;
-      component.name = 'tel';
-      component.label = 'Phone';
+      component.name = 'extension';
+      component.label = 'Extension';
     });
 
     it('should set internal value when input changes', () => {
@@ -87,19 +76,17 @@ describe('Sam International Prefix', () => {
           value: '5'
         }
       };
-  
+
       component.inputChange(mock);
 
       fixture.detectChanges();
-      
+
       fixture.whenStable().then(
         () => {
           const val = fixture.debugElement.querySelector('.sam-extension').value;
           expect(val).toBe(5);
         }
       )
-
-
     });
   })
 });

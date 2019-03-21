@@ -18,15 +18,17 @@ import { SamFormService } from '../../form-service';
   styles: [
     `
     .usa-fieldset-inputs {
-      max-width: 53rem;
+      max-width: 58rem;
     }
 
     .sam-international-phone-container {
       display: flex;
+      flex-wrap: wrap;
     }
 
     .sam-international-phone-prefix {
-      max-width: 15rem;
+      margin-left: 1rem;
+      max-width: 10rem;
     }
 
     .sam-international-extension {
@@ -36,10 +38,11 @@ import { SamFormService } from '../../form-service';
 
     .sam-international-phone-container * {
       display: inline-block;
-    }
+     }
 
     .sam-international-telephone {
       margin-left: 1rem;
+      max-width: 25rem;
       flex-grow: 4;
     }
 
