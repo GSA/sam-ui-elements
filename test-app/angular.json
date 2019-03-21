@@ -77,6 +77,10 @@
             "assets": [
               "src/assets",
               "src/favicon.ico"
+            ],
+            "codeCoverageExclude": [
+              "/**/*.module.ts"
+              , "/**/index.ts"
             ]
           }
         },
