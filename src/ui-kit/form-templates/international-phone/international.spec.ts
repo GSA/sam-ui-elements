@@ -17,6 +17,7 @@ import {
 import { SamFormControlsModule } from '../../form-controls';
 import { ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SamExtension } from './sam-extension';
 
 describe('The Sam International Phone Group', () => {
 
@@ -42,7 +43,8 @@ describe('The Sam International Phone Group', () => {
         declarations: [
           SamIntlPhoneGroup,
           SamInternationalPrefix,
-          SamTelephone
+          SamTelephone,
+          SamExtension
         ],
         providers: [
           SamFormService,
