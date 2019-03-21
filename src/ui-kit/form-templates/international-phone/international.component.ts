@@ -93,6 +93,7 @@ export class SamIntlPhoneGroup extends SamFieldset
   public phoneControl: AbstractControl;
   public extensionControl: AbstractControl;
   public prefixError: string = '';
+  public extensionError: string = '';
   public hint =
     'Country Code is 1 for USA and North America';
   public countryCode: string = '1';
@@ -104,7 +105,7 @@ export class SamIntlPhoneGroup extends SamFieldset
   }
 
   public ngOnInit () {
-    const msg = 'Phone and Prefix names required for 508 compliance';
+    const msg = 'Phone, Prefix and Extension names required for 508 compliance';
     
     if (!this.phoneName || !this.prefixName ||!this.extensionName ) {
       throw new TypeError(msg);

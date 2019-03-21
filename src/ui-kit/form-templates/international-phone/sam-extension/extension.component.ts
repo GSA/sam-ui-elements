@@ -40,8 +40,6 @@ export class SamExtension extends SamFormControl {
    */
    placeholder: string = 'ex: 1234';
   
-  public maxLength = 20;
-  @ViewChild('input') public input: ElementRef;
 
   public inputValue: any = '';
 
