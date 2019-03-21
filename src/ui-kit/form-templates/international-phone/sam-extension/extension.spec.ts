@@ -1,8 +1,15 @@
-import { SimpleChange } from '@angular/core';
-
-// Load the implementations that should be tested
 import { SamExtension } from './extension.component';
+import { ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  FormsModule,
+  FormControl,
+  ReactiveFormsModule } from '@angular/forms'; 
+import { TestBed } from '@angular/core/testing';
 
+import { SamFormService } from '../../../form-service';
+import { SamWrapperModule } from '../../../wrappers'; 
+import { SamFormControlsModule } from '../../../form-controls';
 
 const mockEvent = {
   currentTarget: {
@@ -10,83 +17,89 @@ const mockEvent = {
   }
 };
 
+describe('Sam International Prefix', () => {
 
-// describe('Sam Telephone Component', () => {
+  let component: SamExtension;
 
-//   let component: SamExtension;
+  describe('Standalone tests', () => {
 
-//   beforeEach(() => {
-//     component = new SamExtension(null, null);
-//     component.name = 'tel';
-//     component.label = 'Phone';
-//     component.placeholder = 'ex: (555)555-5555';
-//   });
-
-
-//   it('should set value to a number when input value\
-//     changes', () => {
-//       const expected = '1234567890';
-
-//       mockEvent.currentTarget.value = '(123)456-7890';
-//       component.inputChange(mockEvent);
-      
-//       expect(component.value).toEqual(expected);
-//   });
-
-//   it('should convert value from template to number when\
-//     value is set', () => {
-//     const expected = '1234567890';
-
-//     component.value = '(123)456-7890';
-
-//     expect(component.value).toEqual(expected);
-//   });
-
-//   it('should use international template if country code\
-//     is not 1', () => {
-
-//     const expected = '';
-//     const newCountry = 44;
-//     const changes = {
-//       countryCode: new SimpleChange(
-//         undefined,
-//         newCountry,
-//         false
-//       )
-//     };
-
-//     component.ngOnChanges(changes);
-
-//     expect(component.template).toEqual(expected);
-//   });
-
-//   it('should use international validation if country code\
-//     is not 1', () => {
-//     const expected = '1234567890123456'; // Len > 15 fails
-
-//     component.countryCode = 44;
-    
-//     expect('').not.toBeNull();
-//   });
-
-//   it('should format input value to numbers only when\
-//     element is focused', () => {
-//     const expected = '1234567890';
-
-//     mockEvent.currentTarget.value = '(123)456-7890';
-//     component.handleFocus(mockEvent);
-
-//     expect(component.inputValue).toEqual(expected);
-//   });
-
-//   it('should format input value to template string when\
-//     element is blurred', () => {
-//       const expected = '(123)456-7890';
-
-//       mockEvent.currentTarget.value = '1234567890';
-//       component.handleBlur(mockEvent);
+    beforeEach(() => {
+      component = new SamExtension(null, null);
+      component.name = 'tel';
+      component.label = 'Phone';
+    });
   
-//       expect(component.inputValue).toEqual(expected);
-//   });
+    it('should validate country code less than 999', () => {
+      const value = 5;
+      const control = new FormControl();
+      control.setValue(value);
+  
+      const errs = component.validate(control);
+  
+      expect(errs).toBe(null);
+    });
+  
+    it('should invalidate country code > 999', () => {
+      const value = 1000;
+      const errMsg = 'Country codes must be 3 numbers or fewer';
+      const control = new FormControl();
+      control.setValue(value);
+  
+      const errs = component.validate(control);
+  
+      expect(errs.extension.message).toBe(errMsg);
+    });
+  })
 
-// });
+
+
+  describe('Rendered tests', () => {
+    let fixture;
+
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          CommonModule,
+          FormsModule,
+          FormsModule,
+          ReactiveFormsModule,
+          SamWrapperModule,
+          SamFormControlsModule,
+        ],
+        declarations: [
+          SamExtension,
+        ],
+        providers: [
+          SamFormService,
+          ChangeDetectorRef
+        ]
+      });
+  
+      fixture = TestBed.createComponent(SamExtension);
+      component = fixture.componentInstance;
+      component.name = 'tel';
+      component.label = 'Phone';
+    });
+
+    it('should set internal value when input changes', () => {
+      const mock = {
+        currentTarget: {
+          value: '5'
+        }
+      };
+  
+      component.inputChange(mock);
+
+      fixture.detectChanges();
+      
+      fixture.whenStable().then(
+        () => {
+          const val = fixture.debugElement.querySelector('.sam-extension').value;
+          expect(val).toBe(5);
+        }
+      )
+
+
+    });
+  })
+});

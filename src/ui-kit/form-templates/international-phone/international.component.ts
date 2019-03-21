@@ -18,7 +18,7 @@ import { SamFormService } from '../../form-service';
   styles: [
     `
     .usa-fieldset-inputs {
-      max-width: 46rem;
+      max-width: 53rem;
     }
 
     .sam-international-phone-container {
@@ -31,7 +31,7 @@ import { SamFormService } from '../../form-service';
 
     .sam-international-extension {
       margin-left: 1rem;
-      flex-grow: 4;
+      max-width: 15rem;
     }
 
     .sam-international-phone-container * {

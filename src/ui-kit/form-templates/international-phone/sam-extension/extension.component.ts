@@ -33,12 +33,20 @@ import {
   ]
 })
 export class SamExtension extends SamFormControl {
+/**
+   * A placeholder value for the extention. In this 
+   * component, placeholder should represent the number
+   * format, e.g., 1234 .
+   */
+   placeholder: string = 'ex: 1234';
+  
   public maxLength = 20;
   @ViewChild('input') public input: ElementRef;
 
   public inputValue: any = '';
 
   protected defaultValue = '';
+  public defaultValidators = [ this.extensionValidator ];
 
   public get value(): any {
     return this._value;
@@ -66,7 +74,7 @@ export class SamExtension extends SamFormControl {
   public inputChange(event) {
     this.value = event.currentTarget.value
       ? event.currentTarget.value
-      : '1';
+      : '';
 
     this.onChange(this.value);
   }
@@ -83,5 +91,15 @@ export class SamExtension extends SamFormControl {
 
   public writeValue(val: any): void {
     this.value = val;
+  }
+
+  private extensionValidator (c: FormControl) {
+    const regex: RegExp = /^[0-9]{1,20}$/g;
+    const message =
+      'Phone extensions must only include numbers';
+
+    return c && c.value && !c.value.toString().match(regex)
+      ? { extension: { message: message } }
+      : null;
   }
 }
