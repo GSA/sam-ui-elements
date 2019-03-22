@@ -22,27 +22,22 @@ import { SamFormService } from '../../form-service';
     }
 
     .sam-international-phone-container {
-      display: flex;
       flex-wrap: wrap;
+      margin-top: 1rem;
     }
-
+    .sam-international-container {
+      display: flex;
+    }
     .sam-international-phone-prefix {
-      margin-left: 1rem;
       max-width: 10rem;
     }
 
     .sam-international-extension {
-      margin-left: 1rem;
       max-width: 15rem;
     }
 
-    .sam-international-phone-container * {
-      display: inline-block;
-     }
-
     .sam-international-telephone {
       margin-left: 1rem;
-      max-width: 25rem;
       flex-grow: 4;
     }
 
