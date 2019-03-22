@@ -17,6 +17,7 @@ import {
 import { SamFormControlsModule } from '../../form-controls';
 import { ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SamExtension } from './sam-extension';
 
 describe('The Sam International Phone Group', () => {
 
@@ -42,7 +43,8 @@ describe('The Sam International Phone Group', () => {
         declarations: [
           SamIntlPhoneGroup,
           SamInternationalPrefix,
-          SamTelephone
+          SamTelephone,
+          SamExtension
         ],
         providers: [
           SamFormService,
@@ -54,6 +56,7 @@ describe('The Sam International Phone Group', () => {
       component = fixture.componentInstance;
       component.phoneName = "test";
       component.prefixName = "test";
+      component.extensionName = "test";
       component.group = group;
     });
 
@@ -73,6 +76,7 @@ describe('The Sam International Phone Group', () => {
       () => {
         component.phoneName = '';
         component.prefixName = '';
+        component.extensionName = '';
 
         try {
           fixture.detectChanges();
@@ -82,6 +86,7 @@ describe('The Sam International Phone Group', () => {
           //fix component so it cleans up properly
           component.phoneName = 'a';
           component.prefixName = 'a';
+          component.extensionName = 'a';
           component.ngOnInit();
         }
     });
@@ -90,7 +95,6 @@ describe('The Sam International Phone Group', () => {
       () => {
       component.phoneName = 'asdf';
       component.prefixName = '';
-
       try {
         fixture.detectChanges();
         fail();

@@ -18,24 +18,39 @@ import { SamFormService } from '../../form-service';
   styles: [
     `
     .usa-fieldset-inputs {
-      max-width: 46rem;
+      max-width: 58rem;
     }
 
     .sam-international-phone-container {
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .sam-international-container {
       display: flex;
     }
-
     .sam-international-phone-prefix {
-      max-width: 12rem;
+      max-width: 10rem;
     }
 
-    .sam-international-phone-container * {
-      display: inline-block;
+    .sam-international-extension {
+      max-width: 15rem;
     }
 
     .sam-international-telephone {
       margin-left: 1rem;
-      flex-grow: 3;
+      flex-grow: 4;
+    }
+
+    .sam-extension {
+      width: 100%;
+    }
+
+    .sam-extension div {
+      width: 100%;
+    }
+
+    .sam-extension .label-wrapper-container {
+      width: 100%;
     }
 
     .sam-telephone {
@@ -62,13 +77,18 @@ export class SamIntlPhoneGroup extends SamFieldset
   @Input() public phoneName: string;
   @Input() public prefixName: string;
   @Input() public phoneLabel = 'Phone';
+  @Input() public extensionLabel = 'Extension';
+  @Input() public hasExtension: boolean = false;
+  @Input() public extensionName: string;
   @Input() public prefixLabel = 'Country Code';
 
   @ViewChild(FieldsetWrapper) public wrapper: FieldsetWrapper;
   
   public prefixControl: AbstractControl;
   public phoneControl: AbstractControl;
+  public extensionControl: AbstractControl;
   public prefixError: string = '';
+  public extensionError: string = '';
   public hint =
     'Country Code is 1 for USA and North America';
   public countryCode: string = '1';
@@ -80,9 +100,13 @@ export class SamIntlPhoneGroup extends SamFieldset
   }
 
   public ngOnInit () {
-    const msg = 'Phone and Prefix names required for 508 compliance';
+    const msg = 'Phone, Prefix and Extension names required for 508 compliance';
     
     if (!this.phoneName || !this.prefixName) {
+      throw new TypeError(msg);
+    }
+
+    if (!this.extensionName && this.hasExtension) {
       throw new TypeError(msg);
     }
 
@@ -103,6 +127,7 @@ export class SamIntlPhoneGroup extends SamFieldset
 
     this.prefixControl = this.group.controls.prefix;
     this.phoneControl = this.group.controls.phone;
+    this.extensionControl = this.group.controls.extension;
   }
 
   private _setValidationStrategy () {
@@ -124,7 +149,8 @@ export class SamIntlPhoneGroup extends SamFieldset
 
             this.wrapper.formatErrors(
               this.group.controls.prefix,
-              this.group.controls.phone
+              this.group.controls.phone,
+              this.group.controls.extension
             );
 
           } else if ((!evt.root
@@ -146,7 +172,8 @@ export class SamIntlPhoneGroup extends SamFieldset
 
           this.wrapper.formatErrors(
             this.group.controls.prefix,
-            this.group.controls.phone
+            this.group.controls.phone,
+            this.group.controls.extension
           );
         }
     );
