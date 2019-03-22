@@ -107,7 +107,11 @@ export class SamIntlPhoneGroup extends SamFieldset
   public ngOnInit () {
     const msg = 'Phone, Prefix and Extension names required for 508 compliance';
     
-    if (!this.phoneName || !this.prefixName ||!this.extensionName ) {
+    if (!this.phoneName || !this.prefixName) {
+      throw new TypeError(msg);
+    }
+
+    if (!this.extensionName && this.hasExtension) {
       throw new TypeError(msg);
     }
 
