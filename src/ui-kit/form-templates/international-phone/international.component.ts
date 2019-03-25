@@ -68,7 +68,7 @@ import { SamFormService } from '../../form-service';
       width: 100%;
     }
 
-    @media (max-width: 767px) {
+    @media (max-width: 624px) {
       .sam-international-phone-container{
         display: block;
       }
