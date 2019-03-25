@@ -41,9 +41,7 @@ import { SamFormService } from '../../form-service';
 
     .sam-international-telephone {
       margin-left: 1rem;
-     
       flex: 1 1 0;
-
     }
 
     .sam-extension {
