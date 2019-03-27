@@ -24,9 +24,11 @@ import { SamFormService } from '../../form-service';
     .sam-international-phone-container {
       flex-wrap: wrap;
       margin-top: 1rem;
+      display: flex;
     }
     .sam-international-container {
       display: flex;
+      flex: 1;
     }
     .sam-international-phone-prefix {
       max-width: 10rem;
@@ -34,11 +36,12 @@ import { SamFormService } from '../../form-service';
 
     .sam-international-extension {
       max-width: 15rem;
+      margin-left: 1rem;
     }
 
     .sam-international-telephone {
       margin-left: 1rem;
-      flex-grow: 4;
+      flex: 1 1 0;
     }
 
     .sam-extension {
@@ -63,6 +66,16 @@ import { SamFormService } from '../../form-service';
 
     .sam-telephone .label-wrapper-container {
       width: 100%;
+    }
+
+    @media (max-width: 624px) {
+      .sam-international-phone-container{
+        display: block;
+      }
+
+      .sam-international-extension {
+        margin-left: 0rem;
+      }
     }
     `
   ],
