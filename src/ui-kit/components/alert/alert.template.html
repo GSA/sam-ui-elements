@@ -11,7 +11,7 @@
       <ng-content select="[main-content]"></ng-content>
     </div>
   <div *ngIf="showMoreToggle!==undefined" class="show-hide-toggle">
-      <a (click)="toggleContent()" tabindex="0" (keyup.enter)="toggleContent()">{{showMoreLinkText}}</a>
+      <button class="sam button secondary small" (click)="toggleContent()" tabindex="0" (keyup.enter)="toggleContent()">{{showMoreLinkText}}</button>
     </div>
   </div>
 </div>
