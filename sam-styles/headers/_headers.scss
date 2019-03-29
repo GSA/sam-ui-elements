@@ -37,7 +37,7 @@
     background-color: #EFF6FB !important;
   }
   .usa-nav-submenu{
-    width: 19rem !important;
+    width: 20rem !important;
   }
   #extended-nav-section-one, #extended-nav-section-two{
     background-color: #EFF6FB;
@@ -122,6 +122,9 @@
 }
 .sam-main-content{
   height: 500px;
+}
+.usa-nav, .usa-nav-inner{
+  max-height: 50px;
 }
 ///SAM BAKER - FOOTER
 //--------------------------------
