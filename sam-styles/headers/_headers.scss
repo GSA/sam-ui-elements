@@ -6,3 +6,215 @@
 .sam.heading.middle.aligned{
   align-items: center;
 }
+
+///SAM BAKER - HEADER
+//--------------------------------
+.usa-menu-btn.sam-header-menu-btn{
+  background-color: transparent !important;
+}
+
+@media screen and (min-width: 1024px){
+  .sam-mobile-usa-unstyled-list{
+    display: none !important;
+  }
+  #sam-navbar{
+    background-color: white;
+  }
+  #sam-navbar-content> *> *> *{
+    font-size: 20px !important;
+    color: #212121 !important;
+    letter-spacing: 0 !important;
+    line-height: 14px !important;
+    font-weight: normal !important;
+  }
+  .usa-nav-link{
+    display: inherit;
+  }
+  .usa-accordion-button .usa-nav-link>span::after{
+    background-color: #70E17B !important;
+  }
+  .usa-nav-primary button[aria-expanded=true]{
+    background-color: #EFF6FB !important;
+  }
+  .usa-nav-submenu{
+    width: 20rem !important;
+  }
+  #extended-nav-section-one, #extended-nav-section-two{
+    background-color: #EFF6FB;
+  }
+  #extended-nav-section-one> li> a{
+    font-size: 18px;
+    color: #212121;
+    text-align: left;
+    line-height: 30px;
+  }
+  #extended-nav-section-two> li> a{
+    font-size: 18px;
+    color: #212121;
+    text-align: left;
+    line-height: 30px;
+  }
+  .navbar-btn{
+    text-decoration: none;
+    padding: 0 20px;
+  }
+  .usa-header-extended .usa-current::after, .usa-header-extended [aria-expanded=true]::after, .usa-header-extended .usa-nav-link:hover::after{
+    background-color: #70E17B !important;
+    width: 100% !important;
+    left: 1px !important;
+    right: 1px !important;
+  }
+  .usa-nav-link{
+    text-decoration:none !important;
+  }
+  .usa-accordian-button, .usa-nav-link, .usa-focus{
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  #sam-secondary-header-nav> li{
+    display: inline-block !important;
+    font-size: 14px;
+    color: #757575;
+    letter-spacing: 0;
+    line-height: 12.6px;
+    margin: 10px;
+  }
+  #sam-secondary-header-nav> li:hover{
+    color: red;
+  }
+  .usa-nav-secondary{
+    position: relative !important;
+  }
+  .sam-header> .usa-header-extended .usa-navbar{
+    margin: 0 30px;
+    padding: 0;
+    max-width: none;
+    max-height: 10rem;
+    overflow: hidden;
+  }
+  #sam-usa-navbar{
+    margin: 0 3rem;
+    padding: 0;
+  }
+  .usa-nav, .usa-nav-inner{
+    max-height: 50px;
+  }
+}
+.usa-nav-primary button[aria-expanded=false] {
+    background-image: url(/assets/sam-styles/uswds/img/arrow-right.png);
+    background-image: url(/assets/sam-styles/uswds/img/arrow-right.svg), linear-gradient(transparent, transparent) !important;
+    background-repeat: no-repeat;
+    background-position: right 0 center;
+    background-size: 1.2rem;
+}
+@media screen and (max-width: 1024px){
+  .sam-usa-unstyled-list{
+    display: none !important;
+  }
+  .usa-nav.is-visible{
+    background-color: #EFF6FB;
+  }
+  // .usa-nav-primary button:hover{
+  //   background-color: #EFF6FB;
+  // }
+}
+.navbar-btn{
+  color:#4A4A4A;
+}
+.sam-mobile-usa-unstyled-list>li > a{
+  font-size: 1.7rem;
+  line-height: 1;
+  color: #757575;
+  text-align: left;
+  padding: 12px 16px;
+}
+.sam-sign-out>a{
+  color: black !important;
+}
+.beta-sam-logo{
+  //margin: 20px !important;
+  max-height: 44px;
+}
+.sam-main-content{
+  height: 400px;
+}
+
+///SAM BAKER - FOOTER
+//--------------------------------
+.sam-footer{
+  display: block;
+  background-color: #ECF1F7;
+  box-sizing: content-box;
+  padding: 10px 200px;
+}
+.sam-footer-content{
+  display: flex;
+  flex-direction: row;
+  margin: 20px 0;
+}
+.sam-footer-text{
+  width: 100%;
+  font-family: SourceSansPro-Regular;
+  font-size: 13px;
+  color: #323A44;
+  text-align: left;
+  line-height:normal;
+}
+.sam-footer-logo{
+  width: 200px;
+}
+.sam-footer-logo>img{
+  max-height: 90px;
+}
+.sam-footer-logo-text{
+  color: #005088;
+  word-wrap: wrap;
+  margin-top: 5px;
+}
+.sam-footer-links{
+  display: flex;
+  flex-direction: column;
+  margin: 15px 20px;
+  width: 200px;
+}
+.sam-footer-links>h4{
+  //font-family: SourceSansPro-Bold;
+  font-size: 18px;
+  color: #212121;
+  letter-spacing: 0;
+  font-weight:bold;
+}
+.sam-footer-links>a{
+  //font-family: SourceSansPro-Regular;
+  font-size: 16px;
+  color: #205493;
+  letter-spacing: 0;
+  line-height: 26px;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 1024px){
+  .sam-footer{
+    padding: 5% 10%;
+  }
+  .sam-footer-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .sam-footer-logo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .sam-footer-logo-text{
+    font-size: 16;
+  }
+  .sam-footer-links{
+    padding-top: 10px;
+    text-align: center;
+  }
+  .sam-footer-text{
+    text-align: center;
+  }
+}
