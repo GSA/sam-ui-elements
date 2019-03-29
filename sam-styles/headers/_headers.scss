@@ -9,14 +9,18 @@
 
 ///SAM BAKER - HEADER
 //--------------------------------
-/* Dropdown Button */
+.usa-menu-btn.sam-header-menu-btn{
+  background-color: transparent !important;
+}
+
 @media screen and (min-width: 1024px){
+  .sam-mobile-usa-unstyled-list{
+    display: none !important;
+  }
   #sam-navbar{
     background-color: white;
   }
-
   #sam-navbar-content> *> *> *{
-    font-family: SourceSansPro-Regular !important;
     font-size: 20px !important;
     color: #212121 !important;
     letter-spacing: 0 !important;
@@ -32,26 +36,27 @@
   .usa-nav-primary button[aria-expanded=true]{
     background-color: #EFF6FB !important;
   }
+  .usa-nav-submenu{
+    width: 19rem !important;
+  }
   #extended-nav-section-one, #extended-nav-section-two{
     background-color: #EFF6FB;
   }
   #extended-nav-section-one> li> a{
-    font-family: SourceSansPro-Regular;
     font-size: 18px;
     color: #212121;
     text-align: left;
-    line-height: 20px;
+    line-height: 30px;
   }
   #extended-nav-section-two> li> a{
-    font-family: SourceSansPro-Regular;
     font-size: 18px;
     color: #212121;
     text-align: left;
-    line-height: 20px;
+    line-height: 30px;
   }
   .navbar-btn{
     text-decoration: none;
-    padding: 0 10px;
+    padding: 0 20px;
   }
   .usa-header-extended .usa-current::after, .usa-header-extended [aria-expanded=true]::after, .usa-header-extended .usa-nav-link:hover::after{
     background-color: #70E17B !important;
@@ -68,7 +73,6 @@
   }
   #sam-secondary-header-nav> li{
     display: inline-block !important;
-    font-family: SourceSansPro-Regular;
     font-size: 14px;
     color: #757575;
     letter-spacing: 0;
@@ -80,9 +84,6 @@
   }
   .usa-nav-secondary{
     position: relative !important;
-  }
-  .usa-logo{
-    margin-top: 1rem !important;
   }
   .sam-header> .usa-header-extended .usa-navbar{
     margin: 0 30px;
@@ -97,6 +98,28 @@
   }
 }
 
+@media screen and (max-width: 1024px){
+  .sam-usa-unstyled-list{
+    display: none !important;
+  }
+}
+.navbar-btn{
+  color:#4A4A4A;
+}
+.sam-mobile-usa-unstyled-list>li > a{
+  font-size: 1.7rem;
+  line-height: 1;
+  color: #757575;
+  text-align: left;
+  padding: 12px 16px;
+}
+.sam-sign-out>a{
+  color: black !important;
+}
+.beta-sam-logo{
+  //margin: 20px !important;
+  max-height: 44px;
+}
 .sam-main-content{
   height: 500px;
 }
@@ -130,11 +153,12 @@
 .sam-footer-logo-text{
   color: #005088;
   word-wrap: wrap;
+  margin-top: 5px;
 }
 .sam-footer-links{
   display: flex;
   flex-direction: column;
-  margin: 0 20px;
+  margin: 15px 20px;
   width: 200px;
 }
 .sam-footer-links>h4{
