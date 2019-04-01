@@ -12,7 +12,9 @@
 .usa-menu-btn.sam-header-menu-btn{
   background-color: transparent !important;
 }
-
+.usa-nav-close img {
+    width: 7rem !important;
+}
 @media screen and (min-width: 1024px){
   .sam-mobile-usa-unstyled-list{
     display: none !important;
@@ -54,7 +56,7 @@
     text-align: left;
     line-height: 30px;
   }
-  .navbar-btn{
+  .navbar-btn> a{
     text-decoration: none;
     padding: 0 20px;
   }
@@ -79,9 +81,7 @@
     line-height: 12.6px;
     margin: 10px;
   }
-  #sam-secondary-header-nav> li:hover{
-    color: red;
-  }
+
   .usa-nav-secondary{
     position: relative !important;
   }
@@ -95,18 +95,27 @@
   #sam-usa-navbar{
     margin: 0 3rem;
     padding: 0;
+    background-color: white;
+  }
+  .usa-header{
+    background-color: white;
   }
   .usa-nav, .usa-nav-inner{
     max-height: 50px;
   }
+  .usa-nav-primary button[aria-expanded=false] {
+      background-image: url(/assets/sam-styles/uswds/img/arrow-down.png);
+      background-image: url(/assets/sam-styles/uswds/img/arrow-down.svg), linear-gradient(transparent, transparent) !important;
+      background-repeat: no-repeat;
+      background-position: right 0 center;
+      background-size: 1.2rem;
+  }
+  .sam-header-secondary-link{
+    display: flex;
+    align-items: baseline;
+  }
 }
-.usa-nav-primary button[aria-expanded=false] {
-    background-image: url(/assets/sam-styles/uswds/img/arrow-right.png);
-    background-image: url(/assets/sam-styles/uswds/img/arrow-right.svg), linear-gradient(transparent, transparent) !important;
-    background-repeat: no-repeat;
-    background-position: right 0 center;
-    background-size: 1.2rem;
-}
+
 @media screen and (max-width: 1024px){
   .sam-usa-unstyled-list{
     display: none !important;
@@ -114,13 +123,31 @@
   .usa-nav.is-visible{
     background-color: #EFF6FB;
   }
-  // .usa-nav-primary button:hover{
-  //   background-color: #EFF6FB;
-  // }
+  .usa-nav-primary button[aria-expanded=false] {
+      background-image: url(/assets/sam-styles/uswds/img/arrow-right.png);
+      background-image: url(/assets/sam-styles/uswds/img/arrow-right.svg), linear-gradient(transparent, transparent) !important;
+      background-repeat: no-repeat;
+      background-position: right 0 center;
+      background-size: 1.2rem;
+  }
+  .usa-nav-primary button[aria-expanded=true] {
+    background-image: url(/assets/sam-styles/uswds/img/arrow-down.png);
+    background-image: url(/assets/sam-styles/uswds/img/arrow-down.svg), linear-gradient(transparent, transparent) !important;
+    background-repeat: no-repeat;
+    background-position: right 0 center;
+    background-size: 1.2rem;
+  }
+  #sam-header-btn:hover{
+    background-color: #EFF6FB !important;
+  }
+  #sam-header-btn:focus{
+    border-bottom: 3px solid #70E17B;
+    outline: none !important;
+    box-shadow: none !important;
+    color: #212121;
+  }
 }
-.navbar-btn{
-  color:#4A4A4A;
-}
+
 .sam-mobile-usa-unstyled-list>li > a{
   font-size: 1.7rem;
   line-height: 1;
@@ -132,7 +159,6 @@
   color: black !important;
 }
 .beta-sam-logo{
-  //margin: 20px !important;
   max-height: 44px;
 }
 .sam-main-content{
@@ -145,7 +171,7 @@
   display: block;
   background-color: #ECF1F7;
   box-sizing: content-box;
-  padding: 10px 200px;
+  padding: 10px 150px;
 }
 .sam-footer-content{
   display: flex;
@@ -175,7 +201,7 @@
   display: flex;
   flex-direction: column;
   margin: 15px 20px;
-  width: 200px;
+  width: 220px;
 }
 .sam-footer-links>h4{
   //font-family: SourceSansPro-Bold;
