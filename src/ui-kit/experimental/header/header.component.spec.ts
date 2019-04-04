@@ -1,6 +1,7 @@
 /* tslint:disable */
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { SamHeaderComponent } from './header.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 
 
@@ -11,7 +12,7 @@ describe('SamHeaderComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SamHeaderComponent],
-      imports: []
+      imports: [RouterTestingModule]
     })
       .compileComponents();
   }));
