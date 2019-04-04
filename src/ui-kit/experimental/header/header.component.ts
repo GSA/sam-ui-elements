@@ -15,26 +15,26 @@ export class SamHeaderComponent {
 
 }
 
-export class HeaderModel {
+export interface HeaderModel {
   home:HeaderHome;
   secondaryLinks: HeaderSecondaryLink[];
   navigationLinks: HeaderNavigationLink[];
 }
 
-export class HeaderHome{
+export interface HeaderHome{
   text: string;
   route: string;
   imageSourcePath:string;
   imageAltText: string;
 }
 
-export class HeaderNavigationLink {
+export interface HeaderNavigationLink {
   text: string;
   route: string;
   children: HeaderNavigationLink[];
 }
 
-export class HeaderSecondaryLink {
+export interface HeaderSecondaryLink {
   text: string;
   route: string;
   imageSourcePath: string;
