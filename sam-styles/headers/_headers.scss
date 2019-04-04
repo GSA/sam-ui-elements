@@ -13,7 +13,11 @@
   background-color: transparent !important;
 }
 .usa-nav-close img {
-    width: 7rem !important;
+    width: 3rem !important;
+}
+.usa-nav-close{
+  float: left;
+  margin-bottom: 0px !important;
 }
 @media screen and (min-width: 1024px){
   .sam-mobile-usa-unstyled-list{
@@ -39,7 +43,7 @@
     background-color: #EFF6FB !important;
   }
   .usa-nav-submenu{
-    width: 20rem !important;
+    width: 24rem !important;
   }
   #extended-nav-section-one, #extended-nav-section-two{
     background-color: #EFF6FB;
@@ -122,6 +126,9 @@
   }
   .usa-nav.is-visible{
     background-color: #EFF6FB;
+  }
+  .usa-nav-primary{
+    padding-top: 0 !important;
   }
   .usa-nav-primary button[aria-expanded=false] {
       background-image: url(/assets/sam-styles/uswds/img/arrow-right.png);
