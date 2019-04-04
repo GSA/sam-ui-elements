@@ -16,8 +16,16 @@ export class SamHeaderComponent {
 }
 
 export class HeaderModel {
+  home:HeaderHome;
   secondaryLinks: HeaderSecondaryLink[];
   navigationLinks: HeaderNavigationLink[];
+}
+
+export class HeaderHome{
+  text: string;
+  route: string;
+  imageSourcePath:string;
+  imageAltText: string;
 }
 
 export class HeaderNavigationLink {

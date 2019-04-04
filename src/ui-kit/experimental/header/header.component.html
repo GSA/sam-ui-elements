@@ -42,8 +42,8 @@
     <div class="usa-navbar">
       <div class="usa-logo" id="extended-logo">
         <em class="usa-logo-text">
-          <a href="/" title="Home" aria-label="Home">
-            <img src="\assets\img\sam-r9-logo-color.png" alt="Beta Sam Logo" class="beta-sam-logo">
+          <a href="/" [attr.title]="model.home.text" [attr.aria-label]="model.home.text">
+            <img [attr.src]="model.home.imageSourcePath" [attr.alt]="model.home.imageAltText" class="beta-sam-logo">
           </a>
         </em>
       </div>
@@ -76,17 +76,8 @@
 
         <div class="usa-nav-secondary">
           <ul class="sam-mobile-usa-unstyled-list usa-nav-secondary-links" id="sam-secondary-mobile-header-nav">
-            <li>
-              <a href="https://beta.sam.gov/workspace">Messages</a>
-            </li>
-            <li>
-              <a href="https://beta.sam.gov/workspace">Requests</a>
-            </li>
-            <li>
-              <a href="https://beta.sam.gov/workspace">Workspace</a>
-            </li>
-            <li class="sam-sign-out">
-              <a href="">Sign Out</a>
+            <li *ngFor="let link of model.secondaryLinks">
+              <a href="/">{{link.text}}</a>
             </li>
           </ul>
         </div>
