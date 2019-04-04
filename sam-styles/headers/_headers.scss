@@ -16,8 +16,11 @@
     width: 3rem !important;
 }
 .usa-nav-close{
-  float: left;
+  float: left !important;
   margin-bottom: 0px !important;
+}
+.usa-nav-close::after{
+  clear: both;
 }
 @media screen and (min-width: 1024px){
   .sam-mobile-usa-unstyled-list{
@@ -152,6 +155,9 @@
     outline: none !important;
     box-shadow: none !important;
     color: #212121;
+  }
+  .sam-mobile-usa-unstyled-list > li > a > img{
+    padding: 0 10px;
   }
 }
 
