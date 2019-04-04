@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, TemplateRef, ElementRef, forwardRef } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 
 @Component({
@@ -7,36 +7,97 @@ import { Component, Input, ViewChild, TemplateRef, ElementRef, forwardRef } from
   styleUrls: ['./header.component.scss']
 })
 export class SamHeaderComponent {
+
+  /**
+   * 
+   */
   @Input() model: HeaderModel;
 
+  /**
+   * Takes in a text string and removes all white space characters and returns the new string
+   * @param text 
+   */
   removeWhiteSpace(text: string) {
     return text.replace(/ /g, '');
   }
 
 }
 
+/**
+ * 
+ */
 export interface HeaderModel {
-  home:HeaderHome;
+  home: HeaderHome;
   secondaryLinks: HeaderSecondaryLink[];
   navigationLinks: HeaderNavigationLink[];
 }
 
-export interface HeaderHome{
+/**
+ * 
+ */
+export interface HeaderHome {
+  /**
+   * 
+   */
   text: string;
+
+  /**
+   * 
+   */
   route: string;
-  imageSourcePath:string;
+
+  /**
+   * 
+   */
+  imageSourcePath: string;
+
+  /**
+   * 
+   */
   imageAltText: string;
 }
 
+/**
+ * 
+ */
 export interface HeaderNavigationLink {
+  /**
+   * 
+   */
   text: string;
+
+  /**
+   * 
+   */
   route: string;
+
+  /**
+   * 
+   */
   children: HeaderNavigationLink[];
 }
 
+/**
+ * 
+ */
 export interface HeaderSecondaryLink {
+  /**
+   * 
+   */
   text: string;
+
+  /**
+   * 
+   */
   route: string;
+
+  /**
+   * 
+   */
   imageSourcePath: string;
+
+  /**
+   * 
+   */
   imageAltText: string;
 }

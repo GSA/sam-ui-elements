@@ -26,6 +26,13 @@ describe('SamHeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should remove white space', () => {
+    let before ='T E S T';
+    let after ='TEST';
+    expect(component.removeWhiteSpace(before)).toBe(after);
+  });
+
+
  
 });
 
