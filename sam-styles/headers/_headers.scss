@@ -41,21 +41,16 @@
   .usa-nav-submenu{
     width: 20rem !important;
   }
-  #extended-nav-section-one, #extended-nav-section-two{
-    background-color: #EFF6FB;
+  .sam-header-extended-nav-section{
+    background-color: #EFF6FB !important;
   }
-  #extended-nav-section-one> li> a{
+  .sam-header-extended-nav-section> li> a{
     font-size: 18px;
     color: #212121;
     text-align: left;
     line-height: 30px;
   }
-  #extended-nav-section-two> li> a{
-    font-size: 18px;
-    color: #212121;
-    text-align: left;
-    line-height: 30px;
-  }
+
   .navbar-btn> a{
     text-decoration: none;
     padding: 0 20px;
@@ -137,14 +132,14 @@
     background-position: right 0 center;
     background-size: 1.2rem;
   }
-  #sam-header-btn:hover{
+  .sam-header-btn:hover{
     background-color: #EFF6FB !important;
   }
-  #sam-header-btn:focus{
-    border-bottom: 3px solid #70E17B;
+  .sam-header-btn:focus{
+    border-bottom: 3px solid #70E17B !important;
     outline: none !important;
     box-shadow: none !important;
-    color: #212121;
+    color: #212121 !important;
   }
 }
 
