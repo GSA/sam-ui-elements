@@ -13,7 +13,14 @@
   background-color: transparent !important;
 }
 .usa-nav-close img {
-    width: 7rem !important;
+    width: 3rem !important;
+}
+.usa-nav-close{
+  float: left !important;
+  margin-bottom: 0px !important;
+}
+.usa-nav-close::after{
+  clear: both;
 }
 @media screen and (min-width: 1024px){
   .sam-mobile-usa-unstyled-list{
@@ -39,7 +46,7 @@
     background-color: #EFF6FB !important;
   }
   .usa-nav-submenu{
-    width: 20rem !important;
+    width: 24rem !important;
   }
   .sam-header-extended-nav-section{
     background-color: #EFF6FB !important;
@@ -118,6 +125,9 @@
   .usa-nav.is-visible{
     background-color: #EFF6FB;
   }
+  .usa-nav-primary{
+    padding-top: 0 !important;
+  }
   .usa-nav-primary button[aria-expanded=false] {
       background-image: url(/assets/sam-styles/uswds/img/arrow-right.png);
       background-image: url(/assets/sam-styles/uswds/img/arrow-right.svg), linear-gradient(transparent, transparent) !important;
@@ -140,6 +150,9 @@
     outline: none !important;
     box-shadow: none !important;
     color: #212121 !important;
+  }
+  .sam-mobile-usa-unstyled-list > li > a > img{
+    padding: 0 10px;
   }
 }
 
@@ -166,7 +179,8 @@
   display: block;
   background-color: #ECF1F7;
   box-sizing: content-box;
-  padding: 10px 150px;
+  padding: 10px 10%;
+  margin: auto;
 }
 .sam-footer-content{
   display: flex;

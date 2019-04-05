@@ -1,10 +1,10 @@
 {
   "name": "@gsa-sam/sam-ui-elements",
-  "version": "0.8.12",
+  "version": "0.8.13",
   "description": "SAM UI library",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/GSA/sam-ui-elements.git"
+    "type": "git",
+    "url": "https://github.com/GSA/sam-ui-elements.git"
   },
   "engines": {
     "node": ">=10.0.0"
