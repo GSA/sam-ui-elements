@@ -1,0 +1,19 @@
+<footer class="sam-footer">
+  <div class="sam-footer-content">
+    <div class="sam-footer-logo">
+      <img [attr.src]="model.footerLogo.imageSourcePath" [attr.alt]="model.footerLogo.imageAltText">
+      <h4 class="sam-footer-logo-text">{{model.footerLogo.text}}</h4>
+    </div>
+    <div *ngFor="let section of model.linkSections" class="sam-footer-links">
+      <h4>{{section.text}}</h4>
+      <a *ngFor="let link of section.links" [routerLink]="[link.route]">{{link.text}}
+      </a>
+    </div>
+  </div>
+  <div class="sam-footer-text">
+    This is a U.S. General Services Administration Federal Government computer
+    system that is <b>"FOR OFFICIAL USE ONLY."</b> This system is subject to monitoring.
+    Individuals found performing unauthorized activities are subject to disciplinary
+    action including criminal prosecution.
+  </div>
+</footer>
