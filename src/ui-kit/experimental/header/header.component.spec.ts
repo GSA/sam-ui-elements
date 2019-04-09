@@ -5,7 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 
 
-fdescribe('SamHeaderComponent', () => {
+describe('SamHeaderComponent', () => {
   let component: SamHeaderComponent;
   let fixture: ComponentFixture<SamHeaderComponent>;
 
