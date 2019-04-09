@@ -51,20 +51,21 @@ export class SamHeaderComponent {
   }
 
   find(id: string) {
+    let toReturn = null;
     if (this.model.home) {
       if (this.model.home.id === id) {
-        return this.model.home;
+        toReturn = this.model.home;
       }
     }
     if (this.model.navigationLinks) {
       this.model.navigationLinks.forEach(function (item: HeaderNavigationLink) {
         if (item.id === id) {
-          return item;
+          toReturn = item;
         }
         if (item.children) {
           item.children.forEach(function (child: HeaderNavigationLink) {
             if (child.id === id) {
-              return child;
+              toReturn = child;
             }
           });
         }
@@ -73,11 +74,11 @@ export class SamHeaderComponent {
     if (this.model.secondaryLinks) {
       this.model.secondaryLinks.forEach(function (item: HeaderSecondaryLink) {
         if (item.id === id) {
-          return item;
+          toReturn = item;
         }
       });
     }
-    return null;
+    return toReturn;
   }
 
 }

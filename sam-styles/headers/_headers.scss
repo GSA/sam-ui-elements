@@ -1,51 +1,62 @@
 // HEADERS
 // --------------------------------
-.sam.heading{
+
+.sam.heading {
   display: flex;
 }
-.sam.heading.middle.aligned{
+
+.sam.heading.middle.aligned {
   align-items: center;
 }
-
 ///SAM BAKER - HEADER
 //--------------------------------
-.usa-menu-btn.sam-header-menu-btn{
+
+.usa-menu-btn.sam-header-menu-btn {
   background-color: transparent !important;
 }
+
 .usa-nav-close img {
-    width: 3rem !important;
+  width: 3rem !important;
 }
-.usa-nav-close{
+
+.usa-nav-close {
   float: left !important;
-  margin-bottom: 0px !important;
+  margin-bottom: 0 !important;
 }
-.usa-nav-close::after{
+
+.usa-nav-close::after {
   clear: both;
 }
-@media screen and (min-width: 1024px){
-  .sam-mobile-usa-unstyled-list{
+@media screen and (min-width: 1024px) {
+  .sam-mobile-usa-unstyled-list {
     display: none !important;
   }
-  #sam-navbar{
+
+  #sam-navbar {
     background-color: white;
   }
-  #sam-navbar-content> *> *> *{
+
+  #sam-navbar-content > * > * > * {
     font-size: 20px !important;
     color: #212121 !important;
     letter-spacing: 0 !important;
     line-height: 14px !important;
     font-weight: normal !important;
   }
-  .usa-nav-link{
+
+  .usa-nav-link {
     display: inherit;
   }
-  .usa-accordion-button .usa-nav-link>span::after{
+
+  .usa-accordion-button .usa-nav-link > span::after {
     background-color: #70E17B !important;
   }
-  .usa-nav-primary button[aria-expanded=true]{
+
+  .usa-nav-primary button[aria-expanded=true] {
     background-color: #EFF6FB !important;
   }
-  .usa-nav-submenu{
+
+  .usa-nav-submenu {
     width: 24rem !important;
   }
   .sam-header-extended-nav-section{
@@ -58,24 +69,33 @@
     line-height: 30px;
   }
 
-  .navbar-btn> a{
+
+  .navbar-btn > a {
     text-decoration: none;
     padding: 0 20px;
   }
-  .usa-header-extended .usa-current::after, .usa-header-extended [aria-expanded=true]::after, .usa-header-extended .usa-nav-link:hover::after{
+
+  .usa-header-extended .usa-current::after,
+  .usa-header-extended .usa-nav-link:hover::after,
+  .usa-header-extended [aria-expanded=true]::after {
     background-color: #70E17B !important;
     width: 100% !important;
     left: 1px !important;
     right: 1px !important;
   }
-  .usa-nav-link{
-    text-decoration:none !important;
+
+  .usa-nav-link {
+    text-decoration: none !important;
   }
-  .usa-accordian-button, .usa-nav-link, .usa-focus{
+
+  .usa-accordian-button,
+  .usa-focus,
+  .usa-nav-link {
     outline: none !important;
     box-shadow: none !important;
   }
-  #sam-secondary-header-nav> li{
+
+  #sam-secondary-header-nav > li {
     display: inline-block !important;
     font-size: 14px;
     color: #757575;
@@ -84,59 +104,69 @@
     margin: 10px;
   }
 
-  .usa-nav-secondary{
+  .usa-nav-secondary {
     position: relative !important;
   }
-  .sam-header> .usa-header-extended .usa-navbar{
+
+  .sam-header > .usa-header-extended .usa-navbar {
     margin: 0 30px;
     padding: 0;
     max-width: none;
     max-height: 10rem;
     overflow: hidden;
   }
-  #sam-usa-navbar{
+
+  #sam-usa-navbar {
     margin: 0 3rem;
     padding: 0;
     background-color: white;
   }
-  .usa-header{
+
+  .usa-header {
     background-color: white;
   }
-  .usa-nav, .usa-nav-inner{
+
+  .usa-nav,
+  .usa-nav-inner {
     max-height: 50px;
   }
+
   .usa-nav-primary button[aria-expanded=false] {
-      background-image: url(/assets/sam-styles/uswds/img/arrow-down.png);
-      background-image: url(/assets/sam-styles/uswds/img/arrow-down.svg), linear-gradient(transparent, transparent) !important;
-      background-repeat: no-repeat;
-      background-position: right 0 center;
-      background-size: 1.2rem;
+    background-image: url("/assets/sam-styles/uswds/img/arrow-down.png");
+    background-image: url(/assets/sam-styles/uswds/img/arrow-down.svg), linear-gradient(transparent, transparent) !important;
+    background-repeat: no-repeat;
+    background-position: right 0 center;
+    background-size: 1.2rem;
   }
-  .sam-header-secondary-link{
+
+  .sam-header-secondary-link {
     display: flex;
     align-items: baseline;
   }
 }
-
-@media screen and (max-width: 1024px){
-  .sam-usa-unstyled-list{
+@media screen and (max-width: 1024px) {
+  .sam-usa-unstyled-list {
     display: none !important;
   }
-  .usa-nav.is-visible{
+
+  .usa-nav.is-visible {
     background-color: #EFF6FB;
   }
-  .usa-nav-primary{
+
+  .usa-nav-primary {
     padding-top: 0 !important;
   }
+
   .usa-nav-primary button[aria-expanded=false] {
-      background-image: url(/assets/sam-styles/uswds/img/arrow-right.png);
-      background-image: url(/assets/sam-styles/uswds/img/arrow-right.svg), linear-gradient(transparent, transparent) !important;
-      background-repeat: no-repeat;
-      background-position: right 0 center;
-      background-size: 1.2rem;
+    background-image: url("/assets/sam-styles/uswds/img/arrow-right.png");
+    background-image: url(/assets/sam-styles/uswds/img/arrow-right.svg), linear-gradient(transparent, transparent) !important;
+    background-repeat: no-repeat;
+    background-position: right 0 center;
+    background-size: 1.2rem;
   }
+
   .usa-nav-primary button[aria-expanded=true] {
-    background-image: url(/assets/sam-styles/uswds/img/arrow-down.png);
+    background-image: url("/assets/sam-styles/uswds/img/arrow-down.png");
     background-image: url(/assets/sam-styles/uswds/img/arrow-down.svg), linear-gradient(transparent, transparent) !important;
     background-repeat: no-repeat;
     background-position: right 0 center;
@@ -151,105 +181,117 @@
     box-shadow: none !important;
     color: #212121 !important;
   }
-  .sam-mobile-usa-unstyled-list > li > a > img{
+
+  .sam-mobile-usa-unstyled-list > li > a > img {
     padding: 0 10px;
   }
 }
 
-.sam-mobile-usa-unstyled-list>li > a{
+.sam-mobile-usa-unstyled-list > li > a {
   font-size: 1.7rem;
   line-height: 1;
   color: #757575;
   text-align: left;
   padding: 12px 16px;
 }
-.sam-sign-out>a{
+
+.sam-sign-out > a {
   color: black !important;
 }
-.beta-sam-logo{
+
+.beta-sam-logo {
   max-height: 44px;
 }
-.sam-main-content{
+
+.sam-main-content {
   height: 400px;
 }
-
 ///SAM BAKER - FOOTER
 //--------------------------------
-.sam-footer{
+
+.sam-styles.sam-footer {
   display: block;
   background-color: #ECF1F7;
   box-sizing: content-box;
-  padding: 10px 10%;
-  margin: auto;
+  padding: 15px 0;
 }
-.sam-footer-content{
+
+.sam-footer-content {
   display: flex;
   flex-direction: row;
-  margin: 20px 0;
+  margin: auto;
+  max-width: 70%;
 }
-.sam-footer-text{
-  width: 100%;
+
+.sam-footer-text {
+  width: 80%;
+  margin: auto;
   font-family: SourceSansPro-Regular;
   font-size: 13px;
   color: #323A44;
   text-align: left;
-  line-height:normal;
+  line-height: normal;
 }
-.sam-footer-logo{
+
+.sam-footer-logo {
   width: 200px;
 }
-.sam-footer-logo>img{
+
+.sam-footer-logo > img {
   max-height: 90px;
 }
-.sam-footer-logo-text{
+
+.sam-footer-logo-text {
   color: #005088;
   word-wrap: wrap;
   margin-top: 5px;
 }
-.sam-footer-links{
+
+.sam-footer-links {
   display: flex;
   flex-direction: column;
   margin: 15px 20px;
   width: 220px;
 }
-.sam-footer-links>h4{
-  //font-family: SourceSansPro-Bold;
+
+.sam-footer-links > h4 {
   font-size: 18px;
   color: #212121;
   letter-spacing: 0;
-  font-weight:bold;
+  font-weight: bold;
 }
-.sam-footer-links>a{
-  //font-family: SourceSansPro-Regular;
+
+.sam-footer-links > a {
   font-size: 16px;
   color: #205493;
   letter-spacing: 0;
   line-height: 26px;
   font-weight: 500;
 }
+@media screen and (max-width: 1024px) {
 
-@media screen and (max-width: 1024px){
-  .sam-footer{
-    padding: 5% 10%;
-  }
-  .sam-footer-content{
+  .sam-footer-content {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  .sam-footer-logo{
+
+  .sam-footer-logo {
     display: flex;
     flex-direction: row;
     align-items: center;
   }
-  .sam-footer-logo-text{
+
+  .sam-footer-logo-text {
     font-size: 16;
   }
-  .sam-footer-links{
+
+  .sam-footer-links {
     padding-top: 10px;
     text-align: center;
   }
-  .sam-footer-text{
+
+  .sam-footer-text {
     text-align: center;
   }
 }
