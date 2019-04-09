@@ -64,7 +64,7 @@
     <nav role="navigation" class="usa-nav" id="sam-navbar">
       <div class="usa-nav-inner" id="sam-usa-navbar">
         <button class="usa-nav-close">
-          <img src="assets/sam-styles/uswds/img/close-green.png" alt="close">
+          <img src="assets/icon/header-footer/arrow.png" alt="close">
         </button>
         <ul class="usa-nav-primary usa-accordion" id="sam-navbar-content">
           <li *ngFor="let link of model.navigationLinks" class="navbar-btn">
@@ -77,7 +77,8 @@
         <div class="usa-nav-secondary">
           <ul class="sam-mobile-usa-unstyled-list usa-nav-secondary-links" id="sam-secondary-mobile-header-nav">
             <li *ngFor="let link of model.secondaryLinks">
-              <a [routerLink]="[link.route]">{{link.text}}</a>
+              <a [routerLink]="[link.route]"><img [attr.src]="link.imageSourcePath"
+                  [attr.alt]="link.imageAltText">{{link.text}}</a>
             </li>
           </ul>
         </div>
@@ -91,14 +92,15 @@
 
 
 <ng-template #linkTemplate let-link>
-  <a class="usa-nav-link" [routerLink]="[link.route]">
+  <a [attr.class]="link.selected ? 'usa-nav-link usa-current' : 'usa-nav-link'" [routerLink]="[link.route]">
     <span>{{link.text}}</span>
   </a>
 </ng-template>
 
 <ng-template #dropDownTemplate let-link>
-  <button class="usa-accordion-button usa-nav-link sam-header-btn" aria-expanded="false"
-    [attr.aria-controls]="removeWhiteSpace(link.text)+'-section'">
+  <button
+    [attr.class]="link.selected ? 'usa-accordion-button usa-nav-link sam-header-btn usa-current' : 'usa-accordion-button usa-nav-link sam-header-btn'"
+    aria-expanded="false" [attr.aria-controls]="removeWhiteSpace(link.text)+'-section'">
     <span>{{link.text}}</span>
   </button>
   <ul [attr.id]="removeWhiteSpace(link.text)+'-section'" class="usa-nav-submenu sam-header-extended-nav-section" hidden>
