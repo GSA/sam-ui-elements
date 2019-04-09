@@ -30,53 +30,57 @@ export class SamHeaderComponent {
   }
 
   deselect() {
-    if (this.model.home) {
-      this.model.home.selected = false;
-    }
-    if (this.model.navigationLinks) {
-      this.model.navigationLinks.forEach(function (item: HeaderNavigationLink) {
-        item.selected = false;
-        if (item.children) {
-          item.children.forEach(function (child: HeaderNavigationLink) {
-            child.selected = false;
-          });
-        }
-      });
-    }
-    if (this.model.secondaryLinks) {
-      this.model.secondaryLinks.forEach(function (item: HeaderSecondaryLink) {
-        item.selected = false;
-      });
+    if (this.model) {
+      if (this.model.home) {
+        this.model.home.selected = false;
+      }
+      if (this.model.navigationLinks) {
+        this.model.navigationLinks.forEach(function (item: HeaderNavigationLink) {
+          item.selected = false;
+          if (item.children) {
+            item.children.forEach(function (child: HeaderNavigationLink) {
+              child.selected = false;
+            });
+          }
+        });
+      }
+      if (this.model.secondaryLinks) {
+        this.model.secondaryLinks.forEach(function (item: HeaderSecondaryLink) {
+          item.selected = false;
+        });
+      }
     }
   }
 
   find(id: string) {
     let toReturn = null;
-    if (this.model.home) {
-      if (this.model.home.id === id) {
-        toReturn = this.model.home;
+    if (this.model) {
+      if (this.model.home) {
+        if (this.model.home.id === id) {
+          toReturn = this.model.home;
+        }
       }
-    }
-    if (this.model.navigationLinks) {
-      this.model.navigationLinks.forEach(function (item: HeaderNavigationLink) {
-        if (item.id === id) {
-          toReturn = item;
-        }
-        if (item.children) {
-          item.children.forEach(function (child: HeaderNavigationLink) {
-            if (child.id === id) {
-              toReturn = child;
-            }
-          });
-        }
-      });
-    }
-    if (this.model.secondaryLinks) {
-      this.model.secondaryLinks.forEach(function (item: HeaderSecondaryLink) {
-        if (item.id === id) {
-          toReturn = item;
-        }
-      });
+      if (this.model.navigationLinks) {
+        this.model.navigationLinks.forEach(function (item: HeaderNavigationLink) {
+          if (item.id === id) {
+            toReturn = item;
+          }
+          if (item.children) {
+            item.children.forEach(function (child: HeaderNavigationLink) {
+              if (child.id === id) {
+                toReturn = child;
+              }
+            });
+          }
+        });
+      }
+      if (this.model.secondaryLinks) {
+        this.model.secondaryLinks.forEach(function (item: HeaderSecondaryLink) {
+          if (item.id === id) {
+            toReturn = item;
+          }
+        });
+      }
     }
     return toReturn;
   }
