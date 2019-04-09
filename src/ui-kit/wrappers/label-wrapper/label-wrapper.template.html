@@ -19,8 +19,9 @@
       [style.overflow]="setOverflow()"
       [style.height]="setHeight()">
     </div>
+  
     <div *ngIf="showToggle && !showFullHint">
-      <a href="javascript:void(0)" [attr.aria-label]="toggleOpen ? 'Less info for' : 'More info for' + name "
+      <a href="javascript:void(0)" [attr.aria-label]="toggleOpen ? 'Less info for ' + label : 'More info for ' + label "
         (click)="toggleHint(toggleOpen)">
         {{ toggleOpen ? "less": "more" }}
       </a>
