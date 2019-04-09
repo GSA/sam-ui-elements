@@ -23,7 +23,7 @@ describe('SamHeaderComponent', () => {
     component.model = {
       home: { text: "", id: "home", imageAltText: '', imageSourcePath: '', route: '', selected: false },
       navigationLinks:
-        [{ text: "", selected: false, route: "", children: [], id: "navLink" }],
+        [{ text: "", selected: false, route: "", children: [{ text: "", selected: false, route: "", children: [], id: "childLink" }], id: "navLink" }],
       secondaryLinks: [{ text: "", selected: false, route: "", id: "secNavLink", imageSourcePath: "", imageAltText: "" }]
     };
   });
@@ -71,6 +71,16 @@ describe('SamHeaderComponent', () => {
     component.deselect();
     expect(component.model.secondaryLinks[0].selected).toBe(false);
   });
+
+  it('navigation link child find / select /deselect', () => {
+    expect(component.find(component.model.navigationLinks[0].children[0].id)).toBe(component.model.navigationLinks[0].children[0]);
+    component.select(component.model.navigationLinks[0].children[0].id);
+    expect(component.model.navigationLinks[0].children[0].selected).toBe(true);
+    component.deselect();
+    expect(component.model.navigationLinks[0].children[0].selected).toBe(false);
+  });
+
+
 
 
 
