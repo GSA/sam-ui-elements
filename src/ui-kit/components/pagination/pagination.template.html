@@ -7,3 +7,21 @@
     <li *ngIf="showLastButton()"><a tabindex="0" class="page-button" [ngClass]="textDecoration(totalPages)" (click)="onPageClick(totalPages)" [attr.aria-label]="getAriaLabel(totalPages)" (keyup.enter)="onPageClick(totalPages)">{{totalPages}}</a></li>
     <li *ngIf="showNext()"><a tabindex="0" class="page-next" aria-label="next" (click)="onNextClick()" (keyup.enter)="onNextClick()">Next &rsaquo;</a></li>
   </ul>
+<div>
+  <h1 class="example2">Example 2</h1>
+</div>
+
+<div class="sam-pagination">
+  <p>Showing 1 to 20  of 112 registrations  </p>
+  <div class="sam-pagination__expanded">
+      <a href="#"> <span class="fa fa-angle-left"></span> </a>
+      <a href="#">1</a>
+      <a href="#">2</a>
+      <a href="#">3</a>
+      <a href="#">4</a>
+      <a href="#">5</a>
+      <a href="#">6</a>
+      <a href="#">7</a>
+      <a href="#"> <span class="fa fa-angle-right"></span> </a>
+  </div>
+</div>
