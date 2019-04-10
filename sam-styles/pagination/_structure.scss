@@ -82,8 +82,17 @@
   font-size: 20px;
   font-weight: 600;
   text-decoration: none;
-  color: black;
+  color: #123050;
 }
+
+.sam-pagination__expanded > a.active {
+	color: black;
+}
+
+.sam-pagination__expanded > a:hover{
+	text-decoration: none;
+}
+
 .sam-pagination__expanded > a > img{
   height: 1rem;
 }
