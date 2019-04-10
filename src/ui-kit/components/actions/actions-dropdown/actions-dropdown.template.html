@@ -6,7 +6,7 @@
 
   <button class="usa-button" 
           aria-haspopup="listbox"
-          [attr.aria-labelledby]="name"
+          [attr.aria-label]="name"
           [attr.aria-expanded]="showActions ? 'true' : undefined"
           [attr.id]="name"
           (click)="toggleActions()"
@@ -18,12 +18,11 @@
   </button>
 
   <ul class="usa-unstyled-list"
-    tabindex="0"
     role="listbox"
     [attr.aria-labelledby]="name"
     *ngIf="showActions">
     <li *ngFor="let action of actions" role="option">
-      <button #actionsList class="usa-button"
+      <button #actionsList class="usa-button" tabindex="0"
         (keydown)="keyDownHandler($event)"
         (click)="chooseAction(action)">
         <span [ngClass]="action?.icon"></span>&nbsp;
