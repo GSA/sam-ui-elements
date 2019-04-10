@@ -74,10 +74,14 @@
 
 .sam-pagination__expanded {
   display: inline-block;
+	list-style-type: none;
 }
 
-.sam-pagination__expanded > a {
-  display: inline-block;
+.sam-pagination__expanded > li{
+	display: inline;
+}
+
+.sam-pagination__expanded > li > a {
   padding: 0.5rem;
   font-size: 20px;
   font-weight: 600;
@@ -85,14 +89,14 @@
   color: #11304f;
 }
 
-.sam-pagination__expanded > a.active{
+.sam-pagination__expanded > li > a.active{
 	color: #000000;
 }
 
-.sam-pagination__expanded > a:hover{
+.sam-pagination__expanded > li > a:hover{
 text-decoration: none;
 }
 
-.sam-pagination__expanded > a > img{
+.sam-pagination__expanded > li > a > img{
   height: 1rem;
 }
