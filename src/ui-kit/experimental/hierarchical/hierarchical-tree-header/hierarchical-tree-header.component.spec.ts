@@ -1,12 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SamHierarchicalTreeHeaderComponent } from './hierarchical-tree-header.component';
 import { SamButtonModule } from '../../../elements';
 import { SamSelectModule } from '../../../form-controls';
 import { SamFormService } from '../../../form-service';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 import { SamHierarchicalTreeHeaderConfiguration } from '../models/SamHierarchicalTreeHeaderConfiguration';
 
 const options = [{ "name": "Level 2", "id": "2", "value": "2", "label": "Level 2" },
@@ -16,8 +14,6 @@ const options = [{ "name": "Level 2", "id": "2", "value": "2", "label": "Level 2
 describe('SamHierarchicalTreeHeaderComponent', () => {
   let component: SamHierarchicalTreeHeaderComponent;
   let fixture: ComponentFixture<SamHierarchicalTreeHeaderComponent>;
-  let de: DebugElement;
-
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -36,7 +32,6 @@ describe('SamHierarchicalTreeHeaderComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SamHierarchicalTreeHeaderComponent);
     component = fixture.componentInstance;
-    de = fixture.debugElement;
     component.options = options;
 
     let config = new SamHierarchicalTreeHeaderConfiguration();

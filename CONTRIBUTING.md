@@ -1,0 +1,80 @@
+<h2 id="reviewer-checklist">Reviewer Checklist</h2>
+
+- Testing
+  - [ ] The PR has sufficient tests and test cases, with new code meeting at least 70% coverage
+  - Are new methods, properties, parameters or return types added, removed, or changed?
+    - [ ] The component has new tests, test cases, or modified tests that reflect the changes
+  - Does PR include a component from another library?
+    - [ ] The developer added test cases to cover integrating with library
+    - [ ] If extending a third-party component, you have validated that is the best design solution
+- HTML/CSS/UI Controls
+  - [ ] HTML markup and CSS classes are semantic and meaningful
+  - [ ] Styles are applied by classes, not through style tags on elements
+  - [ ] CSS class names reflect structure, state, or intent rather than specific styles
+  - [ ] Markup choices reflect intent, e.g., `button` for user actions, `a` for navigation
+  - Is the developer creating a new UI component or extending an existing component?
+    - [ ] There is no existing UI component that can be used or modified
+    - [ ] Keyboard interactions follow the conventions listed in the WAI-ARIA Authoring Practices
+    - [ ] Aria roles and attributes are applied as necessary
+  - Code Smells
+    - [ ] Lots of custom CSS classes require careful review
+    - [ ] Component inheritance requires careful review
+    - [ ] Class names with specific styles require careful review
+    - [ ] Large numbers of divs or nested divs require careful review
+    - [ ] No aria tags on custom controls with many event handlers requires careful review
+- Modularity & Decomposition
+  - Is the PR for a new feature?
+    - [ ] The feature is written as a standalone module
+    - [ ] The feature is lazy loaded unless required during App initialization. This applies to both top level routing and children of feature modules
+    - [ ] Only the code necessary to execute the feature is included in the module
+    - [ ] Features do not expose internal implementation via exports
+    - [ ] Modules consuming shared components explicitly import their dependencies (Do not assume deps are provided by a higher module like App)
+  - Is the PR for a UI or data-access component, e.g., a class in app-components or api-kit?
+    - [ ] The component is declared and exported in its own module
+    - [ ] The component is not included in a "big bang" module (AppComponentsModule, ApiKitModule). Each consuming module must explicitly import all dependencies.
+  - Is the code a utility library?
+    - [ ] Any Angular utilities follow the same module rules as UI and data-access components
+    - [ ] JS/TS POJOs or functions should be exported from their respective files inside an appropriately named folder that includes unit tests, interfaces, or any other code related to that.
+  - [ ] Barrel files (index.js/ts) are avoided (this creates complications with Angular Package Format)
+  - Code Smells
+    - [ ] Classes and templates that exceed a few hundred lines of code require careful review
+    - [ ] Templates that make excessive use of conditionals require careful review
+    - [ ] Modules do not have large numbers of declarations (more than 5 is considered large and requires careful review)
+      - [ ] If more than 5 declarations, ensure that the module cannot be broken down into smaller modules and composed together again with imports
+    - [ ] Modules do not export large numbers of components (> 3 requires careful review)
+      - [ ] If there are more than 3 exports, ensure there is value in exporting each member in terms of reusability and long term maintenance
+    - [ ] Routes that are not lazy loaded require careful review
+    - [ ] Routes with no children require careful review
+- Configuration
+  - Does the feature need to support toggling?
+    - [ ] Features can be toggled with a change in environment variables alone
+  - [ ] Hardcoded values are only allowed in constants
+  - [ ] Configuration values should come primarily from API calls, environment variables, services, etc
+- OOP Principles
+  - Single Resonsibility Principle
+    - [ ] A class abstraction should be focused on completing a single, focused unit of functionality
+    - [ ] Properties and methods not directly achieving the purpose of the class should be moved into separate classes, functions, etc 
+    - [ ] Each property and method name on a class makes sense in the context of the purpose of the class
+  - Open/Closed Principle
+    - [ ] Avoid breaking API changes when new functionality is required of a class/module/function
+    - [ ] If class properties are objects, prefer interfaces over concrete classes for types
+    - [ ] Prefer composition over inheritance
+  - Interface Segregation Principle
+    - [ ] Interfaces should be kept small and limited in scope
+    - [ ] Interfaces should only contain properties required to complete a purposeful unit of functionality
+  - Liskov Substitution Principle
+    - [ ] Subclasses do not alter properties or methods of inherited members from the parent class
+  - Dependency Inverstion Principle
+    - [ ] Components have little or no knowledge of the definitions of other, separate components
+    - [ ] Concrete components interact via shared abstractions, e.g., services, dependency injection, interfaces
+- Typing & Visibility
+  - [ ] Every class property has a sufficiently specific type
+  - [ ] Each function or method parameter has a sufficiently specific type
+  - [ ] Each function has a sufficiently specific return type
+  - [ ] Interfaces or Types are created for non-primitive data structures
+  - [ ] Configuration objects have clear interfaces
+  - [ ] The `any` type is avoided
+  - Code Smells
+    - [ ] Extensive use of the `any` type should be reviewed
+    - [ ] Static types made on-the-fly rather than using an interface requires review
+    - [ ] Large numbers of public properties and methods require careful review

@@ -8,7 +8,144 @@ import { SamWrapperModule } from '../../wrappers';
 import {SamFormService } from '../../form-service';
 
 describe('The Sam Date component', () => {
-  describe('Isolated tests', () => {
+ describe('Isolated tests', () => {
+    let component: SamDateComponent;
+    let fixture: any;
+    let monthEl;
+    let dayEl;
+    let yearEl;
+    // provide our implementations or mocks to the dependency injector
+    beforeEach(async(() => {
+      TestBed.configureTestingModule({
+        imports: [SamWrapperModule, FormsModule],
+        declarations: [SamDateComponent],
+        providers: [SamFormService]
+      });
+
+      fixture = TestBed.createComponent(SamDateComponent);
+      component = fixture.componentInstance;
+      component.value = '2016-12-29';
+      component.name = 'test';
+      component.ngOnChanges({
+        value: '2016-12-29'
+      });
+      fixture.detectChanges();
+      monthEl = fixture.debugElement.query(By.css('input[name=date_month]'));
+      dayEl = fixture.debugElement.query(By.css('input[name=date_day]'));
+      yearEl = fixture.debugElement.query(By.css('input[name=date_year]'));
+    }));
+
+    it('Should date value to be empty when tab is pressed', function () {
+      const dumEvent = {
+        "key": "5",
+        preventDefault: function () { },
+      };
+      component.isTabPressed = true;
+      component.onDayInput(dumEvent);
+
+      fixture.detectChanges();
+      expect(component.day.nativeElement.value).toBe('');
+    });
+
+    it('Should not change the date value when tab is pressed', function () {
+      const dumEvent = {
+        "key": "Tab",
+        preventDefault: function () { },
+      };
+      component.isTabPressed = true;
+      component.onDayInput(dumEvent);
+
+      fixture.detectChanges();
+      expect(component.day.nativeElement.value).toBe('29');
+    });
+
+    it('The date should not changes on Shift key', function () {
+      component.isTabPressed = true;
+      const event = {
+        "key": "Shift",
+        preventDefault: function () { },
+      };
+      component.ngOnChanges({
+        value: '2016-12-29'
+      });
+      component.onDayInput(event);
+      fixture.detectChanges();
+      expect(component.day.nativeElement.value).toBe('29');
+
+    });
+
+    it('Should month value to be empty when tab is pressed', function () {
+      const event = {
+        "key": "5",
+        "target": { "value": '5' },
+        preventDefault: function () { },
+      };
+      component.isTabPressed = true;
+      component.onMonthInput(event);
+      fixture.detectChanges();
+      expect(component.month.nativeElement.value).toBe('');
+    });
+
+    it('The month should not changes on Shift key', function () {
+      component.isTabPressed = true;
+      const event = {
+        "key": "Shift",
+        preventDefault: function () { },
+      };
+     component.onMonthInput(event);
+      fixture.detectChanges();
+      expect(component.month.nativeElement.value).toBe('12');
+
+    });
+
+    it('The month should not changes on Tab key', function () {
+      component.isTabPressed = true;
+      const event = {
+        "key": "Tab",
+        preventDefault: function () { },
+      };
+     component.onMonthInput(event);
+      fixture.detectChanges();
+      expect(component.month.nativeElement.value).toBe('12');
+
+    });
+
+    it('Should year value to be empty when tab is pressed', function () {
+      const event = {
+        "key": "5",
+        preventDefault: function () { },
+      };
+      component.isTabPressed = true;
+      component.onYearInput(event);
+      fixture.detectChanges();
+      expect(component.year.nativeElement.value).toBe('');
+    });
+
+    it('The year should not changes on Shift key', function () {
+      component.isTabPressed = true;
+      const event = {
+        "key": "Shift",
+        preventDefault: function () { },
+      };
+     component.onYearInput(event);
+      fixture.detectChanges();
+      expect(component.year.nativeElement.value).toBe('2016');
+    });
+
+    it('The year should not changes on Tab key', function () {
+      component.isTabPressed = true;
+      const event = {
+        "key": "Tab",
+        preventDefault: function () { },
+      };
+     component.onYearInput(event);
+      fixture.detectChanges();
+      expect(component.year.nativeElement.value).toBe('2016');
+    });
+
+  });
+
+  describe('Tab key tests', () => {
     let component: SamDateComponent;
     const cdr: ChangeDetectorRef = undefined;
     beforeEach(() => {

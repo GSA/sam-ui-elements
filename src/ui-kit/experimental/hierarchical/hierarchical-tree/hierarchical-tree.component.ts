@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Observable, BehaviorSubject } from "rxjs";
-import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceSearchItem, SamHiercarchicalServiceResult } from "../hierarchical-interface";
+import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceResult } from "../hierarchical-interface";
 import { SamHierarchicalTreeConfiguration } from "../models/SamHierarchicalTreeConfiguration";
 import { Sort } from "../../../components/data-table/sort.directive";
 import { first } from 'rxjs/operators';
@@ -250,12 +250,10 @@ export class SamHierarchicalTreeComponent implements OnInit {
             this.resultItems = result.items;
             this.totalItems = result.totalItems;
           }
+          this.results = [];
           this.gridResults = Observable.of(this.resultItems);
         }
       );
     }
-
-
-
   }
 }

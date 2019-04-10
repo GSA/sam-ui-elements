@@ -57,7 +57,7 @@ td[sam-cell]:last-child, th[sam-header-cell]:last-child {
   padding-right: $sam-row-horizontal-padding;
 
   [dir='rtl'] & {
-    padding-right: 0;
+    padding-right: 5px;
     padding-left: $sam-row-horizontal-padding;
   }
 }
@@ -67,12 +67,15 @@ td[sam-cell], th[sam-header-cell] {
   flex: 1;
   display: flex;
   align-items: center;
-  // overflow: hidden;
+  overflow: hidden;
   word-wrap: break-word;
   word-break: break-word;
   min-height: inherit;
+  padding: 0 10px 0 10px;
 }
-
+sam-cell, sam-header-cell, th[sam-header-cell]{
+  flex: 1 0 auto;
+}
 sam-header-cell{
   overflow: visible;
 }
@@ -101,6 +104,7 @@ sam-header-cell{
  }
 
  .sam-sort-header-button {
+   justify-content: center;
    border: none;
    background: 0 0;
    display: flex;
