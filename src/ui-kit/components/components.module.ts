@@ -32,7 +32,6 @@ import { SamActionButtonModule } from './actions/action-button';
 import { SamActionDropdownModule } from './actions/actions-dropdown';
 import { SamDataTableModule } from './data-table';
 import { SamPageTitleModule } from './page-title';
-import { SamSortModule } from './sort';
 
 @NgModule({
   imports: [
@@ -67,10 +66,9 @@ import { SamSortModule } from './sort';
     SamSpinnerModule,
     SamTabsModule,
     SamPageTitleModule,
-    SamSortModule,
   ],
   declarations: [
-
+    
   ],
   exports: [
     SamActionButtonModule,
@@ -96,7 +94,6 @@ import { SamSortModule } from './sort';
     SamImageModule,
     SamDataTableModule,
     SamPageTitleModule,
-    SamSortModule,
   ]
 })
 export class SamComponentsModule {}

@@ -20,4 +20,3 @@ export * from './spinner';
 export * from './tabs';
 export * from './page-title';
 export * from './components.module';
-export * from './sort';
