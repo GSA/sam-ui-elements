@@ -67,7 +67,7 @@
 
 .sam-pagination > p {
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
   padding: 5px;
 	display: inline-block;
 }
@@ -82,8 +82,17 @@
   font-size: 20px;
   font-weight: 600;
   text-decoration: none;
-  color: black;
+  color: #11304f;
 }
+
+.sam-pagination__expanded > a.active{
+	color: #000000;
+}
+
+.sam-pagination__expanded > a:hover{
+text-decoration: none;
+}
+
 .sam-pagination__expanded > a > img{
   height: 1rem;
 }
