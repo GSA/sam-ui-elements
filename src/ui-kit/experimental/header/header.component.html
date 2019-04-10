@@ -54,13 +54,12 @@
       <div class="usa-nav-secondary" id="sam-header-unstyled-list">
         <ul class="sam-usa-unstyled-list usa-nav-secondary-links" id="sam-secondary-header-nav">
           <li *ngFor="let link of model.secondaryLinks">
-            <a [routerLink]="[link.route]" class="sam-header-secondary-link"><img [attr.src]="link.imageSourcePath"
+            <a [routerLink]="[link.route]" [attr.class]="link.selected ? 'sam-header-secondary-link' : 'sam-header-secondary-link'"><img [attr.src]="link.imageSourcePath"
                 [attr.alt]="link.imageAltText"> {{link.text}}</a>
           </li>
         </ul>
       </div>
     </div>
-
     <nav role="navigation" class="usa-nav" id="sam-navbar">
       <div class="usa-nav-inner" id="sam-usa-navbar">
         <button class="usa-nav-close">
@@ -70,14 +69,12 @@
           <li *ngFor="let link of model.navigationLinks" class="navbar-btn">
             <ng-container [ngTemplateOutlet]="link.route ? linkTemplate : dropDownTemplate"
               [ngTemplateOutletContext]="{$implicit:link}"></ng-container>
-
           </li>
         </ul>
-
         <div class="usa-nav-secondary">
           <ul class="sam-mobile-usa-unstyled-list usa-nav-secondary-links" id="sam-secondary-mobile-header-nav">
             <li *ngFor="let link of model.secondaryLinks">
-              <a [routerLink]="[link.route]"><img [attr.src]="link.imageSourcePath"
+              <a  [attr.class]="link.selected ? '' : ''" [routerLink]="[link.route]"><img [attr.src]="link.imageSourcePath"
                   [attr.alt]="link.imageAltText">{{link.text}}</a>
             </li>
           </ul>
@@ -88,8 +85,6 @@
   <div class="usa-overlay"></div>
   <main id="main-content" class="sam-main-content"></main>
 </div>
-
-
 
 <ng-template #linkTemplate let-link>
   <a [attr.class]="link.selected ? 'usa-nav-link usa-current' : 'usa-nav-link'" [routerLink]="[link.route]">
