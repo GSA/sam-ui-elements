@@ -112,8 +112,7 @@
 .sam-sort {
 	width: 200px;
 	height: 45px;
-	background:url("assets/img/Sortby_Arrow.svg") no-repeat right #fff;
-	background-image: url(assets/img/Sortby_Arrow.svg), linear-gradient(transparent, transparent);
+	background: url("assets/img/Sortby_Arrow.svg") no-repeat right #fff;
 	border: 1px solid #797979;
 	border-radius: 2px;
 }
@@ -127,7 +126,12 @@
 	line-height: 1.75;
 	border: 0;
 	border-radius: 0;
-	height: 35px;
+	height: 45px;
 	-webkit-appearance: none;
 	color: #626262;
+}
+
+.sam-sort > *:focus{
+	outline: 0;
+	box-shadow: none;
 }
