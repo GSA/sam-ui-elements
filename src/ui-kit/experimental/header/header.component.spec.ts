@@ -6,7 +6,7 @@ import { SamTopBannerComponent } from  './top-banner/top-banner.component';
 
 
 
-fdescribe('SamHeaderComponent', () => {
+describe('SamHeaderComponent', () => {
   let component: SamHeaderComponent;
   let fixture: ComponentFixture<SamHeaderComponent>;
 
