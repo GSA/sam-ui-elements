@@ -1,0 +1,80 @@
+///SAM BAKER - FOOTER
+//--------------------------------
+.sam-footer{
+  display: block;
+  background-color: #ECF1F7;
+  box-sizing: content-box;
+  //padding: 10px 10%;
+  margin: auto;
+}
+.sam-footer-content{
+  display: flex;
+  flex-direction: row;
+  margin: 20px 0;
+}
+.sam-footer-text{
+  width: 100%;
+  font-family: SourceSansPro-Regular;
+  font-size: 13px;
+  color: #323A44;
+  text-align: left;
+  line-height:normal;
+}
+.sam-footer-logo{
+  width: 200px;
+}
+.sam-footer-logo>img{
+  max-height: 90px;
+}
+.sam-footer-logo-text{
+  color: #005088;
+  word-wrap: wrap;
+  margin-top: 5px;
+}
+.sam-footer-links{
+  display: flex;
+  flex-direction: column;
+  margin: 15px 20px;
+  width: 220px;
+}
+.sam-footer-links>h4{
+  //font-family: SourceSansPro-Bold;
+  font-size: 18px;
+  color: #212121;
+  letter-spacing: 0;
+  font-weight:bold;
+}
+.sam-footer-links>a{
+  //font-family: SourceSansPro-Regular;
+  font-size: 16px;
+  color: #205493;
+  letter-spacing: 0;
+  line-height: 26px;
+  font-weight: 500;
+}
+
+@media screen and (max-width: 1024px){
+  .sam-footer{
+    padding: 5% 10%;
+  }
+  .sam-footer-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .sam-footer-logo{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .sam-footer-logo-text{
+    font-size: 16;
+  }
+  .sam-footer-links{
+    padding-top: 10px;
+    text-align: center;
+  }
+  .sam-footer-text{
+    text-align: center;
+  }
+}
