@@ -10,7 +10,7 @@ import { HeaderModel, HeaderNavigationLink, HeaderSecondaryLink } from './model/
 export class SamHeaderComponent {
 
   /**
-   * 
+   * Model used for the different display portions of the header 
    */
   @Input() model: HeaderModel;
 
@@ -23,7 +23,7 @@ export class SamHeaderComponent {
   }
 
   /**
-   * 
+   * Deselects previous seletion
    * @param id 
    */
   select(id: string) {
@@ -34,9 +34,8 @@ export class SamHeaderComponent {
     }
   }
 
-
   /**
-   * 
+   * Deselects all the items in the header model
    */
   deselect() {
     if (this.model) {
@@ -62,8 +61,8 @@ export class SamHeaderComponent {
   }
 
   /**
-   * 
-   * @param id 
+   * Finds the navigation element by id in the header model 
+   * @param id of the navigation item
    */
   find(id: string) {
     let toReturn = null;

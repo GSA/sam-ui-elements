@@ -10,7 +10,7 @@ import { FooterModel } from './model/FooterModel';
 export class SamFooterComponent {
 
   /**
-   * 
+   * Model used for the different display portions of the footer
    */
   @Input() model: FooterModel;
 }

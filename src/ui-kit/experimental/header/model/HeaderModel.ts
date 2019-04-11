@@ -1,6 +1,6 @@
 
 /**
- * 
+ *  
  */
 export interface HeaderModel {
     home: HeaderHome;
