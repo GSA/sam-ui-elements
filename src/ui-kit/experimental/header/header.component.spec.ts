@@ -2,16 +2,17 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { SamHeaderComponent } from './header.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { SamTopBannerComponent } from  './top-banner/top-banner.component';
 
 
 
-describe('SamHeaderComponent', () => {
+fdescribe('SamHeaderComponent', () => {
   let component: SamHeaderComponent;
   let fixture: ComponentFixture<SamHeaderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SamHeaderComponent],
+      declarations: [SamHeaderComponent, SamTopBannerComponent],
       imports: [RouterTestingModule]
     })
       .compileComponents();

@@ -72,7 +72,7 @@ export class SamHeaderComponent {
           toReturn = this.model.home;
         }
       }
-      toReturn = this.findNavigationLinks(id);
+      toReturn = this.findNavigationLinks(id, toReturn);
       if (this.model.secondaryLinks) {
         this.model.secondaryLinks.forEach(function (item: HeaderSecondaryLink) {
           if (item.id === id) {
@@ -88,8 +88,7 @@ export class SamHeaderComponent {
    * Searchs the items in the navigation links
    * @param id 
    */
-  private findNavigationLinks(id: string): Selectable {
-    let toReturn = null;
+  private findNavigationLinks(id: string, toReturn: Selectable): Selectable {
     if (this.model.navigationLinks) {
       this.model.navigationLinks.forEach(function (item: HeaderNavigationLink) {
         if (item.id === id) {
