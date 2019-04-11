@@ -98,5 +98,66 @@ text-decoration: none;
 }
 
 .sam-pagination__expanded > li > a > img{
+  color: #123050;
+}
+
+.sam-pagination__expanded > a.active {
+	color: black;
+}
+
+.sam-pagination__expanded > a:hover{
+	text-decoration: none;
+}
+
+.sam-pagination__expanded > a > img{
   height: 1rem;
+}
+
+/*******************************
+        SB ADDED SORT
+  *******************************/
+
+.sam-sort__wrapper{
+	display: flex;
+	flex-direction: column;
+
+		.sort-header{
+			font-size: 16px;
+			font-weight: 500;
+			color: #797979;
+			margin: 0;
+			padding: 0 !important;
+		}
+
+		.sort-content > option{
+			width: 200px;
+			height: 45px;
+		}
+
+	.sam-sort {
+		width: 200px;
+		height: 45px;
+		background: url("assets/img/Sortby_Arrow.svg") no-repeat right #fff;
+		border: 1px solid #797979;
+		border-radius: 2px;
+	}
+
+	.sam-sort select {
+		background: transparent;
+		width: 200px;
+		padding: 5px;
+		font-weight: 600;
+		font-size: 18px;
+		line-height: 1.75;
+		border: 0;
+		border-radius: 0;
+		height: 45px;
+		-webkit-appearance: none;
+		color: #626262;
+	}
+
+	.sam-sort > *:focus{
+		outline: 0;
+		box-shadow: none;
+	}
 }
