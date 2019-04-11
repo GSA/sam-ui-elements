@@ -27,6 +27,11 @@
 .usa-nav-close::after {
   clear: both;
 }
+
+.sam-secondary-navigation_selected{ 
+  border-bottom: 3px solid #70E17B !important;
+}
+
 @media screen and (min-width: 1024px) {
   .sam-mobile-usa-unstyled-list {
     display: none !important;

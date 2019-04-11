@@ -54,7 +54,7 @@
       <div class="usa-nav-secondary" id="sam-header-unstyled-list">
         <ul class="sam-usa-unstyled-list usa-nav-secondary-links" id="sam-secondary-header-nav">
           <li *ngFor="let link of model.secondaryLinks">
-            <a [routerLink]="[link.route]" [attr.class]="link.selected ? 'sam-header-secondary-link' : 'sam-header-secondary-link'"><img [attr.src]="link.imageSourcePath"
+            <a [routerLink]="[link.route]" [attr.class]="link.selected ? 'sam-header-secondary-link sam-secondary-navigation_selected' : 'sam-header-secondary-link'"><img [attr.src]="link.imageSourcePath"
                 [attr.alt]="link.imageAltText"> {{link.text}}</a>
           </li>
         </ul>
@@ -74,7 +74,7 @@
         <div class="usa-nav-secondary">
           <ul class="sam-mobile-usa-unstyled-list usa-nav-secondary-links" id="sam-secondary-mobile-header-nav">
             <li *ngFor="let link of model.secondaryLinks">
-              <a  [attr.class]="link.selected ? '' : ''" [routerLink]="[link.route]"><img [attr.src]="link.imageSourcePath"
+              <a  [attr.class]="link.selected ? 'sam-secondary-navigation_selected' : ''" [routerLink]="[link.route]"><img [attr.src]="link.imageSourcePath"
                   [attr.alt]="link.imageAltText">{{link.text}}</a>
             </li>
           </ul>
