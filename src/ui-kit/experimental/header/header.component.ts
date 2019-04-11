@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { HeaderModel, HeaderNavigationLink, HeaderSecondaryLink } from './model/HeaderModel';
+import { HeaderModel, Selectable, HeaderNavigationLink, HeaderSecondaryLink } from './model/HeaderModel';
 
 
 @Component({
@@ -64,7 +64,7 @@ export class SamHeaderComponent {
    * Finds the navigation element by id in the header model 
    * @param id of the navigation item
    */
-  find(id: string) {
+  find(id: string): Selectable {
     let toReturn = null;
     if (this.model) {
       if (this.model.home) {
@@ -72,20 +72,7 @@ export class SamHeaderComponent {
           toReturn = this.model.home;
         }
       }
-      if (this.model.navigationLinks) {
-        this.model.navigationLinks.forEach(function (item: HeaderNavigationLink) {
-          if (item.id === id) {
-            toReturn = item;
-          }
-          if (item.children) {
-            item.children.forEach(function (child: HeaderNavigationLink) {
-              if (child.id === id) {
-                toReturn = child;
-              }
-            });
-          }
-        });
-      }
+      toReturn = this.findNavigationLinks(id);
       if (this.model.secondaryLinks) {
         this.model.secondaryLinks.forEach(function (item: HeaderSecondaryLink) {
           if (item.id === id) {
@@ -97,4 +84,26 @@ export class SamHeaderComponent {
     return toReturn;
   }
 
+  /**
+   * Searchs the items in the navigation links
+   * @param id 
+   */
+  private findNavigationLinks(id: string): Selectable {
+    let toReturn = null;
+    if (this.model.navigationLinks) {
+      this.model.navigationLinks.forEach(function (item: HeaderNavigationLink) {
+        if (item.id === id) {
+          toReturn = item;
+        }
+        if (item.children) {
+          item.children.forEach(function (child: HeaderNavigationLink) {
+            if (child.id === id) {
+              toReturn = child;
+            }
+          });
+        }
+      });
+    }
+    return toReturn;
+  }
 }
