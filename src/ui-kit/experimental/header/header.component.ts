@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { HeaderModel, HeaderNavigationLink, HeaderSecondaryLink } from './model/HeaderModel';
 
 
 @Component({
@@ -21,6 +22,10 @@ export class SamHeaderComponent {
     return text.replace(/ /g, '');
   }
 
+  /**
+   * 
+   * @param id 
+   */
   select(id: string) {
     this.deselect();
     let item = this.find(id);
@@ -29,6 +34,10 @@ export class SamHeaderComponent {
     }
   }
 
+
+  /**
+   * 
+   */
   deselect() {
     if (this.model) {
       if (this.model.home) {
@@ -52,6 +61,10 @@ export class SamHeaderComponent {
     }
   }
 
+  /**
+   * 
+   * @param id 
+   */
   find(id: string) {
     let toReturn = null;
     if (this.model) {
@@ -86,122 +99,3 @@ export class SamHeaderComponent {
   }
 
 }
-
-/**
- * 
- */
-export interface HeaderModel {
-  home: HeaderHome;
-  secondaryLinks: HeaderSecondaryLink[];
-  navigationLinks: HeaderNavigationLink[];
-}
-
-
-export class HeaderHome implements Selectable {
-  /**
-   * 
-   */
-  text: string;
-
-  /**
-   * 
-   */
-  route: string;
-
-  /**
-   * 
-   */
-  imageSourcePath: string;
-
-  /**
-   * 
-   */
-  imageAltText: string;
-
-  /**
-   * 
-   */
-  id: string;
-
-  /**
-   * 
-   */
-  selected: boolean;
-}
-
-/**
- * 
- */
-export class HeaderNavigationLink implements Selectable {
-  /**
-   * 
-   */
-  text: string;
-
-  /**
-   * 
-   */
-  route: string;
-
-  /**
-   * 
-   */
-  children: HeaderNavigationLink[];
-
-  /**
-   * 
-   */
-  id: string;
-
-  /**
-   * 
-   */
-  selected: boolean;
-}
-
-/**
- * 
- */
-export class HeaderSecondaryLink implements Selectable {
-  /**
-   * 
-   */
-  text: string;
-
-  /**
-   * 
-   */
-  route: string;
-
-  /**
-   * 
-   */
-  imageSourcePath: string;
-
-  /**
-   * 
-   */
-  imageAltText: string;
-
-  /**
-   * 
-   */
-  id: string;
-
-  /**
-   * 
-   */
-  selected: boolean;
-}
-
-export interface Selectable {
-  /**
- * 
- */
-  id: string;
-
-  /**
-   * 
-   */
-  selected: boolean
-} 
