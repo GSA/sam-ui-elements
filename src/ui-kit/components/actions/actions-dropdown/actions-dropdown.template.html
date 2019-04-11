@@ -6,7 +6,8 @@
 
   <button class="usa-button" 
           aria-haspopup="listbox"
-          [attr.aria-label]="name"
+          [attr.aria-labelledby]="name"
+          [attr.aria-label]="ariaLabelButtonText"
           [attr.aria-expanded]="showActions ? 'true' : undefined"
           [attr.id]="name"
           (click)="toggleActions()"
