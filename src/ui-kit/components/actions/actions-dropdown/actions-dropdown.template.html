@@ -7,6 +7,7 @@
   <button class="usa-button" 
           aria-haspopup="listbox"
           [attr.aria-labelledby]="name"
+          [attr.aria-label]="ariaLabelButtonText"
           [attr.aria-expanded]="showActions ? 'true' : undefined"
           [attr.id]="name"
           (click)="toggleActions()"
@@ -18,7 +19,6 @@
   </button>
 
   <ul class="usa-unstyled-list"
-    tabindex="0"
     role="listbox"
     [attr.aria-labelledby]="name"
     *ngIf="showActions">
