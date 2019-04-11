@@ -35,6 +35,10 @@ export class SamActionsDropdownComponent {
   @Input() public buttonType: 'primary'|'default' = 'default';
   @Input() public text: string = 'Actions';
   /**
+   * Sets the aria-label of action button
+   */
+  @Input() public ariaLabelButtonText: string = 'Actions';
+  /**
    * Emits event when action changes
    */
   @Output() public emitAction: EventEmitter<any> = new EventEmitter<any>();
