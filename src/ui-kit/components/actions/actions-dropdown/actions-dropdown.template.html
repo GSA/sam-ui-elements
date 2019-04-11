@@ -22,7 +22,7 @@
     [attr.aria-labelledby]="name"
     *ngIf="showActions">
     <li *ngFor="let action of actions" role="option">
-      <button #actionsList class="usa-button" tabindex="0"
+      <button #actionsList class="usa-button"
         (keydown)="keyDownHandler($event)"
         (click)="chooseAction(action)">
         <span [ngClass]="action?.icon"></span>&nbsp;
