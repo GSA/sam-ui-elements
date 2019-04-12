@@ -57,6 +57,7 @@ import { SamSortModule } from './sort';
     SamSegmentModule,
     SamProgressModule,
     SamSideNavigationToolbarModule
+
   ],
   declarations: [
     SamBoxComponent,
