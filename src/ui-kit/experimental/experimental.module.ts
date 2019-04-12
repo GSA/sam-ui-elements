@@ -33,8 +33,7 @@ import { SamProgressModule } from './progress/progress.module';
 import { SamListboxModule } from './listbox/listbox.module';
 import { SamSideNavigationToolbarModule } from './sideNavigationToolbar/sideNavigationToolbar.module';
 import { SamDateRangeV2Module } from './date-range-v2/date-range-v2.module';
-import { SamHeaderModule } from './header/header.module';
-import { SamFooterModule } from './footer/footer.module';
+
 
 @NgModule({
   imports: [
@@ -56,9 +55,8 @@ import { SamFooterModule } from './footer/footer.module';
     SamCardModule,
     SamSegmentModule,
     SamProgressModule,
-    SamSideNavigationToolbarModule,
-    SamHeaderModule,
-    SamFooterModule
+    SamSideNavigationToolbarModule
+
   ],
   declarations: [
     SamBoxComponent,
@@ -106,9 +104,7 @@ import { SamFooterModule } from './footer/footer.module';
     SamSegmentModule,
     SamProgressModule,
     SamDateRangeV2Module,
-    SamSideNavigationToolbarModule,
-    SamHeaderModule,
-    SamFooterModule
+    SamSideNavigationToolbarModule
   ]
 })
 export class SamExperimentalModule { }
