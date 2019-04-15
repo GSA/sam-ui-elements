@@ -24,15 +24,17 @@
   flex-wrap: wrap;
 }
 .icons-list > li{
-  height: 120px;
-  width: 120px;
+  height: 80px;
+  width: 80px;
   text-align: center;
   padding: 5px;
 }
 .icons-list > li > *{
   display: block;
   padding: 0;
+  font-size: 12px;
 }
 .icons-list > li > img{
   margin: auto;
+  height: 30px;
 }
