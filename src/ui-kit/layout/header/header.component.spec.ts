@@ -1,25 +1,25 @@
 /* tslint:disable */
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { SamHeaderComponent } from './header.component';
+import { SdsHeaderComponent } from './header.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { SamTopBannerComponent } from  './top-banner/top-banner.component';
+import { SdsTopBannerComponent } from './top-banner/top-banner.component';
 
 
 
-describe('SamHeaderComponent', () => {
-  let component: SamHeaderComponent;
-  let fixture: ComponentFixture<SamHeaderComponent>;
+describe('SdsHeaderComponent', () => {
+  let component: SdsHeaderComponent;
+  let fixture: ComponentFixture<SdsHeaderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SamHeaderComponent, SamTopBannerComponent],
+      declarations: [SdsHeaderComponent, SdsTopBannerComponent],
       imports: [RouterTestingModule]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SamHeaderComponent);
+    fixture = TestBed.createComponent(SdsHeaderComponent);
     component = fixture.componentInstance;
     component.model = {
       home: { text: "", id: "home", imageAltText: '', imageSourcePath: '', route: '', selected: false },
