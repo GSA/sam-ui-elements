@@ -3,11 +3,11 @@ import { FooterModel } from './model/FooterModel';
 
 
 @Component({
-  selector: 'sam-footer-v2',
+  selector: 'sds-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
-export class SamFooterComponent {
+export class SdsFooterComponent {
 
   /**
    * Model used for the different display portions of the footer

@@ -1,24 +1,24 @@
 /* tslint:disable */
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { SamFooterComponent } from './footer.component';
+import { SdsFooterComponent } from './footer.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
 
 
-describe('SamFooterComponent', () => {
-  let component: SamFooterComponent;
-  let fixture: ComponentFixture<SamFooterComponent>;
+describe('SdsFooterComponent', () => {
+  let component: SdsFooterComponent;
+  let fixture: ComponentFixture<SdsFooterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SamFooterComponent],
+      declarations: [SdsFooterComponent],
       imports: [RouterTestingModule]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SamFooterComponent);
+    fixture = TestBed.createComponent(SdsFooterComponent);
     component = fixture.componentInstance;
   });
 

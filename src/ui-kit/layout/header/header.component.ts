@@ -3,11 +3,11 @@ import { HeaderModel, Selectable, HeaderNavigationLink, HeaderSecondaryLink } fr
 
 
 @Component({
-  selector: 'sam-header-v2',
+  selector: 'sds-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class SamHeaderComponent {
+export class SdsHeaderComponent {
 
   /**
    * Model used for the different display portions of the header 

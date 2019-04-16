@@ -33,7 +33,7 @@ import { SamProgressModule } from './progress/progress.module';
 import { SamListboxModule } from './listbox/listbox.module';
 import { SamSideNavigationToolbarModule } from './sideNavigationToolbar/sideNavigationToolbar.module';
 import { SamDateRangeV2Module } from './date-range-v2/date-range-v2.module';
-import { SamSortModule } from './sort';
+import { SdsSortModule } from './sort';
 
 
 @NgModule({
@@ -106,7 +106,7 @@ import { SamSortModule } from './sort';
     SamProgressModule,
     SamDateRangeV2Module,
     SamSideNavigationToolbarModule,
-    SamSortModule
+    SdsSortModule
   ]
 })
 export class SamExperimentalModule { }

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SamSortComponent } from './sort.component';
+import { SdsSortComponent } from './sort.component';
 
 @NgModule({
-    declarations: [ SamSortComponent ],
-    exports: [ SamSortComponent ],
+    declarations: [ SdsSortComponent ],
+    exports: [ SdsSortComponent ],
     imports: [CommonModule]
 })
-export class SamSortModule { }
+export class SdsSortModule { }
 
-export { SamSortComponent } from './sort.component';
+export { SdsSortComponent } from './sort.component';
