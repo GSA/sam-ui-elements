@@ -1,23 +1,23 @@
 /* tslint:disable */
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { SamTopBannerComponent } from './top-banner.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { SdsTopBannerComponent } from './top-banner.component';
 
 
 
-describe('SamTopBannerComponent', () => {
-  let component: SamTopBannerComponent;
-  let fixture: ComponentFixture<SamTopBannerComponent>;
+describe('SdsTopBannerComponent', () => {
+  let component: SdsTopBannerComponent;
+  let fixture: ComponentFixture<SdsTopBannerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SamTopBannerComponent],
+      declarations: [SdsTopBannerComponent],
       imports: []
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SamTopBannerComponent);
+    fixture = TestBed.createComponent(SdsTopBannerComponent);
     component = fixture.componentInstance;
 
   });
