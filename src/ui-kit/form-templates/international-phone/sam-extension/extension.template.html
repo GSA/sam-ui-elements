@@ -4,7 +4,7 @@
   [name]="name"
   [hint]="hint"
   [errorMessage]="errorMessage"
-  [required]="required">
+  [required]="isExtensionRequired">
   <input
     [(ngModel)]="inputValue"
     (change)="inputChange($event)"

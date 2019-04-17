@@ -40,7 +40,10 @@ export class SamExtension extends SamFormControl {
    */
    placeholder: string = 'ex: 1234';
   
-
+   /**
+    * is extension required
+    */
+  @Input() isExtensionRequired: boolean = false;
   public inputValue: any = '';
 
   protected defaultValue = '';
