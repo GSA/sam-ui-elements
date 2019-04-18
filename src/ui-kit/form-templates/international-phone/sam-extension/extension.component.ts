@@ -82,14 +82,10 @@ export class SamExtension extends SamFormControl {
   }
 
   public inputChange(event) {
-    if (this.keys.isAllowed(event)) {
     this.value = event.currentTarget.value
       ? event.currentTarget.value
       : '';
       this.onChange(this.value);
-    } else {
-      event.preventDefault();
-    }
   }
 
   public validate(c: FormControl) {
