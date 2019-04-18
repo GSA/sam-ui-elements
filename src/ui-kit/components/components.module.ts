@@ -68,7 +68,7 @@ import { SamPageTitleModule } from './page-title';
     SamPageTitleModule,
   ],
   declarations: [
-    
+
   ],
   exports: [
     SamActionButtonModule,
