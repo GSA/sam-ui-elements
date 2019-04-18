@@ -1,11 +1,11 @@
 import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  ViewChild,
-  ElementRef,
-  ViewChildren
+    Component,
+    Input,
+    Output,
+    EventEmitter,
+    ViewChild,
+    ElementRef,
+    ViewChildren
 } from '@angular/core';
 
 import { KeyHelper } from '../../../utilities/key-helper/key-helper';
@@ -48,17 +48,24 @@ export class SamActionsDropdownComponent {
   @Output() public emitCallback: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChildren('actionsList') public actionsList;
+
+  @ViewChild('actionButton') public actionButton;
+
   showActions = false;
   focusIndex = -1;
-  hideActions() {
+
+  hideActions(event) {
     return this.showActions = false;
   }
 
   toggleActions() {
-    if(!this.showActions){
+    this.showActions = !this.showActions;
+    if(this.showActions) {
+      this.setFocusOnFirstItem();
+    } else {
+      console.log("here reset focusIndex")
       this.focusIndex = -1;
     }
-    return this.showActions = !this.showActions;
   }
 
   chooseAction(action) {
@@ -75,8 +82,21 @@ export class SamActionsDropdownComponent {
       this.toggleActions();
       event.preventDefault();
       event.stopPropagation();
-    } else if (KeyHelper.is("down",event)){
+    } else {
       this.keyDownHandler(event);
+    }
+  }
+
+  setFocusOnFirstItem() {
+    this.actionsList.changes.subscribe(t => {
+      this.ngForRendered();
+    })
+  }
+
+  ngForRendered() {
+    if(this.actionsList.length > 0) {
+      this.focusIndex = 0;
+      this.actionsList.toArray()[this.focusIndex].nativeElement.focus();
     }
   }
 
@@ -85,6 +105,9 @@ export class SamActionsDropdownComponent {
       if(this.focusIndex+1<this.actionsList.toArray().length){
         this.focusIndex++;
         this.actionsList.toArray()[this.focusIndex].nativeElement.focus();
+      } else {
+        this.focusIndex = 0;
+        this.actionsList.toArray()[this.focusIndex].nativeElement.focus();
       }
       event.preventDefault();
       event.stopPropagation();
@@ -92,9 +115,17 @@ export class SamActionsDropdownComponent {
       if(this.focusIndex-1>=0){
         this.focusIndex--;
         this.actionsList.toArray()[this.focusIndex].nativeElement.focus();
+      } else {
+        this.focusIndex = this.actionsList.toArray().length - 1;
+        this.actionsList.toArray()[this.focusIndex].nativeElement.focus();
       }
       event.preventDefault();
       event.stopPropagation();
+    } else if (KeyHelper.is("esc", event)){
+      if(this.showActions) {
+        this.toggleActions();
+      }
+      this.actionButton.nativeElement.focus();
     }
   }
 }
