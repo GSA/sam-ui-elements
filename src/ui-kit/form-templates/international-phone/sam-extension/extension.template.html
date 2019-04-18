@@ -9,6 +9,7 @@
     [(ngModel)]="inputValue"
     (change)="inputChange($event)"
     type="text"
+    (keydown)="onKeyInput($event)"
     [placeholder]="placeholder"
     [attr.id]="name"
     [attr.name]="name"
