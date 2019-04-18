@@ -63,7 +63,6 @@ export class SamActionsDropdownComponent {
     if(this.showActions) {
       this.setFocusOnFirstItem();
     } else {
-      console.log("here reset focusIndex")
       this.focusIndex = -1;
     }
   }
