@@ -19,6 +19,7 @@ import { SamHistoryModule } from './history';
 import { SamModalModule } from './modal';
 import { SamMultiSelectDropdownModule } from './multiselect-dropdown';
 import { SamPaginationModule } from './pagination';
+import { SdsPaginationModule } from './pagination';
 import { SamPipesModule } from '../pipes';
 import { SamPointOfContactModule } from './point-of-contact';
 import { SamProgressModule } from './progress-bar';
@@ -62,6 +63,7 @@ import { SamPageTitleModule } from './page-title';
     SamHistoryModule,
     SamMultiSelectDropdownModule,
     SamPaginationModule,
+    SdsPaginationModule,
     SamPointOfContactModule,
     SamSpinnerModule,
     SamTabsModule,
@@ -84,6 +86,7 @@ import { SamPageTitleModule } from './page-title';
     SamModalModule,
     SamMultiSelectDropdownModule,
     SamPaginationModule,
+    SdsPaginationModule,
     SamPointOfContactModule,
     SamProgressModule,
     SamSidenavModule,
