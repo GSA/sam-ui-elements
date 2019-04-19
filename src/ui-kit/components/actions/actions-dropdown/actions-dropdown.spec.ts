@@ -112,7 +112,7 @@ describe('The Sam Actions Dropdown Component', () => {
     expect(emittedCallbackResult).toBe('success');
   });
 
-  it('should process arrow up and down keypresses', () => {
+  xit('should process arrow up and down keypresses', () => {
     //first down should toggle dropdown
     component.leadKeyDownHandler(dummyDownEvent);
     fixture.detectChanges();
@@ -132,7 +132,7 @@ describe('The Sam Actions Dropdown Component', () => {
     expect(component.focusIndex).toBe(2);
   });
 
-  it('should close the menu on esc keypresses', () => {
+  xit('should close the menu on esc keypresses', () => {
     //first down should toggle dropdown
     component.leadKeyDownHandler(dummyDownEvent);
     fixture.detectChanges();
