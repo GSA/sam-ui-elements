@@ -122,5 +122,8 @@ describe('The Sam Actions Dropdown Component', () => {
     //should go back to the first item from last item
     component.keyDownHandler(dummyDownEvent);
     expect(component.focusIndex).toBe(0);
+    //pressing up from 1st item should move to last item
+    component.keyDownHandler(dummyUpEvent);
+    expect(component.focusIndex).toBe(2);
   });
 });
