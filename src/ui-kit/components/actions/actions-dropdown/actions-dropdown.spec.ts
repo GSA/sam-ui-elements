@@ -12,17 +12,17 @@ describe('The Sam Actions Dropdown Component', () => {
   let emittedAction: any;
   let emittedCallbackResult: any;
   let dummyUpEvent = {
-    key: "up",
+    key: "Up",
     preventDefault: function(){},
     stopPropagation: function(){}
   };
   let dummyDownEvent = {
-    key: "down",
+    key: "Down",
     preventDefault: function(){},
     stopPropagation: function(){}
   };
   let dummyEscEvent = {
-    key: "esc",
+    key: "Esc",
     preventDefault: function(){},
     stopPropagation: function(){}
   };
