@@ -12,17 +12,17 @@ describe('The Sam Actions Dropdown Component', () => {
   let emittedAction: any;
   let emittedCallbackResult: any;
   let dummyUpEvent = {
-    key: "up",
+    key: "Up",
     preventDefault: function(){},
     stopPropagation: function(){}
   };
   let dummyDownEvent = {
-    key: "down",
+    key: "Down",
     preventDefault: function(){},
     stopPropagation: function(){}
   };
   let dummyEscEvent = {
-    key: "esc",
+    key: "Esc",
     preventDefault: function(){},
     stopPropagation: function(){}
   };
@@ -112,7 +112,7 @@ describe('The Sam Actions Dropdown Component', () => {
     expect(emittedCallbackResult).toBe('success');
   });
 
-  xit('should process arrow up and down keypresses', () => {
+  it('should process arrow up and down keypresses', () => {
     //first down should toggle dropdown
     component.leadKeyDownHandler(dummyDownEvent);
     fixture.detectChanges();
@@ -132,7 +132,7 @@ describe('The Sam Actions Dropdown Component', () => {
     expect(component.focusIndex).toBe(2);
   });
 
-  xit('should close the menu on esc keypresses', () => {
+  it('should close the menu on esc keypresses', () => {
     //first down should toggle dropdown
     component.leadKeyDownHandler(dummyDownEvent);
     fixture.detectChanges();
