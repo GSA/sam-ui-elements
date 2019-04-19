@@ -26,6 +26,7 @@ import {
   AccessorToken,
   ValidatorToken
 } from '../../../form-controls/sam-form-control';
+import { numberInputKeys } from '../number-input-keys';
 
 @Component({
   selector: 'sam-extension',
@@ -47,11 +48,7 @@ export class SamExtension extends SamFormControl {
    /**
     * is extension required
     */
-   public allowChars = [
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-    'backspace', 'left', 'right', 'tab', 'delete'
-  ];
-  private keys: KeyHelper = new KeyHelper(...this.allowChars);
+   private keys: KeyHelper = new KeyHelper(...numberInputKeys);
   @Input() isExtensionRequired: boolean = false;
   public inputValue: any = '';
 

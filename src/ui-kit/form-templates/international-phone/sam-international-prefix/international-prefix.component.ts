@@ -14,6 +14,7 @@ import {
   ValidatorToken
 } from '../../../form-controls/sam-form-control';
 import { KeyHelper } from '../../../utilities/key-helper/key-helper';
+import { numberInputKeys } from '../number-input-keys';
 
 @Component({
   selector: 'sam-international-prefix',
@@ -31,11 +32,7 @@ import { KeyHelper } from '../../../utilities/key-helper/key-helper';
 export class SamInternationalPrefix extends SamFormControl {
 
   @ViewChild('input') public input: ElementRef;
-  public allowChars = [
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-    'backspace', 'left', 'right', 'tab', 'delete'
-  ];
-  private keys: KeyHelper = new KeyHelper(...this.allowChars);
+  private keys: KeyHelper = new KeyHelper(...numberInputKeys);
   
   public min = 1;
   public max = 999;
