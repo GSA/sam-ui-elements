@@ -8,6 +8,7 @@
   <input
     [(ngModel)]="inputValue"
     (change)="inputChange($event)"
+    (keydown)="onKeyInput($event)"
     (focus)="handleFocus($event)"
     (blur)="handleBlur($event)"
     type="tel"

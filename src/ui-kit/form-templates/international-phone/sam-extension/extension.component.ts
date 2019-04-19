@@ -18,10 +18,15 @@ import {
 import { SamFormService } from '../../../form-service';
 
 import {
+  KeyHelper
+} from '../../../utilities/key-helper/key-helper';
+
+import {
   SamFormControl,
   AccessorToken,
   ValidatorToken
 } from '../../../form-controls/sam-form-control';
+import { numberInputKeys } from '../number-input-keys';
 
 @Component({
   selector: 'sam-extension',
@@ -40,7 +45,11 @@ export class SamExtension extends SamFormControl {
    */
    placeholder: string = 'ex: 1234';
   
-
+   /**
+    * is extension required
+    */
+   private keys: KeyHelper = new KeyHelper(...numberInputKeys);
+  @Input() isExtensionRequired: boolean = false;
   public inputValue: any = '';
 
   protected defaultValue = '';
@@ -73,8 +82,7 @@ export class SamExtension extends SamFormControl {
     this.value = event.currentTarget.value
       ? event.currentTarget.value
       : '';
-
-    this.onChange(this.value);
+      this.onChange(this.value);
   }
 
   public validate(c: FormControl) {
@@ -87,6 +95,12 @@ export class SamExtension extends SamFormControl {
       : null;
   }
 
+  onKeyInput(event){
+    if (!this.keys.isAllowed(event)) {
+      event.preventDefault();
+      return;
+    }
+  }
   public writeValue(val: any): void {
     this.value = val;
   }

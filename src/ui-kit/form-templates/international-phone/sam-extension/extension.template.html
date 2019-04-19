@@ -4,11 +4,12 @@
   [name]="name"
   [hint]="hint"
   [errorMessage]="errorMessage"
-  [required]="required">
+  [required]="isExtensionRequired">
   <input
     [(ngModel)]="inputValue"
     (change)="inputChange($event)"
     type="text"
+    (keydown)="onKeyInput($event)"
     [placeholder]="placeholder"
     [attr.id]="name"
     [attr.name]="name"

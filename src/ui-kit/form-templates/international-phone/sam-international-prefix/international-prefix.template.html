@@ -11,5 +11,6 @@
     (change)="inputChange($event)"
     type="text" 
     [attr.id]="name" 
+    (keydown)="onKeyInput($event)"
     [disabled]="disabled"/>
 </sam-label-wrapper>
