@@ -1,51 +1,68 @@
-///SAM BAKER - FOOTER
-//--------------------------------
-.sam-footer{
+// FOOTERS
+// --------------------------------
+.sam-styles.sam-footer {
   display: block;
   background-color: #ECF1F7;
   box-sizing: content-box;
-  //padding: 10px 10%;
+  padding: 15px 0;
   margin: auto;
 }
-.sam-footer-content{
+
+.sam-footer-content {
   display: flex;
   flex-direction: row;
-  margin: 20px 0;
+  justify-content: center;
+  margin: auto;
+  max-width: 85%;
 }
-.sam-footer-text{
-  width: 100%;
+
+.sam-footer-text {
+  width: 85%;
+  margin: auto;
   font-family: SourceSansPro-Regular;
   font-size: 13px;
   color: #323A44;
   text-align: left;
-  line-height:normal;
+  line-height: normal;
 }
-.sam-footer-logo{
+
+.sam-footer-logo {
   width: 200px;
 }
-.sam-footer-logo>img{
+
+.sam-footer-logo > img {
   max-height: 90px;
 }
-.sam-footer-logo-text{
+
+.sam-footer-logo-text {
   color: #005088;
   word-wrap: wrap;
   margin-top: 5px;
 }
-.sam-footer-links{
+
+.sam-footer-links {
   display: flex;
   flex-direction: column;
   margin: 15px 20px;
   width: 220px;
+  list-style-type: none;
 }
-.sam-footer-links>h4{
-  //font-family: SourceSansPro-Bold;
+
+.sam-footer-links > h4 {
   font-size: 18px;
   color: #212121;
   letter-spacing: 0;
-  font-weight:bold;
+  font-weight: bold;
 }
-.sam-footer-links>a{
-  //font-family: SourceSansPro-Regular;
+
+.sam-footer-links_section-header {
+  font-size: 18px;
+  color: #212121;
+  letter-spacing: 0;
+  font-weight: bold;
+}
+
+.sam-footer-links > a {
   font-size: 16px;
   color: #205493;
   letter-spacing: 0;
@@ -53,28 +70,54 @@
   font-weight: 500;
 }
 
-@media screen and (max-width: 1024px){
-  .sam-footer{
+.sam-footer-section-link {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.sam-footer-links_container {
+  padding-left: 0;
+}
+@media screen and (max-width: 1024px) {
+  .sam-footer {
     padding: 5% 10%;
   }
-  .sam-footer-content{
+
+  .sam-footer-content {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  .sam-footer-logo{
+
+  .sam-footer-logo {
     display: flex;
     flex-direction: row;
     align-items: center;
+    font-weight: 700;
   }
-  .sam-footer-logo-text{
-    font-size: 16;
+
+  .sam-footer-logo-text {
+    //font-size: 16;
+    font-size: 2rem;
   }
-  .sam-footer-links{
+
+  .sam-footer-links {
     padding-top: 10px;
     text-align: center;
   }
-  .sam-footer-text{
+
+  .sam-footer-text {
     text-align: center;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .sam-footer-links {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .sam-footer-logo-text {
+    font-size: 2rem;
+    font-weight: 700;
   }
 }
