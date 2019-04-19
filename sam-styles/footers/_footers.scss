@@ -79,7 +79,7 @@
   padding-left: 0;
 }
 @media screen and (max-width: 1024px) {
-  .sam-footer {
+  .sam-styles.sam-footer {
     padding: 5% 10%;
   }
 
@@ -87,6 +87,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .sam-footer-content > ul {
+    padding: 0;
   }
 
   .sam-footer-logo {
