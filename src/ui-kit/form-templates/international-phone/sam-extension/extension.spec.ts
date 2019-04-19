@@ -40,7 +40,7 @@ describe('Sam extension', () => {
       expect(errs).toBe(null);
     });
 
-  })
+  });
 
   describe('Rendered tests', () => {
     let fixture;
@@ -85,6 +85,48 @@ describe('Sam extension', () => {
         () => {
           const val = fixture.debugElement.querySelector('.sam-extension').value;
           expect(val).toBe(5);
+        }
+      );
+    });
+
+    it('Should be empty when chanrecter entered', () => {
+      const mock = {
+        currentTarget: {
+          value: '5'
+        },
+        preventDefault: function(){},
+        stopPropagation: function(){}
+      };
+
+      component.onKeyInput(mock);
+
+      fixture.detectChanges();
+
+      fixture.whenStable().then(
+        () => {
+          const val = fixture.debugElement.querySelector('.sam-extension').value;
+          expect(val).toBe(5);
+        }
+      );
+    });
+
+    it('Should be empty when chanrecter entered', () => {
+    
+      const mock1 = {
+        key: 'g',
+        preventDefault: function(){},
+        stopPropagation: function(){}
+      };
+
+      component.onKeyInput(mock1);
+
+      fixture.detectChanges();
+
+      fixture.whenStable().then(
+        () => {
+          console.log(component.inputValue, 'test');
+          const val = fixture.debugElement.querySelector('.sam-extension').value;
+          expect(val).toBe('');
         }
       )
     });
