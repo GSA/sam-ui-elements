@@ -8,7 +8,7 @@ import {
     ViewChildren
 } from '@angular/core';
 
-import { KeyHelper } from '../../../utilities/key-helper/key-helper';
+import { KeyHelper, KEYS } from '../../../utilities/key-helper/key-helper';
 import {SamActionInterface} from '../action-interface';
 
 @Component({
@@ -77,7 +77,7 @@ export class SamActionsDropdownComponent {
   }
 
   leadKeyDownHandler(event){
-    if(KeyHelper.is("down",event) && !this.showActions){
+    if(KeyHelper.is(KEYS.DOWN,event) && !this.showActions){
       this.toggleActions();
       event.preventDefault();
       event.stopPropagation();
@@ -100,7 +100,7 @@ export class SamActionsDropdownComponent {
   }
 
   keyDownHandler(event){
-    if(KeyHelper.is("down",event)){
+    if(KeyHelper.is(KEYS.DOWN, event)){
       if(this.focusIndex+1<this.actionsList.toArray().length){
         this.focusIndex++;
         this.actionsList.toArray()[this.focusIndex].nativeElement.focus();
@@ -110,7 +110,7 @@ export class SamActionsDropdownComponent {
       }
       event.preventDefault();
       event.stopPropagation();
-    } else if(KeyHelper.is("up",event)){
+    } else if(KeyHelper.is(KEYS.UP,event)){
       if(this.focusIndex-1>=0){
         this.focusIndex--;
         this.actionsList.toArray()[this.focusIndex].nativeElement.focus();
@@ -120,7 +120,7 @@ export class SamActionsDropdownComponent {
       }
       event.preventDefault();
       event.stopPropagation();
-    } else if (KeyHelper.is("esc", event)){
+    } else if (KeyHelper.is(KEYS.ESC, event)){
       if(this.showActions) {
         this.toggleActions();
       }
