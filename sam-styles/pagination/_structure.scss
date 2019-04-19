@@ -61,27 +61,27 @@
         SB ADDED PAGINATION
   *******************************/
 
-.sam-pagination {
+.sds-pagination {
   display: block;
 }
 
-.sam-pagination > p {
+.sds-pagination > p {
   font-size: 20px;
   font-weight: 500;
   padding: 5px;
 	display: inline-block;
 }
 
-.sam-pagination__expanded {
+.sds-pagination__expanded {
   display: inline-block;
 	list-style-type: none;
 }
 
-.sam-pagination__expanded > li{
+.sds-pagination__expanded > li{
 	display: inline;
 }
 
-.sam-pagination__expanded > li > a {
+.sds-pagination__expanded > li > a {
   padding: 0.5rem;
   font-size: 20px;
   font-weight: 600;
@@ -89,27 +89,27 @@
   color: #11304f;
 }
 
-.sam-pagination__expanded > li > a.active{
+.sds-pagination__expanded > li > a.active{
 	color: #000000;
 }
 
-.sam-pagination__expanded > li > a:hover{
+.sds-pagination__expanded > li > a:hover{
 text-decoration: none;
 }
 
-.sam-pagination__expanded > li > a > img{
+.sds-pagination__expanded > li > a > img{
   color: #123050;
 }
 
-.sam-pagination__expanded > a.active {
+.sds-pagination__expanded > a.active {
 	color: black;
 }
 
-.sam-pagination__expanded > a:hover{
+.sds-pagination__expanded > a:hover{
 	text-decoration: none;
 }
 
-.sam-pagination__expanded > a > img{
+.sds-pagination__expanded > a > img{
   height: 1rem;
 }
 
