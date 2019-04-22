@@ -34,6 +34,7 @@ import { SamListboxModule } from './listbox/listbox.module';
 import { SamSideNavigationToolbarModule } from './sideNavigationToolbar/sideNavigationToolbar.module';
 import { SamDateRangeV2Module } from './date-range-v2/date-range-v2.module';
 import { SdsSortModule } from './sort';
+import { SdsPaginationModule } from './pagination';
 
 
 @NgModule({
@@ -106,7 +107,8 @@ import { SdsSortModule } from './sort';
     SamProgressModule,
     SamDateRangeV2Module,
     SamSideNavigationToolbarModule,
-    SdsSortModule
+    SdsSortModule,
+    SdsPaginationModule
   ]
 })
 export class SamExperimentalModule { }
