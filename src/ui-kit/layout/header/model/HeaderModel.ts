@@ -93,14 +93,14 @@ export class HeaderSecondaryLink implements Selectable {
     route: string;
 
     /**
-     * Path for the Image
+     * Class or image 
      */
-    imageSourcePath: string;
+    imageClass: string;
 
     /**
-     * Alt text for the image
+     * displays counter with image
      */
-    imageAltText: string;
+    hasCounter: boolean;
 
     /**
      * Identifier for the item when search for selected 
