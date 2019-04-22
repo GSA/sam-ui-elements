@@ -25,7 +25,7 @@ describe('SdsHeaderComponent', () => {
       home: { text: "", id: "home", imageAltText: '', imageSourcePath: '', route: '', selected: false },
       navigationLinks:
         [{ text: "", selected: false, route: "", children: [{ text: "", selected: false, route: "", children: [], id: "childLink" }], id: "navLink" }],
-      secondaryLinks: [{ text: "", selected: false, route: "", id: "secNavLink", imageSourcePath: "", imageAltText: "" }]
+      secondaryLinks: [{ text: "", selected: false, route: "", id: "secNavLink", hasCounter: false, imageClass: '' }]
     };
   });
 
