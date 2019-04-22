@@ -22,7 +22,7 @@ describe('SdsHeaderComponent', () => {
     fixture = TestBed.createComponent(SdsHeaderComponent);
     component = fixture.componentInstance;
     component.model = {
-      home: { text: "", id: "home", imageAltText: '', imageSourcePath: '', route: '', selected: false },
+      home: { text: "", id: "home", route: '', selected: false },
       navigationLinks:
         [{ text: "", selected: false, route: "", children: [{ text: "", selected: false, route: "", children: [], id: "childLink" }], id: "navLink" }],
       secondaryLinks: [{ text: "", selected: false, route: "", id: "secNavLink", hasCounter: false, imageClass: '' }]

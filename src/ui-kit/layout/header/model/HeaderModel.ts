@@ -28,17 +28,7 @@ export class HeaderHome implements Selectable {
      */
     route: string;
 
-    /**
-     * Image Source Path for the Image button
-     */
-    imageSourcePath: string;
-
-    /**
-     * Alt text for image
-     */
-    imageAltText: string;
-
-    /**
+     /**
      * Identifier for the item when search for selected 
      */
     id: string;
