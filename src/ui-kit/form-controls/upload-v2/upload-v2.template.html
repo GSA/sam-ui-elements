@@ -41,7 +41,7 @@
       <thead class="upload-table-header">
         <th scope="col" align="left" class="p_L-4x">Document</th>
         <th scope="col">File Size</th>
-        <th scope="col">Access</th>
+        <th scope="col" *ngIf="!toggleUploadFileAction?.noHeader">Access</th>
         <th scope="col" *ngIf="isEditMode()">Actions</th>
         <th scope="col" *ngIf="!isEditMode()">Updated Date</th>
       </thead>
@@ -77,7 +77,7 @@
             <td class="upload-table-props-col">
               <div [attr.id]="uploadElIds.fileSize + i">{{ fctrl.fileSize | filesize }}</div>
             </td>
-            <td class="upload-table-props-col">
+            <td class="upload-table-props-col" *ngIf="!toggleUploadFileAction?.noAccess">
               <ng-container *ngIf="isEditMode(); else secureTag">
                 <sam-toggle-switch [attr.id]="uploadElIds.fileSecure + i" [isSwitchOn]="fctrl.isSecure" (switchStatusChange)="onAccessToggle(i, $event)"></sam-toggle-switch>
               </ng-container>
