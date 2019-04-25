@@ -4,10 +4,8 @@ import { SdsPaginationComponent } from './sds-pagination.component';
 
 
 @NgModule({
-    imports: [CommonModule,
-        SdsPaginationModule
-    ],
+    imports: [CommonModule],
     declarations: [SdsPaginationComponent],
-    exports: [SdsPaginationModule]
+    exports: [SdsPaginationComponent]
 })
 export class SdsPaginationModule { }
