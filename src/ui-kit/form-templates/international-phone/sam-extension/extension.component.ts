@@ -107,7 +107,7 @@ export class SamExtension extends SamFormControl {
   private extensionValidator (c: FormControl) {
     const regex: RegExp = /^[0-9]{1,20}$/g;
     const message =
-      'Phone extensions must only include numbers';
+      'Phone extensions must be less than 20 numbers';
 
     return c && c.value && !c.value.toString().match(regex)
       ? { extension: { message: message } }
