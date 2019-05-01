@@ -1,4 +1,5 @@
 import { areEqual } from '../../utilities/are-equal/are-equal';
+import { isEqual } from 'lodash';
 
 export class Cached {
   private contents: any[] = [];
@@ -92,15 +93,16 @@ export class AutocompleteCache {
   }
 
   public static arraysEqual (arr1, arr2) {
-    if (arr1.length !== arr2.length) {
-      return false;
-    }
-    for (let i = arr1.length; i--; ) {
-      if (arr1[i] !== arr2[i]) {
-        return false;
-      }
-    }
-    return true;
+    // if (arr1.length !== arr2.length) {
+    //   return false;
+    // }
+    // for (let i = arr1.length; i--; ) {
+    //   if (arr1[i] !== arr2[i]) {
+    //     return false;
+    //   }
+    // }
+    // return true;
+    return isEqual(arr1, arr2);
   }
 
   constructor(public readonly maxBytes: number = 250000) {

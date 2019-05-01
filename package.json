@@ -47,7 +47,9 @@
     "ie-shim": "0.1.0",
     "rxjs": "^6.2.2",
     "zone.js": "0.8.14",
-    "moment": "2.19.3"
+    "moment": "2.19.3",
+    "@types/lodash": "4.14.123",
+    "lodash": "4.17.11"
   },
   "devDependencies": {
     "@angularclass/hmr": "1.0.1",
