@@ -1,16 +1,26 @@
 <div class="example-container usa-grid">
-  <ng-container *ngTemplateOutlet="gridTemplate"></ng-container>
+  <ng-container *ngTemplateOutlet="gridData.length===0 ? noResults: gridTemplate"></ng-container>
 </div>
 
+<ng-template #noResults>
+  <div class="empty-results">
+    {{configuration.emptyResultText}}
+  </div>
+</ng-template>
 <ng-template #gridTemplate>
-  <div>
+  <div class="h-select-col" (scroll)="onScroll($event)">
     <sam-datatable #table samSort [dataSource]="hierarchicalDataSource">
       <ng-container cdkColumnDef="select">
         <th sam-header-cell *cdkHeaderCellDef sam-sort-header>Select</th>
         <td sam-cell *cdkCellDef="let row">
           <div class="datatable-checkbox">
-            <input [attr.type]="selectionMode" id="selectId" (change)="onChecked($event,row)" name="select">
-            <label for="selectId"></label>
+            <input [attr.type]="selectionMode" [attr.id]="row[configuration.primaryKeyField]+'id'"
+              (change)="onChecked($event,row)" name="select">
+            <label
+              [attr.for]="row[configuration.primaryKeyField]+'id'">{{'Select '+ row[configuration.primaryTextField]}}
+            </label>
+            <button (click)="onRowChange($event,row)"
+              class="usa-sr-only">{{configuration.navigateScreenReaderText + ' '+row[configuration.primaryTextField]}}</button>
           </div>
         </td>
       </ng-container>

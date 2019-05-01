@@ -1,5 +1,5 @@
 import {
-  Component, OnInit, ViewChild, Input,
+  Component, OnInit, ViewChild, Input, AfterViewChecked,
   Output, EventEmitter, ChangeDetectorRef
 } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -12,7 +12,7 @@ import { SamHierarchicalTreeGridConfiguration } from '../models/SamHierarchicalT
   templateUrl: './hierarchical-tree-grid.component.html',
   styleUrls: ['./hierarchical-tree-grid.component.scss']
 })
-export class SamHierarchicalTreeGridComponent implements OnInit {
+export class SamHierarchicalTreeGridComponent implements OnInit, AfterViewChecked {
 
   /**
   * Table configurations 
@@ -38,6 +38,16 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   * Event emitted when row set is selected.
   */
   @Output() selectResults = new EventEmitter<object[]>();
+
+  /**
+   * 
+   */
+  @Output() public sorted = new EventEmitter<object>();
+
+  /**
+   * 
+   */
+  @Output() public scrolled = new EventEmitter<object>();
 
   /**
    * Columns to be displayed
@@ -77,7 +87,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
   /**
    * Sort Directive
    */
-  @ViewChild(SamSortDirective) sort: SamSortDirective;
+  @ViewChild(SamSortDirective) sortDirective: SamSortDirective;
 
 
   constructor(private cdr: ChangeDetectorRef) { }
@@ -92,16 +102,25 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
       this.columnHeaderText.push(item.headerText);
     });
     this.displayedColumns = [...this.displayedColumns, ...this.columnFieldName];
+
+  }
+
+  ngAfterViewChecked(): void {
     if (this.isSingleMode) {
       this.selectionMode = "radio";
-    }
+      this.cdr.detectChanges();
+    }  
   }
 
   ngAfterViewInit() {
-    this.hierarchicalDataSource = new HierarchicalDataSource(
-      this.dataChange,
-      this.sort
-    );
+    this.hierarchicalDataSource = new HierarchicalDataSource(this.dataChange);
+    if (this.sortDirective) {
+      this.sortDirective.samSortChange.subscribe(
+        value => {
+          this.sorted.emit(value);
+        }
+      );
+    }
     this.cdr.detectChanges();
   }
 
@@ -122,6 +141,16 @@ export class SamHierarchicalTreeGridComponent implements OnInit {
       }
     }
     this.selectResults.emit(this.selectedList);
+  }
+
+
+  onScroll(event) {
+    let scrollAreaHeight = event.target.offsetHeight;
+    let scrollTopPos = event.target.scrollTop;
+    let scrollAreaMaxHeight = event.target.scrollHeight;
+    if ((scrollTopPos + scrollAreaHeight * 2) >= scrollAreaMaxHeight) {
+      this.scrolled.emit(null);
+    }
   }
 
   /**

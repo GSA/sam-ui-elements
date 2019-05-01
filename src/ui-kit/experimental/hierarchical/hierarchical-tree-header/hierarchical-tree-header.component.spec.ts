@@ -1,12 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SamHierarchicalTreeHeaderComponent } from './hierarchical-tree-header.component';
 import { SamButtonModule } from '../../../elements';
 import { SamSelectModule } from '../../../form-controls';
 import { SamFormService } from '../../../form-service';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
 import { SamHierarchicalTreeHeaderConfiguration } from '../models/SamHierarchicalTreeHeaderConfiguration';
 
 const options = [{ "name": "Level 2", "id": "2", "value": "2", "label": "Level 2" },
@@ -16,8 +14,6 @@ const options = [{ "name": "Level 2", "id": "2", "value": "2", "label": "Level 2
 describe('SamHierarchicalTreeHeaderComponent', () => {
   let component: SamHierarchicalTreeHeaderComponent;
   let fixture: ComponentFixture<SamHierarchicalTreeHeaderComponent>;
-  let de: DebugElement;
-
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -36,25 +32,16 @@ describe('SamHierarchicalTreeHeaderComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SamHierarchicalTreeHeaderComponent);
     component = fixture.componentInstance;
-    de = fixture.debugElement;
     component.options = options;
 
     let config = new SamHierarchicalTreeHeaderConfiguration();
+    config.minimumCharacterCountSearch = 0;
     component.configuration = config;
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('Should emit when select changes', () => {
-    const button = de.query(By.css('button'));
-    let emittedAction: any;
-    component.filterTextChange.subscribe((_: any) => { emittedAction = _; });
-    fixture.detectChanges();
-    button.triggerEventHandler('click', undefined);
-    expect(emittedAction).toBe(component.selectModel);
   });
 
   it('navigateToParent with child', () => {
@@ -80,6 +67,134 @@ describe('SamHierarchicalTreeHeaderComponent', () => {
     component.onLevelChange(null);
     fixture.detectChanges();
     expect(component.selectBreadcrumb.emit).toHaveBeenCalledWith('1');
+  });
+
+
+  it('Delete no char min', () => {
+    const event = {
+      "key": "Delete",
+      "target": { "value": 'id' }
+    }
+    spyOn(component.filterTextChange, 'emit');
+    component.onKeyup(event);
+    fixture.detectChanges();
+    expect(component.filterTextChange.emit).toHaveBeenCalledWith(event.target.value);
+
+  });
+
+  it('Backspace no char min', () => {
+    const event = {
+      "key": "Backspace",
+      "target": { "value": 'id' }
+    }
+    spyOn(component.filterTextChange, 'emit');
+    component.onKeyup(event);
+    fixture.detectChanges();
+    expect(component.filterTextChange.emit).toHaveBeenCalledWith(event.target.value);
+  });
+
+
+  it('Delete empty with char min', () => {
+    const event = {
+      "key": "Delete",
+      "target": { "value": '' }
+    }
+    component.configuration.minimumCharacterCountSearch = 3;
+    spyOn(component.filterTextChange, 'emit');
+    component.onKeyup(event);
+    fixture.detectChanges();
+    expect(component.filterTextChange.emit).toHaveBeenCalledWith(event.target.value);
+
+  });
+
+  it('Backspace empty with char min', () => {
+    const event = {
+      "key": "Backspace",
+      "target": { "value": '' }
+    }
+    component.configuration.minimumCharacterCountSearch = 3;
+    spyOn(component.filterTextChange, 'emit');
+    component.onKeyup(event);
+    fixture.detectChanges();
+    expect(component.filterTextChange.emit).toHaveBeenCalledWith(event.target.value);
+  });
+
+
+  it('Delete not within emit ', () => {
+    const event = {
+      "key": "Delete",
+      "target": { "value": 'le' }
+    }
+    component.configuration.minimumCharacterCountSearch = 3;
+    spyOn(component.filterTextChange, 'emit');
+    component.onKeyup(event);
+    fixture.detectChanges();
+    expect(component.filterTextChange.emit).toHaveBeenCalledWith('');
+
+  });
+
+  it('Backspace not within emit', () => {
+    const event = {
+      "key": "Backspace",
+      "target": { "value": 'ie' }
+    }
+    component.configuration.minimumCharacterCountSearch = 3;
+    spyOn(component.filterTextChange, 'emit');
+    component.onKeyup(event);
+    fixture.detectChanges();
+    expect(component.filterTextChange.emit).toHaveBeenCalledWith('');
+  });
+
+
+  it('Delete above min char limit', () => {
+    const event = {
+      "key": "Delete",
+      "target": { "value": 'leb' }
+    }
+    component.configuration.minimumCharacterCountSearch = 3;
+    spyOn(component.filterTextChange, 'emit');
+    component.onKeyup(event);
+    fixture.detectChanges();
+    expect(component.filterTextChange.emit).toHaveBeenCalledWith(event.target.value);
+
+  });
+
+  it('Backspace above min char limit', () => {
+    const event = {
+      "key": "Backspace",
+      "target": { "value": 'trr' }
+    }
+    component.configuration.minimumCharacterCountSearch = 3;
+    spyOn(component.filterTextChange, 'emit');
+    component.onKeyup(event);
+    fixture.detectChanges();
+    expect(component.filterTextChange.emit).toHaveBeenCalledWith(event.target.value);
+  });
+
+
+  it('Text above', () => {
+    const event = {
+      "key": "r",
+      "target": { "value": 'trr' }
+    }
+    component.configuration.minimumCharacterCountSearch = 3;
+    spyOn(component.filterTextChange, 'emit');
+    component.onKeyup(event);
+    fixture.detectChanges();
+    expect(component.filterTextChange.emit).toHaveBeenCalledWith(event.target.value);
+  });
+
+
+  it('Text below min char count', () => {
+    const event = {
+      "key": "r",
+      "target": { "value": 'tr' }
+    }
+    component.configuration.minimumCharacterCountSearch = 3;
+    spyOn(component.filterTextChange, 'emit');
+    component.onKeyup(event);
+    fixture.detectChanges();
+    expect(component.filterTextChange.emit).not.toHaveBeenCalled();
   });
 
 });

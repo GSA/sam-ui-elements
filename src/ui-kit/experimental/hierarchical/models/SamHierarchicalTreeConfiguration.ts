@@ -5,6 +5,11 @@ import { SamHierarchicalTreeGridColumn } from './SamHierarchicalTreeGridColumn';
 export class SamHierarchicalTreeConfiguration implements SamHierarchicalTreeGridConfiguration, SamHierarchicalTreeHeaderConfiguration {
 
     /**
+     * Mininumn Characters for search
+     */
+    public minimumCharacterCountSearch: number;
+
+    /**
      *  This is the primary field used to identify each object in the results
      */
     public primaryKeyField: string;
@@ -33,4 +38,15 @@ export class SamHierarchicalTreeConfiguration implements SamHierarchicalTreeGrid
      * Top Level Breadcrumb Text 
      */
     public topLevelBreadcrumbText: string;
+
+    /**
+    * Used for the Grid hidden button Screen Reader text to traverse down the tree
+    */
+    public navigateScreenReaderText: string = 'Go to';
+
+    /**
+    * Text when no results in advanced
+    */
+    public emptyResultText: string = 'There are no results. Try again with another selection.';
+
 }

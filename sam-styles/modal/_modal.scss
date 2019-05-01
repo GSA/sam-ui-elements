@@ -11,7 +11,7 @@
 .primary-model-body {
   background: #112e51;
   padding-left: 2em;
-  vertical-align: top;
+
   display: block;
 
   .sam-primary-title{
@@ -36,4 +36,11 @@ body.modal-open {
 }
 .modal-dialog .usa-modal-content-btn-area{
     padding-top: 20px !important;
+}
+
+// Modal temp styles (sam-hierarchical-tree modal)
+
+.sam-hierarchical-tree-modal .modal-content{
+  max-width: 90%;
+  max-height: 250%;
 }

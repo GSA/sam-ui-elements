@@ -1,0 +1,7 @@
+{
+    "dataSource": "prs",
+    "ignoreLabels": ["duplicate", "help wanted", "invalid", "lvl 2 defect - Annoying", "lvl1 defect - Broken", "nf - New feature", "question", "r&r - Refactoring and re-engineering", "sprint 2", "wontfix"],
+    "onlyMilestones": false,
+    "groupBy": "label",
+    "changelogFilename": "CHANGELOG.md"
+}

@@ -125,12 +125,12 @@ export class SamModalComponent implements OnInit {
     cancelId: ''
   };
 
-  constructor(private hostElement: ElementRef, private cdr: ChangeDetectorRef) {
+  constructor(private hostElement: ElementRef, public cdr: ChangeDetectorRef) {
     this.internalId = Date.now();
   }
 
   ngOnInit() {
-    document.body.appendChild(this.hostElement.nativeElement);
+    // document.body.appendChild(this.hostElement.nativeElement);
     this._scrollHelpers = ScrollHelpers(window);
     if (!this.typeNotDefined()) {
       this.selectedType = this.types[this.type].class;
@@ -185,9 +185,16 @@ export class SamModalComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    if (this.show) {
-      this.removeBackdrop();
-    }
+    // if (this.show) {
+    //   this.show = false;
+    //   this.removeBackdrop();
+    // }
+    this.show = false;
+    this.cdr.detach();
+  }
+
+  ngAfterViewChecked() {
+    this.cdr.detectChanges();
   }
 
   typeNotDefined() {
@@ -209,13 +216,13 @@ export class SamModalComponent implements OnInit {
     this.onOpen.emit(this.args);
     this.open.emit(this.args);
     if (document && document.body) {
-      this.createBackdrop();
+      // this.createBackdrop();
       this.disableScroll();
-      document.body.appendChild(this.backdropElement);
+      // document.body.appendChild(this.backdropElement);
     }
     this._focusModalElement = true;
     this.set508();
-    this.cdr.detectChanges();
+    // this.cdr.detectChanges();
   }
 
   closeModal(emit: boolean = true) {
@@ -226,7 +233,7 @@ export class SamModalComponent implements OnInit {
       this.close.emit(this.args);
     }
     this.args = undefined;
-    this.removeBackdrop();
+    // this.removeBackdrop();
     for (let i = 0; i < this._allFocusableElements.length; i++) {
       this.reinsertTabbable(this._allFocusableElements[i]);
     }
@@ -234,7 +241,7 @@ export class SamModalComponent implements OnInit {
     for (let j = 0; j < this._modalFocusableElements.length; j++) {
       this.removeTabbable(this._modalFocusableElements[j]);
     }
-    this.cdr.detectChanges();
+    // this.cdr.detectChanges();
   }
 
   submitBtnClick() {
@@ -243,14 +250,14 @@ export class SamModalComponent implements OnInit {
   }
 
   private createBackdrop() {
-    this.backdropElement = document.createElement('div');
-    this.backdropElement.classList.add('modal-backdrop');
+    // this.backdropElement = document.createElement('div');
+    // this.backdropElement.classList.add('modal-backdrop');
   }
 
   private removeBackdrop() {
-    if (document && document.body) {
-      document.body.removeChild(this.backdropElement);
-    }
+    // if (document && document.body) {
+    //   document.body.removeChild(this.backdropElement);
+    // }
   }
 
   private preventClosing(evt) {

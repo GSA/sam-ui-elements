@@ -24,7 +24,10 @@ const gridData = [
 const config: SamHierarchicalTreeGridConfiguration = {
     gridColumnsDisplayed: [],
     primaryKeyField: 'id',
-    childCountField: 'childCount'
+    childCountField: 'childCount',
+    navigateScreenReaderText: '',
+    primaryTextField: '',
+    emptyResultText:''
 };
 describe('The Sam hierarchical grid component', () => {
     describe('The Sam Data Table Tests', () => {
@@ -46,6 +49,7 @@ describe('The Sam hierarchical grid component', () => {
             component = fixture.componentInstance;
             component.displayedColumns = ['select'];
             component.configuration = config;
+            component.gridData = [gridData[0]];
             fixture.detectChanges();
             component.ngOnInit();
         });
@@ -102,193 +106,36 @@ describe('The Sam hierarchical grid component', () => {
 
         });
 
+
+        it('Scroll raised', () => {
+            spyOn(component.scrolled, 'emit');
+            let item = {
+                target: {
+                    offsetHeight: 300,
+                    scrollTop: 400,
+                    scrollHeight: 500
+                }
+            }
+            component.onScroll(item);
+            fixture.detectChanges();
+            expect(component.scrolled.emit).toHaveBeenCalledWith(null);
+        });
+
+        it('Scroll not raised', () => {
+            spyOn(component.scrolled, 'emit');
+            let item = {
+                target: {
+                    offsetHeight: 300,
+                    scrollTop: 0,
+                    scrollHeight: 700
+                }
+            }
+            component.onScroll(item);
+            fixture.detectChanges();
+            expect(component.scrolled.emit).not.toHaveBeenCalled();
+        });
+
     });
-    //     it('should displayedColumns length', function () {
-    //         component.configuration.gridDisplayedColumn = [
-    //             { headerText: 'Id', fieldName: 'id' },
-    //             { headerText: 'Name', fieldName: 'name' },
-    //         ];
-    //         component.ngOnInit();
-    //         fixture.detectChanges();
-    //         expect(component.displayedColumns.length).toBe(3);
-    //     });
-
-    //     it('should initial datachange length', function () {
-    //         component.dataChange.next(gridData);
-    //         component.ngOnChanges();
-    //         fixture.detectChanges();
-    //         expect(component.dataChange.value.length).toBe(0);
-    //     });
-
-    //     it('should be datachange length is equal to data length', function () {
-    //         component.dataChange.next(gridData);
-    //         component.ngAfterViewInit();
-    //         fixture.detectChanges();
-    //         expect(component.dataChange.value.length).toBe(gridData.length);
-    //     });
-
-    //     // it('should be fitler text changes', function () {
-    //     //     component.dataChange.next(gridData);
-
-    //     //     component.hierarchicalDataSource = new HierarchicalDataSource(
-    //     //         component.dataChange,
-    //     //         component.sort
-    //     //     );
-
-    //     //     fixture.detectChanges();
-    //     //     expect(component.hierarchicalDataSource.renderedData.length).toBe(3);
-    //     // });
-
-    //     it('should be datasoruce length grid data length', function () {
-    //         component.dataChange.next(gridData);
-    //         component.hierarchicalDataSource = new HierarchicalDataSource(
-    //             component.dataChange,
-    //             component.sort
-    //         );
-    //         component.ngAfterViewInit();
-    //         fixture.detectChanges();
-    //         expect(component.hierarchicalDataSource.renderedData.length).toBe(gridData.length);
-    //     });
-
-    //     it('should emit on ChangeLevel', function () {
-    //         const row = { 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' };
-    //         const mockEvent = {
-    //             currentTarget: {
-    //                 value: undefined
-    //             }
-    //         };
-    //         component.onChangeLevel(mockEvent, row);
-    //         fixture.detectChanges();
-    //         component.levelChanged.subscribe((res: any) => {
-    //             expect(res).toBe(row);
-    //         });
-    //     });
-
-    //     it('Should emit primary on row changed', () => {
-    //         const row = { 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' };
-    //         const dummyUpEvent = {
-    //             preventDefault: function () { },
-    //             stopPropagation: function () { },
-    //             target: {
-    //                 type: 'lable'
-    //             }
-    //         };
-    //         component.configuration = config;
-    //         component.onRowChange(dummyUpEvent, row);
-    //         component.rowChanged.subscribe((res: any) => {
-    //             expect(res).toBe(row[component.configuration.primaryKey]);
-    //         });
-    //     });
-
-    //     it('Should emit primary on row changed', () => {
-    //         const row = { 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' };
-    //         const dummyUpEvent = {
-    //             preventDefault: function () { },
-    //             stopPropagation: function () { },
-    //             target: {
-    //                 type: 'checkbox'
-    //             }
-    //         };
-    //         component.configuration = config;
-    //         component.rowChanged.subscribe((res: any) => {
-    //             expect(res).toBe(row[component.configuration.primaryKey]);
-    //         });
-    //         component.onRowChange(dummyUpEvent, row);
-    //     });
-
-    //     it('Should emit on checkbox selected', () => {
-    //         const results = [{ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }];
-    //         const row = { 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' };
-    //         const dummyUpEvent = {
-    //             preventDefault: function () { },
-    //             stopPropagation: function () { },
-    //             target: {
-    //                 type: 'checkbox',
-    //                 checked: true
-    //             }
-    //         };
-    //         component.selectedList = results;
-    //         component.configuration = config;
-    //         component.onChecked(dummyUpEvent, row);
-    //         expect(component.selectedList.length).toBe(2);
-    //     });
-
-    //     it('Should emit on checkbox unselected', () => {
-    //         const results = [{ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }];
-    //         const row = { 'id': '2', 'parentId': 1, 'name': 'Level 2', 'subtext': 'id 2', 'type': 'Level 1' };
-    //         const dummyUpEvent = {
-    //             preventDefault: function () { },
-    //             stopPropagation: function () { },
-    //             target: {
-    //                 type: 'checkbox',
-    //                 checked: false
-    //             }
-    //         };
-    //         component.selectedList = results;
-    //         component.configuration = config;
-    //         component.onChecked(dummyUpEvent, row);
-    //         expect(component.selectedList.length).toBe(1);
-    //     });
-
-    //     it('Should emit on checkbox unselected', () => {
-    //         const results = [{ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }];
-    //         const row = { 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' };
-    //         const dummyUpEvent = {
-    //             preventDefault: function () { },
-    //             stopPropagation: function () { },
-    //             target: {
-    //                 type: 'checkbox',
-    //                 checked: false
-    //             }
-    //         };
-    //         component.selectedList = results;
-    //         component.configuration = config;
-    //         fixture.detectChanges();
-    //         component.selectResults.subscribe((g) => {
-    //             expect(g.length).toBe(1);
-    //         });
-    //         component.onChecked(dummyUpEvent, row);
-    //     });
-
-    //     it('Should emit on checkbox unselected with index', () => {
-    //         const results = [{ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }];
-    //         const row = { 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' };
-    //         const dummyUpEvent = {
-    //             preventDefault: function () { },
-    //             stopPropagation: function () { },
-    //             target: {
-    //                 type: 'checkbox',
-    //                 checked: false
-    //             }
-    //         };
-    //         component.selectedList = results;
-    //         component.configuration = config;
-    //         fixture.detectChanges();
-    //         component.selectResults.subscribe((g) => {
-    //             expect(g.length).toBe(1);
-    //         });
-    //         component.onChecked(dummyUpEvent, row);
-    //     });
-
-
-    //     it('Should emit on checkbox unselected', () => {
-    //         const results = [{ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }];
-    //         const row = { 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' };
-    //         const dummyUpEvent = {
-    //             preventDefault: function () { },
-    //             stopPropagation: function () { },
-    //             target: {
-    //                 type: 'checkbox',
-    //                 checked: true
-    //             }
-    //         };
-    //         component.selectedList = results;
-    //         component.selectResults.subscribe((g) => {
-    //             expect(g.length).toBe(2);
-    //         });
-    //         component.onChecked(dummyUpEvent, row);
-    //     });
-    // });
 
     describe('Isolation tests', () => {
         let component: SamHierarchicalTreeGridComponent;
@@ -307,40 +154,17 @@ describe('The Sam hierarchical grid component', () => {
             expect(component.columnHeaderText.length).toBe(0);
         });
         it('test', () => {
-            const sort: SamSortDirective = new SamSortDirective();
             component.dataChange.next(gridData);
 
             const dataSource = new HierarchicalDataSource(
-                component.dataChange,
-                sort
+                component.dataChange
+
             );
             dataSource.connect();
             expect(dataSource.renderedData.length).toBe(0);
 
         });
-        it('Data Source get Sorted Data', () => {
-            const sort: SamSortDirective = new SamSortDirective();
-            component.dataChange.next(gridData);
 
-            const dataSource = new HierarchicalDataSource(
-                component.dataChange,
-                sort
-            );
-            const result = dataSource.getSortedData(gridData).length;
-            expect(result).toBe(gridData.length);
-        });
-        it('Data Source sorting Data Accessor', () => {
-            const row = { 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' };
-            const sort: SamSortDirective = new SamSortDirective();
-            component.dataChange.next(gridData);
-
-            const dataSource = new HierarchicalDataSource(
-                component.dataChange,
-                sort
-            );
-            const result = dataSource.sortingDataAccessor(row, 'id');
-            expect(result).toBe(row['id']);
-        });
 
     });
 });

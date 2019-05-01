@@ -1,14 +1,15 @@
 <div class="sam-actions"
      sam-click-outside
-     (clickOutside)="hideActions()"
+     (clickOutside)="hideActions($event)"
      sam-tab-outside
-     (tabOutside)="hideActions()">
+     (tabOutside)="hideActions($event)">
 
-  <button class="usa-button" 
-          aria-haspopup="listbox"
-          [attr.aria-labelledby]="name"
-          [attr.aria-expanded]="showActions ? 'true' : undefined"
+  <button #actionButton class="usa-button"
           [attr.id]="name"
+          aria-haspopup="true"
+          aria-controls="name+'menu'"
+          [attr.aria-label]="ariaLabelButtonText"
+          [attr.aria-expanded]="showActions ? 'true' : undefined"
           (click)="toggleActions()"
           (keydown)="leadKeyDownHandler($event)"
           [ngClass]="buttonType === 'primary' ? 'usa-button-primary' : ''"
@@ -18,14 +19,14 @@
   </button>
 
   <ul class="usa-unstyled-list"
-    tabindex="0"
-    role="listbox"
-    [attr.aria-labelledby]="name"
-    *ngIf="showActions">
-    <li *ngFor="let action of actions" role="option">
-      <button #actionsList class="usa-button"
-        (keydown)="keyDownHandler($event)"
-        (click)="chooseAction(action)">
+      [attr.id]="name+'menu'"
+      role="menu"
+      [attr.aria-labelledby]="name"
+      *ngIf="showActions">
+    <li *ngFor="let action of actions; let i = index" tabindex="-1" role="menuitem">
+      <button #actionsList class="usa-button" [attr.id]="'menuitem'+i"
+              (keydown)="keyDownHandler($event)"
+              (click)="chooseAction(action)">
         <span [ngClass]="action?.icon"></span>&nbsp;
         <span>{{action?.label}}</span>
       </button>

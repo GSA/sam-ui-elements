@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Observable, BehaviorSubject } from "rxjs";
-import { SamHiercarchicalServiceInterface } from "../hierarchical-interface";
+import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceResult } from "../hierarchical-interface";
 import { SamHierarchicalTreeConfiguration } from "../models/SamHierarchicalTreeConfiguration";
+import { Sort } from "../../../components/data-table/sort.directive";
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: "sam-hierarchical-tree",
@@ -12,9 +14,29 @@ import { SamHierarchicalTreeConfiguration } from "../models/SamHierarchicalTreeC
 export class SamHierarchicalTreeComponent implements OnInit {
 
   /**
+   * 
+   */
+  private resultItems: Object[] = [];
+
+  /**
+   * 
+   */
+  private totalItems = 0;
+
+  /**
    * Hierarchy level changes event 
    */
-  public selecteHierarchyLevel = new BehaviorSubject<object>(null);
+  public selectHierarchyLevel = new BehaviorSubject<object>(null);
+
+  /**
+   * Hierarchy level Sort Level
+   */
+  public sortLevel = new BehaviorSubject<Sort>(null);
+
+  /**
+   * 
+   */
+  public scrolled = new BehaviorSubject<Object>(null);
 
   /**
    * Event when something is checked/selected in the grid
@@ -51,6 +73,9 @@ export class SamHierarchicalTreeComponent implements OnInit {
    */
   public selectedValue: string;
 
+
+  private sort: Sort;
+
   /**
    * is single mode if a single or multiple item selection
    */
@@ -80,7 +105,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
   public ngOnInit() {
     this.addInitialBreadcrumb();
-    this.selecteHierarchyLevel.subscribe(
+    this.selectHierarchyLevel.subscribe(
       value => this.selectItem(value)
     );
     this.selectBreadcrumb.subscribe(
@@ -97,6 +122,20 @@ export class SamHierarchicalTreeComponent implements OnInit {
       text => {
         this.filterText = text;
         this.getResults();
+      }
+    );
+
+    this.sortLevel.subscribe(
+      sort => {
+        this.sort = sort;
+        this.getResults();
+      }
+    );
+
+
+    this.scrolled.subscribe(
+      scroll => {
+        this.getResults(true);
       }
     );
   }
@@ -180,7 +219,41 @@ export class SamHierarchicalTreeComponent implements OnInit {
    * Calls the provided service to get the results for the girdbased on
    * the primary id of the selected   * and the filter
    */
-  private getResults() {
-    this.gridResults = this.service.getHiercarchicalById(this.selectedValue, this.filterText);
+  private getResults(isScroll?: boolean) {
+    if (isScroll) {
+      if (this.totalItems > this.resultItems.length) {
+        let item = {
+          id: this.selectedValue,
+          searchValue: this.filterText,
+          sort: this.sort,
+          currentItemCount: this.resultItems.length
+        }
+        this.service.getHiercarchicalById(item).pipe(first()).subscribe(
+          (result: SamHiercarchicalServiceResult) => {
+            if (result) {
+              this.resultItems = this.resultItems.concat(result.items)
+            }
+            this.gridResults = Observable.of(this.resultItems);
+          }
+        );
+      }
+    } else {
+      let item = {
+        id: this.selectedValue,
+        searchValue: this.filterText,
+        sort: this.sort,
+        currentItemCount: 0
+      }
+      this.service.getHiercarchicalById(item).pipe(first()).subscribe(
+        (result: SamHiercarchicalServiceResult) => {
+          if (result) {
+            this.resultItems = result.items;
+            this.totalItems = result.totalItems;
+          }
+          this.results = [];
+          this.gridResults = Observable.of(this.resultItems);
+        }
+      );
+    }
   }
 }

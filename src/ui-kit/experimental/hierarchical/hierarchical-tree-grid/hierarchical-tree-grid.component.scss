@@ -5,16 +5,42 @@ sam-datatable{
   display: flex;
   flex-direction: row;
 }
-//.ng-star-inserted> input, textarea, select {
-//.ng-star-inserted> input{
+.datatable-checkbox{
+  height: 20px;
+  width: 20px;
+}
 .datatable-checkbox> *{
-  max-width: 4rem !important;
-  max-height: 4rem !important;
-  overflow: hidden !important;
-  text-align: left;
-  padding: 10px;
+  position: relative !important;
+  margin: 0 !important;
+  width: 20px;
+  height: 20px;
+  color: transparent;
+}
+.datatable-checkbox> label{
+  transform: translate(1px, -20px)
+}
+.datatable-checkbox> input{
+  z-index: 1;
+}
+.h-select-col th:nth-child(1){
+  max-width: 100px !important;
+  text-align: center !important;
 }
 
-td sam-cell{
-  padding: 0 !important;
+.h-select-col sam-datatable td:nth-child(1){
+  max-width: 100px !important;
+  text-align: center;
 }
+.h-select-col{
+  min-height: 350px;
+  max-height: 400px !important;
+  overflow-y: scroll !important;
+  overflow-x: scroll !important;
+ }
+ .empty-results{
+  min-height: 350px;
+  max-height: 400px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  border-top: 3px solid #cacaca;
+ }

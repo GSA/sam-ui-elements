@@ -5,6 +5,7 @@
   [errorMessages]="errorMessages"
   [required]="required">
   <div class="sam-international-phone-container">
+    <div class="sam-international-container">
     <sam-international-prefix
       class="sam-international-phone-prefix"
       formControlName="prefix"
@@ -18,5 +19,14 @@
       formControlName="phone"
       [countryCode]="countryCode"
     ></sam-telephone>
+   </div>
+    <sam-extension *ngIf="hasExtension"
+    [label]="extensionLabel"
+    [name]="extensionName"
+    [isExtensionRequired]="isExtensionRequired"
+    class="sam-international-extension"
+    formControlName="extension"
+    >
+    </sam-extension>
   </div>
 </sam-fieldset-wrapper>
