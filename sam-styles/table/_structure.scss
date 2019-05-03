@@ -74,7 +74,7 @@ td[sam-cell], th[sam-header-cell] {
   padding: 0 10px 0 10px;
 }
 sam-cell, sam-header-cell, th[sam-header-cell]{
-  flex: 1 0 1;
+  flex: 1 0;
 }
 sam-header-cell{
   overflow: visible;
