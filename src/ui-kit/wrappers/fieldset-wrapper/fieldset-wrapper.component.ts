@@ -31,7 +31,7 @@ export class FieldsetWrapper {
     if (!!message) {
       this.errorMessages = [];
       this.errorMessages.push(message);
-    } else {
+    } else if(this.errorMessages.length === 0){
       this.errorMessages = [];
     }
   };
@@ -153,20 +153,15 @@ export class FieldsetWrapper {
     if (!control) {
       return;
     }
-
-    if (control.pristine) {
-      this.errorMessage = '';
-      return;
-    }
-
+    
     if (control.invalid && control.errors) {
       this.formatInvalidErrors(control);
     } else if (!control.errors) {
-        this.errorMessage = '';
-    }
+      this.errorMessage = '';
   }
-
-  private formatInvalidErrors(control) {
+  }
+ 
+  private formatInvalidErrors(control: AbstractControl) {
     for (const k in control.errors) {
       const errorObject = control.errors[k];
 
