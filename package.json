@@ -17,7 +17,6 @@
   "files": [
     "src/",
     "sam-styles/",
-    "sam-styles-2/",
     "index.ts",
     "LICENSE",
     "README.md"
