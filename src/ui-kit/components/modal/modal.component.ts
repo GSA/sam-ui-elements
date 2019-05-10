@@ -94,16 +94,16 @@ export class SamModalComponent implements OnInit {
 
   @ViewChild('modalRoot') public modalRoot: ElementRef;
   @ViewChild('modalContent') public modalContent: ElementRef;
-
+  @ViewChild('closeButton') public closeButton: ElementRef;
   public show = false;
   public types: any = {
-    'success': { class: 'usa-alert-success', sr: 'success alert'},
-    'warning': { class: 'usa-alert-warning', sr: 'warning alert'},
-    'error': { class: 'usa-alert-error', sr: 'error alert'},
-    'info': { class: 'usa-alert-info', sr: 'information alert'},
-    'plain': { class: 'usa-alert-plain', sr: 'plain alert'},
-    'primary': {class: 'sam-primary'},
-    'download': { class: 'usa-alert-download'}
+    'success': { class: 'usa-alert-success', sr: 'success alert' },
+    'warning': { class: 'usa-alert-warning', sr: 'warning alert' },
+    'error': { class: 'usa-alert-error', sr: 'error alert' },
+    'info': { class: 'usa-alert-info', sr: 'information alert' },
+    'plain': { class: 'usa-alert-plain', sr: 'plain alert' },
+    'primary': { class: 'sam-primary' },
+    'download': { class: 'usa-alert-download' }
   };
   public selectedType: string = this.types.success.class;
 
@@ -167,16 +167,16 @@ export class SamModalComponent implements OnInit {
   }
 
   removeTabbable(item: any) {
-    if(item.hasAttribute("tabindex")){
-      item.setAttribute('data-sam-tabindex',item.getAttribute('tabindex'));
+    if (item.hasAttribute("tabindex")) {
+      item.setAttribute('data-sam-tabindex', item.getAttribute('tabindex'));
     }
     item.setAttribute('tabindex', '-1');
     item.setAttribute('aria-hidden', 'true');
   }
 
   reinsertTabbable(item: any) {
-    if(item.hasAttribute('data-sam-tabindex')){
-      item.setAttribute('tabindex',item.getAttribute('data-sam-tabindex'));
+    if (item.hasAttribute('data-sam-tabindex')) {
+      item.setAttribute('tabindex', item.getAttribute('data-sam-tabindex'));
       item.removeAttribute('data-sam-tabindex');
     } else {
       item.setAttribute('tabindex', '0');
@@ -221,14 +221,49 @@ export class SamModalComponent implements OnInit {
       // document.body.appendChild(this.backdropElement);
     }
     this._focusModalElement = true;
-    this.set508();
+    // this.closeButton.nativeElement.focus();
+    setTimeout(() => {
+      this.set5082();
+    }, 500);
+
     // this.cdr.detectChanges();
+  }
+
+  set5082() {
+    this._modalFocusableElements =
+      this.modalContent.nativeElement.querySelectorAll(this._focusableString);
+    if (this._modalFocusableElements.length !== 0) {
+      let firstFocus = this._modalFocusableElements[0];
+      let lastFocus = this._modalFocusableElements[this._modalFocusableElements.length - 1];
+      let f1 = firstFocus as HTMLBaseElement;
+      f1.focus();
+      let l1 = lastFocus as HTMLBaseElement;
+
+      f1.addEventListener("keydown", function (ev: KeyboardEvent) {
+        if (ev.shiftKey && ev.keyCode === 9) {
+          ev.preventDefault();
+          l1.focus();
+          //  console.log('Focus Last');
+        }
+      });
+
+
+      l1.addEventListener("keydown", function (ev: KeyboardEvent) {
+        if (!ev.shiftKey && ev.keyCode === 9) {
+          ev.preventDefault();
+          f1.focus();
+          //  console.log('Focus First');
+        }
+      });
+    }
+
+
   }
 
   closeModal(emit: boolean = true) {
     this.enableScroll();
     this.show = false;
-    if(emit){
+    if (emit) {
       this.onClose.emit(this.args);
       this.close.emit(this.args);
     }
@@ -279,6 +314,6 @@ export class SamModalComponent implements OnInit {
   disableScroll(): void {
     this.hostElement.nativeElement.style.display = 'block';
     document.body.classList.add('modal-open');
-   
+
   }
 }
