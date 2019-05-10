@@ -224,7 +224,7 @@ export class SamModalComponent implements OnInit {
     // this.closeButton.nativeElement.focus();
     setTimeout(() => {
       this.set5082();
-    }, 500);
+    }, 0);
 
     // this.cdr.detectChanges();
   }
