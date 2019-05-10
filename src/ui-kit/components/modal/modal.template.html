@@ -2,7 +2,7 @@
 <div aria-live="assertive" aria-modal="true" #modalRoot *ngIf="show" [attr.id]="id" tabindex="-1" role="dialog"
 	class="modal-dialog" (keydown.esc)="closeOnEscape ? closeModal() : 0"
 	(click)="closeOnOutsideClick ? closeModal() : 0">
-	<div #modalContent class="modal-content" (click)="preventClosing($event)">
+	<div #modalContent class="modal-content" (click)="preventClosing($event)" tabindex="-1">
 		<div *ngIf="this.type !== 'primary'" class="usa-alert {{this.types[type].class}}">
 			<div class="usa-alert-body">
 				<button #closeButton class="usa-button-link pull-right" *ngIf="showClose" (click)="closeModal()"><span
