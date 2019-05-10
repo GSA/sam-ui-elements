@@ -233,30 +233,32 @@ export class SamModalComponent implements OnInit {
     this._modalFocusableElements =
       this.modalContent.nativeElement.querySelectorAll(this._focusableString);
 
-    if (this._modalFocusableElements && this._modalFocusableElements.length !== 0) {
-      let firstFocus = this._modalFocusableElements[0];
-      let lastFocus = this._modalFocusableElements[this._modalFocusableElements.length - 1];
-      let f1 = firstFocus as HTMLBaseElement;
-      this.modalContent.nativeElement.focus();
-      //f1.focus();
-      let l1 = lastFocus as HTMLBaseElement;
+    if (this._modalFocusableElements) {
+      if (this._modalFocusableElements.length !== 0) {
+        let firstFocus = this._modalFocusableElements[0];
+        let lastFocus = this._modalFocusableElements[this._modalFocusableElements.length - 1];
+        let f1 = firstFocus as HTMLBaseElement;
+        this.modalContent.nativeElement.focus();
+        //f1.focus();
+        let l1 = lastFocus as HTMLBaseElement;
 
-      f1.addEventListener("keydown", function (ev: KeyboardEvent) {
-        if (ev.shiftKey && ev.keyCode === 9) {
-          ev.preventDefault();
-          l1.focus();
-          //  console.log('Focus Last');
-        }
-      });
+        f1.addEventListener("keydown", function (ev: KeyboardEvent) {
+          if (ev.shiftKey && ev.keyCode === 9) {
+            ev.preventDefault();
+            l1.focus();
+            //  console.log('Focus Last');
+          }
+        });
 
 
-      l1.addEventListener("keydown", function (ev: KeyboardEvent) {
-        if (!ev.shiftKey && ev.keyCode === 9) {
-          ev.preventDefault();
-          f1.focus();
-          //  console.log('Focus First');
-        }
-      });
+        l1.addEventListener("keydown", function (ev: KeyboardEvent) {
+          if (!ev.shiftKey && ev.keyCode === 9) {
+            ev.preventDefault();
+            f1.focus();
+            //  console.log('Focus First');
+          }
+        });
+      }
     }
 
 
