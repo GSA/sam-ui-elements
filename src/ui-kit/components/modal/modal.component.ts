@@ -94,16 +94,16 @@ export class SamModalComponent implements OnInit {
 
   @ViewChild('modalRoot') public modalRoot: ElementRef;
   @ViewChild('modalContent') public modalContent: ElementRef;
-
+  @ViewChild('closeButton') public closeButton: ElementRef;
   public show = false;
   public types: any = {
-    'success': { class: 'usa-alert-success', sr: 'success alert'},
-    'warning': { class: 'usa-alert-warning', sr: 'warning alert'},
-    'error': { class: 'usa-alert-error', sr: 'error alert'},
-    'info': { class: 'usa-alert-info', sr: 'information alert'},
-    'plain': { class: 'usa-alert-plain', sr: 'plain alert'},
-    'primary': {class: 'sam-primary'},
-    'download': { class: 'usa-alert-download'}
+    'success': { class: 'usa-alert-success', sr: 'success alert' },
+    'warning': { class: 'usa-alert-warning', sr: 'warning alert' },
+    'error': { class: 'usa-alert-error', sr: 'error alert' },
+    'info': { class: 'usa-alert-info', sr: 'information alert' },
+    'plain': { class: 'usa-alert-plain', sr: 'plain alert' },
+    'primary': { class: 'sam-primary' },
+    'download': { class: 'usa-alert-download' }
   };
   public selectedType: string = this.types.success.class;
 
@@ -166,20 +166,28 @@ export class SamModalComponent implements OnInit {
     }
   }
 
+  addAriaHidden(item: any) {
+    item.setAttribute('aria-hidden', 'true');
+  }
+
+  removeAriaHidden(item: any) {
+    item.setAttribute('aria-hidden', 'false');
+  }
+
   removeTabbable(item: any) {
-    if(item.hasAttribute("tabindex")){
-      item.setAttribute('data-sam-tabindex',item.getAttribute('tabindex'));
+    if (item.hasAttribute("tabindex")) {
+      item.setAttribute('data-sam-tabindex', item.getAttribute('tabindex'));
     }
-    item.setAttribute('tabindex', '-1');
+    //   item.setAttribute('tabindex', '-1');
     item.setAttribute('aria-hidden', 'true');
   }
 
   reinsertTabbable(item: any) {
-    if(item.hasAttribute('data-sam-tabindex')){
-      item.setAttribute('tabindex',item.getAttribute('data-sam-tabindex'));
+    if (item.hasAttribute('data-sam-tabindex')) {
+      // item.setAttribute('tabindex', item.getAttribute('data-sam-tabindex'));
       item.removeAttribute('data-sam-tabindex');
     } else {
-      item.setAttribute('tabindex', '0');
+      // item.setAttribute('tabindex', '0');
     }
     item.setAttribute('aria-hidden', 'false');
   }
@@ -211,7 +219,9 @@ export class SamModalComponent implements OnInit {
     if (this.show) {
       return;
     }
+
     this.show = true;
+    this.cdr.detectChanges();
     this.args = args;
     this.onOpen.emit(this.args);
     this.open.emit(this.args);
@@ -221,27 +231,96 @@ export class SamModalComponent implements OnInit {
       // document.body.appendChild(this.backdropElement);
     }
     this._focusModalElement = true;
-    this.set508();
-    // this.cdr.detectChanges();
+
+    this.set5082();
+
   }
+
+  set5082() {
+
+    //if (this.show) {
+    this._allFocusableElements =
+      document.querySelectorAll(this._focusableString);
+    this._modalFocusableElements =
+      this.modalRoot.nativeElement.querySelectorAll(this._focusableString);
+    // console.log('All');
+    // console.log(this._allFocusableElements);
+    // console.log('-----------------------------------------------------------------')
+    // console.log('Modal');
+    // console.log(this._modalFocusableElements);
+    // for (let i = 0; i < this._allFocusableElements.length; i++) {
+    //   if (!this.hostElement.nativeElement.contains(this._allFocusableElements[i])) {
+    //     this.addAriaHidden(this._allFocusableElements[i]);
+    //   }
+    // }
+
+    // for (let j = 0; j < this._modalFocusableElements.length; j++) {
+    //   this.removeAriaHidden(this._modalFocusableElements[j]);
+    // }
+
+    let modulFocus = this._modalFocusableElements[0] as HTMLBaseElement;
+    let firstFocus = this._modalFocusableElements[1] as HTMLBaseElement;
+    let lastFocus = this._modalFocusableElements[this._modalFocusableElements.length - 1] as HTMLBaseElement;
+    if (this._focusModalElement) {
+      modulFocus.focus();
+
+      this._focusModalElement = false;
+    }
+    let modulHasFocus = true;
+    modulFocus.addEventListener("keydown", function (ev: KeyboardEvent) {
+      if (modulHasFocus) {
+        if (!ev.shiftKey && ev.keyCode === 9) {
+          ev.preventDefault();
+          firstFocus.focus();
+          modulHasFocus = false;
+
+        } else if (ev.shiftKey && ev.keyCode === 9) {
+          ev.preventDefault();
+          lastFocus.focus();
+          modulHasFocus = false;
+        }
+      }else {
+        return false;
+      }
+    });
+
+    firstFocus.addEventListener("keydown", function (ev: KeyboardEvent) {
+      if (ev.shiftKey && ev.keyCode === 9) {
+        ev.preventDefault();
+        lastFocus.focus();
+      } 
+    });
+
+
+    lastFocus.addEventListener("keydown", function (ev: KeyboardEvent) {
+      if (!ev.shiftKey && ev.keyCode === 9) {
+        ev.preventDefault();
+        firstFocus.focus();
+      } 
+    });
+
+
+
+  }
+
 
   closeModal(emit: boolean = true) {
     this.enableScroll();
     this.show = false;
-    if(emit){
+    if (emit) {
       this.onClose.emit(this.args);
       this.close.emit(this.args);
     }
     this.args = undefined;
-    // this.removeBackdrop();
+
     for (let i = 0; i < this._allFocusableElements.length; i++) {
-      this.reinsertTabbable(this._allFocusableElements[i]);
+      this.removeAriaHidden(this._allFocusableElements[i]);
     }
 
     for (let j = 0; j < this._modalFocusableElements.length; j++) {
-      this.removeTabbable(this._modalFocusableElements[j]);
+      this.addAriaHidden(this._modalFocusableElements[j]);
     }
-    // this.cdr.detectChanges();
+
   }
 
   submitBtnClick() {
@@ -279,6 +358,6 @@ export class SamModalComponent implements OnInit {
   disableScroll(): void {
     this.hostElement.nativeElement.style.display = 'block';
     document.body.classList.add('modal-open');
-   
+
   }
 }
