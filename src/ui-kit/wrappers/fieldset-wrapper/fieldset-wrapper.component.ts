@@ -154,11 +154,6 @@ export class FieldsetWrapper {
       return;
     }
     
-    if (control.pristine) {
-      this.errorMessage = '';
-      return;
-    }
-
     if (control.invalid && control.errors) {
       this.formatInvalidErrors(control);
     } else if (!control.errors) {
