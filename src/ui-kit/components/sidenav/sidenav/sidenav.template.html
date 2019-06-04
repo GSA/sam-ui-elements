@@ -30,6 +30,7 @@
       [ngClass]="{
         'active': isSelected($index),
         'completed': child.iconClass == 'completed',
+        'warning': child.iconClass == 'warning',
         'error': child.iconClass == 'error',
         'pending': child.iconClass == 'pending',
         'disabled': child.disabled
