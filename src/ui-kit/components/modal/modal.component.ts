@@ -261,6 +261,7 @@ export class SamModalComponent implements OnInit {
     let modulFocus = this._modalFocusableElements[0] as HTMLBaseElement;
     let firstFocus = this._modalFocusableElements[1] as HTMLBaseElement;
     let lastFocus = this._modalFocusableElements[this._modalFocusableElements.length - 1] as HTMLBaseElement;
+
     if (this._focusModalElement) {
       modulFocus.focus();
 
@@ -269,37 +270,38 @@ export class SamModalComponent implements OnInit {
     let modulHasFocus = true;
     modulFocus.addEventListener("keydown", function (ev: KeyboardEvent) {
       if (modulHasFocus) {
-        if (!ev.shiftKey && ev.keyCode === 9) {
-          ev.preventDefault();
-          firstFocus.focus();
-          modulHasFocus = false;
+        if (firstFocus) {
+          if (!ev.shiftKey && ev.keyCode === 9) {
+            ev.preventDefault();
+            firstFocus.focus();
+            modulHasFocus = false;
 
-        } else if (ev.shiftKey && ev.keyCode === 9) {
-          ev.preventDefault();
-          lastFocus.focus();
-          modulHasFocus = false;
+          } else if (ev.shiftKey && ev.keyCode === 9) {
+            ev.preventDefault();
+            lastFocus.focus();
+            modulHasFocus = false;
+          }
         }
-      }else {
+      } else {
         return false;
       }
     });
-
-    firstFocus.addEventListener("keydown", function (ev: KeyboardEvent) {
-      if (ev.shiftKey && ev.keyCode === 9) {
-        ev.preventDefault();
-        lastFocus.focus();
-      } 
-    });
-
-
-    lastFocus.addEventListener("keydown", function (ev: KeyboardEvent) {
-      if (!ev.shiftKey && ev.keyCode === 9) {
-        ev.preventDefault();
-        firstFocus.focus();
-      } 
-    });
+    if (firstFocus) {
+      firstFocus.addEventListener("keydown", function (ev: KeyboardEvent) {
+        if (ev.shiftKey && ev.keyCode === 9) {
+          ev.preventDefault();
+          lastFocus.focus();
+        }
+      });
 
 
+      lastFocus.addEventListener("keydown", function (ev: KeyboardEvent) {
+        if (!ev.shiftKey && ev.keyCode === 9) {
+          ev.preventDefault();
+          firstFocus.focus();
+        }
+      });
+    }
 
   }
 
