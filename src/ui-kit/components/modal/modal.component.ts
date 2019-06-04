@@ -281,6 +281,11 @@ export class SamModalComponent implements OnInit {
             lastFocus.focus();
             modulHasFocus = false;
           }
+        } else {
+          if (ev.keyCode === 9) {
+            //With no buttons must remain on the modul until closed (By escape or mosu click)
+            ev.preventDefault();
+          }
         }
       } else {
         return false;
