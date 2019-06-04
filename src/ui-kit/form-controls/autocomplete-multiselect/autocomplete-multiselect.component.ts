@@ -7,6 +7,7 @@ import {
   Optional,
   forwardRef,
   TemplateRef,
+  AfterViewInit
 } from '@angular/core';
 import { animate, state, style, transition, trigger , keyframes} from '@angular/animations';
 import {
@@ -73,7 +74,7 @@ import { KeyHelper } from '../../utilities/key-helper/key-helper';
   ]
 })
 export class SamAutocompleteMultiselectComponent
-  implements ControlValueAccessor {
+  implements ControlValueAccessor, AfterViewInit {
   /**
    * Gets DOM element for the textarea used for input
    */
@@ -232,6 +233,9 @@ export class SamAutocompleteMultiselectComponent
     if (this.list.length > 0) {
       this.list = this.sortByCategory(this.list);
     }
+  }
+
+  public ngAfterViewInit(){
     if (!this.control) {
       return;
     }
