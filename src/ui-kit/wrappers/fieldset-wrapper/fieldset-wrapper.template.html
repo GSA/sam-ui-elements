@@ -24,7 +24,7 @@
 
     <div *ngIf="showToggle"
       class="toggle-more">
-      <a href="javascript:void(0)"
+      <a href="javascript:void(0)" [attr.aria-label]="toggleOpen ? 'Less info for ' + linkLabel : 'More info for ' + linkLabel "
         (click)="toggleHint(toggleOpen)">
         {{ toggleOpen?"less":"more"}}
       </a>
