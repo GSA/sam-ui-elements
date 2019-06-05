@@ -12,6 +12,11 @@ import { AbstractControl } from '@angular/forms';
   templateUrl: 'fieldset-wrapper.template.html',
 })
 export class FieldsetWrapper {
+
+  /**
+   * sets the aria label for the anchor text
+   */
+  @Input() public linkLabel: string;
   /**
    * sets the label text
    */
@@ -27,16 +32,16 @@ export class FieldsetWrapper {
   /**
    * set a single error message
    */
-  @Input() public set errorMessage (message: string) {
+  @Input() public set errorMessage(message: string) {
     if (!!message) {
       this.errorMessages = [];
       this.errorMessages.push(message);
-    } else if(this.errorMessages.length === 0){
+    } else if (this.errorMessages.length === 0) {
       this.errorMessages = [];
     }
   };
 
-  public get errorMessage (): string {
+  public get errorMessage(): string {
     return this.errorMessages[0];
   }
   /**
@@ -114,7 +119,7 @@ export class FieldsetWrapper {
       this.lineSize = other.offsetHeight / 2;
       el.removeChild(other);
     }
-    const val = Math.floor(obj.offsetHeight /  this.lineSize);
+    const val = Math.floor(obj.offsetHeight / this.lineSize);
     return val;
   }
 
@@ -129,21 +134,21 @@ export class FieldsetWrapper {
     this.errorMessages = [];
   }
 
-  public displayErrors (): boolean {
+  public displayErrors(): boolean {
     return this.errorMessages.length > 0;
   }
 
-  public displayErrorList (): boolean {
+  public displayErrorList(): boolean {
     return this.errorMessages.length > 1;
   }
 
-  public setOverflow (): string {
+  public setOverflow(): string {
     return (this.showToggle && !this.toggleOpen)
       ? 'hidden'
-      : '' ;
+      : '';
   }
 
-  public setHeight (): string {
+  public setHeight(): string {
     return (this.showToggle && !this.toggleOpen)
       ? '2.88em'
       : ''
@@ -153,14 +158,14 @@ export class FieldsetWrapper {
     if (!control) {
       return;
     }
-    
+
     if (control.invalid && control.errors) {
       this.formatInvalidErrors(control);
     } else if (!control.errors) {
       this.errorMessage = '';
+    }
   }
-  }
- 
+
   private formatInvalidErrors(control: AbstractControl) {
     for (const k in control.errors) {
       const errorObject = control.errors[k];
@@ -193,7 +198,7 @@ export class FieldsetWrapper {
         this.errorMessages.push(msg);
         return;
       case 'isNotBeforeToday':
-        msg ='Date must not be before today';
+        msg = 'Date must not be before today';
         this.errorMessages.push(msg);
         return;
       default:
