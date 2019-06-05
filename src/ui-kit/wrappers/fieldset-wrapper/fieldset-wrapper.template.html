@@ -2,37 +2,27 @@
 
   <fieldset class="usa-fieldset-inputs usa-sans">
 
-    <legend *ngIf="label || required"
-      [class.usa-input-error-label]="displayErrors()">
+    <legend *ngIf="label || required" [class.usa-input-error-label]="displayErrors()">
       {{label}}
-      <span *ngIf="required"
-        class="usa-additional_text">
+      <span *ngIf="required" class="usa-additional_text">
         Required
       </span>
       <ng-content select="[label-right]"></ng-content>
     </legend>
 
-    <div
-      #hintContainer
-      *ngIf="hint"
-      class="usa-form-hint"
-      aria-live="polite"
-      [innerHTML]="hint"
-      [style.overflow]="setOverflow()"
-      [style.height]="setHeight()">
+    <div #hintContainer *ngIf="hint" class="usa-form-hint" aria-live="polite" [innerHTML]="hint"
+      [style.overflow]="setOverflow()" [style.height]="setHeight()">
     </div>
 
-    <div *ngIf="showToggle"
-      class="toggle-more">
-      <a href="javascript:void(0)" [attr.aria-label]="toggleOpen ? 'Less info for ' + linkLabel : 'More info for ' + linkLabel "
+    <div *ngIf="showToggle" class="toggle-more">
+      <a href="javascript:void(0)"
+        [attr.aria-label]="linkLabel? toggleOpen ? 'Less info for ' + linkLabel : 'More info for ' + linkLabel : ''"
         (click)="toggleHint(toggleOpen)">
         {{ toggleOpen?"less":"more"}}
       </a>
     </div>
 
-    <span *ngIf="displayErrors()"
-      class="usa-input-error-message"
-      aria-live="assertive">
+    <span *ngIf="displayErrors()" class="usa-input-error-message" aria-live="assertive">
       <ng-container *ngIf="displayErrorList() else single">
         <ul>
           <li *ngFor="let msg of errorMessages">
