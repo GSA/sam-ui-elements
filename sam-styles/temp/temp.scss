@@ -14,25 +14,25 @@
   }
 
   /*****************flex: stretch & align**************************/
-  .workspace.dash.content{
-    align-items: stretch;
-  }
-  .sam.workspace.nav{
-    /* em is the width of the columns*/
-    flex: 0 0 10em;
-  }
-  .sam.workspace.cards {
-    flex: 1 0 40%;
-  }
-  .sam.workspace.aside {
-    flex: 1 0 40%;
-  }
-  .sam.search.cards{
-    flex: 1 0 40%;
-  }
-  .sam.workspace.role{
-    flex: 1 0 40%;
-  }
+  // .workspace.dash.content{
+  //   align-items: stretch;
+  // }
+  // .sam.workspace.nav{
+  //   /* em is the width of the columns*/
+  //   flex: 0 0 10em;
+  // }
+  // .sam.workspace.cards {
+  //   flex: 1 0 40%;
+  // }
+  // .sam.workspace.aside {
+  //   flex: 1 0 40%;
+  // }
+  // .sam.search.cards{
+  //   flex: 1 0 40%;
+  // }
+  // .sam.workspace.role{
+  //   flex: 1 0 40%;
+  // }
   /*****************item order******************************/
   .sam.workspace.nav{
     /* put the nav on the left */
@@ -54,7 +54,7 @@
       flex: 1;
     }
     .sam.workspace.cards{
-      flex: 3 0px;
+      flex: 2 0px;
     }
     .sam.workspace.aside>.sam.workspace.role{
       visibility: visible;
