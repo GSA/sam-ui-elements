@@ -10,7 +10,7 @@
     flex-wrap: wrap;
   }
   .workspace.dash.content> * {
-    padding: 10px;
+    padding: 30px;
   }
 
   /*****************flex: stretch & align**************************/
@@ -54,7 +54,7 @@
       flex: 1;
     }
     .sam.workspace.cards{
-      flex: 2 0px;
+      flex: 1 0px;
     }
     .sam.workspace.aside>.sam.workspace.role{
       visibility: visible;
@@ -256,18 +256,17 @@
     .checkrole{
       padding: 15px;
     }
-    .rolerequest{
-      background-color: white;
-      color: #0071BC;
-      border: 2px solid #0071BC;
-      border-radius: 8px;
-
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 20px;
-      width: 30%;
-    }
+    // .rolerequest{
+    //   background-color: white;
+    //   color: #0071BC;
+    //   border: 2px solid #0071BC;
+    //   border-radius: 8px;
+    //
+    //   display: block;
+    //   margin-left: auto;
+    //   margin-right: auto;
+    //   padding: 20px;
+    // }
 
     .sam.search.cards{
       display: flex;
