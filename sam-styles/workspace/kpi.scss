@@ -1,14 +1,28 @@
-.sam .fed-kpi {
+.sam.kpi-container {
+  width: 100%;
+  text-align: center;
+}
+
+.sam.kpi-content {
   color: #5b616b;
   font-size: 18px;
   font-weight: 400;
   line-height: 18px;
   text-align: center;
 }
+
 .sam.kpi {
-  height: 100px;
-  width: 150px;
+  height: 80px;
+  width: 140px;
   background-color: #F1F1F1;
+  display: inline-block;
+  margin: 0 5px;
+}
+
+@media all and (min-width: 800px) {
+  .sam.kpi-container {
+      width: 50%;
+  }
 }
 
 .sam.kpi-value {
@@ -21,7 +35,7 @@
 
 .sam.kpi-label {
   color: #5b616b;
-  font-size: 14px;
+  font-size: 1em;
   font-weight: 400;
   line-height: 14px;
   text-align: center;
