@@ -5,24 +5,13 @@
   border-radius: 4px;
   padding: 10px 15px;
   margin-bottom: 20px;
-  
+
   .header{
     display: flex;
     .sam.heading{
       flex-grow: 1;
       align-self: center;
       padding: 0;
-    }
-    button{
-      font-size: 15px;
-      font-weight: 400;
-      margin: 0;
-      border: 1px solid #0071bc;
-      transition: background-color 0.3s ease;
-    }
-    button:hover{
-      color: white;
-      background-color: #0071bc;
     }
   }
 }

@@ -1,0 +1,57 @@
+.workspace.dash.content > * {
+  padding: 30px;
+}
+
+.notif.content {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.notif.icon {
+  float: left;
+  width: 45px;
+  margin-right: 20px;
+}
+
+.sam.notif.summary {
+  text-align: left;
+  width: 70%;
+  margin: 10px;
+  word-wrap: normal;
+}
+
+.date {
+  font-size: 13px;
+  background: #F1F1F1;
+  font-style: italic;
+  padding: 0 10px;
+  min-width: 100px;
+  height: 25px;
+}
+
+.sam.role.request {
+  margin-right: 40px;
+}
+
+.sam.search.cards {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.hierarchy.search,
+.user.search {
+  width: 100%;
+}
+
+.sam.icon-link {
+  text-decoration: none;
+}
+
+.workspace.dash.content > .sam.search {
+  flex-wrap: nowrap !important;
+}

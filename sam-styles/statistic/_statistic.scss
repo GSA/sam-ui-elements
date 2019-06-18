@@ -4,7 +4,7 @@
 .sam.statistics{
   display: flex;
   flex-wrap: wrap;
-  margin: 10px -30px;
+  margin: 10px 30px;
 }
 .sam.statistics > .statistic{
   margin: 5px 30px;
@@ -88,4 +88,9 @@
 .sam.statistics .yellow.statistic:hover>.value>.circular {
   color: white;
   background: #FED06A;
+}
+.sam.statistics.visible.tablet.up {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }

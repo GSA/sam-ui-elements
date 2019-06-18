@@ -7,6 +7,6 @@
 }
 .sam.visible.tablet.up{
   @media (max-width: $medium-screen){
-    display: none;
+    display: none !important;
   }
 }
