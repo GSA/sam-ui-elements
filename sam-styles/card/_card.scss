@@ -3,7 +3,7 @@
 .sam.card-next{
   background-color: white;
   border-radius: 4px;
-  padding: 10px 15px;
+  padding: 15px 15px;
   margin-bottom: 20px;
 
   .header{
@@ -17,5 +17,5 @@
 }
 .sam.card-next.raised{
   border: 1px solid #979797;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+  box-shadow: 0 0 10px 5px rgba(0,0,0,0.20);
 }

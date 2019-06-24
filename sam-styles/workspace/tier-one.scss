@@ -1,34 +1,10 @@
-.workspace.dash.content > * {
-  padding: 30px;
-}
-
-.notif.content {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 0 auto;
-}
-
-.notif.icon {
-  float: left;
-  width: 45px;
-  margin-right: 20px;
-}
-
-.sam.notif.summary {
-  text-align: left;
-  width: 70%;
-  margin: 10px;
-  word-wrap: normal;
-}
-
 .date {
   font-size: 13px;
+  text-align: center;
   background: #F1F1F1;
   font-style: italic;
   padding: 0 10px;
-  min-width: 100px;
+  width: 100px !important;
   height: 25px;
 }
 
@@ -54,4 +30,15 @@
 
 .workspace.dash.content > .sam.search {
   flex-wrap: nowrap !important;
+}
+
+.sam-ui.button {
+  margin: 0;
+}
+
+@media only screen and (max-width: 599px){
+  .sam-ui.button.basic.blue{
+    line-height: 1em;
+    padding: 0.7em;
+  }
 }
