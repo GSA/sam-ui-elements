@@ -118,3 +118,19 @@ describe('Sam Autocomplete Cache Class', () => {
     expect(cache.lastAdded).toEqual(moreValues);
   });
 });
+
+describe('Autocomplete Cache arraysEqual method', () => {
+  const initialArray = [{ key: 1 }, { key: 2 }, { key: 3 }, { key: 4 }];
+
+  it('should return true if arrays are equal ', () => {
+    const mockArray = [{ key: 1 }, { key: 2 }, { key: 3 }, { key: 4 }];
+    const actual = AutocompleteCache.arraysEqual(initialArray, mockArray);
+    expect(actual).toBe(true);
+  });
+
+  it('should return false if arrays are not equal', () => {
+    const mockArray = [{ key: 10 }, { key: 2 }, { key: 3 }, { key: 4 }];
+    const actual = AutocompleteCache.arraysEqual(initialArray, mockArray);
+    expect(actual).toBe(false);
+  });
+});
