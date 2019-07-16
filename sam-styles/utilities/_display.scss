@@ -1,0 +1,25 @@
+.display-block{
+    display: block!important;
+}
+
+.display-none{
+    display: none!important;
+}
+
+.display-flex{
+    display: flex!important;
+}
+
+.display-inline-block {
+    display: inline-block!important;
+}
+
+// Responsive 
+@media screen and (min-width: 600px) {
+    .tablet\:display-block {
+        display: block!important;
+    }
+    .tablet\:display-none {
+        display: none!important;
+    }
+}
