@@ -1,0 +1,215 @@
+// Info tag
+.sds-tag {
+  display: inline-block;
+}
+.sds-tag--info-purple {
+  color: black;
+  background-color: #fbdcff;
+  border: 1.5px solid #7665d1;
+  border-radius: 2px;
+  font-weight: 600;
+  display: block;
+  margin: 0 10px 10px 10px;
+  padding: 1px 0.5rem;
+  text-transform: uppercase;
+  text-align: center;
+  width: 60px;
+}
+
+.sds-tag--info-white {
+  color: black;
+  background-color: white;
+  border: 1.5px solid #76766a;
+  border-radius: 2px;
+  font-weight: 600;
+  display: block;
+  margin: 10px 10px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 60px;
+}
+
+// Alert tag - Warning
+.sds-alert {
+  background-color: #faf3d1;
+  border-radius: 8px;
+  max-width: 320px;
+  display: flex;
+  align-items: center;
+}
+
+.sds-alert > img {
+  height: 50px;
+  margin: 10px;
+  color: #fbc036;
+}
+
+.sds-alert-content {
+  display: inline-block;
+}
+
+// Outline tag
+.sds-tag[class*='sds-tag--outline'] {
+  white-space: nowrap;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 550;
+  padding: 5px;
+  border: 1px solid;
+  color: #212121;
+  margin-right: 5px;
+  display: inline-block;
+  width: auto;
+  background-color: #f5f5f0;
+}
+
+.sds-tag[class*='sds-tag--outline']::before {
+  content: '';
+  display: inline-block;
+  border: 1px solid #5b616b;
+  background-color: #f1f1f1;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: bottom;
+}
+
+.sds-tag.sds-tag--outline-green::before {
+  border: 1px solid #2e8540;
+  background-color: #4aa564;
+}
+
+.sds-tag.sds-tag--outline-gray::before {
+  border: 1px solid #aeb0b5;
+  background-color: #e4e2e0;
+}
+
+.sds-tag.sds-tag--outline-dark-gray::before {
+  border: 1px solid #aeb0b5;
+  background-color: #5b616b;
+}
+
+.sds-tag.sds-tag--outline-yellow::before {
+  border: 1px solid #fdb81e;
+  background-color: #fad980;
+}
+
+.sds-tag.sds-tag--outline-light-blue::before {
+  border: 1px solid #00a6d2;
+  background-color: #9bdaf1;
+}
+
+.sds-tag.sds-tag--outline-red::before {
+  border: 1px solid #981b1e;
+  background-color: #e59393;
+}
+
+.sds-tag[class*='sds-tag--alt'] {
+  white-space: nowrap;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 550;
+  padding: 5px 10px;
+  border: 1px solid;
+  color: #212121;
+  margin-right: 5px;
+  display: inline-block;
+  width: auto;
+  background-color: #f5f5f0;
+}
+
+//outline header
+.sds-type--label-title {
+  font-size: 14px;
+  font-style: italic;
+  font-weight: lighter;
+  margin: 0 0 5px 0;
+  color: #5d5d52;
+}
+
+//layout
+.search-result__list > * {
+  margin: 0 10px 0 0;
+  align-self: flex-start;
+}
+
+.entity-name {
+  height: 45px;
+  color: #0050d8;
+}
+
+.data-input {
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.search-result > .name {
+  font: 600 20px/20px Source Sans Pro, sans-serif;
+  color: #112f4e;
+}
+
+.search-result > .alert {
+  height: 35px;
+  width: 270px;
+  border: solid #febe2e;
+  border-radius: 3px;
+  box-shadow: 0 -5px 7px rgba(154, 154, 154, 0.25);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.search-result > .alert > .label {
+  font: 600 16px/30px Source Sans Pro, sans-serif;
+  color: #5c5c5c;
+  display: inline-block;
+  margin: 0 0 0 4px;
+}
+
+.search-result > .alert > .circle {
+  height: 17px;
+  width: 17px;
+  background-color: #febe2e;
+  border-radius: 50%;
+  text-align: center;
+  font-weight: 900;
+  line-height: 16px;
+  display: inline-block;
+}
+
+.search-result > .button-field {
+  display: flex;
+  justify-content: center;
+}
+
+.search-result > .button-field > .button-content {
+  font: italic 400 14px/18px Source Sans Pro, sans-serif;
+  color: #636363;
+}
+
+.search-result > .button-field > .button-content > .button {
+  font: 600 14px/18px Source Sans Pro, sans-serif;
+  color: #636363;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 10px 10px 0 0;
+}
+
+.search-result > .button-field > .button-content > .button > * {
+  margin: auto;
+}
+
+.entity-status__shape {
+  width: 14px;
+  height: 14px;
+  border: solid 1px #2e8540;
+  border-radius: 50%;
+  background: #4aa564;
+  margin: 5%;
+}
+
+.search-result > .options {
+  max-width: 45px;
+  margin: 25px 10px;
+}
