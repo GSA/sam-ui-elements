@@ -1,0 +1,9 @@
+.padding-right-5 {
+    padding-right: 40px!important;
+}
+
+@media screen and (min-width: 600px) {
+    .tablet\:padding-right-5 {
+        padding-right: 40px!important;
+    }
+  }
