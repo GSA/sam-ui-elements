@@ -1,5 +1,71 @@
 # Changelog
 
+## v0.9.0 (16/07/2019)
+
+#### bugfix
+
+- [**bugfix**] IAE-18570 change for 508 reading [#358](https://github.com/GSA/sam-ui-elements/pull/358)
+
+#### closed
+
+- [**closed**] Add background gradient to utilities [#374](https://github.com/GSA/sam-ui-elements/pull/374)
+- [**closed**] Add white background [#373](https://github.com/GSA/sam-ui-elements/pull/373)
+- [**closed**] Add new utilities to sam-styles [#372](https://github.com/GSA/sam-ui-elements/pull/372)
+- [**closed**] IAE-18889 Directory Returning Duplicate Results  [#370](https://github.com/GSA/sam-ui-elements/pull/370)
+- [**closed**] IAE-20497 - workspace dash styles update [#369](https://github.com/GSA/sam-ui-elements/pull/369)
+- [**closed**] IAE-20497 Tier 1 Workspace [#366](https://github.com/GSA/sam-ui-elements/pull/366)
+- [**closed**] version update to 0.8.29 [#367](https://github.com/GSA/sam-ui-elements/pull/367)
+- [**closed**] update version to 0.8.30 [#368](https://github.com/GSA/sam-ui-elements/pull/368)
+- [**closed**] IAE-14558 add aria label proptery for more/less anchor [#365](https://github.com/GSA/sam-ui-elements/pull/365)
+- [**closed**] autocomplete multiselect label wrapper setup [#363](https://github.com/GSA/sam-ui-elements/pull/363)
+- [**closed**] sidenav icon class update [#362](https://github.com/GSA/sam-ui-elements/pull/362)
+- [**closed**] focus when no button on modal [#364](https://github.com/GSA/sam-ui-elements/pull/364)
+- [**closed**] Revert "fieldset wrapper pristine handling update" [#361](https://github.com/GSA/sam-ui-elements/pull/361)
+- [**closed**] fieldset wrapper pristine handling update [#360](https://github.com/GSA/sam-ui-elements/pull/360)
+- [**closed**] Header-Footer code clean up [#359](https://github.com/GSA/sam-ui-elements/pull/359)
+
+---
+
+## 0.8.31 (10/07/2019)
+
+#### bugfix
+
+- [**bugfix**] IAE-18570 change for 508 reading [#358](https://github.com/GSA/sam-ui-elements/pull/358)
+
+#### closed
+
+- [**closed**] IAE-18889 Directory Returning Duplicate Results  [#370](https://github.com/GSA/sam-ui-elements/pull/370)
+- [**closed**] IAE-20497 - workspace dash styles update [#369](https://github.com/GSA/sam-ui-elements/pull/369)
+- [**closed**] IAE-20497 Tier 1 Workspace [#366](https://github.com/GSA/sam-ui-elements/pull/366)
+- [**closed**] version update to 0.8.29 [#367](https://github.com/GSA/sam-ui-elements/pull/367)
+- [**closed**] update version to 0.8.30 [#368](https://github.com/GSA/sam-ui-elements/pull/368)
+- [**closed**] IAE-14558 add aria label proptery for more/less anchor [#365](https://github.com/GSA/sam-ui-elements/pull/365)
+- [**closed**] autocomplete multiselect label wrapper setup [#363](https://github.com/GSA/sam-ui-elements/pull/363)
+- [**closed**] sidenav icon class update [#362](https://github.com/GSA/sam-ui-elements/pull/362)
+- [**closed**] focus when no button on modal [#364](https://github.com/GSA/sam-ui-elements/pull/364)
+- [**closed**] Revert "fieldset wrapper pristine handling update" [#361](https://github.com/GSA/sam-ui-elements/pull/361)
+- [**closed**] fieldset wrapper pristine handling update [#360](https://github.com/GSA/sam-ui-elements/pull/360)
+- [**closed**] Header-Footer code clean up [#359](https://github.com/GSA/sam-ui-elements/pull/359)
+
+---
+
+## 0.8.30 (19/06/2019)
+update version to 0.8.30
+---
+
+## 0.8.29 (19/06/2019)
+Updated the version to 0.8.29
+Updated the tier 1 workspace dashboard styles to match approved designs - non breaking change
+---
+
+## 0.8.28 (05/06/2019)
+
+---
+
+## 0.8.27 (13/05/2019)
+[bugfix] IAE-18570 Resolving issues with reading of modal
+---
+
 ## v0.8.26 (08/05/2019)
 
 #### closed
@@ -172,32 +238,3 @@ Bugfix to change class method from private to public
 ---
 
 ## 0.8.1 (20/02/2019)
-
----
-
-## 0.8.0 (15/02/2019)
-Breaking change in the SamHiercarchicalServiceInterface the method signatures of  getDataByText and  getHiercarchicalById have been changed
-
----
-
-## 0.7.0 (13/02/2019)
-Method parameter for Hierarchical tree component changed
-Bug fixes for dollar component
-Bug fixes for radio button
-
----
-
-## 0.6.5 (08/02/2019)
-
----
-
-## 0.6.4 (06/02/2019)
-Fix bug in date component
-Changed X behavior in hierarchy picker
----
-
-## 0.6.3 (05/02/2019)
-
----
-
-## 0.6.2 (04/02/2019)
