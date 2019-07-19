@@ -2,13 +2,8 @@
 @import '../core/style/elevation';
 
 .mat-expansion-panel {
-  // @include mat-elevation-transition;
   box-sizing: content-box;
   display: block;
-
-  // &:not([class*='mat-elevation-z']) {
-  //   @include mat-elevation(2);
-  // }
 }
 
 .mat-expansion-panel-content {

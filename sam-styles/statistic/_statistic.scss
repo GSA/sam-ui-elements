@@ -5,11 +5,14 @@
 .sam.statistics {
   display: flex;
   flex-wrap: wrap;
-  margin: 10px 30px;
 }
 
 .sam.statistics > .statistic {
   margin: 5px 30px;
+}
+
+.sam.statistics.compact > .statistic {
+  margin: 5px 10px;
 }
 
 .sam.statistics > .statistic:hover {
@@ -29,20 +32,23 @@
   font-size: 14px;
   text-align: center;
   text-transform: uppercase;
+  margin-top: 8px;
+  line-height: 16px;
 }
 
 .sam.statistics .statistic > .value > .circular {
   display: block;
   margin: 0 auto;
   width: 50px;
-  height: 50px;
+  height: 48px;
   border-radius: 50%;
-  line-height: 50px;
-  transition: all 0.3s ease;
+  line-height: 44px;
+  transition: all 0.3s ease-out;
 }
 
 // COLORS
 
+// Green
 .sam.statistics .green.statistic > .value > .circular {
   background: #EAF2EB;
   border: 1px solid #2E8540;
@@ -53,6 +59,7 @@
   background: #2E8540;
 }
 
+// Blue
 .sam.statistics .blue.statistic > .value > .circular {
   background: #E5F0F4;
   border: 1px solid #00A6D2;
@@ -63,6 +70,7 @@
   background: #00A6D2;
 }
 
+// Red
 .sam.statistics .red.statistic > .value > .circular {
   background: #F4E8E8;
   border: 1px solid #981B1E;
@@ -73,6 +81,7 @@
   background: #981B1E;
 }
 
+// Orange
 .sam.statistics .orange.statistic > .value > .circular {
   background: #FBEBE6;
   border: 1px solid #D84009;
@@ -83,6 +92,7 @@
   background: #D84009;
 }
 
+// Grey
 .sam.statistics .grey.statistic > .value > .circular {
   background: #EEEFF0;
   border: 1px solid #AEB0B5;
@@ -93,6 +103,7 @@
   background: #AEB0B5;
 }
 
+// Yellow
 .sam.statistics .yellow.statistic > .value > .circular {
   background: #FFF1D2;
   border: 1px solid #FED06A;
@@ -101,10 +112,4 @@
 .sam.statistics .yellow.statistic:hover > .value > .circular {
   color: white;
   background: #FED06A;
-}
-
-.sam.statistics.visible.tablet.up {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
 }
