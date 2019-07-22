@@ -1,0 +1,20 @@
+// Alert tag - Warning
+
+.sam-alert {
+  background-color: #faf3d1;
+  border-radius: 8px;
+  max-width: 320px;
+  display: flex;
+  align-items: center;
+  margin: 5px 10px 0 0;
+}
+
+.sam-alert > img {
+  height: 50px;
+  margin: 10px;
+  color: #fbc036;
+}
+
+.sam-alert-content {
+  display: inline-block;
+}
