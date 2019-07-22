@@ -9,11 +9,14 @@
 @import '../expansion/expansion-panel-header';
 @import '../filters/sam-filter-drawer';
 @import '../progress/structure';
-@import '../workspace/tier-one';
-@import '../workspace/tier-two';
-@import '../workspace/tag';
-@import '../workspace/alert';
-@import '../workspace/outline';
+@import '../tag/tag';
+@import '../tag/tag-outline';
+@import '../utilities/link';
+@import '../icon/icon';
+@import '../card/card';
+@import '../alert/alert';
+@import '../button/button';
+
 
 // Include theme
 @import '../core/theming/all-theme';

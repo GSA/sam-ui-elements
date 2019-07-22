@@ -33,3 +33,67 @@
 .sam-card .sam-card__content{
   padding: 15px 0px 0px;
 }
+
+// RESULTS CARD
+// --------------------------------
+
+.entity-card {
+  border: solid #8d9297;
+  background-color: #f7f9fa;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.entity-card--label {
+  display: inline-block;
+  font-weight: 350;
+  font-size: 20px;
+  margin-bottom: 0;
+}
+
+.entity-card--data {
+  margin: 5px 0 30px 0 !important;
+  font-weight: 600;
+
+  ul {
+    list-style-type: none;
+  }
+}
+
+.entity-card--data-address {
+  margin: 0 0 30px 0 !important;
+  font-weight: 500;
+}
+
+.entity-card--wrapper {
+  padding: 0;
+}
+
+.entity-card--content {
+  float: right;
+
+  h5 {
+    margin-top: 0;
+    font-size: 24px;
+  }
+
+  h6 {
+    font-size: 22px;
+    margin: 0 0 10px;
+  }
+}
+
+.hr-15 {
+  height: 15px;
+  background-color: lightgray;
+  border: none;
+  margin: 50px 0 10px;
+}
+
+.entity-card--data.ALT {
+  margin: 75px 0 0 0 !important;
+}
+
+.entity-card--label.ALT {
+  margin: 0 !important;
+}
