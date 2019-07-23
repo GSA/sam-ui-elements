@@ -205,19 +205,19 @@
 }
 
 //Feedback Button
-.entity-btn {
+.feedback-btn {
  margin-top: 50px;
  display: flex;
  flex-direction: column;
  align-items: center;
 }
 
-.entity-btn--label {
+.feedback-btn--label {
  font-size: 24px;
  margin: 10px;
 }
 
-.entity-btn--shape {
+.feedback-btn--shape {
  background-color: #00bde3;
  color: black;
  padding: 15px 25px;
