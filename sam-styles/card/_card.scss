@@ -33,3 +33,55 @@
 .sam-card .sam-card__content{
   padding: 15px 0px 0px;
 }
+
+// RESULTS CARD
+// --------------------------------
+
+.basic-card {
+  border: solid #8d9297;
+  background-color: #f7f9fa;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.basic-card--label {
+  display: inline-block;
+  font-weight: 350;
+  font-size: 20px;
+  margin-bottom: 0;
+}
+
+.basic-card--data {
+  margin: 5px 0 30px 0 !important;
+  font-weight: 600;
+
+  ul {
+    list-style-type: none;
+  }
+}
+
+.basic-card--data-address {
+  margin: 0 0 30px 0 !important;
+  font-weight: 500;
+}
+
+.basic-card--content {
+  float: right;
+
+  h5 {
+    margin-top: 0;
+    font-size: 24px;
+  }
+
+  h6 {
+    font-size: 22px;
+    margin: 0 0 10px;
+  }
+}
+
+.hr-15 {
+  height: 15px;
+  background-color: lightgray;
+  border: none;
+  margin: 20px 0;
+}

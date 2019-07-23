@@ -1,7 +1,7 @@
 
 
 @mixin sam-button-theme($theme) {
-  
+
 }
 
 .sam.button{
@@ -202,4 +202,25 @@
   color: rgba(255, 255, 255, 0.4);;
   background-color: transparent;
   pointer-events: none;
+}
+
+//Feedback Button
+.feedback-btn {
+ margin-top: 30px;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+}
+
+.feedback-btn--label {
+ font-size: 24px;
+ margin: 10px;
+}
+
+.feedback-btn--shape {
+ background-color: #00bde3;
+ color: black;
+ padding: 15px 25px;
+ font-size: 24px;
+ font-weight: 600;
 }

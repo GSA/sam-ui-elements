@@ -1,0 +1,45 @@
+// Info tag
+
+.sam-tag {
+  display: inline-block;
+  margin-bottom: 26px;
+}
+
+.sam-tag--info-purple {
+  color: black;
+  background-color: #fbdcff;
+  border: 1.5px solid #7665d1;
+  border-radius: 2px;
+  font-weight: 600;
+  margin: 0 10px 10px 0;
+  padding: 1px 0.5rem;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.sam-tag--info-white {
+  color: black;
+  background-color: white;
+  border: 1.5px solid #76766a;
+  border-radius: 2px;
+  font-weight: 600;
+  margin: 0 10px 10px 0;
+  padding: 1px 8px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.sam-tag[class*='sam-tag--alt'] {
+  white-space: nowrap;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 550;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid;
+  color: #212121;
+  margin-right: 5px;
+  display: inline-block;
+  width: 150px;
+  background-color: #ffffff;
+}
