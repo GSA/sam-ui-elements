@@ -154,6 +154,12 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
     }
   }
 
+
+  textChange(event) {
+    const searchString = event || '';
+    this.getResults(searchString);
+  }
+
   /**
    * Event method used when focus is gained to the input
    */
@@ -166,7 +172,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
    * Key event
    * @param event 
    */
-  onKeyup(event): void {
+  onKeydown(event): void {
     if (KeyHelper.is(KEYS.TAB, event)) {
       return;
     }
@@ -181,14 +187,6 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
     }
     else if (KeyHelper.is(KEYS.ESC, event)) {
       this.clearAndHideResults();
-    }
-    else if (KeyHelper.is(KEYS.BACKSPACE, event) || KeyHelper.is(KEYS.DELETE, event)) {
-      const searchString = event.target.value || '';
-      this.getResults(searchString);
-    }
-    else {
-      const searchString = event.target.value || '';
-      this.getResults(searchString);
     }
   }
 
