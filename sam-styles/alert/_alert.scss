@@ -18,3 +18,40 @@
 .sam-alert-content {
   display: inline-block;
 }
+
+// Alert tag - Information
+.sam-alert--info {
+  background-color: #EFF6FB;
+  border: 2px solid #5994F6;
+  margin: 2rem 0px;
+  height: 70px;
+  display: flex;
+}
+
+.sam-alert--info > h2 {
+  color: #5994F6;
+  border: 2px solid #5994F6;
+  border-radius: 50%;
+  padding: 0.7rem 2rem;
+  margin: auto 2rem;
+
+}
+
+.sam-alert--info > p {
+  font-size: 20px;
+  color: #616161;
+  margin: auto 0;
+  padding: 0px !important;
+}
+
+//sam alert next
+
+.sam-alert-checked, .sam-alert-unchecked{
+
+  font-size: 22px;
+
+  svg {
+    color: black;
+    margin-right: 10px;
+  }
+}

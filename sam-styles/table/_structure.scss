@@ -205,3 +205,40 @@ sam-header-cell{
 .sam-datatable-horizontal::-webkit-scrollbar-thumb {
   border-radius: 2px;
 }
+
+/**
+* BASIC SAM TABLE
+*/
+.sam-header--basic {
+  border: 1px solid;
+  background-color: #f5f6f7;
+  text-align: left;
+  padding: 0 10px;
+
+  tr {
+    height: 50px;
+  }
+
+  th {
+    padding: 0 10px;
+    font-size: 22px;
+  }
+
+}
+
+.sam-row--basic {
+  border: 1px solid;
+
+  td {
+    padding: 0 10px;
+    font-weight: 600;
+  }
+}
+
+.sam-row--basic > td:first-child {
+  text-align: center;
+}
+
+.sam-detial-table {
+  color: lightgray;
+}
