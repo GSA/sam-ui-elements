@@ -7,11 +7,11 @@
 
 .sam-tag--info-purple {
   color: black;
-  background-color: #fbdcff;
-  border: 1.5px solid #7665d1;
+  background-color: #ede3ff;
+  border: 1.5px solid #c39deb;
   border-radius: 2px;
   font-weight: 600;
-  margin: 0 10px 10px 0;
+  margin: 0 10px 20px 0 !important;
   padding: 1px 0.5rem;
   text-transform: uppercase;
   text-align: center;
@@ -42,4 +42,10 @@
   display: inline-block;
   width: 150px;
   background-color: #ffffff;
+}
+
+.sam-tag--date {
+  font-size: 18px;
+  font-style: italic;
+  color: #71767a;
 }
