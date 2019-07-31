@@ -98,6 +98,16 @@
   }
 }
 
+.basic-card--content-title {
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 35px;
+    margin-right: 10px;
+  }
+}
+
 .hr-15 {
   height: 12px;
   background-color: lightgray;
