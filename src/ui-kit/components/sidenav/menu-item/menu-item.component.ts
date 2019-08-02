@@ -24,6 +24,11 @@ export class SamMenuItemComponent {
    */
   @Output() selection: EventEmitter<any> = new EventEmitter<any>();
 
+    /**
+   * Section is visible 
+   */
+  public showSection: boolean = false;
+
   constructor(private service: SidenavService) { }
 
   updateUI(index: number, event: Event, menuItem: MenuItem): void {
@@ -44,5 +49,12 @@ export class SamMenuItemComponent {
     this.data.emit(event);
     this.selection.emit(event);
     return;
+  }
+
+   /**
+   * Closes the Section
+   */
+  close() {
+    this.showSection = false;
   }
 }
