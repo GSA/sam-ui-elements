@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 
 /**
  * The <sam-banner> component informs the user that the site is an official
@@ -13,5 +13,9 @@ export class SamBannerComponent {
 
   toggleDetails() {
     this.showDetail = !this.showDetail;
+  }
+
+  closeDetail() {
+    if (this.showDetail) this.showDetail = false;
   }
 }
