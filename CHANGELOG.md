@@ -1,5 +1,40 @@
 # Changelog
 
+## v0.9.13 (08/08/2019)
+
+#### closed
+
+- [**closed**] IAE-21948 [#383](https://github.com/GSA/sam-ui-elements/pull/383)
+- [**closed**] sam-ui version changes to 0.9.12 [#382](https://github.com/GSA/sam-ui-elements/pull/382)
+
+---
+
+## v0.9.12 (02/08/2019)
+
+#### closed
+
+- [**closed**] IAE-22073 aria expanded added to side nav [#381](https://github.com/GSA/sam-ui-elements/pull/381)
+- [**closed**] version update to 0.9.11 [#380](https://github.com/GSA/sam-ui-elements/pull/380)
+
+---
+
+## 0.9.11 (31/07/2019)
+IAE 21880 Entity display page added - c56f75e - entity display styles
+IAE 21853 508 change - 0d15cc5 - Delete autocomplete.component.html.bak
+Version Update to 0.9.11
+
+---
+
+## 0.9.1 (23/07/2019)
+version update #377 
+Entity view added #376 b
+Remove unused styles and files 
+Add background gradient to utilities 
+Add new utilities to sam-styles 
+IAE-18889 Directory Returning Duplicate Results 
+IAE-20497 - workspace dash styles update 
+---
+
 ## v0.9.0 (16/07/2019)
 
 #### bugfix
@@ -219,22 +254,3 @@ Cleaned up hierarchical test
 Date component edit and Tab key fixes
 
 Button disable bug fix
-
----
-
-## 0.8.4 (27/02/2019)
-Updates on the styling and templates for the grid
-Updates when emits event when video goes to full-screen mode
-Fixes 508 issue for navigating data table.
-Fix 508 issue for breadcrumbs using events
----
-
-## 0.8.3 (22/02/2019)
-
----
-
-## 0.8.2 (21/02/2019)
-Bugfix to change class method from private to public
----
-
-## 0.8.1 (20/02/2019)
