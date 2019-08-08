@@ -2,36 +2,40 @@
 // --------------------------------
 
 .sam-card {
-  margin: 40px 0px;
-  padding: 18px 20px 20px 20px;
+  margin: 40px 0;
+  padding: 18px 20px 20px;
   border-radius: 4px;
   background-color: white;
-  box-shadow: 0px 10px 25px 5px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 25px 5px rgba(0, 0, 0, 0.15);
 }
 
-.sam-card .sam-card__header{
+.sam-card .sam-card__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  .sam-card__header-title{
-      color: #0071bc;
-      font-size: 17px;
-      font-weight: 700;
-      line-height: 18px;
-      .sam-card__header-title-counter{
-          color: #212121;
-      }
+
+  .sam-card__header-title {
+    color: #0071bc;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 18px;
+
+    .sam-card__header-title-counter {
+      color: #212121;
+    }
   }
-  .sam-card__header-actions{
-      display: flex;
+
+  .sam-card__header-actions {
+    display: flex;
   }
-  .sam-ui.button.tiny{
-      line-height: 14px;
+
+  .sam-ui.button.tiny {
+    line-height: 14px;
   }
 }
 
-.sam-card .sam-card__content{
-  padding: 15px 0px 0px;
+.sam-card .sam-card__content {
+  padding: 15px 0 0;
 }
 
 // RESULTS CARD
@@ -63,6 +67,7 @@
 .basic-card--data {
   margin: 0 0 25px 0 !important;
   font-weight: 600;
+  font-size: 2rem;
   color: #2e2e2a;
 
   ul {
@@ -75,25 +80,33 @@
 .basic-card--data-address {
   margin: 0 0 30px 0 !important;
   font-weight: 500;
+  font-size: 1.8rem;
   color: #2e2e2a;
 }
 
 .basic-card--content {
   float: right;
 
-  h5 {
+  .basic-card--content-title {
     margin-top: 0;
     font-size: 24px;
     color: #2e2e2a;
   }
 
-  h6 {
+  h3 {
     font-size: 22px;
     margin: 0 0 10px;
     color: #2e2e2a;
   }
 
-  dt, dd {
+  h5 {
+    font-weight: 600;
+    font-size: 2rem;
+    color: #2e2e2a;
+  }
+
+  dd,
+  dt {
     font-size: 22px;
   }
 }
@@ -119,11 +132,10 @@
   margin-top: 20px;
 }
 
-.entity-display{
-
+.entity-display {
   h1 {
     font-size: 3rem;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     color: #2e2e2a;
   }
 }
