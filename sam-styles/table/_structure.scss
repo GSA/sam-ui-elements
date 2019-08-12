@@ -210,34 +210,32 @@ sam-header-cell{
 * BASIC SAM TABLE
 */
 .sam-header--basic {
-  border: 1px solid;
+  border: 2px solid #C0C0C0;
   background-color: #f5f6f7;
   text-align: left;
-  padding: 0 10px;
 
   tr {
     height: 50px;
   }
 
   th {
-    padding: 0 10px;
+    padding: 0 20px;
     font-size: 22px;
+    font-weight: 600;
   }
 
 }
 
 .sam-row--basic {
-  border: 1px solid;
+  border: 2px solid #808080;
 
   td {
-    padding: 0 10px;
+    padding: 0 20px;
     font-weight: 600;
+    min-width: 115px;
   }
 }
 
-.sam-row--basic > td:first-child {
-  text-align: center;
-}
 
 .sam-detial-table {
   color: lightgray;
