@@ -653,17 +653,14 @@ export class SamAutocompleteComponent
     let selectedChild = this.getSelectedChildIndex(children);
 
     if (selectedChild !== -1) {
-      console.log(selectedChild)
+
       if (freeText) {
         --selectedChild;
       }
-      if (selectedChild === 0 && freeText) {
-        this.setSelected(this.filteredKeyValuePairs[selectedChild]);
+      if (selectedChild === -1 && freeText) {
+        this.setSelected(this.inputValue);
         this.input.nativeElement.focus();
       } else {
-        if (freeText) {
-          --selectedChild;
-        }
         if (this.results && this.results[selectedChild]) {
           this.setSelected(this.results[selectedChild]);
           this.input.nativeElement.focus();
@@ -677,7 +674,6 @@ export class SamAutocompleteComponent
       }
 
     } else {
-      console.log('ELSE?')
       if (this.allowAny) {
         this.setSelected(this.inputValue);
         this.input.nativeElement.focus();
@@ -719,7 +715,6 @@ export class SamAutocompleteComponent
   }
 
   setSelected(value: any) {
-    console.log(value)
     if (this.config && this.config.categoryProperty
       && !this.config.isCategorySelectable
       && this.isCategory(value)) {
