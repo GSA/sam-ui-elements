@@ -619,7 +619,7 @@ export class SamAutocompleteComponent
     if (freeText) {
       ++index;
     }
-    if (index === undefined) {
+    if (index === undefined && freeText) {
       index = 0;
     }
     const list: ElementRef = this.resultsList || this.resultsListKV;
