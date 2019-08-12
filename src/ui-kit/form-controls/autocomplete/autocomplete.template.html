@@ -29,7 +29,8 @@
       <!-- Lists data if array of strings is passed to component -->
       <ul id="sam-autocomplete-results" class="usa-unstyled-list" #resultsList
         *ngIf=" ((results && results.length > 0) || (displayFreeTextSimpleResults())) && hasFocus">
-        <li *ngIf="freeTextAvalible()"><span>{{inputValue}} - {{freeTextSubtext}}</span>
+        <li *ngIf="freeTextAvalible()" (mouseenter)="listItemHover(i)" (click)="setSelected(inputValue)">
+          <span>{{inputValue}} - {{freeTextSubtext}}</span>
         </li>
         <li *ngFor="let result of results; let i = index" (mouseenter)="listItemHover(i)" (click)="setSelected(result)">
           {{result}}</li>
@@ -37,8 +38,9 @@
       <!-- Lists data if array of objects with key/value pair is passed to component -->
       <ul id="sam-autocomplete-results-kv" class="usa-unstyled-list" #resultsListKV
         *ngIf="((filteredKeyValuePairs && filteredKeyValuePairs.length > 0) || (displayFreeTextKeyValueResults()) ) && hasFocus">
-        <li [class.multiple-values]="config?.keyValueConfig?.subheadProperty" *ngIf="freeTextAvalible()"
-          [ngClass]="freeTextClass()">{{inputValue}} - {{freeTextSubtext}}
+        <li [class.multiple-values]="config?.keyValueConfig?.subheadProperty" (mouseenter)="listItemHover(i)"
+          *ngIf="freeTextAvalible()" [ngClass]="freeTextClass()" (click)="setSelected(inputValue)">{{inputValue}} -
+          {{freeTextSubtext}}
         </li>
         <li *ngFor="let obj of filteredKeyValuePairs; let i = index" (mouseenter)="listItemHover(i)"
           [class.multiple-values]="config?.keyValueConfig?.subheadProperty" [ngClass]="itemClass(obj)"

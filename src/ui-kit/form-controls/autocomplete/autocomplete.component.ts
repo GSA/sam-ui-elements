@@ -615,6 +615,13 @@ export class SamAutocompleteComponent
   }
 
   listItemHover(index) {
+    let freeText = this.freeTextAvalible();
+    if (freeText) {
+      ++index;
+    }
+    if (index === undefined) {
+      index = 0;
+    }
     const list: ElementRef = this.resultsList || this.resultsListKV;
     if (!this.listExists(list)) {
       return;
