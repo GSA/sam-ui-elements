@@ -129,7 +129,7 @@ export class SamAutocompleteComponent
    */
   @Input() public debounceTime: number = 250;
 
-  @Input() public isFreeTextEnabled: boolean = true;
+  @Input() public isFreeTextEnabled: boolean;
 
   @Input() public freeTextSubtext: string = 'search';
 
