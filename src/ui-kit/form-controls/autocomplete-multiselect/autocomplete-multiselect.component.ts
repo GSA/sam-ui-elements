@@ -404,6 +404,7 @@ export class SamAutocompleteMultiselectComponent
   public handleDownArrow(event) {
     if (KeyHelper.is('down', event)) {
       const results = this.getResults();
+      console.log(results);
       const selectedIndex = this.setSelectedChild(
         this.getSelectedChildIndex(results),
         'Down',
@@ -506,10 +507,10 @@ export class SamAutocompleteMultiselectComponent
     }
     if (this.categoryIsSelectable) {
       return this.resultsList.nativeElement
-        .querySelectorAll('li.category-item, li.category-name');
+        .querySelectorAll('li.category-item, li.category-name, li.free-text-item');
     } else {
       return this.resultsList.nativeElement
-        .querySelectorAll('li.category-item');
+        .querySelectorAll('li.category-item, li.free-text-item');
     }
   }
 
