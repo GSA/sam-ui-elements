@@ -160,7 +160,7 @@ export class SamAutocompleteMultiselectComponent
   @Input() public allowAny: boolean = false;
 
 
-  @Input() public isFreeTextEnabled: boolean = true;
+  @Input() public isFreeTextEnabled: boolean = false;
 
   @Input() public freeTextSubtext: string = 'search';
   /**
@@ -327,25 +327,30 @@ export class SamAutocompleteMultiselectComponent
       return;
     }
 
-    if (this.resultsList
-      && this.resultsList.nativeElement
+
+    if (((this.resultsList
+      && this.resultsList.nativeElement) || this.showResultsFreeText())
       && KeyHelper.is('enter', event)) {
 
-      if (this.allowAny) {
-        this.selectWithAny(event, highlighted);
+      if (this.showResultsFreeText() && highlighted === 0) {
+        this.selectItem(this.searchText);
       } else {
-        if (highlighted === -1) {
-          // Don't do anything if the user tries to enter without selecting \
-          // with the up/down keys
-          return;
+        if (this.allowAny) {
+          this.selectWithAny(event, highlighted);
+        } else {
+          if (highlighted === -1) {
+            // Don't do anything if the user tries to enter without selecting \
+            // with the up/down keys
+            return;
+          }
+          this.selectItem(this.getItem());
         }
-        this.selectItem(this.getItem());
-      }
 
+      }
       this.clearSearch();
       this.list = [];
-    }
 
+    }
     return event;
   }
 
@@ -404,7 +409,6 @@ export class SamAutocompleteMultiselectComponent
   public handleDownArrow(event) {
     if (KeyHelper.is('down', event)) {
       const results = this.getResults();
-      console.log(results);
       const selectedIndex = this.setSelectedChild(
         this.getSelectedChildIndex(results),
         'Down',
@@ -478,6 +482,17 @@ export class SamAutocompleteMultiselectComponent
         }
         else {
           foundItem = this.findItemExistInList(this.list[0]);
+        }
+
+        if (this.value) {
+          if (!foundItem) {
+            for (var i = 0; i < this.value.length; i++) {
+              let tempItem = this.value[i];
+              if (tempItem[this.keyValueConfig.valueProperty] === this.searchText) {
+                foundItem = true;
+              }
+            }
+          }
         }
         return !foundItem;
       } else {
