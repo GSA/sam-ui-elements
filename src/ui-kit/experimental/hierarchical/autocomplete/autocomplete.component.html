@@ -22,7 +22,13 @@
           </ng-container>
 
           <ng-container *ngIf="!itemTemplate">
-            <span class="header">{{ result[configuration.primaryTextField] }}</span>
+            <span class="header">{{ result[configuration.primaryTextField] }}
+
+              <span *ngIf="result.type === 'custom'">
+                - {{configuration.freeTextSubtext}}
+              </span>
+            </span>
+
             <ng-container *ngIf="configuration.secondaryTextField &&  result[configuration.secondaryTextField] ">
               <span class="description">{{ result[configuration.secondaryTextField] }}</span>
             </ng-container>

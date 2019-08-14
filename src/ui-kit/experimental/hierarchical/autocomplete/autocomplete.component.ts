@@ -243,6 +243,44 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
     }
   }
 
+  showFreeText() {
+    this.configuration.isFreeTextEnabled = true;
+    if (this.configuration.isFreeTextEnabled) {
+      if (this.inputValue) {
+        if (this.inputValue.length !== 0) {
+          let foundItem = false;
+          if (this.results) {
+            for (var i = 0; i < this.results.length && !foundItem; i++) {
+              let item = this.results[i];
+              foundItem = item[this.configuration.primaryTextField] === this.inputValue;
+            }
+          }
+          if (this.model.getItems().length > 0 && !foundItem) {
+            for (var i = 0; i < this.model.getItems().length && !foundItem; i++) {
+              let item = this.model.getItems()[i];
+              foundItem = item[this.configuration.primaryTextField] === this.inputValue;
+            }
+          }
+
+          return !foundItem;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    } else {
+      return this.configuration.isFreeTextEnabled;
+    }
+  }
+
+  private createFreeTextItem() {
+    let item = { 'type': 'custom' };
+    item[this.configuration.primaryTextField] = this.inputValue;
+    item[this.configuration.primaryKeyField] = this.inputValue;
+    return item;
+  }
+
   /**
    *  gets the inital results
    * @param searchString 
@@ -258,6 +296,9 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
           this.service.getDataByText(0, searchString).subscribe(
             (result) => {
               this.results = result.items;
+              if (this.showFreeText()) {
+                this.results.unshift(this.createFreeTextItem());
+              }
               this.maxResults = result.totalItems;
               this.highlightedIndex = 0;
               this.setHighlightedItem(this.results[this.highlightedIndex]);

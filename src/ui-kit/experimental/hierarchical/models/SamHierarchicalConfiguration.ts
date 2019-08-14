@@ -109,4 +109,8 @@ export class SamHierarchicalConfiguration implements SamHierarchicalAutocomplete
   */
   public emptyResultText: string = 'There are no results. Try again with another selection.';
 
+  public isFreeTextEnabled?: boolean = false;
+
+  public freeTextSubtext?: string = 'search';
+
 }
