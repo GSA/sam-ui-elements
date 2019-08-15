@@ -21,8 +21,6 @@ import { AutocompleteCache } from './autocomplete-cache';
 
 import { SamFormService } from '../../form-service';
 import { KeyHelper } from '../../utilities/key-helper/key-helper';
-import { SamCache } from '../autocomplete/autocomplete.component';
-
 @Component({
   selector: 'sam-autocomplete-multiselect',
   templateUrl: 'autocomplete-multiselect.template.html',
@@ -76,7 +74,7 @@ import { SamCache } from '../autocomplete/autocomplete.component';
   ]
 })
 export class SamAutocompleteMultiselectComponent
-  implements ControlValueAccessor, AfterViewInit, SamCache {
+  implements ControlValueAccessor, AfterViewInit {
   /**
    * Gets DOM element for the textarea used for input
    */
@@ -977,14 +975,6 @@ export class SamAutocompleteMultiselectComponent
     }
     this.addSelectedClass(elements,listIndex);
     this.reachedEndOfList(elements,this.searchText);
-  }
-
-  /***************************************************************
-   * Implementation of SamCache Methods
-   ***************************************************************/
-
-  public clearCache(){
-    this.cache.clearAll();
   }
 
   /***************************************************************
