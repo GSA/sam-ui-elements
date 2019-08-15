@@ -103,14 +103,6 @@ describe('The Sam Autocomplete Multiselect Component', () => {
           component.registerOnTouched(() => undefined);
           component.setDisabledState(false);
       });
-
-      it('should support a way to clear cache', ()=>{
-          component.fetchFromService("test", null, component);
-          component['cache'].insert([{'key':'a', 'value': 'aaaa'}], 'test');
-          expect(component['cache']['value'].length).toBe(1);
-          component.clearCache();
-          expect(component['cache']['value'].length).toBe(0);
-      });
   });
 
   
