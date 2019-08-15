@@ -979,6 +979,10 @@ export class SamAutocompleteMultiselectComponent
     this.reachedEndOfList(elements,this.searchText);
   }
 
+  /***************************************************************
+   * Implementation of SamCache Methods
+   ***************************************************************/
+
   public clearCache(){
     this.cache.clearAll();
   }
