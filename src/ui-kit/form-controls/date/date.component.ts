@@ -287,6 +287,7 @@ export class SamDateComponent
 
   onMonthInput(event: any) {
     const key = KeyHelper.getKeyCode(event);
+    let dupModel;
     if (this._checkCopyPasteChar(key)) {
       return;
     }
@@ -313,10 +314,10 @@ export class SamDateComponent
         this.day.nativeElement.focus();
       }
       this.month.nativeElement.value = possibleNum;
-      const dupModel = this.inputModel;
-      this.onChangeHandler(dupModel);
+      dupModel = this.inputModel;
       event.preventDefault();
     }
+    this.onChangeHandler(dupModel);
   }
 
   getPossibleNum(item, event): number {
@@ -340,7 +341,6 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
-
     if (this.isTabPressed && event && !(KeyHelper.is('shift', event)) && !(KeyHelper.is('tab', event))) {
       this.day.nativeElement.value = '';
     }
@@ -357,6 +357,7 @@ export class SamDateComponent
       event.preventDefault();
       return;
     }
+    let dupModel;
     if (inputNum !== undefined) {
       if (event.target.value.length === 1 ||
         (event.target.value.length === 0
@@ -364,10 +365,10 @@ export class SamDateComponent
         this.year.nativeElement.focus();
       }
       this.day.nativeElement.value = possibleNum;
-      const dupModel = this.inputModel;
-      this.onChangeHandler(dupModel);
-      event.preventDefault();
+       dupModel = this.inputModel;
+       event.preventDefault();
     }
+    this.onChangeHandler(dupModel);
   }
 
   getMaxDate(): number {
@@ -415,6 +416,7 @@ export class SamDateComponent
   onYearInput(event) {
     const key = KeyHelper.getKeyCode(event);
     const maxValue = 9999;
+    let dupModel;
     if (this._checkCopyPasteChar(key)) {
       return;
     }
@@ -438,10 +440,10 @@ export class SamDateComponent
         this.blur.emit();
       }
       this.year.nativeElement.value = possibleNum;
-      const dupModel = this.inputModel;
-      this.onChangeHandler(dupModel);
+     dupModel = this.inputModel;
       event.preventDefault();
     }
+    this.onChangeHandler(dupModel);
   }
 
   removalKeyHandler() {
