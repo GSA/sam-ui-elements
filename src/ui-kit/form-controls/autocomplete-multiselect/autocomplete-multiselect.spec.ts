@@ -107,9 +107,9 @@ describe('The Sam Autocomplete Multiselect Component', () => {
       it('should support a way to clear cache', ()=>{
           component.fetchFromService("test", null, component);
           component['cache'].insert([{'key':'a', 'value': 'aaaa'}], 'test');
-          expect(component['cache']['value'].length).toBe(1);
+          expect(component['cache']['cached']['test']).toBeDefined();
           component.clearCache();
-          expect(component['cache']['value'].length).toBe(0);
+          expect(component['cache']['cached']['test']).toBe(undefined);
       });
   });
 
