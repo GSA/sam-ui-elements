@@ -49,8 +49,14 @@ export class SamHierarchicalAutocompleteConfiguration {
   public minimumCharacterCountSearch: number;
 
 
-  public isFreeTextEnabled?: boolean = false;
+  /**
+   * Allows option to allow user text not in the standard results
+   */
+  public isFreeTextEnabled: boolean = false;
 
-  public freeTextSubtext?: string = 'search';
+  /**
+   * Text appeneded ad the end of free text
+   */
+  public freeTextSubtext: string = 'search';
 
 }
