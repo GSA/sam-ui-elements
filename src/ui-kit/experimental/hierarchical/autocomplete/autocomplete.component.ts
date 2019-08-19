@@ -244,7 +244,6 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
   }
 
   showFreeText() {
-    this.configuration.isFreeTextEnabled = true;
     if (this.configuration.isFreeTextEnabled) {
       if (this.inputValue) {
         if (this.inputValue.length !== 0) {
