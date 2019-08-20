@@ -36,8 +36,6 @@ export class FieldsetWrapper {
     if (!!message) {
       this.errorMessages = [];
       this.errorMessages.push(message);
-    } else if (this.errorMessages.length === 0) {
-      this.errorMessages = [];
     } else {
       this.errorMessages = [];
     }
