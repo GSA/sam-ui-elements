@@ -36,7 +36,9 @@ export class FieldsetWrapper {
     if (!!message) {
       this.errorMessages = [];
       this.errorMessages.push(message);
-    } else {
+    } else if (this.errorMessages.length === 0) {
+      this.errorMessages = [];
+    } else if(!this.hasMultipleControls){
       this.errorMessages = [];
     }
   };
@@ -54,7 +56,7 @@ export class FieldsetWrapper {
   private lineSize: number;
   private lineLimit: number = 2;
   private checkMore = false; // semaphore
-
+  private hasMultipleControls = false;
   constructor(private cdr: ChangeDetectorRef) { }
 
   public ngOnChanges(c) {
@@ -124,6 +126,7 @@ export class FieldsetWrapper {
   }
 
   public formatErrors(...controls: AbstractControl[]): void {
+    this.hasMultipleControls = controls.length > 1 ? true : false;
     this.errorMessages = [];
     controls.forEach(
       control => this._formatError(control)
