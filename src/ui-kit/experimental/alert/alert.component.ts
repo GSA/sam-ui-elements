@@ -24,8 +24,8 @@ export class SamAlertNextComponent {
     'info': { class: 'sam-alert-info', sr: 'info alert'},
     'success': { class: 'sam-alert-success', sr: 'success alert'},
     'warning': { class: 'sam-alert-warning', sr: 'warning alert'},
-    'checked': { class: 'sam-alert-checked', sr: 'checked alert'},
-    'unchecked': { class: 'sam-alert-unchecked', sr: 'unchecked alert'},
+    'checked': { class: 'sam-alert--checked', sr: 'checked alert'},
+    'unchecked': { class: 'sam-alert--unchecked', sr: 'unchecked alert'},
   };
   selectedIconTypes = {
       'success': faCheckCircle,

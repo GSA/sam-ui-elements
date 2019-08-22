@@ -34,21 +34,27 @@
 
 
   p {
-    font-size: 20px;
+    font-size: 16px;
+    font-weight: 600;
     color: #616161;
-    margin: auto 0;
+    margin: auto 10px;
     padding: 0 0 0 4em !important;
   }
 }
 
 //sam alert next
 
-.sam-alert-checked, .sam-alert-unchecked{
+.sam-alert--checked, .sam-alert--unchecked{
 
-  font-size: 22px;
+  font-size: 18px;
+  font-weight: 400;
 
   svg {
     color: black;
     margin-right: 10px;
   }
+}
+
+.sam-alert--unchecked {
+  margin-left: 3px;
 }
