@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 /**
  * The <sam-banner> component informs the user that the site is an official
@@ -6,9 +6,11 @@ import {Component, Output, EventEmitter} from '@angular/core';
  */
 @Component({
   selector: 'sam-banner',
-  templateUrl: 'banner.template.html',
+  templateUrl: 'banner.template.html'
 })
 export class SamBannerComponent {
+  @Input() description = '';
+
   showDetail: boolean = false;
 
   toggleDetails() {
@@ -16,6 +18,8 @@ export class SamBannerComponent {
   }
 
   closeDetail() {
-    if (this.showDetail) this.showDetail = false;
+    if (this.showDetail) {
+      this.showDetail = false;
+    }
   }
 }
