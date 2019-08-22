@@ -1,5 +1,48 @@
 # Changelog
 
+## v0.9.17 (22/08/2019)
+
+#### closed
+
+- [**closed**] date validation changes [#398](https://github.com/GSA/sam-ui-elements/pull/398)
+- [**closed**] UI update to sam-banner [#399](https://github.com/GSA/sam-ui-elements/pull/399)
+- [**closed**] Federalist build fix and sam version update [#397](https://github.com/GSA/sam-ui-elements/pull/397)
+
+---
+
+## v0.9.16 (20/08/2019)
+
+#### closed
+
+- [**closed**] sam ui version 0.9.15 updated [#394](https://github.com/GSA/sam-ui-elements/pull/394)
+- [**closed**] sam-comments max length accessibility fix [#395](https://github.com/GSA/sam-ui-elements/pull/395)
+- [**closed**] Revert "sam-comments max length accessibility fix" [#396](https://github.com/GSA/sam-ui-elements/pull/396)
+
+---
+
+## v0.9.15 (20/08/2019)
+
+#### closed
+
+- [**closed**] IAE-21978 clearing error messages for single control [#393](https://github.com/GSA/sam-ui-elements/pull/393)
+- [**closed**] version updated to 0.9.14 [#392](https://github.com/GSA/sam-ui-elements/pull/392)
+
+---
+
+## v0.9.14 (19/08/2019)
+
+#### closed
+
+- [**closed**] Autocomplete multi clear cache [#390](https://github.com/GSA/sam-ui-elements/pull/390)
+- [**closed**] comment max length and text wrapping added [#391](https://github.com/GSA/sam-ui-elements/pull/391)
+- [**closed**] IAE-21978 Date component error validation changes [#388](https://github.com/GSA/sam-ui-elements/pull/388)
+- [**closed**] Revert "autocomplete multiselect - add clear cache interface + impl" [#389](https://github.com/GSA/sam-ui-elements/pull/389)
+- [**closed**] autocomplete multiselect - add clear cache interface + impl [#387](https://github.com/GSA/sam-ui-elements/pull/387)
+- [**closed**] table and contrast fix [#385](https://github.com/GSA/sam-ui-elements/pull/385)
+- [**closed**] styles fix [#384](https://github.com/GSA/sam-ui-elements/pull/384)
+
+---
+
 ## v0.9.13 (08/08/2019)
 
 #### closed
@@ -7,6 +50,9 @@
 - [**closed**] IAE-21948 [#383](https://github.com/GSA/sam-ui-elements/pull/383)
 - [**closed**] sam-ui version changes to 0.9.12 [#382](https://github.com/GSA/sam-ui-elements/pull/382)
 
+### CSS 
+This patch adds `_banner.scss` to `sam-ui-elements`. 
+- Remove `_banner.scss` file from your code as is not needed.
 ---
 
 ## v0.9.12 (02/08/2019)
@@ -233,24 +279,3 @@ Version updated to 0.8.14
 - [**closed**] PR for Date component shift tab issue fix [#293](https://github.com/GSA/sam-ui-elements/pull/293)
 - [**closed**] modal height css fix [#299](https://github.com/GSA/sam-ui-elements/pull/299)
 - [**closed**] update the sam-ui-elements version to 0.8.8 [#298](https://github.com/GSA/sam-ui-elements/pull/298)
-
----
-
-## 0.8.8 (13/03/2019)
-
----
-
-## 0.8.7 (08/03/2019)
-CSS for Hierarchy Picker and Data Table
----
-
-## 0.8.6 (07/03/2019)
-
----
-
-## 0.8.5 (01/03/2019)
-Cleaned up hierarchical test
-
-Date component edit and Tab key fixes
-
-Button disable bug fix
