@@ -117,6 +117,9 @@ export class SamDateComponent
   private maxDay = 31;
 
   public isTabPressed: boolean = false;
+  public isMonthTouched: boolean = false;
+  public isYearTouched: boolean = false;
+  public isDateTouched: boolean = false;
   private keys: KeyHelper = new KeyHelper(...this.allowChars);
 
   get inputModel() {
@@ -453,20 +456,28 @@ export class SamDateComponent
 
   onChangeHandler(override = undefined) {
     this.onTouched();
-    if (this.isClean(override)) {
-      this.onChange(null);
-      this.valueChange.emit(null);
-    } else if (!this.getDate(override).isValid()) {
-      this.onChange('Invalid Date');
-      this.valueChange.emit('Invalid Date');
-    } else {
-      // use the strict format for outputs
-      const dateString = this.getDate(override).format(this.OUTPUT_FORMAT);
-      this.onChange(dateString);
-      this.valueChange.emit(dateString);
+    if(this.isDateTouched && this.isMonthTouched && this.isYearTouched) {
+      if (this.isClean(override)) {
+        this.onChange(null);
+        this.valueChange.emit(null);
+      } else if (!this.getDate(override).isValid()) {
+        this.onChange('Invalid Date');
+        this.valueChange.emit('Invalid Date');
+      } else {
+        // use the strict format for outputs
+        const dateString = this.getDate(override).format(this.OUTPUT_FORMAT);
+        this.onChange(dateString);
+        this.valueChange.emit(dateString);
+      } 
     }
   }
 
+  touchHandler() {
+    if(this.isDateTouched && this.isMonthTouched && this.isYearTouched) {
+    const dupModel = this.inputModel;
+    this.onChangeHandler(dupModel);
+    }
+  }
   isClean(override = undefined) {
     let dupModel = this.inputModel;
     if (override) {
@@ -501,19 +512,25 @@ export class SamDateComponent
   }
 
   triggerTouch() {
+    this.isYearTouched = true;
+    this.touchHandler()
     this.onTouched();
   }
 
   triggerMonthTouch(event) {
+   this.isMonthTouched = true;
     if (event.target.value.substring(0, 1) === '0') {
       this.month.nativeElement.value = event.target.value.substring(1);
     }
+    this.touchHandler()
     this.onTouched();
   }
   triggerDayTouch(event) {
+    this.isDateTouched = true;
     if (event.target.value.substring(0, 1) === '0') {
       this.day.nativeElement.value = event.target.value.substring(1);
     }
+    this.touchHandler()
     this.onTouched();
   }
 
