@@ -57,7 +57,7 @@
         <!-- (mouseenter)="listItemHover(i)" (click)="setSelected(inputValue)"  [class.multiple-values]="config?.keyValueConfig?.subheadProperty"   *ngIf="freeTextAvalible()" [ngClass]="freeTextClass()" -->
         <ul #resultsList class="usa-unstyled-list multiselect-parent-list" *ngIf="displayList()|| showResultsFreeText()"
           [@dropdown]="">
-          <li class="free-text-item category-item" *ngIf="showResultsFreeText()" (click)="clearSearch(selectItem(searchText))" >{{searchText}} -
+          <li style="margin-left:10px;" class="free-text-item category-item" *ngIf="showResultsFreeText()" (click)="clearSearch(selectItem(searchText))" >{{searchText}} -
             {{freeTextSubtext}}
           </li>
           <li *ngFor="let category of list.categories; let i = index;">
