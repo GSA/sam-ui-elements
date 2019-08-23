@@ -42,6 +42,27 @@
   }
 }
 
+//sam alert data
+.sam-alert--data {
+  background-color: #e7f6f8;
+  border-radius: 8px;
+  max-width: 320px;
+  display: flex;
+  align-items: center;
+}
+
+.sam-alert--data-icon {
+  height: 40px;
+  width: 20px;
+  color: #e7f6f8;
+  background-color: #00bee5;
+  margin: auto 10px;
+  padding-top: 12px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+
 //sam alert next
 
 .sam-alert--checked, .sam-alert--unchecked{
