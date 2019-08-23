@@ -70,8 +70,9 @@
 .basic-card--data {
   font-weight: 700;
   font-size: 16px;
-  //color: #2e2e2a;
+  margin-bottom: 15px;
   display: block;
+  line-height: 16px;
 
   ul {
     list-style-type: circle;
@@ -103,8 +104,8 @@
 
   h3 {
     font-size: 18px;
-    font-weight: 600;
-    margin: 0 0 10px;
+    font-weight: 700;
+    margin: 10px 0;
     color: #2e2e2a;
   }
 
@@ -118,7 +119,7 @@
 
 .basic-card--content-title {
   margin-top: 0;
-  
+
   font-size: 24px;
   color: #2e2e2a;
   height: 35px;
