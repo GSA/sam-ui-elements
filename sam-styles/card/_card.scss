@@ -43,11 +43,20 @@
 .basic-card {
   border: 1.5px solid #8d9297;
   background-color: #f7f9fa;
-  padding: 20px;
+  padding: 20px 20px 0;
   margin-bottom: 20px;
 
   .usa-grid {
     padding: 0 !important;
+  }
+
+  .basic-card--note {
+    font-size: 16px;
+    font-weight: 400;
+    color: #2e2e2a;
+    text-align: right;
+    width: 100%;
+    margin-top: 10px;
   }
 }
 
@@ -116,10 +125,8 @@
   }
 }
 
-
 .basic-card--content-title {
   margin-top: 0;
-
   font-size: 24px;
   color: #2e2e2a;
   height: 35px;
