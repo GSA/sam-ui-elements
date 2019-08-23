@@ -15,7 +15,7 @@ import { AutocompleteService } from '../autocomplete/autocomplete.service';
 import { SamFormService } from '../../form-service';
 import { SamWrapperModule } from '../../wrappers';
 
-fdescribe('The Sam Autocomplete Multiselect Component', () => {
+describe('The Sam Autocomplete Multiselect Component', () => {
   describe('Isolation tests', () => {
     let component: SamAutocompleteMultiselectComponent;
     const cdr: ChangeDetectorRef = undefined;
