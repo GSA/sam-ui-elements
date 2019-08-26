@@ -50,6 +50,10 @@
   max-width: 320px;
   display: flex;
   align-items: center;
+
+  @media only screen and (max-width: 600px) {
+    margin: auto;
+  }
 }
 
 .sam-alert--data-icon {
@@ -66,7 +70,7 @@
 
 //sam alert next
 
-.sam-alert--checked, .sam-alert--unchecked{
+.sam-alert--checked{
 
   font-size: 18px;
   font-weight: 400;
@@ -78,5 +82,17 @@
 }
 
 .sam-alert--unchecked {
-  margin-left: 3px;
+
+  font-size: 18px;
+  font-weight: 400;
+
+  ul {
+    list-style-type: none;
+    padding-left: 30px;
+    margin: 0;
+  }
+
+  sam-icon {
+    display: none;
+  }
 }
