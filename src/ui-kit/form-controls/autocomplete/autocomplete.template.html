@@ -6,7 +6,7 @@
     <div class="input-container">
       <input [attr.id]="id" [attr.tabindex]="tabIndex" #input autocomplete="off"
         [attr.placeholder]="config?.placeholder" [attr.title]="config?.title" [attr.name]="name" type="text"
-        (focus)="inputFocusHandler($event)" (keyup)="onKeyup($event)" [(ngModel)]="inputValue"
+        (focus)="inputFocusHandler($event)" (keydown)="onKeydown($event)" [(ngModel)]="inputValue"
         (ngModelChange)="onChange()">
       <ng-container *ngIf="!input.disabled">
         <span class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}">
