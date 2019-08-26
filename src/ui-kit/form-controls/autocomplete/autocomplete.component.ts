@@ -399,9 +399,6 @@ export class SamAutocompleteComponent
     else if (KeyHelper.is('enter', event) && this.allowAny) {
       this.setSelected(this.inputValue);
     }
-    // else {
-    //   this.textChange(event);
-    // }
   }
 
   private textChange() {
