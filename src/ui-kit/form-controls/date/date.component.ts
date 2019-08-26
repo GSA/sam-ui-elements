@@ -117,6 +117,9 @@ export class SamDateComponent
   private maxDay = 31;
 
   public isTabPressed: boolean = false;
+  public isMonthTouched: boolean = false;
+  public isYearTouched: boolean = false;
+  public isDateTouched: boolean = false;
   private keys: KeyHelper = new KeyHelper(...this.allowChars);
 
   get inputModel() {
@@ -287,6 +290,7 @@ export class SamDateComponent
 
   onMonthInput(event: any) {
     const key = KeyHelper.getKeyCode(event);
+    let dupModel;
     if (this._checkCopyPasteChar(key)) {
       return;
     }
@@ -313,10 +317,10 @@ export class SamDateComponent
         this.day.nativeElement.focus();
       }
       this.month.nativeElement.value = possibleNum;
-      const dupModel = this.inputModel;
-      this.onChangeHandler(dupModel);
+      dupModel = this.inputModel;
       event.preventDefault();
     }
+    this.onChangeHandler(dupModel);
   }
 
   getPossibleNum(item, event): number {
@@ -340,7 +344,6 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
-
     if (this.isTabPressed && event && !(KeyHelper.is('shift', event)) && !(KeyHelper.is('tab', event))) {
       this.day.nativeElement.value = '';
     }
@@ -357,6 +360,7 @@ export class SamDateComponent
       event.preventDefault();
       return;
     }
+    let dupModel;
     if (inputNum !== undefined) {
       if (event.target.value.length === 1 ||
         (event.target.value.length === 0
@@ -364,10 +368,10 @@ export class SamDateComponent
         this.year.nativeElement.focus();
       }
       this.day.nativeElement.value = possibleNum;
-      const dupModel = this.inputModel;
-      this.onChangeHandler(dupModel);
-      event.preventDefault();
+       dupModel = this.inputModel;
+       event.preventDefault();
     }
+    this.onChangeHandler(dupModel);
   }
 
   getMaxDate(): number {
@@ -415,6 +419,7 @@ export class SamDateComponent
   onYearInput(event) {
     const key = KeyHelper.getKeyCode(event);
     const maxValue = 9999;
+    let dupModel;
     if (this._checkCopyPasteChar(key)) {
       return;
     }
@@ -438,10 +443,10 @@ export class SamDateComponent
         this.blur.emit();
       }
       this.year.nativeElement.value = possibleNum;
-      const dupModel = this.inputModel;
-      this.onChangeHandler(dupModel);
+     dupModel = this.inputModel;
       event.preventDefault();
     }
+    this.onChangeHandler(dupModel);
   }
 
   removalKeyHandler() {
@@ -451,20 +456,28 @@ export class SamDateComponent
 
   onChangeHandler(override = undefined) {
     this.onTouched();
-    if (this.isClean(override)) {
-      this.onChange(null);
-      this.valueChange.emit(null);
-    } else if (!this.getDate(override).isValid()) {
-      this.onChange('Invalid Date');
-      this.valueChange.emit('Invalid Date');
-    } else {
-      // use the strict format for outputs
-      const dateString = this.getDate(override).format(this.OUTPUT_FORMAT);
-      this.onChange(dateString);
-      this.valueChange.emit(dateString);
+    if(this.isDateTouched && this.isMonthTouched && this.isYearTouched) {
+      if (this.isClean(override)) {
+        this.onChange(null);
+        this.valueChange.emit(null);
+      } else if (!this.getDate(override).isValid()) {
+        this.onChange('Invalid Date');
+        this.valueChange.emit('Invalid Date');
+      } else {
+        // use the strict format for outputs
+        const dateString = this.getDate(override).format(this.OUTPUT_FORMAT);
+        this.onChange(dateString);
+        this.valueChange.emit(dateString);
+      } 
     }
   }
 
+  touchHandler() {
+    if(this.isDateTouched && this.isMonthTouched && this.isYearTouched) {
+    const dupModel = this.inputModel;
+    this.onChangeHandler(dupModel);
+    }
+  }
   isClean(override = undefined) {
     let dupModel = this.inputModel;
     if (override) {
@@ -499,19 +512,25 @@ export class SamDateComponent
   }
 
   triggerTouch() {
+    this.isYearTouched = true;
+    this.touchHandler()
     this.onTouched();
   }
 
   triggerMonthTouch(event) {
+   this.isMonthTouched = true;
     if (event.target.value.substring(0, 1) === '0') {
       this.month.nativeElement.value = event.target.value.substring(1);
     }
+    this.touchHandler()
     this.onTouched();
   }
   triggerDayTouch(event) {
+    this.isDateTouched = true;
     if (event.target.value.substring(0, 1) === '0') {
       this.day.nativeElement.value = event.target.value.substring(1);
     }
+    this.touchHandler()
     this.onTouched();
   }
 

@@ -35,7 +35,7 @@ const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
 /**
  * Methods we're externally exposing
  */
-interface SamCache {
+export interface SamCache {
   clearCache();
 }
 

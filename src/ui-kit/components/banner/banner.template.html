@@ -1,54 +1,74 @@
-<div class="sticky-banner">
-  <div class="m_L-1x">
-
-    <img title="An official website of the United States Government" class="image-wrap"
-         src="assets/img/us_flag_small.png" alt="US Flag Logo"/>
-
-                  <span>An official website of the United States Government &nbsp;
-                    <a (click)="toggleDetails()">Here's how you
-                    know<span class="fa" [ngClass]="{'fa-angle-up': showDetail,'fa-angle-down': !showDetail} "></span></a></span>
-
-                  <span class="pull-right m_R-1x">This site is in beta and a work in progress &nbsp;
-                  </span>
-
+<div class="sam-banner">
+  <div
+    class="sam-banner__header"
+    [class.sam-banner__header--expanded]="showDetail"
+  >
+    <div class="sam-banner__header-inner">
+      <div class="grid-col-auto">
+        <img
+          title="An official website of the United States Government"
+          class="sam-banner__header-flag"
+          src="assets/img/us_flag_small.png"
+          alt="US flag"
+        />
+      </div>
+      <div class="grid-col-fill tablet:grid-col-auto">
+        <p class="sam-banner__header-text">
+          An official website of the United States government
+        </p>
+        <p class="sam-banner__header-action">Here's how you know</p>
+      </div>
+      <button
+        class="sam-banner__button"
+        (click)="toggleDetails()"
+        (blur)="closeDetail()"
+        [attr.aria-expanded]="showDetail"
+        aria-controls="gov-banner"
+      >
+        <span class="sam-banner__button-text">Here's how you know</span>
+      </button>
+      <div class="sam-banner__header-description">
+        <em>{{ description }}</em>
+      </div>
+    </div>
   </div>
-  <!--gov banner expand: explain the website is official-->
-  <div class="usa-grid-full" *ngIf="showDetail">
-    <div class="usa-width-one-whole">
-      <div class="usa-width-one-half">
-        <div class="usa-width-one-fourth m_T-4x">
-          <div class="span-circle-wrap pull-right blue-circle-wrap">
-            <span><span class="fa fa-bank"></span> </span>
-          </div>
+  <div class="sam-banner__description" *ngIf="description">
+    <em>{{ description }}</em>
+  </div>
+  <div class="sam-banner__content" id="gov-banner" *ngIf="showDetail">
+    <div class="grid-row grid-gap-lg">
+      <div class="sam-banner__guidance tablet:grid-col-6">
+        <div
+          class="sam-banner__icon sam-banner__icon--blue sam-media-block__img"
+        >
+          <span class="fa fa-bank" style="margin-left: 2px;"></span>
         </div>
-        <div class="usa-width-three-fourths m_T-4x">
-          <p><strong> The .gov means it's official.</strong><br>
-            Federal government websites always use a <strong>.gov</strong> or .mil domain. Before
-            sharing
-            sensitive information online, make sure you are on a .gov or .mil site by inspecting your
-            browsers' address(for "location") bar.</p>
+        <div class="sam-media-block__body">
+          <p>
+            <strong>The .gov means it’s official.</strong>
+            <br />
+            Federal government websites often end in .gov or .mil. Before
+            sharing sensitive information, make sure you’re on a federal
+            government site.
+          </p>
         </div>
       </div>
-
-      <div class="usa-width-one-half">
-        <div class="usa-width-one-fourth m_T-4x">
-          <div class="span-circle-wrap pull-right green-circle-wrap">
-            <span><span class="fa fa-lock"></span> </span>
-          </div>
+      <div class="sam-banner__guidance tablet:grid-col-6">
+        <div
+          class="sam-banner__icon sam-banner__icon--green sam-media-block__img"
+        >
+          <span class="fa fa-lock fa-lg"></span>
         </div>
-        <div class="usa-width-three-fourths m_T-4x">
-          <p>This site is also protected by an SSL(Secure Sockets Layer) certificate that's been signed by
-            the
-            U.S.
-            government. The <strong>https://</strong> means all transmitted data is encrypted - in other
-            words, any information
-            or browsing history that you provide is transmitted securely.</p>
+        <div class="sam-media-block__body">
+          <p>
+            <strong>The site is secure.</strong>
+            <br />
+            The <strong>https://</strong> ensures that you are connecting to the
+            official website and that any information you provide is encrypted
+            and transmitted securely.
+          </p>
         </div>
       </div>
     </div>
-    <div class="usa-width-one-whole centered">
-      <a (click)="toggleDetails()"><span><span class="fa fa-angle-double-up"></span> </span></a>
-    </div>
-
   </div>
 </div>

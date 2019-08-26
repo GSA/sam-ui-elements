@@ -27,6 +27,7 @@
         class="sam-text-area"
         placeholder="Type your message and hit Enter"
         id="comment-component-input"
+        [attr.maxlength]="maxLength ? maxLength : 250"
         aria-label="comment-input-box">
       </textarea>
 
