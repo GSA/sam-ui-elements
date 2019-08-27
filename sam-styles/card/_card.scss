@@ -48,10 +48,6 @@
 
   .usa-grid {
     padding: 0 !important;
-
-    @media only screen and (max-width: 600px) {
-      //text-align: center;
-    }
   }
 
   .basic-card--note {
@@ -74,7 +70,7 @@
 
 .basic-card--summary {
   display: inline-block;
-  font-weight: 350;
+  font-weight: 300;
   font-size: 18px;
   margin-bottom: 0;
   color: #2e2e2a;
@@ -108,13 +104,11 @@
     font-weight: 400;
     font-size: 16px;
     margin-top: 0.5rem;
-    //color: #112f4e;
   }
 
   .basic-card--content-title {
     margin-top: 0;
     font-size: 18px;
-    //color: #2e2e2a;
     font-weight: 700;
   }
 
