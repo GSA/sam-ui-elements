@@ -1,44 +1,54 @@
-<div class="sam-autocomplete" sam-click-outside (clickOutside)="checkForFocus($event)" sam-tab-outside (tabOutside)="checkForFocus($event)">
+<div class="sam-autocomplete" sam-click-outside (clickOutside)="checkForFocus($event)" sam-tab-outside
+  (tabOutside)="checkForFocus($event)">
   <!-- Text input -->
-  <sam-label-wrapper #wrapper [label]="labelText" [hint]="hint" [showFullHint]="showFullHint" [name]="id" [required]="required" [errorMessage]="errorMessage">
+  <sam-label-wrapper #wrapper [label]="labelText" [hint]="hint" [showFullHint]="showFullHint" [name]="id"
+    [required]="required" [errorMessage]="errorMessage">
     <div class="input-container">
-      <input [attr.id]="id"
-             [attr.tabindex]="tabIndex"
-             #input autocomplete="off"
-             [attr.placeholder]="config?.placeholder"
-             [attr.title]="config?.title"
-             [attr.name]="name"
-             type="text"
-             (focus)="inputFocusHandler($event)"       
-             (keyup)="onKeyup($event)"
-             [(ngModel)]="inputValue"
-             (ngModelChange)="onChange()">
+      <input [attr.id]="id" [attr.tabindex]="tabIndex" #input autocomplete="off"
+        [attr.placeholder]="config?.placeholder" [attr.title]="config?.title" [attr.name]="name" type="text"
+        (focus)="inputFocusHandler($event)" (keyup)="onKeyup($event)" [(ngModel)]="inputValue"
+        (ngModelChange)="onChange()">
       <ng-container *ngIf="!input.disabled">
-        <span  class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}">
-          <span role="button" [attr.tabindex]="tabIndex" class="fa fa-times-circle" aria-label="Clear input" aria-hidden="false" (click)="clearInput()" (keyup.enter)="clearInput()">
+        <span class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}">
+          <span role="button" [attr.tabindex]="tabIndex" class="fa fa-times-circle" aria-label="Clear input"
+            aria-hidden="false" (click)="clearInput()" (keyup.enter)="clearInput()">
           </span>
         </span>
       </ng-container>
-      <span *ngIf="config && config.addOnIconClass && config.addOnIconName" (click)="addOnIconClick()" class="add-on" role="button">
+      <span *ngIf="config && config.addOnIconClass && config.addOnIconName" (click)="addOnIconClick()" class="add-on"
+        role="button">
         <span class="{{config.addOnIconClass}}"></span>
-        <span class="sr-only">{{config.addOnIconName}}</span> 
+        <span class="sr-only">{{config.addOnIconName}}</span>
       </span>
     </div>
     <div class="sam-autocomplete-results">
-      <ul class="usa-unstyled-list sam-autocomplete-no-results" *ngIf="((results && results.length == 0) && (filteredKeyValuePairs && filteredKeyValuePairs.length == 0))  && hasFocus">
+      <ul class="usa-unstyled-list sam-autocomplete-no-results"
+        *ngIf="((results && results.length == 0) && (filteredKeyValuePairs && filteredKeyValuePairs.length == 0))  && hasFocus && !freeTextAvalible()">
         <li>No results found</li>
       </ul>
       <!-- Lists data if array of strings is passed to component -->
-      <ul id="sam-autocomplete-results" class="usa-unstyled-list" #resultsList *ngIf="results && results.length > 0 && hasFocus">
-        <li *ngFor="let result of results; let i = index" (mouseenter)="listItemHover(i)" (click)="setSelected(result)">{{result}}</li>
+      <ul id="sam-autocomplete-results" class="usa-unstyled-list" #resultsList
+        *ngIf=" ((results && results.length > 0) || (displayFreeTextSimpleResults())) && hasFocus">
+        <li *ngIf="freeTextAvalible()" (mouseenter)="listItemHover(i)" (click)="setSelected(inputValue)">
+          <span>{{inputValue}} - {{freeTextSubtext}}</span>
+        </li>
+        <li *ngFor="let result of results; let i = index" (mouseenter)="listItemHover(i)" (click)="setSelected(result)">
+          {{result}}</li>
       </ul>
       <!-- Lists data if array of objects with key/value pair is passed to component -->
-      <ul id="sam-autocomplete-results-kv" class="usa-unstyled-list" #resultsListKV *ngIf="filteredKeyValuePairs && filteredKeyValuePairs.length > 0 && hasFocus">
-        <li *ngFor="let obj of filteredKeyValuePairs; let i = index" (mouseenter)="listItemHover(i)" [class.multiple-values]="config?.keyValueConfig?.subheadProperty" [ngClass]="itemClass(obj)" (click)="dropdownClick(obj)">
+      <ul id="sam-autocomplete-results-kv" class="usa-unstyled-list" #resultsListKV
+        *ngIf="((filteredKeyValuePairs && filteredKeyValuePairs.length > 0) || (displayFreeTextKeyValueResults()) ) && hasFocus">
+        <li [class.multiple-values]="config?.keyValueConfig?.subheadProperty" (mouseenter)="listItemHover(i)"
+          *ngIf="freeTextAvalible()" [ngClass]="freeTextClass()" (click)="setSelected(inputValue)">{{inputValue}} -
+          {{freeTextSubtext}}
+        </li>
+        <li *ngFor="let obj of filteredKeyValuePairs; let i = index" (mouseenter)="listItemHover(i)"
+          [class.multiple-values]="config?.keyValueConfig?.subheadProperty" [ngClass]="itemClass(obj)"
+          (click)="dropdownClick(obj)">
           <ng-container *ngIf="!itemTemplate; else itemTemplateRef">
             <span *ngIf="obj">{{ obj[config?.keyValueConfig?.valueProperty] }}</span>
             <ng-container *ngIf="obj && obj[config?.keyValueConfig?.subheadProperty]">
-              <br/><span class="secondary-value">{{ obj[config?.keyValueConfig?.subheadProperty] }}</span>
+              <br /><span class="secondary-value">{{ obj[config?.keyValueConfig?.subheadProperty] }}</span>
             </ng-container>
           </ng-container>
           <ng-template #itemTemplateRef>
