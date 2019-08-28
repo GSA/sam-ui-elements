@@ -368,8 +368,8 @@ export class SamDateComponent
         this.year.nativeElement.focus();
       }
       this.day.nativeElement.value = possibleNum;
-       dupModel = this.inputModel;
-       event.preventDefault();
+      dupModel = this.inputModel;
+      event.preventDefault();
     }
     this.onChangeHandler(dupModel);
   }
@@ -443,7 +443,7 @@ export class SamDateComponent
         this.blur.emit();
       }
       this.year.nativeElement.value = possibleNum;
-     dupModel = this.inputModel;
+      dupModel = this.inputModel;
       event.preventDefault();
     }
     this.onChangeHandler(dupModel);
@@ -456,26 +456,29 @@ export class SamDateComponent
 
   onChangeHandler(override = undefined) {
     this.onTouched();
-    if(this.isDateTouched && this.isMonthTouched && this.isYearTouched) {
-      if (this.isClean(override)) {
-        this.onChange(null);
-        this.valueChange.emit(null);
-      } else if (!this.getDate(override).isValid()) {
-        this.onChange('Invalid Date');
-        this.valueChange.emit('Invalid Date');
-      } else {
-        // use the strict format for outputs
-        const dateString = this.getDate(override).format(this.OUTPUT_FORMAT);
-        this.onChange(dateString);
-        this.valueChange.emit(dateString);
-      } 
+    if (this.isDateTouched && this.isMonthTouched && this.isYearTouched) {
+       if (this.month.nativeElement.value && this.day.nativeElement.value &&
+        this.year.nativeElement.value && (this.year.nativeElement.value.length == 4)) {
+          if (this.isClean(override)) {
+          this.onChange(null);
+          this.valueChange.emit(null);
+        } else if (!this.getDate(override).isValid()) {
+          this.onChange('Invalid Date');
+          this.valueChange.emit('Invalid Date');
+        } else {
+          // use the strict format for outputs
+          const dateString = this.getDate(override).format(this.OUTPUT_FORMAT);
+          this.onChange(dateString);
+          this.valueChange.emit(dateString);
+        }
+      }
     }
   }
 
   touchHandler() {
-    if(this.isDateTouched && this.isMonthTouched && this.isYearTouched) {
-    const dupModel = this.inputModel;
-    this.onChangeHandler(dupModel);
+    if (this.isDateTouched && this.isMonthTouched && this.isYearTouched) {
+      const dupModel = this.inputModel;
+      this.onChangeHandler(dupModel);
     }
   }
   isClean(override = undefined) {
@@ -518,7 +521,7 @@ export class SamDateComponent
   }
 
   triggerMonthTouch(event) {
-   this.isMonthTouched = true;
+    this.isMonthTouched = true;
     if (event.target.value.substring(0, 1) === '0') {
       this.month.nativeElement.value = event.target.value.substring(1);
     }
