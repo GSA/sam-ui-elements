@@ -17,6 +17,8 @@
 
 .sam-alert-content {
   display: inline-block;
+  line-height: 18px;
+  padding: 10px 15px 10px 10px;
 }
 
 // Alert tag - Information
@@ -34,21 +36,69 @@
 
 
   p {
-    font-size: 20px;
+    font-size: 16px;
+    font-weight: 600;
     color: #616161;
-    margin: auto 0;
+    margin: auto 10px;
     padding: 0 0 0 4em !important;
   }
 }
 
+//sam alert data
+.sam-alert--data {
+  background-color: #e7f6f8;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+    margin: 15px 0;
+  }
+
+  @media only screen and (min-width: 600px) {
+    width: fit-content;
+  }
+}
+
+.sam-alert--data-icon {
+  height: 60px;
+  width: 20px;
+  font-weight: 200;
+  color: #e7f6f8;
+  background-color: #00bee5;
+  margin: auto 10px;
+  padding-top: 15px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+
 //sam alert next
 
-.sam-alert-checked, .sam-alert-unchecked{
+.sam-alert--checked{
 
-  font-size: 22px;
+  font-size: 18px;
+  font-weight: 400;
 
   svg {
     color: black;
     margin-right: 10px;
+  }
+}
+
+.sam-alert--unchecked {
+
+  font-size: 18px;
+  font-weight: 400;
+
+  ul {
+    list-style-type: none;
+    padding-left: 30px;
+    margin: 0;
+  }
+
+  sam-icon {
+    display: none;
   }
 }
