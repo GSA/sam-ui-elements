@@ -281,26 +281,26 @@ describe('The Sam Autocomplete Component', () => {
       component.results = ['aaa', 'bbb'];
       fixture.detectChanges();
       //index -1 to 0
-      component.onKeyup({
+      component.onKeydown({
         key: "Down", code: "Down", target: {
           value: ""
         }
       });
       //index 0 to 1
-      component.onKeyup({
+      component.onKeydown({
         key: "Down", code: "Down", target: {
           value: ""
         }
       });
       fixture.detectChanges();
       //index 1 to 0
-      component.onKeyup({
+      component.onKeydown({
         key: "Up", code: "Up", target: {
           value: ""
         }
       });
       fixture.detectChanges();
-      component.onKeyup({
+      component.onKeydown({
         key: "Enter", code: "Enter", target: {
           value: ""
         }
@@ -310,7 +310,7 @@ describe('The Sam Autocomplete Component', () => {
       component.hasFocus = true;
       component.results = ['aaa', 'bbb'];
       fixture.detectChanges();
-      component.onKeyup({
+      component.onKeydown({
         key: "Escape", code: "Escape", target: {
           value: ""
         }
@@ -318,7 +318,7 @@ describe('The Sam Autocomplete Component', () => {
       fixture.detectChanges();
       component.allowAny = true;
       component.inputValue = 'ccc';
-      component.onKeyup({
+      component.onKeydown({
         key: "Enter", code: "Enter", target: {
           value: ""
         }
