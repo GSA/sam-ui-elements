@@ -150,7 +150,7 @@ export class SamDateRangeComponent
       if (c.dirty && !valid) {
         return {
           dateRangeError: {
-            message: 'This field is required'
+            message: 'This field is required-test'
           }
         };
       }
