@@ -145,15 +145,18 @@ export class SamDateRangeComponent
 
     return (c: AbstractControl) => {
       // valid when fromRequired => startDate AND toRequired => endDate
-      const valid = (!fromRequired || (c.value && c.value.startDate))
-        && (!toRequired || (c.value && c.value.endDate));
-      if (c.dirty && !valid) {
-        return {
-          dateRangeError: {
-            message: 'This field is required-test'
-          }
-        };
-      }
+      const valid = (!fromRequired || (c.value && c.value.startDate));
+
+      const endDateValidaion = (!toRequired || (c.value && c.value.endDate))
+      console.log(endDateValidaion, 'end')
+      console.log(valid , 'startdate');
+      // if (c.dirty && valid) {
+      //   return {
+      //     dateRangeError: {
+      //       message: 'This field is required-test'
+      //     }
+      //   };
+      // }
 
       return undefined;
     };
