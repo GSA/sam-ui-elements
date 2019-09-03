@@ -254,6 +254,8 @@ export class SamDateRangeComponent
   focusEndHandler() {
     this.onTouched();
     this.hasFocus = true;
+    this.isEndDateBlur = false;
+    this.isStartDateBlur = false;
   }
   parseValueString() {
     const format = this.type !== 'date-time'
