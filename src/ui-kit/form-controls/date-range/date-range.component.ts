@@ -338,9 +338,7 @@ export class SamDateRangeComponent
   dateBlur() {
     this.hasFocus = false;
     this.isStartDateBlur = true;
-    if (this.type === 'date') {
-      this.endDateComp.month.nativeElement.focus();
-    }
+    this.dateChange();
   }
 
   endDateBlur() {
