@@ -129,7 +129,7 @@ export class SamAutocompleteComponent
    */
   @Input() public debounceTime: number = 250;
 
-  @Input() public isFreeTextEnabled: boolean =false;
+  @Input() public isFreeTextEnabled: boolean = false;
 
   @Input() public freeTextSubtext: string = 'search';
 
@@ -316,6 +316,7 @@ export class SamAutocompleteComponent
   }
 
   onChange() {
+    this.textChange();
     if (this.allowAny) {
       this.propogateChange(this.inputValue);
     }
@@ -360,7 +361,7 @@ export class SamAutocompleteComponent
     }
   }
 
-  onKeyup(event: any) {
+  onKeydown(event: any) {
     if (KeyHelper.is('tab', event)) {
       return
     }
@@ -398,13 +399,15 @@ export class SamAutocompleteComponent
     else if (KeyHelper.is('enter', event) && this.allowAny) {
       this.setSelected(this.inputValue);
     }
-    else {
-      const searchString = event.target.value || '';
-      if (this.options) {
-        this.onKeyUpWithOptions(searchString);
-      } else if (this.autocompleteService || this.httpRequest) {
-        this.onKeyUpUsingService(searchString);
-      }
+  }
+
+  private textChange() {
+    const searchString = this.inputValue || '';
+    if (this.options) {
+      this.onKeyUpWithOptions(searchString);
+    }
+    else if (this.autocompleteService || this.httpRequest) {
+      this.onKeyUpUsingService(searchString);
     }
   }
 
@@ -807,7 +810,7 @@ export class SamAutocompleteComponent
   inputFocusHandler(evt) {
     this.onTouchedCallback();
     this.hasFocus = true;
-    this.onKeyup(evt);
+    this.textChange();
     return evt;
   }
 
