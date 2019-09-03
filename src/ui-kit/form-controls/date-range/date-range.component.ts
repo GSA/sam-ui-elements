@@ -145,16 +145,19 @@ export class SamDateRangeComponent
     const toRequired = instance.toRequired || instance.required;
   
     return (c: AbstractControl) => {
-      // valid when fromRequired => startDate AND toRequired => endDate
-      const valid = (!fromRequired || (c.value && c.value.startDate))
-        && (!toRequired || (c.value && c.value.endDate));
-      if (c.dirty && instance.isStartDateBlur && instance.isEndDateBlur) {
-        return {
-          dateRangeError: {
-            message: 'This field is required'
-          }
-        };
-      }
+      if (fromRequired && toRequired) {
+        const valid = !(c.value && c.value.startDate === 'Invalid date' || c.value && c.value.endDate === 'Invalid date');
+        if (c.dirty  && instance.isEndDateBlur && instance.isStartDateBlur && !valid) {
+          if((instance.endDateComp.year.nativeElement.value.length > 3) || 
+          instance.startDateComp.year.nativeElement.value.length > 3 ){
+          return {
+            dateRangeError: {
+              message: 'This field is required'
+            }
+          };
+        } 
+      } 
+    }
 
       return undefined;
     };
@@ -217,9 +220,9 @@ export class SamDateRangeComponent
       validators.push(this.control.validator);
     }
     if (this.defaultValidations) {
-      // if (this.required) {
-      //   validators.push(SamDateRangeComponent.dateRangeRequired(this));
-      // }
+      if (this.required) {
+        validators.push(SamDateRangeComponent.dateRangeRequired(this));
+      }
       validators.push(SamDateRangeComponent.dateRangeValidation);
     }
     this.control.setValidators(validators);
@@ -319,7 +322,7 @@ export class SamDateRangeComponent
       output.startTime = startTimeString;
       output.endTime = endTimeString;
     }
-    this.onChange(output);
+     this.onChange(output);
     this.valueChange.emit(output);
   }
 

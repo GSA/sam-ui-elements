@@ -463,7 +463,7 @@ export class SamDateComponent
   onChangeHandler(override = undefined) {
     this.onTouched();
     if (this.isDateTouched && this.isMonthTouched && this.isYearTouched) {
-      if (this.month.nativeElement.value && this.day.nativeElement.value &&
+      if (this.month.nativeElement.value || this.day.nativeElement.value ||
         this.year.nativeElement.value) {
         if (this.isClean(override)) {
           this.onChange(null);
@@ -488,11 +488,18 @@ export class SamDateComponent
         }
       }
     }
-    this.onBlurEmit();
+    // this.onBlurEmit();
   }
 
-  onBlurEmit() {
-    if (this.isMonthBlur && this.isDayBlur && this.isYearBlur) {
+  // onBlurEmit() {
+  //   if (this.isMonthBlur && this.isDayBlur && this.isYearBlur) {
+  //     this.blurEvent.emit(true);
+  //     this.blur.emit(true);
+  //   }
+  // }
+
+  dateBlurred() {
+    if (this.isDateTouched && this.isMonthTouched && this.isYearTouched && this.isMonthBlur && this.isDayBlur && this.isYearBlur) {
       this.blurEvent.emit(true);
       this.blur.emit(true);
     }
