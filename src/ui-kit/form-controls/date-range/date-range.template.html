@@ -13,11 +13,11 @@
     name="Start Date"
     class="start-date"
     [required]="required || fromRequired"></sam-date>
-  <sam-date
+    <sam-date
     #endDate
     *ngIf="type=='date'"
     sam-focus
-    (focus)="focusHandler()"
+    (focus)="focusEndHandler()"
     (blurEvent)="endDateBlur()"
     #endControl="ngModel"
     [disabled]="disabled"

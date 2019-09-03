@@ -104,7 +104,7 @@ export class SamDateRangeComponent
   public OUTPUT_FORMAT: string = 'YYYY-MM-DD';
   public DT_INPUT_FORMAT: string = 'Y-M-DTH:m';
   public T_OUTPUT_FORMAT: string = 'HH:mm';
-
+  public hasFocus: boolean = false;
   public startModel: any = {
     month: undefined,
     day: undefined,
@@ -143,17 +143,19 @@ export class SamDateRangeComponent
     // return the proper validator based on the instance's required inputs
     const fromRequired = instance.fromRequired || instance.required;
     const toRequired = instance.toRequired || instance.required;
-  
+
     return (c: AbstractControl) => {
       if (fromRequired && toRequired) {
         const valid = !(c.value && c.value.startDate === 'Invalid date' || c.value && c.value.endDate === 'Invalid date');
-        if (c.dirty && instance.isStartDateBlur && instance.isEndDateBlur && !valid) {
-          return {
-            dateRangeError: {
-              message: 'This field is required'
-            }
-          };
-        }  
+        if (!instance.hasFocus) {
+          if (c.dirty && instance.isEndDateBlur && instance.isStartDateBlur && !valid) {
+            return {
+              dateRangeError: {
+                message: 'This field is required'
+              }
+            };
+          }
+        }
       }
       return undefined;
     };
@@ -246,8 +248,13 @@ export class SamDateRangeComponent
 
   focusHandler() {
     this.onTouched();
+    this.hasFocus = true;
   }
 
+  focusEndHandler() {
+    this.onTouched();
+    this.hasFocus = true;
+  }
   parseValueString() {
     const format = this.type !== 'date-time'
       ? this.INPUT_FORMAT
@@ -309,8 +316,8 @@ export class SamDateRangeComponent
       endDateString = this.getDate(this.endModel).format(this.OUTPUT_FORMAT);
     }
     const output: any = {
-        startDate: startDateString,
-        endDate: endDateString
+      startDate: startDateString,
+      endDate: endDateString
     };
     if (this.type === 'date-time') {
       const startTimeString = this.startModel.time;
@@ -329,6 +336,7 @@ export class SamDateRangeComponent
   }
 
   dateBlur() {
+    this.hasFocus = false;
     this.isStartDateBlur = true;
     if (this.type === 'date') {
       this.endDateComp.month.nativeElement.focus();
@@ -336,7 +344,9 @@ export class SamDateRangeComponent
   }
 
   endDateBlur() {
+    this.hasFocus = false;
     this.isEndDateBlur = true;
+    this.dateChange();
   }
 
   registerOnChange(fn) {

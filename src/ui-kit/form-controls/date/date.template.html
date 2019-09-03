@@ -40,7 +40,7 @@
       <label [attr.for]="yearName()">Year</label>
       <input
         (blur)="onYearBlur($event)"
-        (focus)="triggerTouch()"
+        (focus)="triggerTouch($event)"
         (paste)="onYearPaste($event)"
         [attr.id]="yearName()"
         #year

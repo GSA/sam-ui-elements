@@ -94,6 +94,7 @@ export class SamDateComponent
   */
   @Output() public blur = new EventEmitter<any>();
 
+  @Output() public focus = new EventEmitter<any>();
   @ViewChild('month') public month;
   @ViewChild('day') public day;
   @ViewChild('year') public year;
@@ -410,16 +411,17 @@ export class SamDateComponent
   }
 
   onYearBlur(event) {
+    // debugger;
     this.isYearBlur = true;
-    if (this.year.nativeElement.value === '0') {
-      this.year.nativeElement.value = '';
-    }
-    if (this.year.nativeElement.value
-      && !this._isLeapYear(this.year.nativeElement.value)
-      && this.month.nativeElement.value === '2'
-      && this.day.nativeElement.value === '29') {
-      this.day.nativeElement.value = '';
-    }
+    // if (this.year.nativeElement.value === '0') {
+    //   this.year.nativeElement.value = '';
+    // }
+    // if (this.year.nativeElement.value
+    //   && !this._isLeapYear(this.year.nativeElement.value)
+    //   && this.month.nativeElement.value === '2'
+    //   && this.day.nativeElement.value === '29') {
+    //   this.day.nativeElement.value = '';
+    // }
   }
 
   onYearInput(event) {
@@ -444,11 +446,11 @@ export class SamDateComponent
     }
     if (inputNum !== undefined) {
       const four = 4; // Why 4?
-      if (event.target.value.length + 1 === four) {
+      if (event.target.value.length  === four) {
         this.blurEvent.emit();
         this.blur.emit();
       }
-      this.year.nativeElement.value = possibleNum;
+       this.year.nativeElement.value = possibleNum;
       dupModel = this.inputModel;
       event.preventDefault();
     }
@@ -488,16 +490,15 @@ export class SamDateComponent
         }
       }
     }
-    // this.onBlurEmit();
+    this.focusHandler();
+   
   }
 
-  // onBlurEmit() {
-  //   if (this.isMonthBlur && this.isDayBlur && this.isYearBlur) {
-  //     this.blurEvent.emit(true);
-  //     this.blur.emit(true);
-  //   }
-  // }
-
+  focusHandler() {
+    if (this.isDateTouched || this.isMonthTouched || this.isYearTouched ) {
+      this.focus.emit(true);
+    }
+  }
   dateBlurred() {
     if (this.isDateTouched && this.isMonthTouched && this.isYearTouched && this.isMonthBlur && this.isDayBlur && this.isYearBlur) {
       this.blurEvent.emit(true);
@@ -544,7 +545,7 @@ export class SamDateComponent
     return `${this.name}_year`;
   }
 
-  triggerTouch() {
+  triggerTouch(ev) {
     this.isYearTouched = true;
     this.touchHandler()
     this.onTouched();
