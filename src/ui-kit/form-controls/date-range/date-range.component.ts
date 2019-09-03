@@ -115,7 +115,8 @@ export class SamDateRangeComponent
     day: undefined,
     year: undefined
   };
-
+  public isStartDateBlur: boolean = false;
+  public isEndDateBlur: boolean = false
   private startDateValue;
   private endDateValue;
 
@@ -142,21 +143,18 @@ export class SamDateRangeComponent
     // return the proper validator based on the instance's required inputs
     const fromRequired = instance.fromRequired || instance.required;
     const toRequired = instance.toRequired || instance.required;
-
+  
     return (c: AbstractControl) => {
       // valid when fromRequired => startDate AND toRequired => endDate
-      const valid = (!fromRequired || (c.value && c.value.startDate));
-
-      const endDateValidaion = (!toRequired || (c.value && c.value.endDate))
-      console.log(endDateValidaion, 'end')
-      console.log(valid , 'startdate');
-      // if (c.dirty && valid) {
-      //   return {
-      //     dateRangeError: {
-      //       message: 'This field is required-test'
-      //     }
-      //   };
-      // }
+      const valid = (!fromRequired || (c.value && c.value.startDate))
+        && (!toRequired || (c.value && c.value.endDate));
+      if (c.dirty && instance.isStartDateBlur && instance.isEndDateBlur) {
+        return {
+          dateRangeError: {
+            message: 'This field is required'
+          }
+        };
+      }
 
       return undefined;
     };
@@ -177,10 +175,9 @@ export class SamDateRangeComponent
 
   private static validateStart(c) {
     const error = this.newError();
-
-    if (c.value && c.value.startDate) {
+    if (c.value && !(c.value.startDate && c.value.startDate === 'Invalid date')) {
       const startDateM = moment(c.value.startDate);
-      if (!startDateM.isValid() || c.value.startDate === 'Invalid date') {
+      if (!startDateM.isValid()) {
         error.dateRangeError.message = 'Invalid From Date';
         return error;
       }
@@ -189,9 +186,9 @@ export class SamDateRangeComponent
   private static validateEnd(c) {
     const error = this.newError();
 
-    if (c.value && c.value.endDate) {
+    if (c.value && !(c.value.endDate && c.value.endDate === 'Invalid date')) {
       const endDateM = moment(c.value.endDate);
-      if (!endDateM.isValid() || c.value.endDate === 'Invalid date') {
+      if (!endDateM.isValid()) {
         error.dateRangeError.message = 'Invalid To Date';
         return error;
       }
@@ -220,9 +217,9 @@ export class SamDateRangeComponent
       validators.push(this.control.validator);
     }
     if (this.defaultValidations) {
-      if (this.required) {
-        validators.push(SamDateRangeComponent.dateRangeRequired(this));
-      }
+      // if (this.required) {
+      //   validators.push(SamDateRangeComponent.dateRangeRequired(this));
+      // }
       validators.push(SamDateRangeComponent.dateRangeValidation);
     }
     this.control.setValidators(validators);
@@ -333,9 +330,14 @@ export class SamDateRangeComponent
   }
 
   dateBlur() {
+    this.isStartDateBlur = true;
     if (this.type === 'date') {
       this.endDateComp.month.nativeElement.focus();
     }
+  }
+
+  endDateBlur() {
+    this.isEndDateBlur = true;
   }
 
   registerOnChange(fn) {

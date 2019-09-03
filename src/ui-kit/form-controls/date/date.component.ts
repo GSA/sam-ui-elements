@@ -121,6 +121,8 @@ export class SamDateComponent
   public isYearTouched: boolean = false;
   public isDateTouched: boolean = false;
   public isYearBlur: boolean = false;
+  public isDayBlur: boolean = false;
+  public isMonthBlur: boolean = false;
   private keys: KeyHelper = new KeyHelper(...this.allowChars);
 
   get inputModel() {
@@ -284,6 +286,7 @@ export class SamDateComponent
   }
 
   onMonthBlur(event) {
+    this.isMonthBlur = true;
     if (this.month.nativeElement.value === '0') {
       this.month.nativeElement.value = '';
     }
@@ -335,6 +338,7 @@ export class SamDateComponent
   }
 
   onDayBlur(event) {
+    this.isDayBlur = true;
     if (this.day.nativeElement.value === '0') {
       this.day.nativeElement.value = '';
     }
@@ -416,7 +420,6 @@ export class SamDateComponent
       && this.day.nativeElement.value === '29') {
       this.day.nativeElement.value = '';
     }
-    console.log('isfocusesI am getting ', this.isYearBlur)
   }
 
   onYearInput(event) {
@@ -460,17 +463,22 @@ export class SamDateComponent
   onChangeHandler(override = undefined) {
     this.onTouched();
     if (this.isDateTouched && this.isMonthTouched && this.isYearTouched) {
-        if (this.month.nativeElement.value && this.day.nativeElement.value &&
+      if (this.month.nativeElement.value && this.day.nativeElement.value &&
         this.year.nativeElement.value) {
-          debugger;
-          if (this.isClean(override)) {
+        if (this.isClean(override)) {
           this.onChange(null);
           this.valueChange.emit(null);
-        } else if(!this.isYearBlur && (this.year.nativeElement.length >=3)) {
+        } else if (this.isYearTouched) {
+          if (this.year.nativeElement.value.length != 4) {
+            this.onChange('Invalid Date');
+            this.valueChange.emit('Invalid Date');
+          } else {
+            const dateString = this.getDate(override).format(this.OUTPUT_FORMAT);
+          this.onChange(dateString);
+          this.valueChange.emit(dateString);
+          }
+        } else if ((!this.getDate(override).isValid())) {
           this.onChange('Invalid Date');
-          this.valueChange.emit('Invalid Date');
-        } else if ((!this.getDate(override).isValid()) ){
-         this.onChange('Invalid Date');
           this.valueChange.emit('Invalid Date');
         } else {
           // use the strict format for outputs
@@ -479,6 +487,14 @@ export class SamDateComponent
           this.valueChange.emit(dateString);
         }
       }
+    }
+    this.onBlurEmit();
+  }
+
+  onBlurEmit() {
+    if (this.isMonthBlur && this.isDayBlur && this.isYearBlur) {
+      this.blurEvent.emit(true);
+      this.blur.emit(true);
     }
   }
 
