@@ -147,18 +147,14 @@ export class SamDateRangeComponent
     return (c: AbstractControl) => {
       if (fromRequired && toRequired) {
         const valid = !(c.value && c.value.startDate === 'Invalid date' || c.value && c.value.endDate === 'Invalid date');
-        if (c.dirty  && instance.isEndDateBlur && instance.isStartDateBlur && !valid) {
-          if((instance.endDateComp.year.nativeElement.value.length > 3) || 
-          instance.startDateComp.year.nativeElement.value.length > 3 ){
+        if (c.dirty && instance.isStartDateBlur && instance.isEndDateBlur && !valid) {
           return {
             dateRangeError: {
               message: 'This field is required'
             }
           };
-        } 
-      } 
-    }
-
+        }  
+      }
       return undefined;
     };
   }
@@ -322,7 +318,7 @@ export class SamDateRangeComponent
       output.startTime = startTimeString;
       output.endTime = endTimeString;
     }
-     this.onChange(output);
+    this.onChange(output);
     this.valueChange.emit(output);
   }
 
