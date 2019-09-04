@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.9.19 (04/09/2019)
+
+#### closed
+
+- [**closed**] Fix banner AMP issue - id not found/invalid [#406](https://github.com/GSA/sam-ui-elements/pull/406)
+- [**closed**] update version [#404](https://github.com/GSA/sam-ui-elements/pull/404)
+
+---
+
+## 0.9.18 (28/08/2019)
+- Edited the Autocomplete Component
+- Edited the Entity Display Page
+---
+
 ## v0.9.17 (22/08/2019)
 
 #### closed
@@ -259,23 +273,3 @@ Version updated to 0.8.14
 #### enhancement
 
 - [**enhancement**] IAE 16693 Add  extension input for sam International phone number component [#308](https://github.com/GSA/sam-ui-elements/pull/308)
-
----
-
-## 0.8.10 (20/03/2019)
-
----
-
-## 0.8.9 (15/03/2019)
-
-#### bugfix
-
-- [**bugfix**] IAE-16242  Fix Browser Compatibility , 508 Issues Hierarchical Component [#300](https://github.com/GSA/sam-ui-elements/pull/300)
-
-#### closed
-
-- [**closed**] table overlap fix [#301](https://github.com/GSA/sam-ui-elements/pull/301)
-- [**closed**] Add automated release notes, update PR template [#292](https://github.com/GSA/sam-ui-elements/pull/292)
-- [**closed**] PR for Date component shift tab issue fix [#293](https://github.com/GSA/sam-ui-elements/pull/293)
-- [**closed**] modal height css fix [#299](https://github.com/GSA/sam-ui-elements/pull/299)
-- [**closed**] update the sam-ui-elements version to 0.8.8 [#298](https://github.com/GSA/sam-ui-elements/pull/298)
