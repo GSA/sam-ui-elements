@@ -411,17 +411,16 @@ export class SamDateComponent
   }
 
   onYearBlur(event) {
-    // debugger;
     this.isYearBlur = true;
-    // if (this.year.nativeElement.value === '0') {
-    //   this.year.nativeElement.value = '';
-    // }
-    // if (this.year.nativeElement.value
-    //   && !this._isLeapYear(this.year.nativeElement.value)
-    //   && this.month.nativeElement.value === '2'
-    //   && this.day.nativeElement.value === '29') {
-    //   this.day.nativeElement.value = '';
-    // }
+    if (this.year.nativeElement.value === '0') {
+      this.year.nativeElement.value = '';
+    }
+    if (this.year.nativeElement.value
+      && !this._isLeapYear(this.year.nativeElement.value)
+      && this.month.nativeElement.value === '2'
+      && this.day.nativeElement.value === '29') {
+      this.day.nativeElement.value = '';
+    }
   }
 
   onYearInput(event) {
@@ -446,11 +445,11 @@ export class SamDateComponent
     }
     if (inputNum !== undefined) {
       const four = 4; // Why 4?
-      if (event.target.value.length  === four) {
+      if (event.target.value.length === four) {
         this.blurEvent.emit();
         this.blur.emit();
       }
-       this.year.nativeElement.value = possibleNum;
+      this.year.nativeElement.value = possibleNum;
       dupModel = this.inputModel;
       event.preventDefault();
     }
@@ -476,8 +475,8 @@ export class SamDateComponent
             this.valueChange.emit('Invalid Date');
           } else {
             const dateString = this.getDate(override).format(this.OUTPUT_FORMAT);
-          this.onChange(dateString);
-          this.valueChange.emit(dateString);
+            this.onChange(dateString);
+            this.valueChange.emit(dateString);
           }
         } else if ((!this.getDate(override).isValid())) {
           this.onChange('Invalid Date');
@@ -491,11 +490,10 @@ export class SamDateComponent
       }
     }
     this.focusHandler();
-   
   }
 
   focusHandler() {
-    if (this.isDateTouched || this.isMonthTouched || this.isYearTouched ) {
+    if (this.isDateTouched || this.isMonthTouched || this.isYearTouched) {
       this.focus.emit(true);
     }
   }
