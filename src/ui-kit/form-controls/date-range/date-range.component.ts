@@ -146,9 +146,9 @@ export class SamDateRangeComponent
 
     return (c: AbstractControl) => {
       if (fromRequired && toRequired) {
-        const valid = !(c.value && c.value.startDate === 'Invalid date' || c.value && c.value.endDate === 'Invalid date');
+        const valid = !((c.value && c.value.startDate === 'Invalid date') || (c.value && c.value.endDate === 'Invalid date'));
         if (!instance.hasFocus) {
-          if (c.dirty && instance.isEndDateBlur && instance.isStartDateBlur && !valid) {
+          if ((instance.isEndDateBlur || instance.isStartDateBlur) && !valid) {
             return {
               dateRangeError: {
                 message: 'This field is required'
@@ -344,6 +344,7 @@ export class SamDateRangeComponent
   }
 
   endDateBlur() {
+    console.log('called');
     this.hasFocus = false;
     this.isEndDateBlur = true;
     this.dateChange();
