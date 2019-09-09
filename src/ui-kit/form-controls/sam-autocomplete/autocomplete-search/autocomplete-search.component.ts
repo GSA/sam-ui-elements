@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild, TemplateRef, ElementRef, forwardRef, ChangeDetectorRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { SDSAutocompleteServiceInterface } from './models/SDSAutocompleteServiceInterface';
-import { KeyHelper, KEYS } from '../key-helper/key-helper';
+import { KeyHelper, KEYS } from '../../../utilities/key-helper/key-helper';
 import { SDSSelectedItemModel } from '../selected-result/models/sds-selectedItem.model';
 import { SelectionMode, SDSSelectedItemModelHelper } from '../selected-result/models/sds-selected-item-model-helper';
 import { SDSAutocompleteSearchConfiguration } from './models/SDSAutocompleteConfiguration';
