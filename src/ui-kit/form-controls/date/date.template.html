@@ -6,6 +6,7 @@
         (blur)="onMonthBlur($event)"
         (focus)="triggerMonthTouch($event)"
         (paste)="onMonthPaste($event)"
+        (dblclick)="onMonthSelected()"
         [attr.id]="monthName()"
         #month
         (keydown)="onMonthInput($event)"
@@ -24,6 +25,7 @@
         (blur)="onDayBlur($event)"
         (focus)="triggerDayTouch($event)"
         (paste)="onDayPaste($event)"
+        (dblclick)="onDaySelected()"
         [attr.id]="dayName()"
         #day
         (keydown)="onDayInput($event)"
@@ -42,6 +44,7 @@
         (blur)="onYearBlur($event)"
         (focus)="triggerTouch($event)"
         (paste)="onYearPaste($event)"
+        (dblclick)="onYearSelected()"
         [attr.id]="yearName()"
         #year
         (keydown)="onYearInput($event)"

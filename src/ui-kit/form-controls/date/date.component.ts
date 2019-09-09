@@ -124,6 +124,9 @@ export class SamDateComponent
   public isYearBlur: boolean = false;
   public isDayBlur: boolean = false;
   public isMonthBlur: boolean = false;
+  public isYearSelected: boolean = false;
+  public isDaySelected: boolean = false;
+  public isMonthSelected: boolean = false;
   private keys: KeyHelper = new KeyHelper(...this.allowChars);
 
   get inputModel() {
@@ -299,10 +302,11 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
-    if (this.isTabPressed && event && !(KeyHelper.is('shift', event)) && !(KeyHelper.is('tab', event))) {
+    if (this.isTabPressed && event && !(KeyHelper.is('shift', event)) && !(KeyHelper.is('tab', event)) || this.isMonthSelected) {
       this.month.nativeElement.value = '';
     }
     this.isTabPressed = KeyHelper.is('tab', event);
+    this.isMonthSelected = false;
     const inputNum = KeyHelper.getNumberFromKey(event);
 
     const possibleNum = this.getPossibleNum(this.month.nativeElement, event);
@@ -350,10 +354,11 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
-    if (this.isTabPressed && event && !(KeyHelper.is('shift', event)) && !(KeyHelper.is('tab', event))) {
+    if (this.isTabPressed && event && !(KeyHelper.is('shift', event)) && !(KeyHelper.is('tab', event))|| this.isDaySelected) {
       this.day.nativeElement.value = '';
     }
     this.isTabPressed = KeyHelper.is('tab', event);
+    this.isDaySelected = false;
     const inputNum = KeyHelper.getNumberFromKey(event);
     const possibleNum =
       this.getPossibleNum(this.day.nativeElement, event);
@@ -430,10 +435,11 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
-    if (this.isTabPressed && event && !(KeyHelper.is('shift', event)) && !(KeyHelper.is('tab', event))) {
+    if (this.isTabPressed && event && !(KeyHelper.is('shift', event)) && !(KeyHelper.is('tab', event)) || this.isYearSelected) {
       this.year.nativeElement.value = '';
     }
     this.isTabPressed = KeyHelper.is('tab', event);
+    this.isYearSelected = false;
     const inputNum = KeyHelper.getNumberFromKey(event);
     const possibleNum =
       this.getPossibleNum(this.year.nativeElement, event);
@@ -444,9 +450,9 @@ export class SamDateComponent
       return;
     }
     if (inputNum !== undefined) {
-      const four = 4; // Why 4?
-      if (event.target.value.length === four) {
-        this.blurEvent.emit();
+      const three = 3;
+      if (event.target.value.length === three) {
+        this.blurEvent.emit('year entered');
         this.blur.emit();
       }
       this.year.nativeElement.value = possibleNum;
@@ -463,7 +469,7 @@ export class SamDateComponent
 
   onChangeHandler(override = undefined) {
     this.onTouched();
-    if (this.isDateTouched && this.isMonthTouched && this.isYearTouched) {
+    if (this.isDateTouched && this.isMonthTouched && this.isYearTouched && !this.isTabPressed) {
       if (this.month.nativeElement.value || this.day.nativeElement.value ||
         this.year.nativeElement.value) {
         if (this.isClean(override)) {
@@ -547,6 +553,18 @@ export class SamDateComponent
     this.isYearTouched = true;
     this.touchHandler()
     this.onTouched();
+  }
+
+  onMonthSelected() {
+    this.isMonthSelected = true;
+  }
+
+  onDaySelected() {
+    this.isDaySelected = true;
+  }
+
+  onYearSelected() {
+    this.isYearSelected = true;
   }
 
   triggerMonthTouch(event) {

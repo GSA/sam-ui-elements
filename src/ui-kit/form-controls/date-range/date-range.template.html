@@ -4,7 +4,7 @@
     *ngIf="type=='date'"
     sam-focus
     (focus)="focusHandler()"
-    (blurEvent)="dateBlur()"
+    (blurEvent)="dateBlur($event)"
     #startControl="ngModel"
     [disabled]="disabled"
     [ngModel]="startDateValue"

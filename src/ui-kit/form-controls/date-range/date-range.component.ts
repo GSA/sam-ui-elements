@@ -115,8 +115,6 @@ export class SamDateRangeComponent
     day: undefined,
     year: undefined
   };
-  public isStartDateBlur: boolean = false;
-  public isEndDateBlur: boolean = false
   private startDateValue;
   private endDateValue;
 
@@ -147,14 +145,12 @@ export class SamDateRangeComponent
     return (c: AbstractControl) => {
       if (fromRequired && toRequired) {
         const valid = !((c.value && c.value.startDate === 'Invalid date') || (c.value && c.value.endDate === 'Invalid date'));
-        if (!instance.hasFocus) {
-          if ((instance.isEndDateBlur || instance.isStartDateBlur) && !valid) {
-            return {
-              dateRangeError: {
-                message: 'This field is required'
-              }
-            };
-          }
+        if (!instance.hasFocus && !valid) {
+          return {
+            dateRangeError: {
+              message: 'This field is required'
+            }
+          };
         }
       }
       return undefined;
@@ -254,8 +250,6 @@ export class SamDateRangeComponent
   focusEndHandler() {
     this.onTouched();
     this.hasFocus = true;
-    this.isEndDateBlur = false;
-    this.isStartDateBlur = false;
   }
   parseValueString() {
     const format = this.type !== 'date-time'
@@ -337,16 +331,16 @@ export class SamDateRangeComponent
       (model.year === '' || model.year === undefined);
   }
 
-  dateBlur() {
+  dateBlur(evt) {
+    if (this.type === 'date' && evt === 'year entered') {
+      this.endDateComp.month.nativeElement.focus();
+    }
     this.hasFocus = false;
-    this.isStartDateBlur = true;
     this.dateChange();
   }
 
   endDateBlur() {
-    console.log('called');
     this.hasFocus = false;
-    this.isEndDateBlur = true;
     this.dateChange();
   }
 
