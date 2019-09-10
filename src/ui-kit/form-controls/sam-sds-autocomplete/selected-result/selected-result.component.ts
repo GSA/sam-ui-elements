@@ -1,21 +1,21 @@
 import { Component, Input, TemplateRef, forwardRef } from '@angular/core';
-import { SDSSelectedItemModel } from './models/sds-selectedItem.model';
+import { SAMSDSSelectedItemModel } from './models/sds-selectedItem.model';
 import { SDSSelectedResultConfiguration } from './models/SDSSelectedResultConfiguration';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { SDSSelectedItemModelHelper } from './models/sds-selected-item-model-helper';
 const SDS_SelectedResult_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => SDSSelectedResultComponent),
+  useExisting: forwardRef(() => SAMSDSSelectedResultComponent),
   multi: true
 };
 
 @Component({
-  selector: 'sds-selected-result',
+  selector: 'sam-sds-selected-result',
   templateUrl: './selected-result.component.html',
   styleUrls: ['./selected-result.component.scss'],
   providers: [SDS_SelectedResult_VALUE_ACCESSOR]
 })
-export class SDSSelectedResultComponent implements ControlValueAccessor {
+export class SAMSDSSelectedResultComponent implements ControlValueAccessor {
 
   /**
   * Allow to insert a customized template for suggestions to use
@@ -25,7 +25,7 @@ export class SDSSelectedResultComponent implements ControlValueAccessor {
   /**
    * The data model that has the selected item
    */
-  public model: SDSSelectedItemModel;
+  public model: SAMSDSSelectedItemModel;
 
 
   /**
@@ -60,8 +60,8 @@ export class SDSSelectedResultComponent implements ControlValueAccessor {
   }
 
   writeValue(obj: any): void {
-    if (obj instanceof SDSSelectedItemModel) {
-      this.model = obj as SDSSelectedItemModel;
+    if (obj instanceof SAMSDSSelectedItemModel) {
+      this.model = obj as SAMSDSSelectedItemModel;
     }
   }
 

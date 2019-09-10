@@ -1,31 +1,31 @@
 /* tslint:disable */
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { SDSAutocompleteSearchComponent } from './autocomplete-search.component';
-import { SDSAutocompleteSearchConfiguration } from './models/SDSAutocompleteConfiguration';
+import { SAMSDSAutocompleteSearchComponent } from './autocomplete-search.component';
+import { SAMSDSAutocompleteSearchConfiguration } from './models/SAMSDSAutocompleteConfiguration';
 import { FormsModule } from '@angular/forms';
-import { SDSSelectedItemModel } from '../selected-result/models/sds-selectedItem.model';
+import { SAMSDSSelectedItemModel } from '../selected-result/models/sds-selectedItem.model';
 import { SelectionMode } from '../selected-result/models/sds-selected-item-model-helper';
 import { By } from '@angular/platform-browser';
 import { AutoCompleteSampleDataService } from './autocomplete-seach-test-service.spec';
 
 describe('SamAutocompleteComponent', () => {
-  let component: SDSAutocompleteSearchComponent;
-  let fixture: ComponentFixture<SDSAutocompleteSearchComponent>;
+  let component: SAMSDSAutocompleteSearchComponent;
+  let fixture: ComponentFixture<SAMSDSAutocompleteSearchComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SDSAutocompleteSearchComponent],
+      declarations: [SAMSDSAutocompleteSearchComponent],
       imports: [FormsModule]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SDSAutocompleteSearchComponent);
+    fixture = TestBed.createComponent(SAMSDSAutocompleteSearchComponent);
     component = fixture.componentInstance;
     component.service = new AutoCompleteSampleDataService();
-    component.model = new SDSSelectedItemModel();
-    component.configuration = new SDSAutocompleteSearchConfiguration();
+    component.model = new SAMSDSSelectedItemModel();
+    component.configuration = new SAMSDSAutocompleteSearchConfiguration();
     component.configuration.id = 'autoId';
     component.configuration.primaryKeyField = 'id';
     component.configuration.selectionMode = SelectionMode.SINGLE;
@@ -298,7 +298,7 @@ describe('SamAutocompleteComponent', () => {
     component.model = null;
     component.writeValue({});
     expect(component.model).toBe(null);
-    let model = new SDSSelectedItemModel();
+    let model = new SAMSDSSelectedItemModel();
     component.writeValue(model);
     expect(component.model).toBe(model);
   });

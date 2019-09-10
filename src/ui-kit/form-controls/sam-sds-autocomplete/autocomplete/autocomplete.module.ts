@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SDSAutocompleteComponent } from './autocomplete.component';
+import { SAMSDSAutocompleteComponent } from './autocomplete.component';
 import { RouterModule } from '@angular/router';
-import { SdsSelectedResultsModule } from '../selected-result/selected-result.module';
+import { SAMSdsSelectedResultsModule } from '../selected-result/selected-result.module';
 import { SdsAutocompleteSearchModule } from '../autocomplete-search/autocomplete-search.module';
 @NgModule({
   imports: [
-    CommonModule, FormsModule, RouterModule, SdsSelectedResultsModule, SdsAutocompleteSearchModule
+    CommonModule, FormsModule, RouterModule, SAMSdsSelectedResultsModule, SdsAutocompleteSearchModule
   ],
-  declarations: [SDSAutocompleteComponent],
-  exports: [SDSAutocompleteComponent]
+  declarations: [SAMSDSAutocompleteComponent],
+  exports: [SAMSDSAutocompleteComponent]
 })
 export class SdsAutocompleteModule { }

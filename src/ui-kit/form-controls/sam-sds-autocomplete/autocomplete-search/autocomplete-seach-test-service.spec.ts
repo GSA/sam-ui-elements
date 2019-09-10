@@ -1,9 +1,9 @@
 /* tslint:disable */
 import { Observable, of } from 'rxjs';
-import { SDSAutocompleteServiceInterface, SDSHiercarchicalServiceResult } from './models/SDSAutocompleteServiceInterface';
+import { SAMSDSAutocompleteServiceInterface, SAMSDSHiercarchicalServiceResult } from './models/SAMSDSAutocompleteServiceInterface';
 import { map } from 'rxjs/operators';
 
-export class AutoCompleteSampleDataService implements SDSAutocompleteServiceInterface {
+export class AutoCompleteSampleDataService implements SAMSDSAutocompleteServiceInterface {
 
   private loadedData;
   constructor() {
@@ -16,7 +16,7 @@ export class AutoCompleteSampleDataService implements SDSAutocompleteServiceInte
     this.loadedData = data;
   }
 
-  getDataByText(currentItems: number, searchValue?: string): Observable<SDSHiercarchicalServiceResult> {
+  getDataByText(currentItems: number, searchValue?: string): Observable<SAMSDSHiercarchicalServiceResult> {
     let itemIncrease = 25;
     let data = of(this.loadedData);
     let itemsOb: Observable<Object[]>;

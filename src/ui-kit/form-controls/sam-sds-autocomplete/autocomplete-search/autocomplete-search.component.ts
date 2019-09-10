@@ -1,23 +1,23 @@
 import { Component, Input, ViewChild, TemplateRef, ElementRef, forwardRef, ChangeDetectorRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { SDSAutocompleteServiceInterface } from './models/SDSAutocompleteServiceInterface';
+import { SAMSDSAutocompleteServiceInterface } from './models/SAMSDSAutocompleteServiceInterface';
 import { KeyHelper, KEYS } from '../../../utilities/key-helper/key-helper';
-import { SDSSelectedItemModel } from '../selected-result/models/sds-selectedItem.model';
+import { SAMSDSSelectedItemModel } from '../selected-result/models/sds-selectedItem.model';
 import { SelectionMode, SDSSelectedItemModelHelper } from '../selected-result/models/sds-selected-item-model-helper';
-import { SDSAutocompleteSearchConfiguration } from './models/SDSAutocompleteConfiguration';
+import { SAMSDSAutocompleteSearchConfiguration } from './models/SAMSDSAutocompleteConfiguration';
 const Autocomplete_Autocomplete_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => SDSAutocompleteSearchComponent),
+  useExisting: forwardRef(() => SAMSDSAutocompleteSearchComponent),
   multi: true
 };
 
 @Component({
-  selector: 'sds-search-autocomplete',
+  selector: 'sam-sds-search-autocomplete',
   templateUrl: './autocomplete-search.component.html',
   styleUrls: ['./autocomplete-search.component.scss'],
   providers: [Autocomplete_Autocomplete_VALUE_ACCESSOR]
 })
-export class SDSAutocompleteSearchComponent implements ControlValueAccessor {
+export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
 
   constructor(private _changeDetectorRef: ChangeDetectorRef) { }
   /**
@@ -43,19 +43,19 @@ export class SDSAutocompleteSearchComponent implements ControlValueAccessor {
   /**
    * The data model that has the selected item
    */
-  public model: SDSSelectedItemModel;
+  public model: SAMSDSSelectedItemModel;
 
   /**
    * Configuration for the Autocomplete control 
    */
   @Input()
-  public configuration: SDSAutocompleteSearchConfiguration;
+  public configuration: SAMSDSAutocompleteSearchConfiguration;
 
   /**
    * Instance of the SamHiercarchicalServiceInterface provided
    */
   @Input()
-  public service: SDSAutocompleteServiceInterface;
+  public service: SAMSDSAutocompleteServiceInterface;
 
   /**
    * Timer id for the timer awaiting the service call for more typeing
@@ -438,8 +438,8 @@ export class SDSAutocompleteSearchComponent implements ControlValueAccessor {
 
 
   writeValue(obj: any): void {
-    if (obj instanceof SDSSelectedItemModel) {
-      this.model = obj as SDSSelectedItemModel;
+    if (obj instanceof SAMSDSSelectedItemModel) {
+      this.model = obj as SAMSDSSelectedItemModel;
     }
   }
 

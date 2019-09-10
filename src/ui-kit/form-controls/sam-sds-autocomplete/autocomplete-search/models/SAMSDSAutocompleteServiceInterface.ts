@@ -1,13 +1,13 @@
 import { Observable } from 'rxjs';
-export interface SDSAutocompleteServiceInterface {
+export interface SAMSDSAutocompleteServiceInterface {
     /**
      * 
      * @param searchValue 
      */
-    getDataByText(currentItems: number, searchValue?: string): Observable<SDSHiercarchicalServiceResult>;
+    getDataByText(currentItems: number, searchValue?: string): Observable<SAMSDSHiercarchicalServiceResult>;
 }
 
-export interface SDSHiercarchicalServiceResult {
+export interface SAMSDSHiercarchicalServiceResult {
     /**
      * 
      */

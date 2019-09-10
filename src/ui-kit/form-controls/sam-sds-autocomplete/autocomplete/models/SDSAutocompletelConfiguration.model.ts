@@ -1,10 +1,11 @@
+import { SDSSelectedResultConfiguration } from '../../selected-result/models/SDSSelectedResultConfiguration';
+import { SAMSDSAutocompleteSearchConfiguration } from '../../autocomplete-search/models/SAMSDSAutocompleteConfiguration';
 import { SelectionMode } from '../../selected-result/models/sds-selected-item-model-helper';
 
-export class SDSAutocompleteSearchConfiguration {
-
+export class SAMSDSAutocompletelConfiguration implements SDSSelectedResultConfiguration, SAMSDSAutocompleteSearchConfiguration {
   /**
-   * sets the default debounce time to 250 milliseconds 
-   */
+     * sets the default debounce time to 250 milliseconds 
+     */
   constructor() {
     this.debounceTime = 250;
     this.minimumCharacterCountSearch = 0;
@@ -26,8 +27,7 @@ export class SDSAutocompleteSearchConfiguration {
   public primaryKeyField: string;
 
   /**
-   *  Property from supplied model used for the top part of the basic template 
-   *  and the text for single selection
+   *  Property from supplied model used for the top part of the basic template
    */
   public primaryTextField: string;
 
@@ -55,6 +55,7 @@ export class SDSAutocompleteSearchConfiguration {
    * Mode of the model either allows a single item or multiple items
    */
   public selectionMode: SelectionMode = SelectionMode.SINGLE;
+
 
   /**
    * Allows option to allow user text not in the standard results

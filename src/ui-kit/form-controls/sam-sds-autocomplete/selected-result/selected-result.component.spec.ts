@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SDSSelectedResultComponent } from './selected-result.component';
-import { SDSSelectedItemModel } from './models/sds-selectedItem.model';
+import { SAMSDSSelectedResultComponent } from './selected-result.component';
+import { SAMSDSSelectedItemModel } from './models/sds-selectedItem.model';
 import { SDSSelectedItemModelHelper, SelectionMode } from './models/sds-selected-item-model-helper';
 import { By } from '@angular/platform-browser';
 import { SDSSelectedResultConfiguration } from './models/SDSSelectedResultConfiguration';
@@ -11,12 +11,12 @@ import { RouterModule } from '@angular/router';
 
 
 describe('SDSSelectedResultComponent', () => {
-  let component: SDSSelectedResultComponent;
-  let fixture: ComponentFixture<SDSSelectedResultComponent>;
+  let component: SAMSDSSelectedResultComponent;
+  let fixture: ComponentFixture<SAMSDSSelectedResultComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SDSSelectedResultComponent],
+      declarations: [SAMSDSSelectedResultComponent],
       imports: [
         CommonModule, FormsModule, RouterModule
       ],
@@ -25,9 +25,9 @@ describe('SDSSelectedResultComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SDSSelectedResultComponent);
+    fixture = TestBed.createComponent(SAMSDSSelectedResultComponent);
     component = fixture.componentInstance;
-    component.model = new SDSSelectedItemModel();
+    component.model = new SAMSDSSelectedItemModel();
     component.configuration = new SDSSelectedResultConfiguration();
     component.configuration.primaryKeyField = 'id';
     component.configuration.selectionMode = SelectionMode.SINGLE;
@@ -89,7 +89,7 @@ describe('SDSSelectedResultComponent', () => {
     component.model = null;
     component.writeValue({});
     expect(component.model).toBe(null);
-    let model = new SDSSelectedItemModel();
+    let model = new SAMSDSSelectedItemModel();
     component.writeValue(model);
     expect(component.model).toBe(model);
   });

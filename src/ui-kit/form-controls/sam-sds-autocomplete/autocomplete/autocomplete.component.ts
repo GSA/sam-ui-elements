@@ -1,22 +1,22 @@
 import { Component, Input, ViewChild, TemplateRef, ElementRef, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
-import { SDSSelectedItemModel } from '../selected-result/models/sds-selectedItem.model';
-import { SDSAutocompleteServiceInterface } from '../autocomplete-search/models/SDSAutocompleteServiceInterface';
-import { SDSAutocompletelConfiguration } from './models/SDSAutocompletelConfiguration.model';
+import { SAMSDSSelectedItemModel } from '../selected-result/models/sds-selectedItem.model';
+import { SAMSDSAutocompleteServiceInterface } from '../autocomplete-search/models/SAMSDSAutocompleteServiceInterface';
+import { SAMSDSAutocompletelConfiguration } from './models/SDSAutocompletelConfiguration.model';
 import { SelectionMode } from '../selected-result/models/sds-selected-item-model-helper';
 const Autocomplete_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => SDSAutocompleteComponent),
+  useExisting: forwardRef(() => SAMSDSAutocompleteComponent),
   multi: true
 };
 
 @Component({
-  selector: 'sds-autocomplete',
+  selector: 'sam-sds-autocomplete',
   templateUrl: './autocomplete.component.html',
   styleUrls: ['./autocomplete.component.scss'],
   providers: [Autocomplete_VALUE_ACCESSOR]
 })
-export class SDSAutocompleteComponent implements ControlValueAccessor {
+export class SAMSDSAutocompleteComponent implements ControlValueAccessor {
 
 
   /**
@@ -32,7 +32,7 @@ export class SDSAutocompleteComponent implements ControlValueAccessor {
   /**
   * The data model that has the selected item
   */
-  public model: SDSSelectedItemModel;
+  public model: SAMSDSSelectedItemModel;
 
 
   /**
@@ -52,17 +52,17 @@ export class SDSAutocompleteComponent implements ControlValueAccessor {
  * Configuration for the control 
  */
   @Input()
-  public configuration: SDSAutocompletelConfiguration;
+  public configuration: SAMSDSAutocompletelConfiguration;
 
   /**
 * Instance of the SamHiercarchicalServiceInterface provided
 */
   @Input()
-  public service: SDSAutocompleteServiceInterface;
+  public service: SAMSDSAutocompleteServiceInterface;
 
   writeValue(obj: any): void {
-    if (obj instanceof SDSSelectedItemModel) {
-      this.model = obj as SDSSelectedItemModel;
+    if (obj instanceof SAMSDSSelectedItemModel) {
+      this.model = obj as SAMSDSSelectedItemModel;
     }
   }
 

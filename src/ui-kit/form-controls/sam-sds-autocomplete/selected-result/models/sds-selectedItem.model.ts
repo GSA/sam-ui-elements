@@ -1,4 +1,4 @@
-export class SDSSelectedItemModel {
+export class SAMSDSSelectedItemModel {
 
     /**
      * List of items selected

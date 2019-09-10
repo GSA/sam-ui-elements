@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SDSAutocompleteSearchComponent } from './autocomplete-search.component';
+import { SAMSDSAutocompleteSearchComponent } from './autocomplete-search.component';
 import { SamDirectivesModule } from '../../../directives';
 
 
@@ -11,7 +11,7 @@ import { SamDirectivesModule } from '../../../directives';
     FormsModule,
     SamDirectivesModule
   ],
-  declarations: [SDSAutocompleteSearchComponent],
-  exports: [SDSAutocompleteSearchComponent]
+  declarations: [SAMSDSAutocompleteSearchComponent],
+  exports: [SAMSDSAutocompleteSearchComponent]
 })
-export class SdsAutocompleteSearchModule {}
+export class SAMSDSAutocompleteSearchModule {}
