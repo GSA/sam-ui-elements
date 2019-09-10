@@ -3,7 +3,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { SAMSDSAutocompleteServiceInterface } from './models/SAMSDSAutocompleteServiceInterface';
 import { KeyHelper, KEYS } from '../../../utilities/key-helper/key-helper';
 import { SAMSDSSelectedItemModel } from '../selected-result/models/sds-selectedItem.model';
-import { SelectionMode, SDSSelectedItemModelHelper } from '../selected-result/models/sds-selected-item-model-helper';
+import { SelectionMode, SAMSDSSelectedItemModelHelper } from '../selected-result/models/sds-selected-item-model-helper';
 import { SAMSDSAutocompleteSearchConfiguration } from './models/SAMSDSAutocompleteConfiguration';
 const Autocomplete_Autocomplete_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -172,7 +172,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
     if (this.configuration.selectionMode === SelectionMode.SINGLE) {
       if (this.model.items.length > 0) {
         if (this.inputValue.length === 0) {
-          SDSSelectedItemModelHelper.clearItems(this.model.items);
+          SAMSDSSelectedItemModelHelper.clearItems(this.model.items);
           this.propogateChange(this.model);
         } else {
           this.inputValue = this.getObjectValue(this.model.items[0], this.configuration.primaryTextField);
@@ -228,7 +228,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    * @param item 
    */
   public selectItem(item: object): void {
-    SDSSelectedItemModelHelper.addItem(item, this.configuration.primaryKeyField, this.configuration.selectionMode, this.model.items);
+    SAMSDSSelectedItemModelHelper.addItem(item, this.configuration.primaryKeyField, this.configuration.selectionMode, this.model.items);
     this.propogateChange(this.model);
     let message = this.getObjectValue(item, this.configuration.primaryTextField);
     this.inputValue = message;

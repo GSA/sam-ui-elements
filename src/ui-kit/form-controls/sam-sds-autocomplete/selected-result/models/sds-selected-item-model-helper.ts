@@ -1,4 +1,4 @@
-export class SDSSelectedItemModelHelper {
+export class SAMSDSSelectedItemModelHelper {
 
     /**
       *  adds an item to the collection
@@ -11,9 +11,9 @@ export class SDSSelectedItemModelHelper {
       * @param items 
       */
     public static addItem(itemToAdd: object, keyField: string, selectionMode: SelectionMode, items: object[]) {
-        if (!SDSSelectedItemModelHelper.contatinsItem(itemToAdd[keyField], keyField, items)) {
+        if (!SAMSDSSelectedItemModelHelper.contatinsItem(itemToAdd[keyField], keyField, items)) {
             if (selectionMode === SelectionMode.SINGLE) {
-                SDSSelectedItemModelHelper.clearItems(items);
+                SAMSDSSelectedItemModelHelper.clearItems(items);
             }
             items.push(itemToAdd);
         }
@@ -29,7 +29,7 @@ export class SDSSelectedItemModelHelper {
      */
     public static addItems(toAddItems: object[], keyField: string, selectionMode: SelectionMode, items: object[]) {
         for (let i = 0; i < toAddItems.length; i++) {
-            SDSSelectedItemModelHelper.addItem(toAddItems[i], keyField, selectionMode, items);
+            SAMSDSSelectedItemModelHelper.addItem(toAddItems[i], keyField, selectionMode, items);
         }
     }
 
@@ -41,7 +41,7 @@ export class SDSSelectedItemModelHelper {
      * @param items 
      */
     public static removeItem(item: object, keyField: string, items: object[]) {
-        if (SDSSelectedItemModelHelper.contatinsItem(item[keyField], keyField, items)) {
+        if (SAMSDSSelectedItemModelHelper.contatinsItem(item[keyField], keyField, items)) {
             items.splice(items.indexOf(item), 1)
         }
     }
@@ -78,9 +78,9 @@ export class SDSSelectedItemModelHelper {
      */
     public static replaceItems(selectedItems: object[], keyField: string, selectionMode: SelectionMode, items: object[]) {
         //Clears Old List
-        SDSSelectedItemModelHelper.clearItems(items);
+        SAMSDSSelectedItemModelHelper.clearItems(items);
         //Adds new List
-        SDSSelectedItemModelHelper.addItems(selectedItems, keyField, selectionMode, items);
+        SAMSDSSelectedItemModelHelper.addItems(selectedItems, keyField, selectionMode, items);
     }
 }
 

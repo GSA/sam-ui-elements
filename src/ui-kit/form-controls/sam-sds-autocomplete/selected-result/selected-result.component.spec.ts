@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SAMSDSSelectedResultComponent } from './selected-result.component';
 import { SAMSDSSelectedItemModel } from './models/sds-selectedItem.model';
-import { SDSSelectedItemModelHelper, SelectionMode } from './models/sds-selected-item-model-helper';
+import { SAMSDSSelectedItemModelHelper, SelectionMode } from './models/sds-selected-item-model-helper';
 import { By } from '@angular/platform-browser';
 import { SDSSelectedResultConfiguration } from './models/SDSSelectedResultConfiguration';
 import { CommonModule } from '@angular/common';
@@ -47,7 +47,7 @@ describe('SDSSelectedResultComponent', () => {
   });
 
   it('should have an item', () => {
-    SDSSelectedItemModelHelper.addItem({ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }, 'id', SelectionMode.SINGLE, component.model.items);
+    SAMSDSSelectedItemModelHelper.addItem({ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }, 'id', SelectionMode.SINGLE, component.model.items);
     fixture.detectChanges();
     const list = fixture.debugElement.query(By.css('.resultsList'));
     expect(list.nativeElement.children.length).toBe(1);
@@ -55,8 +55,8 @@ describe('SDSSelectedResultComponent', () => {
 
 
   it('should have a single item based on mode', () => {
-    SDSSelectedItemModelHelper.addItem({ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }, 'id', SelectionMode.SINGLE, component.model.items);
-    SDSSelectedItemModelHelper.addItem({ 'id': '2', 'parentId': null, 'name': 'Level 2', 'subtext': 'id 2', 'type': 'Level 2' }, 'id', SelectionMode.SINGLE, component.model.items);
+    SAMSDSSelectedItemModelHelper.addItem({ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }, 'id', SelectionMode.SINGLE, component.model.items);
+    SAMSDSSelectedItemModelHelper.addItem({ 'id': '2', 'parentId': null, 'name': 'Level 2', 'subtext': 'id 2', 'type': 'Level 2' }, 'id', SelectionMode.SINGLE, component.model.items);
     fixture.detectChanges();
     const list = fixture.debugElement.query(By.css('.resultsList'));
     expect(list.nativeElement.children.length).toBe(1);
@@ -65,8 +65,8 @@ describe('SDSSelectedResultComponent', () => {
 
   it('should have an 2 items', () => {
     component.configuration.selectionMode = SelectionMode.MULTIPLE;
-    SDSSelectedItemModelHelper.addItem({ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }, 'id', SelectionMode.MULTIPLE, component.model.items);
-    SDSSelectedItemModelHelper.addItem({ 'id': '2', 'parentId': null, 'name': 'Level 2', 'subtext': 'id 2', 'type': 'Level 2' }, 'id', SelectionMode.MULTIPLE, component.model.items);
+    SAMSDSSelectedItemModelHelper.addItem({ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }, 'id', SelectionMode.MULTIPLE, component.model.items);
+    SAMSDSSelectedItemModelHelper.addItem({ 'id': '2', 'parentId': null, 'name': 'Level 2', 'subtext': 'id 2', 'type': 'Level 2' }, 'id', SelectionMode.MULTIPLE, component.model.items);
     fixture.detectChanges();
     const list = fixture.debugElement.query(By.css('.resultsList'));
     expect(list.nativeElement.children.length).toBe(2);
@@ -76,8 +76,8 @@ describe('SDSSelectedResultComponent', () => {
   it('Tests remove item', () => {
     component.configuration.selectionMode = SelectionMode.MULTIPLE;
     let item2 = { 'id': '2', 'parentId': null, 'name': 'Level 2', 'subtext': 'id 2', 'type': 'Level 2' };
-    SDSSelectedItemModelHelper.addItem({ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }, 'id', SelectionMode.MULTIPLE, component.model.items);
-    SDSSelectedItemModelHelper.addItem(item2, 'id', SelectionMode.MULTIPLE, component.model.items);
+    SAMSDSSelectedItemModelHelper.addItem({ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }, 'id', SelectionMode.MULTIPLE, component.model.items);
+    SAMSDSSelectedItemModelHelper.addItem(item2, 'id', SelectionMode.MULTIPLE, component.model.items);
     fixture.detectChanges();
     component.removeItem(item2);
     fixture.detectChanges();

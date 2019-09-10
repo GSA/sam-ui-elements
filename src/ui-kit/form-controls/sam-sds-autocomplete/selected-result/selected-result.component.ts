@@ -2,7 +2,7 @@ import { Component, Input, TemplateRef, forwardRef } from '@angular/core';
 import { SAMSDSSelectedItemModel } from './models/sds-selectedItem.model';
 import { SDSSelectedResultConfiguration } from './models/SDSSelectedResultConfiguration';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { SDSSelectedItemModelHelper } from './models/sds-selected-item-model-helper';
+import { SAMSDSSelectedItemModelHelper } from './models/sds-selected-item-model-helper';
 const SDS_SelectedResult_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SAMSDSSelectedResultComponent),
@@ -53,7 +53,7 @@ export class SAMSDSSelectedResultComponent implements ControlValueAccessor {
    */
   removeItem(item: object) {
     if (!this.disabled) {
-      SDSSelectedItemModelHelper.removeItem(item, this.configuration.primaryKeyField, this.model.items);
+      SAMSDSSelectedItemModelHelper.removeItem(item, this.configuration.primaryKeyField, this.model.items);
       this.propogateChange(this.model);
       this.onTouchedCallback();
     }
