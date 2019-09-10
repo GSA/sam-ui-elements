@@ -1,29 +1,29 @@
 /* tslint:disable */
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { SDSAutocompleteComponent } from './autocomplete.component';
+import { SAMSDSAutocompleteComponent } from './autocomplete.component';
 import { AutoCompleteSampleDataService } from '../autocomplete-search/autocomplete-seach-test-service.spec';
 import { SAMSDSAutocompletelConfiguration } from './models/SDSAutocompletelConfiguration.model';
 import { SAMSDSSelectedItemModel } from '../selected-result/models/sds-selectedItem.model';
 import { FormsModule } from '@angular/forms';
 import { SelectionMode } from '../selected-result/models/sds-selected-item-model-helper';
 import { SAMSdsSelectedResultsModule } from '../selected-result/selected-result.module';
-import { SdsAutocompleteSearchModule } from '../autocomplete-search/autocomplete-search.module';
+import { SAMSDSAutocompleteSearchModule } from '../autocomplete-search/autocomplete-search.module';
 
 
-describe('SDSAutocompleteComponent', () => {
-  let component: SDSAutocompleteComponent;
-  let fixture: ComponentFixture<SDSAutocompleteComponent>;
+describe('SAMSDSAutocompleteComponent', () => {
+  let component: SAMSDSAutocompleteComponent;
+  let fixture: ComponentFixture<SAMSDSAutocompleteComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SDSAutocompleteComponent],
-      imports: [FormsModule, SAMSdsSelectedResultsModule, SdsAutocompleteSearchModule]
+      declarations: [SAMSDSAutocompleteComponent],
+      imports: [FormsModule, SAMSdsSelectedResultsModule, SAMSDSAutocompleteSearchModule]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SDSAutocompleteComponent);
+    fixture = TestBed.createComponent(SAMSDSAutocompleteComponent);
     component = fixture.componentInstance;
     component.service = new AutoCompleteSampleDataService();
     component.model = new SAMSDSSelectedItemModel();
