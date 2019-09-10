@@ -12,4 +12,4 @@ import { SAMSDSAutocompleteSearchModule } from '../autocomplete-search/autocompl
   declarations: [SAMSDSAutocompleteComponent],
   exports: [SAMSDSAutocompleteComponent]
 })
-export class SdsAutocompleteModule { }
+export class SAMSDSAutocompleteModule { }
