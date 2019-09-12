@@ -302,6 +302,16 @@ describe('SamAutocompleteComponent', () => {
     component.writeValue(model);
     expect(component.model).toBe(model);
     expect(component.inputValue).toBe("");
+    model = new SAMSDSSelectedItemModel();
+    model.items = [{
+      id: 'aaa',
+      value: 'bbb'
+    }];
+    component.configuration.selectionMode = SelectionMode.SINGLE;
+    component.configuration.primaryTextField = "value"
+    component.writeValue(model);
+    expect(component.model).toBe(model);
+    expect(component.inputValue).toBe("bbb");
   });
 
   it('should handle disable', () => {
