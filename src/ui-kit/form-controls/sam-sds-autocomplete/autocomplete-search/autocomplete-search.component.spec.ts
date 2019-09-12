@@ -301,6 +301,7 @@ describe('SamAutocompleteComponent', () => {
     let model = new SAMSDSSelectedItemModel();
     component.writeValue(model);
     expect(component.model).toBe(model);
+    expect(component.inputValue).toBe("");
   });
 
   it('should handle disable', () => {

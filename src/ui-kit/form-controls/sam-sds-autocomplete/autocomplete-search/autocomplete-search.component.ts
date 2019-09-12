@@ -440,6 +440,9 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
   writeValue(obj: any): void {
     if (obj instanceof SAMSDSSelectedItemModel) {
       this.model = obj as SAMSDSSelectedItemModel;
+      if(this.model.items.length == 0){
+        this.inputValue = "";
+      }
     }
   }
 
