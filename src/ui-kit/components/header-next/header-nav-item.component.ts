@@ -1,4 +1,4 @@
-import { Component, Input, Host, OnInit } from '@angular/core';
+import { Component, Input, Host } from '@angular/core';
 import { SamHeaderNavComponent } from './header-nav.component';
 
 @Component({
@@ -21,7 +21,7 @@ import { SamHeaderNavComponent } from './header-nav.component';
     </li>
   `
 })
-export class SamHeaderNavItemComponent implements OnInit {
+export class SamHeaderNavItemComponent {
   @Input() active: boolean;
   @Input() route: String[];
   constructor(@Host() public headerNav: SamHeaderNavComponent) {}
