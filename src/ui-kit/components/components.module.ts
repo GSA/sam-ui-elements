@@ -15,6 +15,7 @@ import { SamBannerModule } from './banner';
 import { SamBreadcrumbsModule } from './breadcrumbs';
 import { SamDownloadModule } from './download';
 import { SamHeaderModule } from './header';
+import { SamHeaderNextModule } from './header-next';
 import { SamHistoryModule } from './history';
 import { SamModalModule } from './modal';
 import { SamMultiSelectDropdownModule } from './multiselect-dropdown';
@@ -50,6 +51,7 @@ import { SamPageTitleModule } from './page-title';
     SamDataTableModule,
     SamBannerModule,
     SamHeaderModule,
+    SamHeaderNextModule,
     SamModalModule,
     SamBreadcrumbsModule,
     SamProgressModule,
@@ -80,6 +82,7 @@ import { SamPageTitleModule } from './page-title';
     SamBreadcrumbsModule,
     SamDownloadModule,
     SamHeaderModule,
+    SamHeaderNextModule,
     SamHistoryModule,
     SamModalModule,
     SamMultiSelectDropdownModule,
