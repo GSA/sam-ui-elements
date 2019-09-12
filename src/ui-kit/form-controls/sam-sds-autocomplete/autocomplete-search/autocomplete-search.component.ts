@@ -446,6 +446,13 @@ this.showLoad = false;
   writeValue(obj: any): void {
     if (obj instanceof SAMSDSSelectedItemModel) {
       this.model = obj as SAMSDSSelectedItemModel;
+      if (this.model.items.length === 0) {
+        this.inputValue = '';
+      } else {
+        if (this.configuration.selectionMode === SelectionMode.SINGLE) {
+          this.inputValue = this.getObjectValue(this.model.items[0], this.configuration.primaryTextField);
+        }
+      }
     }
   }
 
