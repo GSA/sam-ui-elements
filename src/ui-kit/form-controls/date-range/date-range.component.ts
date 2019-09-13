@@ -104,7 +104,7 @@ export class SamDateRangeComponent
   public OUTPUT_FORMAT: string = 'YYYY-MM-DD';
   public DT_INPUT_FORMAT: string = 'Y-M-DTH:m';
   public T_OUTPUT_FORMAT: string = 'HH:mm';
-
+  public hasFocus: boolean = false;
   public startModel: any = {
     month: undefined,
     day: undefined,
@@ -115,7 +115,6 @@ export class SamDateRangeComponent
     day: undefined,
     year: undefined
   };
-
   private startDateValue;
   private endDateValue;
 
@@ -144,17 +143,16 @@ export class SamDateRangeComponent
     const toRequired = instance.toRequired || instance.required;
 
     return (c: AbstractControl) => {
-      // valid when fromRequired => startDate AND toRequired => endDate
-      const valid = (!fromRequired || (c.value && c.value.startDate))
-        && (!toRequired || (c.value && c.value.endDate));
-      if (c.dirty && !valid) {
-        return {
-          dateRangeError: {
-            message: 'This field is required'
-          }
-        };
+      if (fromRequired && toRequired) {
+        const valid = !((c.value && c.value.startDate === 'Invalid date') || (c.value && c.value.endDate === 'Invalid date'));
+        if (!instance.hasFocus && !valid) {
+          return {
+            dateRangeError: {
+              message: 'This field is required'
+            }
+          };
+        }
       }
-
       return undefined;
     };
   }
@@ -174,10 +172,9 @@ export class SamDateRangeComponent
 
   private static validateStart(c) {
     const error = this.newError();
-
-    if (c.value && c.value.startDate) {
+    if (c.value && !(c.value.startDate && c.value.startDate === 'Invalid date')) {
       const startDateM = moment(c.value.startDate);
-      if (!startDateM.isValid() || c.value.startDate === 'Invalid date') {
+      if (!startDateM.isValid()) {
         error.dateRangeError.message = 'Invalid From Date';
         return error;
       }
@@ -186,9 +183,9 @@ export class SamDateRangeComponent
   private static validateEnd(c) {
     const error = this.newError();
 
-    if (c.value && c.value.endDate) {
+    if (c.value && !(c.value.endDate && c.value.endDate === 'Invalid date')) {
       const endDateM = moment(c.value.endDate);
-      if (!endDateM.isValid() || c.value.endDate === 'Invalid date') {
+      if (!endDateM.isValid()) {
         error.dateRangeError.message = 'Invalid To Date';
         return error;
       }
@@ -247,8 +244,13 @@ export class SamDateRangeComponent
 
   focusHandler() {
     this.onTouched();
+    this.hasFocus = true;
   }
 
+  focusEndHandler() {
+    this.onTouched();
+    this.hasFocus = true;
+  }
   parseValueString() {
     const format = this.type !== 'date-time'
       ? this.INPUT_FORMAT
@@ -310,8 +312,8 @@ export class SamDateRangeComponent
       endDateString = this.getDate(this.endModel).format(this.OUTPUT_FORMAT);
     }
     const output: any = {
-        startDate: startDateString,
-        endDate: endDateString
+      startDate: startDateString,
+      endDate: endDateString
     };
     if (this.type === 'date-time') {
       const startTimeString = this.startModel.time;
@@ -329,10 +331,17 @@ export class SamDateRangeComponent
       (model.year === '' || model.year === undefined);
   }
 
-  dateBlur() {
-    if (this.type === 'date') {
+  dateBlur(evt) {
+    if (this.type === 'date' && evt === 'year entered') {
       this.endDateComp.month.nativeElement.focus();
     }
+    this.hasFocus = false;
+    this.dateChange();
+  }
+
+  endDateBlur() {
+    this.hasFocus = false;
+    this.dateChange();
   }
 
   registerOnChange(fn) {
