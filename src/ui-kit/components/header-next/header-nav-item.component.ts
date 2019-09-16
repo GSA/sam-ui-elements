@@ -1,4 +1,4 @@
-import { Component, Input, Host } from '@angular/core';
+import { Component, Host } from '@angular/core';
 import { SamHeaderNavComponent } from './header-nav.component';
 
 @Component({
@@ -10,19 +10,10 @@ import { SamHeaderNavComponent } from './header-nav.component';
         'usa-nav__secondary-item': headerNav.type === 'secondary'
       }"
     >
-      <a
-        class="usa-nav__link"
-        [class.usa-current]="active"
-        [routerLink]="route"
-        routerLinkActive="usa-current"
-      >
-        <ng-content></ng-content>
-      </a>
+      <ng-content></ng-content>
     </li>
   `
 })
 export class SamHeaderNavItemComponent {
-  @Input() active: boolean;
-  @Input() route: String[];
   constructor(@Host() public headerNav: SamHeaderNavComponent) {}
 }
