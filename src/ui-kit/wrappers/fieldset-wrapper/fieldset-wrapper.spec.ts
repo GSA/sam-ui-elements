@@ -37,6 +37,11 @@ describe('The Sam Fieldset Wrapper component', () => {
       group.controls.phone.setErrors({
         required: true
       });
+
+        group.controls.phone.markAsDirty();
+        group.controls.prefix.markAsDirty();
+        group.controls.extension.markAsDirty();
+
       component.formatErrors(group.controls.prefix, group.controls.phone, group.controls.extension);
       expect(component.errorMessages.length).toBe(2);
     });
