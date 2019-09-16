@@ -58,6 +58,23 @@ describe('The Sam Fieldset Wrapper component', () => {
       expect(component.errorMessages.length).toBe(0);
     });
 
+
+    it("should not display any error message if the component is not touched but having error",()=>{
+        component.errorMessages = [];
+        const group = new FormGroup(
+            {
+                phone: new FormControl('1234567'),
+                extension: new FormControl('')
+            }
+        );
+        group.controls.phone.setErrors({
+            required: true
+        });
+        component.formatErrors(group.controls.phone, group.controls.extension);
+        expect(component.errorMessages.length).toBe(0);
+
+    });
+
     it('should display error messages with a form control', () => {
       component.formatErrors(undefined);
 
