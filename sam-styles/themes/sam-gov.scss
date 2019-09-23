@@ -38,3 +38,45 @@ $theme: sam-theme($primary, $secondary);
 
 // Include all theme styles for the components.
 @include sam-gov-theme($theme);
+
+/*******************************
+        SDS Styles
+*******************************/
+
+// General settings
+// -------------------------------------
+$theme-image-path: '~@gsa-sam/sam-styles/src/img';
+
+// Typography settings
+// -------------------------------------
+$theme-respect-user-font-size: false;
+$theme-font-path: '~uswds/dist/fonts';
+$theme-font-role-heading:   'sans';
+$theme-font-weight-semibold:      600;
+
+// Color settings
+// -------------------------------------
+@import '~@gsa-sam/sam-styles/src/stylesheets/theme/sds-theme-color';
+
+// Spacing settings
+// -------------------------------------
+$theme-grid-container-max-width: 'desktop-lg';
+
+// Color settings
+// -------------------------------------
+
+// Required
+// -------------------------------------
+@import '../packages/required';
+
+// Global
+// -------------------------------------
+@import '../packages/global';
+
+// Components
+// -------------------------------------
+@import '../packages/uswds-components';
+
+// Utilities
+// -------------------------------------
+// @import '~uswds/dist/scss/packages/uswds-utilities';
