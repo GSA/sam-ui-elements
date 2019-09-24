@@ -1,0 +1,69 @@
+<div
+  class="usa-overlay"
+  [class.is-visible]="mobileNavActive"
+  (click)="closeMobileNav()"
+></div>
+<header class="usa-header usa-header--extended" role="banner">
+  <div class="usa-navbar">
+    <div class="usa-logo" id="extended-logo">
+      <em class="usa-logo__text">
+        <a href="/" title="Home" aria-label="Home">
+          <ng-container *ngIf="!logoPath">
+            SAM.gov
+          </ng-container>
+          <img *ngIf="logoPath" alt="SAM.gov" src="{{ logoPath }}" />
+        </a>
+      </em>
+    </div>
+    <button
+      #usaNavOpen
+      class="usa-menu-btn"
+      aria-label="Menu"
+      (click)="openMobileNav()"
+    >
+      <fa-layers [fixedWidth]="true" size="3x">
+        <fa-icon [icon]="faSquare" [classes]="['icon-square']"></fa-icon>
+        <fa-icon
+          [icon]="sdsBars"
+          [classes]="['icon-bars']"
+          transform="shrink-6"
+        ></fa-icon>
+        <fa-layers-counter
+          *ngIf="notifications"
+          content=""
+          [classes]="['icon-layers-counter']"
+        ></fa-layers-counter>
+      </fa-layers>
+    </button>
+  </div>
+  <nav
+    role="navigation"
+    class="usa-nav"
+    (keydown.esc)="closeMobileNav()"
+    (animationend)="navAnimationEnd()"
+    [class.is-visible]="mobileNavActive"
+    [cdkTrapFocus]="mobileNavActive"
+  >
+    <div class="usa-nav__inner">
+      <button
+        #usaNavClose
+        class="usa-nav__close"
+        aria-label="Close"
+        (click)="closeMobileNav()"
+      >
+        <fa-layers size="2x">
+          <fa-icon [icon]="faSquare" [classes]="['icon-square']"></fa-icon>
+          <fa-icon
+            [icon]="sdsArrowLeft"
+            [classes]="['icon-arrow-left']"
+            transform="shrink-6"
+          ></fa-icon>
+        </fa-layers>
+      </button>
+      <ng-content select="sam-header-nav[type='primary']"></ng-content>
+      <div class="usa-nav__secondary">
+        <ng-content select="sam-header-nav[type='secondary']"></ng-content>
+      </div>
+    </div>
+  </nav>
+</header>
