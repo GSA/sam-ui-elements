@@ -3,6 +3,7 @@
 // @import '~uswds/dist/scss/base/body';
 @import '~uswds/dist/scss/base/accessibility';
 
+sam-header-next,
 sam-footer-next {
   // Elements
   // -------------------------------------
@@ -20,21 +21,21 @@ sam-footer-next {
 
   // Components
   // -------------------------------------
-  // @import 'components/accordions';
+  // @import '~uswds/dist/scss/components/accordions';
   // @import 'components/alerts';
   // @import 'components/banner';
   // @import 'components/checklist';
   @import '../components/footer';
   // @import 'components/forms';
   // @import 'components/graphic-list';
-  // @import 'components/header';
+  @import '../components/header';
   // @import 'components/hero';
   // @import 'components/layout';
   // @import 'components/media-block';
   // @import 'components/megamenu';
-  // @import 'components/nav-container';
-  // @import 'components/navbar';
-  // @import 'components/navigation';
+  // @import '~uswds/dist/scss/components/nav-container';
+  @import '~uswds/dist/scss/components/navbar';
+  @import '../components/navigation';
   // @import 'components/search';
   // @import 'components/section';
   // @import 'components/sidenav';
