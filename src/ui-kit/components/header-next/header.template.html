@@ -3,17 +3,20 @@
   [class.is-visible]="mobileNavActive"
   (click)="closeMobileNav()"
 ></div>
-<header class="usa-header usa-header--extended" role="banner">
+<header class="usa-header usa-header--extended">
   <div class="usa-navbar">
-    <div class="usa-logo" id="extended-logo">
-      <em class="usa-logo__text">
-        <a href="/" title="Home" aria-label="Home">
-          <ng-container *ngIf="!logoPath">
-            SAM.gov
-          </ng-container>
-          <img *ngIf="logoPath" alt="SAM.gov" src="{{ logoPath }}" />
-        </a>
-      </em>
+    <div class="usa-logo" id="sam-logo">
+      <a href="/" title="Home" aria-label="Home">
+        <ng-container *ngIf="!logoPath">
+          SAM.gov
+        </ng-container>
+        <img
+          class="sds-header__logo"
+          *ngIf="logoPath"
+          alt="SAM.gov"
+          src="{{ logoPath }}"
+        />
+      </a>
     </div>
     <button
       #usaNavOpen
@@ -22,22 +25,19 @@
       (click)="openMobileNav()"
     >
       <fa-layers [fixedWidth]="true" size="3x">
-        <fa-icon [icon]="faSquare" [classes]="['icon-square']"></fa-icon>
+        <fa-icon [icon]="faSquare"></fa-icon>
         <fa-icon
           [icon]="sdsBars"
           [classes]="['icon-bars']"
           transform="shrink-6"
         ></fa-icon>
-        <fa-layers-counter
-          *ngIf="notifications"
-          content=""
-          [classes]="['icon-layers-counter']"
-        ></fa-layers-counter>
+        <fa-layers-counter *ngIf="notifications" content=""></fa-layers-counter>
       </fa-layers>
+      <span class="usa-sr-only">Menu</span>
     </button>
   </div>
   <nav
-    role="navigation"
+    aria-label="Primary navigation"
     class="usa-nav"
     (keydown.esc)="closeMobileNav()"
     (animationend)="navAnimationEnd()"
@@ -51,14 +51,11 @@
         aria-label="Close"
         (click)="closeMobileNav()"
       >
-        <fa-layers size="2x">
-          <fa-icon [icon]="faSquare" [classes]="['icon-square']"></fa-icon>
-          <fa-icon
-            [icon]="sdsArrowLeft"
-            [classes]="['icon-arrow-left']"
-            transform="shrink-6"
-          ></fa-icon>
+        <fa-layers [fixedWidth]="true" size="lg">
+          <fa-icon [icon]="faCircle" [inverse]="true" transform="grow-2"></fa-icon>
+          <fa-icon [icon]="faTimes" transform="shrink-6"></fa-icon>
         </fa-layers>
+        <span class="usa-sr-only">Close</span>
       </button>
       <ng-content select="sam-header-nav[type='primary']"></ng-content>
       <div class="usa-nav__secondary">

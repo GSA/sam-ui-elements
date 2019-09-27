@@ -1,0 +1,20 @@
+/*******************************
+        USWDS HEADER
+*******************************/
+
+@import '~uswds/dist/scss/components/header';
+
+/*******************************
+        SDS OVERRIDES
+*******************************/
+
+@import '~@gsa-sam/sam-styles/src/stylesheets/components/header';
+
+/*******************************
+      SAM FRONTEND OVERRIDES
+*******************************/
+.usa-menu-btn {
+  .fa-square {
+    color: color('primary');
+  }
+}
