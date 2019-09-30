@@ -16,7 +16,7 @@ import {
 } from '@angular/forms';
 import { SamFormService } from '../../form-service';
 import { TextAreaWidthType } from '../../types';
-
+import { pairwise } from 'rxjs/operators';
 /**
  * The <sam-text-area> component provides a textarea input form control
  */
@@ -79,7 +79,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
    * Optional text to be displayed when the text area is empty
    */
   @Input() placeholder: string;
-    /**
+  /**
      * Optional assistance text to be set when placeholder attribute is used
      */
   @Input() title: string;
@@ -147,7 +147,12 @@ export class SamTextareaComponent implements ControlValueAccessor {
 
     this.control.setValidators(validators);
     if (!this.useFormService) {
-      this.control.statusChanges.subscribe(() => {
+      this.control.valueChanges
+      .pipe(pairwise())
+      .subscribe(([prev, next]: [any, any]) => {
+          if (prev === '') {
+          this.control.markAsPristine();
+        }
         this.wrapper.formatErrors(this.control);
       });
       this.wrapper.formatErrors(this.control);
