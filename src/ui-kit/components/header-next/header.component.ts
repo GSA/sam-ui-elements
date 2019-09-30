@@ -5,11 +5,8 @@ import {
   HostListener,
   Input
 } from '@angular/core';
-import { faSquare } from '@fortawesome/free-solid-svg-icons';
-import {
-  sdsBars,
-  sdsArrowLeft
-} from '@gsa-sam/icons';
+import { faSquare, faCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { sdsBars } from '@gsa-sam/icons';
 
 @Component({
   selector: 'sam-header-next',
@@ -25,8 +22,9 @@ export class SamHeaderNextComponent {
 
   /** Icons */
   faSquare = faSquare;
+  faCircle = faCircle;
+  faTimes = faTimes;
   sdsBars = sdsBars;
-  sdsArrowLeft = sdsArrowLeft;
 
   // When the mobile nav is active, and the close box isn't visible,
   // we know the user's viewport has been resized to be larger.

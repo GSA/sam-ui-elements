@@ -71,7 +71,7 @@ describe('SamHeaderNextComponent', () => {
       '.usa-menu-btn'
     );
 
-    expect(menuButton.querySelector('.icon-layers-counter')).not.toBeNull(
+    expect(menuButton.querySelector('.fa-layers-counter')).not.toBeNull(
       'notification icon exists'
     );
   });
