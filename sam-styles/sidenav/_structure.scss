@@ -162,6 +162,10 @@
   .usa-sidenav-list a {
     outline: 0.1px solid lightgray;
     font-size: 17px;
+
+    &:focus {
+      border: 2px solid #2493FE;
+    }
   }
 
   .usa-sidenav-sub_list ul:first-child {
@@ -171,4 +175,5 @@
   .usa-sidenav-sub_list li > sam-menu-item > ul {
     background-color: #f9f7f2 !important;
   }
+
 }
