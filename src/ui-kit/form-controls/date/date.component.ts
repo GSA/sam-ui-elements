@@ -469,7 +469,10 @@ export class SamDateComponent
 
   onChangeHandler(override = undefined) {
     this.onTouched();
-    if (this.isDateTouched && this.isMonthTouched && this.isYearTouched && !this.isTabPressed) {
+    let dayCheck = this.isDateTouched || (!this.isDateTouched && this.day.nativeElement.value);
+    let monthCheck = this.isMonthTouched || (!this.isMonthTouched && this.month.nativeElement.value);
+    let yearCheck = this.isYearTouched || (!this.isYearTouched && this.year.nativeElement.value);
+    if (dayCheck && monthCheck && yearCheck && !this.isTabPressed) {
       if (this.month.nativeElement.value || this.day.nativeElement.value ||
         this.year.nativeElement.value) {
         if (this.isClean(override)) {
