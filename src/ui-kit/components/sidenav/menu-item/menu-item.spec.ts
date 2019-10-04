@@ -33,7 +33,7 @@ describe('The Sam MenuItem component', () => {
       });
       component.emitSelectedChild(true);
     });
-    fit('should show children', () => {
+    it('should show children', () => {
       let obj = {};
       expect(component.hasChildren(obj)).toBe(false);
       let obj2 = { 'children': [{}] };
