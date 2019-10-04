@@ -67,6 +67,10 @@ export class SamModalComponent implements OnInit {
    * Set the title Icon
    */
   @Input() icon: IconProp;
+    /**
+   * Sets the modal button 
+   */
+  @Input() buttonPosition: string = 'center';
   /**
    * (deprecated) Emitted event when modal is opened
    */
