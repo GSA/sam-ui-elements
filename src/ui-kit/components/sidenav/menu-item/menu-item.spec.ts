@@ -9,7 +9,6 @@ import { SidenavService } from '../services';
 import { SamUIKitModule } from '../../../index';
 
 import { data } from '../services/testdata';
-import { MdExpansionPanelActionRowDirective } from 'ui-kit/experimental/patterns/layout/components/expansion';
 
 describe('The Sam MenuItem component', () => {
   describe('isolated tests', () => {
