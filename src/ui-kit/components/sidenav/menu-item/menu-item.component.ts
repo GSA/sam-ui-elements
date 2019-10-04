@@ -40,8 +40,14 @@ export class SamMenuItemComponent {
     return this.service.getData()[this.nodeDepth] === index;
   }
 
-  hasChildren(item:object){
-    return item['children'] && item['children'].length!==0;
+  hasChildren(item: object) {
+
+    if (item['children'] && item['children'].length !== 0) {
+      return true
+    } else {
+      return false;
+    }
+
   }
 
   emitSelectedChild(event: any): void {
