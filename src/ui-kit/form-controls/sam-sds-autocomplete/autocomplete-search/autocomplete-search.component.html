@@ -1,24 +1,21 @@
 <div sam-click-outside (clickOutside)="checkForFocus($event)" sam-tab-outside (tabOutside)="checkForFocus($event)">
   <div class="input-container">
-    <input [disabled]="disabled" (ngModelChange)="textChange($event)" class="sam input" #input [attr.id]="configuration.id" autocomplete="off" type="text" (focus)="inputFocusHandler()"
-      (keydown)="onKeydown($event)" [(ngModel)]="inputValue" autocomplete="off" role="combobox" aria-autocomplete="list"
-      aria-expanded="false" aria-haspopup="true" [attr.aria-owns]="configuration.id+ '-listbox'"
-      [attr.placeholder]="configuration.autocompletePlaceHolderText">
-    <ng-container *ngIf="!input.disabled">
-      <span class="close">
-        <span role="button" class="fa fa-close" aria-label="Clear input" aria-hidden="false" (click)="clearInput()"
-          (keyup.enter)="clearInput()">
-        </span>
-      </span>
-    </ng-container>
-  </div>
-  <div>
-    <ul #resultsList *ngIf="showResults" [attr.id]="configuration.id+ '-listbox'" role="listbox" class="usa-unstyled-list autocomplete-result"
-      [attr.aria-label]="configuration.labelText" (scroll)="onScroll()">
+    <div role="combobox" [attr.id]="configuration.id+'-container'" [attr.aria-expanded]="showResults"
+      [attr.aria-owns]="showResults? configuration.id+ '-listbox' : undefined" aria-haspopup="listbox">
+      <input [disabled]="disabled" (ngModelChange)="textChange($event)" class="sam input" #input
+        [attr.id]="configuration.id" type="text" (focus)="inputFocusHandler()" (keydown)="onKeydown($event)"
+        [(ngModel)]="inputValue" aria-autocomplete="list" [attr.placeholder]="configuration.autocompletePlaceHolderText"
+        [attr.aria-activedescendant]="showResults? configuration.id+'-resultItem-'+highlightedIndex :''"
+        [attr.aria-controls]="showResults? configuration.id+ '-listbox' : undefined">
+    </div>
+    <ul #resultsList *ngIf="showResults" [attr.id]="configuration.id+ '-listbox'" role="listbox"
+      class="usa-unstyled-list autocomplete-result" [attr.aria-label]="configuration.labelText" (scroll)="onScroll()">
       <ng-container *ngIf="(results && results.length > 0)">
-        <li role="option" *ngFor="let result of results; let i = index" (mouseenter)="listItemHover(i)" [class]="result['highlighted']? 'selected-item':''"
+        <li [attr.id]="configuration.id+'-resultItem-'+i" role="option" *ngFor="let result of results; let i = index"
+          (mouseenter)="listItemHover(i)" [class]="result['highlighted']? 'selected-item':''"
           (click)="selectItem(result)">
-          <ng-container *ngIf="itemTemplate" [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit:result}">
+          <ng-container *ngIf="itemTemplate" [ngTemplateOutlet]="itemTemplate"
+            [ngTemplateOutletContext]="{$implicit:result}">
 
           </ng-container>
 
@@ -38,23 +35,31 @@
       <ng-container *ngIf="(!results || results.length == 0)">
         <li class="emptyResults">No results found</li>
       </ng-container>
+      <ng-container *ngIf="showLoad">
+        <li class="autoLoading">
+          <div class="lightToGrayBackgroundGradiate">
 
-      <li *ngIf="showLoad" class="autoLoading">
-        <div class="lightToGrayBackgroundGradiate">
+          </div>
+          <div class="grayToLightBackgroundGradiate">
 
-        </div>
-        <div class="grayToLightBackgroundGradiate">
+          </div>
+        </li>
+        <li class=" autoLoading">
+          <div class="lightToGrayBackgroundGradiate">
 
-        </div>
-      </li>
-      <li  *ngIf="showLoad" class="autoLoading">
-        <div class="lightToGrayBackgroundGradiate">
+          </div>
+          <div class="grayToLightBackgroundGradiate">
 
-        </div>
-        <div class="grayToLightBackgroundGradiate">
-
-        </div>
-      </li>
+          </div>
+        </li>
+      </ng-container>
     </ul>
+    <ng-container *ngIf="!input.disabled">
+      <span class="close">
+        <span role="button" class="fa fa-close" aria-label="Clear input" aria-hidden="false" (click)="clearInput()"
+          (keyup.enter)="clearInput()">
+        </span>
+      </span>
+    </ng-container>
     <ul #srOnly class="usa-sr-only" aria-live="assertive" aria-relevant="additions"></ul>
   </div>
