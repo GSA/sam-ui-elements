@@ -16,7 +16,7 @@ import { SamPageNextService } from '../architecture';
   `
 })
 export class SamActionBarComponent {
-  @ContentChild(SamPaginationNextComponent)
+  @ContentChild(SamPaginationNextComponent, {static: false})
     public pagination: SamPaginationNextComponent;
 
   constructor (@Optional() private _service: SamPageNextService) {}

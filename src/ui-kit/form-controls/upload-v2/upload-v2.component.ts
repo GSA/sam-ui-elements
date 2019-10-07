@@ -6,9 +6,9 @@ import {
   forwardRef, SimpleChanges,  Output,
     EventEmitter, } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpEventType,
-  HttpHeaderResponse, HttpRequest } from '@angular/common/http';
+  HttpHeaderResponse, HttpRequest, HttpEvent } from '@angular/common/http';
 import { DragState } from '../../directives/drag-drop/drag-drop.directive';
-import { HttpEvent } from '@angular/common/http/src/response';
+// import { HttpEvent } from '@angular/http/src/response';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
     ActionModalConfig, ToggleUploadFileAction,
@@ -200,11 +200,11 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   private onTouched: Function;
 
   /* The hidden file input dom element */
-  @ViewChild('file') private fileInput: ElementRef;
+  @ViewChild('file', {static: false}) private fileInput: ElementRef;
 
   /* get references to modals */
-  @ViewChild('removeModal') removeModal;
-  @ViewChild('toggleModal') toggleModal;
+  @ViewChild('removeModal', {static: false}) removeModal;
+  @ViewChild('toggleModal', {static: false}) toggleModal;
 
   public uploadElIds = {
     tableId: 'tableId',

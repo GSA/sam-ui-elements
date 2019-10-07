@@ -17,7 +17,7 @@ import { SamDateComponent } from '../../../ui-kit';
  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SamFormlyDate extends AbstractSamFormly {
-  @ViewChild(SamDateComponent)
+  @ViewChild(SamDateComponent, {static: false})
   public template: SamDateComponent;
 
   constructor (_cdr: ChangeDetectorRef) {

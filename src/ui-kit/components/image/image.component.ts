@@ -30,12 +30,12 @@ export class SamImageComponent implements OnInit {
    */
   @Output() public fileChange: EventEmitter<File> = new EventEmitter<File>();
 
-  @ViewChild('componentContainer') private componentContainer: ElementRef;
-  @ViewChild('filePicker') private filePicker: ElementRef;
-  @ViewChild('image') private _image: ElementRef;
-  @ViewChild('editButton') private editButton: ElementRef;
-  @ViewChild('cancelButton') private cancelButton: ElementRef;
-  @ViewChild('saveButton') private saveButton: ElementRef;
+  @ViewChild('componentContainer', {static: false}) private componentContainer: ElementRef;
+  @ViewChild('filePicker', {static: false}) private filePicker: ElementRef;
+  @ViewChild('image', {static: false}) private _image: ElementRef;
+  @ViewChild('editButton', {static: false}) private editButton: ElementRef;
+  @ViewChild('cancelButton', {static: false}) private cancelButton: ElementRef;
+  @ViewChild('saveButton', {static: false}) private saveButton: ElementRef;
 
   private fileChangeStream: Observable<any>;
   private editButtonStream: Observable<any>;

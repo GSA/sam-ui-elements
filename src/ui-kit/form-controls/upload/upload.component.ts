@@ -3,9 +3,9 @@ import { Subscription } from 'rxjs/Subscription';
 import { Component, ElementRef, Input, ViewChild,
   forwardRef } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpEventType,
-  HttpHeaderResponse, HttpRequest } from '@angular/common/http';
+  HttpHeaderResponse, HttpRequest, HttpEvent } from '@angular/common/http';
 import { DragState } from '../../directives/drag-drop/drag-drop.directive';
-import { HttpEvent } from '@angular/common/http/src/response';
+// import { HttpEvent } from '@angular/common/http/src/response';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { switchMap } from 'rxjs/operators';
 
@@ -137,7 +137,7 @@ export class SamUploadComponent implements ControlValueAccessor {
   private onTouched: Function;
 
   /* The hidden file input dom element */
-  @ViewChild('file') private fileInput: ElementRef;
+  @ViewChild('file', {static: false}) private fileInput: ElementRef;
 
   constructor(private httpClient: HttpClient) {
 

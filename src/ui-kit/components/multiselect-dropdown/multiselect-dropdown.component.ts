@@ -54,7 +54,7 @@ export class SamMultiSelectDropdownComponent implements OnChanges {
    */
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild('optionsList') list: ElementRef;
+  @ViewChild('optionsList', {static: false}) list: ElementRef;
 
   public elementLabel: string;
 

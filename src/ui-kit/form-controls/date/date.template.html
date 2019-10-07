@@ -1,12 +1,11 @@
 <sam-fieldset-wrapper #wrapper [label]="label" [errorMessage]="errorMessage" [hint]="hint" [required]="required">
-  <div class="usa-date-of-birth date-group" (focusout)="dateBlurred()">
+  <div class="usa-date-of-birth date-group">
     <div class="usa-form-group usa-form-group-month">
       <label [attr.for]="monthName()">Month</label>
       <input
         (blur)="onMonthBlur($event)"
         (focus)="triggerMonthTouch($event)"
         (paste)="onMonthPaste($event)"
-        (dblclick)="onMonthSelected()"
         [attr.id]="monthName()"
         #month
         (keydown)="onMonthInput($event)"
@@ -25,7 +24,6 @@
         (blur)="onDayBlur($event)"
         (focus)="triggerDayTouch($event)"
         (paste)="onDayPaste($event)"
-        (dblclick)="onDaySelected()"
         [attr.id]="dayName()"
         #day
         (keydown)="onDayInput($event)"
@@ -42,9 +40,8 @@
       <label [attr.for]="yearName()">Year</label>
       <input
         (blur)="onYearBlur($event)"
-        (focus)="triggerTouch($event)"
+        (focus)="triggerTouch()"
         (paste)="onYearPaste($event)"
-        (dblclick)="onYearSelected()"
         [attr.id]="yearName()"
         #year
         (keydown)="onYearInput($event)"

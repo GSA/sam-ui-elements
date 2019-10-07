@@ -16,7 +16,7 @@ import {AbstractSamFormly} from '../../sam-formly';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SamFormlyRadio extends AbstractSamFormly {
-  @ViewChild(SamRadioButtonComponent)
+  @ViewChild(SamRadioButtonComponent, {static: false})
   public template: SamRadioButtonComponent;
 
   public cdr: ChangeDetectorRef;

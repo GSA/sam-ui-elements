@@ -62,7 +62,7 @@ import 'rxjs/add/operator/switch';
 })
 export class SamSearchComponent implements OnInit{
   
-  @ViewChild('searchInput') inputEl:ElementRef;
+  @ViewChild('searchInput', {static: false}) inputEl:ElementRef;
   @Input() public focus: boolean;
   @Output() selectedDomain: EventEmitter<any> = new EventEmitter();
   

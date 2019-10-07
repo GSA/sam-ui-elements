@@ -28,7 +28,7 @@ export class SamFilterDrawerComponent {
    */
   @Output() public clear = new EventEmitter<any>();
 
-  @ViewChild(forwardRef(() => ChipHostDirective))
+  @ViewChild(forwardRef(() => ChipHostDirective), {static: false})
     public chips: ChipHostDirective;
 
   @ContentChildren(forwardRef(() => SamFilterDrawerItemComponent))

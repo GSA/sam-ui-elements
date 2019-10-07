@@ -91,7 +91,7 @@ export class SamNumberComponent implements ControlValueAccessor {
   */
   @Input() useFormService: boolean;
 
-  @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
+  @ViewChild(LabelWrapper, {static: false}) public wrapper: LabelWrapper;
   public invalidKeys = ['e', 'E', ',', '-', '+'];
 
   public onChange: any = () => {

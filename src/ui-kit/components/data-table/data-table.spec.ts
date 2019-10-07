@@ -72,7 +72,7 @@ import { ExampleDataSource,ExampleDatabase } from './data-source.sample.spec';
 class TestComponent {
     exampleDatabase = new ExampleDatabase();
     dataSource: ExampleDataSource | null;
-    @ViewChild(SamSortDirective) sort: SamSortDirective;
+    @ViewChild(SamSortDirective, {static: false}) sort: SamSortDirective;
     ngOnInit(){
         this.dataSource = new ExampleDataSource(this.exampleDatabase, this.sort);
     }

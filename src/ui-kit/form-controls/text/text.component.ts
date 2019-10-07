@@ -105,7 +105,7 @@ export class SamTextComponent implements ControlValueAccessor,
    */
   @Output() public blur = new EventEmitter<boolean>();
 
-  @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
+  @ViewChild(LabelWrapper, {static: false}) public wrapper: LabelWrapper;
   
   public onChange: any = (c) => null;
   public onTouched: any = () => null;

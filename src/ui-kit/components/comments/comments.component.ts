@@ -40,9 +40,9 @@ export class SamCommentsComponent implements OnInit {
   /**
    * ViewChildren
    */
-  @ViewChild('showCommentsButton') public showCommentsButton: ElementRef;
-  @ViewChild('hideCommentsButton') public hideCommentsButton: ElementRef;
-  @ViewChild('textArea') public textArea: ElementRef;
+  @ViewChild('showCommentsButton', {static: false}) public showCommentsButton: ElementRef;
+  @ViewChild('hideCommentsButton', {static: false}) public hideCommentsButton: ElementRef;
+  @ViewChild('textArea', {static: false}) public textArea: ElementRef;
 
   public form: any;
 

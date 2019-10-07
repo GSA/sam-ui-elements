@@ -54,7 +54,7 @@ export type MdTabHeaderPosition = 'above' | 'below';
 export class MdTabGroup {
   @ContentChildren(MdTab) _tabs: QueryList<MdTab>;
 
-  @ViewChild('tabBodyWrapper') _tabBodyWrapper: ElementRef;
+  @ViewChild('tabBodyWrapper', {static: false}) _tabBodyWrapper: ElementRef;
 
   /** Whether this component has been initialized. */
   private _isInitialized: boolean = false;

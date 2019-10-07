@@ -50,7 +50,7 @@ export class FieldsetWrapper {
    * toggles the required text
    */
   @Input() public required: boolean = false;
-  @ViewChild('hintContainer') public hintContainer: any;
+  @ViewChild('hintContainer', {static: false}) public hintContainer: any;
   public showToggle: boolean = false;
   private toggleOpen: boolean = false;
   private lineSize: number;
@@ -159,11 +159,6 @@ export class FieldsetWrapper {
 
   private _formatError(control: AbstractControl) {
     if (!control) {
-      return;
-    }
-
-    if (control.pristine) {
-      this.errorMessage = '';
       return;
     }
 

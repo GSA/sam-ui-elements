@@ -15,7 +15,7 @@ import { SamTextComponent } from '../../../ui-kit';
  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SamFormlyText extends AbstractSamFormly {
-  @ViewChild(SamTextComponent) public template: SamTextComponent;
+  @ViewChild(SamTextComponent, {static: false}) public template: SamTextComponent;
 
   constructor (public cdr: ChangeDetectorRef) {
     super();

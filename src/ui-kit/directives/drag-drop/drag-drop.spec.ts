@@ -15,8 +15,8 @@ import { SamDragDropDirective } from './drag-drop.directive';
 })
 class TestComponent {
     @Output() action: EventEmitter<any> = new EventEmitter<any>();
-    @ViewChild('var') var;
-    @ViewChild('dummydrop') dummydrop;
+    @ViewChild('var', {static: false}) var;
+    @ViewChild('dummydrop', {static: false}) dummydrop;
     dropHandler() {
       this.action.emit(true);
     }

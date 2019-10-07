@@ -14,7 +14,7 @@ import {AbstractSamFormly} from '../../sam-formly';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SamFormlyAutoCompleteMultiselect extends AbstractSamFormly {
-  @ViewChild(SamAutocompleteMultiselectComponent)
+  @ViewChild(SamAutocompleteMultiselectComponent, {static: false})
   public template: SamAutocompleteMultiselectComponent;
 
   public cdr: ChangeDetectorRef;

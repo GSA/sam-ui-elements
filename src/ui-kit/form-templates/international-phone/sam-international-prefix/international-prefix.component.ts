@@ -31,7 +31,7 @@ import { numberInputKeys } from '../number-input-keys';
 })
 export class SamInternationalPrefix extends SamFormControl {
 
-  @ViewChild('input') public input: ElementRef;
+  @ViewChild('input', {static: false}) public input: ElementRef;
   private keys: KeyHelper = new KeyHelper(...numberInputKeys);
   
   public min = 1;

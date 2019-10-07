@@ -79,7 +79,7 @@ export class SamDateRangeV2Component implements OnInit, ControlValueAccessor {
   */
   @Input() control: FormControl;
 
-  @ViewChild(FieldsetWrapper)
+  @ViewChild(FieldsetWrapper, {static: false})
   public wrapper: FieldsetWrapper;
 
   public disabled: boolean;

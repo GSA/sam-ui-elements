@@ -24,7 +24,7 @@ import {SamStickyComponent} from './sticky.component';
   </div>`
 })
 class TestComponent {
-  @ViewChild('var') var;
+  @ViewChild('var', {static: false}) var;
 }
 
 describe('The Sam Sticky directive', () => {

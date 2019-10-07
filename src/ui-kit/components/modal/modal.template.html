@@ -24,9 +24,9 @@
 			</div>
 		</div>
 		<div class="modal-body">
-	<p id="dialog-description" *ngIf="description">{{description}}</p>
+			<p id="dialog-description" *ngIf="description">{{description}}</p>
 			<ng-content></ng-content>
-			<div *ngIf="cancelButtonLabel || submitButtonLabel" [ngClass]="(buttonPosition=='left') ? 'text-left' : ((buttonPosition=='right') ? 'text-right' : 'text-center')">
+			<div *ngIf="cancelButtonLabel || submitButtonLabel" class="usa-modal-content-btn-area">
 				<sam-button buttonType="tertiary" class="usa-button-outline usa-modal-content-cancel-btn"
 					*ngIf="cancelButtonLabel" (onClick)="closeModal()" [buttonText]="cancelButtonLabel"
 					[attr.id]="modalElIds?.cancelId"></sam-button>

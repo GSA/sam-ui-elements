@@ -22,8 +22,8 @@ import { Popover } from './popover';
 })
 export class SamPickerComponent implements AfterViewInit {
 
-  @ContentChild('input') public input: ElementRef;
-  @ContentChild(Popover) public popover: Popover;
+  @ContentChild('input', {static: false}) public input: ElementRef;
+  @ContentChild(Popover, {static: false}) public popover: Popover;
 
   @Output() public onSearch: EventEmitter<string> =
     new EventEmitter<string>();

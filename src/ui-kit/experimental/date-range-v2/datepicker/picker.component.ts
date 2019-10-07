@@ -94,8 +94,8 @@ export class DatepickerComponent extends SamFormControl implements OnInit, OnCha
   _focusableString: string =
     'a[href], area, button, select, textarea, *[tabindex], \
   input:not([type="hidden"])';
-  @ViewChild('calendarpopup') calendarpopup: ElementRef;
-  @ViewChild('calendarButton') calendarButton: ElementRef;
+  @ViewChild('calendarpopup', {static: false}) calendarpopup: ElementRef;
+  @ViewChild('calendarButton', {static: false}) calendarButton: ElementRef;
 
   static dateValidation() {
     const minYear = 1000;

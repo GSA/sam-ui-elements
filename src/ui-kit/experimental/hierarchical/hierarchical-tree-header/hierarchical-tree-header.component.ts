@@ -44,7 +44,7 @@ export class SamHierarchicalTreeHeaderComponent {
   /**
    * Filter input reference
    */
-  @ViewChild('filter') filter: ElementRef;
+  @ViewChild('filter', {static: false}) filter: ElementRef;
 
 
   /**

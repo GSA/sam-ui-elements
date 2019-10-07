@@ -84,7 +84,7 @@ export type MdTabBodyOriginState = 'left' | 'right';
 })
 export class MdTabBody implements OnInit, AfterViewChecked {
   /** The portal host inside of this container into which the tab body content will be loaded. */
-  @ViewChild(PortalHostDirective) _portalHost: PortalHostDirective;
+  @ViewChild(PortalHostDirective, {static: false}) _portalHost: PortalHostDirective;
 
   /** Event emitted when the tab begins to animate towards the center as the active tab. */
   @Output() onCentering: EventEmitter<number> = new EventEmitter<number>();

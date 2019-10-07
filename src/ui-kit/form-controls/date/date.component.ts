@@ -94,11 +94,10 @@ export class SamDateComponent
   */
   @Output() public blur = new EventEmitter<any>();
 
-  @Output() public focus = new EventEmitter<any>();
-  @ViewChild('month') public month;
-  @ViewChild('day') public day;
-  @ViewChild('year') public year;
-  @ViewChild('wrapper') public wrapper;
+  @ViewChild('month', {static: false}) public month;
+  @ViewChild('day', {static: false}) public day;
+  @ViewChild('year', {static: false}) public year;
+  @ViewChild('wrapper', {static: false}) public wrapper;
 
   public allowChars = [
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -121,12 +120,6 @@ export class SamDateComponent
   public isMonthTouched: boolean = false;
   public isYearTouched: boolean = false;
   public isDateTouched: boolean = false;
-  public isYearBlur: boolean = false;
-  public isDayBlur: boolean = false;
-  public isMonthBlur: boolean = false;
-  public isYearSelected: boolean = false;
-  public isDaySelected: boolean = false;
-  public isMonthSelected: boolean = false;
   private keys: KeyHelper = new KeyHelper(...this.allowChars);
 
   get inputModel() {
@@ -290,7 +283,6 @@ export class SamDateComponent
   }
 
   onMonthBlur(event) {
-    this.isMonthBlur = true;
     if (this.month.nativeElement.value === '0') {
       this.month.nativeElement.value = '';
     }
@@ -302,11 +294,10 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
-    if (this.isTabPressed && event && !(KeyHelper.is('shift', event)) && !(KeyHelper.is('tab', event)) || this.isMonthSelected) {
+    if (this.isTabPressed && event && !(KeyHelper.is('shift', event)) && !(KeyHelper.is('tab', event))) {
       this.month.nativeElement.value = '';
     }
     this.isTabPressed = KeyHelper.is('tab', event);
-    this.isMonthSelected = false;
     const inputNum = KeyHelper.getNumberFromKey(event);
 
     const possibleNum = this.getPossibleNum(this.month.nativeElement, event);
@@ -343,7 +334,6 @@ export class SamDateComponent
   }
 
   onDayBlur(event) {
-    this.isDayBlur = true;
     if (this.day.nativeElement.value === '0') {
       this.day.nativeElement.value = '';
     }
@@ -354,11 +344,10 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
-    if (this.isTabPressed && event && !(KeyHelper.is('shift', event)) && !(KeyHelper.is('tab', event))|| this.isDaySelected) {
+    if (this.isTabPressed && event && !(KeyHelper.is('shift', event)) && !(KeyHelper.is('tab', event))) {
       this.day.nativeElement.value = '';
     }
     this.isTabPressed = KeyHelper.is('tab', event);
-    this.isDaySelected = false;
     const inputNum = KeyHelper.getNumberFromKey(event);
     const possibleNum =
       this.getPossibleNum(this.day.nativeElement, event);
@@ -416,7 +405,6 @@ export class SamDateComponent
   }
 
   onYearBlur(event) {
-    this.isYearBlur = true;
     if (this.year.nativeElement.value === '0') {
       this.year.nativeElement.value = '';
     }
@@ -435,11 +423,10 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
-    if (this.isTabPressed && event && !(KeyHelper.is('shift', event)) && !(KeyHelper.is('tab', event)) || this.isYearSelected) {
+    if (this.isTabPressed && event && !(KeyHelper.is('shift', event)) && !(KeyHelper.is('tab', event))) {
       this.year.nativeElement.value = '';
     }
     this.isTabPressed = KeyHelper.is('tab', event);
-    this.isYearSelected = false;
     const inputNum = KeyHelper.getNumberFromKey(event);
     const possibleNum =
       this.getPossibleNum(this.year.nativeElement, event);
@@ -450,9 +437,9 @@ export class SamDateComponent
       return;
     }
     if (inputNum !== undefined) {
-      const three = 3;
-      if (event.target.value.length === three) {
-        this.blurEvent.emit('year entered');
+      const four = 4; // Why 4?
+      if (event.target.value.length + 1 === four) {
+        this.blurEvent.emit();
         this.blur.emit();
       }
       this.year.nativeElement.value = possibleNum;
@@ -469,25 +456,13 @@ export class SamDateComponent
 
   onChangeHandler(override = undefined) {
     this.onTouched();
-    let dayCheck = this.isDateTouched || (!this.isDateTouched && this.day.nativeElement.value);
-    let monthCheck = this.isMonthTouched || (!this.isMonthTouched && this.month.nativeElement.value);
-    let yearCheck = this.isYearTouched || (!this.isYearTouched && this.year.nativeElement.value);
-    if (dayCheck && monthCheck && yearCheck && !this.isTabPressed) {
-      if (this.month.nativeElement.value || this.day.nativeElement.value ||
-        this.year.nativeElement.value) {
-        if (this.isClean(override)) {
+    if (this.isDateTouched && this.isMonthTouched && this.isYearTouched) {
+       if (this.month.nativeElement.value && this.day.nativeElement.value &&
+        this.year.nativeElement.value && (this.year.nativeElement.value.length == 4)) {
+          if (this.isClean(override)) {
           this.onChange(null);
           this.valueChange.emit(null);
-        } else if (this.isYearTouched) {
-          if (this.year.nativeElement.value.length != 4) {
-            this.onChange('Invalid Date');
-            this.valueChange.emit('Invalid Date');
-          } else {
-            const dateString = this.getDate(override).format(this.OUTPUT_FORMAT);
-            this.onChange(dateString);
-            this.valueChange.emit(dateString);
-          }
-        } else if ((!this.getDate(override).isValid())) {
+        } else if (!this.getDate(override).isValid()) {
           this.onChange('Invalid Date');
           this.valueChange.emit('Invalid Date');
         } else {
@@ -497,19 +472,6 @@ export class SamDateComponent
           this.valueChange.emit(dateString);
         }
       }
-    }
-    this.focusHandler();
-  }
-
-  focusHandler() {
-    if (this.isDateTouched || this.isMonthTouched || this.isYearTouched) {
-      this.focus.emit(true);
-    }
-  }
-  dateBlurred() {
-    if (this.isDateTouched && this.isMonthTouched && this.isYearTouched && this.isMonthBlur && this.isDayBlur && this.isYearBlur) {
-      this.blurEvent.emit(true);
-      this.blur.emit(true);
     }
   }
 
@@ -552,22 +514,10 @@ export class SamDateComponent
     return `${this.name}_year`;
   }
 
-  triggerTouch(ev) {
+  triggerTouch() {
     this.isYearTouched = true;
     this.touchHandler()
     this.onTouched();
-  }
-
-  onMonthSelected() {
-    this.isMonthSelected = true;
-  }
-
-  onDaySelected() {
-    this.isDaySelected = true;
-  }
-
-  onYearSelected() {
-    this.isYearSelected = true;
   }
 
   triggerMonthTouch(event) {

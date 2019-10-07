@@ -9,7 +9,6 @@ export * from './comments';
 export * from './data-table';
 export * from './download';
 export * from './header';
-export * from './header-next';
 export * from './history';
 export * from './image';
 export * from './modal';

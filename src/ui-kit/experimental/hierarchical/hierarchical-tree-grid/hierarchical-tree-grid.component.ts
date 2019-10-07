@@ -87,7 +87,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit, AfterViewChecke
   /**
    * Sort Directive
    */
-  @ViewChild(SamSortDirective) sortDirective: SamSortDirective;
+  @ViewChild(SamSortDirective, {static: false}) sortDirective: SamSortDirective;
 
 
   constructor(private cdr: ChangeDetectorRef) { }

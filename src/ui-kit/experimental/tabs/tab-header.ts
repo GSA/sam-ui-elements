@@ -73,8 +73,8 @@ const EXAGGERATED_OVERSCROLL = 60;
 export class MdTabHeader implements AfterContentChecked, AfterContentInit, OnDestroy {
   @ContentChildren(MdTabLabelWrapper) _labelWrappers: QueryList<MdTabLabelWrapper>;
 
-  @ViewChild('tabListContainer') _tabListContainer: ElementRef;
-  @ViewChild('tabList') _tabList: ElementRef;
+  @ViewChild('tabListContainer', {static: false}) _tabListContainer: ElementRef;
+  @ViewChild('tabList', {static: false}) _tabList: ElementRef;
 
   /** The tab index that is focused. */
   private _focusIndex: number = 0;
