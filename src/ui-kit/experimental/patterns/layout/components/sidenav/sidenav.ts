@@ -28,7 +28,7 @@ import {Directionality, coerceBooleanProperty} from '@angular/cdk';
 import {FocusTrapFactory, FocusTrap} from '@angular/cdk';
 import {ESCAPE} from '@angular/cdk';
 import {first} from '@angular/cdk';
-import {DOCUMENT} from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 
 
 /** Throws an exception when two MdSidenav are matching the same side. */

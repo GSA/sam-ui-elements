@@ -31,7 +31,7 @@ export const ScrollHelpers: (window) => {
       }
       window.onwheel = preventDefault; // modern standard
       window.onmousewheel =
-        document.onmousewheel = preventDefault; // older browsers, IE
+        window.document.onmousewheel = preventDefault; // older browsers, IE
       window.ontouchmove  = preventDefault; // mobile
       document.onkeydown  = preventDefaultForScrollKeys;
     }
@@ -40,7 +40,7 @@ export const ScrollHelpers: (window) => {
       if (window.removeEventListener) {
         window.removeEventListener('DOMMouseScroll', preventDefault, false);
       }
-      window.onmousewheel = document.onmousewheel = undefined; 
+      window.onmousewheel = window.document.onmousewheel = undefined; 
       window.onwheel = undefined; 
       window.ontouchmove = undefined;  
       document.onkeydown = undefined;  
