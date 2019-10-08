@@ -186,7 +186,9 @@ export class SamDateComponent
     if (!this.name) {
       throw new Error('SamDateComponent required a name for 508 compliance');
     }
+  }
 
+  ngAfterViewInit(){
     if (this.control) {
       const validators: ValidatorFn[] = [];
       if (this.control.validator) {
