@@ -2,10 +2,10 @@
   <li *ngFor="let child of children; let $index = index;">
     <!-- TOOD: discuss whether to use <button> instead of <a>, if <a>, then need to implement event handler for space -->
     <a role="button" [attr.aria-label]="child.label" tabindex="0" (click)="updateUI($index, $event, child)" (keyup.enter)="updateUI($index, $event, child)"
-      [ngClass]="{'usa-current': isSelected($index),'disabled': child.disabled}" [attr.id]="child.id" [attr.aria-expanded]="isSelected($index)">
+      [ngClass]="{'usa-current': isSelected($index),'disabled': child.disabled}" [attr.id]="child.id" [attr.aria-expanded]="hasChildren(child) ?isSelected($index):undefined">
       {{child.label}} <ng-container *ngIf="child?.iconClass"> <span [ngClass]="child.iconClass"></span></ng-container>
     </a>
-    <sam-menu-item *ngIf="isSelected($index)"
+    <sam-menu-item *ngIf="isSelected($index) && hasChildren(child)"
                  [nodeDepth]="nodeDepth + 1"
                  [children]="child.children"
                  (selection)="emitSelectedChild($event)">
