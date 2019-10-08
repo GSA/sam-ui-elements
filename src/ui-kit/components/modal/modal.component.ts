@@ -349,10 +349,6 @@ export class SamModalComponent implements OnInit {
     //   document.body.removeChild(this.backdropElement);
     // }
   }
-
-  private preventClosing(evt) {
-    evt.stopPropagation();
-  }
   private setModalElementIds() {
     if (this.id) {
       this.modalElIds.cancelId = this.id + 'Cancel';
