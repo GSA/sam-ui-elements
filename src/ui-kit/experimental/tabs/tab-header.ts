@@ -23,14 +23,6 @@ import {
   NgZone,
   Renderer2,
 } from '@angular/core';
-// import {
-//   RIGHT_ARROW,
-//   LEFT_ARROW,
-//   ENTER,
-//   coerceBooleanProperty
-// } from '@angular/cdk';
-
-
 import {RIGHT_ARROW, ENTER, LEFT_ARROW} from '@angular/cdk/keycodes';
 import {MdTabLabelWrapper} from './tab-label-wrapper';
 

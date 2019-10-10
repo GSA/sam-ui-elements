@@ -7,7 +7,7 @@
  */
 
 import {PositionStrategy} from './position/position-strategy';
-import {Direction} from '@angular/cdk';
+import {Direction} from '@angular/cdk/bidi';
 import {ScrollStrategy} from './scroll/scroll-strategy';
 
 

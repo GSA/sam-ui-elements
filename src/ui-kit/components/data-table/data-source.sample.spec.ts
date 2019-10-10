@@ -1,6 +1,6 @@
 import { SamSortable, SamSortDirective } from './';
 import { merge } from 'rxjs/observable/merge';
-import { DataSource } from '@angular/cdk';
+import { DataSource } from '@angular/cdk/collections';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { RECORDS } from './data.sample.spec';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';

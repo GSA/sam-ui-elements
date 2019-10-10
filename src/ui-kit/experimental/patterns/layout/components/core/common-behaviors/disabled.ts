@@ -1,5 +1,3 @@
-
-// import {coerceBooleanProperty} from '@angular/cdk';
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
 import {Constructor} from './constructor';
 

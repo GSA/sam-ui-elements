@@ -3,7 +3,8 @@ import {
     Optional, ViewEncapsulation, OnDestroy, OnInit, HostBinding, HostListener
   } from '@angular/core';
 import {SamSortDirective, SamSortable, SortDirection} from './sort.directive';
-import {CdkColumnDef, coerceBooleanProperty} from '@angular/cdk';
+import {CdkColumnDef} from '@angular/cdk';
+import {coerceBooleanProperty} from '@angular/cdk/coercion';
 import {Subscription} from 'rxjs/Subscription';
 
 

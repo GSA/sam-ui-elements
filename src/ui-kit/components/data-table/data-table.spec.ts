@@ -6,7 +6,7 @@ Output,
 ViewChild,
 EventEmitter
 } from '@angular/core';
-import {CdkTableModule} from '@angular/cdk';
+import {CdkTableModule} from '@angular/cdk/table';
 
 import { SamDataTableModule,SamSortDirective } from './';
 import { ExampleDataSource,ExampleDatabase } from './data-source.sample.spec';

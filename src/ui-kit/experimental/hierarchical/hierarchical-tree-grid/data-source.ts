@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { DataSource } from '@angular/cdk';
+import { DataSource } from '@angular/cdk/collections';
 
 // preparing data source for the hierarchical grid
 export class HierarchicalDataSource extends DataSource<any> {

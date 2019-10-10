@@ -17,7 +17,6 @@ import {
   ElementRef,
   Renderer2,
 } from '@angular/core';
-// import {coerceBooleanProperty} from '@angular/cdk';
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
 import {Observable} from 'rxjs/Observable';
 import {MdTab} from './tab';
