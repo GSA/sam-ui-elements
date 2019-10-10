@@ -24,10 +24,11 @@ import {
   OnDestroy,
   Inject,
 } from '@angular/core';
-import {Directionality, coerceBooleanProperty} from '@angular/cdk';
-import {FocusTrapFactory, FocusTrap} from '@angular/cdk';
-import {ESCAPE} from '@angular/cdk';
-import {first} from '@angular/cdk';
+// import {Directionality, coerceBooleanProperty} from '@angular/cdk';
+import {Directionality} from '@angular/cdk/bidi';
+import {coerceBooleanProperty} from '@angular/cdk/coercion';
+import {FocusTrapFactory, FocusTrap} from '@angular/cdk/a11y';
+import {ESCAPE, first} from '@angular/cdk/keycodes';
 import { DOCUMENT } from '@angular/common';
 
 

@@ -20,7 +20,7 @@ import {
   transition,
   animate,
 } from '@angular/animations';
-import {SPACE, ENTER} from '@angular/cdk';
+import {SPACE, ENTER} from '@angular/cdk/keycodes';
 import {MdExpansionPanelComponent, EXPANSION_PANEL_ANIMATION_TIMING} from './expansion-panel';
 
 
