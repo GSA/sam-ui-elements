@@ -23,21 +23,24 @@ import {
   NgZone,
   Renderer2,
 } from '@angular/core';
-import {
-  RIGHT_ARROW,
-  LEFT_ARROW,
-  ENTER,
-  coerceBooleanProperty
-} from '@angular/cdk';
+// import {
+//   RIGHT_ARROW,
+//   LEFT_ARROW,
+//   ENTER,
+//   coerceBooleanProperty
+// } from '@angular/cdk';
+
+
+import {RIGHT_ARROW, ENTER, LEFT_ARROW} from '@angular/cdk/keycodes';
 import {MdTabLabelWrapper} from './tab-label-wrapper';
 
 import {Subscription} from 'rxjs/Subscription';
-
-import {auditTime, startWith} from '@angular/cdk';
+import {auditTime, startWith} from 'rxjs/operators';
+// import {auditTime, startWith} from '@angular/cdk';
 import {of as observableOf} from 'rxjs/observable/of';
 import {merge} from 'rxjs/observable/merge';
 import {fromEvent} from 'rxjs/observable/fromEvent';
-
+import {coerceBooleanProperty} from '@angular/cdk/coercion';
 
 /**
  * The directions that scrolling can go in when the header's tabs exceed the header width. 'After'

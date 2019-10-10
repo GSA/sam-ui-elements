@@ -25,7 +25,8 @@ import {
   transition,
   AnimationEvent,
 } from '@angular/animations';
-import {TemplatePortal, PortalHostDirective} from '@angular/cdk';
+// import {TemplatePortal, PortalHostDirective} from '@angular/cdk';
+import {PortalHostDirective, TemplatePortal} from '@angular/cdk/portal';
 
 /**
  * These position states are used internally as animation states for the tab body. Setting the

@@ -17,10 +17,12 @@ import {
   ElementRef,
   Renderer2,
 } from '@angular/core';
-import {coerceBooleanProperty} from '@angular/cdk';
+// import {coerceBooleanProperty} from '@angular/cdk';
+import {coerceBooleanProperty} from '@angular/cdk/coercion';
 import {Observable} from 'rxjs/Observable';
 import {MdTab} from './tab';
-import {map} from '@angular/cdk';
+// import {map} from '@angular/cdk';
+import {map} from 'rxjs/operators';
 
 
 /** Used to generate unique ID's for each tab component */
