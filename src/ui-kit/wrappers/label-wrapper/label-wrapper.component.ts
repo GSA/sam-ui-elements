@@ -28,6 +28,14 @@ export class LabelWrapper implements AfterViewChecked {
    */
   @Input() public hint: string;
   /**
+   * sets the less hint text
+   */
+  @Input() public lessHint: string;
+  /**
+   * sets the more hint text
+   */
+  @Input() public moreHint: string;
+  /**
    * deprecated, toggles the required text
    */
   @Input() public required: boolean = false;
@@ -48,6 +56,10 @@ export class LabelWrapper implements AfterViewChecked {
     this._errorMessage = message;
     this.setDescribedByEl();
   };
+  /**
+   * Allows toggle to always to be on
+   */
+  @Input() public toggleAlwaysOn: boolean = false;
 
   public get errorMessage (): string {
     return this._errorMessage;
@@ -67,14 +79,14 @@ export class LabelWrapper implements AfterViewChecked {
   private checkMore = false; // semaphore
 
   constructor(
-    private cdr: ChangeDetectorRef,
-    private _rend: Renderer2) { }
+      private cdr: ChangeDetectorRef,
+      private _rend: Renderer2) { }
 
   public ngOnChanges(c) {
     if (!this.checkMore
         && c.hint
         && c.hint.previousValue !== c.hint.currentValue) {
-      // needs to be open to recalc correctly in 
+      // needs to be open to recalc correctly in
       // ngAfterViewChecked
       this.showToggle = false;
       this.toggleOpen = false;
@@ -92,8 +104,8 @@ export class LabelWrapper implements AfterViewChecked {
     let lookup;
     try{
       lookup =
-      this.labelDiv.nativeElement
-        .querySelector(selector);
+          this.labelDiv.nativeElement
+              .querySelector(selector);
     } catch(exception){
       console.error(selector + ' not found in label wrapper setup');
     }
@@ -115,12 +127,12 @@ export class LabelWrapper implements AfterViewChecked {
   public calcToggle() {
     if (this.hintContainer) {
       const numOfLines =
-        this.calculateNumberOfLines(
-          this.hintContainer.nativeElement
-        );
+          this.calculateNumberOfLines(
+              this.hintContainer.nativeElement
+          );
       this.showToggle = numOfLines > this.lineLimit
-        ? true
-        : false;
+          ? true
+          : false;
     }
   }
 
@@ -128,14 +140,14 @@ export class LabelWrapper implements AfterViewChecked {
     if (this.input) {
       if (elRefId) {
         this._rend.setAttribute(
-          this.input,
-          'aria-describedby',
-          elRefId
+            this.input,
+            'aria-describedby',
+            elRefId
         );
       } else {
         this._rend.removeAttribute(
-          this.input,
-          'aria-describedby'
+            this.input,
+            'aria-describedby'
         );
       }
 
@@ -144,7 +156,7 @@ export class LabelWrapper implements AfterViewChecked {
 
   @HostListener('window:resize', ['$event'])
   public onResize(event) {
-    // needs to be open to recalc correctly in 
+    // needs to be open to recalc correctly in
     // ngAfterViewChecked
     this.showToggle = false;
     this.toggleOpen = false;
@@ -162,7 +174,7 @@ export class LabelWrapper implements AfterViewChecked {
       other.innerHTML = 'a<br>b';
       other.style.visibility = 'hidden';
       const el = <HTMLElement>document
-        .getElementsByTagName('body')[0];
+          .getElementsByTagName('body')[0];
       el.appendChild(other);
       this.lineSize = other.offsetHeight / 2;
       el.removeChild(other);
@@ -187,7 +199,7 @@ export class LabelWrapper implements AfterViewChecked {
 
         if (errorObject.message) {
           if (Object.prototype.toString.call(errorObject.message)
-            === '[object String]') {
+              === '[object String]') {
             this.errorMessage = errorObject.message;
             return;
           }
@@ -211,16 +223,16 @@ export class LabelWrapper implements AfterViewChecked {
 
   public setOverflow (): string {
     return this.showToggle
-      && !this.showFullHint
-      && !this.toggleOpen
+    && !this.showFullHint
+    && !this.toggleOpen
         ? 'hidden'
         : '';
   }
 
   public setHeight (): string {
     return this.showToggle
-      && !this.showFullHint
-      && !this.toggleOpen
+    && !this.showFullHint
+    && !this.toggleOpen
         ? '2.88em'
         : '';
   }
@@ -231,8 +243,8 @@ export class LabelWrapper implements AfterViewChecked {
         const actualLength = errorObject.actualLength;
         const requiredLength = errorObject.requiredLength;
         this.errorMessage = actualLength
-          + ' characters input but max length is '
-          + requiredLength;
+            + ' characters input but max length is '
+            + requiredLength;
         return;
       case 'required':
         this.errorMessage = 'This field is required';
