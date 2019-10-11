@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { SamModalComponent } from './modal.component';
 import { SamButtonModule } from '../../elements/button';
 import { SamIconsModule} from '../../experimental/icon';
-import { SamDirectivesModule } from '../../directives';
+import { SamClickOutsideModule } from '../../directives/click-outside';
 
 @NgModule({
-    imports: [CommonModule, SamButtonModule, SamIconsModule, SamDirectivesModule],
+    imports: [CommonModule, SamButtonModule, SamIconsModule, SamClickOutsideModule],
     declarations: [ SamModalComponent ],
     exports: [ SamModalComponent ],
 })
