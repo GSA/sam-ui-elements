@@ -310,11 +310,11 @@ export class SamDateRangeComponent
     dateChange() {
         let startDateString = '';
         let endDateString = '';
-        if (!this.isClean(this.startModel)) {
+        if (!this.isEmptyField(this.startModel)) {
             startDateString =
                 this.getDate(this.startModel).format(this.OUTPUT_FORMAT);
         }
-        if (!this.isClean(this.endModel)) {
+        if (!this.isEmptyField(this.endModel)) {
             endDateString = this.getDate(this.endModel).format(this.OUTPUT_FORMAT);
         }
         const output: any = {
@@ -331,7 +331,7 @@ export class SamDateRangeComponent
         this.valueChange.emit(output);
     }
 
-    isClean(model) {
+    isEmptyField(model) {
         return (model.day === '' || model.day === undefined) &&
             (model.month === '' || model.month === undefined) &&
             (model.year === '' || model.year === undefined);
