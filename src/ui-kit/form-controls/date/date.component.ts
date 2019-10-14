@@ -475,7 +475,7 @@ export class SamDateComponent
     let monthCheck = this.isMonthTouched || (!this.isMonthTouched && this.month.nativeElement.value);
     let yearCheck = this.isYearTouched || (!this.isYearTouched && this.year.nativeElement.value);
     if (dayCheck && monthCheck && yearCheck && !this.isTabPressed) {
-      if (this.isClean(override)) {
+      if (this.isEmptyField(override)) {
         this.onChange(null);
         this.valueChange.emit(null);
       } else if (this.isYearTouched) {
@@ -518,7 +518,7 @@ export class SamDateComponent
       this.onChangeHandler(dupModel);
     }
   }
-  isClean(override = undefined) {
+  isEmptyField(override = undefined) {
     let dupModel = this.inputModel;
     if (override) {
       dupModel = override;
