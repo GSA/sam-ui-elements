@@ -25,10 +25,10 @@ describe('The Sam Time component', () => {
     });
 
     it('should check for clean values', () => {
-      expect(component.isClean()).toBe(true);
+      expect(component.isEmptyField()).toBe(true);
       component.hours = 10;
       component.minutes = 10;
-      expect(component.isClean()).toBe(false);
+      expect(component.isEmptyField()).toBe(false);
     });
 
     it('should check numbers', () => {
