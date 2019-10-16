@@ -44,7 +44,9 @@
             [@label]=""
             (click)="deselectItem(item)"
             (keydown)="deselectItemOnEnter($event, item)"
+            role="button"
           >
+            <span class="sr-only">remove</span>
             <div class="label">
               {{
                 keyValueConfig
@@ -59,6 +61,7 @@
                 {{ item[(keyValueConfig?.categoryProperty)] }}
               </span>
             </div>
+            <span class="sr-only">selection</span>
             <span *ngIf="!isDisabled" class="icon close fa fa-times"></span>
           </div>
           <label
@@ -71,6 +74,7 @@
           <textarea
             #textArea
             rows="1"
+            [attr.aria-activedescendant]="selectedEl ? selectedEl.attributes['id'].value : ''"
             [attr.placeholder]="
               innerValue && innerValue.length == 0 ? placeholder : ''
             "
@@ -130,6 +134,7 @@
               <ul
                 *ngIf="displaySublist(category, i)"
                 class="usa-unstyled-list item-list"
+                role="listbox"
               >
                 <li
                   *ngIf="category !== 'uncategorized' && displayCategory"
@@ -137,6 +142,7 @@
                   [ngClass]="{ selectable: categoryIsSelectable }"
                   (click)="clearSearch(selectItemByCategory(category))"
                   [attr.data-category]="category"
+                  role="option"
                 >
                   {{ category }}
                 </li>
@@ -148,6 +154,8 @@
                   [ngClass]="{ marked: item._marked }"
                   [attr.data-category]="i"
                   [attr.data-index]="itemIndex"
+                  [attr.id]="i + '-item-' + itemIndex"
+                  role="option"
                 >
                   <ng-container *ngIf="!itemTemplate; else itemTemplateRef">
                     <p>{{ item[(keyValueConfig?.valueProperty)] }}</p>
