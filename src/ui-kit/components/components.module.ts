@@ -32,6 +32,8 @@ import { SamActionButtonModule } from './actions/action-button';
 import { SamActionDropdownModule } from './actions/actions-dropdown';
 import { SamDataTableModule } from './data-table';
 import { SamPageTitleModule } from './page-title';
+import { SamHeaderNextModule } from './header-next';
+import { SamFooterNextModule } from './footer-next';
 
 @NgModule({
   imports: [
@@ -94,6 +96,8 @@ import { SamPageTitleModule } from './page-title';
     SamImageModule,
     SamDataTableModule,
     SamPageTitleModule,
+    SamHeaderNextModule,
+    SamFooterNextModule
   ]
 })
 export class SamComponentsModule {}
