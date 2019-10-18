@@ -92,9 +92,9 @@ export class SamModalComponent implements OnInit {
    */
   @Output() submit: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild('modalRoot', {static: false}) public modalRoot: ElementRef;
-  @ViewChild('modalContent', {static: false}) public modalContent: ElementRef;
-  @ViewChild('closeButton', {static: false}) public closeButton: ElementRef;
+  @ViewChild('modalRoot', {static: true}) public modalRoot: ElementRef;
+  @ViewChild('modalContent', {static: true}) public modalContent: ElementRef;
+  @ViewChild('closeButton', {static: true}) public closeButton: ElementRef;
   public show = false;
   public types: any = {
     'success': { class: 'usa-alert-success', sr: 'success alert' },

@@ -200,11 +200,11 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   private onTouched: Function;
 
   /* The hidden file input dom element */
-  @ViewChild('file', {static: false}) private fileInput: ElementRef;
+  @ViewChild('file', {static: true}) private fileInput: ElementRef;
 
   /* get references to modals */
-  @ViewChild('removeModal', {static: false}) removeModal;
-  @ViewChild('toggleModal', {static: false}) toggleModal;
+  @ViewChild('removeModal', {static: true}) removeModal;
+  @ViewChild('toggleModal', {static: true}) toggleModal;
 
   public uploadElIds = {
     tableId: 'tableId',

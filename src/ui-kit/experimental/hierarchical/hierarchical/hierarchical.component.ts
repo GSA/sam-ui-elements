@@ -21,22 +21,22 @@ export class SamHierarchicalComponent implements AfterViewChecked, ControlValueA
   /**
    * 
    */
-  @ViewChild('advancedLookup', {static: false}) advancedLookup;
+  @ViewChild('advancedLookup', {static: true}) advancedLookup;
 
   /**
   * modal component 
   */
-  @ViewChild('modal', {static: false}) modal;
+  @ViewChild('modal', {static: true}) modal;
 
   /**
   * autocomplete component
   */
-  @ViewChild('autocomplete', {static: false}) autocomplete
+  @ViewChild('autocomplete', {static: true}) autocomplete
 
   /**
   * hierarchicaltree component
   */
-  @ViewChild('hierarchicaltree', {static: false}) hierarchicaltree;
+  @ViewChild('hierarchicaltree', {static: true}) hierarchicaltree;
 
   /**
    * Stored Event for ControlValueAccessor

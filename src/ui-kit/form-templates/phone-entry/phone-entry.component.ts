@@ -80,9 +80,9 @@ export class SamPhoneEntryComponent implements OnInit, ControlValueAccessor {
   */
   @Output() emitter = new EventEmitter<string>();
 
-  @ViewChild(LabelWrapper, {static: false})
+  @ViewChild(LabelWrapper, {static: true})
   public wrapper: LabelWrapper;
-  @ViewChild('phoneInput', {static: false}) phoneInput;
+  @ViewChild('phoneInput', {static: true}) phoneInput;
   errorMsg: string = '';
 
   phoneNumberTemplateLength = this.phoneNumberTemplate.length;

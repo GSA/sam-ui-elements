@@ -17,7 +17,7 @@ export class SamTitleComponent implements AfterViewInit, OnInit {
   @Input() public aligned: string;
   @Input() public weight: string;
 
-  @ViewChild('titleTemplate', {static: false})
+  @ViewChild('titleTemplate', {static: true})
   titleTpl: TemplateRef<any>
   
   css_classes: string = 'sam title';

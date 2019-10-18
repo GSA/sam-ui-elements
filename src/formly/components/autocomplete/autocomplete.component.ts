@@ -20,7 +20,7 @@ import { AbstractSamFormly } from '../../sam-formly';
  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SamFormlyAutocomplete extends AbstractSamFormly {
-  @ViewChild(SamAutocompleteComponent, {static: false})
+  @ViewChild(SamAutocompleteComponent, {static: true})
   public template: SamAutocompleteComponent;
 
   constructor (_cdr: ChangeDetectorRef) {

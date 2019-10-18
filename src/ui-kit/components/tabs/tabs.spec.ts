@@ -17,9 +17,9 @@ import {
 `
 })
 class TabsDefault {
-  @ViewChild('tabs', {static: false}) comp: SamTabsComponent;
-  @ViewChild('tabs', {static: false}) tab1: SamTabComponent;
-  @ViewChild('tabs', {static: false}) tab2: SamTabComponent;
+  @ViewChild('tabs', {static: true}) comp: SamTabsComponent;
+  @ViewChild('tabs', {static: true}) tab1: SamTabComponent;
+  @ViewChild('tabs', {static: true}) tab2: SamTabComponent;
 }
 
 describe('The Sam Tabs component', () => {

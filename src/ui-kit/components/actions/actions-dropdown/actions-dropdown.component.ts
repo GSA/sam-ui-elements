@@ -49,7 +49,7 @@ export class SamActionsDropdownComponent {
 
   @ViewChildren('actionsList') public actionsList;
 
-  @ViewChild('actionButton', {static: false}) public actionButton;
+  @ViewChild('actionButton', {static: true}) public actionButton;
 
   showActions = false;
   focusIndex = -1;

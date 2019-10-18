@@ -30,7 +30,7 @@ import { SamClickOutsideDirective } from './click-outside.directive';
 })
 class TestComponent {
     @Output() action: EventEmitter<any> = new EventEmitter<any>();
-    @ViewChild('var', {static: false}) var;
+    @ViewChild('var', {static: true}) var;
     clickOutsideHandler() {
         this.action.emit(true);
     }

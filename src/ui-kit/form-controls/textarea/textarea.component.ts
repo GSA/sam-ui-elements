@@ -112,7 +112,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
    */
   @Output() inputChange: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild(LabelWrapper, {static: false}) wrapper: LabelWrapper;
+  @ViewChild(LabelWrapper, {static: true}) wrapper: LabelWrapper;
 
   public characterCounterMsg: string;
   public onChange: any = (_) => undefined;

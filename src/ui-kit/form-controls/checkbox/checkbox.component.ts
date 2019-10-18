@@ -90,7 +90,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild(FieldsetWrapper, {static: false})
+  @ViewChild(FieldsetWrapper, {static: true})
   public wrapper: FieldsetWrapper;
   activeOptions = 0;
   /*

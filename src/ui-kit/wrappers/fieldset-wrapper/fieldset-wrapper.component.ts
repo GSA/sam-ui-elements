@@ -50,7 +50,7 @@ export class FieldsetWrapper {
    * toggles the required text
    */
   @Input() public required: boolean = false;
-  @ViewChild('hintContainer', {static: false}) public hintContainer: any;
+  @ViewChild('hintContainer', {static: true}) public hintContainer: any;
   public showToggle: boolean = false;
   private toggleOpen: boolean = false;
   private lineSize: number;

@@ -19,7 +19,7 @@ import { SamPageNextService } from '../architecture';
 export class SamMainComponent implements AfterContentInit {
   @HostBinding('class') public classes = 'sam-main';
 
-  @ContentChild(forwardRef(() => SamFilterDrawerComponent), {static: false})
+  @ContentChild(forwardRef(() => SamFilterDrawerComponent), {static: true})
     public drawer: SamFilterDrawerComponent;
 
   constructor (protected _service: SamPageNextService) {}

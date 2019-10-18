@@ -94,10 +94,10 @@ export class SamDateComponent
   */
   @Output() public blur = new EventEmitter<any>();
 
-  @ViewChild('month', {static: false}) public month;
-  @ViewChild('day', {static: false}) public day;
-  @ViewChild('year', {static: false}) public year;
-  @ViewChild('wrapper', {static: false}) public wrapper;
+  @ViewChild('month', {static: true}) public month;
+  @ViewChild('day', {static: true}) public day;
+  @ViewChild('year', {static: true}) public year;
+  @ViewChild('wrapper', {static: true}) public wrapper;
 
   public allowChars = [
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',

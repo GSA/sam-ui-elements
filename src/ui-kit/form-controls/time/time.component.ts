@@ -65,10 +65,10 @@ export class SamTimeComponent
   */
   @Input() public useFormService: boolean;
 
-  @ViewChild(LabelWrapper, {static: false}) public wrapper: LabelWrapper;
-  @ViewChild('hour', {static: false}) public hourV;
-  @ViewChild('minute', {static: false}) public minuteV;
-  @ViewChild('ampm', {static: false}) public ampmV;
+  @ViewChild(LabelWrapper, {static: true}) public wrapper: LabelWrapper;
+  @ViewChild('hour', {static: true}) public hourV;
+  @ViewChild('minute', {static: true}) public minuteV;
+  @ViewChild('ampm', {static: true}) public ampmV;
 
   public value: string = undefined;
   public hours: number = undefined;

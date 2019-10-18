@@ -23,17 +23,17 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
   /**
    * Ul list of elements 
    */
-  @ViewChild('resultsList', {static: false}) resultsListElement: ElementRef;
+  @ViewChild('resultsList', {static: true}) resultsListElement: ElementRef;
 
   /**
    * input control 
    */
-  @ViewChild('input', {static: false}) input: ElementRef;
+  @ViewChild('input', {static: true}) input: ElementRef;
 
   /**
    * Screen read field
    */
-  @ViewChild('srOnly', {static: false}) srOnly: ElementRef;
+  @ViewChild('srOnly', {static: true}) srOnly: ElementRef;
 
   /**
    * Allow to insert a customized template for suggestions to use

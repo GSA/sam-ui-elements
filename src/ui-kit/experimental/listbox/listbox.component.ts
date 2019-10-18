@@ -75,12 +75,12 @@ export class SamListBoxComponent implements ControlValueAccessor {
   /**
 * Screen read field
 */
-  @ViewChild('srOnly', {static: false}) srOnly: ElementRef;
+  @ViewChild('srOnly', {static: true}) srOnly: ElementRef;
 
   /**
 * Ul list of elements 
 */
-  @ViewChild('checkboxList', {static: false}) checkboxListElement: ElementRef;
+  @ViewChild('checkboxList', {static: true}) checkboxListElement: ElementRef;
 
   /**
 * Mode to determine if single or multiple selection
@@ -106,7 +106,7 @@ export class SamListBoxComponent implements ControlValueAccessor {
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild(FieldsetWrapper, {static: false})
+  @ViewChild(FieldsetWrapper, {static: true})
   public wrapper: FieldsetWrapper;
   /*
    * We want our model to list the checked items in the order that they appear

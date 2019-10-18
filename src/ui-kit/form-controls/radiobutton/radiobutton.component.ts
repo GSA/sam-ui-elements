@@ -69,7 +69,7 @@ export class SamRadioButtonComponent  {
   */
   @Output() public modelChange: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild(FieldsetWrapper, {static: false}) public wrapper: FieldsetWrapper;
+  @ViewChild(FieldsetWrapper, {static: true}) public wrapper: FieldsetWrapper;
 
   public disabled = undefined;
 
