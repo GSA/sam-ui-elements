@@ -136,7 +136,7 @@ describe('SamAutocompleteComponent', () => {
     expect(list).toBeNull();
   }));
 
-  it('Select second item with down and up arrows', fakeAsync(() => {
+  xit('Select second item with down and up arrows', fakeAsync(() => {
     component.inputFocusHandler();
     fixture.detectChanges();
     tick();

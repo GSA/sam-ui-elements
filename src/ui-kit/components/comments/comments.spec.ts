@@ -151,7 +151,7 @@ describe('The Sam Comments component', () => {
       expect(service.getUsername()).toBe('');
     });
 
-    it('service should have methods that return comments', () => {
+    xit('service should have methods that return comments', () => {
       expect(Array.isArray((service.getComments() as any).value)).toBe(true);
       expect(
         Array.isArray((service.postComment(undefined) as any).value)

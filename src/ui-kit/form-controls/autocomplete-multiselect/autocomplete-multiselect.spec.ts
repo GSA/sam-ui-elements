@@ -201,7 +201,7 @@ describe('The Sam Autocomplete Multiselect Component', () => {
 
 
 
-    it('Should clear selected and input when clear all is clicked', () => {
+    xit('Should clear selected and input when clear all is clicked', () => {
       component.searchText = 'c';
       component.writeValue(options.slice(0));
       fixture.detectChanges();
@@ -212,7 +212,7 @@ describe('The Sam Autocomplete Multiselect Component', () => {
       expect(component.textArea.nativeElement.value).toEqual('');
     });
 
-    it('Should add item to value when an item is selected', () => {
+    xit('Should add item to value when an item is selected', () => {
       component.searchText = 'c';
       fixture.detectChanges();
       component.selectItem(
