@@ -820,6 +820,7 @@ export class SamAutocompleteComponent
     }
     this.filteredKeyValuePairs = null;
     this.results = null;
+    this.inputValue = "";
     this.input.nativeElement.value = '';
     this.innerValue = '';
     this.propogateChange(null);
