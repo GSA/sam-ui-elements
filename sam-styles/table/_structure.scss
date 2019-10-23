@@ -207,6 +207,46 @@ sam-header-cell{
 }
 
 /**
+* sam-styles custom for tertiary datatable
+*/
+sam-datatable.sam-datatable--light {
+  overflow-x: scroll;
+  overflow-y: scroll;
+
+  width: inherit;
+  height: 400px;
+
+  .sam-header-row {
+    background-color: #f5f6f7;
+
+    th {
+      color: black;
+
+      &:hover {
+        color: black;
+      }
+      &:active {
+        color: primary;
+      }
+    }
+
+    th:hover {
+      color: black;
+    }
+  }
+
+  tr {
+    border: 1px solid #999;
+  }
+
+  sam-cell{
+    border-right: 1px solid #999;
+    text-align: left;
+    height: 100%;
+  }
+}
+
+/**
 * BASIC SAM TABLE
 */
 .sam-header--basic {
