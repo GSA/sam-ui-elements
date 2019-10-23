@@ -130,7 +130,7 @@ export class SamDateTimeComponent
   }
 
   onInputChange(): void {
-    if (this.dateComponent.isClean() && this.timeComponent.isClean()) {
+    if (this.dateComponent.isEmptyField() && this.timeComponent.isEmptyField()) {
       this.emitChanges(undefined);
     } else if (this.dateComponent.isValid() && this.timeComponent.isValid()) {
       this.emitChanges(`${this.date}T${this.time}`);

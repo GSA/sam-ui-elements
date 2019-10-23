@@ -2,7 +2,7 @@
   <div class="input-container">
     <div role="combobox" [attr.id]="configuration.id+'-container'" [attr.aria-expanded]="showResults"
       [attr.aria-owns]="showResults? configuration.id+ '-listbox' : undefined" aria-haspopup="listbox">
-      <input [disabled]="disabled" (ngModelChange)="textChange($event)" class="sam input" #input
+      <input (input)="textChange($event)" [disabled]="disabled" class="sam input" #input
         [attr.id]="configuration.id" type="text" (focus)="inputFocusHandler()" (keydown)="onKeydown($event)"
         [(ngModel)]="inputValue" aria-autocomplete="list" [attr.placeholder]="configuration.autocompletePlaceHolderText"
         [attr.aria-activedescendant]="showResults? configuration.id+'-resultItem-'+highlightedIndex :''"

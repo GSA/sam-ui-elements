@@ -143,6 +143,15 @@ describe('The Sam Date component', () => {
       expect(component.year.nativeElement.value).toBe('2016');
     });
 
+    it('should fire change events if prepopulated and at least one field is not pristine', function(){
+      component.isDateTouched = false;
+      component.isMonthTouched = false;
+      component.isYearTouched = true;
+      component.valueChange.subscribe((data)=>{
+        expect(data).toBe("2016-12-29");
+      });
+      component.onChangeHandler();
+    });
   });
 
   describe('Tab key tests', () => {
@@ -218,7 +227,7 @@ describe('The Sam Date component', () => {
         expect(component.day.nativeElement.value).toBe('29');
         expect(component.year.nativeElement.value).toBe('2016');
         expect(component.isValid()).toBe(true);
-        expect(component.isClean()).toBe(false);
+        expect(component.isEmptyField()).toBe(false);
   //    });
     });
   

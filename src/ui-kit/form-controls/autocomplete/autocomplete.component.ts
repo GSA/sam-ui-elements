@@ -46,11 +46,11 @@ export interface SamCache {
 })
 export class SamAutocompleteComponent
   implements ControlValueAccessor, OnChanges, OnDestroy, SamCache {
-  @ViewChild('resultsList', {static: true}) resultsList: ElementRef;
-  @ViewChild('resultsListKV', {static: true}) resultsListKV: ElementRef;
-  @ViewChild('input', {static: true}) input: ElementRef;
-  @ViewChild('srOnly', {static: true}) srOnly: ElementRef;
-  @ViewChild('wrapper', {static: true}) wrapper;
+    @ViewChild('resultsList', {static: true}) resultsList: ElementRef;
+    @ViewChild('resultsListKV', {static: true}) resultsListKV: ElementRef;
+    @ViewChild('input', {static: true}) input: ElementRef;
+    @ViewChild('srOnly', {static: true}) srOnly: ElementRef;
+    @ViewChild('wrapper', {static: true}) wrapper;
 
   /**
   * Sets the name attribute
@@ -148,7 +148,7 @@ export class SamAutocompleteComponent
    ></sam-autocomplete>
 
    class SomeComponent {
-     @ViewChild('autoComplete', {static: true}) autoComplete: SamAutocompleteComponent;
+     @ViewChild('autoComplete') autoComplete: SamAutocompleteComponent;
 
      ngOnInit() {
        this.request = this.autoComplete.keyEvents
@@ -820,6 +820,7 @@ export class SamAutocompleteComponent
     }
     this.filteredKeyValuePairs = null;
     this.results = null;
+    this.inputValue = "";
     this.input.nativeElement.value = '';
     this.innerValue = '';
     this.propogateChange(null);

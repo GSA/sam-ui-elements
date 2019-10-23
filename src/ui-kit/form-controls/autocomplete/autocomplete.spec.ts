@@ -269,6 +269,7 @@ describe('The Sam Autocomplete Component', () => {
       component.setSelected('Alabama');
       component.clearInput();
       expect(component.innerValue).toBeFalsy();
+      expect(component.inputValue).toBeFalsy();
     });
 
     xit('Should handle keyup', () => {

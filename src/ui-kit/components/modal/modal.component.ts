@@ -67,6 +67,10 @@ export class SamModalComponent implements OnInit {
    * Set the title Icon
    */
   @Input() icon: IconProp;
+    /**
+   * Sets the modal button 
+   */
+  @Input() buttonPosition: string = 'center';
   /**
    * (deprecated) Emitted event when modal is opened
    */
@@ -96,6 +100,7 @@ export class SamModalComponent implements OnInit {
   @ViewChild('modalContent', {static: true}) public modalContent: ElementRef;
   @ViewChild('closeButton', {static: true}) public closeButton: ElementRef;
   public show = false;
+  public clickOutsideReady = false;
   public types: any = {
     'success': { class: 'usa-alert-success', sr: 'success alert' },
     'warning': { class: 'usa-alert-warning', sr: 'warning alert' },
@@ -198,6 +203,7 @@ export class SamModalComponent implements OnInit {
     //   this.removeBackdrop();
     // }
     this.show = false;
+    this.clickOutsideReady = false;
     this.cdr.detach();
   }
 
@@ -233,7 +239,12 @@ export class SamModalComponent implements OnInit {
     this._focusModalElement = true;
 
     this.set5082();
-
+    // for some reason cdr detectchanges still processes click event used to open the modal, 
+    // so clickoutside fires when the modal opens and closes it immediately
+    // setTimeout works though
+    window.setTimeout(()=>{
+      this.clickOutsideReady = true;
+    });
   }
 
   set5082() {
@@ -314,6 +325,7 @@ export class SamModalComponent implements OnInit {
   closeModal(emit: boolean = true) {
     this.enableScroll();
     this.show = false;
+    this.clickOutsideReady = false;
     if (emit) {
       this.onClose.emit(this.args);
       this.close.emit(this.args);
@@ -344,10 +356,6 @@ export class SamModalComponent implements OnInit {
     // if (document && document.body) {
     //   document.body.removeChild(this.backdropElement);
     // }
-  }
-
-  private preventClosing(evt) {
-    evt.stopPropagation();
   }
   private setModalElementIds() {
     if (this.id) {
