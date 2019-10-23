@@ -15,6 +15,8 @@ import { SamBannerModule } from './banner';
 import { SamBreadcrumbsModule } from './breadcrumbs';
 import { SamDownloadModule } from './download';
 import { SamHeaderModule } from './header';
+import { SamHeaderNextModule } from './header-next';
+import { SamFooterNextModule } from './footer-next';
 import { SamHistoryModule } from './history';
 import { SamModalModule } from './modal';
 import { SamMultiSelectDropdownModule } from './multiselect-dropdown';
@@ -32,8 +34,6 @@ import { SamActionButtonModule } from './actions/action-button';
 import { SamActionDropdownModule } from './actions/actions-dropdown';
 import { SamDataTableModule } from './data-table';
 import { SamPageTitleModule } from './page-title';
-import { SamHeaderNextModule } from './header-next';
-import { SamFooterNextModule } from './footer-next';
 
 @NgModule({
   imports: [
@@ -52,6 +52,8 @@ import { SamFooterNextModule } from './footer-next';
     SamDataTableModule,
     SamBannerModule,
     SamHeaderModule,
+    SamHeaderNextModule,
+    SamFooterNextModule,
     SamModalModule,
     SamBreadcrumbsModule,
     SamProgressModule,
@@ -82,6 +84,8 @@ import { SamFooterNextModule } from './footer-next';
     SamBreadcrumbsModule,
     SamDownloadModule,
     SamHeaderModule,
+    SamHeaderNextModule,
+    SamFooterNextModule,
     SamHistoryModule,
     SamModalModule,
     SamMultiSelectDropdownModule,
@@ -96,8 +100,6 @@ import { SamFooterNextModule } from './footer-next';
     SamImageModule,
     SamDataTableModule,
     SamPageTitleModule,
-    SamHeaderNextModule,
-    SamFooterNextModule
   ]
 })
 export class SamComponentsModule {}
