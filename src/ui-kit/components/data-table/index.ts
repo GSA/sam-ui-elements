@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {CdkTableModule} from '@angular/cdk';
+import {CdkTableModule} from '@angular/cdk/table';
 import {SamDataTableComponent} from './data-table.component';
 import {SamCellDirective, SamHeaderCellDirective} from './cell.component';
 import {SamHeaderRowComponent, SamRowComponent} from './row.component';
