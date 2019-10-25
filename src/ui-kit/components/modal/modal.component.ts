@@ -72,6 +72,11 @@ export class SamModalComponent implements OnInit {
    */
   @Input() buttonPosition: string = 'center';
   /**
+   * Sets the modal condensed styles
+   */
+  @Input() condensed: boolean = false;
+
+  /**
    * (deprecated) Emitted event when modal is opened
    */
   @Output() onOpen: EventEmitter<any> = new EventEmitter<any>();
