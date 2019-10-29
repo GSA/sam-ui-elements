@@ -17,6 +17,11 @@ export interface SAMSDSHiercarchicalServiceResult {
      * 
      */
     totalItems: number;
+
+    /**
+     * 
+     */
+    srMessage?: string;
 }
 
 export class SDSHiercarchicalServiceSearchItem {

@@ -345,7 +345,11 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
               this.highlightedIndex = 0;
               this.setHighlightedItem(this.results[this.highlightedIndex]);
               this.showResults = true;
-              this.addScreenReaderMessage(this.maxResults + ' ' + this.resultsAvailableMessage);
+              if(result.srMessage){
+                this.addScreenReaderMessage(result.srMessage);
+              } else {
+                this.addScreenReaderMessage(this.maxResults + ' ' + this.resultsAvailableMessage);
+              }              
               this._changeDetectorRef.markForCheck();
             });
         }, this.configuration.debounceTime);
