@@ -17,6 +17,6 @@ template: `
 `,
 })
 export class FilterWrapperComponent extends FieldWrapper {
-@ViewChild('fieldComponent', {read: ViewContainerRef, static: false})
+@ViewChild('fieldComponent', {read: ViewContainerRef, static: true})
   public fieldComponent: ViewContainerRef;
 }

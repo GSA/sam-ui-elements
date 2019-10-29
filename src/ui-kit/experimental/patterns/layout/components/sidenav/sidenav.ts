@@ -23,6 +23,7 @@ import {
   NgZone,
   OnDestroy,
   Inject,
+  ChangeDetectorRef
 } from '@angular/core';
 import {Directionality} from '@angular/cdk/bidi';
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
@@ -140,6 +141,7 @@ export class MdSidenav implements AfterContentInit, OnDestroy {
    */
   constructor(private _elementRef: ElementRef,
               private _focusTrapFactory: FocusTrapFactory,
+              public cdr: ChangeDetectorRef,
               @Optional() @Inject(DOCUMENT) private _doc: any) {
     this.onOpen.subscribe(() => {
       if (this._doc) {
@@ -174,13 +176,16 @@ export class MdSidenav implements AfterContentInit, OnDestroy {
   ngAfterContentInit() {
     this._focusTrap = this._focusTrapFactory.create(this._elementRef.nativeElement);
     this._focusTrap.enabled = this.isFocusTrapEnabled;
+    this.cdr.detectChanges();
 
     // This can happen when the sidenav is set to opened in
     // the template and the transition hasn't ended.
     if (this._toggleAnimationPromise && this._resolveToggleAnimationPromise) {
       this._resolveToggleAnimationPromise(true);
       this._toggleAnimationPromise = this._resolveToggleAnimationPromise = null;
+      this.cdr.detectChanges();
     }
+    this.cdr.detectChanges();
   }
 
   ngOnDestroy() {
@@ -387,7 +392,8 @@ export class MdSidenavContainer implements AfterContentInit {
     this._validateDrawers();
 
     // Give the view a chance to render the initial state, then enable transitions.
-    first.call(this._ngZone.onMicrotaskEmpty).subscribe(() => this._enableTransitions = true);
+    this._sidenavs.changes.subscribe(() =>
+    first.call(this._ngZone.onMicrotaskEmpty).subscribe(() => this._enableTransitions = true));
   }
 
   /** Calls `open` of both start and end sidenavs */

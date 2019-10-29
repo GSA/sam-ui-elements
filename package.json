@@ -42,7 +42,7 @@
     "@fortawesome/free-regular-svg-icons": "5.10.2",
     "@fortawesome/free-solid-svg-icons": "5.10.2",
     "@gsa-sam/sam-styles": "0.0.34",
-    "@ngx-formly/core": "^2.1.1",
+    "@ngx-formly/core": "5.5.1",
     "accessible-html5-video-player": "^1.0.3",
     "core-js": "2.4.1",
     "ie-shim": "0.1.0",
