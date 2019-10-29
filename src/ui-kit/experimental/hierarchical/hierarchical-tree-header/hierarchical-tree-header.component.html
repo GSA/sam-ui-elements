@@ -1,0 +1,27 @@
+<div class="sam-hierarchical-tree-header">
+  <!-- Hierarchy Navigator -->
+  <!-- <div class="hierarchy-views">
+    <h4> Views </h4>
+    <div class="views icon">
+      <a>
+        <img> Card
+      </a>
+    </div>
+    <div class="views icon">
+      <a>
+        <img> List
+      </a>
+    </div>
+  </div> -->
+
+  <button type="button" class="order-results" (click)="navigateToParent()">Up</button>
+
+  <!-- Agency Level Selector -->
+  <sam-select [(ngModel)]="selectModel" (change)="onLevelChange($event)" name="levelSelect" class="levelSelect"
+    [options]="options">
+  </sam-select>
+
+  <!-- Search Control -->
+  <input (keyup)="onKeyup($event)" #filter aria-label="search" [attr.placeholder]="configuration.filterPlaceholderText"
+    autocomplete="off" [(ngModel)]="filterText">
+</div>

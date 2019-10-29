@@ -1,0 +1,19 @@
+.hierarchical.template{
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  align-items: stretch;
+}
+sam-hierarchical-tree-header{
+  padding: 10px;
+  width: 100%;
+  position: relative;
+  align-self: stretch;
+}
+sam-hierarchical-tree-grid{
+  //padding: 10px;
+  width: 100%;
+  position: relative;
+}

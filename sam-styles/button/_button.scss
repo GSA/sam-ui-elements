@@ -1,10 +1,6 @@
+@mixin sam-button-theme($theme) {}
 
-
-@mixin sam-button-theme($theme) {
-  
-}
-
-.sam.button{
+.sam.button {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   margin-top: 8.5px;
@@ -25,180 +21,243 @@
   text-align: center;
   text-decoration: none;
   width: auto;
+  white-space: nowrap;
 }
-
 // Primary
-.sam.button.primary{
+
+.sam.button.primary {
   color: white;
   background-color: #0071bc;
 }
 
-.sam.button.primary:hover,
-.sam.button.primary.hover{
+.sam.button.primary.hover,
+.sam.button.primary:hover {
   background-color: #205493;
 }
 
-.sam.button.primary:active,
-.sam.button.primary.active{
+.sam.button.primary.active,
+.sam.button.primary:active {
   background-color: #112e51;
 }
 
-.sam.button.primary:focus,
-.sam.button.primary.focus{
+.sam.button.primary.focus,
+.sam.button.primary:focus {
   outline: 2px dotted #aeb0b5;
   outline-offset: 3px;
   box-shadow: none;
 }
 
-.sam.button.primary:disabled,
-.sam.button.primary.disabled{
+.sam.button.primary.disabled,
+.sam.button.primary:disabled {
   background-color: #d6d7d9;
   pointer-events: none;
 }
 
-.sam.button.primary.small{
+.sam.button.primary.small {
   font-weight: 700;
   font-size: 14px;
   line-height: 1;
 }
-
 // Secondary
-.sam.button.secondary{
+
+.sam.button.secondary {
   color: #0071bc;
   background-color: transparent;
 }
 
-.sam.button.secondary:hover,
-.sam.button.secondary.hover{
+.sam.button.secondary.hover,
+.sam.button.secondary:hover {
   color: #205494;
   background-color: transparent;
 }
 
-.sam.button.secondary:active,
-.sam.button.secondary.active{
+.sam.button.secondary.active,
+.sam.button.secondary:active {
   color: #112e51;
   background-color: transparent;
 }
 
-.sam.button.secondary:focus,
-.sam.button.secondary.focus{
+.sam.button.secondary.focus,
+.sam.button.secondary:focus {
   outline: 2px dotted #aeb0b5;
   outline-offset: 3px;
   box-shadow: none;
 }
 
-.sam.button.secondary:disabled,
-.sam.button.secondary.disabled{
+.sam.button.secondary.disabled,
+.sam.button.secondary:disabled {
   color: #d6d7d9;
   background-color: transparent;
   pointer-events: none;
 }
 
-.sam.button.secondary.small{
+.sam.button.secondary.small {
   font-weight: 700;
   font-size: 14px;
   line-height: 1;
 }
-
 //Secondary Inverted
-.sam.button.inverted.secondary{
-  color: rgba(255, 255, 255, 0.8);;
+
+.sam.button.inverted.secondary {
+  color: rgba(255, 255, 255, 0.8);
   background-color: transparent;
 }
 
-.sam.button.inverted.secondary:hover,
-.sam.button.inverted.secondary.hover{
+.sam.button.inverted.secondary.hover,
+.sam.button.inverted.secondary:hover {
   color: rgba(255, 255, 255, 0.9);
   background-color: transparent;
 }
 
-.sam.button.inverted.secondary:active,
-.sam.button.inverted.secondary.active{
+.sam.button.inverted.secondary.active,
+.sam.button.inverted.secondary:active {
   color: rgba(255, 255, 255, 1);
   background-color: transparent;
 }
 
-.sam.button.inverted.secondary:focus,
-.sam.button.inverted.secondary.focus{
+.sam.button.inverted.secondary.focus,
+.sam.button.inverted.secondary:focus {
   outline: 2px dotted #aeb0b5;
   outline-offset: 3px;
   box-shadow: none;
 }
 
-.sam.button.inverted.secondary:disabled,
-.sam.button.inverted.secondary.disabled{
-  color: rgba(255, 255, 255, 0.4);;
+.sam.button.inverted.secondary.disabled,
+.sam.button.inverted.secondary:disabled {
+  color: rgba(255, 255, 255, 0.4);
   background-color: transparent;
   pointer-events: none;
 }
-
-
 // Tertiary
-.sam.button.tertiary{
+
+.sam.button.tertiary {
   color: #323a45;
   background-color: transparent;
 }
 
-.sam.button.tertiary:hover,
-.sam.button.tertiary.hover{
+.sam.button.tertiary.hover,
+.sam.button.tertiary:hover {
   color: #205494;
   background-color: transparent;
 }
 
-.sam.button.tertiary:active,
-.sam.button.tertiary.active{
+.sam.button.tertiary.active,
+.sam.button.tertiary:active {
   color: #112e51;
   background-color: transparent;
 }
 
-.sam.button.tertiary:focus,
-.sam.button.tertiary.focus{
+.sam.button.tertiary.focus,
+.sam.button.tertiary:focus {
   outline: 2px dotted #aeb0b5;
   outline-offset: 3px;
   box-shadow: none;
 }
 
-.sam.button.tertiary:disabled,
-.sam.button.tertiary.disabled{
+.sam.button.tertiary.disabled,
+.sam.button.tertiary:disabled {
   color: #d6d7d9;
   background-color: transparent;
   pointer-events: none;
 }
 
-.sam.button.tertiary.small{
+.sam.button.tertiary.small {
   font-weight: 700;
   font-size: 14px;
   line-height: 1;
 }
-
 //Tertiary Inverted
-.sam.button.inverted.tertiary{
-  color: rgba(255, 255, 255, 0.8);;
+
+.sam.button.inverted.tertiary {
+  color: rgba(255, 255, 255, 0.8);
   background-color: transparent;
 }
 
-.sam.button.inverted.tertiary:hover,
-.sam.button.inverted.tertiary.hover{
+.sam.button.inverted.tertiary.hover,
+.sam.button.inverted.tertiary:hover {
   color: rgba(255, 255, 255, 0.9);
   background-color: transparent;
 }
 
-.sam.button.inverted.tertiary:active,
-.sam.button.inverted.tertiary.active{
+.sam.button.inverted.tertiary.active,
+.sam.button.inverted.tertiary:active {
   color: rgba(255, 255, 255, 1);
   background-color: transparent;
 }
 
-.sam.button.inverted.tertiary:focus,
-.sam.button.inverted.tertiary.focus{
+.sam.button.inverted.tertiary.focus,
+.sam.button.inverted.tertiary:focus {
   outline: 2px dotted #aeb0b5;
   outline-offset: 3px;
   box-shadow: none;
 }
 
-.sam.button.inverted.tertiary:disabled,
-.sam.button.inverted.tertiary.disabled{
-  color: rgba(255, 255, 255, 0.4);;
+.sam.button.inverted.tertiary.disabled,
+.sam.button.inverted.tertiary:disabled {
+  color: rgba(255, 255, 255, 0.4);
   background-color: transparent;
   pointer-events: none;
+}
+//Next button
+
+.sam.button.next {
+  color: black;
+  background-color: #e3f5e1;
+  border: 2px solid #70e17b;
+  border-radius: 5px;
+}
+
+.sam.button.next:hover {
+  background-color: #70e17b;
+}
+//Feedback Button
+
+.feedback-btn {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.feedback-btn--label {
+  font-size: 24px;
+  margin: 10px;
+}
+
+.feedback-btn--shape {
+  background-color: #00bde3;
+  color: black;
+  padding: 15px 25px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.sam-icon-button {
+  height: 70px;
+  width: 100px;
+  background-color: white;
+  border: solid 1px lightgray;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 0 5px;
+
+  &:hover {
+    background-color: white;
+    box-shadow: 0 0 8px #999999;
+  }
+
+  i {
+    display: block;
+    margin: auto;
+    color: #0071bc;
+  }
+
+  span {
+    display: block;
+    text-align: center;
+    color: black;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 5px;
+  }
 }

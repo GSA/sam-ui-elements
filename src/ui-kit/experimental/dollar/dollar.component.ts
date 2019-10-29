@@ -5,19 +5,15 @@ import {
     ViewChild,
     forwardRef,
     Output,
-    EventEmitter,
-    OnInit,
-    OnDestroy,
-    AfterViewInit
+    EventEmitter
   } from '@angular/core';
 import {
   NG_VALUE_ACCESSOR,
-  ControlValueAccessor,
-  FormControl,
   Validators,
   ValidatorFn
 } from '@angular/forms';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { SamFormService } from '../../form-service';
 import { KeyHelper } from '../../utilities/key-helper/key-helper';
@@ -52,6 +48,7 @@ export class SamDollarComponent extends SamFormControl {
   strictMaxLength = 16;
   attrType = 'text';
   previousValue = null;
+  blurDisabled = false;
   private ngUnsubscribe: Subject<any> = new Subject();
 
   constructor(public samFormService: SamFormService,
@@ -86,7 +83,11 @@ export class SamDollarComponent extends SamFormControl {
     this.control.setValidators(validators);
 
     if (!this.useFormService) {
-      this.control.statusChanges.takeUntil(this.ngUnsubscribe).subscribe(() => {
+      this.control.statusChanges
+      .pipe(
+        takeUntil(this.ngUnsubscribe)
+      )
+      .subscribe(() => {
         this.wrapper.formatErrors(this.control);
         this.cdr.detectChanges();
       });
@@ -127,9 +128,17 @@ export class SamDollarComponent extends SamFormControl {
       this.value = this.dollarToStr(this.value);
       this.cdr.detectChanges();
       this.attrType = 'number';
+      this.blurDisabled = true;
+      // firefox emits blur event when it switches, temporarily disabling blur handling
+      window.setTimeout(()=>{
+        this.blurDisabled = false;
+      });
   }
 
   public onLoseFocus() {
+    if(this.blurDisabled){
+      return;
+    }
     this.attrType = 'text';
     const value = this.strToDollar(this.value);
     if (value !== this.previousValue) {
@@ -142,7 +151,8 @@ export class SamDollarComponent extends SamFormControl {
   }
 
   public dollarToStr(value) {
-    let strValue = value.replace(/\$/g, '');
+    let strValue = value ? value : "";
+    strValue = strValue.replace(/\$/g, '');
     strValue = strValue.replace(/,/g, '');
     return strValue;
   }
@@ -161,6 +171,9 @@ export class SamDollarComponent extends SamFormControl {
   }
 
   public strToDollar(value) {
+    if(!value){
+      return "";
+    }
     let dollarVal = value.trim();
     if (dollarVal !== '') {
         dollarVal = this.roundForCurrency(dollarVal);

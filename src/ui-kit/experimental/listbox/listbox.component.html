@@ -1,0 +1,22 @@
+<div>
+  <ng-container *ngTemplateOutlet="listTemplate"></ng-container>
+</div>
+
+<ng-template #listTemplate> 
+  <sam-fieldset-wrapper [label]="label" [hint]="hint" [errorMessage]="errorMessage" [required]="required">
+    <div id="listboxgroup-lable" (keydown)="onKeyDown($event)">
+      <ul role="listboxgroup" tabindex="0" aria-labelledby="listboxgroup-lable" #checkboxList class="usa-unstyled-list checkbox-container">
+
+        <li (mouseenter)="onHover(i)" [class]="option['highlighted']? 'selected-item':''" *ngFor="let option of options; let i = index;"
+          role="option" aria-checked="false">
+
+          <input [disabled]="option.disabled || disabled?'disabled':null " [attr.id]="option.name" [attr.value]="option.value" [attr.type]="optionsMode"
+            [attr.aria-label]="option.name" [required]="option.required" [checked]="option.checked" name="option"
+            (change)="onChecked($event,option)">
+          <label [attr.for]="option.name">{{option.label}}</label>
+        </li>
+      </ul>
+      <ul #srOnly class="usa-sr-only" aria-live="assertive" aria-relevant="additions"></ul>
+    </div>
+  </sam-fieldset-wrapper>
+</ng-template>

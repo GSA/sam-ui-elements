@@ -1,0 +1,49 @@
+/*******************************
+        USWDS HEADER
+*******************************/
+
+@import '~uswds/dist/scss/components/navigation';
+
+/*******************************
+        SDS OVERRIDES
+*******************************/
+
+@import '~@gsa-sam/sam-styles/src/stylesheets/components/navigation';
+
+/*******************************
+      SAM FRONTEND OVERRIDES
+*******************************/
+
+.usa-nav__primary {
+  .usa-nav__primary-item {
+    font-size: font-size($theme-navigation-font-family, 'md');
+    line-height: line-height($theme-navigation-font-family, 2);
+    @include at-media($theme-header-min-width) {
+      line-height: line-height($theme-navigation-font-family, 1);
+    }
+
+    a {
+      font-weight: font-weight('normal');
+      &:hover {
+        color: color('secondary');
+      }
+      @include at-media($theme-header-min-width) {
+        @include primary-nav-link;
+        color: color($nav-link-color);
+        display: block;
+      }
+    }
+  }
+}
+
+.usa-nav__secondary-links {
+  sam-header-nav-item {
+    @include at-media($theme-header-min-width) {
+      & + sam-header-nav-item .usa-nav__secondary-item::before {
+        color: color('base-lighter');
+        content: '|';
+        padding-right: units(0.5);
+      }
+    }
+  }
+}

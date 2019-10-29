@@ -16,54 +16,6 @@ $class: sam;
 /*----------------------
         Site
 -----------------------*/
-// html{
-//   font-size: 10px;
-//   -webkit-text-size-adjust: 100%;
-// }
-
-// body {
-//   font-family: $fontFamily;
-//   font-size: $fontSize;
-//   -webkit-font-smoothing: antialiased;
-//   -moz-osx-font-smoothing: grayscale;
-//   color: rgba(0,0,0,.7);
-//   line-height: 1.5em;
-//   text-rendering: optimizeLegibility;
-//   font-feature-settings: "pnum";
-//   font-variant-numeric: proportional-nums;
-//   overflow-x: hidden;
-// }
-
-// a {
-//     color: #0071bc;
-//     cursor: pointer;
-//     font-weight: 600;
-//     text-decoration: none;
-// }
-
-// a:hover{
-//   text-decoration: underline;
-// }
-
-// strong{
-//   font-weight: 600;
-// }
-
-// p{
-//   margin: 0 0 1em 0;
-// }
-
-// p.sam.paragraph.remove.margin{
-//   margin-bottom: 0;
-// }
-
-/*----------------------
-        Layout
------------------------*/
-// .#{$class}.master{
-//   display: grid;
-//   min-height: 100vh;
-// }
 
 .#{$class}.master > .header,
 .#{$class}.master > .footer{
@@ -71,12 +23,6 @@ $class: sam;
   font-weight: 600;
   padding: 1rem;
 }
-
-
-////////////////////////////////////////////////
-
-
-
 
 /*******************************
           Master Page

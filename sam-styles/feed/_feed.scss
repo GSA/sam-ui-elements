@@ -1,0 +1,43 @@
+// FEED
+// --------------------------------
+.sam.feed{
+  margin-top:5px;
+  margin-bottom: 15px;
+}
+
+.sam.feed > .event{
+  display: flex;
+  padding: 12px 15px;
+  border-bottom: 1px solid #D6D7D9;
+}
+
+.sam.feed>.event>.label{
+  padding-right: 15px;
+}
+
+.sam.feed>.event>.content{
+  width: 100%;
+}
+
+.sam.feed>.event>.content .summary{
+  line-height: 18px;
+}
+
+.sam.feed>.event>.content .summary>.action{
+  font-weight: 700;
+  color: #212121;
+}
+
+.sam.feed>.event>.content .summary>.date{
+  font-size: 13px;
+  background: #F1F1F1;
+  font-style: italic;
+  float: right;
+  padding: 0 5px;
+}
+
+.sam.feed>.event>.content .meta{
+  margin-top: 5px;
+  font-size: 14px;
+  line-height: 16px;
+}

@@ -1,0 +1,21 @@
+<dt role="heading" aria-level="3">
+    <button [attr.aria-expanded]="showSection" (click)="open()" class="sam-accordion-trigger" [attr.aria-controls]="id+'section'"
+        [attr.id]="id" type="button">
+        <span class="sam-accordion-icon">
+            <i [attr.class]="icon"></i>
+        </span>
+        <span class="sam-accordion-title">
+            {{title}}
+        </span>
+    </button>
+</dt>
+<dd [attr.id]="id+'section'" role="region" [attr.aria-labelledby]="id" [attr.class]="showSection? 'sam-accordion-panel display-block' : 'sam-accordion-panel display-none'">
+    <div>
+        <span class="close">
+            <span role="button" class="fa fa-chevron-circle-left fa-lg" tabindex="0" aria-label="Close section" aria-hidden="false" (click)="close()"
+                (keyup.enter)="close()">
+            </span>
+        </span>
+        <ng-content></ng-content>
+    </div>
+</dd>

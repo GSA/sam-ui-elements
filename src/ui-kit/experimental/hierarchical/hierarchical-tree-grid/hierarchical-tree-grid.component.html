@@ -1,0 +1,40 @@
+<div class="example-container usa-grid">
+  <ng-container *ngTemplateOutlet="gridData.length===0 ? noResults: gridTemplate"></ng-container>
+</div>
+
+<ng-template #noResults>
+  <div class="empty-results">
+    {{configuration.emptyResultText}}
+  </div>
+</ng-template>
+<ng-template #gridTemplate>
+  <div class="h-select-col" (scroll)="onScroll($event)">
+    <sam-datatable #table samSort [dataSource]="hierarchicalDataSource">
+      <ng-container cdkColumnDef="select">
+        <th sam-header-cell *cdkHeaderCellDef sam-sort-header>Select</th>
+        <td sam-cell *cdkCellDef="let row">
+          <div class="datatable-checkbox">
+            <input [attr.type]="selectionMode" [attr.id]="row[configuration.primaryKeyField]+'id'"
+              (change)="onChecked($event,row)" name="select">
+            <label
+              [attr.for]="row[configuration.primaryKeyField]+'id'">{{'Select '+ row[configuration.primaryTextField]}}
+            </label>
+            <button (click)="onRowChange($event,row)"
+              class="usa-sr-only">{{configuration.navigateScreenReaderText + ' '+row[configuration.primaryTextField]}}</button>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container *ngFor="let col of columnFieldName;let cIndex = index;" cdkColumnDef="{{col}}">
+        <th sam-header-cell *cdkHeaderCellDef sam-sort-header>
+          {{columnHeaderText[cIndex]}}
+        </th>
+        <td sam-cell *cdkCellDef="let row; let rIndex = index;"> {{row[col]}} </td>
+      </ng-container>
+
+      <tr sam-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+      <tr (click)="onRowChange($event,row)" sam-row *cdkRowDef="let row; columns: displayedColumns;
+        let first = first; let last = last; let even = even; let odd = odd"></tr>
+    </sam-datatable>
+  </div>
+</ng-template>

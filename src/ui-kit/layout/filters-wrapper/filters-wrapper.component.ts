@@ -13,6 +13,7 @@ import {
   
   import { SamPageNextService } from '../../experimental/patterns/layout/architecture';
   import { areEqual } from '../../utilities';
+  import { combineLatest } from 'rxjs';
   
   @Component({
     selector: 'sam-filters-wrapper',
@@ -109,8 +110,9 @@ import {
   
     private _initializeService () {
       if (this._service) {
-  
-        Observable.combineLatest(
+    
+
+        combineLatest(
           this.group.valueChanges,
           this._service.model.properties['filters'].valueChanges
         )

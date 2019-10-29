@@ -1,0 +1,15 @@
+.advanced-link{
+  font-weight: 600;
+  text-align: right;
+  display: block;
+  max-width: 460px;
+}
+
+.advanced-link-disabled{
+  color: #5b616b;
+  cursor: not-allowed;
+}
+
+.advanced-link-disabled:hover{
+  text-decoration: none;
+}
