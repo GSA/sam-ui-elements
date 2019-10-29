@@ -100,6 +100,14 @@ export class SamDateRangeComponent
      */
     @Input() id: string = '';
     /**
+     * From Date label parameter for date range components
+     */
+    @Input() fromDateLabel: string = 'From Date';
+    /**
+     * To Date label parameter for date range components
+     */
+    @Input() toDateLabel: string = 'To Date';
+    /**
      * (deprecated) Event emitted when value changes
      */
     @Output() valueChange = new EventEmitter<any>();
