@@ -3,7 +3,7 @@
 	(keydown.esc)="closeOnEscape ? closeModal() : 0" aria-labelledby="dialog-title" aria-describedby="dialog-description">
 	<div #modalContent class="modal-content" tabindex="-1" sam-click-outside (clickOutside)="closeOnOutsideClick && clickOutsideReady ? closeModal() : 0">
 		<div *ngIf="this.type !== 'primary'" class="usa-alert {{this.types[type].class}}">
-			<div [class]="((this.type == 'plain') && (condensed))? 'usa-alert-body plain-alert-body' : 'usa-alert-body'" class="usa-alert-body">
+			<div [class]="((this.type == 'plain') && (condensed))? 'usa-alert-body plain-alert-body' : 'usa-alert-body'">
 				<button #closeButton class="usa-button-link pull-right" *ngIf="showClose" (click)="closeModal()"><span
 						class="fa fa-times-circle" [attr.id]="modalElIds?.closeId"></span><span
 						class="usa-sr-only">close
