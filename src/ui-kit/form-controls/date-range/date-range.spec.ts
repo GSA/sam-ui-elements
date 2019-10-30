@@ -92,6 +92,18 @@ describe('The Sam Date Range component', () => {
       component.ngOnChanges();
       fixture.detectChanges();
     });
+
+    it('should take new label', () => {
+      component.fromDateLabel = 'From Created Date';
+      fixture.detectChanges();
+      expect(component.toDateLabel).toBe('From Created Date');
+    });
+
+    it('should take new label', () => {
+      component.toDateLabel = 'To Created Date';
+      fixture.detectChanges();
+      expect(component.toDateLabel).toBe('To Created Date');
+    });
   
     it('should initialize Date', function () {
       expect(true).toBe(true);
