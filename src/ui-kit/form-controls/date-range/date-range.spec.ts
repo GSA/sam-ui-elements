@@ -123,6 +123,19 @@ describe('The Sam Date Range component', () => {
       expect(component.endModel.day).toBe(1);
       expect(component.endModel.year).toBe(2017);
     });
+
+    it('should take new label', () => {
+      component.fromDateLabel = 'From Created Date';
+      fixture.detectChanges();
+      expect(component.toDateLabel).toBe('From Created Date');
+    });
+
+    it('should take new label', () => {
+      component.toDateLabel = 'To Created Date';
+      fixture.detectChanges();
+      expect(component.toDateLabel).toBe('To Created Date');
+    });
+    
   
     it('should implement controlvalueaccessor + work with custom validations', 
       () => {
