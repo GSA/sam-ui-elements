@@ -56,7 +56,7 @@
     </ul>
     <ng-container *ngIf="!input.disabled">
       <span class="close">
-        <span role="button" class="fa fa-close" aria-label="Clear input" aria-hidden="false" (click)="clearInput()"
+        <span tabindex="0" role="button" class="fa fa-close" aria-label="Clear input" aria-hidden="false" (click)="clearInput()"
           (keyup.enter)="clearInput()">
         </span>
       </span>
