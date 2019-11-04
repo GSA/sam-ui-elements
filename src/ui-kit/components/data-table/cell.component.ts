@@ -26,7 +26,7 @@ export class SamHeaderCellDirective extends _SamHeaderCellBase {
 /** Cell template container that adds the right classes and role. */
 /* tslint:disable */
 @Directive({
-  selector: 'sam-cell, td[sam-header-cell]'
+  selector: 'sam-cell, td[sam-cell]'
 })
 /* tslint:enable */
 export class SamCellDirective extends _SamCell {
