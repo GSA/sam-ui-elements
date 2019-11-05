@@ -543,12 +543,21 @@ export class SamDateComponent
     return `${this.name}_month`;
   }
 
+  monthNameDesc() {
+    return `${this.name}_month Enter Month Here`;
+  }
   dayName() {
     return `${this.name}_day`;
+  }
+  dayNameDesc() {
+    return `${this.name}_day Enter Day Here`;
   }
 
   yearName() {
     return `${this.name}_year`;
+  }
+  yearNameDesc() {
+    return `${this.name}_year Enter Year Here.`;
   }
 
   triggerTouch(ev) {
