@@ -8,6 +8,8 @@
         [attr.placeholder]="config?.placeholder" [attr.title]="config?.title" [attr.name]="name" type="text"
         (focus)="inputFocusHandler($event)" (keydown)="onKeydown($event)" [(ngModel)]="inputValue"
         (ngModelChange)="onChange()">
+        <!-- [attr.aria-activedescendant]="showResults? configuration.id+'-resultItem-'+highlightedIndex :''"
+        [attr.aria-controls]="showResults? configuration.id+ '-listbox' : undefined" -->
 
       <span *ngIf="config && config.addOnIconClass && config.addOnIconName" (click)="addOnIconClick()" class="add-on"
         role="button">
