@@ -6,7 +6,8 @@
         [attr.id]="configuration.id" type="text" (focus)="inputFocusHandler()" (keydown)="onKeydown($event)"
         [(ngModel)]="inputValue" aria-autocomplete="list" [attr.placeholder]="configuration.autocompletePlaceHolderText"
         [attr.aria-activedescendant]="showResults? configuration.id+'-resultItem-'+highlightedIndex :''"
-        [attr.aria-controls]="showResults? configuration.id+ '-listbox' : undefined">
+        [attr.aria-controls]="showResults? configuration.id+ '-listbox' : undefined"
+         autocomplete="off">
     </div>
     <ul #resultsList *ngIf="showResults" [attr.id]="configuration.id+ '-listbox'" role="listbox"
       class="usa-unstyled-list autocomplete-result" (scroll)="onScroll()">
