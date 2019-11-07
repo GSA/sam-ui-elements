@@ -15,15 +15,13 @@ export const _SamTable = CdkTable;
  * Todo: revert back to using CDK_TABLE_TEMPLATE in a later version
  */
 @Component({
-    selector: 'sam-datatable',
+    selector: 'sam-datatable, table[sam-datatable]',
     template: CDK_TABLE_TEMPLATE,
-    //   template: `
-    //   <table class="sam-table sam large table">
-    //     <ng-container headerRowPlaceholder></ng-container>
-    //     <ng-container rowPlaceholder></ng-container>
-    //     <ng-content select="[rowFooterPlaceholder]"></ng-content>
-    //   </table>`,
-    providers: [{ provide: CdkTable }],
+//   template: `
+//     <ng-container headerRowPlaceholder></ng-container>
+//     <ng-container rowPlaceholder></ng-container>
+//     <ng-content select="[rowFooterPlaceholder]"></ng-content>`,
+    providers: [{ provide: CdkTable }],  
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

@@ -539,15 +539,15 @@ export class SamDateComponent
   }
 
   monthName() {
-    return `${this.name}_month`;
+    return `${this.name}_month Enter Month Here.`;
   }
 
   dayName() {
-    return `${this.name}_day`;
+    return `${this.name}_day Enter Day Here.`;
   }
 
   yearName() {
-    return `${this.name}_year`;
+    return `${this.name}_year Enter Year Here.`;
   }
 
   triggerTouch(ev) {

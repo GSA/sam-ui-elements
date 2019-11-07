@@ -38,6 +38,14 @@ export class SamDateRangeComponent
         @ViewChild('startDate', {static: true}) public startDateComp;
         @ViewChild('endDate', {static: true}) public endDateComp;
         @ViewChild('wrapper', {static: true}) public wrapper;
+    /**
+     * From Date label parameter for date range components
+     */
+    @Input() fromDateLabel: string = 'From';
+    /**
+     * To Date label parameter for date range components
+     */
+    @Input() toDateLabel: string = 'To';
 
     /**
      * Sets the label text
