@@ -18,7 +18,7 @@ export class SamHeaderCellDirective extends _SamHeaderCellBase {
     constructor(columnDef: CdkColumnDef,
             elementRef: ElementRef,
             renderer: Renderer2) {
-        super(columnDef, elementRef, renderer);
+        super(columnDef, elementRef);
         renderer.addClass(elementRef.nativeElement, `sam-column-${columnDef.name}`);
     }
 }
@@ -35,7 +35,7 @@ export class SamCellDirective extends _SamCell {
     constructor(columnDef: CdkColumnDef,
             elementRef: ElementRef,
             renderer: Renderer2) {
-        super(columnDef, elementRef, renderer);
+        super(columnDef, elementRef);
         renderer.addClass(elementRef.nativeElement, `sam-column-${columnDef.name}`);
     }
 }
