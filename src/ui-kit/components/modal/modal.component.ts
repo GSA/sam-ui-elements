@@ -6,13 +6,13 @@ import {
   EventEmitter,
   ElementRef,
   ViewChild,
-  AfterViewChecked,
   ChangeDetectorRef
 } from '@angular/core';
 import { ScrollHelpers } from '../../dom-helpers';
 import {
   IconProp
 } from '@fortawesome/fontawesome-svg-core';
+import { KeyHelper, KEYS } from '../../utilities/key-helper/key-helper';
 
 /**
  * The <sam-modal> component display a popover for user interaction
@@ -67,8 +67,8 @@ export class SamModalComponent implements OnInit {
    * Set the title Icon
    */
   @Input() icon: IconProp;
-    /**
-   * Sets the modal button 
+  /**
+   * Sets the modal button
    */
   @Input() buttonPosition: string = 'center';
   /**
@@ -121,8 +121,8 @@ export class SamModalComponent implements OnInit {
   private internalId;
   private _focusModalElement: boolean = false;
   private _focusableString: string =
-    'a[href], area, button, select, textarea, *[tabindex], \
-    input:not([type="hidden"])';
+      'a[href], area, button, select, textarea, *[tabindex], \
+      input:not([type="hidden"])';
 
   private _allFocusableElements: NodeListOf<Element>;
   private _modalFocusableElements: NodeListOf<Element>;
@@ -140,7 +140,6 @@ export class SamModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    // document.body.appendChild(this.hostElement.nativeElement);
     this._scrollHelpers = ScrollHelpers(window);
     if (!this.typeNotDefined()) {
       this.selectedType = this.types[this.type].class;
@@ -148,65 +147,8 @@ export class SamModalComponent implements OnInit {
     this.setModalElementIds();
   }
 
-  set508() {
-    if (this.show) {
-      this._allFocusableElements =
-        document.querySelectorAll(this._focusableString);
-      this._modalFocusableElements =
-        this.hostElement.nativeElement.querySelectorAll(this._focusableString);
-
-      for (let i = 0; i < this._allFocusableElements.length; i++) {
-        if (!this.hostElement.nativeElement.contains(
-          this._allFocusableElements[i])) {
-          this.removeTabbable(this._allFocusableElements[i]);
-        }
-      }
-
-      for (let j = 0; j < this._modalFocusableElements.length; j++) {
-        this.reinsertTabbable(this._modalFocusableElements[j]);
-      }
-    }
-
-    if (this._focusModalElement) {
-      const focusable = this._modalFocusableElements[1] as HTMLElement;
-      if (focusable) {
-        focusable.focus();
-      }
-      this._focusModalElement = false;
-    }
-  }
-
-  addAriaHidden(item: any) {
-    item.setAttribute('aria-hidden', 'true');
-  }
-
-  removeAriaHidden(item: any) {
-    item.setAttribute('aria-hidden', 'false');
-  }
-
-  removeTabbable(item: any) {
-    if (item.hasAttribute("tabindex")) {
-      item.setAttribute('data-sam-tabindex', item.getAttribute('tabindex'));
-    }
-    //   item.setAttribute('tabindex', '-1');
-    item.setAttribute('aria-hidden', 'true');
-  }
-
-  reinsertTabbable(item: any) {
-    if (item.hasAttribute('data-sam-tabindex')) {
-      // item.setAttribute('tabindex', item.getAttribute('data-sam-tabindex'));
-      item.removeAttribute('data-sam-tabindex');
-    } else {
-      // item.setAttribute('tabindex', '0');
-    }
-    item.setAttribute('aria-hidden', 'false');
-  }
 
   ngOnDestroy() {
-    // if (this.show) {
-    //   this.show = false;
-    //   this.removeBackdrop();
-    // }
     this.show = false;
     this.clickOutsideReady = false;
     this.cdr.detach();
@@ -237,50 +179,30 @@ export class SamModalComponent implements OnInit {
     this.onOpen.emit(this.args);
     this.open.emit(this.args);
     if (document && document.body) {
-      // this.createBackdrop();
       this.disableScroll();
-      // document.body.appendChild(this.backdropElement);
     }
     this._focusModalElement = true;
 
     this.set5082();
-    // for some reason cdr detectchanges still processes click event used to open the modal, 
+    // for some reason cdr detectchanges still processes click event used to open the modal,
     // so clickoutside fires when the modal opens and closes it immediately
     // setTimeout works though
-    window.setTimeout(()=>{
+    window.setTimeout(() => {
       this.clickOutsideReady = true;
     });
   }
 
   set5082() {
-
-    //if (this.show) {
     this._allFocusableElements =
-      document.querySelectorAll(this._focusableString);
+        document.querySelectorAll(this._focusableString);
     this._modalFocusableElements =
-      this.modalRoot.nativeElement.querySelectorAll(this._focusableString);
-    // console.log('All');
-    // console.log(this._allFocusableElements);
-    // console.log('-----------------------------------------------------------------')
-    // console.log('Modal');
-    // console.log(this._modalFocusableElements);
-    // for (let i = 0; i < this._allFocusableElements.length; i++) {
-    //   if (!this.hostElement.nativeElement.contains(this._allFocusableElements[i])) {
-    //     this.addAriaHidden(this._allFocusableElements[i]);
-    //   }
-    // }
-
-    // for (let j = 0; j < this._modalFocusableElements.length; j++) {
-    //   this.removeAriaHidden(this._modalFocusableElements[j]);
-    // }
-
+        this.modalRoot.nativeElement.querySelectorAll(this._focusableString);
     let modulFocus = this._modalFocusableElements[0] as HTMLBaseElement;
     let firstFocus = this._modalFocusableElements[1] as HTMLBaseElement;
     let lastFocus = this._modalFocusableElements[this._modalFocusableElements.length - 1] as HTMLBaseElement;
 
     if (this._focusModalElement) {
       modulFocus.focus();
-
       this._focusModalElement = false;
     }
     let modulHasFocus = true;
@@ -291,7 +213,6 @@ export class SamModalComponent implements OnInit {
             ev.preventDefault();
             firstFocus.focus();
             modulHasFocus = false;
-
           } else if (ev.shiftKey && ev.keyCode === 9) {
             ev.preventDefault();
             lastFocus.focus();
@@ -337,13 +258,6 @@ export class SamModalComponent implements OnInit {
     }
     this.args = undefined;
 
-    for (let i = 0; i < this._allFocusableElements.length; i++) {
-      this.removeAriaHidden(this._allFocusableElements[i]);
-    }
-
-    for (let j = 0; j < this._modalFocusableElements.length; j++) {
-      this.addAriaHidden(this._modalFocusableElements[j]);
-    }
 
   }
 
@@ -379,5 +293,12 @@ export class SamModalComponent implements OnInit {
     this.hostElement.nativeElement.style.display = 'block';
     document.body.classList.add('modal-open');
 
+  }
+
+  closeEscape(event): void {
+    if (this.closeOnEscape && KeyHelper.is(KEYS.ESC, event)) {
+      this.closeModal()
+    }
+    event.stopPropagation();
   }
 }

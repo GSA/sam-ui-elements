@@ -44,20 +44,23 @@ export class SamToggleSwitchComponent implements ControlValueAccessor {
    * Event emitter to output the current state of the toggle switch
    */
   @Output() public switchStatusChange: EventEmitter<boolean> =
-    new EventEmitter<boolean>();
+      new EventEmitter<boolean>();
 
-  public onSwitchClick(val: boolean): void {
+  public onSwitchClick(event) {
     this.onTouched();
     if (!this.disableSwitch) {
+      let val = event.target.checked;
       this.isSwitchOn = val;
       this.onChange(val);
       this.switchStatusChange.emit(val);
+
     }
+    event.stopPropagation();
   }
-  
+
   public onChange: any = () => undefined;
   public onTouched: any = () => undefined;
-  
+
   public registerOnChange(fn) {
     this.onChange = fn;
   }
