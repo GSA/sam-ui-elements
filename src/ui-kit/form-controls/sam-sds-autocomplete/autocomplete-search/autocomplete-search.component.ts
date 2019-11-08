@@ -228,7 +228,9 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
     else if (KeyHelper.is(KEYS.ESC, event)) {
       if (this.showResults) {
         this.clearAndHideResults();
-        event.stopPropagation();
+        if (event.stopPropagation) {
+          event.stopPropagation();
+        }
       }
     }
   }
