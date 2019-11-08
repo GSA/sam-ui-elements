@@ -178,7 +178,6 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
           this.propogateChange(this.model);
         } else {
           this.inputValue = this.getObjectValue(this.model.items[0], this.configuration.primaryTextField);
-
         }
       } else {
         this.inputValue = '';
@@ -188,10 +187,10 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
     }
   }
 
-  textChange(event){
+  textChange(event) {
     // ie 11 placeholders will incorrectly trigger input events (known bug)
     // if input isn't active element then don't do anything
-    if(event.target != document.activeElement){
+    if (event.target != document.activeElement) {
       event.preventDefault();
       return;
     }
@@ -213,7 +212,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    * Key event
    * @param event 
    */
-  onKeydown(event): void {
+  onKeydown(event: Event): void {
     if (KeyHelper.is(KEYS.TAB, event)) {
       return;
     }
@@ -227,7 +226,10 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
       this.selectItem(this.highlightedItem);
     }
     else if (KeyHelper.is(KEYS.ESC, event)) {
-      this.clearAndHideResults();
+      if (this.showResults) {
+        this.clearAndHideResults();
+        event.stopPropagation();
+      }
     }
   }
 
@@ -240,11 +242,11 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
     this.propogateChange(this.model);
     let message = this.getObjectValue(item, this.configuration.primaryTextField);
     this.inputValue = message;
-    if (this.configuration.secondaryTextField && item[this.configuration.secondaryTextField]) {
-      message += ': ' + item[this.configuration.secondaryTextField];
-    }
-    message += ' selected';
-    this.addScreenReaderMessage(message);
+    // if (this.configuration.secondaryTextField && item[this.configuration.secondaryTextField]) {
+    //   message += ': ' + item[this.configuration.secondaryTextField];
+    // }
+    //  message += ' selected';
+    // this.addScreenReaderMessage(message);
     this.focusRemoved();
     this.showResults = false;
   }
@@ -388,13 +390,13 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    * gets more results based when scrolling and adds the items
    */
   private getAdditionalResults() {
-this.showLoad = true;
+    this.showLoad = true;
     this.service.getDataByText(this.results.length, this.searchString).subscribe(
       (result) => {
         for (let i = 0; i < result.items.length; i++) {
           this.addResult(result.items[i]);
         }
-this.showLoad = false;
+        this.showLoad = false;
         this.maxResults = result.totalItems;
       });
   }
