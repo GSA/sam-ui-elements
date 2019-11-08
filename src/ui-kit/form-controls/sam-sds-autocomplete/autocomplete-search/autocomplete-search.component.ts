@@ -212,7 +212,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    * Key event
    * @param event 
    */
-  onKeydown(event: Event): void {
+  onKeydown(event): void {
     if (KeyHelper.is(KEYS.TAB, event)) {
       return;
     }
