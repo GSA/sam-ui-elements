@@ -7,9 +7,9 @@
       <input [attr.id]="id" [attr.tabindex]="tabIndex" #input autocomplete="off"
         [attr.placeholder]="config?.placeholder" [attr.title]="config?.title" [attr.name]="name" type="text"
         (focus)="inputFocusHandler($event)" (keydown)="onKeydown($event)" [(ngModel)]="inputValue"
-        (ngModelChange)="onChange()" [attr.aria-activedescendant]="activeDescendant">
-      <!-- [attr.aria-activedescendant]="showResults? configuration.id+'-resultItem-'+highlightedIndex :''"
-        [attr.aria-controls]="showResults? configuration.id+ '-listbox' : undefined" -->
+        (ngModelChange)="onChange()" [attr.aria-activedescendant]="activeDescendant"
+        [attr.aria-controls]="results && results.length > 0 ? 'sam-autocomplete-results' : filteredKeyValuePairs && filteredKeyValuePairs.length > 0  ? 'sam-autocomplete-results-kv':undefined">
+      <!-- -->
 
       <span *ngIf="config && config.addOnIconClass && config.addOnIconName" (click)="addOnIconClick()" class="add-on"
         role="button">
