@@ -7,8 +7,8 @@
       <input [attr.id]="id" [attr.tabindex]="tabIndex" #input autocomplete="off"
         [attr.placeholder]="config?.placeholder" [attr.title]="config?.title" [attr.name]="name" type="text"
         (focus)="inputFocusHandler($event)" (keydown)="onKeydown($event)" [(ngModel)]="inputValue"
-        (ngModelChange)="onChange()">
-        <!-- [attr.aria-activedescendant]="showResults? configuration.id+'-resultItem-'+highlightedIndex :''"
+        (ngModelChange)="onChange()" [attr.aria-activedescendant]="activeDescendant">
+      <!-- [attr.aria-activedescendant]="showResults? configuration.id+'-resultItem-'+highlightedIndex :''"
         [attr.aria-controls]="showResults? configuration.id+ '-listbox' : undefined" -->
 
       <span *ngIf="config && config.addOnIconClass && config.addOnIconName" (click)="addOnIconClick()" class="add-on"
@@ -25,23 +25,25 @@
         <!-- Lists data if array of strings is passed to component -->
         <ul id="sam-autocomplete-results" class="usa-unstyled-list" #resultsList
           *ngIf=" ((results && results.length > 0) || (displayFreeTextSimpleResults())) && hasFocus">
-          <li *ngIf="freeTextAvalible()" (mouseenter)="listItemHover(i)" (click)="setSelected(inputValue)">
+          <li id="resultFreeText" *ngIf="freeTextAvalible()" (mouseenter)="listItemHover(i)"
+            (click)="setSelected(inputValue)">
             <span>{{inputValue}} - {{freeTextSubtext}}</span>
           </li>
-          <li *ngFor="let result of results; let i = index" (mouseenter)="listItemHover(i)"
+          <li [attr.id]="'resultItem_'+ i" *ngFor="let result of results; let i = index" (mouseenter)="listItemHover(i)"
             (click)="setSelected(result)">
             {{result}}</li>
         </ul>
         <!-- Lists data if array of objects with key/value pair is passed to component -->
         <ul id="sam-autocomplete-results-kv" class="usa-unstyled-list" #resultsListKV
           *ngIf="((filteredKeyValuePairs && filteredKeyValuePairs.length > 0) || (displayFreeTextKeyValueResults()) ) && hasFocus">
-          <li [class.multiple-values]="config?.keyValueConfig?.subheadProperty" (mouseenter)="listItemHover(i)"
-            *ngIf="freeTextAvalible()" [ngClass]="freeTextClass()" (click)="setSelected(inputValue)">{{inputValue}} -
+          <li id="resultFreeText" [class.multiple-values]="config?.keyValueConfig?.subheadProperty"
+            (mouseenter)="listItemHover(i)" *ngIf="freeTextAvalible()" [ngClass]="freeTextClass()"
+            (click)="setSelected(inputValue)">{{inputValue}} -
             {{freeTextSubtext}}
           </li>
-          <li *ngFor="let obj of filteredKeyValuePairs; let i = index" (mouseenter)="listItemHover(i)"
-            [class.multiple-values]="config?.keyValueConfig?.subheadProperty" [ngClass]="itemClass(obj)"
-            (click)="dropdownClick(obj)">
+          <li [attr.id]="'resultItem_'+ i" *ngFor="let obj of filteredKeyValuePairs; let i = index"
+            (mouseenter)="listItemHover(i)" [class.multiple-values]="config?.keyValueConfig?.subheadProperty"
+            [ngClass]="itemClass(obj)" (click)="dropdownClick(obj)">
             <ng-container *ngIf="!itemTemplate; else itemTemplateRef">
               <span *ngIf="obj">{{ obj[config?.keyValueConfig?.valueProperty] }}</span>
               <ng-container *ngIf="obj && obj[config?.keyValueConfig?.subheadProperty]">
@@ -60,8 +62,8 @@
       </div>
       <ng-container *ngIf="!input.disabled">
         <span class="{{ input.value.length > 0 ? 'reset-icon-active' : 'reset-icon'}}">
-          <span role="button" [attr.tabindex]="input.value.length > 0 ? tabIndex : -1" class="fa fa-times-circle" aria-label="Clear input"
-           (click)="clearInput()" (keyup.enter)="clearInput()">
+          <span role="button" [attr.tabindex]="input.value.length > 0 ? tabIndex : -1" class="fa fa-times-circle"
+            aria-label="Clear input" (click)="clearInput()" (keyup.enter)="clearInput()">
           </span>
         </span>
       </ng-container>
