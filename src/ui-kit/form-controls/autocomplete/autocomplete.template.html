@@ -4,13 +4,17 @@
   <sam-label-wrapper #wrapper [label]="labelText" [hint]="hint" [showFullHint]="showFullHint" [name]="id"
     [required]="required" [errorMessage]="errorMessage">
     <div class="input-container">
-      <input [attr.id]="id" [attr.tabindex]="tabIndex" #input autocomplete="off"
-        [attr.placeholder]="config?.placeholder" [attr.title]="config?.title" [attr.name]="name" type="text"
-        (focus)="inputFocusHandler($event)" (keydown)="onKeydown($event)" [(ngModel)]="inputValue"
-        (ngModelChange)="onChange()" [attr.aria-activedescendant]="activeDescendant"
-        [attr.aria-controls]="results && results.length > 0 ? 'sam-autocomplete-results' : filteredKeyValuePairs && filteredKeyValuePairs.length > 0  ? 'sam-autocomplete-results-kv':undefined">
-      <!-- -->
-
+      <div role="combobox" [attr.id]="id+'-container'"
+        [attr.aria-owns]="results && results.length > 0 ? 'sam-autocomplete-results' : filteredKeyValuePairs && filteredKeyValuePairs.length > 0  ? 'sam-autocomplete-results-kv':undefined"
+        [attr.aria-expanded]="(((filteredKeyValuePairs && filteredKeyValuePairs.length > 0) || (displayFreeTextKeyValueResults()) ) && hasFocus)
+        ||(((results && results.length > 0) || (displayFreeTextSimpleResults())) && hasFocus)
+        ">
+        <input [attr.id]="id" [attr.tabindex]="tabIndex" #input autocomplete="off"
+          [attr.placeholder]="config?.placeholder" [attr.title]="config?.title" [attr.name]="name" type="text"
+          (focus)="inputFocusHandler($event)"   (keydown)="onKeydown($event)" [(ngModel)]="inputValue"
+          (ngModelChange)="onChange()" [attr.aria-activedescendant]="activeDescendant" aria-autocomplete="list"
+          [attr.aria-controls]="results && results.length > 0 ? 'sam-autocomplete-results' : filteredKeyValuePairs && filteredKeyValuePairs.length > 0  ? 'sam-autocomplete-results-kv':undefined">
+      </div>
       <span *ngIf="config && config.addOnIconClass && config.addOnIconName" (click)="addOnIconClick()" class="add-on"
         role="button">
         <span class="{{config.addOnIconClass}}"></span>
@@ -23,7 +27,7 @@
           <li>No results found</li>
         </ul>
         <!-- Lists data if array of strings is passed to component -->
-        <ul id="sam-autocomplete-results" class="usa-unstyled-list" #resultsList
+        <ul role="listbox" id="sam-autocomplete-results" class="usa-unstyled-list" #resultsList
           *ngIf=" ((results && results.length > 0) || (displayFreeTextSimpleResults())) && hasFocus">
           <li id="resultFreeText" *ngIf="freeTextAvalible()" (mouseenter)="listItemHover(i)"
             (click)="setSelected(inputValue)">
@@ -34,7 +38,7 @@
             {{result}}</li>
         </ul>
         <!-- Lists data if array of objects with key/value pair is passed to component -->
-        <ul id="sam-autocomplete-results-kv" class="usa-unstyled-list" #resultsListKV
+        <ul role="listbox" id="sam-autocomplete-results-kv" class="usa-unstyled-list" #resultsListKV
           *ngIf="((filteredKeyValuePairs && filteredKeyValuePairs.length > 0) || (displayFreeTextKeyValueResults()) ) && hasFocus">
           <li id="resultFreeText" [class.multiple-values]="config?.keyValueConfig?.subheadProperty"
             (mouseenter)="listItemHover(i)" *ngIf="freeTextAvalible()" [ngClass]="freeTextClass()"
