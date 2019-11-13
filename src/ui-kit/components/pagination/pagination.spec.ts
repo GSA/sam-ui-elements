@@ -7,6 +7,7 @@ import { SamPaginationComponent } from './pagination.component';
 describe('The Sam Pagination component', () => {
   let component: SamPaginationComponent;
   let fixture: any;
+  let srPage= '<span class="sr-only">Page</span>';
 
   const defaultOptions: any = {
     totalPages: 20,
@@ -71,7 +72,7 @@ describe('The Sam Pagination component', () => {
     expect(firstEllipsis).toBeFalsy();
 
     const currentButton = fixture.debugElement.query(By.css('.usa-current'));
-    expect(currentButton.nativeElement.innerHTML).toBe('5');
+    expect(currentButton.nativeElement.innerHTML.replace(srPage,'')).toBe('5');
 
   });
 
@@ -85,7 +86,7 @@ describe('The Sam Pagination component', () => {
     expect(ellipsis).toBeFalsy();
 
     const currentButton = fixture.debugElement.query(By.css('.usa-current'));
-    expect(currentButton.nativeElement.innerHTML).toBe('5');
+    expect(currentButton.nativeElement.innerHTML.replace(srPage,'')).toBe('5');
   });
 
   it('should hide the last ellipsis if the current page is 5 pages away from \
@@ -98,7 +99,7 @@ describe('The Sam Pagination component', () => {
     expect(ellipsis).toBeFalsy();
 
     const currentButton = fixture.debugElement.query(By.css('.usa-current'));
-    expect(currentButton.nativeElement.innerHTML).toBe('15');
+    expect(currentButton.nativeElement.innerHTML.replace(srPage,'')).toBe('15');
   });
 
   /*
@@ -127,7 +128,7 @@ describe('The Sam Pagination component', () => {
     const pageButtons = fixture.debugElement.queryAll(By.css('.page-button'));
     expect(pageButtons.length).toBe(1);
     const currentButton = fixture.debugElement.query(By.css('.usa-current'));
-    expect(currentButton.nativeElement.innerHTML).toBe('1');
+    expect(currentButton.nativeElement.innerHTML.replace(srPage,'')).toBe('1');
   });
 
   it('should show two buttons if there are two pages', () => {
@@ -141,7 +142,7 @@ describe('The Sam Pagination component', () => {
     expect(pageButtons.length).toBe(expectedLength);
 
     const currentButton = fixture.debugElement.query(By.css('.usa-current'));
-    expect(currentButton.nativeElement.innerHTML).toBe('1');
+    expect(currentButton.nativeElement.innerHTML.replace(srPage,'')).toBe('1');
   });
 
   it('should show ten buttons if there are ten pages', () => {
@@ -152,6 +153,6 @@ describe('The Sam Pagination component', () => {
     const pageButtons = fixture.debugElement.queryAll(By.css('.page-button'));
     expect(pageButtons.length).toBe(totalPages);
     const currentButton = fixture.debugElement.query(By.css('.usa-current'));
-    expect(currentButton.nativeElement.innerHTML).toBe('1');
+    expect(currentButton.nativeElement.innerHTML.replace(srPage,'')).toBe('1');
   });
 });
