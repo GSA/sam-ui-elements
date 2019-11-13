@@ -46,7 +46,7 @@ describe('The Sam Pagination component', () => {
     expect(previousButton).toBeTruthy();
 
     const currentButton = fixture.debugElement.query(By.css('.usa-current'));
-    expect(currentButton.nativeElement.innerHTML).toBe('10');
+    expect(currentButton.nativeElement.innerHTML.replace(srPage,'')).toBe('10');
   });
 
   /*
