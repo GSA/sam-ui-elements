@@ -36,7 +36,7 @@ describe('The Sam Pagination component', () => {
 
     const ellipsis = fixture.debugElement
       .queryAll(By.css('.usa-pagination li span'));
-    const expectedLen2 = 2;
+    const expectedLen2 = 10;
     expect(ellipsis.length).toBe(expectedLen2);
 
     const nextButton = fixture.debugElement.query(By.css('.page-next'));
