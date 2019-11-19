@@ -19,7 +19,8 @@
         </div>
 
         <div id="textarea-system-comments">
-            <textarea #textArea formControlName="text" name="comment" class="sam-text-area" placeholder="Type your message and hit Enter" id="comment-component-input" [attr.maxlength]="maxLength ? maxLength : 250" aria-label="comment-input-box">
+            <textarea #textArea formControlName="text" name="comment" class="sam-text-area" placeholder="Type your message and hit Enter" id="comment-component-input" [attr.maxlength]="maxLength ? maxLength : 250" 
+            [attr.aria-label]="commentAriaLabel()">
             </textarea>
 
             <p class="char-counter" aria-label="comments-characters-count">
