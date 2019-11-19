@@ -41,7 +41,7 @@ export class SamDateRangeComponent
     /**
      * From Date label parameter for date range components
      */
-    @Input() fromDateLabel: string = 'From';
+    fromDateLabel: string = 'From';
     /**
      * To Date label parameter for date range components
      */
