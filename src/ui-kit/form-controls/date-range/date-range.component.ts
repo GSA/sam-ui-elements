@@ -45,7 +45,7 @@ export class SamDateRangeComponent
     /**
      * To Date label parameter for date range components
      */
-    @Input() toDateLabel: string = 'To';
+    toDateLabel: string = 'To';
 
     /**
      * Sets the label text
