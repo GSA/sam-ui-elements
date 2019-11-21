@@ -21,8 +21,8 @@
           </ng-container>
 
           <ng-container *ngIf="!itemTemplate">
-            <span class="header">{{ result[configuration.primaryTextField] }}
-
+            <span class="header">
+              {{ getObjectValue(result, configuration.primaryTextField) }}
               <span *ngIf="result.type === 'custom'">
                 - {{configuration.freeTextSubtext}}
               </span>
