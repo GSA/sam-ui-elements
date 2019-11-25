@@ -70,7 +70,7 @@ export class SamCommentsComponent implements OnInit {
    * Other private variables
    */
   comments: Array<Comment> = [];
-  private maxLength: number = 250;
+  public maxLength: number = 250;
 
   /**
    * Playground
@@ -203,5 +203,9 @@ export class SamCommentsComponent implements OnInit {
       this.form.controls.text.value.length :
       0;
     return this.maxLength - textLength;
+  }
+
+  commentAriaLabel(){
+    return "Enter your comments (Maximum characters allowed: "+  this.maxLength+ ")";
   }
 }

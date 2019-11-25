@@ -5,7 +5,7 @@ import { FormsModule, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef } from '@angular/core';
 import { SamFormService } from '../../form-service';
-import { SamWrapperModule } from '../../wrappers'; 
+import { SamWrapperModule } from '../../wrappers';
 
 // Load the implementations that should be tested
 import { SamUIKitModule } from '../../index';
@@ -17,33 +17,34 @@ import { AutocompleteConfig } from '../../types';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 describe('The Sam Autocomplete Component', () => {
-  describe('isolated tests', ()=>{
+  describe('isolated tests', () => {
     let component: SamAutocompleteComponent;
     const cdr: ChangeDetectorRef = undefined;
     beforeEach(() => {
       component = new SamAutocompleteComponent(null, null, cdr);
     });
 
-    it('should set a value', ()=>{
+    it('should set a value', () => {
       component.value = [];
       expect(component.value).toBe(component.innerValue);
     });
 
-    it('should return errors', ()=>{
+    it('should return errors', () => {
       expect(component.errors).toBe('');
     });
 
-    it('should detect keyvalue pairs', ()=>{
+    it('should detect keyvalue pairs', () => {
       expect(component.isKeyValuePair(['aaa'])).toBe(false);
-      expect(component.isKeyValuePair([{key:'aaa',value:'bbb'}])).toBe(true);
+      expect(component.isKeyValuePair([{ key: 'aaa', value: 'bbb' }])).toBe(true);
     });
 
-    it('should have focus handling', ()=>{
+    it('should have focus handling', () => {
       component.hasFocus = false;
       component.srOnly = {
-        "nativeElement" : { innerHTML :""}}
+        "nativeElement": { innerHTML: "" }
+      }
 
-    
+
 
       component.inputFocusHandler({
         target: {
@@ -53,46 +54,63 @@ describe('The Sam Autocomplete Component', () => {
       expect(component.hasFocus).toBe(true);
     });
 
-    it('should detect a category', ()=>{
+    it('should free text be shown', () => {
+      expect(component.freeTextAvalible()).toBe(false);
+      component.isFreeTextEnabled = true;
+      expect(component.freeTextAvalible()).toBe(false);
+      component.inputValue = 'Test'
+      expect(component.freeTextAvalible()).toBe(true);
+      component.results = ['Item'];
+      expect(component.freeTextAvalible()).toBe(true);
+      component.results = ['Test'];
+      expect(component.freeTextAvalible()).toBe(false);
+      component.results = undefined;
+      component.filteredKeyValuePairs = [{ 'key': 'Item', 'value': 'Item' }];
+      expect(component.freeTextAvalible()).toBe(true);
+      component.filteredKeyValuePairs = [{ 'key': 'Test', 'value': 'Test' }];
+      expect(component.freeTextAvalible()).toBe(false);
+    });
+
+    it('should detect a category', () => {
       component.categories = ["classA"];
       expect(component.isCategory("classA")).toBe(true);
       expect(component.isCategory("classB")).toBe(false);
     });
 
-    it('should set request error', ()=>{
+    it('should set request error', () => {
       component.requestError({});
       expect(component.results[0]).toBe('An error occurred. Try a different value.');
     });
 
-    it('should handleBackspaceKeyup', ()=>{
+    it('should handleBackspaceKeyup', () => {
       component.handleBackspaceKeyup();
       expect(component.value).toBe(null);
     });
 
-    it('should detect isFirstItem', ()=>{
+    it('should detect isFirstItem', () => {
       expect(component.isFirstItem(0)).toBe(true);
       expect(component.isFirstItem(-1)).toBe(true);
       expect(component.isFirstItem(1)).toBe(false);
     });
 
-    it('should clearCache', ()=>{
-      component.cache.insert(['aaa'],'');
+    it('should clearCache', () => {
+      component.cache.insert(['aaa'], '');
       component.clearCache();
       expect(component.cache.totalBytes).toBe(2);
     });
-    
-    it('should handle requests througk input', ()=>{
+
+    it('should handle requests througk input', () => {
       let subject = new BehaviorSubject([]);
       component.httpRequest = subject;//of(['aaa']);
-      component.ngOnChanges({httpRequest:true});
+      component.ngOnChanges({ httpRequest: true });
       subject.next(['aaa']);
-      subject.next(['aaa','bbb']);
-      subject.next([{key:'aaa',value:'bbb'}]);
-      subject.next([{key:'aaa',value:'bbb'},{key:'ccc',value:'ddd'}]);
+      subject.next(['aaa', 'bbb']);
+      subject.next([{ key: 'aaa', value: 'bbb' }]);
+      subject.next([{ key: 'aaa', value: 'bbb' }, { key: 'ccc', value: 'ddd' }]);
       expect(component.cache.totalBytes).toBe(2);
     });
   });
-  describe('rendered tests',()=>{
+  describe('rendered tests', () => {
     let component: SamAutocompleteComponent;
     let fixture: ComponentFixture<SamAutocompleteComponent>;
 
@@ -147,18 +165,18 @@ describe('The Sam Autocomplete Component', () => {
       let control = new FormControl('');
       component = fixture.componentInstance;
       component.name = name;
-      component.control = control;  
+      component.control = control;
       component.id = id;
       component.labelText = labelText;
       component.options = options;
       component.config = config;
       component.allowAny = allowAny;
-      component.writeValue({key: 'key', value: 'test'});
+      component.writeValue({ key: 'key', value: 'test' });
     });
 
     it('Should initialize with model', () => {
       fixture.detectChanges();
-      expect(component.value).toEqual({key: 'key', value: 'test'});
+      expect(component.value).toEqual({ key: 'key', value: 'test' });
     });
 
     it('Should have an input', () => {
@@ -211,34 +229,34 @@ describe('The Sam Autocomplete Component', () => {
 
     it('Should have public property `inputValue` that binds to search input\
       value', () => {
-      const input = fixture.debugElement.query(
-        By.css('input[type="text"]')
-      );
+        const input = fixture.debugElement.query(
+          By.css('input[type="text"]')
+        );
 
-      expect(component.inputValue).toBeDefined();
+        expect(component.inputValue).toBeDefined();
 
-      fixture.detectChanges();
-      input.nativeElement.value = 'test search';
-      input.nativeElement.dispatchEvent(new Event('input'));
-      fixture.detectChanges();
+        fixture.detectChanges();
+        input.nativeElement.value = 'test search';
+        input.nativeElement.dispatchEvent(new Event('input'));
+        fixture.detectChanges();
 
-      expect((<HTMLInputElement>input.nativeElement).value)
-        .toEqual(component.inputValue);
-    });
+        expect((<HTMLInputElement>input.nativeElement).value)
+          .toEqual(component.inputValue);
+      });
 
     it('Should handle setting selections', () => {
       component.setSelected('Alabama');
       expect(component.innerValue).toBe("Alabama");
     });
 
-    it('Should handle when losing focus', ()=> {
+    it('Should handle when losing focus', () => {
       component.checkForFocus({});
       expect(component.hasFocus).toBeFalsy();
     });
 
-    it('Should work as a form control', ()=> {
-      component.registerOnChange((_)=>{});
-      component.registerOnTouched((_)=>{});
+    it('Should work as a form control', () => {
+      component.registerOnChange((_) => { });
+      component.registerOnTouched((_) => { });
       component.setDisabledState(true);
       let el = fixture.debugElement.query(By.css('input'));
       fixture.detectChanges();
@@ -247,42 +265,43 @@ describe('The Sam Autocomplete Component', () => {
       expect(component.innerValue).toBe(null);
     });
 
-    it('Should provide a way to clear', ()=>{
+    it('Should provide a way to clear', () => {
       component.setSelected('Alabama');
       component.clearInput();
       expect(component.innerValue).toBeFalsy();
+      expect(component.inputValue).toBeFalsy();
     });
 
-    it('Should handle keyup', ()=>{
+    it('Should handle keyup', () => {
       component.hasFocus = true;
-       component.inputFocusHandler({
+      component.inputFocusHandler({
         target: {
           value: ""
         }
       });
-      component.results = ['aaa','bbb'];
+      component.results = ['aaa', 'bbb'];
       fixture.detectChanges();
       //index -1 to 0
-      component.onKeyup({
+      component.onKeydown({
         key: "Down", code: "Down", target: {
           value: ""
         }
       });
       //index 0 to 1
-      component.onKeyup({
+      component.onKeydown({
         key: "Down", code: "Down", target: {
           value: ""
         }
       });
       fixture.detectChanges();
       //index 1 to 0
-      component.onKeyup({
+      component.onKeydown({
         key: "Up", code: "Up", target: {
           value: ""
         }
       });
       fixture.detectChanges();
-      component.onKeyup({
+      component.onKeydown({
         key: "Enter", code: "Enter", target: {
           value: ""
         }
@@ -290,9 +309,9 @@ describe('The Sam Autocomplete Component', () => {
       expect(component.value).toBe('aaa');
       fixture.detectChanges();
       component.hasFocus = true;
-      component.results = ['aaa','bbb'];
+      component.results = ['aaa', 'bbb'];
       fixture.detectChanges();
-      component.onKeyup({
+      component.onKeydown({
         key: "Escape", code: "Escape", target: {
           value: ""
         }
@@ -300,7 +319,7 @@ describe('The Sam Autocomplete Component', () => {
       fixture.detectChanges();
       component.allowAny = true;
       component.inputValue = 'ccc';
-      component.onKeyup({
+      component.onKeydown({
         key: "Enter", code: "Enter", target: {
           value: ""
         }

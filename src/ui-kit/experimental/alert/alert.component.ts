@@ -3,7 +3,8 @@ import {
   faExclamationCircle,
   faInfoCircle,
   faCheckCircle,
-  faExclamationTriangle
+  faExclamationTriangle,
+  faCheck
 } from '@fortawesome/free-solid-svg-icons';
 /**
  * The <sam-alert> component keeps users informed of important and (optionally)
@@ -23,12 +24,16 @@ export class SamAlertNextComponent {
     'info': { class: 'sam-alert-info', sr: 'info alert'},
     'success': { class: 'sam-alert-success', sr: 'success alert'},
     'warning': { class: 'sam-alert-warning', sr: 'warning alert'},
+    'checked': { class: 'sam-alert--checked', sr: 'checked alert'},
+    'unchecked': { class: 'sam-alert--unchecked', sr: 'unchecked alert'},
   };
   selectedIconTypes = {
       'success': faCheckCircle,
       'error': faExclamationCircle,
       'info': faInfoCircle,
-      'warning': faExclamationTriangle
+      'warning': faExclamationTriangle,
+      'checked': faCheck
+
   };
   selectedType: string = this.types.success.class;
   selectedIcon = this.selectedIconTypes.success;

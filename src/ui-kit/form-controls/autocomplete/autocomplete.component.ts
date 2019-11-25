@@ -17,7 +17,7 @@ import {
   ControlValueAccessor,
   FormControl
 } from '@angular/forms';
-import { Observable, Subject,of } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import { AutocompleteConfig } from '../../types';
 import { AutocompleteService } from './autocomplete.service';
 import { SamFormService } from '../../form-service';
@@ -35,7 +35,7 @@ const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
 /**
  * Methods we're externally exposing
  */
-interface SamCache {
+export interface SamCache {
   clearCache();
 }
 
@@ -128,6 +128,12 @@ export class SamAutocompleteComponent
    * Set timer that keyboard input should poll to trigger service calls
    */
   @Input() public debounceTime: number = 250;
+
+  @Input() public isFreeTextEnabled: boolean = false;
+
+  @Input() public freeTextSubtext: string = 'search';
+
+  @Input() public isKeyValue?: boolean;
   /*
    How do define custom http callbacks:
    <sam-autocomplete
@@ -176,7 +182,10 @@ export class SamAutocompleteComponent
    */
   @Input() public httpRequest: Observable<any>;
 
-  public results: Array<string> =[];
+
+  activeDescendant: string = undefined;
+
+  public results: Array<string> = [];
   public innerValue: any = '';
   public inputValue: any = '';
   public selectedInputValue: any;
@@ -190,7 +199,7 @@ export class SamAutocompleteComponent
   public lastReturnedResults: Array<string>;
 
   public keyValuePairs: any;
-  public filteredKeyValuePairs: any[]= [];
+  public filteredKeyValuePairs: any[] = [];
   public inputTimer;
   public cache: AutocompleteCache = new AutocompleteCache();
 
@@ -310,6 +319,7 @@ export class SamAutocompleteComponent
   }
 
   onChange() {
+    this.textChange();
     if (this.allowAny) {
       this.propogateChange(this.inputValue);
     }
@@ -323,9 +333,38 @@ export class SamAutocompleteComponent
     }
   }
 
-  onKeyup(event: any) {
+  freeTextAvalible(): boolean {
+    if (this.isFreeTextEnabled) {
+      if (this.inputValue && this.inputValue.length > 0) {
+        if (this.results) {
+          //Add case insensitivity?
+          return this.results.indexOf(this.inputValue) === -1;
+        } else if (this.filteredKeyValuePairs) {
+          let foundItem = false;
+          for (var i = 0; i < this.filteredKeyValuePairs.length; i++) {
+            let item = this.filteredKeyValuePairs[i];
+            if (item) {
+              if (item[this.config.keyValueConfig.valueProperty] === this.inputValue) {
+                foundItem = true;
+              }
+            }
+          }
+          return !foundItem;
+        } else {
+          //Exists when no other valid matches
+          return true;
+        }
+      } else {
+        //Not showing when the text string is empty
+        return false;
+      }
+    } else {
+      //Really false this feature is disabled
+      return this.isFreeTextEnabled;
+    }
+  }
 
-   
+  onKeydown(event: any) {
     if (KeyHelper.is('tab', event)) {
       return
     }
@@ -363,13 +402,15 @@ export class SamAutocompleteComponent
     else if (KeyHelper.is('enter', event) && this.allowAny) {
       this.setSelected(this.inputValue);
     }
-    else {
-      const searchString = event.target.value || '';
-      if (this.options) {
-        this.onKeyUpWithOptions(searchString);
-      } else if (this.autocompleteService || this.httpRequest) {
-        this.onKeyUpUsingService(searchString);
-      }
+  }
+
+  private textChange() {
+    const searchString = this.inputValue || '';
+    if (this.options) {
+      this.onKeyUpWithOptions(searchString);
+    }
+    else if (this.autocompleteService || this.httpRequest) {
+      this.onKeyUpUsingService(searchString);
     }
   }
 
@@ -451,30 +492,24 @@ export class SamAutocompleteComponent
     let selectedChildIndex = this.getSelectedChildIndex(children);
     let message;
     let isFirstItemCategory: boolean = false;
+
     this.setEndOfList(selectedChildIndex, children.length);
 
     if (selectedChildIndex === children.length - 1) {
       this.onKeyUpUsingService(this.inputValue);
-      selectedChildIndex =
-        this.checkCategoryIndex(children[selectedChildIndex]);
-      isFirstItemCategory = this.isFirstItemCategory(
-        children[selectedChildIndex],
-        selectedChildIndex
-      );
-      selectedChildIndex = selectedChildIndex
-        + this.incrementIfFirstCategory(isFirstItemCategory);
+      selectedChildIndex = this.checkCategoryIndex(children[selectedChildIndex]);
+      isFirstItemCategory = this.isFirstItemCategory(children[selectedChildIndex], selectedChildIndex);
+      selectedChildIndex = selectedChildIndex + this.incrementIfFirstCategory(isFirstItemCategory);
       children[selectedChildIndex].classList.add('isSelected');
       this.selectedChild = children[selectedChildIndex];
+      this.activeDescendant = this.selectedChild.id;
       message = this.setMessage(selectedChildIndex);
     } else {
-      isFirstItemCategory = this.isFirstItemCategory(
-        children[selectedChildIndex + 1],
-        selectedChildIndex + 1
-      );
-      selectedChildIndex = selectedChildIndex
-        + this.incrementIfFirstCategory(isFirstItemCategory);
+      isFirstItemCategory = this.isFirstItemCategory(children[selectedChildIndex + 1], selectedChildIndex + 1);
+      selectedChildIndex = selectedChildIndex + this.incrementIfFirstCategory(isFirstItemCategory);
       children[selectedChildIndex + 1].classList.add('isSelected');
       this.selectedChild = children[selectedChildIndex + 1];
+      this.activeDescendant = this.selectedChild.id;
       message = this.setMessage(selectedChildIndex + 1);
     }
 
@@ -517,10 +552,24 @@ export class SamAutocompleteComponent
   }
 
   setMessage(index): string {
-    return !!this.results
-      ? this.results[index]
-      : this.filteredKeyValuePairs[index]
-      [this.config.keyValueConfig.valueProperty];
+    let message = '';
+    let isFirstItemFreeText = this.freeTextAvalible();
+    if (index === 0 && isFirstItemFreeText) {
+      message = this.inputValue + ' - ' + this.freeTextSubtext;
+    }
+    else if (this.results) {
+      if (isFirstItemFreeText) {
+        index--;
+      }
+      message = this.results[index]
+    } else if (this.filteredKeyValuePairs) {
+      if (isFirstItemFreeText) {
+        index--;
+      }
+      message = this.filteredKeyValuePairs[index][this.config.keyValueConfig.valueProperty]
+    }
+
+    return message;
   }
 
   onUpArrowDown(list) {
@@ -535,8 +584,10 @@ export class SamAutocompleteComponent
 
     if (this.isFirstItem(selectedChildIndex)) {
       this.endOfList = true;
-      children[children.length - 1].classList.add('isSelected');
-      this.selectedChild = children[children.length - 1];
+      let child = children[children.length - 1];
+      child.classList.add('isSelected');
+      this.selectedChild = child;
+      this.activeDescendant = child.id;
       message = this.setMessage(children.length - 1);
     } else {
       if (this.categories.length > 0 && !this.config.isCategorySelectable) {
@@ -555,8 +606,10 @@ export class SamAutocompleteComponent
           && children[selectedChildIndex - 1].classList
             .contains('category')) {
           this.endOfList = true;
-          children[children.length - 1].classList.add('isSelected');
-          this.selectedChild = children[children.length - 1];
+          let child = children[children.length - 1];
+          child.classList.add('isSelected');
+          this.activeDescendant = child.id;
+          this.selectedChild = child;
           message = this.setMessage(children.length - 1);
           this.pushSROnlyMessage(message);
           list.nativeElement.scrollTop = this.selectedChild.offsetTop
@@ -564,8 +617,10 @@ export class SamAutocompleteComponent
           return;
         }
       }
-      children[selectedChildIndex - 1].classList.add('isSelected');
-      this.selectedChild = children[selectedChildIndex - 1];
+      let child = children[selectedChildIndex - 1];
+      child.classList.add('isSelected');
+      this.selectedChild = child;
+      this.activeDescendant = child.id;
       message = this.setMessage(selectedChildIndex - 1);
     }
     this.pushSROnlyMessage(message);
@@ -576,6 +631,13 @@ export class SamAutocompleteComponent
   }
 
   listItemHover(index) {
+    let freeText = this.freeTextAvalible();
+    if (freeText) {
+      ++index;
+    }
+    if (index === undefined && freeText) {
+      index = 0;
+    }
     const list: ElementRef = this.resultsList || this.resultsListKV;
     if (!this.listExists(list)) {
       return;
@@ -609,21 +671,35 @@ export class SamAutocompleteComponent
 
   onEnterDown(list) {
     const children = list.nativeElement.children;
-    const selectedChild = this.getSelectedChildIndex(children);
+
+    let freeText = this.freeTextAvalible();
+    let selectedChild = this.getSelectedChildIndex(children);
+
     if (selectedChild !== -1) {
-      if (this.results && this.results[selectedChild]) {
-        this.setSelected(this.results[selectedChild]);
+
+      if (freeText) {
+        --selectedChild;
+      }
+      if (selectedChild === -1 && freeText) {
+        this.setSelected(this.inputValue);
         this.input.nativeElement.focus();
+      } else {
+        if (this.results && this.results[selectedChild]) {
+          this.setSelected(this.results[selectedChild]);
+          this.input.nativeElement.focus();
+        }
+
+        if (this.filteredKeyValuePairs
+          && this.filteredKeyValuePairs[selectedChild]) {
+          this.setSelected(this.filteredKeyValuePairs[selectedChild]);
+          this.input.nativeElement.focus();
+        }
       }
 
-      if (this.filteredKeyValuePairs
-        && this.filteredKeyValuePairs[selectedChild]) {
-        this.setSelected(this.filteredKeyValuePairs[selectedChild]);
-        this.input.nativeElement.focus();
-      }
     } else {
       if (this.allowAny) {
         this.setSelected(this.inputValue);
+        this.input.nativeElement.focus();
       }
     }
   }
@@ -682,6 +758,7 @@ export class SamAutocompleteComponent
     this.srOnly.nativeElement.innerHTML = null;
     this.pushSROnlyMessage(`You chose ${message}`);
     this.enterEvent.emit(value);
+    this.activeDescendant = undefined;
   }
 
   filterResults(subStr: string, stringArray: Array<string>): Array<string> {
@@ -742,12 +819,13 @@ export class SamAutocompleteComponent
     this.input.nativeElement.blur();
     this.hasFocus = false;
     this.srOnly.nativeElement.innerHTML = null;
+    this.activeDescendant = undefined;
   }
 
   inputFocusHandler(evt) {
     this.onTouchedCallback();
     this.hasFocus = true;
-    this.onKeyup(evt);
+    this.textChange();
     return evt;
   }
 
@@ -757,6 +835,7 @@ export class SamAutocompleteComponent
     }
     this.filteredKeyValuePairs = null;
     this.results = null;
+    this.inputValue = "";
     this.input.nativeElement.value = '';
     this.innerValue = '';
     this.propogateChange(null);
@@ -816,6 +895,31 @@ export class SamAutocompleteComponent
       indented: hasCategories && notCategory,
     };
   }
+
+  freeTextClass() {
+    return this.itemClass({ isCategory: false, isCategorySelectable: false })
+  }
+
+
+  displayFreeTextSimpleResults() {
+    if (this.isKeyValue !== undefined && this.isFreeTextEnabled) {
+      return !this.isKeyValue && this.freeTextAvalible();
+    } else {
+      return false;
+    }
+  }
+
+  displayFreeTextKeyValueResults() {
+    if (this.isKeyValue !== undefined && this.isFreeTextEnabled) {
+      return this.isKeyValue && this.freeTextAvalible();
+    } else {
+      return false;
+    };
+  }
+
+
+
+
 
   private setEndOfList(index, length) {
     if (index === length - 2) {

@@ -118,3 +118,107 @@ describe('Sam Autocomplete Cache Class', () => {
     expect(cache.lastAdded).toEqual(moreValues);
   });
 });
+
+describe('Autocomplete Cache arraysEqual method', () => {
+  const initialArray = [{ key: 1 }, { key: 2 }, { key: 3 }, { key: 4 }];
+
+  it('should return true if arrays are equal ', () => {
+    const mockArray = [{ key: 1 }, { key: 2 }, { key: 3 }, { key: 4 }];
+    const actual = AutocompleteCache.arraysEqual(initialArray, mockArray);
+    expect(actual).toBe(true);
+  });
+
+  it('should return false if arrays are not equal', () => {
+    const mockArray = [{ key: 10 }, { key: 2 }, { key: 3 }, { key: 4 }];
+    const actual = AutocompleteCache.arraysEqual(initialArray, mockArray);
+    expect(actual).toBe(false);
+  });
+  
+  it('should return true if  string arrays are  equal', () => {
+    const options = ['apple', 'orange', 'grape', 'banana', 'pineapple'];
+    const options1 = ['apple', 'orange', 'grape', 'banana', 'pineapple'];
+    const actual = AutocompleteCache.arraysEqual(options, options1);
+    expect(actual).toBe(true);
+  });
+
+  it('should return false if string array are not equal', () => {
+    const options = [ 'orange', 'grape', 'banana', 'pineapple'];
+    const options1 = ['apple', 'orange', 'grape', 'banana', 'pineapple'];
+    const actual = AutocompleteCache.arraysEqual(options, options1);
+    expect(actual).toBe(false);
+  });
+  
+  it('should return true if object arrays are equal ', () => {
+    const objArray = [{
+      code: 'code01',
+      value: 'apple'
+    }, {
+      code: 'code02',
+      value: 'orange'
+    }, {
+      code: 'code03',
+      value: 'grape'
+    }, {
+      code: 'code04',
+      value: 'banana'
+    }, {
+      code: 'code05',
+      value: 'pineapple'
+    }];
+
+    const objArray1 = [{
+      code: 'code01',
+      value: 'apple'
+    }, {
+      code: 'code02',
+      value: 'orange'
+    }, {
+      code: 'code03',
+      value: 'grape'
+    }, {
+      code: 'code04',
+      value: 'banana'
+    }, {
+      code: 'code05',
+      value: 'pineapple'
+    }];
+    const actual = AutocompleteCache.arraysEqual(objArray, objArray1);
+    expect(actual).toBe(true);
+  });
+
+  it('should return false if object arrays are not equal', () => {
+    const objArray = [{
+      code: 'code01',
+      value: 'apple'
+    }, {
+      code: 'code02',
+      value: 'orange'
+    }, {
+      code: 'code03',
+      value: 'grape'
+    }, {
+      code: 'code04',
+      value: 'banana'
+    }, {
+      code: 'code05',
+      value: 'pineapple'
+    }];
+
+    const objArray1 = [ {
+      code: 'code02',
+      value: 'orange'
+    }, {
+      code: 'code03',
+      value: 'grape'
+    }, {
+      code: 'code04',
+      value: 'banana'
+    }, {
+      code: 'code05',
+      value: 'pineapple'
+    }];
+    const actual = AutocompleteCache.arraysEqual(objArray, objArray1);
+    expect(actual).toBe(false);
+  });
+
+});

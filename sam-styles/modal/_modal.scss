@@ -44,3 +44,21 @@ body.modal-open {
   max-width: 90%;
   max-height: 250%;
 }
+
+.modal-dialog-condensed {
+  .modal-content {
+    .usa-alert {
+    padding: .5rem 1rem !important;
+    } 
+    .modal-body {
+      padding :0 0 15px 30px !important;
+    }
+    .usa-alert-body{
+      padding-top: 1rem !important;
+    }
+  }
+}
+
+.plain-alert-body {
+  padding: 0 !important;
+}

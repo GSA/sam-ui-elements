@@ -180,8 +180,7 @@ export class SamTelephone extends SamFormControl
     return (c: FormControl): { [key: string]: any } => {
       const usaRegex: RegExp = /^[0-9]{10}$/g;
       const message =
-        'North American phone numbers must be 10 numbers \
-        in length';
+        'North American phone numbers must be 10 digits';
       
       return c && c.value && !c.value.match(usaRegex)
         ? { usaPhone: { message: message } }
@@ -193,8 +192,7 @@ export class SamTelephone extends SamFormControl
 
     return (c: FormControl): { [key: string]: any} => {
       const message =
-        'International phone numbers include between 4 \
-        and 15 numbers';
+        'International phone numbers must be between 4 and 15 digits';
 
       return c && c.value && this.isValidIntlNumber(c.value)
         ? { intlPhone: { message: message } }

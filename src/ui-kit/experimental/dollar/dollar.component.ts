@@ -48,6 +48,7 @@ export class SamDollarComponent extends SamFormControl {
   strictMaxLength = 16;
   attrType = 'text';
   previousValue = null;
+  blurDisabled = false;
   private ngUnsubscribe: Subject<any> = new Subject();
 
   constructor(public samFormService: SamFormService,
@@ -127,9 +128,17 @@ export class SamDollarComponent extends SamFormControl {
       this.value = this.dollarToStr(this.value);
       this.cdr.detectChanges();
       this.attrType = 'number';
+      this.blurDisabled = true;
+      // firefox emits blur event when it switches, temporarily disabling blur handling
+      window.setTimeout(()=>{
+        this.blurDisabled = false;
+      });
   }
 
   public onLoseFocus() {
+    if(this.blurDisabled){
+      return;
+    }
     this.attrType = 'text';
     const value = this.strToDollar(this.value);
     if (value !== this.previousValue) {

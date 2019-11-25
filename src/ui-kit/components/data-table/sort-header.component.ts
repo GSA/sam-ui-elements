@@ -14,7 +14,7 @@ import {Subscription} from 'rxjs/Subscription';
 @Injectable()
 export class SamSortHeaderIntl {
   sortButtonLabel = (id: string) => {
-    return `Change sorting for ${id}`;
+    return id;
   }
 
   /** A label to describe the current sort (visible only to screenreaders). */

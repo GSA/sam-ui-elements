@@ -144,3 +144,36 @@
   }
 }
 
+//Sam Side Navigation -- Entity Display Page
+.entity-display {
+  .usa-width-one-third {
+    margin-right: 18px;
+  }
+
+  .usa-sidenav-list a.usa-current {
+    color: #005b9e;
+    border-left: 4px solid #005b9e;
+  }
+
+  .usa-sidenav-list > li > a {
+    border: 1px solid;
+  }
+
+  .usa-sidenav-list a {
+    outline: 0.1px solid lightgray;
+    font-size: 17px;
+
+    &:focus {
+      border: 2px solid #2493FE;
+    }
+  }
+
+  .usa-sidenav-sub_list ul:first-child {
+    background-color: white;
+  }
+
+  .usa-sidenav-sub_list li > sam-menu-item > ul {
+    background-color: #f9f7f2 !important;
+  }
+
+}

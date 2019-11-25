@@ -38,18 +38,17 @@ import { numberInputKeys } from '../number-input-keys';
   ]
 })
 export class SamExtension extends SamFormControl {
-/**
-   * A placeholder value for the extention. In this 
-   * component, placeholder should represent the number
-   * format, e.g., 1234 .
+  /**
+     * A placeholder value for the extention. In this 
+     * component, placeholder should represent the number
+     * format, e.g., 1234 .
+     */
+  placeholder: string = 'ex: 1234';
+
+  /**
+   * is extension required
    */
-   placeholder: string = 'ex: 1234';
-  
-   /**
-    * is extension required
-    */
-   private keys: KeyHelper = new KeyHelper(...numberInputKeys);
-  @Input() isExtensionRequired: boolean = false;
+  private keys: KeyHelper = new KeyHelper(...numberInputKeys);
   public inputValue: any = '';
 
   protected defaultValue = '';
@@ -70,7 +69,7 @@ export class SamExtension extends SamFormControl {
 
     super(samFormService, cdr);
   }
- 
+
 
   public ngOnInit() {
     super.ngOnInit();
@@ -82,7 +81,7 @@ export class SamExtension extends SamFormControl {
     this.value = event.currentTarget.value
       ? event.currentTarget.value
       : '';
-      this.onChange(this.value);
+    this.onChange(this.value);
   }
 
   public validate(c: FormControl) {
@@ -108,7 +107,7 @@ export class SamExtension extends SamFormControl {
   private extensionValidator (c: FormControl) {
     const regex: RegExp = /^[0-9]{1,20}$/g;
     const message =
-      'Phone extensions must only include numbers';
+      'Phone extensions must be 20 digits or fewer';
 
     return c && c.value && !c.value.toString().match(regex)
       ? { extension: { message: message } }

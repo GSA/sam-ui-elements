@@ -1,6 +1,6 @@
 {
   "name": "@gsa-sam/sam-ui-elements",
-  "version": "0.8.24",
+  "version": "0.12.4",
   "description": "SAM UI library",
   "repository": {
     "type": "git",
@@ -17,7 +17,6 @@
   "files": [
     "src/",
     "sam-styles/",
-    "sam-styles-2/",
     "index.ts",
     "LICENSE",
     "README.md"
@@ -38,16 +37,20 @@
     "@angular/platform-browser-dynamic": "^6.0.0",
     "@angular/platform-server": "^6.0.0",
     "@angular/router": "^6.0.0",
-    "@angularclass/conventions-loader": "1.0.12",
-    "@fortawesome/fontawesome-svg-core": "1.2.2",
-    "@fortawesome/free-solid-svg-icons": "5.2.0",
+    "@fortawesome/angular-fontawesome": "0.2.1",
+    "@fortawesome/fontawesome-svg-core": "1.2.22",
+    "@fortawesome/free-regular-svg-icons": "5.10.2",
+    "@fortawesome/free-solid-svg-icons": "5.10.2",
+    "@gsa-sam/sam-styles": "0.0.34",
     "@ngx-formly/core": "^2.1.1",
     "accessible-html5-video-player": "^1.0.3",
     "core-js": "2.4.1",
     "ie-shim": "0.1.0",
     "rxjs": "^6.2.2",
     "zone.js": "0.8.14",
-    "moment": "2.19.3"
+    "moment": "2.19.3",
+    "@types/lodash": "4.14.123",
+    "lodash": "4.17.11"
   },
   "devDependencies": {
     "@angularclass/hmr": "1.0.1",

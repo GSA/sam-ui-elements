@@ -33,6 +33,11 @@ describe('The Sam Button component', () => {
     buttonId: 'errorConfigBtn',
     buttonText: 'Wrong buttonType'
   };
+  const nextBtnConfig = {
+    buttonType: 'next',
+    buttonId: 'nextBtn',
+    buttonText: 'Next'
+  };
 
 
   beforeEach(() => {
@@ -109,5 +114,18 @@ describe('The Sam Button component', () => {
     expect(component.buttonDisabled).toBe(false);
     const btnElement = fixture.debugElement.query(By.css('#errorConfigBtn'));
     expect(btnElement.nativeElement.innerHTML.trim()).toBe('Wrong buttonType');
+  });
+
+  it('should display a next sam button', function () {
+
+    component.buttonType = nextBtnConfig.buttonType;
+    component.buttonId = nextBtnConfig.buttonId;
+    component.buttonText = nextBtnConfig.buttonText;
+    fixture.detectChanges();
+
+    expect(component.btnClass).toContain('next');
+    expect(component.buttonDisabled).toBe(false);
+    const btnElement = fixture.debugElement.query(By.css('#nextBtn'));
+    expect(btnElement.nativeElement.innerHTML.trim()).toBe('Next');
   });
 });

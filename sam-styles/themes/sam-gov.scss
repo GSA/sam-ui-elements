@@ -1,5 +1,3 @@
-// @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,600,600i,700,700i');
-
 // Include structure
 @import '../breadcrumbs/structure';
 @import '../menu/structure';
@@ -8,10 +6,22 @@
 @import '../sidenav/structure';
 @import '../expansion/expansion-panel';
 @import '../expansion/expansion-panel-header';
-// @import '../grid/grid';
 @import '../filters/sam-filter-drawer';
 @import '../progress/structure';
-@import '../temp/temp';
+@import '../tag/tag';
+@import '../tag/tag-outline';
+@import '../utilities/link';
+@import '../utilities/margin';
+@import '../utilities/padding';
+@import '../utilities/border';
+@import '../utilities/float';
+@import '../utilities/text-styles';
+@import '../icon/icon';
+@import '../card/card';
+@import '../alert/alert';
+@import '../button/button';
+@import '../banner/banner';
+@import '../comment/comment';
 
 // Include theme
 @import '../core/theming/all-theme';
@@ -21,9 +31,54 @@
 
 // Define a theme.
 $primary: sam-palette($uswds-blue, 700, 500, 900);
-$secondary:  sam-palette($uswds-light-blue, 500, 200, 600);
+$secondary: sam-palette($uswds-light-blue, 500, 200, 600);
 
 $theme: sam-theme($primary, $secondary);
 
 // Include all theme styles for the components.
 @include sam-gov-theme($theme);
+
+/*******************************
+        SDS Styles
+*******************************/
+
+// General settings
+// -------------------------------------
+$theme-image-path: '~@gsa-sam/sam-styles/src/img';
+
+// Typography settings
+// -------------------------------------
+$theme-respect-user-font-size: false;
+$theme-font-path: '~uswds/dist/fonts';
+$theme-font-role-heading: 'sans';
+$theme-font-weight-semibold: 600;
+
+// Color settings
+// -------------------------------------
+@import '~@gsa-sam/sam-styles/src/stylesheets/theme/sds-theme-color';
+
+// Spacing settings
+// -------------------------------------
+$theme-grid-container-max-width: 'desktop-lg';
+
+// Components settings
+// -------------------------------------
+// Header
+$theme-header-max-width: 'desktop-lg';
+$theme-header-min-width: 'tablet';
+
+// Required
+// -------------------------------------
+@import '../packages/required';
+
+// Global
+// -------------------------------------
+@import '../packages/global';
+
+// Components
+// -------------------------------------
+@import '../packages/uswds-components';
+
+// Utilities
+// -------------------------------------
+// @import '~uswds/dist/scss/packages/uswds-utilities';

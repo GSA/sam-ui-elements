@@ -6,13 +6,13 @@ import {
   EventEmitter,
   ElementRef,
   ViewChild,
-  AfterViewChecked,
   ChangeDetectorRef
 } from '@angular/core';
 import { ScrollHelpers } from '../../dom-helpers';
 import {
   IconProp
 } from '@fortawesome/fontawesome-svg-core';
+import { KeyHelper, KEYS } from '../../utilities/key-helper/key-helper';
 
 /**
  * The <sam-modal> component display a popover for user interaction
@@ -68,6 +68,15 @@ export class SamModalComponent implements OnInit {
    */
   @Input() icon: IconProp;
   /**
+   * Sets the modal button
+   */
+  @Input() buttonPosition: string = 'center';
+  /**
+   * Sets the modal condensed styles
+   */
+  @Input() condensed: boolean = false;
+
+  /**
    * (deprecated) Emitted event when modal is opened
    */
   @Output() onOpen: EventEmitter<any> = new EventEmitter<any>();
@@ -94,16 +103,17 @@ export class SamModalComponent implements OnInit {
 
   @ViewChild('modalRoot') public modalRoot: ElementRef;
   @ViewChild('modalContent') public modalContent: ElementRef;
-
+  @ViewChild('closeButton') public closeButton: ElementRef;
   public show = false;
+  public clickOutsideReady = false;
   public types: any = {
-    'success': { class: 'usa-alert-success', sr: 'success alert'},
-    'warning': { class: 'usa-alert-warning', sr: 'warning alert'},
-    'error': { class: 'usa-alert-error', sr: 'error alert'},
-    'info': { class: 'usa-alert-info', sr: 'information alert'},
-    'plain': { class: 'usa-alert-plain', sr: 'plain alert'},
-    'primary': {class: 'sam-primary'},
-    'download': { class: 'usa-alert-download'}
+    'success': { class: 'usa-alert-success', sr: 'success alert' },
+    'warning': { class: 'usa-alert-warning', sr: 'warning alert' },
+    'error': { class: 'usa-alert-error', sr: 'error alert' },
+    'info': { class: 'usa-alert-info', sr: 'information alert' },
+    'plain': { class: 'usa-alert-plain', sr: 'plain alert' },
+    'primary': { class: 'sam-primary' },
+    'download': { class: 'usa-alert-download' }
   };
   public selectedType: string = this.types.success.class;
 
@@ -111,8 +121,8 @@ export class SamModalComponent implements OnInit {
   private internalId;
   private _focusModalElement: boolean = false;
   private _focusableString: string =
-    'a[href], area, button, select, textarea, *[tabindex], \
-    input:not([type="hidden"])';
+      'a[href], area, button, select, textarea, *[tabindex], \
+      input:not([type="hidden"])';
 
   private _allFocusableElements: NodeListOf<Element>;
   private _modalFocusableElements: NodeListOf<Element>;
@@ -130,7 +140,6 @@ export class SamModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    // document.body.appendChild(this.hostElement.nativeElement);
     this._scrollHelpers = ScrollHelpers(window);
     if (!this.typeNotDefined()) {
       this.selectedType = this.types[this.type].class;
@@ -138,58 +147,10 @@ export class SamModalComponent implements OnInit {
     this.setModalElementIds();
   }
 
-  set508() {
-    if (this.show) {
-      this._allFocusableElements =
-        document.querySelectorAll(this._focusableString);
-      this._modalFocusableElements =
-        this.hostElement.nativeElement.querySelectorAll(this._focusableString);
-
-      for (let i = 0; i < this._allFocusableElements.length; i++) {
-        if (!this.hostElement.nativeElement.contains(
-          this._allFocusableElements[i])) {
-          this.removeTabbable(this._allFocusableElements[i]);
-        }
-      }
-
-      for (let j = 0; j < this._modalFocusableElements.length; j++) {
-        this.reinsertTabbable(this._modalFocusableElements[j]);
-      }
-    }
-
-    if (this._focusModalElement) {
-      const focusable = this._modalFocusableElements[1] as HTMLElement;
-      if (focusable) {
-        focusable.focus();
-      }
-      this._focusModalElement = false;
-    }
-  }
-
-  removeTabbable(item: any) {
-    if(item.hasAttribute("tabindex")){
-      item.setAttribute('data-sam-tabindex',item.getAttribute('tabindex'));
-    }
-    item.setAttribute('tabindex', '-1');
-    item.setAttribute('aria-hidden', 'true');
-  }
-
-  reinsertTabbable(item: any) {
-    if(item.hasAttribute('data-sam-tabindex')){
-      item.setAttribute('tabindex',item.getAttribute('data-sam-tabindex'));
-      item.removeAttribute('data-sam-tabindex');
-    } else {
-      item.setAttribute('tabindex', '0');
-    }
-    item.setAttribute('aria-hidden', 'false');
-  }
 
   ngOnDestroy() {
-    // if (this.show) {
-    //   this.show = false;
-    //   this.removeBackdrop();
-    // }
     this.show = false;
+    this.clickOutsideReady = false;
     this.cdr.detach();
   }
 
@@ -211,37 +172,93 @@ export class SamModalComponent implements OnInit {
     if (this.show) {
       return;
     }
+
     this.show = true;
+    this.cdr.detectChanges();
     this.args = args;
     this.onOpen.emit(this.args);
     this.open.emit(this.args);
     if (document && document.body) {
-      // this.createBackdrop();
       this.disableScroll();
-      // document.body.appendChild(this.backdropElement);
     }
     this._focusModalElement = true;
-    this.set508();
-    // this.cdr.detectChanges();
+
+    this.set5082();
+    // for some reason cdr detectchanges still processes click event used to open the modal,
+    // so clickoutside fires when the modal opens and closes it immediately
+    // setTimeout works though
+    window.setTimeout(() => {
+      this.clickOutsideReady = true;
+    });
   }
+
+  set5082() {
+    this._allFocusableElements =
+        document.querySelectorAll(this._focusableString);
+    this._modalFocusableElements =
+        this.modalRoot.nativeElement.querySelectorAll(this._focusableString);
+    let modulFocus = this._modalFocusableElements[0] as HTMLBaseElement;
+    let firstFocus = this._modalFocusableElements[1] as HTMLBaseElement;
+    let lastFocus = this._modalFocusableElements[this._modalFocusableElements.length - 1] as HTMLBaseElement;
+
+    if (this._focusModalElement) {
+      modulFocus.focus();
+      this._focusModalElement = false;
+    }
+    let modulHasFocus = true;
+    modulFocus.addEventListener("keydown", function (ev: KeyboardEvent) {
+      if (modulHasFocus) {
+        if (firstFocus) {
+          if (!ev.shiftKey && ev.keyCode === 9) {
+            ev.preventDefault();
+            firstFocus.focus();
+            modulHasFocus = false;
+          } else if (ev.shiftKey && ev.keyCode === 9) {
+            ev.preventDefault();
+            lastFocus.focus();
+            modulHasFocus = false;
+          }
+        } else {
+          if (ev.keyCode === 9) {
+            //With no buttons must remain on the modul until closed (By escape or mosu click)
+            ev.preventDefault();
+          }
+        }
+      } else {
+        return false;
+      }
+    });
+    if (firstFocus) {
+      firstFocus.addEventListener("keydown", function (ev: KeyboardEvent) {
+        if (ev.shiftKey && ev.keyCode === 9) {
+          ev.preventDefault();
+          lastFocus.focus();
+        }
+      });
+
+
+      lastFocus.addEventListener("keydown", function (ev: KeyboardEvent) {
+        if (!ev.shiftKey && ev.keyCode === 9) {
+          ev.preventDefault();
+          firstFocus.focus();
+        }
+      });
+    }
+
+  }
+
 
   closeModal(emit: boolean = true) {
     this.enableScroll();
     this.show = false;
-    if(emit){
+    this.clickOutsideReady = false;
+    if (emit) {
       this.onClose.emit(this.args);
       this.close.emit(this.args);
     }
     this.args = undefined;
-    // this.removeBackdrop();
-    for (let i = 0; i < this._allFocusableElements.length; i++) {
-      this.reinsertTabbable(this._allFocusableElements[i]);
-    }
 
-    for (let j = 0; j < this._modalFocusableElements.length; j++) {
-      this.removeTabbable(this._modalFocusableElements[j]);
-    }
-    // this.cdr.detectChanges();
+
   }
 
   submitBtnClick() {
@@ -259,10 +276,6 @@ export class SamModalComponent implements OnInit {
     //   document.body.removeChild(this.backdropElement);
     // }
   }
-
-  private preventClosing(evt) {
-    evt.stopPropagation();
-  }
   private setModalElementIds() {
     if (this.id) {
       this.modalElIds.cancelId = this.id + 'Cancel';
@@ -279,6 +292,13 @@ export class SamModalComponent implements OnInit {
   disableScroll(): void {
     this.hostElement.nativeElement.style.display = 'block';
     document.body.classList.add('modal-open');
-   
+
+  }
+
+  closeEscape(event): void {
+    if (this.closeOnEscape && KeyHelper.is(KEYS.ESC, event)) {
+      this.closeModal()
+    }
+    event.stopPropagation();
   }
 }
