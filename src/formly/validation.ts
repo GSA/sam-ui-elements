@@ -1,20 +1,20 @@
 import { FormControl, ValidationErrors } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 
-export function minDateValidationMessage(err, field: FormlyFieldConfig) {
+export function minDateValidationMessage(err, field) {
     let dt = field.templateOptions.minDate;
     let dateFormat = (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
     return `Date must be after ${dateFormat}`;
 }
 
-export function maxDateValidationMessage(err, field: FormlyFieldConfig) {
+export function maxDateValidationMessage(err, field) {
     let dt = field.templateOptions.maxDate;
     let dateFormat = (dt.getMonth() + 1) + "/" + dt.getDate() + "/" + dt.getFullYear();
     return `Date must be before ${dateFormat}`;
 }
 
 
-export function betweenDateValidationMessage(err, field: FormlyFieldConfig) {
+export function betweenDateValidationMessage(err, field) {
     let dtnmax = field.templateOptions.maxDate;
     let dateMaxFormat = (dtnmax.getMonth() + 1) + "/" + dtnmax.getDate() + "/" + dtnmax.getFullYear();
     let dtmin = field.templateOptions.minDate;
@@ -22,7 +22,7 @@ export function betweenDateValidationMessage(err, field: FormlyFieldConfig) {
     return `Date must be between ${dateMinFormat} and ${dateMaxFormat} `;
 }
 
-export function invalidDateFormatValidationMessage(err, field: FormlyFieldConfig) {
+export function invalidDateFormatValidationMessage(err, field) {
     return `Valid date format required (ex: MM/DD/YYYY)`;
 }
 
@@ -32,7 +32,7 @@ export function invalidDateFormatValidationMessage(err, field: FormlyFieldConfig
  * @param control 
  * @param field 
  */
-export function minDateValidator(control: FormControl, field: FormlyFieldConfig): ValidationErrors {
+export function minDateValidator(control: FormControl, field): ValidationErrors {
     let toReturn = null;
     let minDateField = field.templateOptions.minDate;
     let value = control.value;
@@ -61,7 +61,7 @@ export function minDateValidator(control: FormControl, field: FormlyFieldConfig)
  * @param control 
  * @param field 
  */
-export function maxDateValidator(control: FormControl, field: FormlyFieldConfig): ValidationErrors {
+export function maxDateValidator(control: FormControl, field): ValidationErrors {
     let toReturn = null;
     let maxDateField = field.templateOptions.maxDate;
     let value = control.value;
@@ -83,7 +83,7 @@ export function maxDateValidator(control: FormControl, field: FormlyFieldConfig)
     return toReturn;
 }
 
-export function minDateToDateRangePicker(model: any, formState: any, field: FormlyFieldConfig) {
+export function minDateToDateRangePicker(model: any, formState: any, field) {
     let date = null;
     //Setting a minumn date for the date range picker
     if (field.parent.templateOptions.minDate) {
@@ -98,7 +98,7 @@ export function minDateToDateRangePicker(model: any, formState: any, field: Form
     return date;
   }
   
-  export function minDateFromDateRangePicker(model: any, formState: any, field: FormlyFieldConfig) {
+  export function minDateFromDateRangePicker(model: any, formState: any, field) {
     let date = null;
     //Setting a minumn date for the date range picker
     if (field.parent.templateOptions.minDate) {
@@ -107,7 +107,7 @@ export function minDateToDateRangePicker(model: any, formState: any, field: Form
     return date;
   }
   
-  export function maxDateToDateRangePicker(model: any, formState: any, field: FormlyFieldConfig) {
+  export function maxDateToDateRangePicker(model: any, formState: any, field) {
     let date = null;
     //Setting a max date for the date range picker 
     if (field.parent.templateOptions.maxDate) {
@@ -116,7 +116,7 @@ export function minDateToDateRangePicker(model: any, formState: any, field: Form
     return date;
   }
   
-  export function maxDateFromDateRangePicker(model: any, formState: any, field: FormlyFieldConfig) {
+  export function maxDateFromDateRangePicker(model: any, formState: any, field) {
     let date = null;
     //Setting a max date for the date range picker
     if (field.parent.templateOptions.maxDate) {
