@@ -4,6 +4,7 @@ import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceResult } from 
 import { SamHierarchicalTreeConfiguration } from "../models/SamHierarchicalTreeConfiguration";
 import { Sort } from "../../../components/data-table/sort.directive";
 import { first } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: "sam-hierarchical-tree",
@@ -233,7 +234,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
             if (result) {
               this.resultItems = this.resultItems.concat(result.items)
             }
-            this.gridResults = Observable.of(this.resultItems);
+            this.gridResults = of(this.resultItems);
           }
         );
       }
@@ -251,7 +252,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
             this.totalItems = result.totalItems;
           }
           this.results = [];
-          this.gridResults = Observable.of(this.resultItems);
+          this.gridResults = of(this.resultItems);
         }
       );
     }
