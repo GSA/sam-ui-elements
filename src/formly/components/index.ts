@@ -6,3 +6,4 @@ export * from './radio';
 export * from './autocomplete-multiselect';
 export * from './date-range';
 export * from './number';
+export * from './date-picker';

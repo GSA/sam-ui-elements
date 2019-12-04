@@ -9,8 +9,8 @@ import {
 } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { SamUIKitModule } from '../../../ui-kit';
-
 import { FilterWrapperComponent } from './filter.wrapper';
+import { FormlyWrapperFormFieldComponent } from './form-field.wrapper';
 
 @NgModule({
   imports: [
@@ -23,15 +23,21 @@ import { FilterWrapperComponent } from './filter.wrapper';
         {
           name: 'filter',
           component: FilterWrapperComponent
+        },
+        {
+          name: 'form-field',
+          component: FormlyWrapperFormFieldComponent
         }
       ]
     })
   ],
   declarations: [
-    FilterWrapperComponent
+    FilterWrapperComponent,
+    FormlyWrapperFormFieldComponent
   ],
   exports: [
-    FilterWrapperComponent
+    FilterWrapperComponent,
+    FormlyWrapperFormFieldComponent
   ]
 })
-export class SamFilterWrapperModule {}
+export class SamFilterWrapperModule { }
