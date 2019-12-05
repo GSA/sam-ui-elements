@@ -24,7 +24,10 @@ const gridData = [
 const config: SamHierarchicalTreeGridConfiguration = {
     gridColumnsDisplayed: [],
     primaryKeyField: 'id',
-    childCountField: 'childCount'
+    childCountField: 'childCount',
+    navigateScreenReaderText: '',
+    primaryTextField: '',
+    emptyResultText:''
 };
 describe('The Sam hierarchical grid component', () => {
     describe('The Sam Data Table Tests', () => {
@@ -46,6 +49,7 @@ describe('The Sam hierarchical grid component', () => {
             component = fixture.componentInstance;
             component.displayedColumns = ['select'];
             component.configuration = config;
+            component.gridData = [gridData[0]];
             fixture.detectChanges();
             component.ngOnInit();
         });

@@ -1,9 +1,18 @@
-  <ul class="usa-pagination usa-color-text usa-color-primary-darkest usa-color-text-white" aria-label="pagination" [ngClass]="disabled && 'disabled'">
-    <li *ngIf="showPrevious()"><a tabindex="0" class="page-previous" aria-label="previous" (click)="onPreviousClick()" (keyup.enter)="onPreviousClick()">&lsaquo; Prev</a></li>
-    <li><a tabindex="0" class="page-button" [ngClass]="textDecoration(1)" (click)="onPageClick(1)" [attr.aria-label]="getAriaLabel(1)" (keyup.enter)="onPageClick(1)">1</a></li>
+<ul class="usa-pagination usa-color-text usa-color-primary-darkest usa-color-text-white" aria-label="pagination"
+    [ngClass]="disabled && 'disabled'">
+    <li *ngIf="showPrevious()"><a href="javascript:void(0)" class="page-previous" aria-label="previous page"
+            (click)="onPreviousClick()" (keyup.enter)="onPreviousClick()">&lsaquo; Prev </a></li>
+    <li><a href="javascript:void(0)" class="page-button" [ngClass]="textDecoration(1)" (click)="onPageClick(1)"
+            [attr.aria-label]="getAriaLabel(1)" (keyup.enter)="onPageClick(1)"><span class="sr-only">Page</span>1</a>
+    </li>
     <li *ngIf="showFirstEllipsis()"><span class="first-ellipsis">&hellip;</span></li>
-    <li *ngFor="let i of consecutivePageRange()"><a tabindex="0" class="page-button" [ngClass]="textDecoration(i)" (click)="onPageClick(i)" [attr.aria-label]="getAriaLabel(i)" (keyup.enter)="onPageClick(i)">{{i}}</a></li>
+    <li *ngFor="let i of consecutivePageRange()"><a href="javascript:void(0)" class="page-button"
+            [ngClass]="textDecoration(i)" (click)="onPageClick(i)" [attr.aria-label]="getAriaLabel(i)"
+            (keyup.enter)="onPageClick(i)"><span class="sr-only">Page</span>{{i}}</a></li>
     <li *ngIf="showLastEllipsis()"><span class="last-ellipsis">&hellip;</span></li>
-    <li *ngIf="showLastButton()"><a tabindex="0" class="page-button" [ngClass]="textDecoration(totalPages)" (click)="onPageClick(totalPages)" [attr.aria-label]="getAriaLabel(totalPages)" (keyup.enter)="onPageClick(totalPages)">{{totalPages}}</a></li>
-    <li *ngIf="showNext()"><a tabindex="0" class="page-next" aria-label="next" (click)="onNextClick()" (keyup.enter)="onNextClick()">Next &rsaquo;</a></li>
-  </ul>
+    <li *ngIf="showLastButton()"><a href="javascript:void(0)" class="page-button" [ngClass]="textDecoration(totalPages)"
+            (click)="onPageClick(totalPages)" [attr.aria-label]="getAriaLabel(totalPages)"
+            (keyup.enter)="onPageClick(totalPages)">{{totalPages}}</a></li>
+    <li *ngIf="showNext()"><a href="javascript:void(0)" class="page-next" aria-label="next page" (click)="onNextClick()"
+            (keyup.enter)="onNextClick()">Next &rsaquo;</a></li>
+</ul>

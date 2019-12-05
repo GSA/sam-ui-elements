@@ -79,7 +79,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
    * Optional text to be displayed when the text area is empty
    */
   @Input() placeholder: string;
-    /**
+  /**
      * Optional assistance text to be set when placeholder attribute is used
      */
   @Input() title: string;
@@ -148,7 +148,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
     this.control.setValidators(validators);
     if (!this.useFormService) {
       this.control.statusChanges.subscribe(() => {
-        this.wrapper.formatErrors(this.control);
+       this.wrapper.formatErrors(this.control);
       });
       this.wrapper.formatErrors(this.control);
     } else {

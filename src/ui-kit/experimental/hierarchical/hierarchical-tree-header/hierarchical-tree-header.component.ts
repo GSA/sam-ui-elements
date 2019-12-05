@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { OptionsType } from '../../../../ui-kit/types';
 import { SamHierarchicalTreeHeaderConfiguration } from '../models/SamHierarchicalTreeHeaderConfiguration';
-import { fromEvent } from 'rxjs/observable/fromEvent';
+
 import { KeyHelper, KEYS } from '../../../utilities/key-helper/key-helper';
 
 @Component({

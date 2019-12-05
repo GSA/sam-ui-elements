@@ -1,0 +1,73 @@
+// Outline tag
+
+.status-outline {
+  display: flex;
+  align-items: center;
+}
+
+.sam-tag[class*='sam-tag--outline'] {
+  white-space: nowrap;
+  font-size: 16px;
+  font-style: italic;
+  line-height: 20px;
+  font-weight: 400;
+  padding: 10px 20px;
+  border: 1px solid;
+  color: #212121;
+  margin-right: 5px;
+  display: inline-block;
+  width: 130px;
+  background-color: #ffffff;
+}
+
+.sam-tag[class*='sam-tag--outline']::before {
+  content: '';
+  display: inline-block;
+  border: 1px solid #5b616b;
+  background-color: #f1f1f1;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 5px;
+  vertical-align: bottom;
+}
+
+.sam-tag.sam-tag--outline-green::before {
+  border: 1px solid #2e8540;
+  background-color: #90cb31;
+}
+
+.sam-tag.sam-tag--outline-gray::before {
+  border: 1px solid #aeb0b5;
+  background-color: #e4e2e0;
+}
+
+.sam-tag.sam-tag--outline-dark-gray::before {
+  border: 1px solid #aeb0b5;
+  background-color: #5b616b;
+}
+
+.sam-tag.sam-tag--outline-yellow::before {
+  border: 1px solid #fdb81e;
+  background-color: #fad980;
+}
+
+.sam-tag.sam-tag--outline-light-blue::before {
+  border: 1px solid #00a6d2;
+  background-color: #9bdaf1;
+}
+
+.sam-tag.sam-tag--outline-red::before {
+  border: 1px solid #981b1e;
+  background-color: #e59393;
+}
+
+//outline header
+.sam-type--label-title {
+  font-size: 14px;
+  font-style: italic;
+  margin-bottom: 5px;
+  color: #5d5d52;
+  letter-spacing: normal;
+  line-height: 1.5;
+}

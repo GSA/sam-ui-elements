@@ -18,3 +18,20 @@
   opacity: 1;
   transform: translateX(5px);
 }
+
+//Entity link
+.sam.link.title {
+  text-align: right;
+  margin: 15px 0;
+
+  a {
+    //color: #00538;
+    color: #112f4e;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
+}

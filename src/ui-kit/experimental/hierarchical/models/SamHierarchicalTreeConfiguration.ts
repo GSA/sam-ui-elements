@@ -38,4 +38,15 @@ export class SamHierarchicalTreeConfiguration implements SamHierarchicalTreeGrid
      * Top Level Breadcrumb Text 
      */
     public topLevelBreadcrumbText: string;
+
+    /**
+    * Used for the Grid hidden button Screen Reader text to traverse down the tree
+    */
+    public navigateScreenReaderText: string = 'Go to';
+
+    /**
+    * Text when no results in advanced
+    */
+    public emptyResultText: string = 'There are no results. Try again with another selection.';
+
 }

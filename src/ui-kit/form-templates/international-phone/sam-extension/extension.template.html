@@ -1,0 +1,16 @@
+<sam-label-wrapper
+  class="sam-extension"
+  [label]="label"
+  [name]="name"
+  [hint]="hint"
+  [errorMessage]="errorMessage">
+  <input
+    [(ngModel)]="inputValue"
+    (change)="inputChange($event)"
+    type="text"
+    (keydown)="onKeyInput($event)"
+    [placeholder]="placeholder"
+    [attr.id]="name"
+    [attr.name]="name"
+    [disabled]="disabled"/>
+</sam-label-wrapper>

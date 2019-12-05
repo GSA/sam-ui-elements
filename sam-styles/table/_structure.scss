@@ -1,5 +1,5 @@
-$sam-header-row-height: 56px;
-$sam-row-height: 48px;
+$sam-header-row-height: 40px;
+$sam-row-height: 38px;
 $sam-row-horizontal-padding: 24px;
 
 /**
@@ -9,20 +9,19 @@ sam-datatable {
   display: block;
 }
 
-table.sam-table{
-  width: 100%;
-}
-
-sam-header-row, tr[sam-header-row] {
+sam-header-row {
   min-height: $sam-header-row-height;
 }
 
-sam-row, tr[sam-row], .sam-footer-row {
+sam-row,
+.sam-footer-row {
   padding: 4px 0px 4px 0px;
   min-height: $sam-row-height;
 }
 
-sam-row, tr[sam-row], sam-header-row, tr[sam-header-row], .sam-footer-row {
+sam-row,
+sam-header-row,
+.sam-footer-row {
   display: flex;
   // Define a border style, but then widths default to 3px. Reset them to 0px except the bottom
   // which should be 1px;
@@ -42,8 +41,9 @@ sam-row, tr[sam-row], sam-header-row, tr[sam-header-row], .sam-footer-row {
   }
 }
 
-sam-cell:first-child, sam-header-cell:first-child, .sam-footer-cell:first-child,
-td[sam-cell]:first-child, th[sam-header-cell]:first-child {
+sam-cell:first-child,
+sam-header-cell:first-child,
+.sam-footer-cell:first-child {
   padding-left: $sam-row-horizontal-padding;
 
   [dir='rtl'] & {
@@ -52,152 +52,307 @@ td[sam-cell]:first-child, th[sam-header-cell]:first-child {
   }
 }
 
-sam-cell:last-child, sam-header-cell:last-child, .sam-footer-cell:last-child,
-td[sam-cell]:last-child, th[sam-header-cell]:last-child {
+sam-cell:last-child,
+sam-header-cell:last-child,
+.sam-footer-cell:last-child {
   padding-right: $sam-row-horizontal-padding;
 
   [dir='rtl'] & {
-    padding-right: 0;
+    padding-right: 5px;
     padding-left: $sam-row-horizontal-padding;
   }
 }
 
-sam-cell, sam-header-cell, .sam-footer-cell,
-td[sam-cell], th[sam-header-cell] {
+sam-cell,
+sam-header-cell,
+.sam-footer-cell {
   flex: 1;
   display: flex;
   align-items: center;
-  // overflow: hidden;
+  overflow: hidden;
   word-wrap: break-word;
   word-break: break-word;
   min-height: inherit;
+  padding: 0 10px 0 10px;
 }
 
-sam-header-cell{
+sam-cell,
+sam-header-cell {
+  flex: 1 0;
+}
+sam-header-cell {
   overflow: visible;
 }
-/**
- * SORT
- */
- $sam-sort-header-arrow-margin: 6px;
- $sam-sort-header-arrow-container-size: 12px;
- $sam-sort-header-arrow-stem-size: 10px;
- $sam-sort-header-arrow-pointer-length: 6px;
- $sam-sort-header-arrow-thickness: 2px;
- $sam-sort-header-arrow-hint-opacity: 0.38;
 
- .sam-sort-header-container {
-   display: flex;
-   cursor: pointer;
-   align-items: center;
+// Native HTML table structure
+// =============================
+table.sam-table {
+  border-spacing: 0;
+}
 
-   .sam-sort-header-disabled & {
-     cursor: default;
-   }
- }
+tr.sam-header-row {
+  height: $sam-header-row-height;
+}
 
- .sam-sort-header-position-before {
-   flex-direction: row-reverse;
- }
+tr.sam-row,
+tr.sam-footer-row {
+  height: $sam-row-height;
+}
 
- .sam-sort-header-button {
-   border: none;
-   background: 0 0;
-   display: flex;
-   align-items: center;
-   padding: 0;
-   cursor: inherit;
-   outline: 0;
-   font: inherit;
-   color: currentColor;
-   min-width: 100px;
-   span.fa{
-     padding-left: 5px;
-    }
-    &:focus{
-      outline: 2px dotted #aeb0b5;
-      outline-offset: 3px;
-      box-shadow: none;
-    }
- }
+th.sam-header-cell {
+  text-align: left;
+}
 
- .sam-sort-header-arrow {
-   height: $sam-sort-header-arrow-container-size;
-   width: $sam-sort-header-arrow-container-size;
-   min-width: $sam-sort-header-arrow-container-size;
-   position: relative;
-   display: flex;
+th.sam-header-cell,
+td.sam-cell,
+td.sam-footer-cell {
+  padding: 0;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+}
 
-   &,
-   [dir='rtl'] .sam-sort-header-position-before & {
-     margin: 0 0 0 $sam-sort-header-arrow-margin;
-   }
+th.sam-header-cell:first-child,
+td.sam-cell:first-child,
+td.sam-footer-cell:first-child {
+  padding-left: $sam-row-horizontal-padding;
+}
 
-   .sam-sort-header-position-before &,
-   [dir='rtl'] & {
-     margin: 0 $sam-sort-header-arrow-margin 0 0;
-   }
- }
+th.sam-header-cell:last-child,
+td.sam-cell:last-child,
+td.sam-footer-cell:last-child {
+  padding-right: $sam-row-horizontal-padding;
+}
 
- .sam-sort-header-stem {
-   background: currentColor;
-   height: $sam-sort-header-arrow-stem-size;
-   width: $sam-sort-header-arrow-thickness;
-   margin: auto;
-   display: flex;
-   align-items: center;
- }
+// Sort header
+// ==============================================
 
- .sam-sort-header-indicator {
-   width: 100%;
-   height: $sam-sort-header-arrow-thickness;
-   display: flex;
-   align-items: center;
-   position: absolute;
-   top: 0;
-   left: 0;
- }
+$sam-sort-header-arrow-margin: 6px;
+$sam-sort-header-arrow-container-size: 12px;
+$sam-sort-header-arrow-stem-size: 10px;
+$sam-sort-header-arrow-pointer-length: 6px;
+$sam-sort-header-arrow-thickness: 2px;
+$sam-sort-header-arrow-hint-opacity: 0.38;
 
- .sam-sort-header-pointer-middle {
-   margin: auto;
-   height: $sam-sort-header-arrow-thickness;
-   width: $sam-sort-header-arrow-thickness;
-   background: currentColor;
-   transform: rotate(45deg);
- }
+.sam-sort-header-container {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
 
- .sam-sort-header-pointer-left,
- .sam-sort-header-pointer-right {
-   background: currentColor;
-   width: $sam-sort-header-arrow-pointer-length;
-   height: $sam-sort-header-arrow-thickness;
-   position: absolute;
-   top: 0;
- }
+  .sam-sort-header-disabled & {
+    cursor: default;
+  }
+}
 
- .sam-sort-header-pointer-left {
-   transform-origin: right;
-   left: 0;
- }
+.sam-sort-header-position-before {
+  flex-direction: row-reverse;
+}
 
- .sam-sort-header-pointer-right {
-   transform-origin: left;
-   right: 0;
- }
+.sam-sort-header-button {
+  justify-content: center;
+  border: none;
+  background: 0 0;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  cursor: inherit;
+  outline: 0;
+  font: inherit;
+  color: currentColor;
+  min-width: 100px;
+  span.fa {
+    padding-left: 5px;
+  }
+  &:focus {
+    outline: 2px dotted #aeb0b5;
+    outline-offset: 3px;
+    box-shadow: none;
+  }
+}
 
- /**
- * sam-styles custom
- */
- .sam.large.table{
-   overflow-x: auto;
- }
+.sam-sort-header-arrow {
+  height: $sam-sort-header-arrow-container-size;
+  width: $sam-sort-header-arrow-container-size;
+  min-width: $sam-sort-header-arrow-container-size;
+  position: relative;
+  display: flex;
 
-.sam-datatable-horizontal{
+  &,
+  [dir='rtl'] .sam-sort-header-position-before & {
+    margin: 0 0 0 $sam-sort-header-arrow-margin;
+  }
+
+  .sam-sort-header-position-before &,
+  [dir='rtl'] & {
+    margin: 0 $sam-sort-header-arrow-margin 0 0;
+  }
+}
+
+.sam-sort-header-stem {
+  background: currentColor;
+  height: $sam-sort-header-arrow-stem-size;
+  width: $sam-sort-header-arrow-thickness;
+  margin: auto;
+  display: flex;
+  align-items: center;
+}
+
+.sam-sort-header-indicator {
+  width: 100%;
+  height: $sam-sort-header-arrow-thickness;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.sam-sort-header-pointer-middle {
+  margin: auto;
+  height: $sam-sort-header-arrow-thickness;
+  width: $sam-sort-header-arrow-thickness;
+  background: currentColor;
+  transform: rotate(45deg);
+}
+
+.sam-sort-header-pointer-left,
+.sam-sort-header-pointer-right {
+  background: currentColor;
+  width: $sam-sort-header-arrow-pointer-length;
+  height: $sam-sort-header-arrow-thickness;
+  position: absolute;
+  top: 0;
+}
+
+.sam-sort-header-pointer-left {
+  transform-origin: right;
+  left: 0;
+}
+
+.sam-sort-header-pointer-right {
+  transform-origin: left;
+  right: 0;
+}
+
+// Horizontal Fix
+// =========================
+// @deprecated use 'sam-table-container-overflow'
+// to provide overflow behavior
+.sam.large.table,
+.sam-datatable-horizontal {
   overflow-x: auto;
 }
 .sam-datatable-horizontal::-webkit-scrollbar {
-  height: 7px;
+  width: 5px;
+  height: 5px;
 }
 .sam-datatable-horizontal::-webkit-scrollbar-thumb {
   border-radius: 2px;
+}
+
+// Basic Theme (Deprecated)
+// =========================
+// @deprecated use .sam-table--basic component
+.sam-header--basic {
+  border: 2px solid #c0c0c0;
+  background-color: #f5f6f7;
+  text-align: left;
+  tr {
+    height: 50px;
+  }
+  th {
+    padding: 0 20px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.sam-row--basic {
+  border: 2px solid #808080;
+  td {
+    padding: 0 20px;
+    font-weight: 600;
+    min-width: 115px;
+  }
+}
+
+// Celled Theme
+// =========================
+.sam-table.sam-table--basic {
+  sam-header-row,
+  tr.sam-header-row {
+    background-color: #efeeee;
+  }
+  .sam-header-cell {
+    color: #212121;
+  }
+  sam-row,
+  sam-header-row,
+  sam-footer-row,
+  tr[sam-row],
+  th.sam-header-cell,
+  td.sam-cell,
+  td.sam-footer-cell {
+    padding: 2px 10px;
+    border-top: 1px solid #a9a9a9;
+    border-bottom: 1px solid #a9a9a9;
+  }
+  .sam-sort-header-button {
+    justify-content: space-between;
+    margin: 0;
+    width: 100%;
+    &:hover {
+      color: #0070b8;
+    }
+  }
+  th.sam-header-cell:first-child,
+  td.sam-cell:first-child,
+  td.sam-footer-cell:first-child {
+    border-left: 1px solid #a9a9a9;
+  }
+  th.sam-header-cell:last-child,
+  td.sam-cell:last-child,
+  td.sam-footer-cell:last-child {
+    border-right: 1px solid #a9a9a9;
+  }
+}
+
+// sam table utilities
+// =========================
+// Fixes header at the top when scrolled
+.sam-table .sam-header-row--fixed th {
+  top: -1px;
+  position: sticky;
+  z-index: 100;
+  background-color: inherit;
+  box-shadow: 0px 1px 0 0px #6b6b6b;
+}
+
+// Wrapper to provide custom scroll bars
+.sam-table-container-overflow {
+  overflow: auto;
+  border-top: 1px solid #a9a9a9;
+  border-bottom: 1px solid #a9a9a9;
+  background-color: #f3f3f3;
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+  }
+}
+
+.sam-table-header {
+  background-color: #e5f0f1;
+  border: 1px solid #a9a9a9;
+  border-bottom: none;
+  padding: 5px 10px;
+  font-style: italic;
+  a {
+    font-style: normal;
+    font-weight: 700;
+  }
+  & + .sam-table-container-overflow .sam-header-row--fixed th {
+    border-top: none;
+  }
 }

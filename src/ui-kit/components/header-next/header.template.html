@@ -1,0 +1,66 @@
+<div
+  class="usa-overlay"
+  [class.is-visible]="mobileNavActive"
+  (click)="closeMobileNav()"
+></div>
+<header class="usa-header usa-header--extended">
+  <div class="usa-navbar">
+    <div class="usa-logo" id="sam-logo">
+      <a href="/" title="Home" aria-label="Home">
+        <ng-container *ngIf="!logoPath">
+          SAM.gov
+        </ng-container>
+        <img
+          class="sds-header__logo"
+          *ngIf="logoPath"
+          alt="SAM.gov"
+          src="{{ logoPath }}"
+        />
+      </a>
+    </div>
+    <button
+      #usaNavOpen
+      class="usa-menu-btn"
+      aria-label="Menu"
+      (click)="openMobileNav()"
+    >
+      <fa-layers [fixedWidth]="true" size="3x">
+        <fa-icon [icon]="faSquare"></fa-icon>
+        <fa-icon
+          [icon]="sdsBars"
+          [classes]="['icon-bars']"
+          transform="shrink-6"
+        ></fa-icon>
+        <fa-layers-counter *ngIf="notifications" content=""></fa-layers-counter>
+      </fa-layers>
+      <span class="usa-sr-only">Menu</span>
+    </button>
+  </div>
+  <nav
+    aria-label="Primary navigation"
+    class="usa-nav"
+    (keydown.esc)="closeMobileNav()"
+    (animationend)="navAnimationEnd()"
+    [class.is-visible]="mobileNavActive"
+    [cdkTrapFocus]="mobileNavActive"
+  >
+    <div class="usa-nav__inner">
+      <button
+        #usaNavClose
+        class="usa-nav__close"
+        aria-label="Close"
+        (click)="closeMobileNav()"
+      >
+        <fa-layers [fixedWidth]="true" size="lg">
+          <fa-icon [icon]="faCircle" [inverse]="true" transform="grow-2"></fa-icon>
+          <fa-icon [icon]="faTimes" transform="shrink-6"></fa-icon>
+        </fa-layers>
+        <span class="usa-sr-only">Close</span>
+      </button>
+      <ng-content select="sam-header-nav[type='primary']"></ng-content>
+      <div class="usa-nav__secondary">
+        <ng-content select="sam-header-nav[type='secondary']"></ng-content>
+      </div>
+    </div>
+  </nav>
+</header>

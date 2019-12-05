@@ -218,7 +218,7 @@ export class SamTimeComponent
   }
 
   // used by date-time/date-range comps
-  isClean() {
+  isEmptyField() {
     const hours = this.hours;
     const minutes = this.minutes;
     return (isNaN(hours) || hours === undefined)
