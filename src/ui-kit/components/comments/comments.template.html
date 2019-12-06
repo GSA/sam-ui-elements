@@ -1,42 +1,33 @@
 <section class="sam-comments">
-  <!-- List of comments -->
-  <p class="button-row">
-    <button #showCommentsButton class="usa-button-link show-button">Show previous comments</button>
-    <button #hideCommentsButton class="usa-button-link hide-button">Hide previous comments</button>
-  </p>
-  <ul class="usa-unstyled-list">
-    <li *ngFor="let comment of comments;">
-      <sam-comment [comment]="comment"
-                    [allowDelete]="isDeletable(comment)"
-                    (delete)="onDelete($event)"></sam-comment>
-    </li>
-  </ul>
-  <!-- New Comment Form -->
-  <form [formGroup]="form">
-    <div id="current-user-comment-icon">
-      <figure>
-        <span class="fa fa-3x fa-user"></span>
-        <figcaption class="usa-sr-only">Icon for current user</figcaption>
-      </figure>
-    </div>
-    
-    <div id="textarea-system-comments">
-      <textarea #textArea
-        formControlName="text"
-        name="comment"
-        class="sam-text-area"
-        placeholder="Type your message and hit Enter"
-        id="comment-component-input"
-        [attr.maxlength]="maxLength ? maxLength : 250"
-        aria-label="comment-input-box">
-      </textarea>
+    <!-- List of comments -->
+    <p class="button-row">
+        <button #showCommentsButton class="usa-button-link show-button">Show previous comments</button>
+        <button #hideCommentsButton class="usa-button-link hide-button">Hide previous comments</button>
+    </p>
+    <ul class="usa-unstyled-list">
+        <li *ngFor="let comment of comments;">
+            <sam-comment [comment]="comment" [allowDelete]="isDeletable(comment)" (delete)="onDelete($event)"></sam-comment>
+        </li>
+    </ul>
+    <!-- New Comment Form -->
+    <form [formGroup]="form">
+        <div id="current-user-comment-icon">
+            <figure>
+                <span class="fa fa-3x fa-user"></span>
+                <figcaption class="usa-sr-only">Icon for current user</figcaption>
+            </figure>
+        </div>
 
-      <p class="char-counter">
-        <span>{{ charsRemaining() }} characters remaining</span>
-      </p>
-    </div>
-    
+        <div id="textarea-system-comments">
+            <textarea #textArea formControlName="text" name="comment" class="sam-text-area" placeholder="Type your message and hit Enter" id="comment-component-input" [attr.maxlength]="maxLength ? maxLength : 250" 
+            [attr.aria-label]="commentAriaLabel()">
+            </textarea>
 
-  </form>
+            <p class="char-counter" aria-label="comments-characters-count">
+                <span>{{ charsRemaining() }} characters remaining</span>
+            </p>
+        </div>
+
+
+    </form>
 </section>
-

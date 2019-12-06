@@ -1,115 +1,106 @@
-
-// STATISTICS
-// --------------------------------
+//SAM Statistics
+//--------------------------------
 
 .sam.statistics {
   display: flex;
   flex-wrap: wrap;
-}
 
-.sam.statistics > .statistic {
-  margin: 5px 30px;
-}
+  .statistic {
+    margin: 5px 15px;
+    background-color: transparent;
+    border: none;
 
-.sam.statistics.compact > .statistic {
-  margin: 5px 10px;
-}
+    .value {
+      color: #323A45;
+      font-weight: 700;
+      font-size: 24px;
+      letter-spacing: -0.6px;
+      text-align: center;
 
-.sam.statistics > .statistic:hover {
-  text-decoration: none;
-}
+      .circular {
+        display: block;
+        margin: 0 auto;
+        height: 45px;
+        width: 75px;
+        padding: 5px 2px;
+        border-radius: 40px;
+        line-height: 32px;
+        transition: all 0.3s ease-out;
+      }
+    }
 
-.sam.statistics .statistic > .value {
-  color: #323A45;
-  font-weight: 700;
-  font-size: 24px;
-  letter-spacing: -0.6px;
-  text-align: center;
-}
+    .label {
+      color: #5B616B;
+      font-size: 14px;
+      text-align: center;
+      text-transform: uppercase;
+      margin-top: 8px;
+      line-height: 16px;
+    }
+  }
 
-.sam.statistics .statistic > .label {
-  color: #5B616B;
-  font-size: 14px;
-  text-align: center;
-  text-transform: uppercase;
-  margin-top: 8px;
-  line-height: 16px;
-}
+  .statistic:hover {
+    text-decoration: none;
+  }
+  // COLORS
+  // Green
+  .green.statistic > .value > .circular {
+    background: #EAF2EB;
+    border: 1px solid #2E8540;
+  }
 
-.sam.statistics .statistic > .value > .circular {
-  display: block;
-  margin: 0 auto;
-  width: 50px;
-  height: 48px;
-  border-radius: 50%;
-  line-height: 44px;
-  transition: all 0.3s ease-out;
-}
+  .green.statistic:hover > .value > .circular {
+    color: white;
+    background: #2E8540;
+  }
+  // Blue
+  .blue.statistic > .value > .circular {
+    background: #E5F0F4;
+    border: 1px solid #00A6D2;
+  }
 
-// COLORS
+  .blue.statistic:hover > .value > .circular {
+    color: white;
+    background: #00A6D2;
+  }
+  // Red
+  .red.statistic > .value > .circular {
+    background: #F4E8E8;
+    border: 1px solid #981B1E;
+  }
 
-// Green
-.sam.statistics .green.statistic > .value > .circular {
-  background: #EAF2EB;
-  border: 1px solid #2E8540;
-}
+  .red.statistic:hover > .value > .circular {
+    color: white;
+    background: #981B1E;
+  }
+  // Orange
+  .orange.statistic > .value > .circular {
+    background: #FBEBE6;
+    border: 1px solid #D84009;
+  }
 
-.sam.statistics .green.statistic:hover > .value > .circular {
-  color: white;
-  background: #2E8540;
-}
+  .orange.statistic:hover > .value > .circular {
+    color: white;
+    background: #D84009;
+  }
+  // Grey
+  .grey.statistic > .value > .circular {
+    background: #EEEFF0;
+    border: 1px solid #AEB0B5;
+  }
 
-// Blue
-.sam.statistics .blue.statistic > .value > .circular {
-  background: #E5F0F4;
-  border: 1px solid #00A6D2;
-}
+  .grey.statistic:hover > .value > .circular {
+    color: white;
+    background: #AEB0B5;
+  }
+  // Yellow
+  .yellow.statistic > .value > .circular {
+    background: #FFF1D2;
+    border: 1px solid #FED06A;
+  }
 
-.sam.statistics .blue.statistic:hover > .value > .circular {
-  color: white;
-  background: #00A6D2;
-}
-
-// Red
-.sam.statistics .red.statistic > .value > .circular {
-  background: #F4E8E8;
-  border: 1px solid #981B1E;
-}
-
-.sam.statistics .red.statistic:hover > .value > .circular {
-  color: white;
-  background: #981B1E;
-}
-
-// Orange
-.sam.statistics .orange.statistic > .value > .circular {
-  background: #FBEBE6;
-  border: 1px solid #D84009;
-}
-
-.sam.statistics .orange.statistic:hover > .value > .circular {
-  color: white;
-  background: #D84009;
-}
-
-// Grey
-.sam.statistics .grey.statistic > .value > .circular {
-  background: #EEEFF0;
-  border: 1px solid #AEB0B5;
-}
-
-.sam.statistics .grey.statistic:hover > .value > .circular {
-  color: white;
-  background: #AEB0B5;
-}
-
-// Yellow
-.sam.statistics .yellow.statistic > .value > .circular {
-  background: #FFF1D2;
-  border: 1px solid #FED06A;
-}
-
-.sam.statistics .yellow.statistic:hover > .value > .circular {
-  color: white;
-  background: #FED06A;
+  .yellow.statistic:hover > .value > .circular {
+    color: white;
+    background: #FED06A;
+  }
 }

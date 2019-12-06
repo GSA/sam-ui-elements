@@ -186,7 +186,9 @@ export class SamDateComponent
     if (!this.name) {
       throw new Error('SamDateComponent required a name for 508 compliance');
     }
+  }
 
+  ngAfterViewInit(){
     if (this.control) {
       const validators: ValidatorFn[] = [];
       if (this.control.validator) {
@@ -469,30 +471,30 @@ export class SamDateComponent
 
   onChangeHandler(override = undefined) {
     this.onTouched();
-    if (this.isDateTouched && this.isMonthTouched && this.isYearTouched && !this.isTabPressed) {
-      if (this.month.nativeElement.value || this.day.nativeElement.value ||
-        this.year.nativeElement.value) {
-        if (this.isClean(override)) {
-          this.onChange(null);
-          this.valueChange.emit(null);
-        } else if (this.isYearTouched) {
-          if (this.year.nativeElement.value.length != 4) {
-            this.onChange('Invalid Date');
-            this.valueChange.emit('Invalid Date');
-          } else {
-            const dateString = this.getDate(override).format(this.OUTPUT_FORMAT);
-            this.onChange(dateString);
-            this.valueChange.emit(dateString);
-          }
-        } else if ((!this.getDate(override).isValid())) {
+    let dayCheck = this.isDateTouched || (!this.isDateTouched && this.day.nativeElement.value);
+    let monthCheck = this.isMonthTouched || (!this.isMonthTouched && this.month.nativeElement.value);
+    let yearCheck = this.isYearTouched || (!this.isYearTouched && this.year.nativeElement.value);
+    if (dayCheck && monthCheck && yearCheck && !this.isTabPressed) {
+      if (this.isEmptyField(override)) {
+        this.onChange(null);
+        this.valueChange.emit(null);
+      } else if (this.isYearTouched) {
+        if (this.year.nativeElement.value.length != 4) {
           this.onChange('Invalid Date');
           this.valueChange.emit('Invalid Date');
         } else {
-          // use the strict format for outputs
           const dateString = this.getDate(override).format(this.OUTPUT_FORMAT);
           this.onChange(dateString);
           this.valueChange.emit(dateString);
         }
+      } else if ((!this.getDate(override).isValid())) {
+        this.onChange('Invalid Date');
+        this.valueChange.emit('Invalid Date');
+      } else {
+        // use the strict format for outputs
+        const dateString = this.getDate(override).format(this.OUTPUT_FORMAT);
+        this.onChange(dateString);
+        this.valueChange.emit(dateString);
       }
     }
     this.focusHandler();
@@ -516,7 +518,7 @@ export class SamDateComponent
       this.onChangeHandler(dupModel);
     }
   }
-  isClean(override = undefined) {
+  isEmptyField(override = undefined) {
     let dupModel = this.inputModel;
     if (override) {
       dupModel = override;
@@ -538,16 +540,19 @@ export class SamDateComponent
   }
 
   monthName() {
-    return `${this.name}_month`;
+    return `${this.name}_month Enter Month Here.`;
   }
+
 
   dayName() {
-    return `${this.name}_day`;
+    return `${this.name}_day Enter Day Here.`;
   }
 
+
   yearName() {
-    return `${this.name}_year`;
+    return `${this.name}_year Enter Year Here.`;
   }
+
 
   triggerTouch(ev) {
     this.isYearTouched = true;

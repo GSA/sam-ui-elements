@@ -182,6 +182,9 @@ export class SamAutocompleteComponent
    */
   @Input() public httpRequest: Observable<any>;
 
+
+  activeDescendant: string = undefined;
+
   public results: Array<string> = [];
   public innerValue: any = '';
   public inputValue: any = '';
@@ -496,13 +499,17 @@ export class SamAutocompleteComponent
       this.onKeyUpUsingService(this.inputValue);
       selectedChildIndex = this.checkCategoryIndex(children[selectedChildIndex]);
       isFirstItemCategory = this.isFirstItemCategory(children[selectedChildIndex], selectedChildIndex);
-      selectedChildIndex = selectedChildIndex + this.incrementIfFirstCategory(isFirstItemCategory); children[selectedChildIndex].classList.add('isSelected');
+      selectedChildIndex = selectedChildIndex + this.incrementIfFirstCategory(isFirstItemCategory);
+      children[selectedChildIndex].classList.add('isSelected');
       this.selectedChild = children[selectedChildIndex];
+      this.activeDescendant = this.selectedChild.id;
       message = this.setMessage(selectedChildIndex);
     } else {
       isFirstItemCategory = this.isFirstItemCategory(children[selectedChildIndex + 1], selectedChildIndex + 1);
-      selectedChildIndex = selectedChildIndex + this.incrementIfFirstCategory(isFirstItemCategory); children[selectedChildIndex + 1].classList.add('isSelected');
+      selectedChildIndex = selectedChildIndex + this.incrementIfFirstCategory(isFirstItemCategory);
+      children[selectedChildIndex + 1].classList.add('isSelected');
       this.selectedChild = children[selectedChildIndex + 1];
+      this.activeDescendant = this.selectedChild.id;
       message = this.setMessage(selectedChildIndex + 1);
     }
 
@@ -577,8 +584,10 @@ export class SamAutocompleteComponent
 
     if (this.isFirstItem(selectedChildIndex)) {
       this.endOfList = true;
-      children[children.length - 1].classList.add('isSelected');
-      this.selectedChild = children[children.length - 1];
+      let child = children[children.length - 1];
+      child.classList.add('isSelected');
+      this.selectedChild = child;
+      this.activeDescendant = child.id;
       message = this.setMessage(children.length - 1);
     } else {
       if (this.categories.length > 0 && !this.config.isCategorySelectable) {
@@ -597,8 +606,10 @@ export class SamAutocompleteComponent
           && children[selectedChildIndex - 1].classList
             .contains('category')) {
           this.endOfList = true;
-          children[children.length - 1].classList.add('isSelected');
-          this.selectedChild = children[children.length - 1];
+          let child = children[children.length - 1];
+          child.classList.add('isSelected');
+          this.activeDescendant = child.id;
+          this.selectedChild = child;
           message = this.setMessage(children.length - 1);
           this.pushSROnlyMessage(message);
           list.nativeElement.scrollTop = this.selectedChild.offsetTop
@@ -606,8 +617,10 @@ export class SamAutocompleteComponent
           return;
         }
       }
-      children[selectedChildIndex - 1].classList.add('isSelected');
-      this.selectedChild = children[selectedChildIndex - 1];
+      let child = children[selectedChildIndex - 1];
+      child.classList.add('isSelected');
+      this.selectedChild = child;
+      this.activeDescendant = child.id;
       message = this.setMessage(selectedChildIndex - 1);
     }
     this.pushSROnlyMessage(message);
@@ -745,6 +758,7 @@ export class SamAutocompleteComponent
     this.srOnly.nativeElement.innerHTML = null;
     this.pushSROnlyMessage(`You chose ${message}`);
     this.enterEvent.emit(value);
+    this.activeDescendant = undefined;
   }
 
   filterResults(subStr: string, stringArray: Array<string>): Array<string> {
@@ -805,6 +819,7 @@ export class SamAutocompleteComponent
     this.input.nativeElement.blur();
     this.hasFocus = false;
     this.srOnly.nativeElement.innerHTML = null;
+    this.activeDescendant = undefined;
   }
 
   inputFocusHandler(evt) {
@@ -820,6 +835,7 @@ export class SamAutocompleteComponent
     }
     this.filteredKeyValuePairs = null;
     this.results = null;
+    this.inputValue = "";
     this.input.nativeElement.value = '';
     this.innerValue = '';
     this.propogateChange(null);
@@ -900,6 +916,7 @@ export class SamAutocompleteComponent
       return false;
     };
   }
+
 
 
 

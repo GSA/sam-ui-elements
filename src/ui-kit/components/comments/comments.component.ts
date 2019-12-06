@@ -204,4 +204,8 @@ export class SamCommentsComponent implements OnInit {
       0;
     return this.maxLength - textLength;
   }
+
+  commentAriaLabel(){
+    return "Enter your comments (Maximum characters allowed: "+  this.maxLength+ ")";
+  }
 }
