@@ -147,8 +147,13 @@ export class SamTextareaComponent implements ControlValueAccessor {
 
     this.control.setValidators(validators);
     if (!this.useFormService) {
-      this.control.statusChanges.subscribe(() => {
-       this.wrapper.formatErrors(this.control);
+      this.control.valueChanges
+      .pipe(pairwise())
+      .subscribe(([prev, next]: [any, any]) => {
+          if (this.placeholder) {
+          this.control.markAsPristine();
+        }
+        this.wrapper.formatErrors(this.control);
       });
       this.wrapper.formatErrors(this.control);
     } else {
