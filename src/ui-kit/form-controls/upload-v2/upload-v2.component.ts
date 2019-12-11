@@ -1,6 +1,5 @@
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { isObservable } from 'rxjs';
+import { Observable ,  Subscription ,  isObservable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import {
   Component, ElementRef, Input, ViewChild, Renderer2,
   forwardRef, SimpleChanges,  Output,
@@ -15,7 +14,7 @@ import {
     UploadedFileData
 } from '../../types';
 import * as moment from 'moment';
-import 'rxjs/add/operator/switchMap';
+
 
 export type RequestGenerator =
   (file: File) => HttpRequest<any> | Observable<HttpRequest<any>>;
@@ -568,7 +567,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     const request = this.deleteRequest(uf);
 
     if (isObservable(request)) {
-      return request.switchMap(req => this.httpClient.request(req));
+      return request.pipe(switchMap(req => this.httpClient.request(req)));
     } else if (request instanceof HttpRequest) {
       return this.httpClient.request(request);
     } else {
@@ -581,10 +580,10 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     const request = this.uploadRequest(file);
 
     if (isObservable(request)) {
-      return request.switchMap((req: HttpRequest<any>) => {
+      return request.pipe(switchMap((req: HttpRequest<any>) => {
         upload.request = req;
         return this.httpClient.request(req);
-      });
+      }));
     } else if (request instanceof HttpRequest) {
       upload.request = request;
       return this.httpClient.request(request);

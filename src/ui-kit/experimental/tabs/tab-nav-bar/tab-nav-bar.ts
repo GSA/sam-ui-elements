@@ -17,8 +17,7 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {CanDisable, mixinDisabled} from '../../patterns/layout/components/core/common-behaviors/disabled';
-import {Subject} from 'rxjs/Subject';
-import {Subscription} from 'rxjs/Subscription';
+import {Subject, Subscription} from 'rxjs';
 
 /**
  * Navigation component matching the styles of the tab group header.

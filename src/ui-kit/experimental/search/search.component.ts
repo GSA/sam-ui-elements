@@ -27,13 +27,8 @@ import {
 
 import { PrototypeSearchService } from './search.service';
 
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/switch';
+import { fromEvent } from 'rxjs';
+import { map, tap, filter, debounceTime, switchAll } from 'rxjs/operators';
 
 @Component({
   selector: "sam-search",
@@ -79,14 +74,14 @@ export class SamSearchComponent implements OnInit{
   ngOnInit(): void{
     this.resultsWidth = "450px";
     // convert the `keyup` event into an observable stream
-    Observable.fromEvent(this.inputEl.nativeElement, 'keyup')
-    .map((e: any) => e.target.value) // extract the value of the input
-    .filter((text: string) => text.length > 1) // filter out if empty
-    .do(()=> this.loading = true) // enable loading
-    .debounceTime(350) // only once every 250ms
+    fromEvent(this.inputEl.nativeElement, 'keyup').pipe(
+    map((e: any) => e.target.value), // extract the value of the input
+    filter((text: string) => text.length > 1), // filter out if empty
+    tap(()=> this.loading = true), // enable loading
+    debounceTime(350), // only once every 250ms
     //.map((query: string) => this.prototypedata.search(query) )
-    .map((query: string) => this.prototypedata.loadData(query) )
-    .switch()
+    map((query: string) => this.prototypedata.loadData(query) ),
+    switchAll())
     // act on the return of the search
     .subscribe(
       (results) => { // on success
