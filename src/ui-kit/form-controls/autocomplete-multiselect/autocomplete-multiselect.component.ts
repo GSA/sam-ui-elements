@@ -81,7 +81,7 @@ export class SamAutocompleteMultiselectComponent
   /**
    * Gets DOM element for the textarea used for input
    */
-  @ViewChild('textArea', {static: true}) textArea: ElementRef;
+  @ViewChild('textArea', {static: false}) textArea: ElementRef;
   @ViewChild('hiddenText', {static: true}) hiddenText: ElementRef;
   @ViewChild('resultsList', {static: true}) resultsList: ElementRef;
   @ViewChild(LabelWrapper, {static: true}) wrapper: LabelWrapper;
