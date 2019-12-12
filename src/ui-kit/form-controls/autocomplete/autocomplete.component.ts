@@ -46,8 +46,8 @@ export interface SamCache {
 })
 export class SamAutocompleteComponent
   implements ControlValueAccessor, OnChanges, OnDestroy, SamCache {
-    @ViewChild('resultsList', {static: true}) resultsList: ElementRef;
-    @ViewChild('resultsListKV', {static: true}) resultsListKV: ElementRef;
+    @ViewChild('resultsList', {static: false}) resultsList: ElementRef;
+    @ViewChild('resultsListKV', {static: false}) resultsListKV: ElementRef;
     @ViewChild('input', {static: true}) input: ElementRef;
     @ViewChild('srOnly', {static: true}) srOnly: ElementRef;
     @ViewChild('wrapper', {static: true}) wrapper;
