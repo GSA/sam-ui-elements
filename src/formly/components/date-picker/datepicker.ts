@@ -14,7 +14,7 @@ import { FieldType } from '@ngx-formly/core';
  
  .mat-input-element
  { display:inline-block; 
-max-width: 175px;
+max-width: 200px;
 }
 </style> 
   `,
