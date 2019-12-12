@@ -35,8 +35,8 @@ export class SamDateRangeComponent
 
         @ViewChild('startControl', {static: true}) public startControl;
         @ViewChild('endControl', {static: true}) public endControl;
-        @ViewChild('startDate', {static: true}) public startDateComp;
-        @ViewChild('endDate', {static: true}) public endDateComp;
+        @ViewChild('startDate', {static: false}) public startDateComp;
+        @ViewChild('endDate', {static: false}) public endDateComp;
         @ViewChild('wrapper', {static: true}) public wrapper;
     /**
      * From Date label parameter for date range components
