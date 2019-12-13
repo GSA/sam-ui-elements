@@ -8,7 +8,7 @@ import { FieldType } from '@ngx-formly/core';
 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
 <mat-datepicker  [startAt]="to.startDate"   #picker></mat-datepicker>
 <style>
-.mat-datepicker-toggle > button.mat-button-base:hover{
+.mat-datepicker-toggle > .mat-button-base:hover{
   background-color: ffffff !important;
  }
  
