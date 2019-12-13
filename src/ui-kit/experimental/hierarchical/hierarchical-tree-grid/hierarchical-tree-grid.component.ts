@@ -2,7 +2,7 @@ import {
   Component, OnInit, ViewChild, Input, AfterViewChecked,
   Output, EventEmitter, ChangeDetectorRef
 } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { SamSortDirective } from '../../../components'
 import { HierarchicalDataSource } from './data-source';
 import { SamHierarchicalTreeGridConfiguration } from '../models/SamHierarchicalTreeGridConfiguration';
