@@ -42,7 +42,6 @@ export type MdTabHeaderPosition = 'above' | 'below';
  * See: https://www.google.com/design/spec/components/tabs.html
  */
 @Component({
-  moduleId: module.id,
   selector: 'sam-tabs-next',
   templateUrl: 'tab-group.html',
   styleUrls: ['tab-group.scss'],

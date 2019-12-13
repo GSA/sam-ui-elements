@@ -20,7 +20,6 @@ export class MdTabBase {}
 export const _MdTabMixinBase = mixinDisabled(MdTabBase);
 
 @Component({
-  moduleId: module.id,
   selector: 'sam-tab-next',
   templateUrl: 'tab.html',
   inputs: ['disabled']
