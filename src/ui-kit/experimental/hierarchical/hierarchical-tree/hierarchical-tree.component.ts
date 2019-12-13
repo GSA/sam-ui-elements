@@ -4,7 +4,7 @@ import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceResult } from 
 import { SamHierarchicalTreeConfiguration } from "../models/SamHierarchicalTreeConfiguration";
 import { Sort } from "../../../components/data-table/sort.directive";
 import { first } from 'rxjs/operators';
-import { of } from 'rxjs';
+
 
 @Component({
   selector: "sam-hierarchical-tree",
