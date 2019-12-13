@@ -18,7 +18,7 @@ import {
   Renderer2,
 } from '@angular/core';
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 import {MdTab} from './tab';
 // import {map} from '@angular/cdk';
 import {map} from 'rxjs/operators';
@@ -42,7 +42,6 @@ export type MdTabHeaderPosition = 'above' | 'below';
  * See: https://www.google.com/design/spec/components/tabs.html
  */
 @Component({
-  moduleId: module.id,
   selector: 'sam-tabs-next',
   templateUrl: 'tab-group.html',
   styleUrls: ['tab-group.scss'],

@@ -6,6 +6,7 @@ import { RECORDS } from './data.sample.spec';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 /* tslint:disable */
 import { Observable } from 'rxjs';
+import 'rxjs/add/operator/map'
 /* tslint:enable */
 
 export interface CFDAData {

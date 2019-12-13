@@ -26,12 +26,8 @@ import {
 import {RIGHT_ARROW, ENTER, LEFT_ARROW} from '@angular/cdk/keycodes';
 import {MdTabLabelWrapper} from './tab-label-wrapper';
 
-import {Subscription} from 'rxjs/Subscription';
+import {Subscription, of as observableOf, merge, fromEvent} from 'rxjs';
 import {auditTime, startWith} from 'rxjs/operators';
-// import {auditTime, startWith} from '@angular/cdk';
-import {of as observableOf} from 'rxjs/observable/of';
-import {merge} from 'rxjs/observable/merge';
-import {fromEvent} from 'rxjs/observable/fromEvent';
 import {coerceBooleanProperty} from '@angular/cdk/coercion';
 
 /**
@@ -55,7 +51,6 @@ const EXAGGERATED_OVERSCROLL = 60;
  * @docs-private
  */
 @Component({
-  moduleId: module.id,
   selector: 'md-tab-header, mat-tab-header',
   templateUrl: 'tab-header.html',
   styleUrls: ['tab-header.scss'],

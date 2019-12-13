@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceSearchItem, SamHiercarchicalServiceResult } from './hierarchical-interface';
 import { Sort } from "../../components/data-table/sort.directive";
 import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/map'
 
 export class HierarchicalDataService implements SamHiercarchicalServiceInterface {
 

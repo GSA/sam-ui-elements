@@ -1,6 +1,7 @@
 import { AutocompleteService } from '@gsa-sam/sam-ui-elements';
 /* tslint:disable */
 import { Observable,of } from 'rxjs';
+import { map } from 'rxjs/operators';
 /* tslint:enable */
 
 export class TestAutocompleteService implements AutocompleteService {
@@ -14,6 +15,6 @@ export class TestAutocompleteService implements AutocompleteService {
       { key: 'cc-carlos', value: 'Carlos', category: 'People', subhead: 'CSS Guru' },
       { key: 'cc-colin', value: 'Colin', category: 'People', subhead: 'UI Developer' },
       { key: 'cc-diego', value: 'Diego', category: 'People', subhead: 'UI Developer' }
-    ]).map(o => o);
+    ]).pipe(map(o => o));
   }
 }

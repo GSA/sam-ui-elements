@@ -1,7 +1,7 @@
 import {
   Component, HostBinding, forwardRef
 } from '@angular/core';
-import 'rxjs/add/observable/merge';
+
 import { SamMainComponent } from '../';
 import { SamPageNextService } from '../../architecture';
 

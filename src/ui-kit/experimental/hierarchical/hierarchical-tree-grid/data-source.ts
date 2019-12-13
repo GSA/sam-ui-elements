@@ -1,4 +1,5 @@
-import { Observable } from 'rxjs';
+import { Observable, merge } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { DataSource } from '@angular/cdk/collections';
 
 // preparing data source for the hierarchical grid
@@ -13,10 +14,10 @@ export class HierarchicalDataSource extends DataSource<any> {
     const displayDataChanges = [
       this.dataChange
     ];
-    return Observable.merge(...displayDataChanges).map(() => {
+    return merge(...displayDataChanges).pipe(map(() => {
       this.renderedData = this.dataChange.value;
       return this.renderedData;
-    });
+    }));
   }
   disconnect() { }
 }
