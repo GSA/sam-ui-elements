@@ -83,7 +83,7 @@ export class SamAutocompleteMultiselectComponent
    */
   @ViewChild('textArea', {static: false}) textArea: ElementRef;
   @ViewChild('hiddenText', {static: true}) hiddenText: ElementRef;
-  @ViewChild('resultsList', {static: true}) resultsList: ElementRef;
+  @ViewChild('resultsList', {static: false}) resultsList: ElementRef;
   @ViewChild(LabelWrapper, {static: true}) wrapper: LabelWrapper;
 
   /**
