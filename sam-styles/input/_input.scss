@@ -172,3 +172,26 @@ input[type=text]::-ms-reveal {
   width: 0;
   height: 0;
 }
+
+//added for the FormlyFieldDatePickerComponent
+sds-formly-field-datepicker > mat-datepicker-toggle > .mat-icon-button.mat-button-base:hover{
+  color: rgba(0,0,0,0.54) !important;
+  background-color: white !important;
+}
+
+sds-formly-field-datepicker > .mat-input-element.mat-form-field-autofill-control{
+  padding: 0.5rem 0.2rem;
+  height: 3.5rem;
+}
+sds-formly-wrapper-form-field > div{
+  padding: 5px 15px;
+}
+formly-group {
+  sds-formly-wrapper-form-field > div{
+  padding: 0;
+  }
+}
+.mat-input-element{
+  display:inline-block;
+  max-width: 200px;
+}
