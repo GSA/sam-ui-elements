@@ -22,7 +22,7 @@ export class SamAlertComponent {
    */
   @Input() description: string;
   /**
-   * Sets the alert description
+   * Sets the alert link
    */
   @Input() link: string;
   /**

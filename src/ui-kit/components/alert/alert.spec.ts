@@ -105,8 +105,8 @@ describe('The Sam Alert component', () => {
           )
           .nativeElement.textContent.trim()
         )
-        .toBe('i-am-a-link')
-        .toBe('i-am-a-description');
+        .toBe('i-am-a-description')
+        .toBe('i-am-a-link');
       });
     });
     it('type check', () => {
