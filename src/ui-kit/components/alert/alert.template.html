@@ -6,8 +6,7 @@
     <span class="sr-only">{{this.types[this.type]?.sr}}</span>
     <h3 *ngIf="title" class="usa-alert-heading" [innerText]="title"></h3>
     <p class="usa-alert-text">{{description}}<ng-content></ng-content>
-      <a class="alert-link"> this is a link example</a>
-    </p>
+    <a class="alert-link"> {{link}}<ng-content></ng-content></a></p>
     <ng-content select="[leading-content]"></ng-content>
     <div *ngIf="showMoreToggle">
       <ng-content select="[main-content]"></ng-content>
