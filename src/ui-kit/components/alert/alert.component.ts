@@ -22,6 +22,10 @@ export class SamAlertComponent {
    */
   @Input() description: string;
   /**
+   * Sets the alert description
+   */
+  @Input() link: string;
+  /**
    * Controls whether to display/hide the Close button
    */
   @Input() showClose: boolean = false;

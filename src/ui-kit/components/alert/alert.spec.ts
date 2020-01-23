@@ -8,6 +8,7 @@ import { SamAlertComponent } from './alert.component';
 
 const defaultConfig = {
   description: 'i-am-a-description',
+  link: 'i-am-a-link',
   title: 'i-am-a-title',
   type: 'success',
 };
@@ -83,11 +84,12 @@ describe('The Sam Alert component', () => {
       component.type = defaultConfig.type;
       component.title = defaultConfig.title;
       component.description = defaultConfig.description;
+      component.link = defaultConfig.link;
       fixture.detectChanges();
 
     });
 
-    it('title + description check', () => {
+    it('title + link + description check', () => {
       fixture.detectChanges();
       fixture.whenStable().then(() => {
         expect(
@@ -103,6 +105,7 @@ describe('The Sam Alert component', () => {
           )
           .nativeElement.textContent.trim()
         )
+        .toBe('i-am-a-link')
         .toBe('i-am-a-description');
       });
     });
