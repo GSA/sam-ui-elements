@@ -12,7 +12,7 @@
             <span [ngClass]="child.iconClass"></span>
           </ng-container>
       </a>
-      <sam-menu-item *ngIf="isSelected($index)"
+      <sam-menu-item *ngIf="isSelected($index) && model.children[$index].children"
                     [nodeDepth]="1"
                     [children]="model.children[$index].children"
                     (selection)="emitChildData($event)">
