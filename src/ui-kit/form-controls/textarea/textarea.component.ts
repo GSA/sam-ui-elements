@@ -17,6 +17,8 @@ import {
 import { SamFormService } from '../../form-service';
 import { TextAreaWidthType } from '../../types';
 
+
+
 /**
  * The <sam-text-area> component provides a textarea input form control
  */
@@ -118,6 +120,11 @@ export class SamTextareaComponent implements ControlValueAccessor {
   public onChange: any = (_) => undefined;
   public onTouched: any = () => undefined;
 
+  private inBrowser = typeof window !== 'undefined';
+  private UA = this.inBrowser && window.navigator.userAgent.toLowerCase();
+  private isIE = this.UA && /msie|trident/.test(this.UA);
+  private ie11PristineFlag = false;
+
   constructor(private cdr: ChangeDetectorRef,
     private samFormService: SamFormService) {}
 
@@ -127,49 +134,49 @@ export class SamTextareaComponent implements ControlValueAccessor {
        parameter for 508 compliance');
     }
 
-    if (!this.control) {
-      return;
-    }
+    if (this.control) {
+      const validators: any[] = [];
 
-    const validators: any[] = [];
+      if (this.control.validator) {
+        validators.push(this.control.validator);
+      }
 
-    if (this.control.validator) {
-      validators.push(this.control.validator);
-    }
+      if (this.required || this.requiredFlag) {
+        validators.push(Validators.required);
+      }
 
-    if (this.required || this.requiredFlag) {
-      validators.push(Validators.required);
-    }
+      if (this.maxlength) {
+        validators.push(Validators.maxLength(this.maxlength));
+      }
 
-    if (this.maxlength) {
-      validators.push(Validators.maxLength(this.maxlength));
-    }
-
-    this.control.setValidators(validators);
-    if (!this.useFormService) {
-      this.control.statusChanges.subscribe(() => {
-       this.wrapper.formatErrors(this.control);
-      });
-      this.wrapper.formatErrors(this.control);
-    } else {
-      this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
-        if ((!evt.root || evt.root === this.control.root)
-          && evt.eventType && evt.eventType === 'submit') {
-          this.wrapper.formatErrors(this.control);
-        } else if ((!evt.root || evt.root === this.control.root)
-          && evt.eventType && evt.eventType === 'reset') {
-          this.wrapper.clearError();
-        }
-      });
+      this.control.setValidators(validators);
     }
   }
 
   ngAfterViewInit() {
-    if (!this.control) {
-      return;
+    if (this.control) {
+      if (!this.useFormService) {
+        this.control.valueChanges.subscribe(() => {
+          if(this.placeholder && this.isIE && !this.ie11PristineFlag){
+            // there's a known ie issue that improperly fires input events when placeholders are used
+            this.control.markAsPristine();
+            this.ie11PristineFlag = true;
+          }
+          this.wrapper.formatErrors(this.control);
+        });
+        this.wrapper.formatErrors(this.control);
+      } else {
+        this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
+          if ((!evt.root || evt.root === this.control.root)
+            && evt.eventType && evt.eventType === 'submit') {
+            this.wrapper.formatErrors(this.control);
+          } else if ((!evt.root || evt.root === this.control.root)
+            && evt.eventType && evt.eventType === 'reset') {
+            this.wrapper.clearError();
+          }
+        });
+      }
     }
-    this.wrapper.formatErrors(this.control);
-    this.cdr.detectChanges();
   }
 
   onFocus($event) {

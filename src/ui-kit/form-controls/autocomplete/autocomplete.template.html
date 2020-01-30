@@ -10,7 +10,7 @@
         ||(((results && results.length > 0) || (displayFreeTextSimpleResults())) && hasFocus)
         ">
         <input [attr.id]="id" [attr.tabindex]="tabIndex" #input autocomplete="off"
-          [attr.placeholder]="config?.placeholder" [attr.title]="config?.title" [attr.name]="name" type="text"
+          [attr.placeholder]="config?.placeholder" [attr.title]="config?.title" [attr.name]="name" [attr.aria-label]="labelText" type="text"
           (focus)="inputFocusHandler($event)"   (keydown)="onKeydown($event)" [(ngModel)]="inputValue"
           (ngModelChange)="onChange()" [attr.aria-activedescendant]="activeDescendant" aria-autocomplete="list"
           [attr.aria-controls]="results && results.length > 0 ? 'sam-autocomplete-results' : filteredKeyValuePairs && filteredKeyValuePairs.length > 0  ? 'sam-autocomplete-results-kv':undefined">
