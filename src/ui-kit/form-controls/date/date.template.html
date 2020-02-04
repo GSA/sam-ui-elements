@@ -1,7 +1,7 @@
 <sam-fieldset-wrapper #wrapper [label]="label" [errorMessage]="errorMessage" [hint]="hint" [required]="required">
   <div class="usa-date-of-birth date-group" (focusout)="dateBlurred()">
     <div class="usa-form-group usa-form-group-month">
-      <label [attr.for]="monthName()">Month</label>
+      <label [attr.for]="monthName()">Month<span class="sr-only">{{required ? 'required' : ''}} </span></label>
       <input
         (blur)="onMonthBlur($event)"
         (focus)="triggerMonthTouch($event)"
@@ -20,7 +20,7 @@
         [disabled]="disabled">
     </div>
     <div class="usa-form-group usa-form-group-day">
-      <label [attr.for]="dayName()">Day</label>
+      <label [attr.for]="dayName()">Day<span class="sr-only"> {{required ? 'required' : ''}}</span></label>
       <input
         (blur)="onDayBlur($event)"
         (focus)="triggerDayTouch($event)"
@@ -39,7 +39,7 @@
         [disabled]="disabled">
     </div>
     <div class="usa-form-group usa-form-group-year">
-      <label [attr.for]="yearName()">Year</label>
+      <label [attr.for]="yearName()">Year<span class="sr-only"> {{required ? 'required' : ''}}</span></label>
       <input
         (blur)="onYearBlur($event)"
         (focus)="triggerTouch($event)"
