@@ -1,16 +1,21 @@
 <div sam-click-outside (clickOutside)="checkForFocus($event)" sam-tab-outside (tabOutside)="checkForFocus($event)">
   <div class="input-container">
-    <div role="combobox" [attr.id]="configuration.id+'-container'" [attr.aria-label]="configuration.id + ' container'" [attr.aria-expanded]="showResults"
-      [attr.aria-owns]="showResults? configuration.id+ '-listbox' : undefined" aria-haspopup="listbox">
-      <input (input)="textChange($event)" [disabled]="disabled" class="sam input" #input
-        [attr.id]="configuration.id" 
-        [attr.aria-label]="configuration.id"
-        type="text" (focus)="inputFocusHandler()" (keydown)="onKeydown($event)"
-        [(ngModel)]="inputValue" [attr.placeholder]="configuration.autocompletePlaceHolderText"
-        [attr.aria-activedescendant]="showResults? configuration.id+'-resultItem-'+highlightedIndex :''"
-        [attr.aria-controls]="showResults? configuration.id+ '-listbox' : undefined"
-         autocomplete="off">
-    </div>
+    <input #input
+      role="combobox"
+      [attr.id]="configuration.id" 
+      [attr.aria-label]="configuration.id"
+      [attr.aria-expanded]="showResults"
+      [attr.aria-owns]="showResults? configuration.id+ '-listbox' : undefined"
+      aria-haspopup="true"
+      aria-autocomplete="list"
+      [attr.aria-activedescendant]="showResults? configuration.id+'-resultItem-'+highlightedIndex :''"
+      [attr.aria-controls]="showResults? configuration.id+ '-listbox' : undefined"
+      (input)="textChange($event)"
+      [disabled]="disabled"
+      class="sam input"
+      type="text" (focus)="inputFocusHandler()" (keydown)="onKeydown($event)"
+      [(ngModel)]="inputValue" [attr.placeholder]="configuration.autocompletePlaceHolderText">
+
     <ul #resultsList *ngIf="showResults" [attr.id]="configuration.id+ '-listbox'" role="listbox"
       class="usa-unstyled-list autocomplete-result" (scroll)="onScroll()">
       <ng-container *ngIf="(results && results.length > 0)">
@@ -66,3 +71,4 @@
     </ng-container>
     <ul #srOnly class="usa-sr-only" aria-live="assertive" aria-relevant="additions"></ul>
   </div>
+</div>
