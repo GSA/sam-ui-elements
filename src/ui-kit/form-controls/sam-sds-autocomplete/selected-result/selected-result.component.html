@@ -6,13 +6,13 @@
         [ngTemplateOutletContext]="{$implicit:result}">
       </ng-container>
       <ng-container *ngIf="!itemTemplate">
-        <span class="header">{{  getObjectValue(result, configuration.primaryTextField)  }}</span>
+        <span class="header">{{  getObjectValue(result, configuration.primaryTextField)  }}--test</span>
         <ng-container *ngIf="configuration.secondaryTextField &&  result[configuration.secondaryTextField] ">
           <span class="secondary-value">{{ result[configuration.secondaryTextField] }}</span>
         </ng-container>
       </ng-container>
       <span tabindex="0" role="button" [attr.class]="disabled?'close close-disabled fa fa-close' :'close fa fa-close' "
-        [attr.aria-label]="'Remove Item ' + result[configuration.primaryTextField]" aria-hidden="false" (click)="removeItem(result)" (keyup.enter)="removeItem(result)">
+        [attr.aria-label]="'Remove Item ' + getObjectValue(result, configuration.primaryTextField)" aria-hidden="false" (click)="removeItem(result)" (keyup.enter)="removeItem(result)">
       </span>
     </div>
   </li>
