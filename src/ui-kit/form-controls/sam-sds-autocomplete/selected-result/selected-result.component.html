@@ -6,7 +6,7 @@
         [ngTemplateOutletContext]="{$implicit:result}">
       </ng-container>
       <ng-container *ngIf="!itemTemplate">
-        <span class="header">{{  getObjectValue(result, configuration.primaryTextField)  }}--test</span>
+        <span class="header">{{  getObjectValue(result, configuration.primaryTextField)  }}</span>
         <ng-container *ngIf="configuration.secondaryTextField &&  result[configuration.secondaryTextField] ">
           <span class="secondary-value">{{ result[configuration.secondaryTextField] }}</span>
         </ng-container>
