@@ -23,21 +23,12 @@ import {
   NgZone,
   Renderer2,
 } from '@angular/core';
-import {
-  RIGHT_ARROW,
-  LEFT_ARROW,
-  ENTER,
-  coerceBooleanProperty
-} from '@angular/cdk';
+import {RIGHT_ARROW, ENTER, LEFT_ARROW} from '@angular/cdk/keycodes';
 import {MdTabLabelWrapper} from './tab-label-wrapper';
 
-import {Subscription} from 'rxjs/Subscription';
-
-import {auditTime, startWith} from '@angular/cdk';
-import {of as observableOf} from 'rxjs/observable/of';
-import {merge} from 'rxjs/observable/merge';
-import {fromEvent} from 'rxjs/observable/fromEvent';
-
+import {Subscription, of as observableOf, merge, fromEvent} from 'rxjs';
+import {auditTime, startWith} from 'rxjs/operators';
+import {coerceBooleanProperty} from '@angular/cdk/coercion';
 
 /**
  * The directions that scrolling can go in when the header's tabs exceed the header width. 'After'
@@ -60,7 +51,6 @@ const EXAGGERATED_OVERSCROLL = 60;
  * @docs-private
  */
 @Component({
-  moduleId: module.id,
   selector: 'md-tab-header, mat-tab-header',
   templateUrl: 'tab-header.html',
   styleUrls: ['tab-header.scss'],
@@ -73,8 +63,8 @@ const EXAGGERATED_OVERSCROLL = 60;
 export class MdTabHeader implements AfterContentChecked, AfterContentInit, OnDestroy {
   @ContentChildren(MdTabLabelWrapper) _labelWrappers: QueryList<MdTabLabelWrapper>;
 
-  @ViewChild('tabListContainer') _tabListContainer: ElementRef;
-  @ViewChild('tabList') _tabList: ElementRef;
+  @ViewChild('tabListContainer', {static: true}) _tabListContainer: ElementRef;
+  @ViewChild('tabList', {static: true}) _tabList: ElementRef;
 
   /** The tab index that is focused. */
   private _focusIndex: number = 0;

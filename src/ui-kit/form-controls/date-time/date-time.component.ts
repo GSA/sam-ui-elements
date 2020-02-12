@@ -64,9 +64,9 @@ export class SamDateTimeComponent
   public time: string = undefined;
   public date: string = undefined;
 
-  @ViewChild('dateComponent') public dateComponent: SamDateComponent;
-  @ViewChild('timeComponent') public timeComponent: SamTimeComponent;
-  @ViewChild(FieldsetWrapper) public wrapper;
+  @ViewChild('dateComponent', {static: true}) public dateComponent: SamDateComponent;
+  @ViewChild('timeComponent', {static: true}) public timeComponent: SamTimeComponent;
+  @ViewChild(FieldsetWrapper, {static: true}) public wrapper;
 
   public onChange: Function;
   public onTouched: Function;

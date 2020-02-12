@@ -6,7 +6,7 @@ Output,
 ViewChild,
 EventEmitter
 } from '@angular/core';
-import {CdkTableModule} from '@angular/cdk';
+import {CdkTableModule} from '@angular/cdk/table';
 
 import { SamDataTableModule,SamSortDirective } from './';
 import { ExampleDataSource,ExampleDatabase } from './data-source.sample.spec';
@@ -72,7 +72,7 @@ import { ExampleDataSource,ExampleDatabase } from './data-source.sample.spec';
 class TestComponent {
     exampleDatabase = new ExampleDatabase();
     dataSource: ExampleDataSource | null;
-    @ViewChild(SamSortDirective) sort: SamSortDirective;
+    @ViewChild(SamSortDirective, {static: true}) sort: SamSortDirective;
     ngOnInit(){
         this.dataSource = new ExampleDataSource(this.exampleDatabase, this.sort);
     }

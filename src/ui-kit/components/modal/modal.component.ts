@@ -101,9 +101,9 @@ export class SamModalComponent implements OnInit {
    */
   @Output() submit: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild('modalRoot') public modalRoot: ElementRef;
-  @ViewChild('modalContent') public modalContent: ElementRef;
-  @ViewChild('closeButton') public closeButton: ElementRef;
+  @ViewChild('modalRoot', {static: false}) public modalRoot: ElementRef;
+  @ViewChild('modalContent', {static: false}) public modalContent: ElementRef;
+  @ViewChild('closeButton', {static: true}) public closeButton: ElementRef;
   public show = false;
   public clickOutsideReady = false;
   public types: any = {

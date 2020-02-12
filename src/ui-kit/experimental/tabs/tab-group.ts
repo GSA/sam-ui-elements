@@ -17,10 +17,11 @@ import {
   ElementRef,
   Renderer2,
 } from '@angular/core';
-import {coerceBooleanProperty} from '@angular/cdk';
-import {Observable} from 'rxjs/Observable';
+import {coerceBooleanProperty} from '@angular/cdk/coercion';
+import {Observable} from 'rxjs';
 import {MdTab} from './tab';
-import {map} from '@angular/cdk';
+// import {map} from '@angular/cdk';
+import {map} from 'rxjs/operators';
 
 
 /** Used to generate unique ID's for each tab component */
@@ -41,7 +42,6 @@ export type MdTabHeaderPosition = 'above' | 'below';
  * See: https://www.google.com/design/spec/components/tabs.html
  */
 @Component({
-  moduleId: module.id,
   selector: 'sam-tabs-next',
   templateUrl: 'tab-group.html',
   styleUrls: ['tab-group.scss'],
@@ -54,7 +54,7 @@ export type MdTabHeaderPosition = 'above' | 'below';
 export class MdTabGroup {
   @ContentChildren(MdTab) _tabs: QueryList<MdTab>;
 
-  @ViewChild('tabBodyWrapper') _tabBodyWrapper: ElementRef;
+  @ViewChild('tabBodyWrapper', {static: true}) _tabBodyWrapper: ElementRef;
 
   /** Whether this component has been initialized. */
   private _isInitialized: boolean = false;

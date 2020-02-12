@@ -25,7 +25,7 @@ import { SamFormService } from '../../form-service';
 import { KeyHelper } from '../../utilities/key-helper/key-helper';
 import { areEqual } from '../../utilities/are-equal/are-equal';
 import { AutocompleteCache } from '../autocomplete-multiselect/autocomplete-cache';
-import 'rxjs/add/operator/catch';
+
 const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamAutocompleteComponent),
@@ -46,11 +46,11 @@ export interface SamCache {
 })
 export class SamAutocompleteComponent
   implements ControlValueAccessor, OnChanges, OnDestroy, SamCache {
-  @ViewChild('resultsList') resultsList: ElementRef;
-  @ViewChild('resultsListKV') resultsListKV: ElementRef;
-  @ViewChild('input') input: ElementRef;
-  @ViewChild('srOnly') srOnly: ElementRef;
-  @ViewChild('wrapper') wrapper;
+    @ViewChild('resultsList', {static: false}) resultsList: ElementRef;
+    @ViewChild('resultsListKV', {static: false}) resultsListKV: ElementRef;
+    @ViewChild('input', {static: true}) input: ElementRef;
+    @ViewChild('srOnly', {static: true}) srOnly: ElementRef;
+    @ViewChild('wrapper', {static: true}) wrapper;
 
   /**
   * Sets the name attribute

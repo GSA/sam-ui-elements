@@ -88,9 +88,9 @@ export class SamSelectComponent implements ControlValueAccessor, AfterViewInit {
   */
   @Output() public modelChange: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
+  @ViewChild(LabelWrapper, {static: true}) public wrapper: LabelWrapper;
 
-  @ViewChild('select') public select: any;
+  @ViewChild('select', {static: true}) public select: any;
 
   private onChange: (_: any) => void;
   private onTouched: () => void;

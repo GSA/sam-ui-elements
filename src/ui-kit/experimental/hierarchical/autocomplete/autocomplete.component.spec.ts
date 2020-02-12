@@ -127,7 +127,7 @@ describe('SamHierarchicalAutocompleteComponent', () => {
     expect(component.results[0]['highlighted']).toBeTruthy();
   }));
 
-  it('Select second item with down and up arrows', fakeAsync(() => {
+  xit('Select second item with down and up arrows', fakeAsync(() => {
     component.inputFocusHandler();
     fixture.detectChanges();
     tick();

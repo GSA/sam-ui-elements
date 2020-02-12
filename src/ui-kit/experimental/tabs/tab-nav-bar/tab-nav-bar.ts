@@ -17,15 +17,13 @@ import {
   ViewEncapsulation
 } from '@angular/core';
 import {CanDisable, mixinDisabled} from '../../patterns/layout/components/core/common-behaviors/disabled';
-import {Subject} from 'rxjs/Subject';
-import {Subscription} from 'rxjs/Subscription';
+import {Subject, Subscription} from 'rxjs';
 
 /**
  * Navigation component matching the styles of the tab group header.
  * Provides anchored navigation with animated ink bar.
  */
 @Component({
-  moduleId: module.id,
   selector: '[md-tab-nav-bar], [mat-tab-nav-bar]',
   templateUrl: 'tab-nav-bar.html',
   styleUrls: ['tab-nav-bar.scss'],

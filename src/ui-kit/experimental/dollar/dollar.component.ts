@@ -42,7 +42,7 @@ export class SamDollarComponent extends SamFormControl {
    */
   @Output() public blur: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
+  @ViewChild(LabelWrapper, {static: true}) public wrapper: LabelWrapper;
 
   // type=number starts adding letter 'e' if a max length is not enforced
   strictMaxLength = 16;

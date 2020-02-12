@@ -95,11 +95,10 @@ export class SamDateComponent
   @Output() public blur = new EventEmitter<any>();
 
   @Output() public focus = new EventEmitter<any>();
-  @ViewChild('month') public month;
-  @ViewChild('day') public day;
-  @ViewChild('year') public year;
-  @ViewChild('wrapper') public wrapper;
-
+  @ViewChild('month', {static: true}) public month;
+  @ViewChild('day', {static: true}) public day;
+  @ViewChild('year', {static: true}) public year;
+  @ViewChild('wrapper', {static: true}) public wrapper;
   public allowChars = [
     '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
     'backspace', 'left', 'right', 'tab', 'delete'
@@ -540,19 +539,16 @@ export class SamDateComponent
   }
 
   monthName() {
-    return `${this.name}_month Enter Month Here.`;
+   return (this.required ? `${this.name} month required.` : `${this.name} month`) + ' Enter Month Here';
   }
-
 
   dayName() {
-    return `${this.name}_day Enter Day Here.`;
+    return (this.required ? `${this.name} day required.` : `${this.name} day`) + ' Enter Day Here';
   }
-
 
   yearName() {
-    return `${this.name}_year Enter Year Here.`;
+    return (this.required ? `${this.name} year required.` : `${this.name} year`) + ' Enter Year Here';
   }
-
 
   triggerTouch(ev) {
     this.isYearTouched = true;

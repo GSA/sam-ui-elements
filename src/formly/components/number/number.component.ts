@@ -17,7 +17,7 @@ import {SamNumberComponent} from '../../../ui-kit';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SamFormlyNumber extends AbstractSamFormly {
-  @ViewChild(SamNumberComponent)
+  @ViewChild(SamNumberComponent, {static: true})
   public template: SamNumberComponent;
 
   constructor(_cdr: ChangeDetectorRef) {

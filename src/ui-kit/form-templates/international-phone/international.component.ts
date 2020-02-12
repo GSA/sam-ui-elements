@@ -94,7 +94,7 @@ export class SamIntlPhoneGroup extends SamFieldset
   @Input() public hasExtension: boolean = false;
   @Input() public extensionName: string;
   @Input() public prefixLabel = 'Country Code';
-  @ViewChild(FieldsetWrapper) public wrapper: FieldsetWrapper;
+  @ViewChild(FieldsetWrapper, {static: true}) public wrapper: FieldsetWrapper;
   
   public prefixControl: AbstractControl;
   public phoneControl: AbstractControl;

@@ -15,7 +15,7 @@ import { SamCheckboxComponent } from '../../../ui-kit';
  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SamFormlyCheckbox extends AbstractSamFormly {
-  @ViewChild(SamCheckboxComponent)
+  @ViewChild(SamCheckboxComponent, {static: true})
   public template: SamCheckboxComponent;
 
   constructor (public cdr: ChangeDetectorRef) {
