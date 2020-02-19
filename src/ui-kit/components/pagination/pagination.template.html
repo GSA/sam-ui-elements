@@ -12,7 +12,7 @@
     <li *ngIf="showLastEllipsis()"><span class="last-ellipsis">&hellip;</span></li>
     <li *ngIf="showLastButton()"><a href="javascript:void(0)" class="page-button" [ngClass]="textDecoration(totalPages)"
             (click)="onPageClick(totalPages)" [attr.aria-label]="getAriaLabel(totalPages)"
-            (keyup.enter)="onPageClick(totalPages)">{{totalPages}}</a></li>
+            (keyup.enter)="onPageClick(totalPages)"><span class="sr-only">Page</span>{{totalPages}}</a></li>
     <li *ngIf="showNext()"><a href="javascript:void(0)" class="page-next" aria-label="next page" (click)="onNextClick()"
             (keyup.enter)="onNextClick()">Next &rsaquo;</a></li>
 </ul>
