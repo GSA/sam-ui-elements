@@ -29,7 +29,7 @@
 
 // Outline tag
 
-.sds-tag[class*="sds-tag--outline"] {
+.sam-notice[class*="sam-notice--outline"] {
   font-family: Source Sans Pro Web, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
   color: #5d5d52;
   font-weight: 550;
@@ -41,142 +41,142 @@
   background-color: #f7f9fa;
 }
 
-.sds-tag.sds-tag--outline--blue {
+.sam-notice.sam-notice--outline--blue {
   border-color: #009ec1 ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--red {
+.sam-notice.sam-notice--outline--red {
   border-color: #fb5a47 ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--green {
+.sam-notice.sam-notice--outline--green {
   border-color: #00a91c ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--gray {
+.sam-notice.sam-notice--outline--gray {
   border-color: #afaea2 ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--dark-gray {
+.sam-notice.sam-notice--outline--dark-gray {
   border-color: #76766a ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--yellow {
+.sam-notice.sam-notice--outline--yellow {
   border-color: #ffbe2e ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--blue {
+.sam-notice.sam-notice--outline--blue {
   border-color: #0050d8 ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--light-blue {
+.sam-notice.sam-notice--outline--light-blue {
   border-color: #00bde3 ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--brown {
+.sam-notice.sam-notice--outline--brown {
   border-color: #936f38 ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--danger {
+.sam-notice.sam-notice--outline--danger {
   border-color: #fb5a47 ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--info {
+.sam-notice.sam-notice--outline--info {
   border-color: #00bde3 ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--info-lighter {
+.sam-notice.sam-notice--outline--info-lighter {
   border-color: #e7f6f8 ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--info-light {
+.sam-notice.sam-notice--outline--info-light {
   border-color: #9ddfeb ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--info-dark {
+.sam-notice.sam-notice--outline--info-dark {
   border-color: #009ec1 ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--info-darker {
+.sam-notice.sam-notice--outline--info-darker {
   border-color: #2e6276 ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--error {
+.sam-notice.sam-notice--outline--error {
   border-color: #fb5a47 ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--error-lighter {
+.sam-notice.sam-notice--outline--error-lighter {
   border-color: #fdb8ae ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--error-light {
+.sam-notice.sam-notice--outline--error-light {
   border-color: #ff8d7b ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--error-dark {
+.sam-notice.sam-notice--outline--error-dark {
   border-color: #b50909 ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--error-darker {
+.sam-notice.sam-notice--outline--error-darker {
   border-color: #8b0a03 ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--warning {
+.sam-notice.sam-notice--outline--warning {
   border-color: #ffbe2e ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--warning-lighter {
+.sam-notice.sam-notice--outline--warning-lighter {
   border-color: #faf3d1 ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--warning-light {
+.sam-notice.sam-notice--outline--warning-light {
   border-color: #fee685 ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--warning-dark {
+.sam-notice.sam-notice--outline--warning-dark {
   border-color: #e5a000 ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--warning-darker {
+.sam-notice.sam-notice--outline--warning-darker {
   border-color: #936f38 ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--success {
+.sam-notice.sam-notice--outline--success {
   border-color: #00a91c ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--success-lighter {
+.sam-notice.sam-notice--outline--success-lighter {
   border-color: #ecf3ec ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--success-light {
+.sam-notice.sam-notice--outline--success-light {
   border-color: #70e17b ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--success-dark {
+.sam-notice.sam-notice--outline--success-dark {
   border-color: #4d8055 ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--success-darker {
+.sam-notice.sam-notice--outline--success-darker {
   border-color: #446443 ;
   border-style: solid; }
 
-.sds-tag.sds-tag--outline--disabled {
+.sam-notice.sam-notice--outline--disabled {
   border-color: #c9c9c9 ;
   border-style: solid; }
 
 
-  .sds-tag--small {
+  .sam-notice--small {
     font-family: Source Sans Pro Web, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
     font-size: 0.87rem; }
   
-  .sds-tag--disabled {
+  .sam-notice--disabled {
     background-color: #c9c9c9  !important;
     border-color: #adadad  !important;
     border-style: solid !important; }
 
 
-    .sds-status {
+    .sam-status {
       border-radius: 50%;
       width: 1.25rem ;
       height: 1.25rem ;
@@ -184,108 +184,108 @@
       display: inline-block;
       margin: 2px 5px -0.33rem 0; }
     
-    .sds-status--sm {
+    .sam-status--sm {
       width: 1rem ;
       height: 1rem ;
       background-color: #afaea2 ;
       margin: 7px 6px 4px 4px; }
     
-    .sds-status--circle {
+    .sam-status--circle {
       border-radius: 50%; }
     
-    .sds- .sds-status--square {
+    .sds- .sam-status--square {
       border-radius: 0; }
     
-    .sds-status--blue {
+    .sam-status--blue {
       background-color: #009ec1 ; }
     
-    .sds-status--red {
+    .sam-status--red {
       background-color: #fb5a47 ; }
     
-    .sds-status--green {
+    .sam-status--green {
       background-color: #00a91c ; }
     
-    .sds-status--gray {
+    .sam-status--gray {
       background-color: #afaea2 ; }
     
-    .sds-status--dark-gray {
+    .sam-status--dark-gray {
       background-color: #76766a ; }
     
-    .sds-status--yellow {
+    .sam-status--yellow {
       background-color: #ffbe2e ; }
     
-    .sds-status--blue {
+    .sam-status--blue {
       background-color: #0050d8 ; }
     
-    .sds-status--light-blue {
+    .sam-status--light-blue {
       background-color: #00bde3 ; }
     
-    .sds-status--brown {
+    .sam-status--brown {
       background-color: #936f38 ; }
     
-    .sds-status--danger {
+    .sam-status--danger {
       background-color: #fb5a47 ; }
     
-    .sds-status--info {
+    .sam-status--info {
       background-color: #00bde3 ; }
     
-    .sds-status--info-lighter {
+    .sam-status--info-lighter {
       background-color: #e7f6f8 ; }
     
-    .sds-status--info-light {
+    .sam-status--info-light {
       background-color: #9ddfeb ; }
     
-    .sds-status--info-dark {
+    .sam-status--info-dark {
       background-color: #009ec1 ; }
     
-    .sds-status--info-darker {
+    .sam-status--info-darker {
       background-color: #2e6276 ; }
     
-    .sds-status--error {
+    .sam-status--error {
       background-color: #fb5a47 ; }
     
-    .sds-status--error-lighter {
+    .sam-status--error-lighter {
       background-color: #fdb8ae ; }
     
-    .sds-status--error-light {
+    .sam-status--error-light {
       background-color: #ff8d7b ; }
     
-    .sds-status--error-dark {
+    .sam-status--error-dark {
       background-color: #b50909 ; }
     
-    .sds-status--error-darker {
+    .sam-status--error-darker {
       background-color: #8b0a03 ; }
     
-    .sds-status--warning {
+    .sam-status--warning {
       background-color: #ffbe2e ; }
     
-    .sds-status--warning-lighter {
+    .sam-status--warning-lighter {
       background-color: #faf3d1 ; }
     
-    .sds-status--warning-light {
+    .sam-status--warning-light {
       background-color: #fee685 ; }
     
-    .sds-status--warning-dark {
+    .sam-status--warning-dark {
       background-color: #e5a000 ; }
     
-    .sds-status--warning-darker {
+    .sam-status--warning-darker {
       background-color: #936f38 ; }
     
-    .sds-status--success {
+    .sam-status--success {
       background-color: #00a91c ; }
     
-    .sds-status--success-lighter {
+    .sam-status--success-lighter {
       background-color: #ecf3ec ; }
     
-    .sds-status--success-light {
+    .sam-status--success-light {
       background-color: #70e17b ; }
     
-    .sds-status--success-dark {
+    .sam-status--success-dark {
       background-color: #4d8055 ; }
     
-    .sds-status--success-darker {
+    .sam-status--success-darker {
       background-color: #446443 ; }
     
-    .sds-status--disabled {
+    .sam-status--disabled {
       background-color: #c9c9c9 ; }
     
