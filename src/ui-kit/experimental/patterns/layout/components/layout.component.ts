@@ -16,9 +16,9 @@ import { SamMainComponent } from './main.component';
 export class SamLayoutComponent {
   @HostBinding('class.container') container: boolean = true;
 
-  @ContentChild(forwardRef(() => SamActionBarComponent))
+  @ContentChild(forwardRef(() => SamActionBarComponent), {static: true})
   public actions: SamActionBarComponent;
 
-  @ContentChild(SamMainComponent)
+  @ContentChild(SamMainComponent, {static: true})
   public main: SamMainComponent;
 }

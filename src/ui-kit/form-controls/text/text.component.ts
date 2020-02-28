@@ -19,7 +19,7 @@ import {
 } from '@angular/forms';
 
 import { Subject, Subscription } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, filter } from 'rxjs/operators';
 
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { SamFormService } from '../../form-service';
@@ -105,7 +105,7 @@ export class SamTextComponent implements ControlValueAccessor,
    */
   @Output() public blur = new EventEmitter<boolean>();
 
-  @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
+  @ViewChild(LabelWrapper, {static: true}) public wrapper: LabelWrapper;
   
   public onChange: any = (c) => null;
   public onTouched: any = () => null;
@@ -180,8 +180,8 @@ export class SamTextComponent implements ControlValueAccessor,
         );
 
     this._changeSubsription = 
-      this.changeEvent
-        .filter(event => event.type === this.emitOn)
+      this.changeEvent.pipe(
+        filter(event => event.type === this.emitOn))
         .subscribe(
           e => this._setValue.call(this, e.event.target.value)
         );

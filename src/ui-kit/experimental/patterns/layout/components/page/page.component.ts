@@ -50,9 +50,9 @@ export class SamPageNextComponent extends MdSidenavContainer {
     }
   }
   
-  @ContentChild(MdSidenav) public aside: MdSidenav;
+  @ContentChild(MdSidenav, {static: true}) public aside: MdSidenav;
   
-  @ContentChild(SamToolbarComponent)
+  @ContentChild(SamToolbarComponent, {static: true})
     public toolbar: SamToolbarComponent;
 
   public backIcon = faLongArrowAltLeft;

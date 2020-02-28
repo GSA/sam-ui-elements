@@ -25,7 +25,8 @@ import {
   transition,
   AnimationEvent,
 } from '@angular/animations';
-import {TemplatePortal, PortalHostDirective} from '@angular/cdk';
+// import {TemplatePortal, PortalHostDirective} from '@angular/cdk';
+import {PortalHostDirective, TemplatePortal} from '@angular/cdk/portal';
 
 /**
  * These position states are used internally as animation states for the tab body. Setting the
@@ -53,7 +54,6 @@ export type MdTabBodyOriginState = 'left' | 'right';
  * @docs-private
  */
 @Component({
-  moduleId: module.id,
   selector: 'md-tab-body, mat-tab-body',
   templateUrl: 'tab-body.html',
   styleUrls: ['tab-body.scss'],
@@ -84,7 +84,7 @@ export type MdTabBodyOriginState = 'left' | 'right';
 })
 export class MdTabBody implements OnInit, AfterViewChecked {
   /** The portal host inside of this container into which the tab body content will be loaded. */
-  @ViewChild(PortalHostDirective) _portalHost: PortalHostDirective;
+  @ViewChild(PortalHostDirective, {static: true}) _portalHost: PortalHostDirective;
 
   /** Event emitted when the tab begins to animate towards the center as the active tab. */
   @Output() onCentering: EventEmitter<number> = new EventEmitter<number>();

@@ -1,8 +1,22 @@
 <div sam-click-outside (clickOutside)="checkForFocus($event)" sam-tab-outside (tabOutside)="checkForFocus($event)">
   <div class="input-container">
-    <input [disabled]="disabled" (ngModelChange)="textChange($event)" class="sam input" #input [attr.id]="configuration.id" autocomplete="off" type="text" (focus)="inputFocusHandler()"
-      (keydown)="onKeydown($event)" [(ngModel)]="inputValue" autocomplete="off" role="combobox" aria-autocomplete="list"
-      aria-expanded="false" aria-haspopup="true" [attr.aria-owns]="configuration.id+ '-listbox'" [attr.placeholder]="configuration.autocompletePlaceHolderText">
+      <input #input
+      [disabled]="disabled"
+      (ngModelChange)="textChange($event)"
+      (focus)="inputFocusHandler()"
+      role="combobox"
+      [attr.id]="configuration.id" 
+      [attr.aria-label]="configuration.id"
+      [attr.aria-expanded]="showResults"
+      [attr.aria-owns]="showResults? configuration.id+ '-listbox' : undefined"
+      aria-haspopup="true"
+      aria-autocomplete="list"
+      [attr.aria-activedescendant]="showResults? configuration.id+'-resultItem-'+highlightedIndex :''"
+      [attr.aria-controls]="showResults? configuration.id+ '-listbox' : undefined"
+      (input)="textChange($event)"
+      class="sam input"
+      type="text" (focus)="inputFocusHandler()" (keydown)="onKeydown($event)"
+      [(ngModel)]="inputValue" [attr.placeholder]="configuration.autocompletePlaceHolderText">
     <ng-container *ngIf="!input.disabled">
       <span class="close">
         <span role="button" class="fa fa-close" aria-label="Clear input" aria-hidden="false" (click)="clearInput()"

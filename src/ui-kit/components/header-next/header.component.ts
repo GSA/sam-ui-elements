@@ -13,8 +13,8 @@ import { sdsBars } from '@gsa-sam/icons';
   templateUrl: 'header.template.html'
 })
 export class SamHeaderNextComponent {
-  @ViewChild('usaNavOpen') openNavBtn: ElementRef;
-  @ViewChild('usaNavClose') closeNavBtn: ElementRef;
+  @ViewChild('usaNavOpen', {static: true}) openNavBtn: ElementRef;
+  @ViewChild('usaNavClose', {static: true}) closeNavBtn: ElementRef;
   @Input() logoPath: string;
   @Input() notifications: boolean;
 

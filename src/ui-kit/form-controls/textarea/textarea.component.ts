@@ -17,19 +17,17 @@ import {
 import { SamFormService } from '../../form-service';
 import { TextAreaWidthType } from '../../types';
 
-
-
 /**
  * The <sam-text-area> component provides a textarea input form control
  */
 @Component({
   selector: 'sam-text-area',
   templateUrl: 'textarea.template.html',
-  providers: [ {
+  providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => SamTextareaComponent),
     multi: true
-  } ]
+  }]
 })
 export class SamTextareaComponent implements ControlValueAccessor {
   /**
@@ -82,8 +80,8 @@ export class SamTextareaComponent implements ControlValueAccessor {
    */
   @Input() placeholder: string;
   /**
-     * Optional assistance text to be set when placeholder attribute is used
-     */
+   * Optional assistance text to be set when placeholder attribute is used
+   */
   @Input() title: string;
   /**
   * Toggles validations to display with SamFormService events
@@ -114,7 +112,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
    */
   @Output() inputChange: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild(LabelWrapper) wrapper: LabelWrapper;
+  @ViewChild(LabelWrapper, { static: true }) wrapper: LabelWrapper;
 
   public characterCounterMsg: string;
   public onChange: any = (_) => undefined;
@@ -124,9 +122,8 @@ export class SamTextareaComponent implements ControlValueAccessor {
   private UA = this.inBrowser && window.navigator.userAgent.toLowerCase();
   private isIE = this.UA && /msie|trident/.test(this.UA);
   private ie11PristineFlag = false;
-
   constructor(private cdr: ChangeDetectorRef,
-    private samFormService: SamFormService) {}
+    private samFormService: SamFormService) { }
 
   ngOnInit() {
     if (!this.name) {
@@ -152,12 +149,12 @@ export class SamTextareaComponent implements ControlValueAccessor {
       this.control.setValidators(validators);
     }
   }
-
+  
   ngAfterViewInit() {
     if (this.control) {
       if (!this.useFormService) {
         this.control.valueChanges.subscribe(() => {
-          if(this.placeholder && this.isIE && !this.ie11PristineFlag){
+          if (this.placeholder && this.isIE && !this.ie11PristineFlag) {
             // there's a known ie issue that improperly fires input events when placeholders are used
             this.control.markAsPristine();
             this.ie11PristineFlag = true;

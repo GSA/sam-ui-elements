@@ -1,7 +1,8 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { SamHeaderNextComponent } from './header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { A11yModule } from '@angular/cdk';
+// import { A11yModule } from '@angular/cdk';
+import {A11yModule} from '@angular/cdk/a11y';
 
 // INTEGRATION TESTING
 // ===============================

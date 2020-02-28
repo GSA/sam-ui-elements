@@ -21,17 +21,17 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
   /**
    * Ul list of elements 
    */
-  @ViewChild('resultsList') resultsListElement: ElementRef;
+  @ViewChild('resultsList', {static: true}) resultsListElement: ElementRef;
 
   /**
    * input control 
    */
-  @ViewChild('input') input: ElementRef;
+  @ViewChild('input', {static: true}) input: ElementRef;
 
   /**
    * Screen read field
    */
-  @ViewChild('srOnly') srOnly: ElementRef;
+  @ViewChild('srOnly', {static: true}) srOnly: ElementRef;
 
   /**
    * Allow to insert a customized template for suggestions to use
@@ -73,7 +73,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
   /**
    * selected index
    */
-  private highlightedIndex: number = 0;
+  public highlightedIndex: number = 0;
 
   /**
    * highlighted object in drop down
