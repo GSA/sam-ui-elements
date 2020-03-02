@@ -3,7 +3,7 @@
     <input #input
       role="combobox"
       [attr.id]="configuration.id" 
-      [attr.aria-label]="configuration.id"
+      [attr.aria-label]="configuration.ariaLabelText"
       [attr.aria-expanded]="showResults"
       [attr.aria-owns]="showResults? configuration.id+ '-listbox' : undefined"
       aria-haspopup="true"
