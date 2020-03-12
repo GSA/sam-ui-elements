@@ -376,6 +376,14 @@ describe('SamAutocompleteComponent', () => {
   });
 
 
+  it('should have reference to resultslist element defined after results on focus are populated', fakeAsync(() => {
+    component.inputFocusHandler();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+
+    expect(component.resultsListElement).toBeDefined();
+  }));
 
 });
 

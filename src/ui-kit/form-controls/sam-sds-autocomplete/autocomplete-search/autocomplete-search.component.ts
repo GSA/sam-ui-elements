@@ -23,17 +23,13 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
   /**
    * Ul list of elements 
    */
-  @ViewChild('resultsList', {static: true}) resultsListElement: ElementRef;
+  @ViewChild('resultsList', {static: false}) resultsListElement: ElementRef;
 
   /**
    * input control 
    */
   @ViewChild('input', {static: true}) input: ElementRef;
 
-  /**
-   * Screen read field
-   */
-  @ViewChild('srOnly', {static: true}) srOnly: ElementRef;
 
   /**
    * Allow to insert a customized template for suggestions to use
@@ -98,6 +94,13 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    * Search string
    */
   private searchString: string = null;
+
+  /**
+   * Message announced by screen readers when
+   * autocomplete results are updated or new item
+   * is highlighted
+   */
+  public srOnlyText: string;
 
   /**
    * Stored Event for ControlValueAccessor
@@ -445,11 +448,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    * @param message 
    */
   private addScreenReaderMessage(message: string) {
-    const srResults: HTMLElement = document.createElement('li');
-    srResults.innerText = message;
-    if (this.srOnly && this.srOnly.nativeElement) {
-      this.srOnly.nativeElement.appendChild(srResults);
-    }
+    this.srOnlyText = message;
   }
 
 
