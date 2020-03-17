@@ -33,11 +33,11 @@ import { SamFormService } from '../../form-service';
 export class SamDateRangeComponent
     implements OnInit, OnChanges, ControlValueAccessor {
 
-    @ViewChild('startControl') public startControl;
-    @ViewChild('endControl') public endControl;
-    @ViewChild('startDate') public startDateComp;
-    @ViewChild('endDate') public endDateComp;
-    @ViewChild('wrapper') public wrapper;
+        @ViewChild('startControl', {static: true}) public startControl;
+        @ViewChild('endControl', {static: true}) public endControl;
+        @ViewChild('startDate', {static: false}) public startDateComp;
+        @ViewChild('endDate', {static: false}) public endDateComp;
+        @ViewChild('wrapper', {static: true}) public wrapper;
     /**
      * From Date label parameter for date range components
      */

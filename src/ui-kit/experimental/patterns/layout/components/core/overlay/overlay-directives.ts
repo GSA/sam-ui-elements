@@ -22,19 +22,21 @@ import {
 } from '@angular/core';
 import {Overlay} from './overlay';
 import {OverlayRef} from './overlay-ref';
-import {TemplatePortal} from '@angular/cdk';
+// import {TemplatePortal} from '@angular/cdk';
+import {TemplatePortal} from '@angular/cdk/portal';
 import {OverlayState} from './overlay-state';
 import {
     ConnectionPositionPair,
     ConnectedOverlayPositionChange
 } from './position/connected-position';
 import {ConnectedPositionStrategy} from './position/connected-position-strategy';
-import {Directionality, Direction} from '@angular/cdk';
+// import {Directionality, Direction} from '@angular/cdk';
+import {Directionality, Direction} from '@angular/cdk/bidi';
 import {Scrollable} from './scroll/scrollable';
 import {ScrollStrategy} from './scroll/scroll-strategy';
-import {coerceBooleanProperty} from '@angular/cdk';
-import {ESCAPE} from '@angular/cdk';
-import {Subscription} from 'rxjs/Subscription';
+import {coerceBooleanProperty} from '@angular/cdk/coercion';
+import {ESCAPE} from '@angular/cdk/keycodes';
+import {Subscription} from 'rxjs';
 
 
 /** Default set of positions for the overlay. Follows the behavior of a dropdown. */

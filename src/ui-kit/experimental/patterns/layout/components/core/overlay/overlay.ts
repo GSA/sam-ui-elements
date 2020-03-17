@@ -14,7 +14,7 @@ import {
   NgZone,
 } from '@angular/core';
 import {OverlayState} from './overlay-state';
-import {DomPortalHost} from '@angular/cdk';
+import {DomPortalHost} from '@angular/cdk/portal';
 import {OverlayRef} from './overlay-ref';
 import {OverlayPositionBuilder} from './position/overlay-position-builder';
 import {OverlayContainer} from './overlay-container';

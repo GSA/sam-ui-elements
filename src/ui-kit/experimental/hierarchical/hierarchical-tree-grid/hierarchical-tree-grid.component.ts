@@ -2,7 +2,7 @@ import {
   Component, OnInit, ViewChild, Input, AfterViewChecked,
   Output, EventEmitter, ChangeDetectorRef
 } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { SamSortDirective } from '../../../components'
 import { HierarchicalDataSource } from './data-source';
 import { SamHierarchicalTreeGridConfiguration } from '../models/SamHierarchicalTreeGridConfiguration';
@@ -87,7 +87,7 @@ export class SamHierarchicalTreeGridComponent implements OnInit, AfterViewChecke
   /**
    * Sort Directive
    */
-  @ViewChild(SamSortDirective) sortDirective: SamSortDirective;
+  @ViewChild(SamSortDirective, {static: true}) sortDirective: SamSortDirective;
 
 
   constructor(private cdr: ChangeDetectorRef) { }

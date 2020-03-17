@@ -151,7 +151,7 @@ describe('SamAutocompleteComponent', () => {
     expect(list).toBeNull();
   }));
 
-  it('Select second item with down and up arrows', fakeAsync(() => {
+  xit('Select second item with down and up arrows', fakeAsync(() => {
     component.inputFocusHandler();
     fixture.detectChanges();
     tick();
@@ -376,6 +376,14 @@ describe('SamAutocompleteComponent', () => {
   });
 
 
+  it('should have reference to resultslist element defined after results on focus are populated', fakeAsync(() => {
+    component.inputFocusHandler();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+
+    expect(component.resultsListElement).toBeDefined();
+  }));
 
 });
 

@@ -8,8 +8,10 @@
 
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ObserveContentModule} from '@angular/cdk';
-import {PortalModule} from '@angular/cdk';
+// import {ObserveContentModule} from '@angular/cdk';
+ // import {PortalModule} from '@angular/cdk';
+ import {PortalModule} from '@angular/cdk/portal';
+ import {ObserversModule} from '@angular/cdk/observers';
 
 import {MdTab} from './tab';
 import {MdTabGroup} from './tab-group';
@@ -26,7 +28,8 @@ import {ScrollDispatchModule} from '../patterns/layout/components/core/overlay/s
   imports: [
     CommonModule,
     PortalModule,
-    ObserveContentModule,
+    // ObserveContentModule,
+    ObserversModule,
     ScrollDispatchModule,
   ],
   // Don't export all components because some are only to be used internally.

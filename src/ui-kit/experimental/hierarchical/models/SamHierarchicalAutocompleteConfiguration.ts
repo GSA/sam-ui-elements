@@ -59,4 +59,9 @@ export class SamHierarchicalAutocompleteConfiguration {
    */
   public freeTextSubtext: string = 'search';
 
+     /**
+   * The aria-label for the auto-complete
+   */
+  public ariaLabelText: string = 'Auto Complete';
+
 }

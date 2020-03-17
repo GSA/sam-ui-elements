@@ -81,10 +81,10 @@ export class SamAutocompleteMultiselectComponent
   /**
    * Gets DOM element for the textarea used for input
    */
-  @ViewChild('textArea') textArea: ElementRef;
-  @ViewChild('hiddenText') hiddenText: ElementRef;
-  @ViewChild('resultsList') resultsList: ElementRef;
-  @ViewChild(LabelWrapper) wrapper: LabelWrapper;
+  @ViewChild('textArea', {static: false}) textArea: ElementRef;
+  @ViewChild('hiddenText', {static: true}) hiddenText: ElementRef;
+  @ViewChild('resultsList', {static: false}) resultsList: ElementRef;
+  @ViewChild(LabelWrapper, {static: true}) wrapper: LabelWrapper;
 
   /**
    * Used when a to set the text for the hidden label for the textarea in the autocomplete

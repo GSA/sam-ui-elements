@@ -53,8 +53,8 @@ export class LabelWrapper implements AfterViewChecked {
     return this._errorMessage;
   }
 
-  @ViewChild('labelDiv') public labelDiv: ElementRef;
-  @ViewChild('hintContainer') public hintContainer: ElementRef;
+  @ViewChild('labelDiv', {static: true}) public labelDiv: ElementRef;
+  @ViewChild('hintContainer', {static: false}) public hintContainer: ElementRef;
   public input: HTMLElement;
   public showToggle: boolean = false;
   public errorElId: string;

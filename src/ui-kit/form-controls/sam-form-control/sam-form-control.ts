@@ -82,7 +82,7 @@ export class SamFormControl
    */
   @Input() public disableValidation: boolean;
 
-  @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
+  @ViewChild(LabelWrapper, {static: true}) public wrapper: LabelWrapper;
 
   public defaultValidators: ValidatorFn[] = [];
 

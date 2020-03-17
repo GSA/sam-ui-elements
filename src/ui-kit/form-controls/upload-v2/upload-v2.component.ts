@@ -1,21 +1,20 @@
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { isObservable } from 'rxjs';
+import { Observable ,  Subscription ,  isObservable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import {
   Component, ElementRef, Input, ViewChild, Renderer2,
   forwardRef, SimpleChanges,  Output,
     EventEmitter, } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpEventType,
-  HttpHeaderResponse, HttpRequest } from '@angular/common/http';
+  HttpHeaderResponse, HttpRequest, HttpEvent } from '@angular/common/http';
 import { DragState } from '../../directives/drag-drop/drag-drop.directive';
-import { HttpEvent } from '@angular/common/http/src/response';
+// import { HttpEvent } from '@angular/http/src/response';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
     ActionModalConfig, ToggleUploadFileAction,
     UploadedFileData
 } from '../../types';
 import * as moment from 'moment';
-import 'rxjs/add/operator/switchMap';
+
 
 export type RequestGenerator =
   (file: File) => HttpRequest<any> | Observable<HttpRequest<any>>;
@@ -200,11 +199,11 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   private onTouched: Function;
 
   /* The hidden file input dom element */
-  @ViewChild('file') private fileInput: ElementRef;
+  @ViewChild('file', {static: true}) private fileInput: ElementRef;
 
   /* get references to modals */
-  @ViewChild('removeModal') removeModal;
-  @ViewChild('toggleModal') toggleModal;
+  @ViewChild('removeModal', {static: true}) removeModal;
+  @ViewChild('toggleModal', {static: true}) toggleModal;
 
   public uploadElIds = {
     tableId: 'tableId',
@@ -568,7 +567,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     const request = this.deleteRequest(uf);
 
     if (isObservable(request)) {
-      return request.switchMap(req => this.httpClient.request(req));
+      return request.pipe(switchMap(req => this.httpClient.request(req)));
     } else if (request instanceof HttpRequest) {
       return this.httpClient.request(request);
     } else {
@@ -581,10 +580,10 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     const request = this.uploadRequest(file);
 
     if (isObservable(request)) {
-      return request.switchMap((req: HttpRequest<any>) => {
+      return request.pipe(switchMap((req: HttpRequest<any>) => {
         upload.request = req;
         return this.httpClient.request(req);
-      });
+      }));
     } else if (request instanceof HttpRequest) {
       upload.request = request;
       return this.httpClient.request(request);
