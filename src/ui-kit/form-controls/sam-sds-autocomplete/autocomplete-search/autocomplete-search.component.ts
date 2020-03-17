@@ -223,6 +223,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
       this.onArrowDown();
     }
     else if (KeyHelper.is(KEYS.UP, event)) {
+      event.preventDefault();
       this.onArrowUp();
     }
     else if (KeyHelper.is(KEYS.ENTER, event) && this.highlightedIndex >= 0) {
