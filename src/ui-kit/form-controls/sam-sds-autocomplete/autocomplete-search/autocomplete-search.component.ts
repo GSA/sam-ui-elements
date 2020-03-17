@@ -225,8 +225,12 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
     else if (KeyHelper.is(KEYS.UP, event)) {
       this.onArrowUp();
     }
-    else if (KeyHelper.is(KEYS.ENTER, event)) {
+    else if (KeyHelper.is(KEYS.ENTER, event) && this.highlightedIndex >= 0) {
       this.selectItem(this.highlightedItem);
+    }
+    else if (KeyHelper.is(KEYS.ENTER, event) && this.highlightedIndex < 0) {
+      const item = this.createFreeTextItem();
+      this.selectItem(item);
     }
     else if (KeyHelper.is(KEYS.ESC, event)) {
       if (this.showResults) {
@@ -270,10 +274,10 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    */
   private onArrowUp(): void {
     if (this.results && this.results.length > 0) {
-      if (this.highlightedIndex !== 0) {
+      if (this.highlightedIndex >= 0) {
         this.highlightedIndex--;
         this.setHighlightedItem(this.results[this.highlightedIndex]);
-        this.scrollSelectedItemToTop();
+        this.scrollSelectedItemIntoView();
       }
     }
   }
@@ -286,7 +290,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
       if (this.highlightedIndex < this.results.length - 1) {
         this.highlightedIndex++;
         this.setHighlightedItem(this.results[this.highlightedIndex]);
-        this.scrollSelectedItemToTop();
+        this.scrollSelectedItemIntoView();
       }
     }
   }
@@ -345,12 +349,13 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
             (result) => {
               this.results = result.items;
               this.showLoad = false;
-              if (this.showFreeText()) {
-                this.results.unshift(this.createFreeTextItem());
-              }
               this.maxResults = result.totalItems;
-              this.highlightedIndex = 0;
-              this.setHighlightedItem(this.results[this.highlightedIndex]);
+
+              this.highlightedIndex = this.configuration.isFreeTextEnabled ? -1 : 0;
+              if (!this.configuration.isFreeTextEnabled) {
+                this.setHighlightedItem(this.results[this.highlightedIndex]);
+              }
+
               this.showResults = true;
               this.addScreenReaderMessage(this.maxResults + ' ' + this.resultsAvailableMessage);
               this._changeDetectorRef.markForCheck();
@@ -418,9 +423,11 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
   /**
    * When paging up and down with arrow key it sets the highlighted item into view
    */
-  private scrollSelectedItemToTop() {
-    let selectedChild = this.resultsListElement.nativeElement.children[this.highlightedIndex];
-    this.resultsListElement.nativeElement.scrollTop = selectedChild.offsetTop;
+  private scrollSelectedItemIntoView() {
+    if (this.highlightedIndex >= 0) {
+      const selectedChild = this.resultsListElement.nativeElement.children[this.highlightedIndex];
+      selectedChild.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'start'});
+    }
   }
 
   /**
@@ -432,12 +439,17 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
       if (this.highlightedItem) {
         this.highlightedItem[this.HighlightedPropertyName] = false;
       }
-      this.highlightedItem = item;
-      this.highlightedItem[this.HighlightedPropertyName] = true;
-      let message = item[this.configuration.primaryTextField];
-      if (this.configuration.secondaryTextField && item[this.configuration.secondaryTextField]) {
-        message += ': ' + item[this.configuration.secondaryTextField]
-
+      let message = '';
+      if (item) {
+        this.highlightedItem = item;
+        this.highlightedItem[this.HighlightedPropertyName] = true;
+        message = item[this.configuration.primaryTextField];
+        if (this.configuration.secondaryTextField && item[this.configuration.secondaryTextField]) {
+          message += ': ' + item[this.configuration.secondaryTextField];
+        }
+      } else {
+        this.highlightedItem = undefined;
+        message = 'No item selected';
       }
       this.addScreenReaderMessage(message);
     }
