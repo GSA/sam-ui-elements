@@ -113,23 +113,6 @@ describe('SamAutocompleteComponent', () => {
     expect(component.results[0]['highlighted']).toBeTruthy();
   }));
 
-  it('Should not highlight first result if free text is on', fakeAsync(() => {
-    const event = {
-      preventDefault: ()=>{},
-      target: component.input.nativeElement
-    };
-    component.configuration.isFreeTextEnabled = true;
-    component.input.nativeElement.value = "id";
-    component.input.nativeElement.focus();
-    component.textChange(event);
-    fixture.detectChanges();
-    tick();
-    fixture.detectChanges();
-    const list = fixture.debugElement.query(By.css('.autocomplete-result'));
-    expect(list.nativeElement.children.length).toBe(11);
-    expect(component.results[0]['highlighted']).not.toBeTruthy();
-  }));
-
 
 
   it('Should have empty results key press minimumCharacterCountSearch', fakeAsync(() => {
@@ -207,7 +190,7 @@ describe('SamAutocompleteComponent', () => {
     component.onKeydown(upEvent);
     tick();
     fixture.detectChanges();
-    expect(component.results[0]['highlighted']).Not.toBeTruthy();
+    expect(component.results[0]['highlighted']).toBeTruthy();
   }));
 
 
