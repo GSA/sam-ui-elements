@@ -46,6 +46,14 @@ describe('SamAutocompleteComponent', () => {
     expect(input).toBeDefined();
   });
 
+  it('Should check for focus', () => {
+    const event = {};
+    component.checkForFocus(event);
+    fixture.detectChanges();
+    expect(component.inputValue).toBe('');
+    expect(component.showResults).toBeFalsy();
+  });
+
   it('Should have an input id', () => {
     fixture.detectChanges();
     const input = fixture.debugElement.query(By.css('input'));
@@ -94,7 +102,21 @@ describe('SamAutocompleteComponent', () => {
   }));
 
 
+  it('Should have results with input and free text search on', fakeAsync(() => {
+    component.inputValue = 'search text';
+    const event = {
+      "key": "Enter",
+      target: { "value": component.inputValue }
+    }
+    component.configuration.isFreeTextEnabled = true;
+    component.highlightedIndex = -1;
+    component.onKeydown(event);
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    expect(component.inputValue).toBe('search text');
 
+  }));
 
 
   it('Should have results key press', fakeAsync(() => {
@@ -113,6 +135,8 @@ describe('SamAutocompleteComponent', () => {
     expect(component.results[0]['highlighted']).toBeTruthy();
   }));
 
+
+
   it('Should not highlight first result if free text is on', fakeAsync(() => {
     const event = {
       preventDefault: ()=>{},
@@ -127,7 +151,7 @@ describe('SamAutocompleteComponent', () => {
     fixture.detectChanges();
     const list = fixture.debugElement.query(By.css('.autocomplete-result'));
     expect(list.nativeElement.children.length).toBe(11);
-    expect(component.results[0]['highlighted']).not.toBeTruthy();
+    expect(component.highlightedIndex).toBe(-1);
   }));
 
 
@@ -202,12 +226,13 @@ describe('SamAutocompleteComponent', () => {
     expect(component.results[0]['highlighted']).toBeTruthy();
     const upEvent = {
       "key": "Up",
-      "target": { "value": 'id' }
+      "target": { "value": 'id' },
+      "preventDefault": () => true
     }
     component.onKeydown(upEvent);
     tick();
     fixture.detectChanges();
-    expect(component.results[0]['highlighted']).Not.toBeTruthy();
+    expect(component.results[0]['highlighted']).toBeFalsy();
   }));
 
 
