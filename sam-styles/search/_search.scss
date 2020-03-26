@@ -29,6 +29,38 @@
     background-color: #0071BC !important;
   }
 }
+
+.sam.search--primary {
+  display: flex;
+  select{
+    margin: 0;
+    width: auto;
+    border-right-width: 0px;
+  }
+
+  input {
+    margin: 0;
+    border-right-width: 0px;
+    max-width: initial;
+  }
+  button {
+    background-color: #0071BC;
+    color: white;
+    border: 1px solid #5b616b;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    margin: 0px;
+    transition: all 0.3s ease;
+  }
+
+  button:hover {
+    color: white !important;
+    background-color: #004370 !important;
+  }
+}
+
 /**********************************************
               Search
 ***********************************************/
