@@ -92,6 +92,12 @@ export class SamTextComponent implements ControlValueAccessor,
    * Sets the title attribute on the input for accessibility
    */
   @Input() public title: string;
+
+  /**
+   * Sets full hint toggle option for label wrapper
+   */
+  @Input() public showFullHint: boolean = false;
+
   /**
    * Changes the HTML event the changes emit on
    */
