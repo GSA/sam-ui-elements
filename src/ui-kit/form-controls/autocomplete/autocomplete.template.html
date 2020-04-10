@@ -39,13 +39,15 @@
         </ul>
         <!-- Lists data if array of objects with key/value pair is passed to component -->
         <ul role="listbox" id="sam-autocomplete-results-kv" class="usa-unstyled-list" #resultsListKV
-          *ngIf="((filteredKeyValuePairs && filteredKeyValuePairs.length > 0) || (displayFreeTextKeyValueResults()) ) && hasFocus">
+          *ngIf="((filteredKeyValuePairs && filteredKeyValuePairs.length > 0) || (displayFreeTextKeyValueResults()) ) && hasFocus"
+          (scroll)="onScroll()"
+        >
           <li id="resultFreeText" [class.multiple-values]="config?.keyValueConfig?.subheadProperty"
             (mouseenter)="listItemHover(i)" *ngIf="freeTextAvalible()" [ngClass]="freeTextClass()"
             (click)="setSelected(inputValue)">{{inputValue}} -
             {{freeTextSubtext}}
           </li>
-          <li [attr.id]="'resultItem_'+ i" *ngFor="let obj of filteredKeyValuePairs; let i = index"
+          <li [attr.id]="'resultItem_'+ i" *ngFor="let obj of displayResults; let i = index"
             (mouseenter)="listItemHover(i)" [class.multiple-values]="config?.keyValueConfig?.subheadProperty"
             [ngClass]="itemClass(obj)" (click)="dropdownClick(obj)">
             <ng-container *ngIf="!itemTemplate; else itemTemplateRef">
