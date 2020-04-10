@@ -227,25 +227,6 @@ describe('The Sam Autocomplete Component', () => {
       expect(component.results).toEqual([]);
     });
 
-    it('Should lazy render k/v pairs if enabled', () => {
-      component.maxNumResultsToDisplay = 2;
-      component.filteredKeyValuePairs = kvoptions;
-      component.hasFocus = true;
-      component.enableLazyRendering = true;
-      fixture.detectChanges();
-      let list =
-        fixture.debugElement.query(By.css('#sam-autocomplete-results-kv'));
-      expect(list.nativeElement.getElementsByTagName('li').length).toEqual(2);
-
-      list.nativeElement.scrollTop = list.nativeElement.scrollHeight;
-      list.triggerEventHandler('scroll', null);
-
-      fixture.detectChanges();
-
-      list = fixture.debugElement.query(By.css('#sam-autocomplete-results-kv'));
-      expect(list.nativeElement.getElementsByTagName('li').length).toEqual(4);
-    })
-
     it('Should have public property `inputValue` that binds to search input\
       value', () => {
         const input = fixture.debugElement.query(

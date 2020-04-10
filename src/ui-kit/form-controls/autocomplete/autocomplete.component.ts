@@ -134,12 +134,6 @@ export class SamAutocompleteComponent
   @Input() public freeTextSubtext: string = 'search';
 
   @Input() public isKeyValue?: boolean;
-
-  /**
-   * Limits number of items rendered immediately for faster performance.
-   * As user scrolls through list, more items are added if available.
-   */
-  @Input() public enableLazyRendering: boolean = false;
   /*
    How do define custom http callbacks:
    <sam-autocomplete
@@ -188,14 +182,10 @@ export class SamAutocompleteComponent
    */
   @Input() public httpRequest: Observable<any>;
 
-  // Defines how many items to initially display as well as
-  // increment amount of new items as user scrolls through suggesstions
-  private readonly STARTING_MAX_ITEMS = 25;
 
   activeDescendant: string = undefined;
 
   public results: Array<string> = [];
-  public maxNumResultsToDisplay = this.STARTING_MAX_ITEMS;
   public innerValue: any = '';
   public inputValue: any = '';
   public selectedInputValue: any;
@@ -225,20 +215,6 @@ export class SamAutocompleteComponent
       this.innerValue = val;
       this.propogateChange(val);
     }
-  }
-
-  // If lazy rendering is enabled, returns small slice of array to show to user.
-  public get displayResults() {
-
-    const arrayToCheck = this.filteredKeyValuePairs.length > 0 ? this.filteredKeyValuePairs : this.results;
-
-    if (!this.enableLazyRendering) {
-      return arrayToCheck;
-    }
-
-    const sliceIndex = arrayToCheck.length < this.maxNumResultsToDisplay ? 
-                        arrayToCheck.length : this.maxNumResultsToDisplay;
-    return arrayToCheck.slice(0, sliceIndex)
   }
 
   public keyEvents: Subject<any> = new Subject();
@@ -938,30 +914,12 @@ export class SamAutocompleteComponent
       return this.isKeyValue && this.freeTextAvalible();
     } else {
       return false;
-    }
+    };
   }
 
-  /**
-   * Display additional items to user as they scroll through
-   * suggestions. Only valid if lazy rendering is enabled, otherwise,
-   * all possible suggestions would be shown.
-   */
-  onScroll() {
-    if (!this.enableLazyRendering) {
-      return;
-    }
-    const element: ElementRef = this.resultsList || this.resultsListKV;
-    console.log(element);
-    const resultsArray = this.filteredKeyValuePairs.length > 0 ? this.filteredKeyValuePairs : this.results;
-    if (this.maxNumResultsToDisplay < resultsArray.length - 1) {
-        let scrollAreaHeight = element.nativeElement.offsetHeight;
-        let scrollTopPos = element.nativeElement.scrollTop;
-        let scrollAreaMaxHeight = element.nativeElement.scrollHeight;
-        if ((scrollTopPos + scrollAreaHeight * 2) >= scrollAreaMaxHeight) {
-            this.maxNumResultsToDisplay += this.STARTING_MAX_ITEMS;
-        }
-    }
-  }
+
+
+
 
   private setEndOfList(index, length) {
     if (index === length - 2) {
