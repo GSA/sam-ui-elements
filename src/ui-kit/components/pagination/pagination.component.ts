@@ -100,7 +100,7 @@ export class SamPaginationComponent {
   }
 
   getAriaLabel(i){
-    return this.currentPage === i ? 'current page '+ this.currentPage : `Page ${i}`;
+    return this.currentPage === i ? 'current page '+ this.currentPage : '';
   }
 
 }
