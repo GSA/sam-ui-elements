@@ -44,12 +44,12 @@ export class ColumnDirective {
   private reset(){
     for(let i=1; i<=12 ;i++){
       let number = this._columnsMap.get(""+i);
-      this.renderer.setElementClass(this.el.nativeElement, number, false);
+      this.renderer.addClass(this.el.nativeElement, number);
     }
     this.renderer
-      .setElementClass(this.el.nativeElement, 'wide', false);
+      .addClass(this.el.nativeElement, 'wide');
     this.renderer
-      .setElementClass(this.el.nativeElement, 'column', false);
+      .addClass(this.el.nativeElement, 'column');
   }
   
   constructor(private renderer: Renderer2, public el: ElementRef ) {}
