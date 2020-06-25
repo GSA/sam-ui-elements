@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Renderer, Input } from '@angular/core';
+import { Directive, ElementRef, Renderer2, Input } from '@angular/core';
 
 @Directive({
   selector: '[columns]'
@@ -52,5 +52,5 @@ export class ColumnDirective {
       .setElementClass(this.el.nativeElement, 'column', false);
   }
   
-  constructor(private renderer: Renderer, public el: ElementRef ) {}
+  constructor(private renderer: Renderer2, public el: ElementRef ) {}
 }
