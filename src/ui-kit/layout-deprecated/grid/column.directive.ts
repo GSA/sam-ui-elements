@@ -30,11 +30,11 @@ export class ColumnDirective {
     this.columnsClass = this._columnsMap.get(value);
     this.reset();
     this.renderer
-      .setElementClass(this.el.nativeElement, this.columnsClass, true);
+      .addClass(this.el.nativeElement, this.columnsClass);
     this.renderer
-      .setElementClass(this.el.nativeElement, 'wide', true);
+      .addClass(this.el.nativeElement, 'wide');
     this.renderer
-      .setElementClass(this.el.nativeElement, 'column', true);
+      .addClass(this.el.nativeElement, 'column');
   }
 
   public get number() {
@@ -44,12 +44,12 @@ export class ColumnDirective {
   private reset(){
     for(let i=1; i<=12 ;i++){
       let number = this._columnsMap.get(""+i);
-      this.renderer.setElementClass(this.el.nativeElement, number, false);
+      this.renderer.removeClass(this.el.nativeElement, number);
     }
     this.renderer
-      .setElementClass(this.el.nativeElement, 'wide', false);
+      .removeClass(this.el.nativeElement, 'wide');
     this.renderer
-      .setElementClass(this.el.nativeElement, 'column', false);
+      .removeClass(this.el.nativeElement, 'column');
   }
   
   constructor(private renderer: Renderer2, public el: ElementRef ) {}

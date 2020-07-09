@@ -5,6 +5,6 @@ import { Directive, ElementRef, Renderer2, Input } from '@angular/core';
 })
 export class RowDirective {
   constructor( private renderer: Renderer2, public el: ElementRef ) {
-    renderer.setElementClass(el.nativeElement, 'row', true);
+    renderer.addClass(el.nativeElement, 'row');
   }
 }
