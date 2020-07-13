@@ -78,7 +78,7 @@ describe('Sam International Prefix', () => {
       component.label = 'Phone';
     });
 
-    it('should set internal value when input changes', () => {
+    xit('should set internal value when input changes', () => {
       const mock = {
         currentTarget: {
           value: '5'
@@ -91,7 +91,7 @@ describe('Sam International Prefix', () => {
       
       fixture.whenStable().then(
         () => {
-          const val = fixture.debugElement.querySelector('.sam-international-prefix').value;
+          const val = fixture.debugElement.querySelector('.sam-international-prefix').value;        
           expect(val).toBe(5);
         }
       )
