@@ -5,7 +5,8 @@
       <label [attr.for]="checkAllLabelOrId()">Select all</label>
     </li>
     <li *ngFor="let option of options; let i = index">
-      <input [disabled]="option.disabled || disabled?'disabled':null" [attr.id]="option.name" [attr.aria-label]="option.label" type="checkbox"
+      <input [disabled]="option.disabled || disabled?'disabled':null" [attr.id]="option.name" 
+        [attr.aria-label]="option.ariaLabel ? option.ariaLabel : option.label" type="checkbox"
         (change)="onCheckChanged(option.value, $event.target.checked, option.name)" [checked]="isChecked(option.value)">
       <label [attr.aria-hidden]="true" [attr.for]="option.name">{{option.label}}</label>
     </li>
