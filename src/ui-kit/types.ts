@@ -11,13 +11,17 @@ export interface OptionsType {
    */
   label: string;
   /**
-   * The machine readable description of the input
+   * The name and id attribute value of the input
    */
   name: string;
   /**
    * if true, the option is greyed out and not clickable
    */
   disabled?: boolean;
+  /**
+   * The machine read description of the input. Will default to label value if none is provided
+   */
+  ariaLabel?: string
 }
 
 export interface AutocompleteDropdownButton {
