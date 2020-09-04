@@ -1,38 +1,35 @@
-import { Component, Input, TemplateRef, forwardRef } from '@angular/core';
-import { SAMSDSSelectedItemModel  } from './models/sds-selectedItem.model';
-import { SAMSDSSelectedResultConfiguration } from './models/SAMSDSSelectedResultConfiguration';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { SAMSDSSelectedItemModelHelper  } from './models/sds-selected-item-model-helper';
+import { Component, Input, TemplateRef, forwardRef } from "@angular/core";
+import { SAMSDSSelectedItemModel } from "./models/sds-selectedItem.model";
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
+import { SAMSDSSelectedItemModelHelper } from "./models/sds-selected-item-model-helper";
 const SDS_SelectedResult_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => SAMSDSSelectedResultComponent ),
-  multi: true
+  useExisting: forwardRef(() => SAMSDSSelectedResultComponent),
+  multi: true,
 };
 
 @Component({
-  selector: 'sam-sds-selected-result',
-  templateUrl: './selected-result.component.html',
-  styleUrls: ['./selected-result.component.scss'],
-  providers: [SDS_SelectedResult_VALUE_ACCESSOR]
+  selector: "sam-sds-selected-result",
+  templateUrl: "./selected-result.component.html",
+  styleUrls: ["./selected-result.component.scss"],
+  providers: [SDS_SelectedResult_VALUE_ACCESSOR],
 })
-export class SAMSDSSelectedResultComponent  implements ControlValueAccessor {
-
+export class SAMSDSSelectedResultComponent implements ControlValueAccessor {
   /**
-  * Allow to insert a customized template for suggestions to use
-  */
+   * Allow to insert a customized template for suggestions to use
+   */
   @Input() itemTemplate: TemplateRef<any>;
 
   /**
    * The data model that has the selected item
    */
-  public model: SAMSDSSelectedItemModel ;
-
+  public model: SAMSDSSelectedItemModel;
 
   /**
-  * Configuration for the Selected Results control 
-  */
+   * Configuration for the Selected Results control
+   */
   @Input()
-  public configuration: SAMSDSSelectedResultConfiguration;
+  public configuration: any;
 
   /**
    * Stored Event for ControlValueAccessor
@@ -49,19 +46,23 @@ export class SAMSDSSelectedResultComponent  implements ControlValueAccessor {
 
   /**
    * Removes item from the model
-   * @param item 
+   * @param item
    */
   removeItem(item: object) {
     if (!this.disabled) {
-      SAMSDSSelectedItemModelHelper.removeItem(item, this.configuration.primaryKeyField, this.model);
+      SAMSDSSelectedItemModelHelper.removeItem(
+        item,
+        this.configuration.primaryKeyField,
+        this.model
+      );
       this.propogateChange(this.model);
       this.onTouchedCallback();
     }
   }
 
   writeValue(obj: any): void {
-    if (obj instanceof SAMSDSSelectedItemModel ) {
-      this.model = obj as SAMSDSSelectedItemModel ;
+    if (obj instanceof SAMSDSSelectedItemModel) {
+      this.model = obj as SAMSDSSelectedItemModel;
     }
   }
 
@@ -77,19 +78,18 @@ export class SAMSDSSelectedResultComponent  implements ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-
   /**
    * Gets the string value from the specifed properties of an object
-   * @param object 
+   * @param object
    * @param propertyFields comma seperated list with periods depth of object
    */
   getObjectValue(object: Object, propertyFields: string): string {
-    let value = '';
+    let value = "";
     let current = object;
-    let fieldSplit = propertyFields.split(',');
+    let fieldSplit = propertyFields.split(",");
     for (let i = 0; i < fieldSplit.length; i++) {
       let fieldValue = fieldSplit[i];
-      let fieldPartSplit = fieldValue.split('.');
+      let fieldPartSplit = fieldValue.split(".");
       for (let j = 0; j < fieldPartSplit.length; j++) {
         let fieldCheckValue = fieldPartSplit[j];
         if (current) {
@@ -98,11 +98,10 @@ export class SAMSDSSelectedResultComponent  implements ControlValueAccessor {
       }
 
       if (current) {
-        value += current.toString() + ' ';
+        value += current.toString() + " ";
       }
       current = object;
     }
     return value.trim();
   }
-
 }

@@ -7,33 +7,33 @@ import {
   forwardRef,
   HostListener,
   ChangeDetectorRef,
-  ChangeDetectionStrategy
-} from '@angular/core';
+  ChangeDetectionStrategy,
+} from "@angular/core";
 import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
-  FormControl
-} from '@angular/forms';
-import { SAMSDSSelectedItemModel } from '../selected-result/models/sds-selectedItem.model';
-import { SAMSDSAutocompleteServiceInterface } from '../autocomplete-search/models/SAMSDSAutocompleteServiceInterface';
-import { SAMSDSAutocompletelConfiguration } from './models/SAMSDSAutocompletelConfiguration.model';
-import { SelectionMode } from '../selected-result/models/sds-selected-item-model-helper';
-import { SAMSDSAutocompleteSearchComponent } from '../autocomplete-search/autocomplete-search.component';
+  FormControl,
+} from "@angular/forms";
+import { SAMSDSSelectedItemModel } from "../selected-result/models/sds-selectedItem.model";
+import { SAMSDSAutocompleteServiceInterface } from "../autocomplete-search/models/SAMSDSAutocompleteServiceInterface";
+import { SelectionMode } from "../selected-result/models/sds-selected-item-model-helper";
+import { SAMSDSAutocompleteSearchComponent } from "../autocomplete-search/autocomplete-search.component";
+import { SAMSDSAutocompletelConfiguration } from "./models/SDSAutocompletelConfiguration.model";
 
 const Autocomplete_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => SAMSDSAutocompleteComponent ),
-  multi: true
+  useExisting: forwardRef(() => SAMSDSAutocompleteComponent),
+  multi: true,
 };
 
 @Component({
-  selector: 'sam-sds-autocomplete',
-  templateUrl: './autocomplete.component.html',
-  styleUrls: ['./autocomplete.component.scss'],
+  selector: "sam-sds-autocomplete",
+  templateUrl: "./autocomplete.component.html",
+  styleUrls: ["./autocomplete.component.scss"],
   providers: [Autocomplete_VALUE_ACCESSOR],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SAMSDSAutocompleteComponent  implements ControlValueAccessor {
+export class SAMSDSAutocompleteComponent implements ControlValueAccessor {
   /**
    * Allow to insert a customized template for suggestions results
    */
@@ -69,33 +69,38 @@ export class SAMSDSAutocompleteComponent  implements ControlValueAccessor {
   @Input()
   public service: SAMSDSAutocompleteServiceInterface;
 
-  @ViewChild('autocompleteSearch', {static: false}) autocompleteSearch: SAMSDSAutocompleteSearchComponent;
-  constructor(private cd: ChangeDetectorRef) { }
+  @ViewChild("autocompleteSearch", { static: false })
+  autocompleteSearch: SAMSDSAutocompleteSearchComponent;
+  constructor(private cd: ChangeDetectorRef) {}
 
   /**
    * Stored Event for ControlValueAccessor
    */
-  @HostListener('focusout')
-  public onTouched = () => { };
+  @HostListener("focusout")
+  public onTouched = () => {};
 
   /**
    * Stored Event for ControlValueAccessor
    */
-  public onChange = (_: any) => { };
+  public onChange = (_: any) => {};
 
   // ControlValueAccessor (and Formly) is trying to update the value of the FormControl (our custom component) programatically
   // If there is a value we will just overwrite items
   // If there is no value we reset the items array to be empty
   writeValue(value: any) {
-    if (value instanceof SAMSDSSelectedItemModel && value.items && value.items.length && this.model.items !== value.items) {
+    if (
+      value instanceof SAMSDSSelectedItemModel &&
+      value.items &&
+      value.items.length &&
+      this.model.items !== value.items
+    ) {
       this.model.items = [...value.items];
       this.cd.markForCheck();
-    }
-    else if(value && value.length && this.model.items !== value) {
+    } else if (value && value.length && this.model.items !== value) {
       this.model.items = value;
       this.cd.markForCheck();
     } else {
-      if(!this.model || !(this.model instanceof SAMSDSSelectedItemModel)) {
+      if (!this.model || !(this.model instanceof SAMSDSSelectedItemModel)) {
         this.model = new SAMSDSSelectedItemModel();
       }
       this.model.items = value && value.items ? value.items : [];
@@ -145,8 +150,8 @@ export class SAMSDSAutocompleteComponent  implements ControlValueAccessor {
   }
 
   addItems(list: object[]) {
-    list.forEach(item => {
+    list.forEach((item) => {
       this.addItem(item);
-    })
+    });
   }
 }
