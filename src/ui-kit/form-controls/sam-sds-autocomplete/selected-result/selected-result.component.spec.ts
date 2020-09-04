@@ -4,13 +4,14 @@ import { SAMSDSSelectedResultComponent } from './selected-result.component';
 import { SAMSDSSelectedItemModel } from './models/sds-selectedItem.model';
 import { SAMSDSSelectedItemModelHelper, SelectionMode } from './models/sds-selected-item-model-helper';
 import { By } from '@angular/platform-browser';
-import { SDSSelectedResultConfiguration } from './models/SDSSelectedResultConfiguration';
+import { SAMSDSSelectedResultConfiguration } from './models/SAMSDSSelectedResultConfiguration';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
-describe('SDSSelectedResultComponent', () => {
+describe('SAMSDSSelectedResultComponent', () => {
   let component: SAMSDSSelectedResultComponent;
   let fixture: ComponentFixture<SAMSDSSelectedResultComponent>;
 
@@ -18,7 +19,7 @@ describe('SDSSelectedResultComponent', () => {
     TestBed.configureTestingModule({
       declarations: [SAMSDSSelectedResultComponent],
       imports: [
-        CommonModule, FormsModule, RouterModule
+        CommonModule, FormsModule, RouterModule, FontAwesomeModule
       ],
     })
       .compileComponents();
@@ -28,7 +29,7 @@ describe('SDSSelectedResultComponent', () => {
     fixture = TestBed.createComponent(SAMSDSSelectedResultComponent);
     component = fixture.componentInstance;
     component.model = new SAMSDSSelectedItemModel();
-    component.configuration = new SDSSelectedResultConfiguration();
+    component.configuration = new SAMSDSSelectedResultConfiguration();
     component.configuration.primaryKeyField = 'id';
     component.configuration.selectionMode = SelectionMode.SINGLE;
     component.configuration.primaryTextField = 'name';
@@ -42,33 +43,33 @@ describe('SDSSelectedResultComponent', () => {
 
   it('should be empty', () => {
     fixture.detectChanges();
-    const list = fixture.debugElement.query(By.css('.resultsList'));
+    const list = fixture.debugElement.query(By.css('.sds-autocomplete-selected'));
     expect(list.nativeElement.children.length).toBe(0);
   });
 
   it('should have an item', () => {
-    SAMSDSSelectedItemModelHelper.addItem({ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }, 'id', SelectionMode.SINGLE, component.model.items);
+    SAMSDSSelectedItemModelHelper.addItem({ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }, 'id', SelectionMode.SINGLE, component.model);
     fixture.detectChanges();
-    const list = fixture.debugElement.query(By.css('.resultsList'));
+    const list = fixture.debugElement.query(By.css('.sds-autocomplete-selected'));
     expect(list.nativeElement.children.length).toBe(1);
   });
 
 
   it('should have a single item based on mode', () => {
-    SAMSDSSelectedItemModelHelper.addItem({ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }, 'id', SelectionMode.SINGLE, component.model.items);
-    SAMSDSSelectedItemModelHelper.addItem({ 'id': '2', 'parentId': null, 'name': 'Level 2', 'subtext': 'id 2', 'type': 'Level 2' }, 'id', SelectionMode.SINGLE, component.model.items);
+    SAMSDSSelectedItemModelHelper.addItem({ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }, 'id', SelectionMode.SINGLE, component.model);
+    SAMSDSSelectedItemModelHelper.addItem({ 'id': '2', 'parentId': null, 'name': 'Level 2', 'subtext': 'id 2', 'type': 'Level 2' }, 'id', SelectionMode.SINGLE, component.model);
     fixture.detectChanges();
-    const list = fixture.debugElement.query(By.css('.resultsList'));
+    const list = fixture.debugElement.query(By.css('.sds-autocomplete-selected'));
     expect(list.nativeElement.children.length).toBe(1);
   });
 
 
   it('should have an 2 items', () => {
     component.configuration.selectionMode = SelectionMode.MULTIPLE;
-    SAMSDSSelectedItemModelHelper.addItem({ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }, 'id', SelectionMode.MULTIPLE, component.model.items);
-    SAMSDSSelectedItemModelHelper.addItem({ 'id': '2', 'parentId': null, 'name': 'Level 2', 'subtext': 'id 2', 'type': 'Level 2' }, 'id', SelectionMode.MULTIPLE, component.model.items);
+    SAMSDSSelectedItemModelHelper.addItem({ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }, 'id', SelectionMode.MULTIPLE, component.model);
+    SAMSDSSelectedItemModelHelper.addItem({ 'id': '2', 'parentId': null, 'name': 'Level 2', 'subtext': 'id 2', 'type': 'Level 2' }, 'id', SelectionMode.MULTIPLE, component.model);
     fixture.detectChanges();
-    const list = fixture.debugElement.query(By.css('.resultsList'));
+    const list = fixture.debugElement.query(By.css('.sds-autocomplete-selected'));
     expect(list.nativeElement.children.length).toBe(2);
   });
 
@@ -76,12 +77,12 @@ describe('SDSSelectedResultComponent', () => {
   it('Tests remove item', () => {
     component.configuration.selectionMode = SelectionMode.MULTIPLE;
     let item2 = { 'id': '2', 'parentId': null, 'name': 'Level 2', 'subtext': 'id 2', 'type': 'Level 2' };
-    SAMSDSSelectedItemModelHelper.addItem({ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }, 'id', SelectionMode.MULTIPLE, component.model.items);
-    SAMSDSSelectedItemModelHelper.addItem(item2, 'id', SelectionMode.MULTIPLE, component.model.items);
+    SAMSDSSelectedItemModelHelper.addItem({ 'id': '1', 'parentId': null, 'name': 'Level 1', 'subtext': 'id 1', 'type': 'Level 1' }, 'id', SelectionMode.MULTIPLE, component.model);
+    SAMSDSSelectedItemModelHelper.addItem(item2, 'id', SelectionMode.MULTIPLE, component.model);
     fixture.detectChanges();
     component.removeItem(item2);
     fixture.detectChanges();
-    const list = fixture.debugElement.query(By.css('.resultsList'));
+    const list = fixture.debugElement.query(By.css('.sds-autocomplete-selected'));
     expect(list.nativeElement.children.length).toBe(1);
   });
 

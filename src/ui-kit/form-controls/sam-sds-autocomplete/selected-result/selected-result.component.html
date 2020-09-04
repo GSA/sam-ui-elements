@@ -1,19 +1,51 @@
-<ul *ngIf="model" [attr.aria-label]="configuration.labelText +' results'" class="usa-unstyled-list resultsList"
-  aria-relevant="additions" role="listbox" aria-live="polite">
+<ul
+  *ngIf="model"
+  [attr.aria-label]="configuration.labelText + ' results'"
+  class="usa-list usa-list--unstyled sds-autocomplete-selected"
+  aria-relevant="additions"
+  role="listbox"
+  aria-live="polite"
+>
   <li role="option" *ngFor="let result of model.items; let i = index">
-    <div [attr.class]="disabled?'selected-item selected-item-disabled' :'selected-item'">
-      <ng-container *ngIf="itemTemplate" [ngTemplateOutlet]="itemTemplate"
-        [ngTemplateOutletContext]="{$implicit:result}">
+    <div
+      class="sds-tag sds-tag--chip sds-tag--input"
+      [ngClass]="disabled ? 'sds-tag--disabled' : ''"
+    >
+      <ng-container
+        *ngIf="itemTemplate"
+        [ngTemplateOutlet]="itemTemplate"
+        [ngTemplateOutletContext]="{ $implicit: result }"
+      >
       </ng-container>
       <ng-container *ngIf="!itemTemplate">
-        <span class="header">{{  getObjectValue(result, configuration.primaryTextField)  }}</span>
-        <ng-container *ngIf="configuration.secondaryTextField &&  result[configuration.secondaryTextField] ">
-          <span class="secondary-value">{{ result[configuration.secondaryTextField] }}</span>
-        </ng-container>
+        <div class="sds--tag__item">
+          <div>
+            {{ getObjectValue(result, configuration.primaryTextField) }}
+          </div>
+          <div
+            *ngIf="
+              configuration.secondaryTextField &&
+              result[configuration.secondaryTextField]
+            "
+          >
+            {{ result[configuration.secondaryTextField] }}
+          </div>
+        </div>
       </ng-container>
-      <span tabindex="0" role="button" [attr.class]="disabled?'close close-disabled fa fa-close' :'close fa fa-close' "
-        [attr.aria-label]="'Remove Item ' + getObjectValue(result, configuration.primaryTextField)" aria-hidden="false" (click)="removeItem(result)" (keyup.enter)="removeItem(result)">
-      </span>
+      <button
+        *ngIf="!disabled"
+        [attr.aria-label]="
+          'Remove Item ' +
+          getObjectValue(result, configuration.primaryTextField)
+        "
+        [class.text-base]="disabled"
+        aria-hidden="false"
+        class="sds-tag__close"
+        (click)="removeItem(result)"
+        (keyup.enter)="removeItem(result)"
+      >
+        <fa-icon [icon]="['fas', 'times']" size="sm"></fa-icon>
+      </button>
     </div>
   </li>
 </ul>

@@ -1,4 +1,6 @@
-export class SAMSDSSelectedItemModelHelper {
+import { SAMSDSSelectedItemModel } from './sds-selectedItem.model';
+
+export class SAMSDSSelectedItemModelHelper  {
 
     /**
       *  adds an item to the collection
@@ -10,12 +12,12 @@ export class SAMSDSSelectedItemModelHelper {
       * @param selectionMode 
       * @param items 
       */
-    public static addItem(itemToAdd: object, keyField: string, selectionMode: SelectionMode, items: object[]) {
-        if (!SAMSDSSelectedItemModelHelper.contatinsItem(itemToAdd[keyField], keyField, items)) {
+    public static addItem(itemToAdd: object, keyField: string, selectionMode: SelectionMode, model: SAMSDSSelectedItemModel) {
+        if (!SAMSDSSelectedItemModelHelper.containsItem(itemToAdd[keyField], keyField, model.items)) {
             if (selectionMode === SelectionMode.SINGLE) {
-                SAMSDSSelectedItemModelHelper.clearItems(items);
+                SAMSDSSelectedItemModelHelper.clearItems(model.items);
             }
-            items.push(itemToAdd);
+            model.items.push(itemToAdd);
         }
     }
 
@@ -27,9 +29,9 @@ export class SAMSDSSelectedItemModelHelper {
      * @param selectionMode 
      * @param items 
      */
-    public static addItems(toAddItems: object[], keyField: string, selectionMode: SelectionMode, items: object[]) {
+    public static addItems(toAddItems: object[], keyField: string, selectionMode: SelectionMode, model: SAMSDSSelectedItemModel) {
         for (let i = 0; i < toAddItems.length; i++) {
-            SAMSDSSelectedItemModelHelper.addItem(toAddItems[i], keyField, selectionMode, items);
+            SAMSDSSelectedItemModelHelper.addItem(toAddItems[i], keyField, selectionMode, model);
         }
     }
 
@@ -40,9 +42,9 @@ export class SAMSDSSelectedItemModelHelper {
      * @param keyField 
      * @param items 
      */
-    public static removeItem(item: object, keyField: string, items: object[]) {
-        if (SAMSDSSelectedItemModelHelper.contatinsItem(item[keyField], keyField, items)) {
-            items.splice(items.indexOf(item), 1)
+    public static removeItem(item: object, keyField: string, model: SAMSDSSelectedItemModel) {
+        if (SAMSDSSelectedItemModelHelper.containsItem(item[keyField], keyField, model.items)) {
+            model.items.splice(model.items.indexOf(item), 1)
         }
     }
 
@@ -53,7 +55,7 @@ export class SAMSDSSelectedItemModelHelper {
      * @param keyField 
      * @param items 
      */
-    public static contatinsItem(key: string, keyField: string, items: object[]): boolean {
+    public static containsItem(key: string, keyField: string, items: object[]): boolean {
         let item = items.find(o => o[keyField] === key);
         return item !== null && item !== undefined;
     }
@@ -76,11 +78,11 @@ export class SAMSDSSelectedItemModelHelper {
      * @param selectionMode 
      * @param items 
      */
-    public static replaceItems(selectedItems: object[], keyField: string, selectionMode: SelectionMode, items: object[]) {
+    public static replaceItems(selectedItems: object[], keyField: string, selectionMode: SelectionMode, model: SAMSDSSelectedItemModel) {
         //Clears Old List
-        SAMSDSSelectedItemModelHelper.clearItems(items);
+        SAMSDSSelectedItemModelHelper.clearItems(model.items);
         //Adds new List
-        SAMSDSSelectedItemModelHelper.addItems(selectedItems, keyField, selectionMode, items);
+        SAMSDSSelectedItemModelHelper.addItems(selectedItems, keyField, selectionMode, model);
     }
 }
 

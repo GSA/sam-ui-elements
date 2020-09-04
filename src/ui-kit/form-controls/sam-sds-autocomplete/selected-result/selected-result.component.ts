@@ -1,11 +1,11 @@
 import { Component, Input, TemplateRef, forwardRef } from '@angular/core';
-import { SAMSDSSelectedItemModel } from './models/sds-selectedItem.model';
-import { SDSSelectedResultConfiguration } from './models/SDSSelectedResultConfiguration';
+import { SAMSDSSelectedItemModel  } from './models/sds-selectedItem.model';
+import { SAMSDSSelectedResultConfiguration } from './models/SAMSDSSelectedResultConfiguration';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { SAMSDSSelectedItemModelHelper } from './models/sds-selected-item-model-helper';
+import { SAMSDSSelectedItemModelHelper  } from './models/sds-selected-item-model-helper';
 const SDS_SelectedResult_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => SAMSDSSelectedResultComponent),
+  useExisting: forwardRef(() => SAMSDSSelectedResultComponent ),
   multi: true
 };
 
@@ -15,7 +15,7 @@ const SDS_SelectedResult_VALUE_ACCESSOR: any = {
   styleUrls: ['./selected-result.component.scss'],
   providers: [SDS_SelectedResult_VALUE_ACCESSOR]
 })
-export class SAMSDSSelectedResultComponent implements ControlValueAccessor {
+export class SAMSDSSelectedResultComponent  implements ControlValueAccessor {
 
   /**
   * Allow to insert a customized template for suggestions to use
@@ -25,14 +25,14 @@ export class SAMSDSSelectedResultComponent implements ControlValueAccessor {
   /**
    * The data model that has the selected item
    */
-  public model: SAMSDSSelectedItemModel;
+  public model: SAMSDSSelectedItemModel ;
 
 
   /**
   * Configuration for the Selected Results control 
   */
   @Input()
-  public configuration: SDSSelectedResultConfiguration;
+  public configuration: SAMSDSSelectedResultConfiguration;
 
   /**
    * Stored Event for ControlValueAccessor
@@ -53,15 +53,15 @@ export class SAMSDSSelectedResultComponent implements ControlValueAccessor {
    */
   removeItem(item: object) {
     if (!this.disabled) {
-      SAMSDSSelectedItemModelHelper.removeItem(item, this.configuration.primaryKeyField, this.model.items);
+      SAMSDSSelectedItemModelHelper.removeItem(item, this.configuration.primaryKeyField, this.model);
       this.propogateChange(this.model);
       this.onTouchedCallback();
     }
   }
 
   writeValue(obj: any): void {
-    if (obj instanceof SAMSDSSelectedItemModel) {
-      this.model = obj as SAMSDSSelectedItemModel;
+    if (obj instanceof SAMSDSSelectedItemModel ) {
+      this.model = obj as SAMSDSSelectedItemModel ;
     }
   }
 

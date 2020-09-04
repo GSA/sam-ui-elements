@@ -1,6 +1,11 @@
-import { SelectionMode } from '../../selected-result/models/sds-selected-item-model-helper';
+import { SDSSelectedResultConfiguration } from "../../selected-result/models/SAMSDSSelectedResultConfiguration";
+import { SAMSDSAutocompleteSearchConfiguration } from "../../autocomplete-search/models/SAMSDSAutocompleteConfiguration";
+import { SelectionMode } from "../../selected-result/models/sds-selected-item-model-helper";
 
-export class SAMSDSAutocompleteSearchConfiguration  {
+export class SAMSDSAutocompletelConfiguration
+  implements
+    SAMSDSSelectedResultConfiguration,
+    SAMSDSAutocompleteSearchConfiguration {
   /**
    * sets the default debounce time to 250 milliseconds
    */
@@ -26,7 +31,6 @@ export class SAMSDSAutocompleteSearchConfiguration  {
 
   /**
    *  Property from supplied model used for the top part of the basic template
-   *  and the text for single selection
    */
   public primaryTextField: string;
 
@@ -63,7 +67,7 @@ export class SAMSDSAutocompleteSearchConfiguration  {
   /**
    * Text appeneded ad the end of free text
    */
-  public freeTextSubtext: string = 'search';
+  public freeTextSubtext: string = "search";
 
   /**
    * Focus into autocomplete search
@@ -73,7 +77,7 @@ export class SAMSDSAutocompleteSearchConfiguration  {
   /**
    * The aria-label for the auto-complete
    */
-  public ariaLabelText: string = 'Auto Complete';
+  public ariaLabelText: string = "Auto Complete";
 
   /**
    * To enable the tag mode
@@ -88,7 +92,7 @@ export class SAMSDSAutocompleteSearchConfiguration  {
   /**
    * Name of the children filed
    */
-  public groupByChild: string = 'children';
+  public groupByChild: string = "children";
 
   /**
    * To enable the Grouping mode
