@@ -1,7 +1,30 @@
+.input-container {
+  position: relative;
+  max-width: 46rem;
+
+  input {
+    margin-bottom:0;
+  }
+
+  span.close {
+    color: #2e2e2a !important;
+    font-size: 14px;
+    position: absolute;
+    right: 1rem !important;
+    top: 0.75rem !important;
+    cursor: pointer !important;
+    z-index: 2;
+
+    span:last-of-type {
+      margin-left:3px;
+    }
+  }
+}
+
 .sds-autocomplete {
   font-family: Source Sans Pro Web, Helvetica Neue, Helvetica, Roboto, Arial,
     sans-serif;
-  font-size: 1rem;
+  font-size: 1.5rem;
   position: absolute;
   z-index: 99999;
   overflow-y: scroll;
@@ -9,7 +32,7 @@
   width: 100%;
   background-color: white;
   max-height: 320px;
-  max-width: 30rem;
+  max-width: 46rem;
 
   /* Custom Shadow */
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
