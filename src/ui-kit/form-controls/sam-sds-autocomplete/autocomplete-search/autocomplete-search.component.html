@@ -4,7 +4,7 @@
   sam-tab-outside
   (tabOutside)="checkForFocus($event)"
 >
-  <div class="maxw-mobile-lg position-relative">
+  <div class="input-container">
     <div
       role="combobox"
       [attr.id]="configuration.id + '-container'"
@@ -223,9 +223,47 @@
         </li>
       </ng-container>
     </ul>
-
     <ng-container *ngIf="!input.disabled">
-      <span class="position-absolute right-105 top-1 cursor-pointer">
+      <span class="close">
+        <span
+          *ngIf="inputValue && !disabled"
+          tabindex="0"
+          role="button"
+          class="fa fa-close"
+          aria-label="Clear input"
+          aria-hidden="false"
+          (click)="clearInput()"
+          (keyup.enter)="clearInput()"
+        >
+        </span>
+        <span *ngIf="!configuration.isTagModeEnabled">
+          <span
+            *ngIf="!showResults && !disabled"
+            tabindex="1"
+            role="button"
+            class="fa fa-arrow-down"
+            aria-label="down arrow"
+            aria-hidden="false"
+            (click)="openOptions()"
+            (keyup.enter)="openOptions()"
+          >
+          </span>
+          <span
+            *ngIf="showResults && !disabled"
+            tabindex="2"
+            role="button"
+            class="fa fa-arrow-up"
+            aria-label="arrow up arrow"
+            aria-hidden="false"
+            (click)="checkForFocus($event)"
+            (keyup.enter)="checkForFocus($event)"
+          >
+          </span>
+        </span>
+      </span>
+    </ng-container>
+    <!-- <ng-container *ngIf="!input.disabled">
+      <span class="close">
         <span
           *ngIf="inputValue && !disabled"
           role="button"
@@ -257,7 +295,7 @@
           ></fa-icon>
         </span>
       </span>
-    </ng-container>
+    </ng-container> -->
     <ul class="usa-sr-only" aria-live="assertive">
       <li>{{ srOnlyText }}</li>
     </ul>
