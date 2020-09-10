@@ -99,4 +99,14 @@ export class SAMSDSAutocompleteSearchConfiguration {
    * To enable the Group item selectable
    */
   public isSelectableGroup: boolean = true;
+
+  /**
+   * To enable the delimeter
+   */
+  public delimiterEnabled: boolean = true;
+
+  /**
+   *  The delimeter array
+   */
+  public delimiters: string[] = [",", ";"];
 }

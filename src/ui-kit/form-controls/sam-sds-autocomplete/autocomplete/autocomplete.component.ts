@@ -21,6 +21,7 @@ import {
   ChangeDetectorRef,
   ChangeDetectionStrategy,
 } from "@angular/core";
+import { SAMSDSAutocompleteSearchComponent } from "../autocomplete-search/autocomplete-search.component";
 
 const Autocomplete_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -33,6 +34,7 @@ const Autocomplete_VALUE_ACCESSOR: any = {
   templateUrl: "./autocomplete.component.html",
   styleUrls: ["./autocomplete.component.scss"],
   providers: [Autocomplete_VALUE_ACCESSOR],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SAMSDSAutocompleteComponent implements ControlValueAccessor {
   /**
@@ -68,10 +70,10 @@ export class SAMSDSAutocompleteComponent implements ControlValueAccessor {
    * Instance of the SamHiercarchicalServiceInterface provided
    */
   @Input()
-  public service: SDSAutocompleteServiceInterface;
+  public service: SAMSDSAutocompleteServiceInterface;
 
-  @ViewChild("autocompleteSearch")
-  autocompleteSearch: SDSAutocompleteSearchComponent;
+  @ViewChild("autocompleteSearch", { static: false })
+  autocompleteSearch: SAMSDSAutocompleteSearchComponent;
   constructor(private cd: ChangeDetectorRef) {}
 
   /**
