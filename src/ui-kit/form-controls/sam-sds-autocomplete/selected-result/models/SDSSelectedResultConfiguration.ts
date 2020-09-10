@@ -1,7 +1,6 @@
-import { SelectionMode } from './sds-selected-item-model-helper';
+import { SelectionMode } from "./sds-selected-item-model-helper";
 
 export class SDSSelectedResultConfiguration {
-
   /**
    * Used to describe the drop down (Text should match the label that will be supplied)
    */
