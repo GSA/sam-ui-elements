@@ -32,7 +32,22 @@
           </div>
         </div>
       </ng-container>
-      <span
+      <button
+        *ngIf="!disabled"
+        [attr.aria-label]="
+          'Remove Item ' +
+          getObjectValue(result, configuration.primaryTextField)
+        "
+        [class.text-base]="disabled"
+        aria-hidden="false"
+        class="sds-tag__close close_button"
+        (click)="removeItem(result)"
+        (keyup.enter)="removeItem(result)"
+      >
+        <span [attr.class]="'fa fa-close'"></span>
+        <!-- <fa-icon [icon]="['fas', 'times']" size="sm"></fa-icon> -->
+      </button>
+      <!-- <span
         tabindex="0"
         *ngIf="!disabled"
         role="button"
@@ -45,7 +60,7 @@
         (click)="removeItem(result)"
         (keyup.enter)="removeItem(result)"
       >
-      </span>
+      </span> -->
     </div>
   </li>
 </ul>
