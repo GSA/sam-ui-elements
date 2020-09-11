@@ -207,23 +207,49 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    */
   private focusRemoved() {
     if (this.configuration) {
-      if (this.configuration.selectionMode === SelectionMode.SINGLE) {
-        if (this.model.items.length > 0) {
-          if (this.inputValue.length === 0) {
-            SAMSDSSelectedItemModelHelper.clearItems(this.model.items);
-            this.propogateChange(this.model);
-          } else {
-            this.inputValue = this.getObjectValue(
-              this.model.items[0],
-              this.configuration.primaryTextField
-            );
+      if (
+        this.configuration.isFreeTextEnabled ||
+        this.configuration.isTagModeEnabled
+      ) {
+        if (this.configuration.selectionMode === SelectionMode.SINGLE) {
+          if (this.inputValue) {
+            const val = this.createFreeTextItem(this.inputValue);
+            this.selectItem(val);
           }
+        } else {
+          if (
+            this.configuration.isDelimiterEnabled &&
+            this.configuration.selectionMode === SelectionMode.MULTIPLE
+          ) {
+            if (this.inputValue) {
+              this.updateDelimeterModel();
+            }
+          } else {
+            if (this.inputValue) {
+              const val = this.createFreeTextItem(this.inputValue);
+              this.selectItem(val);
+            }
+          }
+          this.inputValue = "";
         }
-      } else {
-        this.inputValue = "";
       }
-    } else {
-      this.inputValue = "";
+      //   if (this.configuration.selectionMode === SelectionMode.SINGLE) {
+      //     if (this.model.items.length > 0) {
+      //       if (this.inputValue.length === 0) {
+      //         SAMSDSSelectedItemModelHelper.clearItems(this.model.items);
+      //         this.propogateChange(this.model);
+      //       } else {
+      //         this.inputValue = this.getObjectValue(
+      //           this.model.items[0],
+      //           this.configuration.primaryTextField
+      //         );
+      //       }
+      //     }
+      //   } else {
+      //     this.inputValue = "";
+      //   }
+      // } else {
+      //   this.inputValue = "";
     }
   }
 
