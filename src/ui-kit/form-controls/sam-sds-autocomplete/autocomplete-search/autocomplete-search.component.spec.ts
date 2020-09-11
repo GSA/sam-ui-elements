@@ -72,7 +72,7 @@ describe("SamAutocompleteComponent", () => {
 
   it("Should have empty results with invalid search", fakeAsync(() => {
     const event = {
-      preventDefault: () => {},
+      preventDefault: jasmine.createSpy("test"),
       target: component.input.nativeElement,
     };
     component.input.nativeElement.value = "search";
@@ -119,7 +119,7 @@ describe("SamAutocompleteComponent", () => {
 
   it("Should have results key press", fakeAsync(() => {
     const event = {
-      preventDefault: () => {},
+      preventDefault: jasmine.createSpy("test"),
       target: component.input.nativeElement,
     };
     component.input.nativeElement.value = "Formu";
@@ -129,7 +129,7 @@ describe("SamAutocompleteComponent", () => {
     tick();
     fixture.detectChanges();
     const list = fixture.debugElement.query(By.css(".sds-autocomplete"));
-    expect(list.nativeElement.children.length).toBe(2);
+    expect(list.nativeElement.children.length).toBe(1);
     component.onScroll();
     tick();
     fixture.detectChanges();
@@ -137,8 +137,8 @@ describe("SamAutocompleteComponent", () => {
 
   it("Should not highlight first result if free text is on", fakeAsync(() => {
     const event = {
-      preventDefault: () => {},
       target: component.input.nativeElement,
+      preventDefault: jasmine.createSpy("test"),
     };
     component.configuration.isFreeTextEnabled = true;
     component.input.nativeElement.value = "id";
@@ -148,7 +148,7 @@ describe("SamAutocompleteComponent", () => {
     tick();
     fixture.detectChanges();
     const list = fixture.debugElement.query(By.css(".sds-autocomplete"));
-    expect(list.nativeElement.children.length).toBe(1);
+    expect(list.nativeElement.children.length).toBe(11);
     expect(component.highlightedIndex).toBe(-1);
   }));
 
@@ -172,7 +172,7 @@ describe("SamAutocompleteComponent", () => {
     tick();
     fixture.detectChanges();
     const list = fixture.debugElement.query(By.css(".sds-autocomplete"));
-    expect(list.nativeElement.children.length).toBe(16);
+    expect(list.nativeElement.children.length).toBe(11);
     expect(component.results[0]["highlighted"]).toBeTruthy();
   }));
 
@@ -194,19 +194,19 @@ describe("SamAutocompleteComponent", () => {
     const downEvent = {
       key: "Down",
       target: { value: "id" },
-      preventDefault: jasmine.createSpy(),
+      preventDefault: jasmine.createSpy("test"),
     };
     component.onKeydown(downEvent);
     tick();
     fixture.detectChanges();
     const list = fixture.debugElement.query(By.css(".sds-autocomplete"));
     const items = component.getFlatElements();
-    expect(list.nativeElement.children.length).toBe(16);
+    expect(list.nativeElement.children.length).toBe(11);
     expect(items[1]["highlighted"]).toBeTruthy();
     const upEvent = {
       key: "Up",
       target: { value: "id" },
-      preventDefault: jasmine.createSpy(),
+      preventDefault: jasmine.createSpy("test"),
     };
     component.onKeydown(upEvent);
     tick();
@@ -227,7 +227,7 @@ describe("SamAutocompleteComponent", () => {
     const downEvent = {
       key: "Up",
       target: { value: "id" },
-      preventDefault: jasmine.createSpy(),
+      preventDefault: jasmine.createSpy("test"),
     };
     component.onKeydown(downEvent);
     tick();
@@ -259,7 +259,7 @@ describe("SamAutocompleteComponent", () => {
     const downEvent = {
       key: "Down",
       target: { value: "id" },
-      preventDefault: jasmine.createSpy(),
+      preventDefault: jasmine.createSpy("test"),
     };
     component.onKeydown(downEvent);
     tick();
@@ -280,7 +280,7 @@ describe("SamAutocompleteComponent", () => {
     const downEvent = {
       key: "Down",
       target: { value: "id" },
-      preventDefault: jasmine.createSpy(),
+      preventDefault: jasmine.createSpy("test"),
     };
     component.onKeydown(downEvent);
     tick();
@@ -291,7 +291,7 @@ describe("SamAutocompleteComponent", () => {
     const upEvent = {
       key: "Up",
       target: { value: "id" },
-      preventDefault: jasmine.createSpy(),
+      preventDefault: jasmine.createSpy("test"),
     };
     component.highlightedChildIndex = 3;
     component.onKeydown(upEvent);
@@ -305,7 +305,7 @@ describe("SamAutocompleteComponent", () => {
     tick();
     fixture.detectChanges();
     const list = fixture.debugElement.query(By.css(".sds-autocomplete"));
-    expect(list.nativeElement.children.length).toBe(16);
+    expect(list.nativeElement.children.length).toBe(11);
     const items = component.getFlatElements();
     expect(items[0]["highlighted"]).toBeTruthy();
     const upEvent = {
@@ -325,14 +325,14 @@ describe("SamAutocompleteComponent", () => {
     fixture.detectChanges();
 
     const list = fixture.debugElement.query(By.css(".sds-autocomplete"));
-    expect(list.nativeElement.children.length).toBe(16);
+    expect(list.nativeElement.children.length).toBe(11);
     expect(component.results[0]["highlighted"]).toBeTruthy();
     fixture.detectChanges();
     tick();
     const upEvent = {
       key: "Down",
       target: { value: "id" },
-      preventDefault: jasmine.createSpy(),
+      preventDefault: function () {},
     };
     component.onKeydown(upEvent);
     tick();
@@ -343,7 +343,7 @@ describe("SamAutocompleteComponent", () => {
 
   it("Should have delete have results", fakeAsync(() => {
     const event = {
-      preventDefault: () => {},
+      // preventDefault: jasmine.createSpy("test"),
       target: component.input.nativeElement,
     };
     component.input.nativeElement.value = "id";
@@ -353,7 +353,7 @@ describe("SamAutocompleteComponent", () => {
     tick();
     fixture.detectChanges();
     const list = fixture.debugElement.query(By.css(".sds-autocomplete"));
-    expect(list.nativeElement.children.length).toBe(1);
+    expect(list.nativeElement.children.length).toBe(11);
   }));
 
   it("Should have results Escape press", fakeAsync(() => {
@@ -361,7 +361,7 @@ describe("SamAutocompleteComponent", () => {
     tick();
     fixture.detectChanges();
     const listBefore = fixture.debugElement.query(By.css(".sds-autocomplete"));
-    expect(listBefore.nativeElement.children.length).toBe(16);
+    expect(listBefore.nativeElement.children.length).toBe(11);
     const event = {
       key: "Escape",
       target: { value: "id" },
@@ -380,7 +380,7 @@ describe("SamAutocompleteComponent", () => {
     tick();
     fixture.detectChanges();
     const list = fixture.debugElement.query(By.css(".sds-autocomplete"));
-    expect(list.nativeElement.children.length).toBe(16);
+    expect(list.nativeElement.children.length).toBe(11);
     expect(component.results[0]["highlighted"]).toBeTruthy();
   }));
 
@@ -390,7 +390,7 @@ describe("SamAutocompleteComponent", () => {
     tick();
     fixture.detectChanges();
     const list = fixture.debugElement.query(By.css(".sds-autocomplete"));
-    expect(list.nativeElement.children.length).toBe(16);
+    expect(list.nativeElement.children.length).toBe(11);
     expect(component.results[0]["highlighted"]).toBeTruthy();
     const event = {
       key: "Enter",
@@ -429,7 +429,7 @@ describe("SamAutocompleteComponent", () => {
     tick();
     fixture.detectChanges();
     const list = fixture.debugElement.query(By.css(".sds-autocomplete"));
-    expect(list.nativeElement.children.length).toBe(16);
+    expect(list.nativeElement.children.length).toBe(11);
     component.clearInput();
     fixture.detectChanges();
     tick();
@@ -541,7 +541,7 @@ describe("SamAutocompleteComponent", () => {
     component.configuration.inputReadOnly = true;
     const event = {
       key: "Backspace",
-      preventDefault: () => {},
+      preventDefault: jasmine.createSpy("test"),
       target: {
         value: component.inputValue,
       },

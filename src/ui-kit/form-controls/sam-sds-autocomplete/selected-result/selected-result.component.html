@@ -3,6 +3,7 @@
   [attr.aria-label]="configuration.labelText + ' results'"
   aria-relevant="additions"
   role="listbox"
+  class="sds-autocomplete-selected"
   aria-live="polite"
 >
   <li role="option" *ngFor="let result of model.items; let i = index">
@@ -31,20 +32,20 @@
           </div>
         </div>
       </ng-container>
-      <button
+      <span
+        tabindex="0"
         *ngIf="!disabled"
+        role="button"
+        class="sds-tag__close close_button"
         [attr.aria-label]="
           'Remove Item ' +
           getObjectValue(result, configuration.primaryTextField)
         "
-        [class.text-base]="disabled"
         aria-hidden="false"
-        class="sds-tag__close close_button"
         (click)="removeItem(result)"
         (keyup.enter)="removeItem(result)"
       >
-        <fa-icon [icon]="faTimes" size="sm"></fa-icon>
-      </button>
+      </span>
     </div>
   </li>
 </ul>
