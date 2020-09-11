@@ -277,15 +277,29 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
       this.onArrowGroupUp();
     } else if (KeyHelper.is(KEYS.ENTER, event) && this.highlightedIndex >= 0) {
       if (this.configuration.isTagModeEnabled) {
-        const val = this.createFreeTextItem();
-        this.selectItem(val);
+        if (
+          this.configuration.selectionMode === SelectionMode.MULTIPLE &&
+          this.configuration.isDelimiterEnabled
+        ) {
+          this.updateDelimeterModel();
+        } else {
+          const val = this.createFreeTextItem(this.inputValue);
+          this.selectItem(val);
+        }
       } else {
         this.selectItem(this.highlightedItem);
       }
     } else if (KeyHelper.is(KEYS.ENTER, event) && this.highlightedIndex < 0) {
       if (this.configuration.isFreeTextEnabled) {
-        const val = this.createFreeTextItem();
-        this.selectItem(val);
+        if (
+          this.configuration.selectionMode === SelectionMode.MULTIPLE &&
+          this.configuration.isDelimiterEnabled
+        ) {
+          this.updateDelimeterModel();
+        } else {
+          const val = this.createFreeTextItem(this.inputValue);
+          this.selectItem(val);
+        }
       }
     } else if (KeyHelper.is(KEYS.ESC, event)) {
       if (this.showResults) {
@@ -297,6 +311,26 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
     }
   }
 
+  getSeparatedValue() {
+    let values;
+    if (Array.isArray(this.configuration.delimiters)) {
+      values = this.inputValue.split(
+        new RegExp("[" + this.configuration.delimiters.join("") + "]", "g")
+      );
+    } else {
+      values = this.inputValue.split(",");
+    }
+    console.log(values);
+    return values;
+  }
+
+  updateDelimeterModel() {
+    let separatedValues = this.getSeparatedValue();
+    for (let i in separatedValues) {
+      const val = this.createFreeTextItem(separatedValues[i]);
+      this.selectItem(val);
+    }
+  }
   /**
    * selects the item adding it to the model and closes the results
    * @param item
@@ -437,10 +471,10 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
     }
   }
 
-  private createFreeTextItem() {
+  private createFreeTextItem(value) {
     let item = { type: "custom" };
-    item[this.configuration.primaryTextField] = this.inputValue;
-    item[this.configuration.primaryKeyField] = this.inputValue;
+    item[this.configuration.primaryTextField] = value;
+    item[this.configuration.primaryKeyField] = value;
     return item;
   }
   /**
