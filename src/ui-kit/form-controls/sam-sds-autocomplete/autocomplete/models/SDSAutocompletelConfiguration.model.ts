@@ -112,5 +112,5 @@ export class SAMSDSAutocompletelConfiguration
   /**
    *  The delimeter array
    */
-  public delimiters: string[] = [",", ";"];
+  public delimiters: string | string[] = [",", ";"];
 }

@@ -108,5 +108,5 @@ export class SAMSDSAutocompleteSearchConfiguration {
   /**
    *  The delimeter array
    */
-  public delimiters: string[] = [",", ";"];
+  public delimiters: string | string[] = [",", ";"];
 }
