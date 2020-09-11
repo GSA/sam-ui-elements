@@ -107,7 +107,7 @@ export class SAMSDSAutocompletelConfiguration
   /**
    * To enable the delimeter
    */
-  public delimiterEnabled: boolean = true;
+  public isDelimiterEnabled: boolean = true;
 
   /**
    *  The delimeter array
