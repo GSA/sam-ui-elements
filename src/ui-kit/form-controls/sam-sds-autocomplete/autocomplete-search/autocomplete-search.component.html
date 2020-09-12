@@ -4,6 +4,7 @@
   sam-tab-outside
   (tabOutside)="checkForFocus($event)"
 >
+  {{ showResults }}
   <div class="input-container">
     <div
       role="combobox"
@@ -252,7 +253,7 @@
             *ngIf="showResults && !disabled"
             tabindex="2"
             role="button"
-            class="fa fa-caret-down"
+            class="fa fa-caret-up"
             aria-label="arrow up arrow"
             aria-hidden="false"
             (click)="checkForFocus($event)"
@@ -262,6 +263,7 @@
         </span>
       </span>
     </ng-container>
+
     <!-- <ng-container *ngIf="!input.disabled">
       <span class="close">
         <span

@@ -44,23 +44,8 @@
         (click)="removeItem(result)"
         (keyup.enter)="removeItem(result)"
       >
-        <span [attr.class]="'fa fa-close'"></span>
-        <!-- <fa-icon [icon]="['fas', 'times']" size="sm"></fa-icon> -->
+        <span [attr.class]="'fa fa-sm fa-close'"></span>
       </button>
-      <!-- <span
-        tabindex="0"
-        *ngIf="!disabled"
-        role="button"
-        class="sds-tag__close close_button"
-        [attr.aria-label]="
-          'Remove Item ' +
-          getObjectValue(result, configuration.primaryTextField)
-        "
-        aria-hidden="false"
-        (click)="removeItem(result)"
-        (keyup.enter)="removeItem(result)"
-      >
-      </span> -->
     </div>
   </li>
 </ul>

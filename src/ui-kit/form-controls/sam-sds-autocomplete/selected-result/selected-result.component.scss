@@ -1,6 +1,6 @@
 .sds-tag.sds-tag--chip {
-  background-color: #e3f5e1;
-  border: 1px solid #70e17b;
+  background-color: #dce4ef;
+  border: 1px solid #ccc;
   font-family: Source Sans Pro Web, Helvetica Neue, Helvetica, Roboto, Arial,
     sans-serif;
   font-size: 1.4rem;
@@ -40,7 +40,8 @@ sds-tag.sds-tag--chip .sds-tag__close {
   color: #2e2e2a;
   cursor: pointer;
 }
-.sds-tag.sds-tag--input .sds--tag__item div:first-child, .sds-tag.sds-tag--input .sds--tag__item .sds-tag__primary-text {
+.sds-tag.sds-tag--input .sds--tag__item div:first-child,
+.sds-tag.sds-tag--input .sds--tag__item .sds-tag__primary-text {
   font-weight: 600;
 }
 .close_button {
@@ -49,8 +50,6 @@ sds-tag.sds-tag--chip .sds-tag__close {
   margin: 0;
   padding: 0;
 }
-
-
 
 :host,
 :host ul {
