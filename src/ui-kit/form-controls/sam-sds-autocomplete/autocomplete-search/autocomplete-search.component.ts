@@ -206,42 +206,32 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    *
    */
   private focusRemoved() {
-    if (this.configuration) {
-      if (this.configuration.selectionMode === SelectionMode.SINGLE) {
-        if (this.model.items.length > 0) {
-          if (this.inputValue.length === 0) {
-            SAMSDSSelectedItemModelHelper.clearItems(this.model.items);
-            this.propogateChange(this.model);
-          } else {
-            this.inputValue = this.getObjectValue(
-              this.model.items[0],
-              this.configuration.primaryTextField
-            );
+    if (this.inputValue) {
+      setTimeout(() => {
+        if (this.configuration) {
+          if (
+            this.configuration.isTagModeEnabled ||
+            this.configuration.isFreeTextEnabled
+          ) {
+            if (this.configuration.selectionMode === SelectionMode.MULTIPLE) {
+              if (this.configuration.isDelimiterEnabled) {
+                this.updateDelimeterModel();
+                this.inputValue = "";
+                // setTimeout(() => {
+                //   this.updateDelimeterModel();
+                // }, 150);
+              } else {
+                const val = this.inputValue;
+                this.selectItem(this.createFreeTextItem(val));
+              }
+              console.log(this.inputValue);
+            } else {
+              const val = this.inputValue;
+              this.selectItem(this.createFreeTextItem(val));
+            }
           }
-        } else {
-          this.inputValue = "";
         }
-      } else {
-        this.inputValue = "";
-      }
-    }
-  }
-  /**
-   *
-   */
-  private focusRemoved1() {
-    if (this.configuration) {
-      if (
-        this.configuration.isTagModeEnabled ||
-        this.configuration.isTagModeEnabled
-      ) {
-        if (
-          this.configuration.isDelimiterEnabled &&
-          this.configuration.selectionMode === SelectionMode.MULTIPLE
-        ) {
-          this.updateDelimeterModel();
-        }
-      }
+      }, 150);
     }
   }
 
@@ -338,7 +328,6 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
     } else {
       values = this.inputValue.split(",");
     }
-    console.log(values);
     return values;
   }
 
@@ -381,7 +370,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
       this.configuration.primaryTextField
     );
     this.inputValue = message;
-    this.focusRemoved();
+    //this.focusRemoved();
     this.showResults = false;
   }
 
