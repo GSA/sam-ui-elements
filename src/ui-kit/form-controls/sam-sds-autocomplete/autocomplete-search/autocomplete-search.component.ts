@@ -209,7 +209,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
         (this.configuration.isFreeTextEnabled &&
           this.configuration.selectionMode === SelectionMode.SINGLE)
       ) {
-        this.model = new SAMSDSSelectedItemModel();
+        SAMSDSSelectedItemModelHelper.clearItems(this.model.items);
         this.propogateChange(this.model);
       }
     }
