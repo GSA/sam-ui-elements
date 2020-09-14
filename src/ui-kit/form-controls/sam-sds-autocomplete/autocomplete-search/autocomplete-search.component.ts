@@ -245,8 +245,10 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
               this.selectItem(this.createFreeTextItem(val));
             }
           } else {
-            this.inputValue = "";
-            this.input.nativeElement.value = "";
+            if (this.model.items.length <= 0) {
+              this.inputValue = "";
+              this.input.nativeElement.value = "";
+            }
           }
         }
       }, 150);
