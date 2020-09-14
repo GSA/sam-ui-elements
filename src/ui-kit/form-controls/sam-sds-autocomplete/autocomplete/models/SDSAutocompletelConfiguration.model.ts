@@ -1,11 +1,14 @@
-import { SDSSelectedResultConfiguration } from '../../selected-result/models/SDSSelectedResultConfiguration';
-import { SAMSDSAutocompleteSearchConfiguration } from '../../autocomplete-search/models/SAMSDSAutocompleteConfiguration';
-import { SelectionMode } from '../../selected-result/models/sds-selected-item-model-helper';
+import { SDSSelectedResultConfiguration } from "../../selected-result/models/SDSSelectedResultConfiguration";
+import { SAMSDSAutocompleteSearchConfiguration } from "../../autocomplete-search/models/SAMSDSAutocompleteConfiguration";
+import { SelectionMode } from "../../selected-result/models/sds-selected-item-model-helper";
 
-export class SAMSDSAutocompletelConfiguration implements SDSSelectedResultConfiguration, SAMSDSAutocompleteSearchConfiguration {
+export class SAMSDSAutocompletelConfiguration
+  implements
+    SDSSelectedResultConfiguration,
+    SAMSDSAutocompleteSearchConfiguration {
   /**
-     * sets the default debounce time to 250 milliseconds 
-     */
+   * sets the default debounce time to 250 milliseconds
+   */
   constructor() {
     this.debounceTime = 250;
     this.minimumCharacterCountSearch = 0;
@@ -56,7 +59,6 @@ export class SAMSDSAutocompletelConfiguration implements SDSSelectedResultConfig
    */
   public selectionMode: SelectionMode = SelectionMode.SINGLE;
 
-
   /**
    * Allows option to allow user text not in the standard results
    */
@@ -65,15 +67,50 @@ export class SAMSDSAutocompletelConfiguration implements SDSSelectedResultConfig
   /**
    * Text appeneded ad the end of free text
    */
-  public freeTextSubtext: string = 'search';
+  public freeTextSubtext: string = "search";
 
   /**
    * Focus into autocomplete search
    */
   public focusInSearch: boolean = true;
 
-    /**
+  /**
    * The aria-label for the auto-complete
    */
-  public ariaLabelText: string = 'Auto Complete';
+  public ariaLabelText: string = "Auto Complete";
+
+  /**
+   * To enable the tag mode
+   */
+  public isTagModeEnabled: boolean = false;
+
+  /**
+   * To make input readonly
+   */
+  public inputReadOnly = false;
+
+  /**
+   * Name of the children filed
+   */
+  public groupByChild: string = "children";
+
+  /**
+   * To enable the Grouping mode
+   */
+  public isGroupingEnabled: boolean = false;
+
+  /**
+   * To enable the Group item selectable
+   */
+  public isSelectableGroup: boolean = true;
+
+  /**
+   * To enable the delimeter
+   */
+  public isDelimiterEnabled: boolean = true;
+
+  /**
+   *  The delimeter array
+   */
+  public delimiters: string | string[] = [",", ";"];
 }
