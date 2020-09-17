@@ -188,7 +188,6 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    * Clears the input fields and value
    */
   public clearInput(): void {
-    console.log("test-clear");
     this.inputValue = "";
     this.onTouchedCallback();
     this.clearAndHideResults();
@@ -210,8 +209,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
         this.configuration.isFreeTextEnabled
       ) {
         if (this.configuration.selectionMode === SelectionMode.SINGLE)
-          console.log("inside-clear");
-        SAMSDSSelectedItemModelHelper.clearItems(this.model);
+          SAMSDSSelectedItemModelHelper.clearItems(this.model);
       }
     }
   }
