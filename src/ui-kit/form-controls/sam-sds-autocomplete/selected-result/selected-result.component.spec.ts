@@ -68,7 +68,7 @@ describe("SDSSelectedResultComponent", () => {
     expect(list.nativeElement.children.length).toBe(1);
   });
 
-  it("should have a single item based on mode", () => {
+  xit("should have a single item based on mode", () => {
     SAMSDSSelectedItemModelHelper.addItem(
       {
         id: "1",
