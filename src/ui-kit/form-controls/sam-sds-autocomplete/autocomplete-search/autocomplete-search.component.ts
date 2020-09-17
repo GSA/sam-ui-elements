@@ -206,11 +206,10 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
     if (this.configuration) {
       if (
         this.configuration.isTagModeEnabled ||
-        (this.configuration.isFreeTextEnabled &&
-          this.configuration.selectionMode === SelectionMode.SINGLE)
+        this.configuration.isFreeTextEnabled
       ) {
-        SAMSDSSelectedItemModelHelper.clearItems(this.model.items);
-        this.propogateChange(this.model);
+        if (this.configuration.selectionMode === SelectionMode.SINGLE)
+          SAMSDSSelectedItemModelHelper.clearItems(this.model);
       }
     }
   }
@@ -228,10 +227,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
           } else if (
             this.configuration.selectionMode === SelectionMode.MULTIPLE
           ) {
-            if (
-              this.configuration.isTagModeEnabled ||
-              this.configuration.isFreeTextEnabled
-            ) {
+            if (this.configuration.isTagModeEnabled) {
               if (this.configuration.isDelimiterEnabled) {
                 this.updateDelimeterModel();
                 this.inputValue = "";
@@ -387,7 +383,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
       this.configuration.primaryTextField
     );
     this.inputValue = message;
-    //this.focusRemoved();
+    this.focusRemoved();
     this.showResults = false;
   }
 
