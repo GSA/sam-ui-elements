@@ -25,7 +25,7 @@ export class SAMSDSSelectedItemModelHelper {
       )
     ) {
       if (selectionMode === SelectionMode.SINGLE) {
-        SAMSDSSelectedItemModelHelper.clearItems(model.items);
+        SAMSDSSelectedItemModelHelper.clearItems(model);
       }
       model.items.push(itemToAdd);
     }
@@ -98,7 +98,7 @@ export class SAMSDSSelectedItemModelHelper {
    * Clears the list of items
    * @param items
    */
-  public static clearItems(items: object[]) {
+  public static clearItems(items: any) {
     while (items.length > 0) {
       items.pop();
     }
@@ -119,7 +119,7 @@ export class SAMSDSSelectedItemModelHelper {
     model: SAMSDSSelectedItemModel
   ) {
     //Clears Old List
-    SAMSDSSelectedItemModelHelper.clearItems(model.items);
+    SAMSDSSelectedItemModelHelper.clearItems(model);
     //Adds new List
     SAMSDSSelectedItemModelHelper.addItems(
       selectedItems,

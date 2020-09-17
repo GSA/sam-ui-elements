@@ -3,7 +3,7 @@
   max-width: 46rem;
 
   input {
-    margin-bottom:0;
+    margin-bottom: 0;
   }
 
   span.close {
@@ -16,7 +16,7 @@
     z-index: 2;
 
     span:last-of-type {
-      margin-left:3px;
+      margin-left: 3px;
     }
   }
 }
@@ -189,4 +189,8 @@
 .sds-autocomplete .usa-prose ul > li {
   margin-bottom: 0;
   max-width: unset;
+}
+
+.emptyResults {
+  padding: 10px;
 }

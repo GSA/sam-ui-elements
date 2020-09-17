@@ -210,7 +210,7 @@
         </li>
       </ng-container>
       <ng-container *ngIf="!results || results.length == 0">
-        <li class="emptyResults margin-1">No results found</li>
+        <li class="emptyResults">No results found</li>
       </ng-container>
       <ng-container *ngIf="showLoad">
         <li class="autoLoading">
@@ -263,40 +263,6 @@
       </span>
     </ng-container>
 
-    <!-- <ng-container *ngIf="!input.disabled">
-      <span class="close">
-        <span
-          *ngIf="inputValue && !disabled"
-          role="button"
-          aria-label="Clear input"
-          aria-hidden="false"
-          (click)="clearInput()"
-          (keyup.enter)="clearInput()"
-        >
-          <fa-icon [icon]="faTimes" size="xs"></fa-icon>
-        </span>
-        <span
-          *ngIf="!configuration.isTagModeEnabled"
-          role="button"
-          aria-label="Clear input"
-          aria-hidden="false"
-          class="margin-left-1"
-        >
-          <fa-icon
-            *ngIf="!showResults && !disabled"
-            (click)="openOptions()"
-            [icon]="faSquare"
-            size="sm"
-          ></fa-icon>
-          <fa-icon
-            *ngIf="showResults && !disabled"
-            (click)="checkForFocus($event)"
-            [icon]="faCircle"
-            size="sm"
-          ></fa-icon>
-        </span>
-      </span>
-    </ng-container> -->
     <ul class="usa-sr-only" aria-live="assertive">
       <li>{{ srOnlyText }}</li>
     </ul>
