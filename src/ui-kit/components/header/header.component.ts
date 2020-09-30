@@ -19,7 +19,6 @@ export class SamHeaderComponent {
   }
   // deprecated
   refreshPage() {
-    console.log('deprecating sam-header refreshPage method');
     window.location.reload();
   }
 

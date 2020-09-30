@@ -36,7 +36,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
   faCircle = faCircle;
   faTimes = faTimes;
 
-  constructor(private _changeDetectorRef: ChangeDetectorRef) {}
+  constructor(private _changeDetectorRef: ChangeDetectorRef) { }
   /**
    * Ul list of elements
    */
@@ -223,11 +223,17 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
         if (this.configuration) {
           if (this.configuration.selectionMode === SelectionMode.SINGLE) {
             const val = this.inputValue;
-            this.selectItem(this.createFreeTextItem(val));
+            if (this.configuration.isTagModeEnabled || this.configuration.isFreeTextEnabled) {
+              SAMSDSSelectedItemModelHelper.clearItems(this.model);
+              this.selectItem(this.createFreeTextItem(val));
+            } else {
+              this.inputValue = "";
+              this.input.nativeElement.value = "";
+            }
           } else if (
             this.configuration.selectionMode === SelectionMode.MULTIPLE
           ) {
-            if (this.configuration.isTagModeEnabled) {
+            if (this.configuration.isFreeTextEnabled || this.configuration.isTagModeEnabled) {
               if (this.configuration.isDelimiterEnabled) {
                 this.updateDelimeterModel();
                 this.inputValue = "";
@@ -383,7 +389,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
       this.configuration.primaryTextField
     );
     this.inputValue = message;
-    this.focusRemoved();
+    // this.focusRemoved();
     this.showResults = false;
   }
 

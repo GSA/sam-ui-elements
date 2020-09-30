@@ -46,11 +46,11 @@ export interface SamCache {
 })
 export class SamAutocompleteComponent
   implements ControlValueAccessor, OnChanges, OnDestroy, SamCache {
-    @ViewChild('resultsList', {static: false}) resultsList: ElementRef;
-    @ViewChild('resultsListKV', {static: false}) resultsListKV: ElementRef;
-    @ViewChild('input', {static: true}) input: ElementRef;
-    @ViewChild('srOnly', {static: true}) srOnly: ElementRef;
-    @ViewChild('wrapper', {static: true}) wrapper;
+  @ViewChild('resultsList', { static: false }) resultsList: ElementRef;
+  @ViewChild('resultsListKV', { static: false }) resultsListKV: ElementRef;
+  @ViewChild('input', { static: true }) input: ElementRef;
+  @ViewChild('srOnly', { static: true }) srOnly: ElementRef;
+  @ViewChild('wrapper', { static: true }) wrapper;
 
   /**
   * Sets the name attribute
@@ -236,8 +236,8 @@ export class SamAutocompleteComponent
       return arrayToCheck;
     }
 
-    const sliceIndex = arrayToCheck.length < this.maxNumResultsToDisplay ? 
-                        arrayToCheck.length : this.maxNumResultsToDisplay;
+    const sliceIndex = arrayToCheck.length < this.maxNumResultsToDisplay ?
+      arrayToCheck.length : this.maxNumResultsToDisplay;
     return arrayToCheck.slice(0, sliceIndex)
   }
 
@@ -951,15 +951,14 @@ export class SamAutocompleteComponent
       return;
     }
     const element: ElementRef = this.resultsList || this.resultsListKV;
-    console.log(element);
     const resultsArray = this.filteredKeyValuePairs.length > 0 ? this.filteredKeyValuePairs : this.results;
     if (this.maxNumResultsToDisplay < resultsArray.length - 1) {
-        let scrollAreaHeight = element.nativeElement.offsetHeight;
-        let scrollTopPos = element.nativeElement.scrollTop;
-        let scrollAreaMaxHeight = element.nativeElement.scrollHeight;
-        if ((scrollTopPos + scrollAreaHeight * 2) >= scrollAreaMaxHeight) {
-            this.maxNumResultsToDisplay += this.STARTING_MAX_ITEMS;
-        }
+      let scrollAreaHeight = element.nativeElement.offsetHeight;
+      let scrollTopPos = element.nativeElement.scrollTop;
+      let scrollAreaMaxHeight = element.nativeElement.scrollHeight;
+      if ((scrollTopPos + scrollAreaHeight * 2) >= scrollAreaMaxHeight) {
+        this.maxNumResultsToDisplay += this.STARTING_MAX_ITEMS;
+      }
     }
   }
 
