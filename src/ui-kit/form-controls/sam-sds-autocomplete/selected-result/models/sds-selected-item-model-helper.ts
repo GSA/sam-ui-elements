@@ -25,12 +25,12 @@ export class SAMSDSSelectedItemModelHelper {
       )
     ) {
       if (selectionMode === SelectionMode.SINGLE) {
-        console.log(model, ' insideservice');
+
         SAMSDSSelectedItemModelHelper.clearItems(model);
-        console.log(model, 'afterservice');
+
       }
       model.items.push(itemToAdd);
-      console.log(model, 'service');
+
     }
   }
 

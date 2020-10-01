@@ -199,7 +199,6 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    * @param event
    */
   checkForFocus(event): void {
-    // console.log('inside')
     if (this.configuration) {
       if (
         this.configuration.isTagModeEnabled ||
@@ -397,7 +396,6 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
       this.model
     );
     this.propogateChange(this.model);
-    console.log(this.model)
     let message = this.getObjectValue(
       item,
       this.configuration.primaryTextField
