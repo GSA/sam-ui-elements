@@ -25,9 +25,12 @@ export class SAMSDSSelectedItemModelHelper {
       )
     ) {
       if (selectionMode === SelectionMode.SINGLE) {
+        console.log(model, ' insideservice');
         SAMSDSSelectedItemModelHelper.clearItems(model);
+        console.log(model, 'afterservice');
       }
       model.items.push(itemToAdd);
+      console.log(model, 'service');
     }
   }
 
@@ -98,9 +101,9 @@ export class SAMSDSSelectedItemModelHelper {
    * Clears the list of items
    * @param items
    */
-  public static clearItems(items: any) {
-    while (items.length > 0) {
-      items.pop();
+  public static clearItems(model: any) {
+    while (model.items.length > 0) {
+      model.items.pop();
     }
   }
 

@@ -199,8 +199,21 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    * @param event
    */
   checkForFocus(event): void {
-    this.focusRemoved();
+    // console.log('inside')
+    if (this.configuration) {
+      if (
+        this.configuration.isTagModeEnabled ||
+        this.configuration.isFreeTextEnabled
+      ) {
+        this.focusRemoved();
+      } else {
+        this.inputValue = "";
+        this.input.nativeElement.value = "";
+      }
+    }
+
     this.showResults = false;
+
   }
   updateSingleModeFocusOutModel() {
     if (this.configuration) {
@@ -384,12 +397,13 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
       this.model
     );
     this.propogateChange(this.model);
+    console.log(this.model)
     let message = this.getObjectValue(
       item,
       this.configuration.primaryTextField
     );
     this.inputValue = message;
-    // this.focusRemoved();
+    this.focusRemoved();
     this.showResults = false;
   }
 
