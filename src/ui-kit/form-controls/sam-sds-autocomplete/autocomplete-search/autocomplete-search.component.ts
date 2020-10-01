@@ -221,13 +221,9 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
   }
   updateSingleModeFocusOutModel() {
     if (this.configuration) {
-      if (
-        this.configuration.isTagModeEnabled ||
-        this.configuration.isFreeTextEnabled
-      ) {
-        if (this.configuration.selectionMode === SelectionMode.SINGLE)
-          SAMSDSSelectedItemModelHelper.clearItems(this.model);
-      }
+      if (this.configuration.selectionMode === SelectionMode.SINGLE)
+        SAMSDSSelectedItemModelHelper.clearItems(this.model);
+      this.propogateChange(this.model);
     }
   }
 
