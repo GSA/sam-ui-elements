@@ -405,6 +405,10 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
     this.inputValue = message;
     // this.focusRemoved();
     this.showResults = false;
+    if (this.configuration.selectionMode === SelectionMode.MULTIPLE) {
+      this.inputValue = "";
+      this.input.nativeElement.value = "";
+    }
   }
 
   /**
