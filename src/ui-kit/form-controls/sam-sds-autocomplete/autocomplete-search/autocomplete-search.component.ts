@@ -257,24 +257,8 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
               } else {
                 const val = this.inputValue;
                 this.selectItem(this.createFreeTextItem(val));
-              } else {
                 this.inputValue = "";
                 this.input.nativeElement.value = "";
-              }
-            } else if (
-              this.configuration.selectionMode === SelectionMode.MULTIPLE
-            ) {
-              if (this.configuration.isFreeTextEnabled || this.configuration.isTagModeEnabled) {
-                if (this.configuration.isDelimiterEnabled) {
-                  this.updateDelimeterModel();
-                  this.inputValue = "";
-                  this.input.nativeElement.value = "";
-                } else {
-                  const val = this.inputValue;
-                  this.selectItem(this.createFreeTextItem(val));
-                  this.inputValue = "";
-                  this.input.nativeElement.value = "";
-                }
               }
             } else {
 
