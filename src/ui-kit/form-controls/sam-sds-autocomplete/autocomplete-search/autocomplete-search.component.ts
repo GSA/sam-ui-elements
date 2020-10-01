@@ -206,8 +206,10 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
       ) {
         this.focusRemoved();
       } else {
-        this.inputValue = "";
-        this.input.nativeElement.value = "";
+        if (this.model.items.length <= 0) {
+          this.inputValue = "";
+          this.input.nativeElement.value = "";
+        }
       }
     }
 
@@ -401,7 +403,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
       this.configuration.primaryTextField
     );
     this.inputValue = message;
-    this.focusRemoved();
+    // this.focusRemoved();
     this.showResults = false;
   }
 
