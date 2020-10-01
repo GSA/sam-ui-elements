@@ -202,8 +202,22 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    * @param event
    */
   checkForFocus(event): void {
-    this.focusRemoved();
+    if (this.configuration) {
+      if (
+        this.configuration.isTagModeEnabled ||
+        this.configuration.isFreeTextEnabled
+      ) {
+        this.focusRemoved();
+      } else {
+        if (this.model.items.length <= 0) {
+          this.inputValue = "";
+          this.input.nativeElement.value = "";
+        }
+      }
+    }
+
     this.showResults = false;
+
   }
   updateSingleModeFocusOutModel() {
     if (this.configuration) {
@@ -411,6 +425,10 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
     this.inputValue = message;
     // this.focusRemoved();
     this.showResults = false;
+    if (this.configuration.selectionMode === SelectionMode.MULTIPLE) {
+      this.inputValue = "";
+      this.input.nativeElement.value = "";
+    }
   }
 
   /**
