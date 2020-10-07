@@ -133,6 +133,9 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    */
   @Input() public inputReadOnly = false;
 
+  public isItemSelected: boolean = false;
+
+
   /**
    * Stored Event for ControlValueAccessor
    */
@@ -234,9 +237,19 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
           if (this.configuration.selectionMode === SelectionMode.SINGLE) {
             const val = this.inputValue;
             if (this.configuration.isTagModeEnabled || this.configuration.isFreeTextEnabled) {
-              SAMSDSSelectedItemModelHelper.clearItems(this.model);
-              this.propogateChange(this.model);
-              this.selectItem(this.createFreeTextItem(val));
+              if (
+                SAMSDSSelectedItemModelHelper.containsItem(
+                  val,
+                  this.configuration.primaryKeyField,
+                  this.model.items
+                )
+              ) {
+                SAMSDSSelectedItemModelHelper.clearItems(this.model);
+                this.propogateChange(this.model);
+                this.selectItem(this.createFreeTextItem(val));
+              } else {
+                this.selectItem(this.createFreeTextItem(val));
+              }
             }
           } else if (
             this.configuration.selectionMode === SelectionMode.MULTIPLE
@@ -374,6 +387,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    * @param item
    */
   public selectItem(item: object): void {
+    this.isItemSelected = true;
     let filterItem = {};
     if (this.essentialModelFields) {
       filterItem[this.configuration.primaryKeyField] =
@@ -449,7 +463,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
       if (selectedChild) {
         selectedChild.scrollIntoView({
           behavior: "smooth",
-          block: "center",
+          block: "nearest",
           inline: "start",
         });
       }
