@@ -16,9 +16,9 @@ import { SamIconsModule } from '../../../ui-kit/experimental/icon/icon.module';
     exports: [
         SamPaginationNextComponent
     ],
-    entryComponents: [
-        SamPaginationNextComponent
-    ]
+    // entryComponents: [
+    //     SamPaginationNextComponent
+    // ]
 })
 export class SamPaginationNextModule { }
 export { SamPaginationNextComponent } from './pagination.component';
