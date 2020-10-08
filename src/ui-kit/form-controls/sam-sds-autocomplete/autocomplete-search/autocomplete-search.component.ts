@@ -202,6 +202,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    * @param event
    */
   checkForFocus(event): void {
+    console.log(this.model, '---focusout----')
     if (this.configuration) {
       if (
         this.configuration.isTagModeEnabled ||
@@ -227,6 +228,11 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
     }
   }
 
+  clickOutSide(event): void {
+    this.focusRemoved();
+    this.showResults = false;
+  }
+
   /**
    *
    */
@@ -239,15 +245,17 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
             if (this.configuration.isTagModeEnabled || this.configuration.isFreeTextEnabled) {
               if (
                 SAMSDSSelectedItemModelHelper.containsItem(
-                  val,
+                  val[this.configuration.primaryKeyField],
                   this.configuration.primaryKeyField,
                   this.model.items
                 )
               ) {
+                console.log('test outside')
                 SAMSDSSelectedItemModelHelper.clearItems(this.model);
                 this.propogateChange(this.model);
                 this.selectItem(this.createFreeTextItem(val));
-              } else {
+              } else if (this.model.items.length <= 0) {
+                console.log('else test outside')
                 this.selectItem(this.createFreeTextItem(val));
               }
             }
