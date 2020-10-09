@@ -23,9 +23,9 @@ import {
   transition,
   animate,
 } from '@angular/animations';
-import {MdAccordionDirective, MdAccordionDisplayMode} from './accordion';
-import {AccordionItem} from './accordion-item';
-import {UniqueSelectionDispatcher} from '../core/coordination/unique-selection-dispatcher';
+import { MdAccordionDirective, MdAccordionDisplayMode } from './accordion';
+import { AccordionItem } from './accordion-item';
+import { UniqueSelectionDispatcher } from '../core/coordination/unique-selection-dispatcher';
 
 
 /** MdExpansionPanel's states. */
@@ -48,26 +48,26 @@ export const EXPANSION_PANEL_ANIMATION_TIMING = '225ms cubic-bezier(0.4,0.0,0.2,
   templateUrl: './expansion-panel.html',
   encapsulation: ViewEncapsulation.None,
   providers: [
-    {provide: AccordionItem, useExisting: forwardRef(() => MdExpansionPanelComponent)}
+    { provide: AccordionItem, useExisting: forwardRef(() => MdExpansionPanelComponent) }
   ],
   animations: [
     trigger('bodyExpansion', [
-      state('collapsed', style({height: '0px'})),
-      state('expanded', style({height: '*'})),
+      state('collapsed', style({ height: '0px' })),
+      state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate(EXPANSION_PANEL_ANIMATION_TIMING)),
     ]),
     trigger('displayMode', [
-      state('collapsed', style({margin: '0'})),
-      state('default', style({margin: '16px 0'})),
-      state('flat', style({margin: '0'})),
+      state('collapsed', style({ margin: '0' })),
+      state('default', style({ margin: '16px 0' })),
+      state('flat', style({ margin: '0' })),
       transition('flat <=> collapsed, default <=> collapsed, flat <=> default',
-                 animate(EXPANSION_PANEL_ANIMATION_TIMING)),
+        animate(EXPANSION_PANEL_ANIMATION_TIMING)),
     ]),
   ],
 })
 export class MdExpansionPanelComponent extends AccordionItem {
   @HostBinding('class') hostClass = 'mat-expansion-panel';
-  @HostBinding('class.mat-expanded') expanded;
+  //@HostBinding('class.mat-expanded') expanded;
   @HostBinding('@displayMode') get getDisplayMode() {
     return this._getDisplayMode();
   }
@@ -75,7 +75,7 @@ export class MdExpansionPanelComponent extends AccordionItem {
   @Input() hideToggle: boolean = false;
 
   constructor(@Optional() @Host() accordion: MdAccordionDirective,
-              _uniqueSelectionDispatcher: UniqueSelectionDispatcher) {
+    _uniqueSelectionDispatcher: UniqueSelectionDispatcher) {
     super(accordion, _uniqueSelectionDispatcher);
     this.accordion = accordion;
   }
