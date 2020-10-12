@@ -35,6 +35,12 @@ export class SamModalComponent implements OnInit {
    * Sets the modal title text
    */
   @Input() title: string;
+  
+    /**
+   * Sets the subTitle
+   */
+  @Input() subTitle: string = '';
+  
   /**
    * Sets the modal text description
    */
