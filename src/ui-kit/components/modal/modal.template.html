@@ -10,6 +10,7 @@
 						modal</span></button>
 				<span *ngIf="this.types[type].sr" class="sr-only">{{this.types[type].sr}}</span>
 				<h3 id="dialog-title" class="usa-alert-heading">{{title}}</h3>
+				<h5 *ngIf="this.subTitle != ''"><i>{{subTitle}}</i></h5>
 			</div>
 		</div>
 		<div *ngIf="this.type === 'primary'" class="primary-model-body">
