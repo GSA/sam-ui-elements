@@ -72,7 +72,7 @@ export class SAMSDSAutocompleteComponent implements ControlValueAccessor {
   @Input()
   public service: SAMSDSAutocompleteServiceInterface;
 
-  @ViewChild("autocompleteSearch", { static: false })
+  @ViewChild("autocomplete", { static: false })
   autocompleteSearch: SAMSDSAutocompleteSearchComponent;
   constructor(private cd: ChangeDetectorRef) {}
 
@@ -103,10 +103,8 @@ export class SAMSDSAutocompleteComponent implements ControlValueAccessor {
       this.model.items = value;
       this.cd.markForCheck();
     } else {
-      if (!this.model || !(this.model instanceof SAMSDSSelectedItemModel)) {
-        this.model = new SAMSDSSelectedItemModel();
-      }
-      this.model.items = value && value.items ? value.items : [];
+      const items = value && value.items ? value.items : [];
+      this.model = new SAMSDSSelectedItemModel(items);
       this.cd.markForCheck();
     }
   }
