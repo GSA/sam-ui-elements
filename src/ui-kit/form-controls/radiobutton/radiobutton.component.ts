@@ -4,7 +4,8 @@ import {
   Output,
   EventEmitter,
   ViewChild,
-  forwardRef
+  forwardRef,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
 import { OptionsType } from '../../types';
@@ -68,26 +69,29 @@ export class SamRadioButtonComponent  {
   */
   @Output() public modelChange: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild(FieldsetWrapper) public wrapper: FieldsetWrapper;
+  @ViewChild(FieldsetWrapper, {static: true}) public wrapper: FieldsetWrapper;
 
   public disabled = undefined;
 
+
+  constructor(private cdr: ChangeDetectorRef) {}
 
   public ngOnInit() {
     if (!this.name) {
       throw new Error('<sam-radio-button> requires a [name]\
        parameter for 508 compliance');
     }
+  }
 
-    if (!this.control) {
-      return;
-    }
+  public ngAfterViewInit() {
+    if (this.control) {
+      this.control.valueChanges.subscribe(() => {
+        this.wrapper.formatErrors(this.control);
+      });
 
-    this.control.valueChanges.subscribe(() => {
       this.wrapper.formatErrors(this.control);
-    });
-
-    this.wrapper.formatErrors(this.control);
+      this.cdr.detectChanges();
+    }
   }
 
   public onRadioChange(value) {

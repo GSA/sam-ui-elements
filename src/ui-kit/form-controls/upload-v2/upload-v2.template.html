@@ -1,33 +1,49 @@
-<sam-modal *ngIf="uploadFileActionModalConfig" #actionModal
+<sam-modal *ngIf="uploadFileActionModalConfig"
+  #removeModal
+  [showClose]="true"
+  [closeOnOutsideClick]="true"
+  [closeOnEscape]="true"
+  [type]="'warning'"
+  [title]="uploadFileActionModalConfig.title"
+  [description]="uploadFileActionModalConfig.description"
+  [submitButtonLabel]="'Ok'"
+  [cancelButtonLabel]="'Cancel'"
+  (open)="onRemoveModalOpen($event)"
+  (submit)="onRemoveModalSubmit($event)">
+  <ng-content select=".action-modal-content"></ng-content>
+</sam-modal>
+
+<sam-modal *ngIf="toggleAccessActionModalConfig"
+           #toggleModal
            [showClose]="true"
            [closeOnOutsideClick]="true"
            [closeOnEscape]="true"
            [type]="'warning'"
-           [title]="uploadFileActionModalConfig.title"
-           [description]="uploadFileActionModalConfig.description"
-           [submitButtonLabel]="'Ok'"
+           [title]="toggleAccessActionModalConfig.title"
+           [description]="toggleAccessActionModalConfig.description"
+           [submitButtonLabel]="'Apply'"
            [cancelButtonLabel]="'Cancel'"
-           (onSubmit)="onActionModalSubmit($event)"
-           (close)="onUploadModalCloseChange($event)">
-  <ng-content select=".action-modal-content"></ng-content>
+           (open)="onToggleModalOpen($event)"
+           (submit)="onToggleModalSubmit($event)"
+           (close)="onToggleModalClose($event)">
+  <ng-content select=".toggle-modal-content"></ng-content>
 </sam-modal>
 
 <div class="file-container"
-     sam-drag-drop
-     [disabled]="disabled"
-     (dropEvent)="onFilesChange($event)"
-     [(dragState)]="dragState"
-     [ngClass]=" { 'disabled': disabled, 'drag-border': shouldShowDropTarget() }"
-     [ngStyle]="{'pointer-events': disabled ? 'none' : 'initial'}"
-  >
+  sam-drag-drop
+  [disabled]="disabled"
+  (dropEvent)="onFilesChange($event)"
+  [(dragState)]="dragState"
+  [ngClass]=" { 'disabled': disabled, 'drag-border': shouldShowDropTarget() }"
+  [ngStyle]="{'pointer-events': disabled ? 'none' : 'initial'}">
   <div>
     <table class="upload-table" *ngIf="fileCtrlConfig.length" [attr.id]="uploadElIds.tableId">
       <thead class="upload-table-header">
         <th scope="col" align="left" class="p_L-4x">Document</th>
         <th scope="col">File Size</th>
-        <th scope="col">Security</th>
+        <th scope="col" *ngIf="!toggleUploadFileAction?.noHeader">Access</th>
         <th scope="col" *ngIf="isEditMode()">Actions</th>
-        <th scope="col" *ngIf="!isEditMode()">Posted</th>
+        <th scope="col" *ngIf="!isEditMode()">Updated Date</th>
       </thead>
       <tbody>
         <ng-container *ngFor="let fctrl of fileCtrlConfig; let i = index">
@@ -36,10 +52,13 @@
               <div class="file-icon" [attr.title]="fctrl?.icon?.name" [attr.id]="uploadElIds.fileToolTip + i" [attr.aria-label]="fctrl?.icon?.name"><i class="p_R-2x" [ngClass]="fctrl?.icon?.iconClass"></i>
               </div>
               <ng-container *ngIf="!fileCtrlConfig[i].isNameEditMode; else fileNameEdit">
-                  <p *ngIf="isEditMode()" [attr.id]="uploadElIds.fileName + i">{{ fctrl.fileName }} </p>
-                  <a *ngIf="!isEditMode()" class="file-link" [attr.id]="uploadElIds.fileLinkId + i" [attr.href]="fctrl.url">{{ fctrl.fileName }} </a>
+                <p *ngIf="isEditMode()" [attr.id]="uploadElIds.fileName + i">{{ fctrl.fileName }} </p>
+                <ng-container *ngIf="!isEditMode()">
+                  <a *ngIf="!fctrl.disabled" class="file-link" [attr.id]="uploadElIds.fileLinkId + i" [attr.href]="fctrl.url">{{ fctrl.fileName }} </a>
+                  <span *ngIf="fctrl.disabled" class="file-link" [attr.id]="uploadElIds.fileLinkId + i">{{ fctrl.fileName }} </span>
+                </ng-container>
                 <div *ngIf="toggleUploadFileAction?.isEdit">
-                  <button type="button"  [attr.id]="uploadElIds.editId + i" class="pull-right inline-pencil-icon clear-button" (click)="onNameEditSwitch(i, $event)" *ngIf="isEditMode()" [attr.aria-label]="uploadElIds.editFileName + i"><i class="fa fa-pencil"></i></button>
+                <button type="button"  [attr.id]="uploadElIds.editId + i" class="pull-right inline-pencil-icon clear-button" (click)="onNameEditSwitch(i, $event)" *ngIf="isEditMode()" [attr.aria-label]="uploadElIds.editFileName + i"><i class="fa fa-pencil"></i></button>
               </div>
               </ng-container>
               <ng-template #fileNameEdit>
@@ -58,21 +77,14 @@
             <td class="upload-table-props-col">
               <div [attr.id]="uploadElIds.fileSize + i">{{ fctrl.fileSize | filesize }}</div>
             </td>
-            <td class="upload-table-props-col">
-              <div *ngIf="toggleUploadFileAction?.isSecure">
+            <td class="upload-table-props-col" *ngIf="!toggleUploadFileAction?.noAccess">
               <ng-container *ngIf="isEditMode(); else secureTag">
-                <input [attr.id]="uploadElIds.fileSecure + i"
-                  name="security-checkbox"
-                  class="secure-cbx"
-                  type="checkbox"
-                  [(ngModel)]="fctrl.isSecure" [attr.aria-label]="uploadElIds.securityCheckboxInput + i"/>
-                <label [attr.id]="uploadElIds.fileSecureLabel + i" class="secure-label">Secure</label>
+                <sam-toggle-switch [attr.id]="uploadElIds.fileSecure + i" [isSwitchOn]="fctrl.isSecure" (switchStatusChange)="onAccessToggle(i, $event)"></sam-toggle-switch>
               </ng-container>
               <ng-template #secureTag>
                 <span class="upload-secure-span" *ngIf="fctrl.isSecure"><i class="fa fa-lock"></i>&nbsp;Secure</span>
                 <span class="upload-secure-span" *ngIf="!fctrl.isSecure"><i class="fa fa-unlock"></i>&nbsp;Not Secure</span>
               </ng-template>
-              </div>
             </td>
             <td class="upload-table-props-col" *ngIf="isEditMode()">
               <div>
@@ -83,7 +95,7 @@
                 <i class="fa fa-chevron-up p_R-1x" [attr.aria-label]="uploadElIds.moveUp + i"></i>
               </button>
              </span>
-              <span *ngIf="toggleUploadFileAction?.isRemove"><button type="button" [attr.id]="uploadElIds.removeId + i" class="clear-button" (click)="onCloseClick(fctrl.fileName, i)">
+              <span *ngIf="toggleUploadFileAction?.isRemove"><button type="button" [attr.id]="uploadElIds.removeId + i" class="clear-button" (click)="onRemoveClick(fctrl.fileName, i)">
                 <i class="fa fa-remove remove-icon" [attr.aria-label]="uploadElIds.removeId + i"></i>
               </button>
                 </span>
@@ -116,11 +128,11 @@
   <!-- Hidden input to trigger the browser file selector -->
   <label class="hide" *ngIf="uploadElIds && uploadElIds.fileLinkId" [attr.for]="uploadElIds.fileLinkId">file uploads</label>
   <input type="file"
-        #file
-        [attr.id]="uploadElIds.fileLinkId"
-        [attr.accept]="accept"
-        ngModel
-        class="hide"
-        (change)="onFilesChange($event.target.files)"
-        [attr.multiple]="maxFiles === 0 || maxFiles > 1 ? 'multiple' : null">
+    #file
+    [attr.id]="uploadElIds.fileLinkId"
+    [attr.accept]="accept"
+    ngModel
+    class="hide"
+    (change)="onFilesChange($event.target.files)"
+    [attr.multiple]="maxFiles === 0 || maxFiles > 1 ? 'multiple' : null">
 </div>

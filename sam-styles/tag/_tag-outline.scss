@@ -1,0 +1,291 @@
+//outline header
+.sam-type--label-title {
+  font-size: 14px;
+  font-style: italic;
+  margin-bottom: 5px;
+  color: #5d5d52;
+  letter-spacing: normal;
+  line-height: 1.5;
+}
+
+//====================================
+
+// Status tag
+
+.sam-sds-tag[class*="sam-sds-tag--status"] {
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-family: Source Sans Pro Web, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
+  font-size: 0.87rem;
+  color: #5d5d52;
+  line-height: 20px;
+  font-weight: 600;
+  padding: 0 5px 4px 0;
+  border-radius: 0;
+  margin-right: 5px;
+  display: inline-block;
+  width: auto;
+}
+
+// Outline tag
+
+.sam-sds-tag[class*="sam-sds-tag--outline"] {
+  font-family: Source Sans Pro Web, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
+  color: #5d5d52;
+  font-weight: 550;
+  padding: 6px 7px 7px 7px;
+  border: 1px solid #c9c9c9;
+  margin-right: 14px;
+  display: flex;
+  width: 128px;
+  background-color: #f7f9fa;
+}
+
+.sam-sds-tag.sam-sds-tag--outline--blue {
+  border-color: #009ec1 ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--red {
+  border-color: #fb5a47 ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--green {
+  border-color: #00a91c ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--gray {
+  border-color: #afaea2 ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--dark-gray {
+  border-color: #76766a ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--yellow {
+  border-color: #ffbe2e ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--blue {
+  border-color: #0050d8 ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--light-blue {
+  border-color: #00bde3 ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--brown {
+  border-color: #936f38 ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--danger {
+  border-color: #fb5a47 ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--info {
+  border-color: #00bde3 ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--info-lighter {
+  border-color: #e7f6f8 ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--info-light {
+  border-color: #9ddfeb ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--info-dark {
+  border-color: #009ec1 ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--info-darker {
+  border-color: #2e6276 ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--error {
+  border-color: #fb5a47 ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--error-lighter {
+  border-color: #fdb8ae ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--error-light {
+  border-color: #ff8d7b ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--error-dark {
+  border-color: #b50909 ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--error-darker {
+  border-color: #8b0a03 ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--warning {
+  border-color: #ffbe2e ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--warning-lighter {
+  border-color: #faf3d1 ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--warning-light {
+  border-color: #fee685 ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--warning-dark {
+  border-color: #e5a000 ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--warning-darker {
+  border-color: #936f38 ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--success {
+  border-color: #00a91c ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--success-lighter {
+  border-color: #ecf3ec ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--success-light {
+  border-color: #70e17b ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--success-dark {
+  border-color: #4d8055 ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--success-darker {
+  border-color: #446443 ;
+  border-style: solid; }
+
+.sam-sds-tag.sam-sds-tag--outline--disabled {
+  border-color: #c9c9c9 ;
+  border-style: solid; }
+
+
+  .sam-sds-tag--small {
+    font-family: Source Sans Pro Web, Helvetica Neue, Helvetica, Roboto, Arial, sans-serif;
+    font-size: 0.87rem; }
+  
+  .sam-sds-tag--disabled {
+    background-color: #c9c9c9  !important;
+    border-color: #adadad  !important;
+    border-style: solid !important; }
+
+
+    .sam-sds-status {
+      border-radius: 50%;
+      width: 1.25rem ;
+      height: 1.25rem ;
+      background-color: #afaea2 ;
+      display: inline-block;
+      margin: 2px 5px -0.33rem 0; }
+    
+    .sam-sds-status--sm {
+      min-width: 1rem ;
+      height: 1rem ;
+      background-color: #afaea2 ;
+      margin: 7px 6px 4px 4px; }
+    
+    .sam-sds-status--circle {
+      border-radius: 50%; }
+    
+    .sam-sds-status--square {
+      border-radius: 0; }
+    
+    .sam-sds-status--blue {
+      background-color: #009ec1 ; }
+    
+    .sam-sds-status--red {
+      background-color: #fb5a47 ; }
+    
+    .sam-sds-status--green {
+      background-color: #00a91c ; }
+    
+    .sam-sds-status--gray {
+      background-color: #afaea2 ; }
+    
+    .sam-sds-status--dark-gray {
+      background-color: #76766a ; }
+    
+    .sam-sds-status--yellow {
+      background-color: #ffbe2e ; }
+    
+    .sam-sds-status--blue {
+      background-color: #0050d8 ; }
+    
+    .sam-sds-status--light-blue {
+      background-color: #00bde3 ; }
+    
+    .sam-sds-status--brown {
+      background-color: #936f38 ; }
+    
+    .sam-sds-status--danger {
+      background-color: #fb5a47 ; }
+    
+    .sam-sds-status--info {
+      background-color: #00bde3 ; }
+    
+    .sam-sds-status--info-lighter {
+      background-color: #e7f6f8 ; }
+    
+    .sam-sds-status--info-light {
+      background-color: #9ddfeb ; }
+    
+    .sam-sds-status--info-dark {
+      background-color: #009ec1 ; }
+    
+    .sam-sds-status--info-darker {
+      background-color: #2e6276 ; }
+    
+    .sam-sds-status--error {
+      background-color: #fb5a47 ; }
+    
+    .sam-sds-status--error-lighter {
+      background-color: #fdb8ae ; }
+    
+    .sam-sds-status--error-light {
+      background-color: #ff8d7b ; }
+    
+    .sam-sds-status--error-dark {
+      background-color: #b50909 ; }
+    
+    .sam-sds-status--error-darker {
+      background-color: #8b0a03 ; }
+    
+    .sam-sds-status--warning {
+      background-color: #ffbe2e ; }
+    
+    .sam-sds-status--warning-lighter {
+      background-color: #faf3d1 ; }
+    
+    .sam-sds-status--warning-light {
+      background-color: #fee685 ; }
+    
+    .sam-sds-status--warning-dark {
+      background-color: #e5a000 ; }
+    
+    .sam-sds-status--warning-darker {
+      background-color: #936f38 ; }
+    
+    .sam-sds-status--success {
+      background-color: #00a91c ; }
+    
+    .sam-sds-status--success-lighter {
+      background-color: #ecf3ec ; }
+    
+    .sam-sds-status--success-light {
+      background-color: #70e17b ; }
+    
+    .sam-sds-status--success-dark {
+      background-color: #4d8055 ; }
+    
+    .sam-sds-status--success-darker {
+      background-color: #446443 ; }
+    
+    .sam-sds-status--disabled {
+      background-color: #c9c9c9 ; }
+    

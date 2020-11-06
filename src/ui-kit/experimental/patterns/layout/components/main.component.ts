@@ -11,15 +11,15 @@ import { SamPageNextService } from '../architecture';
 @Component({
   selector: 'sam-main',
   template: `
-    <ng-content select="sam-filter-drawer"></ng-content>
     <ng-content select="sam-alert-next"></ng-content>
+    <ng-content select="sam-filter-drawer"></ng-content>
     <ng-content></ng-content>
   `
 })
 export class SamMainComponent implements AfterContentInit {
   @HostBinding('class') public classes = 'sam-main';
 
-  @ContentChild(forwardRef(() => SamFilterDrawerComponent))
+  @ContentChild(forwardRef(() => SamFilterDrawerComponent), {static: true})
     public drawer: SamFilterDrawerComponent;
 
   constructor (protected _service: SamPageNextService) {}

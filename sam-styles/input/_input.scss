@@ -52,7 +52,7 @@ input.sam.input.error{
   color: #323A45;
   &.optional{
     font-weight: 400;
-    color:#5B616B; 
+    color:#5B616B;
   }
 }
 
@@ -146,4 +146,29 @@ input.sam.input.error{
 
 [type=radio].sam:disabled + label::before {
   box-shadow: 0 0 0 2px #f1f1f1, 0 0 0 3px #aeb0b5;
+}
+
+
+input[type=tel]::-ms-clear {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+input[type=tel]::-ms-reveal {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+input[type=text]::-ms-clear {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+input[type=text]::-ms-reveal {
+  display: none;
+  width: 0;
+  height: 0;
 }

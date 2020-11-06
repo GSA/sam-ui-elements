@@ -10,13 +10,13 @@ import { FieldWrapper } from '@ngx-formly/core';
 template: `
   <sam-expansion-panel>
     <sam-expansion-panel-header>
-      {{ to.label }}
+      {{ to.accordionLabel }}
     </sam-expansion-panel-header>
     <ng-container #fieldComponent></ng-container>
   </sam-expansion-panel>
 `,
 })
 export class FilterWrapperComponent extends FieldWrapper {
-@ViewChild('fieldComponent', {read: ViewContainerRef})
+@ViewChild('fieldComponent', {read: ViewContainerRef, static: true})
   public fieldComponent: ViewContainerRef;
 }

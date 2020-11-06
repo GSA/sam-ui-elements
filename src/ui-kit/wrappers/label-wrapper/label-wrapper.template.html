@@ -11,7 +11,7 @@
       <ng-content select="[label-right]"></ng-content>
   </label>
   
-  <div *ngIf="hint" class="toggle-more">
+  <div *ngIf="hint" class="toggle-more" aria-live="polite">
     <div #hintContainer
       class="usa-form-hint"
       [attr.id]="hintElId"
@@ -19,8 +19,10 @@
       [style.overflow]="setOverflow()"
       [style.height]="setHeight()">
     </div>
+  
     <div *ngIf="showToggle && !showFullHint">
-      <a href="javascript:void(0)"
+      <a href="javascript:void(0)" [attr.aria-label]="toggleOpen ? 'Less info for ' + label : 'More info for ' + label "
+        [attr.aria-expanded]="toggleOpen" [attr.aria-controls]="hintElId"
         (click)="toggleHint(toggleOpen)">
         {{ toggleOpen ? "less": "more" }}
       </a>

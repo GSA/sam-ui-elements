@@ -1,0 +1,107 @@
+// Alert tag - Warning
+.sam-alert {
+    background-color: #faf3d1;
+    border-radius: 8px;
+    max-width: 320px;
+    display: flex;
+    align-items: center;
+    margin: 5px 10px 0 0;
+}
+
+.sam-alert>img {
+    height: 50px;
+    margin: 10px;
+    color: #fbc036;
+}
+
+.sam-alert-content {
+    display: inline-block;
+    line-height: 18px;
+    padding: 5px 15px 10px 10px;
+}
+
+// Alert tag - Information
+.sam-alert--info {
+    background-color: #EFF6FB;
+    border: 2px solid #5994F6;
+    margin: 2rem 0;
+    height: 70px;
+    display: flex;
+    background-image: url("data:image/svg+xml;charset=utf8,%3C?xml version='1.0' encoding='UTF-8'?%3E%3Csvg width='48px' height='48px' viewBox='0 0 48 48' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3C!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com --%3E%3Ctitle%3EAlert/Informationalinformation_icon%3C/title%3E%3Cdesc%3ECreated with Sketch.%3C/desc%3E%3Cg id='FOUO-Core-Data---2-column' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg transform='translate(-363.000000, -251.000000)' id='Alert/Informational'%3E%3Cg transform='translate(365.000000, 253.000000)'%3E%3Cpath d='M22.4,44.8 C10.0288216,44.8 0,34.7711784 0,22.4 C0,10.0288216 10.0288216,0 22.4,0 C34.7711784,0 44.8,10.0288216 44.8,22.4 C44.8,34.7711784 34.7711784,44.8 22.4,44.8 Z' id='Path' stroke='%235994F6' stroke-width='2.4' fill-rule='nonzero'%3E%3C/path%3E%3Ccircle id='Oval' fill='%235994F6' fill-rule='evenodd' transform='translate(22.400000, 11.200000) rotate(-180.000000) translate(-22.400000, -11.200000) ' cx='22.4' cy='11.2' r='1.6'%3E%3C/circle%3E%3Crect id='Rectangle' fill='%235994F6' fill-rule='evenodd' transform='translate(22.400000, 25.600000) rotate(-360.000000) translate(-22.400000, -25.600000) ' x='20.8' y='16' width='3.2' height='19.2'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 1em;
+    p {
+        font-size: 16px;
+        font-weight: 600;
+        color: #616161;
+        margin: auto 10px;
+        padding: 0 0 0 4em !important;
+    }
+}
+
+//sam alert data
+.sam-alert--link {
+    display: flex;
+    align-items: center;
+    background-image: url("data:image/svg+xml;charset=utf8,%3C?xml version='1.0' encoding='UTF-8'?%3E%3Csvg width='48px' height='48px' viewBox='0 0 48 48' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3C!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com --%3E%3Ctitle%3EAlert/Informationalinformation_icon%3C/title%3E%3Cdesc%3ECreated with Sketch.%3C/desc%3E%3Cg id='FOUO-Core-Data---2-column' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg transform='translate(-363.000000, -251.000000)' id='Alert/Informational'%3E%3Cg transform='translate(365.000000, 253.000000)'%3E%3Cpath d='M22.4,44.8 C10.0288216,44.8 0,34.7711784 0,22.4 C0,10.0288216 10.0288216,0 22.4,0 C34.7711784,0 44.8,10.0288216 44.8,22.4 C44.8,34.7711784 34.7711784,44.8 22.4,44.8 Z' id='Path' stroke='%235994F6' stroke-width='2.4' fill-rule='nonzero'%3E%3C/path%3E%3Ccircle id='Oval' fill='%235994F6' fill-rule='evenodd' transform='translate(22.400000, 11.200000) rotate(-180.000000) translate(-22.400000, -11.200000) ' cx='22.4' cy='11.2' r='1.6'%3E%3C/circle%3E%3Crect id='Rectangle' fill='%235994F6' fill-rule='evenodd' transform='translate(22.400000, 25.600000) rotate(-360.000000) translate(-22.400000, -25.600000) ' x='20.8' y='16' width='3.2' height='19.2'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 1em;
+    background-size: 40px;
+    @media only screen and (max-width: 600px) {
+        width: 100%;
+        margin: 15px 0;
+    }
+    @media only screen and (min-width: 600px) {
+        width: fit-content;
+    }
+    .sam-alert-content {
+        margin-left: 60px;
+        text-align: left;
+        a {
+            display: block;
+            color: #3F57A6;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 20px;
+        }
+    }
+}
+
+//sam alert next
+.sam-alert--checked {
+    font-size: 18px;
+    font-weight: 400;
+    svg {
+        color: black;
+        margin-right: 10px;
+    }
+}
+
+.sam-alert--unchecked {
+    font-size: 18px;
+    font-weight: 400;
+    ul {
+        list-style-type: none;
+        padding-left: 30px;
+        margin: 0;
+    }
+    sam-icon {
+        display: none;
+    }
+}
+
+@media screen and (-ms-high-contrast: active),
+(-ms-high-contrast: none) {
+    .sam-alert--info p {
+        margin-top: 20px;
+    }
+}
+
+//alert link color
+.usa-alert-text {
+  .alert-link,
+  a {
+    color: #0a2c88;
+    font-weight: 700;
+  }
+}

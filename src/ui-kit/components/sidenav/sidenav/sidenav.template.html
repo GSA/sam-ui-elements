@@ -3,6 +3,8 @@
     <li *ngFor="let child of model.children; let $index = index">
       <!-- TOOD: discuss whether to use <button> instead of <a>, if <a>, then need to implement event handler for space -->
       <a role="button" tabindex="0"
+      [attr.aria-expanded]="isSelected($index) && model.children[$index].children ? true : null"
+      [attr.aria-current]="isSelected($index) ? true : null"
         [ngClass]="{'usa-current': isSelected($index), 'disabled': child.disabled}"
         (keyup.enter)="updateUI($index, $event, child)"
         (click)="updateUI($index, $event, child)" [attr.id]="child.id">
@@ -11,7 +13,7 @@
             <span [ngClass]="child.iconClass"></span>
           </ng-container>
       </a>
-      <sam-menu-item *ngIf="isSelected($index)"
+      <sam-menu-item *ngIf="isSelected($index) && model.children[$index].children"
                     [nodeDepth]="1"
                     [children]="model.children[$index].children"
                     (selection)="emitChildData($event)">
@@ -30,11 +32,13 @@
       [ngClass]="{
         'active': isSelected($index),
         'completed': child.iconClass == 'completed',
+        'warning': child.iconClass == 'warning',
         'error': child.iconClass == 'error',
         'pending': child.iconClass == 'pending',
         'disabled': child.disabled
       }"
       (keyup.enter)="updateUI($index, $event, child)"
+      [attr.aria-expanded]="isSelected($index)"
       [title]="child.iconClass ? child.label + ' - ' + child.iconClass : child.label"
       (click)="updateUI($index, $event, child)" [attr.id]="child.id">
       <div class="content">

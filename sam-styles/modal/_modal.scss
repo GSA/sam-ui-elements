@@ -11,7 +11,7 @@
 .primary-model-body {
   background: #112e51;
   padding-left: 2em;
-  vertical-align: top;
+
   display: block;
 
   .sam-primary-title{
@@ -29,4 +29,36 @@
     margin-top: 10px;
     padding: 5px;
   }
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+.modal-dialog .usa-modal-content-btn-area{
+    padding-top: 20px !important;
+}
+
+// Modal temp styles (sam-hierarchical-tree modal)
+
+.sam-hierarchical-tree-modal .modal-content{
+  max-width: 90%;
+  max-height: 250%;
+}
+
+.modal-dialog-condensed {
+  .modal-content {
+    .usa-alert {
+    padding: .5rem 1rem !important;
+    } 
+    .modal-body {
+      padding :0 0 15px 30px !important;
+    }
+    .usa-alert-body{
+      padding-top: 1rem !important;
+    }
+  }
+}
+
+.plain-alert-body {
+  padding: 0 !important;
 }

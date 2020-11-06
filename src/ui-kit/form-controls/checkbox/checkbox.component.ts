@@ -90,7 +90,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild(FieldsetWrapper)
+  @ViewChild(FieldsetWrapper, {static: true})
   public wrapper: FieldsetWrapper;
   activeOptions = 0;
   /*
@@ -99,8 +99,11 @@ export class SamCheckboxComponent implements ControlValueAccessor {
    * value is before another value
    */
   private _ordering: any = {};
+
   onChange: any = (c) => undefined;
+
   onTouched: any = () => undefined;
+  
   get value() {
     return this.model;
   }

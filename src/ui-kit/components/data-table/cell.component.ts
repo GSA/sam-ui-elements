@@ -1,5 +1,5 @@
 import {Directive, ElementRef, Renderer2, HostBinding} from '@angular/core';
-import {CdkCell, CdkColumnDef, CdkHeaderCell} from '@angular/cdk';
+import {CdkCell, CdkColumnDef, CdkHeaderCell} from '@angular/cdk/table';
 
 /** Workaround for https://github.com/angular/angular/issues/17849 */
 export const _SamHeaderCellBase = CdkHeaderCell;
@@ -18,7 +18,7 @@ export class SamHeaderCellDirective extends _SamHeaderCellBase {
     constructor(columnDef: CdkColumnDef,
             elementRef: ElementRef,
             renderer: Renderer2) {
-        super(columnDef, elementRef, renderer);
+        super(columnDef, elementRef);
         renderer.addClass(elementRef.nativeElement, `sam-column-${columnDef.name}`);
     }
 }
@@ -26,7 +26,7 @@ export class SamHeaderCellDirective extends _SamHeaderCellBase {
 /** Cell template container that adds the right classes and role. */
 /* tslint:disable */
 @Directive({
-  selector: 'sam-cell, td[sam-header-cell]'
+  selector: 'sam-cell, td[sam-cell]'
 })
 /* tslint:enable */
 export class SamCellDirective extends _SamCell {
@@ -35,7 +35,7 @@ export class SamCellDirective extends _SamCell {
     constructor(columnDef: CdkColumnDef,
             elementRef: ElementRef,
             renderer: Renderer2) {
-        super(columnDef, elementRef, renderer);
+        super(columnDef, elementRef);
         renderer.addClass(elementRef.nativeElement, `sam-column-${columnDef.name}`);
     }
 }

@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs/Observable';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable ,  BehaviorSubject } from 'rxjs';
+import { map, distinctUntilChanged } from 'rxjs/operators';
 
 export interface ServicePropertyObj {
   [key: string]: ServiceProperty
@@ -91,8 +91,10 @@ export class ServiceModel extends AbstractServiceProperty {
         key => {
           this.properties[key] = new ServiceProperty(
             { name: key, value: properties[key] },
-            stream.map(value => value[key])
-              .distinctUntilChanged()
+            stream.pipe(
+                map(value => value[key]),
+                distinctUntilChanged()
+            )
           );
         }
       );

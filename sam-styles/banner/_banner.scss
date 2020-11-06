@@ -1,0 +1,320 @@
+// ========================================
+// SAM BANNER
+// ========================================
+.sam-banner {
+  background-color: #f0f0f0;
+}
+
+// Header
+// =========================
+.sam-banner {
+  .sam-banner__header {
+    padding: 8px 0px;
+    font-size: 12.77px;
+    font-weight: 400;
+    min-height: 48px;
+    position: relative;
+    @media (min-width: 600px) {
+      padding: 4px 0px;
+      min-height: 0;
+    }
+
+    /* Normal State */
+    .sam-banner__header-inner {
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 16px;
+      max-width: 1143px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      padding-right: 0;
+      @media (min-width: 600px) {
+        align-items: center;
+      }
+    }
+    // Flag image
+    .sam-banner__header-flag {
+      float: left;
+      margin-right: 8px;
+      width: 16px;
+    }
+    // Header text
+    .sam-banner__header-text {
+      margin-bottom: 0;
+      margin-top: 0;
+      padding: 0 !important;
+      font-size: 12.77px;
+      line-height: 14.4px;
+    }
+    // Action Link
+    .sam-banner__header-action {
+      color: #0071bc;
+      font-size: 12.77px;
+      line-height: 14.4px;
+      margin-bottom: 0;
+      margin-top: 2px;
+      padding: 0 !important;
+      text-decoration: underline;
+      @media (min-width: 600px) {
+        display: none;
+      }
+      // Caret down icon
+      &:after {
+        content: '';
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 284.929 284.929'%3E%3Cpath d='M282.082 76.51L267.808 62.24c-1.902-1.906-4.093-2.856-6.57-2.856-2.47 0-4.66.95-6.563 2.856L142.465 174.44 30.263 62.24c-1.903-1.905-4.093-2.855-6.567-2.855-2.475 0-4.665.95-6.567 2.856L2.856 76.516C.95 78.417 0 80.607 0 83.082c0 2.473.953 4.663 2.856 6.565L135.9 222.693c1.9 1.903 4.092 2.854 6.566 2.854s4.66-.95 6.562-2.854L282.082 89.647c1.902-1.903 2.847-4.093 2.847-6.565 0-2.475-.946-4.665-2.848-6.57z' fill='%23005ea2'/%3E%3C/svg%3E");
+        background-position: 50%;
+        background-repeat: no-repeat;
+        background-size: 8px;
+        height: 8px;
+        width: 8px;
+        margin-left: 4px;
+        display: inline-block;
+      }
+    }
+
+    /* Expanded State */
+    &.sam-banner__header--expanded {
+      padding-right: 56px;
+      @media (min-width: 600px) {
+        padding-right: 0;
+      }
+      .sam-banner__header-action {
+        display: none;
+      }
+    }
+  }
+}
+
+// Button
+// =========================
+.sam-banner .sam-banner__button {
+  display: block;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: #0071bc;
+  font-weight: 400;
+  font-size: 12.77px;
+  // Mobile
+  @media (max-width: 599px) {
+    width: 100%;
+  }
+  // Desktop
+  @media (min-width: 600px) {
+    display: inline;
+    position: relative;
+    margin-left: 8px;
+    // Caret down icon
+    &:after {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 284.929 284.929'%3E%3Cpath d='M282.082 76.51L267.808 62.24c-1.902-1.906-4.093-2.856-6.57-2.856-2.47 0-4.66.95-6.563 2.856L142.465 174.44 30.263 62.24c-1.903-1.905-4.093-2.855-6.567-2.855-2.475 0-4.665.95-6.567 2.856L2.856 76.516C.95 78.417 0 80.607 0 83.082c0 2.473.953 4.663 2.856 6.565L135.9 222.693c1.9 1.903 4.092 2.854 6.566 2.854s4.66-.95 6.562-2.854L282.082 89.647c1.902-1.903 2.847-4.093 2.847-6.565 0-2.475-.946-4.665-2.848-6.57z' fill='%23005ea2'/%3E%3C/svg%3E");
+      background-position: 50%;
+      background-repeat: no-repeat;
+      background-size: 8px;
+      content: '';
+      display: inline-block;
+      height: 8px;
+      width: 8px;
+      margin-left: 2px;
+    }
+  }
+}
+
+/* Focus State */
+.sam-banner .sam-banner__button:focus {
+  outline: 4px solid #2491ff;
+  box-shadow: none;
+}
+
+/* Expanded State */
+.sam-banner .sam-banner__button[aria-expanded='true']:after {
+  //Mobile (close icon)
+  @media (max-width: 599px) {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' viewBox='0 0 15 15'%3E%3Cpath fill='none' stroke='%23005EA2' stroke-linecap='round' stroke-width='2' d='M0 13.0332964L13.0332964 0M13.0332964 13.0332964L0 0' transform='translate(1 1)'/%3E%3C/svg%3E");
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    content: '';
+    display: inline-block;
+    margin-left: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #dcdee0;
+    width: 48px;
+    height: auto;
+  }
+  // Desktop (caret up icon)
+  @media (min-width: 600px) {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 284.929 284.929'%3E%3Cpath d='M282.082 195.285L149.028 62.24c-1.9-1.903-4.088-2.856-6.562-2.856s-4.665.953-6.567 2.856L2.855 195.285C.95 197.19 0 199.378 0 201.853c0 2.474.953 4.664 2.856 6.566l14.272 14.27c1.903 1.903 4.093 2.854 6.567 2.854s4.664-.95 6.567-2.854l112.204-112.202 112.208 112.21c1.902 1.902 4.093 2.847 6.563 2.847 2.478 0 4.668-.95 6.57-2.848l14.274-14.277c1.903-1.902 2.848-4.093 2.848-6.566 0-2.476-.944-4.666-2.846-6.57z' fill='%23005ea2'/%3E%3C/svg%3E");
+  }
+}
+
+/* Text inside button */
+.sam-banner .sam-banner__button-text {
+  position: absolute;
+  left: -999em;
+  text-decoration: underline;
+  // Desktop
+  @media (min-width: 600px) {
+    position: static;
+    display: inline;
+  }
+}
+
+// Banner Description
+// =========================
+.sam-banner .sam-banner__header-description {
+  display: none;
+  @media (min-width: 830px) {
+    display: inline-block;
+    flex-grow: 1;
+    text-align: right;
+    padding-right: 10px;
+  }
+}
+
+.sam-banner .sam-banner__description {
+  font-size: 12.7px;
+  line-height: 14.4px;
+  padding: 8px 20px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  @media (min-width: 830px) {
+    display: none;
+  }
+}
+
+// Banner Content
+// =========================
+.sam-banner .sam-banner__content {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1143px;
+  background-color: transparent;
+  font-size: 15.9px;
+  padding: 4px 16px 16px 8px;
+  width: 100%;
+  @media (min-width: 600px) {
+    padding-bottom: 24px;
+    padding-top: 24px;
+  }
+}
+
+.sam-banner .sam-banner__content p:first-child {
+  padding: 0 !important;
+}
+
+.sam-banner .sam-banner__guidance {
+  padding-top: 16px;
+  @media (min-width: 600px) {
+    padding-top: 0;
+  }
+}
+
+// Icons
+.sam-banner__icon {
+  border: 1px solid black;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sam-banner__icon--blue {
+  color: #2378c3;
+  border-color: #2378c3;
+}
+
+.sam-banner__icon--green {
+  color: #719f2a;
+  border-color: #719f2a;
+}
+
+// SAM Media
+// =========================
+
+.sam-media-block__img {
+  float: left;
+  margin-right: 8px;
+}
+
+.sam-media-block__body {
+  overflow: hidden;
+}
+
+// Layout Utilities
+// =========================
+
+.sam-banner .grid-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.sam-banner .grid-row.grid-gap-lg {
+  margin-left: -12px;
+  margin-right: -12px;
+}
+
+.sam-banner .grid-row.grid-gap-lg > * {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.sam-banner [class*='grid-col'] {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sam-banner .grid-col,
+.sam-banner .grid-col-auto {
+  width: auto;
+  max-width: 100%;
+}
+
+.sam-banner .grid-col-auto {
+  flex: 0 0 auto;
+}
+
+.sam-banner .grid-col-fill {
+  flex: 1 0 0;
+  width: auto;
+  max-width: 100%;
+}
+
+@media (min-width: 600px) {
+  .sam-banner .tablet\:grid-col-1,
+  .sam-banner .tablet\:grid-col-auto {
+    flex: 0 0 auto;
+  }
+}
+
+@media (min-width: 600px) {
+  .sam-banner .tablet\:grid-col-auto {
+    width: auto;
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 600px) {
+  .sam-banner .tablet\:grid-col-6,
+  .sam-banner .tablet\:grid-col-7 {
+    flex: 0 0 auto;
+  }
+}
+
+@media (min-width: 600px) {
+  .sam-banner .tablet\:grid-col-6 {
+    width: 50%;
+  }
+}

@@ -1,0 +1,35 @@
+.sam-hierarchical-tree-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.sam-hierarchical-tree-header> *{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.hierarchy-views{
+  display: flex;
+  flex-direction: row;
+  color: #205493;
+  justify-content: space-evenly;
+  align-items: center;
+  text-decoration: none;
+  color: #205493;
+  //hide the "views options" until we have two views ready//
+  display: none;
+}
+
+.order-results{
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  border-radius: 3px;
+  margin: 0px;
+  line-height: normal;
+}
+
+sam-select{
+  width: 30rem;
+}

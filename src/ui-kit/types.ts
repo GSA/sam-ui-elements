@@ -11,13 +11,17 @@ export interface OptionsType {
    */
   label: string;
   /**
-   * The machine readable description of the input
+   * The name and id attribute value of the input
    */
   name: string;
   /**
    * if true, the option is greyed out and not clickable
    */
   disabled?: boolean;
+  /**
+   * The machine read description of the input. Will default to label value if none is provided
+   */
+  ariaLabel?: string
 }
 
 export interface AutocompleteDropdownButton {
@@ -338,20 +342,24 @@ export interface UploadedFileData {
   /**
    * sets the url
    */
-  url: string;
-    /**
-     * sets the file icon
-     */
+  url?: string;
+  /**
+   * sets the file icon
+   */
   icon: any;
+  /**
+   * Whether link to download should be disabled
+   */
+  disabled?: boolean;
 }
 
-export interface UploadFileActionModalConfig {
+export interface ActionModalConfig {
     /**
-     * sets the upload modal title
+     * sets the modal title
      */
     title?: string,
     /**
-     * sets the upload modal description
+     * sets the modal description
      */
     description?: string
 }

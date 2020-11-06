@@ -64,9 +64,9 @@ export class SamDateTimeComponent
   public time: string = undefined;
   public date: string = undefined;
 
-  @ViewChild('dateComponent') public dateComponent: SamDateComponent;
-  @ViewChild('timeComponent') public timeComponent: SamTimeComponent;
-  @ViewChild(FieldsetWrapper) public wrapper;
+  @ViewChild('dateComponent', {static: true}) public dateComponent: SamDateComponent;
+  @ViewChild('timeComponent', {static: true}) public timeComponent: SamTimeComponent;
+  @ViewChild(FieldsetWrapper, {static: true}) public wrapper;
 
   public onChange: Function;
   public onTouched: Function;
@@ -130,7 +130,7 @@ export class SamDateTimeComponent
   }
 
   onInputChange(): void {
-    if (this.dateComponent.isClean() && this.timeComponent.isClean()) {
+    if (this.dateComponent.isEmptyField() && this.timeComponent.isEmptyField()) {
       this.emitChanges(undefined);
     } else if (this.dateComponent.isValid() && this.timeComponent.isValid()) {
       this.emitChanges(`${this.date}T${this.time}`);

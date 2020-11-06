@@ -65,10 +65,10 @@ export class SamTimeComponent
   */
   @Input() public useFormService: boolean;
 
-  @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
-  @ViewChild('hour') public hourV;
-  @ViewChild('minute') public minuteV;
-  @ViewChild('ampm') public ampmV;
+  @ViewChild(LabelWrapper, {static: true}) public wrapper: LabelWrapper;
+  @ViewChild('hour', {static: true}) public hourV;
+  @ViewChild('minute', {static: true}) public minuteV;
+  @ViewChild('ampm', {static: true}) public ampmV;
 
   public value: string = undefined;
   public hours: number = undefined;
@@ -218,7 +218,7 @@ export class SamTimeComponent
   }
 
   // used by date-time/date-range comps
-  isClean() {
+  isEmptyField() {
     const hours = this.hours;
     const minutes = this.minutes;
     return (isNaN(hours) || hours === undefined)

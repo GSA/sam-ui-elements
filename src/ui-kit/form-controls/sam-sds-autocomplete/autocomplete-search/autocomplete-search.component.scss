@@ -1,0 +1,196 @@
+.input-container {
+  position: relative;
+  max-width: 46rem;
+
+  input {
+    margin-bottom: 0;
+  }
+
+  span.close {
+    color: #2e2e2a !important;
+    font-size: 14px;
+    position: absolute;
+    right: 1rem !important;
+    top: 0.75rem !important;
+    cursor: pointer !important;
+    z-index: 2;
+
+    span:last-of-type {
+      margin-left: 3px;
+    }
+  }
+}
+
+.sds-autocomplete {
+  font-family: Source Sans Pro Web, Helvetica Neue, Helvetica, Roboto, Arial,
+    sans-serif;
+  font-size: 1.5rem;
+  position: absolute;
+  z-index: 99999;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 100%;
+  background-color: white;
+  max-height: 320px;
+  max-width: 46rem;
+
+  /* Custom Shadow */
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
+
+  /* Scroll bar style */
+  /* width */
+  &::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background-color: #f5f5f0;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background-color: #76766a;
+    border-radius: 0;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #454540;
+  }
+
+  /* Item */
+  .sds-autocomplete__item {
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+
+  /* Item hover or highlighted */
+  .sds-autocomplete__item:hover,
+  .sds-autocomplete__item--highlighted {
+    background-color: #2672de;
+    color: white;
+  }
+
+  /* Item selected */
+  .sds-autocomplete__item--selected,
+  .sds-autocomplete__item--selected:hover {
+    color: #76766a;
+    background-color: white;
+    font-style: italic;
+    cursor: auto;
+  }
+
+  /* Item Group */
+  .sds-autocomplete__group {
+    div.sds-autocomplete__item {
+      background-color: #f9f9f7;
+      font-weight: 600;
+    }
+
+    /* Group hover or highlighted */
+    div.sds-autocomplete__item:hover,
+    div.sds-autocomplete__item--highlighted {
+      background-color: #2672de;
+      color: white;
+    }
+
+    /* Item selected */
+    div.sds-autocomplete__item--selected,
+    div.sds-autocomplete__item--selected:hover {
+      color: #454540;
+      background-color: #f9f9f7;
+      font-style: italic;
+      cursor: auto;
+    }
+
+    /* Child with group */
+    .sds-autocomplete__group {
+      .sds-autocomplete__item {
+        padding-left: 1rem;
+      }
+
+      ul > li.sds-autocomplete__item {
+        padding-left: 2rem;
+      }
+    }
+
+    /* Grandchildren Items */
+    & > ul > li.sds-autocomplete__item {
+      padding-left: 1rem;
+    }
+
+    & > div.sds-autocomplete__item--disabled,
+    & > div.sds-autocomplete__item--disabled:hover {
+      background-color: #f9f9f7;
+      color: #2e2e2a;
+      font-style: normal;
+      cursor: auto;
+    }
+  }
+
+  /* Disabled */
+  .sds-autocomplete__item--disabled,
+  .sds-autocomplete__item--disabled:hover {
+    color: #76766a;
+    background-color: white;
+    font-style: italic;
+    cursor: auto;
+  }
+}
+
+.sds-autocomplete,
+.sds-autocomplete ul {
+  margin-bottom: 1em;
+  margin-top: 1em;
+  line-height: 1.3;
+  padding-left: 3ch;
+}
+
+.sds-autocomplete:last-child {
+  margin-bottom: 0;
+}
+
+.sds-autocomplete li {
+  margin-bottom: 0.25em;
+  max-width: 72ex;
+}
+
+.sds-autocomplete li:last-child {
+  margin-bottom: 0;
+}
+
+.sds-autocomplete,
+.sds-autocomplete ul {
+  margin-bottom: 0;
+  margin-top: 0;
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.sds-autocomplete > li,
+.sds-autocomplete ul > li {
+  margin-bottom: 0;
+  max-width: unset;
+}
+
+.usa-prose .sds-autocomplete,
+.usa-prose .sds-autocomplete ul,
+.sds-autocomplete .usa-prose ul {
+  margin-bottom: 0;
+  margin-top: 0;
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.usa-prose .sds-autocomplete > li,
+.usa-prose .sds-autocomplete ul > li,
+.sds-autocomplete .usa-prose ul > li {
+  margin-bottom: 0;
+  max-width: unset;
+}
+
+.emptyResults {
+  padding: 10px;
+}

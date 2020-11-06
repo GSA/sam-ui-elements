@@ -5,8 +5,8 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-
-import {TemplatePortal} from '@angular/cdk';
+import {TemplatePortal} from '@angular/cdk/portal';
+// import {TemplatePortal} from '@angular/cdk';
 import {
   ViewContainerRef, Input, TemplateRef, ViewChild, OnInit, ContentChild,
   Component
@@ -20,17 +20,16 @@ export class MdTabBase {}
 export const _MdTabMixinBase = mixinDisabled(MdTabBase);
 
 @Component({
-  moduleId: module.id,
   selector: 'sam-tab-next',
   templateUrl: 'tab.html',
   inputs: ['disabled']
 })
 export class MdTab extends _MdTabMixinBase implements OnInit, CanDisable {
   /** Content for the tab label given by <ng-template md-tab-label>. */
-  @ContentChild(MdTabLabel) templateLabel: MdTabLabel;
+  @ContentChild(MdTabLabel, {static: true}) templateLabel: MdTabLabel;
 
   /** Template inside the MdTab view that contains an <ng-content>. */
-  @ViewChild(TemplateRef) _content: TemplateRef<any>;
+  @ViewChild(TemplateRef, {static: true}) _content: TemplateRef<any>;
 
   /** The plain text label for the tab, used when there is no template label. */
   @Input('label') textLabel: string = '';

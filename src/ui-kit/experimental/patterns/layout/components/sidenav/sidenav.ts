@@ -23,12 +23,14 @@ import {
   NgZone,
   OnDestroy,
   Inject,
+  ChangeDetectorRef
 } from '@angular/core';
-import {Directionality, coerceBooleanProperty} from '@angular/cdk';
-import {FocusTrapFactory, FocusTrap} from '@angular/cdk';
-import {ESCAPE} from '@angular/cdk';
-import {first} from '@angular/cdk';
-import {DOCUMENT} from '@angular/platform-browser';
+import {Directionality} from '@angular/cdk/bidi';
+import {coerceBooleanProperty} from '@angular/cdk/coercion';
+import {FocusTrapFactory, FocusTrap} from '@angular/cdk/a11y';
+import { first } from 'rxjs/operators';
+import {ESCAPE} from '@angular/cdk/keycodes';
+import { DOCUMENT } from '@angular/common';
 
 
 /** Throws an exception when two MdSidenav are matching the same side. */
@@ -51,7 +53,6 @@ export class MdSidenavToggleResult {
  * Please refer to README.md for examples on how to use it.
  */
 @Component({
-  moduleId: module.id,
   selector: 'md-sidenav, mat-sidenav, sam-aside',
   // TODO(mmalerba): move template to separate file.
   template: '<ng-content></ng-content>',
@@ -139,6 +140,7 @@ export class MdSidenav implements AfterContentInit, OnDestroy {
    */
   constructor(private _elementRef: ElementRef,
               private _focusTrapFactory: FocusTrapFactory,
+              public cdr: ChangeDetectorRef,
               @Optional() @Inject(DOCUMENT) private _doc: any) {
     this.onOpen.subscribe(() => {
       if (this._doc) {
@@ -173,13 +175,16 @@ export class MdSidenav implements AfterContentInit, OnDestroy {
   ngAfterContentInit() {
     this._focusTrap = this._focusTrapFactory.create(this._elementRef.nativeElement);
     this._focusTrap.enabled = this.isFocusTrapEnabled;
+    this.cdr.detectChanges();
 
     // This can happen when the sidenav is set to opened in
     // the template and the transition hasn't ended.
     if (this._toggleAnimationPromise && this._resolveToggleAnimationPromise) {
       this._resolveToggleAnimationPromise(true);
       this._toggleAnimationPromise = this._resolveToggleAnimationPromise = null;
+      this.cdr.detectChanges();
     }
+    this.cdr.detectChanges();
   }
 
   ngOnDestroy() {
@@ -195,7 +200,7 @@ export class MdSidenav implements AfterContentInit, OnDestroy {
   @Input()
   get opened(): boolean { return this._opened; }
   set opened(v: boolean) {
-    this.toggle(coerceBooleanProperty(v));
+   // this.toggle(coerceBooleanProperty(v));
   }
 
 
@@ -323,7 +328,6 @@ export class MdSidenav implements AfterContentInit, OnDestroy {
  * and coordinates the backdrop and content styling.
  */
 @Component({
-  moduleId: module.id,
   selector: 'md-sidenav-container, mat-sidenav-container',
   // Do not use ChangeDetectionStrategy.OnPush. It does not work for this component because
   // technically it is a sibling of MdSidenav (on the content tree) and isn't updated when MdSidenav
@@ -386,7 +390,8 @@ export class MdSidenavContainer implements AfterContentInit {
     this._validateDrawers();
 
     // Give the view a chance to render the initial state, then enable transitions.
-    first.call(this._ngZone.onMicrotaskEmpty).subscribe(() => this._enableTransitions = true);
+    this._sidenavs.changes.subscribe(() =>
+    first.call(this._ngZone.onMicrotaskEmpty).subscribe(() => this._enableTransitions = true));
   }
 
   /** Calls `open` of both start and end sidenavs */

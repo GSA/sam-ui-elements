@@ -18,8 +18,8 @@ import {
   ValidatorFn
 } from '@angular/forms';
 
-import { Subject } from 'rxjs/Subject'
-import { Subscription } from 'rxjs/Subscription';
+import { Subject, Subscription } from 'rxjs';
+import { takeUntil, filter } from 'rxjs/operators';
 
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import { SamFormService } from '../../form-service';
@@ -92,6 +92,12 @@ export class SamTextComponent implements ControlValueAccessor,
    * Sets the title attribute on the input for accessibility
    */
   @Input() public title: string;
+
+  /**
+   * Sets full hint toggle option for label wrapper
+   */
+  @Input() public showFullHint: boolean = false;
+
   /**
    * Changes the HTML event the changes emit on
    */
@@ -105,7 +111,7 @@ export class SamTextComponent implements ControlValueAccessor,
    */
   @Output() public blur = new EventEmitter<boolean>();
 
-  @ViewChild(LabelWrapper) public wrapper: LabelWrapper;
+  @ViewChild(LabelWrapper, {static: true}) public wrapper: LabelWrapper;
   
   public onChange: any = (c) => null;
   public onTouched: any = () => null;
@@ -180,8 +186,8 @@ export class SamTextComponent implements ControlValueAccessor,
         );
 
     this._changeSubsription = 
-      this.changeEvent
-        .filter(event => event.type === this.emitOn)
+      this.changeEvent.pipe(
+        filter(event => event.type === this.emitOn))
         .subscribe(
           e => this._setValue.call(this, e.event.target.value)
         );
@@ -196,7 +202,9 @@ export class SamTextComponent implements ControlValueAccessor,
 
     if (!this.useFormService) {
       this.control.statusChanges
-      .takeUntil(this.ngUnsubscribe)
+      .pipe(
+        takeUntil(this.ngUnsubscribe)
+      )
       .subscribe(() => {
         this.wrapper.formatErrors(this.control);
         this.cdr.detectChanges();
@@ -216,9 +224,12 @@ export class SamTextComponent implements ControlValueAccessor,
   private _unsubscribe (): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
-
-    this._focusSubscription.unsubscribe();
-    this._changeSubsription.unsubscribe();
+    if(this._focusSubscription){
+      this._focusSubscription.unsubscribe();
+    }
+    if(this._changeSubsription){
+      this._changeSubsription.unsubscribe();
+    }
   }
 
   private _trimWhitespace () {

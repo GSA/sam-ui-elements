@@ -1,0 +1,156 @@
+// CARD
+// --------------------------------
+
+.sam-card {
+  margin: 40px 0;
+  padding: 18px 20px 20px;
+  border-radius: 4px;
+  background-color: white;
+  box-shadow: 0 10px 25px 5px rgba(0, 0, 0, 0.15);
+}
+
+.sam-card .sam-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .sam-card__header-title {
+    color: #0071bc;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 18px;
+
+    .sam-card__header-title-counter {
+      color: #212121;
+    }
+  }
+
+  .sam-card__header-actions {
+    display: flex;
+  }
+
+  .sam-ui.button.tiny {
+    line-height: 14px;
+  }
+}
+
+.sam-card .sam-card__content {
+  padding: 15px 0 0;
+}
+// RESULTS CARD
+// --------------------------------
+
+.basic-card {
+  border: 1.5px solid #8d9297;
+  background-color: #f7f9fa;
+  padding: 20px 20px 0;
+  margin-bottom: 20px;
+
+  .usa-grid {
+    padding: 0 !important;
+  }
+
+  .basic-card--note {
+    font-size: 16px;
+    font-weight: 400;
+    color: #2e2e2a;
+    text-align: right;
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+.basic-card--label {
+  display: inline-block;
+  font-weight: 400;
+  font-size: 16px;
+  margin-top: 1.7rem;
+}
+
+.basic-card--summary {
+  display: inline-block;
+  font-weight: 300;
+  font-size: 18px;
+  margin-bottom: 0;
+  color: #2e2e2a;
+}
+
+.basic-card--data {
+  font-weight: 700;
+  font-size: 16px;
+  display: block;
+  line-height: 16px;
+
+  ul {
+    list-style-type: circle;
+    padding-left: 15px;
+    margin: 0;
+  }
+}
+
+.basic-card--content {
+  @media only screen and (min-width: 600px) {
+    float: right;
+  }
+
+  @media only screen and (max-width: 600px) {
+    margin: 0 20px;
+  }
+
+  .basic-card--data {
+    margin-bottom: 15px;
+  }
+
+  .basic-card--label {
+    display: inline-block;
+    font-weight: 400;
+    font-size: 16px;
+    margin-top: 0.5rem;
+  }
+
+  h2:before {
+    content:"\A";
+    height: 13px;
+    width: 13px;
+    background-color: #5994f6;
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    color: #2e2e2a;
+  }
+
+  dd,
+  dt {
+    font-size: 18px;
+    font-weight: 400px;
+  }
+}
+
+.basic-card--content-title {
+  margin-top: 0;
+  font-size: 24px;
+  color: #2e2e2a;
+  height: 35px;
+  line-height: 1.35em;
+  display: inline-block;
+}
+
+.hr-15 {
+  height: 12px;
+  background-color: lightgray;
+  border: none;
+  margin: 20px 0 0 0;
+}
+
+.entity-display {
+  h1 {
+    font-size: 26px;
+    margin-bottom: 0;
+    color: #2e2e2a;
+  }
+}

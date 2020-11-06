@@ -1,0 +1,17 @@
+<div class="hierarchical component">
+    <a #advancedLookup *ngIf="!configuration.hideAdvancedLookup"
+        [attr.class]="disabled? 'advanced-link advanced-link-disabled' : 'advanced-link'" (click)="onModalClick()"
+        href="javascript:void(0)">Advanced Lookup</a>
+    <sam-hierarchical-autocomplete [disabled]="disabled" (ngModelChange)="propogateChange($event)" #autocomplete
+        [service]="service" [(ngModel)]="model" [configuration]="configuration" [itemTemplate]="suggestionTemplate">
+    </sam-hierarchical-autocomplete>
+    <sam-selected-result (ngModelChange)="propogateChange($event)" [disabled]="disabled" *ngIf="!isSingleMode()"
+        [(ngModel)]="model" [configuration]="configuration" [itemTemplate]="selectedItemTemplate"></sam-selected-result>
+    <sam-modal class="sam-hierarchical-tree-modal" [showClose]="true" #modal [title]="configuration.modalTitle"
+        [type]="'primary'" [submitButtonLabel]="configuration.modalSelectButtonLabel"       
+        [cancelButtonLabel]="configuration.modalCancelButtonLabel" (onSubmit)="onModalSubmitClick()"
+        [submitButtonDisabled]="hierarchicaltree.results ? hierarchicaltree.results.length === 0 : false">
+        <sam-hierarchical-tree #hierarchicaltree [configuration]="configuration" [service]="service"
+            [isSingleMode]="singleMode"></sam-hierarchical-tree>
+    </sam-modal>
+</div>

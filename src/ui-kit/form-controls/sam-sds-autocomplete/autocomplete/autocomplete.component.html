@@ -1,0 +1,19 @@
+<sam-sds-search-autocomplete
+  [disabled]="disabled"
+  (ngModelChange)="updateItems($event)"
+  #autocomplete
+  [service]="service"
+  [(ngModel)]="model"
+  [configuration]="configuration"
+  [itemTemplate]="suggestionTemplate"
+>
+</sam-sds-search-autocomplete>
+<sam-sds-selected-result
+  (ngModelChange)="updateItems($event)"
+  [disabled]="disabled"
+  *ngIf="!isSingleMode()"
+  [(ngModel)]="model"
+  [configuration]="configuration"
+  [itemTemplate]="selectedItemTemplate"
+  class="sds-autocomplete"
+></sam-sds-selected-result>

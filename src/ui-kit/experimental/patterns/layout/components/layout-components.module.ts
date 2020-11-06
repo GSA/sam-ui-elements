@@ -10,7 +10,7 @@ import { MdSidenavModule } from './sidenav';
 import { SamActionBarComponent } from './actionbar.component';
 import { SamLayoutComponent } from './layout.component';
 import { SamMainComponent } from './main.component';
-import { SamPaginationNextComponent } from './pagination';
+
 import {
   SamResourcesWrapperComponent
 } from './resources-wrapper.component';
@@ -46,7 +46,7 @@ import { SamFiltersWrapperModule } from '../../../../layout/filters-wrapper/filt
     SamLayoutComponent,
     SamMainComponent,
     SamMainContentComponent,
-    SamPaginationNextComponent,
+    
     SamResourcesWrapperComponent,
     SamPageNextComponent,
     SamReportingMainComponent,
@@ -66,8 +66,7 @@ import { SamFiltersWrapperModule } from '../../../../layout/filters-wrapper/filt
     SamLayoutComponent,
     SamMainComponent,
     SamMainContentComponent,
-    SamPaginationNextComponent,
-    SamResourcesWrapperComponent,
+        SamResourcesWrapperComponent,
     SamPageNextComponent,
     SamReportingMainComponent,
 

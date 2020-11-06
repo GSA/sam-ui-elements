@@ -6,6 +6,7 @@
 @import '../../pagination/theme';
 @import '../../sidenav/theme';
 @import '../../expansion/theme';
+@import '../../progress/theme';
 
 @import '../../box/box';
 @import '../../button/button';
@@ -24,6 +25,19 @@
 @import '../../title/title';
 @import '../../video/video';
 @import '../../modal/modal';
+@import '../../card/card';
+@import '../../segment/segement';
+@import '../../statistic/statistic';
+@import '../../feed/feed';
+@import '../../headers/headers';
+@import '../../utilities/link';
+@import '../../utilities/type';
+@import '../../utilities/color';
+@import '../../utilities/visible';
+@import '../../utilities/flex';
+@import '../../utilities/display';
+@import '../../utilities/text-styles';
+@import '../../utilities/padding';
 
 // Create a theme.
 @mixin sam-gov-theme($theme) {
@@ -37,4 +51,5 @@
   @include sam-sidenav-theme($theme);
   @include sam-expansion-panel-theme($theme);
   @include sam-tabs-theme($theme);
+  @include sam-progress-theme($theme);
 }

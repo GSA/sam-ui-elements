@@ -1,0 +1,40 @@
+// COLOR UTILITIES
+// --------------------------------
+.sam.ink.black{
+  color: #0F0F0F;
+}
+
+// Background
+.bg-base-lightest{
+  background-color: #f0f0f0;
+}
+
+// Background Gradient
+// Responsive
+@media screen and (min-width: 600px) {
+  .tablet\:bg-transparent-to-base-lightest {
+    background: linear-gradient(to right, transparent 0%,#f0f0f0 100%);
+  }
+}
+
+
+// Text
+.text-primary{
+  color: #0071bc!important;
+}
+
+.text-red{
+  color:#e52207!important;
+}
+
+.text-gray-30 {
+  color: #adadad!important;
+}
+
+.text-base {
+  color: #71767a !important;
+}
+
+.text-base-dark {
+  color: #565c65 !important
+}

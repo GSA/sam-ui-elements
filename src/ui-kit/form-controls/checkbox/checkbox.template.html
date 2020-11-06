@@ -1,13 +1,14 @@
 <sam-fieldset-wrapper [label]="label" [hint]="hint" [errorMessage]="errorMessage" [required]="required">
   <ul class="usa-unstyled-list">
     <li *ngIf="hasSelectAll">
-      <input [attr.disabled]="disabled?'disabled':null" [attr.id]="checkAllLabelOrId()" type="checkbox" aria-label="Select All" (change)="onSelectAllChange($event.target.checked)" [checked]="model?.length==activeOptions">
+      <input [attr.disabled]="disabled?'disabled':null" [attr.id]="checkAllLabelOrId()" [attr.aria-label]="'Select all'" type="checkbox" (change)="onSelectAllChange($event.target.checked)" [checked]="model?.length==activeOptions">
       <label [attr.for]="checkAllLabelOrId()">Select all</label>
     </li>
     <li *ngFor="let option of options; let i = index">
-      <input [disabled]="option.disabled || disabled?'disabled':null" [attr.id]="option.name" type="checkbox" [attr.aria-label]="option.label" 
+      <input [disabled]="option.disabled || disabled?'disabled':null" [attr.id]="option.name" 
+        [attr.aria-label]="option.ariaLabel ? option.ariaLabel : option.label" type="checkbox"
         (change)="onCheckChanged(option.value, $event.target.checked, option.name)" [checked]="isChecked(option.value)">
-      <label [attr.for]="option.name">{{option.label}}</label>
+      <label [attr.aria-hidden]="true" [attr.for]="option.name">{{option.label}}</label>
     </li>
   </ul>
 </sam-fieldset-wrapper>

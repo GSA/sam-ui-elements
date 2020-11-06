@@ -12,6 +12,11 @@ import { AbstractControl } from '@angular/forms';
   templateUrl: 'fieldset-wrapper.template.html',
 })
 export class FieldsetWrapper {
+
+  /**
+   * sets the aria label for the anchor text
+   */
+  @Input() public linkLabel: string;
   /**
    * sets the label text
    */
@@ -27,29 +32,31 @@ export class FieldsetWrapper {
   /**
    * set a single error message
    */
-  @Input() public set errorMessage (message: string) {
+  @Input() public set errorMessage(message: string) {
     if (!!message) {
       this.errorMessages = [];
       this.errorMessages.push(message);
-    } else {
+    } else if (this.errorMessages.length === 0) {
+      this.errorMessages = [];
+    } else if(!this.hasMultipleControls){
       this.errorMessages = [];
     }
   };
 
-  public get errorMessage (): string {
+  public get errorMessage(): string {
     return this.errorMessages[0];
   }
   /**
    * toggles the required text
    */
   @Input() public required: boolean = false;
-  @ViewChild('hintContainer') public hintContainer: any;
+  @ViewChild('hintContainer', {static: false}) public hintContainer: any;
   public showToggle: boolean = false;
   private toggleOpen: boolean = false;
   private lineSize: number;
   private lineLimit: number = 2;
   private checkMore = false; // semaphore
-
+  private hasMultipleControls = false;
   constructor(private cdr: ChangeDetectorRef) { }
 
   public ngOnChanges(c) {
@@ -114,11 +121,12 @@ export class FieldsetWrapper {
       this.lineSize = other.offsetHeight / 2;
       el.removeChild(other);
     }
-    const val = Math.floor(obj.offsetHeight /  this.lineSize);
+    const val = Math.floor(obj.offsetHeight / this.lineSize);
     return val;
   }
 
   public formatErrors(...controls: AbstractControl[]): void {
+    this.hasMultipleControls = controls.length > 1 ? true : false;
     this.errorMessages = [];
     controls.forEach(
       control => this._formatError(control)
@@ -129,21 +137,21 @@ export class FieldsetWrapper {
     this.errorMessages = [];
   }
 
-  public displayErrors (): boolean {
+  public displayErrors(): boolean {
     return this.errorMessages.length > 0;
   }
 
-  public displayErrorList (): boolean {
+  public displayErrorList(): boolean {
     return this.errorMessages.length > 1;
   }
 
-  public setOverflow (): string {
+  public setOverflow(): string {
     return (this.showToggle && !this.toggleOpen)
       ? 'hidden'
-      : '' ;
+      : '';
   }
 
-  public setHeight (): string {
+  public setHeight(): string {
     return (this.showToggle && !this.toggleOpen)
       ? '2.88em'
       : ''
@@ -162,11 +170,11 @@ export class FieldsetWrapper {
     if (control.invalid && control.errors) {
       this.formatInvalidErrors(control);
     } else if (!control.errors) {
-        this.errorMessage = '';
+      this.errorMessage = '';
     }
   }
 
-  private formatInvalidErrors(control) {
+  private formatInvalidErrors(control: AbstractControl) {
     for (const k in control.errors) {
       const errorObject = control.errors[k];
 
@@ -198,7 +206,7 @@ export class FieldsetWrapper {
         this.errorMessages.push(msg);
         return;
       case 'isNotBeforeToday':
-        msg ='Date must not be before today';
+        msg = 'Date must not be before today';
         this.errorMessages.push(msg);
         return;
       default:

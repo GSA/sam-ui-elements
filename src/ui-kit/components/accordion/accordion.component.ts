@@ -38,7 +38,7 @@ export class SamAccordionSection implements OnInit {
 
   constructor(
     @Inject(forwardRef(() => SamAccordionComponent))
-    private parent: SamAccordionComponent
+    private parent: any
   ) {
     this.parent.addSection(this);
   }

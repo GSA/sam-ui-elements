@@ -1,0 +1,14 @@
+.checkbox-container {
+    position: relative;
+    height: 130px;
+    max-height: 145px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin: 10px;
+    padding-left: 10px;
+}
+
+.selected-item {
+    background-color: #0071bc;
+    color: white;
+}

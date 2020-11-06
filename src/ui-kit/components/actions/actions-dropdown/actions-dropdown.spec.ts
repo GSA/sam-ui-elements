@@ -21,6 +21,11 @@ describe('The Sam Actions Dropdown Component', () => {
     preventDefault: function(){},
     stopPropagation: function(){}
   };
+  let dummyEscEvent = {
+    key: "Esc",
+    preventDefault: function(){},
+    stopPropagation: function(){}
+  };
 
   const callback = () => {
     return 'success';
@@ -113,19 +118,29 @@ describe('The Sam Actions Dropdown Component', () => {
     fixture.detectChanges();
     const numberOfButtons = de.queryAll(By.css('button')).length;
     expect(numberOfButtons).toBe(4);
-    //next one should go into dropdown list
-    component.leadKeyDownHandler(dummyDownEvent);
-    expect(component.focusIndex).toBe(0);
-    //pressing up should keep index at 0
-    component.keyDownHandler(dummyUpEvent);
     expect(component.focusIndex).toBe(0);
     //should go down the list
     component.keyDownHandler(dummyDownEvent);
     expect(component.focusIndex).toBe(1);
     component.keyDownHandler(dummyDownEvent);
     expect(component.focusIndex).toBe(2);
-    //shouldn't go farther than the full length
+    //should go back to the first item from last item
     component.keyDownHandler(dummyDownEvent);
+    expect(component.focusIndex).toBe(0);
+    //pressing up from 1st item should move to last item
+    component.keyDownHandler(dummyUpEvent);
     expect(component.focusIndex).toBe(2);
+  });
+
+  it('should close the menu on esc keypresses', () => {
+    //first down should toggle dropdown
+    component.leadKeyDownHandler(dummyDownEvent);
+    fixture.detectChanges();
+    const numberOfButtons = de.queryAll(By.css('button')).length;
+    expect(numberOfButtons).toBe(4);
+    expect(component.focusIndex).toBe(0);
+    //should go down the list
+    component.keyDownHandler(dummyEscEvent);
+    expect(component.focusIndex).toBe(-1);
   });
 });

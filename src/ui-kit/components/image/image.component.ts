@@ -5,7 +5,8 @@ import { Component,
          Input,
          Output,
          EventEmitter } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, fromEvent } from 'rxjs';
+import { merge } from 'rxjs/operators';
 
 @Component({
   selector: 'sam-image',
@@ -30,12 +31,12 @@ export class SamImageComponent implements OnInit {
    */
   @Output() public fileChange: EventEmitter<File> = new EventEmitter<File>();
 
-  @ViewChild('componentContainer') private componentContainer: ElementRef;
-  @ViewChild('filePicker') private filePicker: ElementRef;
-  @ViewChild('image') private _image: ElementRef;
-  @ViewChild('editButton') private editButton: ElementRef;
-  @ViewChild('cancelButton') private cancelButton: ElementRef;
-  @ViewChild('saveButton') private saveButton: ElementRef;
+  @ViewChild('componentContainer', {static: true}) private componentContainer: ElementRef;
+  @ViewChild('filePicker', {static: true}) private filePicker: ElementRef;
+  @ViewChild('image', {static: true}) private _image: ElementRef;
+  @ViewChild('editButton', {static: true}) private editButton: ElementRef;
+  @ViewChild('cancelButton', {static: true}) private cancelButton: ElementRef;
+  @ViewChild('saveButton', {static: true}) private saveButton: ElementRef;
 
   private fileChangeStream: Observable<any>;
   private editButtonStream: Observable<any>;
@@ -55,22 +56,22 @@ export class SamImageComponent implements OnInit {
 
   ngOnInit() {
     this.fileChangeStream =
-      Observable.fromEvent(this.filePicker.nativeElement, 'change');
+      fromEvent(this.filePicker.nativeElement, 'change');
     this.editButtonStream =
-      Observable.fromEvent(this.editButton.nativeElement, 'click');
+      fromEvent(this.editButton.nativeElement, 'click');
     this.cancelButtonStream =
-      Observable.fromEvent(this.cancelButton.nativeElement, 'click');
+      fromEvent(this.cancelButton.nativeElement, 'click');
     this.saveButtonStream =
-      Observable.fromEvent(this.saveButton.nativeElement, 'click');
+      fromEvent(this.saveButton.nativeElement, 'click');
 
     this.reader.onload = (event: any) => {
       this.tmpSrc = event.target.result;
     };
 
     this.editModeSubscription =
-      this.editButtonStream
-      .merge(this.cancelButtonStream)
-      .merge(this.saveButtonStream)
+      this.editButtonStream.pipe(
+      merge(this.cancelButtonStream),
+      merge(this.saveButtonStream))
       .subscribe(
         (event) => {
           if (this.editable) {

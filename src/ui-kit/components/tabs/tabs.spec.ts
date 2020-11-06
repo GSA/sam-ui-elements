@@ -6,7 +6,7 @@ import { By } from '@angular/platform-browser';
 import { SamTabsComponent, SamTabComponent } from './tabs.component';
 import {
   ChangeDetectorRef
-} from '@angular/core/src/change_detection/change_detector_ref';
+} from '@angular/core';
 
 @Component({
   template: `
@@ -17,9 +17,9 @@ import {
 `
 })
 class TabsDefault {
-  @ViewChild('tabs') comp: SamTabsComponent;
-  @ViewChild('tabs') tab1: SamTabComponent;
-  @ViewChild('tabs') tab2: SamTabComponent;
+  @ViewChild('tabs', {static: true}) comp: SamTabsComponent;
+  @ViewChild('tabs', {static: true}) tab1: SamTabComponent;
+  @ViewChild('tabs', {static: true}) tab2: SamTabComponent;
 }
 
 describe('The Sam Tabs component', () => {

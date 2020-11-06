@@ -5,6 +5,7 @@ import { SamIntlPhoneGroup } from './international.component';
 import { SamInternationalPrefix } from './sam-international-prefix/international-prefix.component';
 import { SamTelephone } from './sam-telephone/telephone.component';
 import { SamWrapperModule } from '../../wrappers';
+import { SamExtension } from './sam-extension';
 
 @NgModule({
   imports: [
@@ -17,11 +18,13 @@ import { SamWrapperModule } from '../../wrappers';
     SamInternationalPrefix,
     SamIntlPhoneGroup,
     SamTelephone,
+    SamExtension
   ],
   exports: [
     SamInternationalPrefix,
     SamIntlPhoneGroup,
     SamTelephone,
+    SamExtension
   ]
 })
 export class SamInternationalPhoneModule {}

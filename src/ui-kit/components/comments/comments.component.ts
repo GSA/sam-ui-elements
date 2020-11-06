@@ -13,10 +13,8 @@ import {
   ControlValueAccessor
 } from '@angular/forms';
 
-import { Observable, Subscription, Subject } from 'rxjs';
-import * as moment from 'moment';
-
-import { SamAccordionComponent } from '../accordion';
+import { Observable, Subscription, Subject ,of, fromEvent} from 'rxjs';
+import { flatMap, catchError, merge } from 'rxjs/operators';
 
 import { CommentsService } from './comments.service';
 import { Comment } from './interfaces';
@@ -33,9 +31,9 @@ export class SamCommentsComponent implements OnInit {
   /**
    * ViewChildren
    */
-  @ViewChild('showCommentsButton') public showCommentsButton: ElementRef;
-  @ViewChild('hideCommentsButton') public hideCommentsButton: ElementRef;
-  @ViewChild('textArea') public textArea: ElementRef;
+  @ViewChild('showCommentsButton', {static: true}) public showCommentsButton: ElementRef;
+  @ViewChild('hideCommentsButton', {static: true}) public hideCommentsButton: ElementRef;
+  @ViewChild('textArea', {static: true}) public textArea: ElementRef;
 
   public form: any;
 
@@ -63,7 +61,7 @@ export class SamCommentsComponent implements OnInit {
    * Other private variables
    */
   comments: Array<Comment> = [];
-  private maxLength: number = 250;
+  public maxLength: number = 250;
 
   /**
    * Playground
@@ -94,74 +92,78 @@ export class SamCommentsComponent implements OnInit {
     });
 
     // Register observables for 'click' events
-    this.showButtonStream =
-      Observable.fromEvent(this.showCommentsButton.nativeElement, 'click');
-    this.hideCommentsStream =
-      Observable.fromEvent(this.hideCommentsButton.nativeElement, 'click');
-    this.enterEventStream =
-      Observable.fromEvent(this.textArea.nativeElement, 'keyup');
+    this.showButtonStream = fromEvent(this.showCommentsButton.nativeElement, 'click');
+    this.hideCommentsStream = fromEvent(this.hideCommentsButton.nativeElement, 'click');
+    this.enterEventStream = fromEvent(this.textArea.nativeElement, 'keyup');
 
     // Map DOM events to actions
     this.getCommentsStream =
-      this.showButtonStream
-      .flatMap(event => {
-        return this.commentsService.getComments()
-              .catch(error => Observable.of(error));
-      });
+      this.showButtonStream.pipe(
+          flatMap(event => {
+            return this.commentsService.getComments().pipe(
+                catchError(error => of(error))
+            );
+          })
+      );
 
     this.collapseCommentsStream =
-      this.hideCommentsStream
-      .flatMap(event => {
-        return this.commentsService.getInitialState()
-              .catch(error => Observable.of(error));
-      });
+      this.hideCommentsStream.pipe(
+      flatMap(event => {
+        return this.commentsService.getInitialState().pipe(
+              catchError(error => of(error))
+        );
+      }));
 
     this.submitStream =
-      this.enterEventStream
-      .flatMap(event => {
-        if (event.key === 'Enter' || event.keyIdentified === 'Enter') {
-          this.form.controls.datetime.setValue(Date.now());
-          return this.commentsService.postComment(this.form.value)
-                .catch(error => Observable.of(error));
-        } else {
-          return Observable.of(undefined);
-        }
-      })
-      .flatMap(event => {
-        if (event instanceof Error) {
-          return Observable.of(this.comments);
-        } else if (event === null || event === undefined) {
-          return Observable.of(this.comments);
-        } else {
-          this.form.controls.text.setValue('');
-          return Observable.of(event)
-            .catch(error => Observable.of(error));
-        }
-      });
+      this.enterEventStream.pipe(
+          flatMap(event => {
+            if (event.key === 'Enter' || event.keyIdentified === 'Enter') {
+              this.form.controls.datetime.setValue(Date.now());
+              return this.commentsService.postComment(this.form.value).pipe(
+                  catchError(error => of(error))
+              );
+            } else {
+              return of(undefined);
+            }
+          }),
+          flatMap(event => {
+            if (event instanceof Error) {
+              return of(this.comments);
+            } else if (event === null || event === undefined) {
+              return of(this.comments);
+            } else {
+              this.form.controls.text.setValue('');
+              return of(event).pipe(
+                  catchError(error => of(error))
+              );
+            }
+          })
+      );
 
     const sub =
-      this.deleteStream
-      .flatMap((comment) => {
-        return this.commentsService.deleteComment(comment)
-               .catch(err => Observable.of(err));
-      })
-      .flatMap((event) => {
+      this.deleteStream.pipe(
+      flatMap((comment) => {
+        return this.commentsService.deleteComment(comment).pipe(
+               catchError(err => of(err)));
+      }),
+      flatMap((event) => {
         if (event instanceof Error) {
-          return Observable.of(this.comments);
+          return of(this.comments);
         } else {
-        return Observable.of(event)
-               .catch(err => Observable.of(err));
+          return of(event).pipe(
+                 catchError(err => of(err))
+          );
         }
-      });
+      }));
 
     // Subscribe to mapped DOM events
     this.commentsSubscription =
       this.commentsService
-        .getInitialState() // Initialize stream with initial state
-      .merge(this.getCommentsStream) // Add comments stream
-      .merge(this.collapseCommentsStream) // Add collapse stream
-      .merge(this.submitStream) // Add submit stream
-      .merge(sub)
+        .getInitialState().pipe( // Initialize stream with initial state
+      merge(this.getCommentsStream), // Add comments stream
+      merge(this.collapseCommentsStream), // Add collapse stream
+      merge(this.submitStream), // Add submit stream
+      merge(sub))
       .subscribe(
         (comments) => {
           this.comments = comments;
@@ -196,5 +198,9 @@ export class SamCommentsComponent implements OnInit {
       this.form.controls.text.value.length :
       0;
     return this.maxLength - textLength;
+  }
+
+  commentAriaLabel(){
+    return "Enter your comments (Maximum characters allowed: "+  this.maxLength+ ")";
   }
 }

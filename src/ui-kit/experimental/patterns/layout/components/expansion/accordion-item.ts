@@ -28,7 +28,12 @@ export class AccordionItem implements OnDestroy {
   /** The unique MdAccordianChild id. */
   readonly id = `cdk-accordion-child-${nextId++}`;
   /** Whether the MdAccordianChild is expanded. */
-  @Input() get expanded(): boolean { return this._expanded; }
+  @Input() get expanded(): boolean { 
+    if (this._expanded === undefined) {
+      return false;
+    }
+    return this._expanded; 
+  }
   set expanded(expanded: boolean) {
     // Only emit events and update the internal value if the value changes.
     if (this._expanded !== expanded) {

@@ -1,0 +1,71 @@
+<sds-top-banner></sds-top-banner>
+
+<div class="sam-header">
+  <header class="usa-header usa-header-extended" role="banner">
+    <div class="usa-navbar">
+      <div class="usa-logo" id="extended-logo">
+        <em class="usa-logo-text">
+          <a [routerLink]="[model.home.route]" [attr.title]="model.home.text" [attr.aria-label]="model.home.text">
+            <img [attr.src]="model.home.imageSourcePath" [attr.alt]="model.home.imageAltText" class="beta-sam-logo">
+          </a>
+        </em>
+      </div>
+      <button class="usa-menu-btn sam-header-menu-btn">
+        <img src="assets/icon/header-footer/Mobile-Menu.png" alt="Menu">
+      </button>
+
+      <div class="usa-nav-secondary" id="sam-header-unstyled-list">
+        <ul class="sam-usa-unstyled-list usa-nav-secondary-links" id="sam-secondary-header-nav">
+          <li *ngFor="let link of model.secondaryLinks">
+            <a [routerLink]="[link.route]"
+              [attr.class]="link.selected ? 'sam-header-secondary-link sam-secondary-navigation_selected' : 'sam-header-secondary-link'"><img
+                [attr.src]="link.imageSourcePath" [attr.alt]="link.imageAltText"> {{link.text}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <nav role="navigation" class="usa-nav" id="sam-navbar">
+      <div class="usa-nav-inner" id="sam-usa-navbar">
+        <button class="usa-nav-close">
+          <img src="assets/icon/header-footer/arrow.png" alt="close">
+        </button>
+        <ul class="usa-nav-primary usa-accordion" id="sam-navbar-content">
+          <li *ngFor="let link of model.navigationLinks" class="navbar-btn">
+            <ng-container [ngTemplateOutlet]="link.route ? linkTemplate : dropDownTemplate"
+              [ngTemplateOutletContext]="{$implicit:link}"></ng-container>
+          </li>
+        </ul>
+        <div class="usa-nav-secondary">
+          <ul class="sam-mobile-usa-unstyled-list usa-nav-secondary-links" id="sam-secondary-mobile-header-nav">
+            <li *ngFor="let link of model.secondaryLinks">
+              <a [attr.class]="link.selected ? 'sam-secondary-navigation_selected' : ''"
+                [routerLink]="[link.route]"><img [attr.src]="link.imageSourcePath"
+                  [attr.alt]="link.imageAltText">{{link.text}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <div class="usa-overlay"></div>
+  <main id="main-content" class="sam-main-content"></main>
+</div>
+
+<ng-template #linkTemplate let-link>
+  <a [attr.class]="link.selected ? 'usa-nav-link usa-current' : 'usa-nav-link'" [routerLink]="[link.route]">
+    <span>{{link.text}}</span>
+  </a>
+</ng-template>
+
+<ng-template #dropDownTemplate let-link>
+  <button
+    [attr.class]="link.selected ? 'usa-accordion-button usa-nav-link sam-header-btn usa-current' : 'usa-accordion-button usa-nav-link sam-header-btn'"
+    aria-expanded="false" [attr.aria-controls]="removeWhiteSpace(link.text)+'-section'">
+    <span>{{link.text}}</span>
+  </button>
+  <ul [attr.id]="removeWhiteSpace(link.text)+'-section'" class="usa-nav-submenu sam-header-extended-nav-section" hidden>
+    <li *ngFor="let childLink of link.children">
+      <a [routerLink]="[childLink.route]">{{childLink.text}}</a>
+    </li>
+  </ul>
+</ng-template>
