@@ -16,8 +16,7 @@ import { MenuItem } from '../interfaces';
  */
 @Component({
   selector: 'sam-sidenav',
-  templateUrl: './sidenav.template.html',
-  providers: [SidenavService]
+  templateUrl: './sidenav.template.html'
 })
 export class SamSidenavComponent implements OnInit {
   /**
