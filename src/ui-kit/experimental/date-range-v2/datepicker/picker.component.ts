@@ -89,7 +89,6 @@ export class DatepickerComponent extends SamFormControl implements OnInit, OnCha
   // colors
   colors: { [id: string]: string };
   // forms
-  disabled: boolean;
   yearControl: FormControl;
   _focusableString: string =
     'a[href], area, button, select, textarea, *[tabindex], \
