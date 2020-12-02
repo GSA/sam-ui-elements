@@ -1,6 +1,8 @@
 /* tslint:disable */
-import { Component, SimpleChange, ChangeDetectorRef, ViewChild, ElementRef, Output, Input, 
-  EventEmitter, OnInit, OnChanges, forwardRef, HostListener } from '@angular/core';
+import {
+  Component, SimpleChange, ChangeDetectorRef, ViewChild, ElementRef, Output, Input,
+  EventEmitter, OnInit, OnChanges, forwardRef, HostListener
+} from '@angular/core';
 import {
   FormControl, Validators, ControlValueAccessor,
   AbstractControl, NG_VALUE_ACCESSOR, ValidatorFn
@@ -89,12 +91,13 @@ export class DatepickerComponent extends SamFormControl implements OnInit, OnCha
   // colors
   colors: { [id: string]: string };
   // forms
+  //disabled: boolean;
   yearControl: FormControl;
   _focusableString: string =
     'a[href], area, button, select, textarea, *[tabindex], \
   input:not([type="hidden"])';
-  @ViewChild('calendarpopup', {static: true}) calendarpopup: ElementRef;
-  @ViewChild('calendarButton', {static: true}) calendarButton: ElementRef;
+  @ViewChild('calendarpopup', { static: true }) calendarpopup: ElementRef;
+  @ViewChild('calendarButton', { static: true }) calendarButton: ElementRef;
 
   static dateValidation() {
     const minYear = 1000;

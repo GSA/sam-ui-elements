@@ -8,7 +8,7 @@ import { SamSideNavigationToolbarItemComponent } from './sideNavigationToolbarIt
   imports: [CommonModule, FormsModule],
   declarations: [SamSideNavigationToolbarComponent, SamSideNavigationToolbarItemComponent],
   exports: [SamSideNavigationToolbarComponent, SamSideNavigationToolbarItemComponent],
-  entryComponents: [SamSideNavigationToolbarItemComponent]
+  // entryComponents: [SamSideNavigationToolbarItemComponent]
 })
 export class SamSideNavigationToolbarModule {
 
