@@ -11,7 +11,7 @@
 				<span *ngIf="this.types[type].sr" class="sr-only">{{this.types[type].sr}}</span>
 				<h3 *ngIf="!headerLevel" [attr.id]="id + '-dialog-title'" class="usa-alert-heading" >{{title}}</h3>
 				<div *ngIf="headerLevel" [attr.id]="id + '-dialog-title'" class="usa-alert-heading" 
-					role="heading" [attr.aria-level]="headerLevel">{{title}}</h3>
+					role="heading" [attr.aria-level]="headerLevel">{{title}}</div>
 
 			</div>
 		</div>
@@ -24,7 +24,7 @@
 					<sam-icon [icon]="icon" size="2x"></sam-icon>
 				</ng-container>
 				<h3 *ngIf="!headerLevel" [attr.id]="id + '-dialog-title'">{{title}}</h3>
-				<div *ngIf="headerLevel" [attr.id]="id + '-dialog-title'" role="heading" [attr.aria-level]="headerLevel">{{title}}</h3>
+				<div *ngIf="headerLevel" [attr.id]="id + '-dialog-title'" role="heading" [attr.aria-level]="headerLevel">{{title}}</div>
 			</div>
 		</div>
 		<div class="modal-body">
