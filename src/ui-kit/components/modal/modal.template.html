@@ -23,7 +23,8 @@
 				<ng-container *ngIf="icon">
 					<sam-icon [icon]="icon" size="2x"></sam-icon>
 				</ng-container>
-				<h3 [attr.id]="id + '-dialog-title'">{{title}}</h3>
+				<h3 *ngIf="!headerLevel" [attr.id]="id + '-dialog-title'">{{title}}</h3>
+				<div *ngIf="headerLevel" [attr.id]="id + '-dialog-title'" role="heading" [attr.aria-level]="headerLevel">{{title}}</h3>
 			</div>
 		</div>
 		<div class="modal-body">
