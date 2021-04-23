@@ -76,6 +76,8 @@ export class SamModalComponent implements OnInit {
    */
   @Input() condensed: boolean = false;
 
+  @Input() headerLevel: number;
+
   /**
    * (deprecated) Emitted event when modal is opened
    */
