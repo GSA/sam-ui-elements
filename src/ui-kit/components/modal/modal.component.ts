@@ -76,6 +76,9 @@ export class SamModalComponent implements OnInit {
    */
   @Input() condensed: boolean = false;
 
+  /**
+   * Defines aria level for modal title
+   */
   @Input() headerLevel: number;
 
   /**
