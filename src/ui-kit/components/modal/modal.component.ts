@@ -77,6 +77,11 @@ export class SamModalComponent implements OnInit {
   @Input() condensed: boolean = false;
 
   /**
+   * Defines aria level for modal title
+   */
+  @Input() headerLevel: number;
+
+  /**
    * (deprecated) Emitted event when modal is opened
    */
   @Output() onOpen: EventEmitter<any> = new EventEmitter<any>();

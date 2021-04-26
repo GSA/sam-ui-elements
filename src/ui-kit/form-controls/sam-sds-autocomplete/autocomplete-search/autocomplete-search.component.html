@@ -3,7 +3,8 @@
     <div role="combobox" [attr.id]="configuration.id + '-container'" [attr.aria-expanded]="showResults"
       [attr.aria-owns]="showResults ? configuration.id + '-listbox' : undefined" aria-haspopup="listbox">
       <input [disabled]="disabled" (keypress)="onkeypress($event)" (input)="textChange($event)"
-        class="usa-input padding-right-3" [ngClass]="getClass()" #input [attr.aria-label]="configuration.ariaLabelText"
+        class="usa-input padding-right-3" [ngClass]="getClass()" #input
+        [attr.aria-label]="configuration.ariaLabelText ? configuration.ariaLabelText : configuration.labelText"
         [attr.id]="configuration.id" type="text" (focus)="inputFocusHandler()" (keydown)="onKeydown($event)"
         [(ngModel)]="inputValue" aria-autocomplete="list" [attr.placeholder]="configuration.autocompletePlaceHolderText"
         [attr.aria-activedescendant]="
@@ -155,11 +156,11 @@
           aria-hidden="false" (click)="clearInput()" (keyup.enter)="clearInput()">
         </span>
         <span *ngIf="!configuration.isTagModeEnabled">
-          <span *ngIf="!showResults && !disabled" tabindex="1" role="button" class="fa fa-caret-down"
-            aria-label="down arrow" aria-hidden="false" (click)="openOptions()" (keyup.enter)="openOptions()">
+          <span *ngIf="!showResults && !disabled" tabindex="0" role="button" class="fa fa-caret-down"
+            aria-label="Display Options" aria-hidden="false" (click)="openOptions()" (keyup.enter)="openOptions()">
           </span>
-          <span *ngIf="showResults && !disabled" tabindex="2" role="button" class="fa fa-caret-up"
-            aria-label="arrow up arrow" aria-hidden="false" (click)="checkForFocus($event)"
+          <span *ngIf="showResults && !disabled" tabindex="0" role="button" class="fa fa-caret-up"
+            aria-label="Hide Options" aria-hidden="false" (click)="checkForFocus($event)"
             (keyup.enter)="checkForFocus($event)">
           </span>
         </span>

@@ -17,9 +17,9 @@ import { SamExperimentalModule } from '../../experimental/experimental.module';
     exports: [
         SamPageComponent, SamPageSidebarComponent
     ],
-    entryComponents: [
-        SamPageComponent,SamPageSidebarComponent
-    ], 
+    // entryComponents: [
+    //     SamPageComponent,SamPageSidebarComponent
+    // ], 
 })
 export class SamPageModule { }
 export { SamPageComponent, SamPageSidebarComponent } from './page.component';

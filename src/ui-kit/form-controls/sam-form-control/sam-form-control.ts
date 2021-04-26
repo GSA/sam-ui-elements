@@ -1,22 +1,26 @@
 import {
   Input,
-  OnInit, 
+  OnInit,
+  Component,
   ViewChild,
-  ChangeDetectorRef, 
+  ChangeDetectorRef,
   AfterViewInit,
-  forwardRef } from '@angular/core';
+  forwardRef
+} from '@angular/core';
 
 import {
   ControlValueAccessor,
   FormControl,
   ValidatorFn,
-  NG_VALUE_ACCESSOR, 
-  NG_VALIDATORS} from '@angular/forms';
+  NG_VALUE_ACCESSOR,
+  NG_VALIDATORS
+} from '@angular/forms';
 
 import { SamFormService } from '../../form-service';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 
-export function AccessorToken (className) {
+
+export function AccessorToken(className) {
   return {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => className),
@@ -24,14 +28,16 @@ export function AccessorToken (className) {
   };
 }
 
-export function ValidatorToken (className) {
+export function ValidatorToken(className) {
   return {
     provide: NG_VALIDATORS,
     useExisting: forwardRef(() => className),
     multi: true
   };
 }
-
+@Component({
+  template: ''
+})
 export class SamFormControl
   implements ControlValueAccessor, OnInit, AfterViewInit {
 
@@ -82,42 +88,42 @@ export class SamFormControl
    */
   @Input() public disableValidation: boolean;
 
-  @ViewChild(LabelWrapper, {static: true}) public wrapper: LabelWrapper;
+  @ViewChild(LabelWrapper, { static: true }) public wrapper: LabelWrapper;
 
   public defaultValidators: ValidatorFn[] = [];
 
   protected defaultValue: any = null;
-  
+
   protected _value: any = null;
   protected _disabled: boolean;
 
   public onChange: (_?: any) => any = (_) => { return _; };
   public onTouched: () => any = () => { return; };
 
-  public get value (): any {
+  public get value(): any {
     return this._value;
   }
 
-  public set value (val: any) {
+  public set value(val: any) {
     this._value = !val ? this.defaultValue : val;
     this.onChange(this.value);
   }
 
-  public get disabled (): boolean {
+  public get disabled(): boolean {
     return this._disabled;
   }
 
-  public set disabled (state: boolean) {
+  public set disabled(state: boolean) {
     this._disabled = state;
   }
 
-  constructor (
+  constructor(
     public samFormService: SamFormService,
-    public cdr: ChangeDetectorRef) {}
+    public cdr: ChangeDetectorRef) { }
 
   // Lifecycle Hooks
 
-  public ngOnInit () {
+  public ngOnInit() {
     this.initReactiveForms();
   }
 
@@ -127,25 +133,25 @@ export class SamFormControl
 
   // ControlValueAccessor Methods
 
-  public writeValue (val) { 
+  public writeValue(val) {
     this.value = val;
   }
 
-  public registerOnChange (fn) {
+  public registerOnChange(fn) {
     this.onChange = fn;
   }
 
-  public registerOnTouched (fn) {
+  public registerOnTouched(fn) {
     this.onTouched = fn;
   }
 
-  public setDisabledState (state) {
+  public setDisabledState(state) {
     this.disabled = state;
   }
 
   // Member methods
 
-  private initReactiveForms () {
+  private initReactiveForms() {
     if (this.control) {
 
       const validators: ValidatorFn[] = [];
@@ -168,24 +174,24 @@ export class SamFormControl
 
       this.setValidationMethod();
     }
-}
+  }
 
-private setValidationMethod () {
+  private setValidationMethod() {
 
-  if (!this.useFormService) {
+    if (!this.useFormService) {
 
-    this.control.statusChanges.subscribe(
-      (_: any) => {
-        this.wrapper.formatErrors(this.control);
-        this.cdr.detectChanges();
-      },
-      (err: any) => console.error('Error occurred')
-    );
+      this.control.statusChanges.subscribe(
+        (_: any) => {
+          this.wrapper.formatErrors(this.control);
+          this.cdr.detectChanges();
+        },
+        (err: any) => console.error('Error occurred')
+      );
 
     } else {
 
       this.samFormService.formEventsUpdated$
-        .subscribe( (evt: any) => {
+        .subscribe((evt: any) => {
           if ((!evt.root
             || evt.root === this.control.root)
             && evt.eventType
@@ -201,11 +207,11 @@ private setValidationMethod () {
             this.wrapper.clearError();
           }
         }, (err: any) => console.error('Error occured')
-      );
+        );
     }
   }
 
-  private initWrapper () {
+  private initWrapper() {
     if (this.control) {
       this.wrapper.formatErrors(this.control);
       this.cdr.detectChanges();

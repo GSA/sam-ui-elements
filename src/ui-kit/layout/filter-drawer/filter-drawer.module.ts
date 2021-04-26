@@ -31,8 +31,8 @@ import { SamButtonNextModule } from '../../experimental/button-next';
     SamFilterDrawerItemComponent,
     SamFilterDrawerComponent
   ],
-  entryComponents: [
-    SamFilterDrawerItemComponent
-  ]
+  // entryComponents: [
+  //   SamFilterDrawerItemComponent
+  // ]
 })
 export class SamFilterDrawerModule {}
