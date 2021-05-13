@@ -1,5 +1,5 @@
 import { areEqual } from '../../utilities/are-equal/are-equal';
-import { isEqual } from 'lodash';
+import { isEqual } from 'lodash-es/isEqual';
 
 export class Cached {
   private contents: any[] = [];

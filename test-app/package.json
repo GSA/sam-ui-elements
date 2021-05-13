@@ -19,7 +19,6 @@
     "@ng-idle/keepalive": "^6.0.0-beta.3",
     "@types/core-js": "0.9.28",
     "@types/hammerjs": "2.0.28",
-    "@types/lodash": "4.14.88",
     "@types/moment-timezone": "^0.2.34",
     "@types/protractor": "1.5.16",
     "@types/selenium-webdriver": "2.44.26",
@@ -73,7 +72,8 @@
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
     "typescript": "3.8.3",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",
+    "lodash-es": "4.17.21"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.8.0",
