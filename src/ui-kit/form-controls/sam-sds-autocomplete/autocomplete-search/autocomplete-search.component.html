@@ -1,6 +1,6 @@
 <div sam-click-outside (clickOutside)="clickOutSide($event)" sam-tab-outside (tabOutside)="clickOutSide($event)">
   <div class="input-container">
-    <div role="combobox" [attr.id]="configuration.id + '-container'" [attr.aria-expanded]="showResults"
+    <div role="combobox" [attr.aria-label]="configuration.id + '-label'" [attr.id]="configuration.id + '-container'" [attr.aria-expanded]="showResults"
       [attr.aria-owns]="showResults ? configuration.id + '-listbox' : undefined" aria-haspopup="listbox">
       <input [disabled]="disabled" (keypress)="onkeypress($event)" (input)="textChange($event)"
         class="usa-input padding-right-3" [ngClass]="getClass()" #input
