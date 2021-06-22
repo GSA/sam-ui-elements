@@ -33,6 +33,11 @@ export class SamDollarComponent extends SamFormControl {
    * Optional text to be displayed when the text area is empty
    */
   @Input() public placeholder: string;
+  
+  /**
+   * type = number starts adding letter 'e' if a max length is not enforced
+  */
+  @Input() public strictMaxLength: number = 16;
   /**
    * (deprecated) Lose focus event emit
    */
@@ -44,8 +49,6 @@ export class SamDollarComponent extends SamFormControl {
 
   @ViewChild(LabelWrapper, {static: true}) public wrapper: LabelWrapper;
 
-  // type=number starts adding letter 'e' if a max length is not enforced
-  strictMaxLength = 16;
   attrType = 'text';
   previousValue = null;
   blurDisabled = false;
