@@ -39,6 +39,8 @@ export interface SamCache {
   clearCache();
 }
 
+let nextId = 0;
+
 @Component({
   selector: 'sam-autocomplete',
   templateUrl: 'autocomplete.template.html',
@@ -63,7 +65,7 @@ export class SamAutocompleteComponent
   /**
   * Sets the id attribute
   */
-  @Input() public id: string;
+  @Input() public id: string = `sam-autocomplete-${nextId++}`;
   /**
   * Sets the label text
   */
