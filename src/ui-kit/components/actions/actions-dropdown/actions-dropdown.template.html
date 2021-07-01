@@ -7,7 +7,7 @@
   <button #actionButton class="usa-button"
           [attr.id]="name"
           aria-haspopup="true"
-          aria-controls="name+'menu'"
+          [attr.aria-controls]="name+'menu'"
           [attr.aria-label]="ariaLabelButtonText"
           [attr.aria-expanded]="showActions ? 'true' : undefined"
           (click)="toggleActions()"

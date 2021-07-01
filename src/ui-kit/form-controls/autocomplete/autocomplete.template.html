@@ -4,15 +4,17 @@
   <sam-label-wrapper #wrapper [label]="labelText" [hint]="hint" [showFullHint]="showFullHint" [name]="id"
     [required]="required" [errorMessage]="errorMessage">
     <div class="input-container">
-      <div role="combobox" [attr.id]="id+'-container'"
+      <div [attr.id]="id+'-container'"
         [attr.aria-owns]="results && results.length > 0 ? 'sam-autocomplete-results' : filteredKeyValuePairs && filteredKeyValuePairs.length > 0  ? 'sam-autocomplete-results-kv':undefined"
-        [attr.aria-expanded]="(((filteredKeyValuePairs && filteredKeyValuePairs.length > 0) || (displayFreeTextKeyValueResults()) ) && hasFocus)
-        ||(((results && results.length > 0) || (displayFreeTextSimpleResults())) && hasFocus)
-        ">
-        <input [attr.id]="id" [attr.tabindex]="tabIndex" #input autocomplete="off"
+       >
+        <input role="combobox" [attr.id]="id" [attr.tabindex]="tabIndex" #input autocomplete="off"
+          [attr.aria-expanded]="(((filteredKeyValuePairs && filteredKeyValuePairs.length > 0) || 
+            (displayFreeTextKeyValueResults()) ) && hasFocus) ||(((results && results.length > 0) || 
+            (displayFreeTextSimpleResults())) && hasFocus)"
+          aria-autocomplete="list"
           [attr.placeholder]="config?.placeholder" [attr.title]="config?.title" [attr.name]="name" [attr.aria-label]="labelText" type="text"
           (focus)="inputFocusHandler($event)"   (keydown)="onKeydown($event)" [(ngModel)]="inputValue"
-          (ngModelChange)="onChange()" [attr.aria-activedescendant]="activeDescendant" aria-autocomplete="list"
+          (ngModelChange)="onChange()" [attr.aria-activedescendant]="activeDescendant"
           [attr.aria-controls]="results && results.length > 0 ? 'sam-autocomplete-results' : filteredKeyValuePairs && filteredKeyValuePairs.length > 0  ? 'sam-autocomplete-results-kv':undefined">
       </div>
       <span *ngIf="config && config.addOnIconClass && config.addOnIconName" (click)="addOnIconClick()" class="add-on"
