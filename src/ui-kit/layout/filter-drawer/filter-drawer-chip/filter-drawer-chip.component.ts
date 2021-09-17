@@ -15,7 +15,7 @@ import {
       [title]="'Remove ' + label"
       (click)="remove.next($event)">
       <span class="sr-only">Close button</span>
-      <span class="fa fa-close" aria-hidden="true"></span>
+      <span class="fa fa-times" aria-hidden="true"></span>
     </button>
   </span>
   `
