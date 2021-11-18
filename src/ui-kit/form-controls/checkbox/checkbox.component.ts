@@ -4,6 +4,7 @@ import {
   Input,
   Output,
   EventEmitter,
+  ChangeDetectorRef,
   ViewChild
 } from '@angular/core';
 import {
@@ -77,12 +78,9 @@ export class SamCheckboxComponent implements ControlValueAccessor {
    */
   @Input() id: string;
 
-  public optionChange:string;
+  public optionChange: string;
 
-  public optionId:string;
-  
-
-  
+  public optionId: string;
   /**
   * Deprecated, Event emitted when the model value changes
   */
@@ -90,7 +88,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild(FieldsetWrapper, {static: true})
+  @ViewChild(FieldsetWrapper, { static: true })
   public wrapper: FieldsetWrapper;
   activeOptions = 0;
   /*
@@ -103,7 +101,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   onChange: any = (c) => undefined;
 
   onTouched: any = () => undefined;
-  
+
   get value() {
     return this.model;
   }
@@ -114,7 +112,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
     this.onTouched();
   }
 
-  constructor(protected samFormService: SamFormService) {}
+  constructor(protected samFormService: SamFormService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     // initialize the order lookup map
@@ -148,17 +146,18 @@ export class SamCheckboxComponent implements ControlValueAccessor {
       }
     }
     this.model = returnVal;
+    this.cdr.detectChanges();
     this.setSelectAllCheck();
   }
 
-  setSelectAllCheck(){
+  setSelectAllCheck() {
     let activeOptionsNum = 0;
-    this.options.forEach(val=>{
-      if(!val.disabled){
+    this.options.forEach(val => {
+      if (!val.disabled) {
         activeOptionsNum++;
       }
     });
-    this.activeOptions=activeOptionsNum;
+    this.activeOptions = activeOptionsNum;
   }
 
   // Give the check all label a name for screen readers
@@ -216,8 +215,8 @@ export class SamCheckboxComponent implements ControlValueAccessor {
   emitModel() {
 
     this.modelChange.emit(this.model);
-  
-    this.optionSelected.emit({model : this.model, selected: this.optionChange, id: this.optionId});
+
+    this.optionSelected.emit({ model: this.model, selected: this.optionChange, id: this.optionId });
   }
 
   registerOnChange(fn) {

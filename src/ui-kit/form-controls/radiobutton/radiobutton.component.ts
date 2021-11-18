@@ -16,7 +16,7 @@ import {
   Validators,
   ValidatorFn
 } from '@angular/forms';
-import {SamFormService} from '../../form-service';
+import { SamFormService } from '../../form-service';
 
 /**
  * The <sam-radio-button> component is a set of checkboxes compliant with
@@ -31,11 +31,11 @@ import {SamFormService} from '../../form-service';
     multi: true
   }]
 })
-export class SamRadioButtonComponent  {
+export class SamRadioButtonComponent {
   /**
   * Sets the bound value of the component
   */
-  @Input() public model: string|number|symbol;
+  @Input() public model: string | number | symbol;
   /**
   * Sets the array of checkbox values and labels (see OptionsType)
   */
@@ -69,12 +69,12 @@ export class SamRadioButtonComponent  {
   */
   @Output() public modelChange: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild(FieldsetWrapper, {static: true}) public wrapper: FieldsetWrapper;
+  @ViewChild(FieldsetWrapper, { static: true }) public wrapper: FieldsetWrapper;
 
   public disabled = undefined;
 
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) { }
 
   public ngOnInit() {
     if (!this.name) {
@@ -117,5 +117,6 @@ export class SamRadioButtonComponent  {
 
   public writeValue(value) {
     this.model = value;
+    this.cdr.detectChanges();
   }
 }
