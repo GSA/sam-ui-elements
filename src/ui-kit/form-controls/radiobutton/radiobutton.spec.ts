@@ -16,15 +16,7 @@ describe('The Sam Radio Buttons component', () => {
       component = new SamRadioButtonComponent(cdr);
     });
 
-    it('should implement controlvalueaccessor', () => {
-      component.onChange();
-      component.onTouched();
-      component.registerOnChange((_) => undefined);
-      component.registerOnTouched(() => undefined);
-      component.setDisabledState(false);
-      component.writeValue('test');
-      expect(component.model).toBe('test');
-    });
+
 
     it('should process radio changes', () => {
       component.onRadioChange('newval');
@@ -43,19 +35,19 @@ describe('The Sam Radio Buttons component', () => {
   describe('rendered tests', () => {
     let component: SamRadioButtonComponent;
     let fixture: any;
-  
+
     const options: any[] = [
-      {value: 'dc', label: 'Washington DC', name: 'dc'},
-      {value: 'ma', label: 'Maryland', name: 'dc'},
-      {value: 'va', label: 'Virginia', name: 'virginia'},
+      { value: 'dc', label: 'Washington DC', name: 'dc' },
+      { value: 'ma', label: 'Maryland', name: 'dc' },
+      { value: 'va', label: 'Virginia', name: 'virginia' },
     ];
-  
+
     const defaultOptions = {
       options: options,
       label: 'Radio buttons',
       name: 'my-radio-buttons'
     };
-  
+
     // provide our implementations or mocks to the dependency injector
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -63,34 +55,34 @@ describe('The Sam Radio Buttons component', () => {
         imports: [SamWrapperModule, FormsModule],
         providers: [SamFormService]
       });
-  
+
       fixture = TestBed.createComponent(SamRadioButtonComponent);
       component = fixture.componentInstance;
       component.options = defaultOptions.options;
       component.label = defaultOptions.label;
       component.name = defaultOptions.name;
     });
-  
+
     it('should display 3 radiobuttons if 3 options are specified by the config',
       function () {
-      fixture.detectChanges();
+        fixture.detectChanges();
 
-      expect(fixture.nativeElement.getElementsByTagName('input').length)
-        .toBe(options.length);
-    });
-  
-    it('should allow an initial value to be set by the model input', 
+        expect(fixture.nativeElement.getElementsByTagName('input').length)
+          .toBe(options.length);
+      });
+
+    it('should allow an initial value to be set by the model input',
       async(() => {
-      component.model = 'ma';
-      fixture.detectChanges();
+        component.model = 'ma';
+        fixture.detectChanges();
 
-      const checkedElement =
-        fixture.debugElement.query(By.css(':checked + label'));
+        const checkedElement =
+          fixture.debugElement.query(By.css(':checked + label'));
 
-      expect(checkedElement.nativeElement.innerHTML).toContain('Maryland');
-      expect(checkedElement.nativeElement.innerHTML).not.toContain('DC');
-    }));
-  
+        expect(checkedElement.nativeElement.innerHTML).toContain('Maryland');
+        expect(checkedElement.nativeElement.innerHTML).not.toContain('DC');
+      }));
+
     it('should deselect one radio button when another is clicked', function () {
       component.model = 'ma';
       fixture.detectChanges();
@@ -108,21 +100,21 @@ describe('The Sam Radio Buttons component', () => {
 
       expect(label1).not.toEqual(label2);
     });
-  
+
     it('should show a hint message', function () {
       const hint = 'Life pro tip: eat vegetables';
       component.hint = hint;
       fixture.detectChanges();
       expect(fixture.nativeElement.innerHTML).toContain(hint);
     });
-  
+
     it('should show an error message', function () {
       const errorMessage = 'Uh-oh, something went wrong';
       component.errorMessage = errorMessage;
       fixture.detectChanges();
       expect(fixture.nativeElement.innerHTML).toContain(errorMessage);
     });
-  
+
     it('should show a label', function () {
       const labelText = 'Pick from the following options';
       component.label = labelText;
