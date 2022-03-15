@@ -5,54 +5,56 @@ import {
   forwardRef,
   Output,
   EventEmitter,
-  ChangeDetectorRef
-} from '@angular/core';
-import { LabelWrapper } from '../../wrappers/label-wrapper';
+  ChangeDetectorRef,
+} from "@angular/core";
+import { LabelWrapper } from "../../wrappers/label-wrapper";
 import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
   Validators,
-  FormControl
-} from '@angular/forms';
-import { SamFormService } from '../../form-service';
-import { TextAreaWidthType } from '../../types';
+  FormControl,
+} from "@angular/forms";
+import { SamFormService } from "../../form-service";
+import { TextAreaWidthType } from "../../types";
 
 /**
  * The <sam-text-area> component provides a textarea input form control
  */
 @Component({
-  selector: 'sam-text-area',
-  templateUrl: 'textarea.template.html',
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => SamTextareaComponent),
-    multi: true
-  }]
+  selector: "sam-text-area",
+  templateUrl: "textarea.template.html",
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SamTextareaComponent),
+      multi: true,
+    },
+  ],
 })
 export class SamTextareaComponent implements ControlValueAccessor {
   /**
-  * Sets the text input value
-  */
-  @Input() value: string = '';
+   * Sets the text input value
+   */
+  @Input() value: string = "";
   /**
-  * Sets the label text
-  */
+   * Sets the label text
+   */
   @Input() label: string;
   /**
-  * Sets the name attribute
-  */
+   * Sets the name attribute
+   */
   @Input() name: string;
   /**
-  * Sets the helpful hint text
-  */
+   * Sets the helpful hint text
+   */
   @Input() hint: string;
   /**
-  * Sets the general error message
-  */
+   * Sets the general error message
+   */
   @Input() errorMessage: string;
   /**
-  * Sets the disabled attribute
-  */
+   * Sets the disabled attribute
+   */
   @Input() disabled: boolean;
   /**
   * Sets the required attribute
@@ -60,12 +62,12 @@ export class SamTextareaComponent implements ControlValueAccessor {
   */
   @Input() required: boolean; // deprecated
   /**
-  * Sets the required attribute
-  */
+   * Sets the required attribute
+   */
   @Input() requiredFlag: boolean;
   /**
-  * Sets the maxlength attribute
-  */
+   * Sets the maxlength attribute
+   */
   @Input() maxlength: number;
   /**
    * sets the form control to update label messages
@@ -84,8 +86,8 @@ export class SamTextareaComponent implements ControlValueAccessor {
    */
   @Input() title: string;
   /**
-  * Toggles validations to display with SamFormService events
-  */
+   * Toggles validations to display with SamFormService events
+   */
   @Input() useFormService: boolean;
   /**
    * Sets the showCharCount attribute
@@ -118,17 +120,21 @@ export class SamTextareaComponent implements ControlValueAccessor {
   public onChange: any = (_) => undefined;
   public onTouched: any = () => undefined;
 
-  private inBrowser = typeof window !== 'undefined';
+  private inBrowser = typeof window !== "undefined";
   private UA = this.inBrowser && window.navigator.userAgent.toLowerCase();
   private isIE = this.UA && /msie|trident/.test(this.UA);
   private ie11PristineFlag = false;
-  constructor(private cdr: ChangeDetectorRef,
-    private samFormService: SamFormService) { }
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private samFormService: SamFormService
+  ) {}
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error('<sam-text-area> requires a [name]\
-       parameter for 508 compliance');
+      throw new Error(
+        "<sam-text-area> requires a [name]\
+       parameter for 508 compliance"
+      );
     }
 
     if (this.control) {
@@ -149,7 +155,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
       this.control.setValidators(validators);
     }
   }
-  
+
   ngAfterViewInit() {
     if (this.control) {
       if (!this.useFormService) {
@@ -164,11 +170,17 @@ export class SamTextareaComponent implements ControlValueAccessor {
         this.wrapper.formatErrors(this.control);
       } else {
         this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
-          if ((!evt.root || evt.root === this.control.root)
-            && evt.eventType && evt.eventType === 'submit') {
+          if (
+            (!evt.root || evt.root === this.control.root) &&
+            evt.eventType &&
+            evt.eventType === "submit"
+          ) {
             this.wrapper.formatErrors(this.control);
-          } else if ((!evt.root || evt.root === this.control.root)
-            && evt.eventType && evt.eventType === 'reset') {
+          } else if (
+            (!evt.root || evt.root === this.control.root) &&
+            evt.eventType &&
+            evt.eventType === "reset"
+          ) {
             this.wrapper.clearError();
           }
         });
@@ -197,10 +209,22 @@ export class SamTextareaComponent implements ControlValueAccessor {
   setCharCounterMsg(value: string) {
     if (this.showCharCount) {
       if (this.value) {
-        let msg = this.maxlength - value.length > 1 ? 'characters ' : 'character ';
-        this.characterCounterMsg = this.maxlength - value.length + ' ' + msg + 'remaining of ' + this.maxlength + ' characters.';
+        let msg =
+          this.maxlength - value.length > 1 ? "characters " : "character ";
+        this.characterCounterMsg =
+          this.maxlength -
+          value.length +
+          " " +
+          msg +
+          "remaining of " +
+          this.maxlength +
+          " characters.";
       } else {
-        this.characterCounterMsg = this.maxlength + ' characters remaining of ' + this.maxlength + ' characters.';
+        this.characterCounterMsg =
+          this.maxlength +
+          " characters remaining of " +
+          this.maxlength +
+          " characters.";
       }
     }
   }
