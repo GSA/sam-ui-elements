@@ -36,7 +36,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
   faCircle = faCircle;
   faTimes = faTimes;
 
-  constructor(private _changeDetectorRef: ChangeDetectorRef) { }
+  constructor(private _changeDetectorRef: ChangeDetectorRef) {}
   /**
    * Ul list of elements
    */
@@ -135,7 +135,6 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
 
   public isItemSelected: boolean = false;
 
-
   /**
    * Stored Event for ControlValueAccessor
    */
@@ -202,7 +201,6 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    * @param event
    */
   checkForFocus(event): void {
-    console.log(this.model, '---focusout----')
     if (this.configuration) {
       if (
         this.configuration.isTagModeEnabled ||
@@ -218,7 +216,6 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
     }
 
     this.showResults = false;
-
   }
   updateSingleModeFocusOutModel() {
     if (this.configuration) {
@@ -242,7 +239,10 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
         if (this.configuration) {
           if (this.configuration.selectionMode === SelectionMode.SINGLE) {
             const val = this.inputValue;
-            if (this.configuration.isTagModeEnabled || this.configuration.isFreeTextEnabled) {
+            if (
+              this.configuration.isTagModeEnabled ||
+              this.configuration.isFreeTextEnabled
+            ) {
               if (
                 SAMSDSSelectedItemModelHelper.containsItem(
                   val[this.configuration.primaryKeyField],
@@ -250,19 +250,20 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
                   this.model.items
                 )
               ) {
-                console.log('test outside')
                 SAMSDSSelectedItemModelHelper.clearItems(this.model);
                 this.propogateChange(this.model);
                 this.selectItem(this.createFreeTextItem(val));
               } else if (this.model.items.length <= 0) {
-                console.log('else test outside')
                 this.selectItem(this.createFreeTextItem(val));
               }
             }
           } else if (
             this.configuration.selectionMode === SelectionMode.MULTIPLE
           ) {
-            if (this.configuration.isFreeTextEnabled || this.configuration.isTagModeEnabled) {
+            if (
+              this.configuration.isFreeTextEnabled ||
+              this.configuration.isTagModeEnabled
+            ) {
               if (this.configuration.isDelimiterEnabled) {
                 this.updateDelimeterModel();
 
@@ -275,7 +276,6 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
                 this.input.nativeElement.value = "";
               }
             } else {
-
               this.inputValue = "";
               this.input.nativeElement.value = "";
             }
