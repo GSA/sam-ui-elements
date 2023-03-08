@@ -6,9 +6,8 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {Injectable, Optional, SkipSelf} from '@angular/core';
-import {ScrollDispatcher} from '../scroll/scroll-dispatcher';
-
+import {Injectable, Optional, SkipSelf} from "@angular/core";
+import {ScrollDispatcher} from "../scroll/scroll-dispatcher";
 
 /**
  * Simple utility for getting the bounds of the browser viewport.
@@ -16,7 +15,6 @@ import {ScrollDispatcher} from '../scroll/scroll-dispatcher';
  */
 @Injectable()
 export class ViewportRuler {
-
   /** Cached document client rectangle. */
   private _documentRect?: ClientRect;
 
@@ -26,7 +24,7 @@ export class ViewportRuler {
   }
 
   /** Gets a ClientRect for the viewport's bounds. */
-  getViewportRect(documentRect = this._documentRect): ClientRect {
+  getViewportRect(documentRect = this._documentRect): any {
     // Cache the document bounding rect so that we don't recompute it for multiple calls.
     if (!documentRect) {
       this._cacheViewportGeometry();
@@ -47,7 +45,7 @@ export class ViewportRuler {
     const width = window.innerWidth;
 
     return {
-      top: scrollPosition.top,
+      top: scrollPosition.top ? scrollPosition.top : 0,
       left: scrollPosition.left,
       bottom: scrollPosition.top + height,
       right: scrollPosition.left + width,
@@ -55,7 +53,6 @@ export class ViewportRuler {
       width,
     };
   }
-
 
   /**
    * Gets the (top, left) scroll position of the viewport.
@@ -74,11 +71,11 @@ export class ViewportRuler {
     // `scrollTop` and `scrollLeft` is inconsistent. However, using the bounding rect of
     // `document.documentElement` works consistently, where the `top` and `left` values will
     // equal negative the scroll position.
-    const top = -documentRect!.top || document.body.scrollTop || window.scrollY ||
-                  document.documentElement.scrollTop || 0;
+    const top =
+      -documentRect!.top || document.body.scrollTop || window.scrollY || document.documentElement.scrollTop || 0;
 
-    const left = -documentRect!.left || document.body.scrollLeft || window.scrollX ||
-                  document.documentElement.scrollLeft || 0;
+    const left =
+      -documentRect!.left || document.body.scrollLeft || window.scrollX || document.documentElement.scrollLeft || 0;
 
     return {top, left};
   }
@@ -87,11 +84,9 @@ export class ViewportRuler {
   _cacheViewportGeometry() {
     this._documentRect = document.documentElement.getBoundingClientRect();
   }
-
 }
 
-export function VIEWPORT_RULER_PROVIDER_FACTORY(parentRuler: ViewportRuler,
-                                                scrollDispatcher: ScrollDispatcher) {
+export function VIEWPORT_RULER_PROVIDER_FACTORY(parentRuler: ViewportRuler, scrollDispatcher: ScrollDispatcher) {
   return parentRuler || new ViewportRuler(scrollDispatcher);
 }
 
@@ -99,5 +94,5 @@ export const VIEWPORT_RULER_PROVIDER = {
   // If there is already a ViewportRuler available, use that. Otherwise, provide a new one.
   provide: ViewportRuler,
   deps: [[new Optional(), new SkipSelf(), ViewportRuler], ScrollDispatcher],
-  useFactory: VIEWPORT_RULER_PROVIDER_FACTORY
+  useFactory: VIEWPORT_RULER_PROVIDER_FACTORY,
 };
