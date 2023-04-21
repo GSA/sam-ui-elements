@@ -1,6 +1,6 @@
 {
   "name": "@gsa-sam/sam-ui-elements",
-  "version": "14.0.0-beta-1",
+  "version": "14.0.0-beta-2",
   "description": "SAM UI library",
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
   },
   "peerDependencies": {
 "@angular/animations": ">=14.2.12 <15.0.0",
-    "@angular/cdk": ">=14.2.12 <15.0.0",
+    "@angular/cdk": ">=14.2.7",
     "@angular/common": ">=14.2.12 <15.0.0",
     "@angular/forms": ">=14.2.12 <15.0.0",
     "@angular/platform-browser": ">=14.2.12 <15.0.0",
