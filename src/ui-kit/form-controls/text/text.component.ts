@@ -222,7 +222,7 @@ export class SamTextComponent implements ControlValueAccessor,
   }
 
   private _unsubscribe (): void {
-    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.next(null);
     this.ngUnsubscribe.complete();
     if(this._focusSubscription){
       this._focusSubscription.unsubscribe();

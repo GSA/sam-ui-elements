@@ -26,7 +26,7 @@
     "ng": "ng"
   },
   "peerDependencies": {
-"@angular/animations": ">=14.2.12 <15.0.0",
+    "@angular/animations": ">=14.2.12 <15.0.0",
     "@angular/cdk": ">=14.2.7",
     "@angular/common": ">=14.2.12 <15.0.0",
     "@angular/forms": ">=14.2.12 <15.0.0",
@@ -44,7 +44,7 @@
     "accessible-html5-video-player": ">=1.0.6",
     "core-js": ">=2.6.11",
     "ie-shim": ">=0.1.0",
-    "rxjs": ">=6.5.5",
+    "rxjs": "7.5.0",
     "zone.js": ">=0.11.4",
     "moment": ">=2.19.3",
     "@types/lodash": ">=4.14.123",
