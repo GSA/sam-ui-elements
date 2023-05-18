@@ -44,18 +44,18 @@ $theme: sam-theme($primary, $secondary);
 
 // General settings
 // -------------------------------------
-$theme-image-path: '~@gsa-sam/sam-styles/src/img';
+// $theme-image-path: '~@gsa-sam/sam-styles/src/img';
 
 // Typography settings
 // -------------------------------------
 $theme-respect-user-font-size: false;
-$theme-font-path: '~@gsa-sam/sam-styles/src/fonts';
+// $theme-font-path: '~@gsa-sam/sam-styles/src/fonts';
 $theme-font-role-heading: 'sans';
 $theme-font-weight-semibold: 600;
 
 // Color settings
 // -------------------------------------
-@import '~@gsa-sam/sam-styles/src/stylesheets/theme/sds-theme-color';
+// @import '~@gsa-sam/sam-styles/src/stylesheets/theme/sds-theme-color';
 
 // Spacing settings
 // -------------------------------------
