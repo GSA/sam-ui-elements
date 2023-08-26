@@ -16,7 +16,7 @@ import {
     selector: 'sam-filters-wrapper',
     template: `
       <form [formGroup]="group"
-        (ngSubmit)="runReportEvent.next()">
+        (ngSubmit)="runReportEvent.next($event)">
         <ng-content></ng-content>
         <sam-button-next
           action="submit"
@@ -25,7 +25,7 @@ import {
         </sam-button-next>
         <sam-button-next
           action="secondary"
-          (onClick)="resetReportEvent.next()">
+          (onClick)="resetReportEvent.next($event)">
           {{resetBtnText}}
         </sam-button-next>
       </form>

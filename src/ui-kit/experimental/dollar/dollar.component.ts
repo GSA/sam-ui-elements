@@ -106,7 +106,7 @@ export class SamDollarComponent extends SamFormControl {
 
   public ngOnDestroy() {
     this.cdr.detach();
-    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.next(null);
     this.ngUnsubscribe.complete();
   }
 
