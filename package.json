@@ -1,6 +1,6 @@
 {
   "name": "@gsa-sam/sam-ui-elements",
-  "version": "14.0.0",
+  "version": "15.0.0",
   "description": "SAM UI library",
   "repository": {
     "type": "git",
@@ -26,14 +26,14 @@
     "ng": "ng"
   },
   "peerDependencies": {
-    "@angular/animations": "14.3.0",
-    "@angular/cdk": ">=14.2.7",
-    "@angular/common": ">=14.2.12 <15.0.0",
-    "@angular/forms": ">=14.2.12 <15.0.0",
-    "@angular/platform-browser": ">=14.2.12 <15.0.0",
-    "@angular/platform-browser-dynamic": ">=14.2.12 <15.0.0",
-    "@angular/platform-server": ">=14.2.12 <15.0.0",
-    "@angular/router": ">=14.2.12 <15.0.0",
+    "@angular/animations": ">=15.2.9",
+    "@angular/cdk": ">=15.2.9",
+    "@angular/common": ">=15.0.0 <16.2.0",
+    "@angular/forms": ">=15.0.0 <16.2.0",
+    "@angular/platform-browser": ">=15.0.0 <16.2.0",
+    "@angular/platform-browser-dynamic": ">=15.0.0 <16.2.0",
+    "@angular/platform-server": ">=15.0.0 <16.2.0",
+    "@angular/router": ">=15.0.0 <16.2.0",
     "@fortawesome/angular-fontawesome": "0.10.1",
     "@fortawesome/fontawesome-svg-core": ">=1.2.36",
     "@fortawesome/free-regular-svg-icons": ">=5.15.4",
@@ -42,13 +42,13 @@
     "@gsa-sam/sam-styles": ">=0.0.34",
     "@ngx-formly/core": ">=5.10.22",
     "accessible-html5-video-player": ">=1.0.6",
-    "core-js": ">=2.6.11",
+    "core-js": ">=3.22.4",
     "ie-shim": ">=0.1.0",
-    "rxjs": "7.5.0",
+    "rxjs": ">=7.5.0",
     "zone.js": ">=0.11.4",
     "moment": ">=2.19.3",
     "@types/lodash": ">=4.14.123",
-    "lodash": ">=4.17.11"
+    "lodash": ">=4.17.15"
   },
   "devDependencies": {
     "@angularclass/hmr": "1.0.1",
