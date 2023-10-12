@@ -20,19 +20,19 @@ jobs:
       - checkout
 
       # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+      # - restore_cache:
+      #     keys:
+      #       - v1-dependencies-{{ checksum "package.json" }}
+      #       # fallback to using the latest cache if no exact match is found
+      #       - v1-dependencies-
 
-      - run: cd test-app && npm install
-      - run: sudo npm install -g @angular/cli@6.2.7
+      # - run: cd test-app && npm install
+      # - run: sudo npm install -g @angular/cli@6.2.7
 
-      - save_cache:
-          paths:
-            - test-app/node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+      # - save_cache:
+      #     paths:
+      #       - test-app/node_modules
+      #     key: v1-dependencies-{{ checksum "package.json" }}
 
       # # run tests!
       # - run: cd test-app && npm run test
