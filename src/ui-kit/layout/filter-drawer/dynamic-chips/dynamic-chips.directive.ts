@@ -3,7 +3,6 @@ import {
   Input,
   Output,
   EventEmitter,
-  ComponentFactoryResolver,
   ComponentRef,
   OnInit
 } from '@angular/core';
@@ -30,8 +29,7 @@ export class DynamicChipsDirective implements OnInit {
   @Output() public remove = new EventEmitter<any>();
 
   constructor (public host: SamFilterDrawerComponent,
-    private _service: SamPageNextService,
-    private componentFactoryResolver: ComponentFactoryResolver) {}
+    private _service: SamPageNextService) {}
 
   public ngOnInit () {
     this.host.usingDirective = true;
@@ -91,14 +89,14 @@ export class DynamicChipsDirective implements OnInit {
   }
 
   private _createChipComponent (): ComponentRef<SamFilterDrawerItemComponent> {
-    let componentFactory =
-      this.componentFactoryResolver
-        .resolveComponentFactory(
-          SamFilterDrawerItemComponent
-        );
+    // let componentFactory =
+    //   this.componentFactoryResolver
+    //     .resolveComponentFactory(
+    //       SamFilterDrawerItemComponent
+    //     );
 
     return this.host.chips.viewContainerRef.
-      createComponent(componentFactory);
+      createComponent(SamFilterDrawerItemComponent);
   }
 
   private _setChipProperties (
