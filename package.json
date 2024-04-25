@@ -1,6 +1,6 @@
 {
   "name": "@gsa-sam/sam-ui-elements",
-  "version": "17.0.0",
+  "version": "17.0.1",
   "description": "SAM UI library",
   "repository": {
     "type": "git",
@@ -27,14 +27,14 @@
   },
   "peerDependencies": {
     "@angular/animations": "^17.3.2",
-    "@angular/cdk": "^16.2.8",
+    "@angular/cdk": "^17.3.2",
     "@angular/common": "^17.3.2",
     "@angular/forms": "^17.3.2",
     "@angular/platform-browser": "^17.3.2",
     "@angular/platform-browser-dynamic": "^17.3.2",
     "@angular/platform-server": "^17.3.2",
     "@angular/router": "^17.3.2",
-    "@fortawesome/angular-fontawesome": "0.13.0",
+    "@fortawesome/angular-fontawesome": ">=0.14.1",
     "@fortawesome/fontawesome-free": ">=5.15.4",
     "@fortawesome/fontawesome-svg-core": ">=1.2.36",
     "@fortawesome/free-regular-svg-icons": ">=5.15.4",
