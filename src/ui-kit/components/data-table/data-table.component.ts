@@ -11,6 +11,7 @@ import {
   _CoalescedStyleScheduler,
   _COALESCED_STYLE_SCHEDULER,
   STICKY_POSITIONING_LISTENER,
+  CDK_TABLE,
 } from "@angular/cdk/table";
 
 import {
@@ -34,7 +35,8 @@ export const _SamTable = CdkTable;
   //     <ng-container rowPlaceholder></ng-container>
   //     <ng-content select="[rowFooterPlaceholder]"></ng-content>`,
   providers: [
-    { provide: CdkTable },
+    { provide: CdkTable, useExisting: SamDataTableComponent },
+    { provide: CDK_TABLE, useExisting: SamDataTableComponent },
     {
       provide: _VIEW_REPEATER_STRATEGY,
       useClass: _DisposeViewRepeaterStrategy,
