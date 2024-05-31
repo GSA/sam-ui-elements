@@ -36,8 +36,7 @@ export const _SamTable = CdkTable;
   //     <ng-content select="[rowFooterPlaceholder]"></ng-content>`,
   providers: [
     { provide: CdkTable, useExisting: SamDataTableComponent },
-   { provide: CDK_TABLE, useExisting: SamDataTableComponent },
-    // { provide: CdkTable },
+    { provide: CDK_TABLE, useExisting: SamDataTableComponent },
     {
       provide: _VIEW_REPEATER_STRATEGY,
       useClass: _DisposeViewRepeaterStrategy,
