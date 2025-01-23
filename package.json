@@ -44,7 +44,7 @@
     "@angular/platform-browser": "^18.2.13",
     "@angular/platform-browser-dynamic": "^18.2.13",
     "@angular/router": "^18.2.13",
-    "@gsa-sam/sam-styles": "^3.0.23",
+    "@gsa-sam/sam-styles": ">=0.0.34",
     "@ngx-formly/core": "^6.2.1",
     "accessible-html5-video-player": "^1.0.6",
     "core-js": "^3.22.4",
