@@ -9,7 +9,6 @@ import {
 } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { SamUIKitModule } from '../../../ui-kit';
-import { MdExpansionModule } from '../../../ui-kit/experimental/patterns/layout/components/expansion';
 
 import { FilterWrapperComponent } from './filter.wrapper';
 
@@ -19,7 +18,6 @@ import { FilterWrapperComponent } from './filter.wrapper';
     FormsModule,
     ReactiveFormsModule,
     SamUIKitModule,
-    MdExpansionModule,
     FormlyModule.forRoot({
       wrappers: [
         {
