@@ -7,6 +7,7 @@ import {SamAutocompleteMultiselectComponent} from '../../../ui-kit';
 import {AbstractSamFormly} from '../../sam-formly';
 
 @Component({
+  standalone: false,
   template: `
     <sam-autocomplete-multiselect [formControl]="formControl" [control]="formControl">
     </sam-autocomplete-multiselect>

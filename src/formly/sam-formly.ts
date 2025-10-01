@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FieldType } from '@ngx-formly/core';
 
 @Component({
+  standalone: false,
   template: ''
 })
 export abstract class AbstractSamFormly extends FieldType implements OnInit {

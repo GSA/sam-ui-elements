@@ -9,6 +9,7 @@ import { AbstractSamFormly } from '../../sam-formly';
 import { SamCheckboxComponent } from '../../../ui-kit';
 
 @Component({
+  standalone: false,
  template: `
    <sam-checkbox [formControl]="formControl"></sam-checkbox>
  `,

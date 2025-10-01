@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { SamUIKitModule } from '../ui-kit';
+import { SamAutocompleteModule } from '../ui-kit/form-controls/autocomplete';
 
 /**
  * Package imports
@@ -25,6 +26,7 @@ import {SamFormlyNumber} from './components/number';
 @NgModule({
  imports: [
    SamUIKitModule,
+   SamAutocompleteModule,
    FormsModule,
    ReactiveFormsModule,
    FormlyModule.forRoot({

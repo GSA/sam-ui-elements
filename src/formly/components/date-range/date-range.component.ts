@@ -9,6 +9,7 @@ import {AbstractSamFormly} from '../../sam-formly';
 import {SamDateRangeComponent} from '../../../ui-kit';
 
 @Component({
+  standalone: false,
   template: `
    <sam-date-range [formControl]="formControl"
     [control]="formControl"

@@ -9,6 +9,7 @@ import { AbstractSamFormly } from '../../sam-formly';
 import { SamDateComponent } from '../../../ui-kit';
 
 @Component({
+  standalone: false,
  template: `
    <sam-date [formControl]="formControl"
     [control]="formControl"

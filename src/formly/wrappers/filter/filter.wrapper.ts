@@ -7,6 +7,7 @@ import {
 import { FieldWrapper } from '@ngx-formly/core';
 
 @Component({
+standalone: false,
 template: `
   <sam-expansion-panel>
     <sam-expansion-panel-header>
