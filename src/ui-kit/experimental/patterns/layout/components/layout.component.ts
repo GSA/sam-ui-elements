@@ -8,6 +8,7 @@ import { SamActionBarComponent } from './actionbar.component';
 import { SamMainComponent } from './main.component';
 
 @Component({
+  standalone: false,
   selector: 'sam-layout-b',
   template: `
     <ng-content></ng-content>

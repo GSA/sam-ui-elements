@@ -25,6 +25,7 @@ import {Subject, Subscription} from 'rxjs';
  */
 @Component({
   selector: '[md-tab-nav-bar], [mat-tab-nav-bar]',
+  standalone: false,
   templateUrl: 'tab-nav-bar.html',
   styleUrls: ['tab-nav-bar.scss'],
   host: {'class': 'mat-tab-nav-bar'},
@@ -74,6 +75,7 @@ export const _MdTabLinkMixinBase = mixinDisabled(MdTabLinkBase);
  */
 @Directive({
   selector: '[md-tab-link], [mat-tab-link], [mdTabLink], [matTabLink]',
+  standalone: false,
   inputs: ['disabled'],
   host: {
     'class': 'mat-tab-link',

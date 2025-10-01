@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'sam-side-navigation-toolbar-item',
+  standalone: false,
   templateUrl: './sideNavigationToolbarItem.component.html',
   styleUrls: ['./sideNavigationToolbarItem.component.scss']
 })

@@ -4,6 +4,7 @@ import { BadgeConfig } from '../components/badge';
 
 @Component({
   selector: 'title-and-section',
+  standalone: false,
   template: `
     <div [ngClass]="badgeOptions?.attached ? 'sam-ui segment' : ''">
       <h1 *ngIf="title || section"

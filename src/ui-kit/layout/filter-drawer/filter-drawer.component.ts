@@ -19,6 +19,7 @@ import {
 
 
 @Component({
+  standalone: false,
   selector: 'sam-filter-drawer',
   templateUrl: 'filter-drawer.template.html',
 })

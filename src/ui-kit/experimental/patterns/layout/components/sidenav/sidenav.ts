@@ -53,6 +53,7 @@ export class MdSidenavToggleResult {
  * Please refer to README.md for examples on how to use it.
  */
 @Component({
+  standalone: false,
   selector: 'md-sidenav, mat-sidenav, sam-aside',
   // TODO(mmalerba): move template to separate file.
   template: '<ng-content></ng-content>',
@@ -328,6 +329,7 @@ export class MdSidenav implements AfterContentInit, OnDestroy {
  * and coordinates the backdrop and content styling.
  */
 @Component({
+  standalone: false,
   selector: 'md-sidenav-container, mat-sidenav-container',
   // Do not use ChangeDetectionStrategy.OnPush. It does not work for this component because
   // technically it is a sibling of MdSidenav (on the content tree) and isn't updated when MdSidenav

@@ -13,6 +13,7 @@ import { OptionsType } from '../../types';
  * multiselect a list
  */
 @Component({
+  standalone: false,
     selector: 'sam-multiselect-dropdown',
     templateUrl: 'multiselect-dropdown.template.html'
 })

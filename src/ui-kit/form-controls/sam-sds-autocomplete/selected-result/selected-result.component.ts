@@ -13,6 +13,7 @@ const SDS_SelectedResult_VALUE_ACCESSOR: any = {
 
 @Component({
   selector: "sam-sds-selected-result",
+  standalone: false,
   templateUrl: "./selected-result.component.html",
   styleUrls: ["./selected-result.component.scss"],
   providers: [SDS_SelectedResult_VALUE_ACCESSOR],

@@ -7,6 +7,7 @@ import {
 
 @Component({
   selector: 'sam-filter-drawer-item',
+  standalone: false,
   template: `
   <div class="title">{{ label }}</div>
   <ng-container *ngFor="let value of values">

@@ -31,6 +31,7 @@ import { fromEvent } from 'rxjs';
 import { map, tap, filter, debounceTime, switchAll } from 'rxjs/operators';
 
 @Component({
+  standalone: false,
   selector: "sam-search",
   templateUrl: 'search.template.html',
   animations: [

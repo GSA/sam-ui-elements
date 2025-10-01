@@ -6,6 +6,7 @@ import { Component, Input } from '@angular/core';
  */
 @Component({
   selector: 'sam-banner',
+  standalone: false,
   templateUrl: 'banner.template.html'
 })
 export class SamBannerComponent {

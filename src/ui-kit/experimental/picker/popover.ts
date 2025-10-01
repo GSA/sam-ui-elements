@@ -7,6 +7,7 @@ export class Popover {
 
 @Component({
   selector: 'sam-popover',
+  standalone: false,
   template: `<ng-content></ng-content>`,
   providers: [
     {

@@ -22,6 +22,7 @@ import { KeyHelper } from '../../../utilities/key-helper/key-helper';
 import  { numberInputKeys} from '../number-input-keys';
 @Component({
   selector: 'sam-telephone',
+  standalone: false,
   encapsulation: ViewEncapsulation.None,
   templateUrl: 'telephone.template.html',
   providers: [

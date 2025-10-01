@@ -37,6 +37,7 @@ export interface DateRangeSettings {
 }
 
 @Component({
+  standalone: false,
   selector: 'sam-date-range-v2',
   templateUrl: './date-range-v2.component.html',
   styleUrls: ['./date-range-v2.component.scss'],

@@ -13,6 +13,7 @@ import {
   import { areEqual } from '../../utilities';
   
   @Component({
+    standalone: false,
     selector: 'sam-filters-wrapper',
     template: `
       <form [formGroup]="group"

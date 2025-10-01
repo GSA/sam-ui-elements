@@ -19,6 +19,7 @@ import {
  */
 @Component({
   selector: 'sam-icon',
+  standalone: false,
   template: `<sam-fa-icon
     [icon]="iconProp"
     [title]="title"

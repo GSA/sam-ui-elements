@@ -22,6 +22,7 @@ import { TextAreaWidthType } from "../../types";
  */
 @Component({
   selector: "sam-text-area",
+  standalone: false,
   templateUrl: "textarea.template.html",
   providers: [
     {

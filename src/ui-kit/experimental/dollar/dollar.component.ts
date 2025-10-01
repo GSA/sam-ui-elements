@@ -21,6 +21,7 @@ import { SamFormControl } from '../../form-controls/sam-form-control';
 
 @Component({
   selector: 'sam-dollar',
+  standalone: false,
   templateUrl: 'dollar.template.html',
   providers: [{
       provide: NG_VALUE_ACCESSOR,

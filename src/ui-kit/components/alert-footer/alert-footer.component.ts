@@ -4,6 +4,7 @@ import { AlertType } from '../../types';
 
 @Component({
   selector: 'sam-alert-footer',
+  standalone: false,
   templateUrl: 'alert-footer.template.html'
 })
 export class SamAlertFooterComponent {

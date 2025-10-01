@@ -34,6 +34,7 @@ import {
    * Fontawesome icon. Remove with real fontawesome package when on angular 5+
    */
   @Component({
+    standalone: false,
     selector: 'sam-fa-icon',
     template: ``
   })

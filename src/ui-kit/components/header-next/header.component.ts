@@ -9,6 +9,7 @@ import { faSquare, faCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { sdsBars } from '@gsa-sam/icons';
 
 @Component({
+  standalone: false,
   selector: 'sam-header-next',
   templateUrl: 'header.template.html'
 })

@@ -21,6 +21,7 @@ import { Comment } from './interfaces';
 
 @Component({
   selector: 'sam-comments',
+  standalone: false,
   templateUrl: 'comments.template.html',
 })
 export class SamCommentsComponent implements OnInit {

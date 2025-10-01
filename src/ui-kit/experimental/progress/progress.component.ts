@@ -18,6 +18,7 @@ export enum ProgressIndicatorType {
 
 @Component({
   selector: 'sam-progress',
+  standalone: false,
   templateUrl: 'progress.component.html'
 })
 export class ProgressComponent implements ProgressIndicator {

@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: "sam-layout",
+  standalone: false,
   template: `
     <div [ngClass]="css_classes">
       <ng-content></ng-content>
@@ -25,6 +26,7 @@ export class SamLayoutComponent {
 
 @Component({
   selector: "sam-layout-img",
+  standalone: false,
   template: `
     <div [ngClass]="css_classes">
       <ng-content></ng-content>
@@ -45,6 +47,7 @@ export class SamLayoutImgComponent {
 
 @Component({
   selector: "sam-layout-content",
+  standalone: false,
   template: `
     <div [ngClass]="css_classes">
       <ng-content></ng-content>

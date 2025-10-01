@@ -19,6 +19,7 @@ import { KeyHelper, KEYS } from '../../utilities/key-helper/key-helper';
  */
 @Component({
   selector: 'sam-modal',
+  standalone: false,
   templateUrl: './modal.template.html'
 })
 export class SamModalComponent implements OnInit {

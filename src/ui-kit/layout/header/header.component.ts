@@ -4,6 +4,7 @@ import { HeaderModel, Selectable, HeaderNavigationLink, HeaderSecondaryLink } fr
 
 @Component({
   selector: 'sds-header',
+  standalone: false,
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })

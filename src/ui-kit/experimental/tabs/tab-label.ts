@@ -14,6 +14,7 @@ export const _MdTabLabelBaseClass = TemplatePortalDirective;
 
 /** Used to flag tab labels for use with the portal directive */
 @Directive({
+  standalone: false,
   selector: '[sam-tab-label]',
 })
 export class MdTabLabel extends _MdTabLabelBaseClass {

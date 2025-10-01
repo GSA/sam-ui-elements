@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: "sam-label-next",
+  standalone: false,
   template: `
     <span [ngClass]="css_classes">
       <ng-content></ng-content>

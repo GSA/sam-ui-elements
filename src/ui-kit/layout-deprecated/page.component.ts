@@ -6,6 +6,7 @@ import { PageConfig } from './types';
   selector: 'page',
   templateUrl: 'page.template.html',
   providers: [PageService],
+  standalone: false
 })
 export class PageTemplateComponent implements OnInit {
   /**

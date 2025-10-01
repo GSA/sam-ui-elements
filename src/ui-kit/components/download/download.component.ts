@@ -10,6 +10,7 @@ import { DownloadPackageType } from '../../types';
  */
 @Component({
   selector: 'sam-download',
+  standalone: false,
   templateUrl: 'download.template.html',
   animations: [
     trigger('accordion', [

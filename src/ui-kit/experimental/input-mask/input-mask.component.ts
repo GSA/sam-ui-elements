@@ -13,6 +13,7 @@ export const VALUE_ACCESSOR: any = {
 
 @Component({
     selector: 'sam-input-mask',
+  standalone: false,
     template: `<input
         [disabled]='disabled'
         type='text'

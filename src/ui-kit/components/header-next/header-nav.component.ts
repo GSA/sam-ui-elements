@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'sam-header-nav',
+  standalone: false,
   template: `
     <ul
       [ngClass]="{

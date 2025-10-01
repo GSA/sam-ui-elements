@@ -40,6 +40,7 @@ export interface SamCache {
 }
 
 @Component({
+  standalone: false,
   selector: 'sam-autocomplete',
   templateUrl: 'autocomplete.template.html',
   providers: [AUTOCOMPLETE_VALUE_ACCESSOR]

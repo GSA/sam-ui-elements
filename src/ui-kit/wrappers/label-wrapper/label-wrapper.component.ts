@@ -11,6 +11,7 @@ import {
 import { AbstractControl } from '@angular/forms';
 
 @Component({
+  standalone: false,
   selector: 'sam-label-wrapper',
   templateUrl: 'label-wrapper.template.html',
 })

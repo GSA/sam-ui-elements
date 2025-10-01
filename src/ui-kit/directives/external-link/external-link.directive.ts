@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 
 @Directive({
+  standalone: false,
   selector: 'a[target]'
 })
 export class SamExternalLinkDirective

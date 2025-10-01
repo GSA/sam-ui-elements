@@ -20,6 +20,7 @@ import {
  */
 @Component({
   selector: 'sam-toggle-switch',
+  standalone: false,
   templateUrl: 'toggle-switch.template.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

@@ -17,6 +17,7 @@ import { AbstractCell } from '../aria/abstract-grid/abstract-cell';
 import { Popover } from './popover';
 
 @Component({
+  standalone: false,
   selector: 'sam-picker',
   template: `<ng-content></ng-content>`
 })

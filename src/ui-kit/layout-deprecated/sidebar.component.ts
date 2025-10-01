@@ -4,6 +4,7 @@ import { PageService } from './page.service';
 @Component({
   selector: 'sidebar',
   template: '<ng-content></ng-content>',
+  standalone: false
 })
 export class SidebarTemplateComponent implements OnInit {
   /**

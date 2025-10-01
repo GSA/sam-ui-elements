@@ -17,6 +17,7 @@ export interface Sort {
 
 /** Container for SamSortables to manage the sort state and provide default sort parameters. */
 @Directive({
+  standalone: false,
   selector: '[samSort]',
 })
 export class SamSortDirective {

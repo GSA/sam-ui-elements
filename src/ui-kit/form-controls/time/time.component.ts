@@ -24,6 +24,7 @@ import {SamFormService} from '../../form-service';
  */
 @Component({
   selector: 'sam-time',
+  standalone: false,
   templateUrl: 'time.template.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

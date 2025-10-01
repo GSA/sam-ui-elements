@@ -2,6 +2,7 @@ import { Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: "sam-list",
+  standalone: false,
   template: `
     <ul [ngClass]="css_classes">
       <ng-content></ng-content>
@@ -28,6 +29,7 @@ export class SamListComponent implements OnInit{
 
 @Component({
   selector: "sam-list-item",
+  standalone: false,
   template: `
     <li [ngClass]="bullet">
       <span class="bullet" *ngIf="bullet"></span>

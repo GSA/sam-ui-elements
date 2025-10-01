@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'sam-progress-bar',
+  standalone: false,
   template: '<progress [attr.value]="value" [attr.max]="max"></progress>',
   styles: [`
     progress[value] {

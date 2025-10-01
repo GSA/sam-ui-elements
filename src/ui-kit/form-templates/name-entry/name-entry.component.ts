@@ -127,6 +127,7 @@ suffixOptions.unshift({
  */
 @Component({
   selector: 'sam-name-entry',
+  standalone: false,
   templateUrl: 'name-entry.template.html',
   providers: [
     {

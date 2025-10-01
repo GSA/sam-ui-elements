@@ -11,6 +11,7 @@ import { SamPageNextService } from '../../experimental/patterns/layout/architect
 
 @Component({
   selector: 'sam-aside-toggle',
+  standalone: false,
   template: `
     <button *ngIf="sidenav && showToggle" class="sam button tertiary small"
       (click)="handleClick()"

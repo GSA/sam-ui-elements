@@ -10,6 +10,7 @@ const Hierarchical_VALUE_ACCESSOR: any = {
 };
 
 @Component({
+  standalone: false,
   selector: 'sam-hierarchical',
   templateUrl: './hierarchical.component.html',
   styleUrls: ['./hierarchical.component.scss'],

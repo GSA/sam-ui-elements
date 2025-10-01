@@ -24,6 +24,7 @@ import { SamFormService } from '../../form-service';
  * The <samPhoneInput> component is a Phone entry portion of a form
  */
 @Component( {
+  standalone: false,
   selector: 'sam-phone-entry',
   templateUrl: 'phone-entry.template.html',
   providers: [{

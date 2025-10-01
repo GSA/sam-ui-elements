@@ -22,6 +22,7 @@ interface ValidationResult {
 }
 
 @Component({
+  standalone: false,
   selector: 'sam-datepicker-v2',
   animations: [
     trigger('calendarAnimation', [

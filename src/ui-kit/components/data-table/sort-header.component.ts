@@ -35,6 +35,7 @@ export class SamSortHeaderIntl {
  */
 @Component({
 selector: '[sam-sort-header]',
+  standalone: false,
 template: `
 <div class="sam-sort-header-container"
      [class.sam-sort-header-position-before]="arrowPosition == 'before'">

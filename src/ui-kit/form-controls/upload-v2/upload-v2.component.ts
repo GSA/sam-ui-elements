@@ -74,6 +74,7 @@ export namespace UploadValidator {
 }
 
 @Component({
+  standalone: false,
   selector: 'sam-upload-v2',
   providers: [VALUE_ACCESSOR],
   templateUrl: 'upload-v2.template.html',

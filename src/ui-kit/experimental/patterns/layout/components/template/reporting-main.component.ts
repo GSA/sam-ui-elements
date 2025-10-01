@@ -7,6 +7,7 @@ import { SamPageNextService } from '../../architecture';
 
 @Component({
   selector: 'sam-reporting-main',
+  standalone: false,
   templateUrl: './reporting-main.template.html',
   providers: [
     {

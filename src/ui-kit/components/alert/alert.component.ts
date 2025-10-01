@@ -6,7 +6,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
  */
 @Component({
   selector: 'sam-alert',
-  templateUrl: './alert.template.html'
+  templateUrl: './alert.template.html',
+  standalone: false
 })
 export class SamAlertComponent {
   /**

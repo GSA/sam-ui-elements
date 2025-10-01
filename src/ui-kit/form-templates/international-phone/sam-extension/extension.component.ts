@@ -30,6 +30,7 @@ import { numberInputKeys } from '../number-input-keys';
 
 @Component({
   selector: 'sam-extension',
+  standalone: false,
   encapsulation: ViewEncapsulation.None,
   templateUrl: 'extension.template.html',
   providers: [

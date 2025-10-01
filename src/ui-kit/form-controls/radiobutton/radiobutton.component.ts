@@ -23,6 +23,7 @@ import { SamFormService } from '../../form-service';
  * sam.gov standards
  */
 @Component({
+  standalone: false,
   selector: 'sam-radio-button',
   templateUrl: 'radiobutton.template.html',
   providers: [{
