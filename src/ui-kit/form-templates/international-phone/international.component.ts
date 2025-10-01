@@ -13,6 +13,7 @@ import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
 import { SamFormService } from '../../form-service';
 
 @Component({
+  standalone: false,
   selector: 'sam-intl-telephone-group',
   encapsulation: ViewEncapsulation.None,
   styles: [

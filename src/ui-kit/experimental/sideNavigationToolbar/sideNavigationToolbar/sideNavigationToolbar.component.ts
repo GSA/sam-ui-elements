@@ -3,6 +3,7 @@ import { SamSideNavigationToolbarItemComponent } from '../sideNavigationToolbarI
 
 @Component({
   selector: 'sam-side-navigation-toolbar',
+  standalone: false,
   templateUrl: './sideNavigationToolbar.component.html',
   styleUrls: ['./sideNavigationToolbar.component.scss']
 })

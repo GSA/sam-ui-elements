@@ -20,6 +20,7 @@ import { SamFormService } from '../../form-service';
  *
  */
 @Component({
+  standalone: false,
   selector: 'sam-number',
   template: `
       <sam-label-wrapper

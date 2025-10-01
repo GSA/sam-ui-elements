@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'form-only',
+  standalone: false,
   template: `
     <div class="occupy-page"
       [style.background-color]="theme == 'inside' ? '#F9F9F9' : '' " 

@@ -1,6 +1,7 @@
 import { Component, Input, ElementRef, TemplateRef, Renderer2, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: "sam-title",
   template: `
     <ng-template #titleTemplate>

@@ -8,6 +8,7 @@ import { HierarchicalDataSource } from './data-source';
 import { SamHierarchicalTreeGridConfiguration } from '../models/SamHierarchicalTreeGridConfiguration';
 
 @Component({
+  standalone: false,
   selector: 'sam-hierarchical-tree-grid',
   templateUrl: './hierarchical-tree-grid.component.html',
   styleUrls: ['./hierarchical-tree-grid.component.scss']

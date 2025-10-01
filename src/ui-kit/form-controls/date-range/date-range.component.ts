@@ -23,6 +23,7 @@ import { SamFormService } from '../../form-service';
  */
 @Component({
     selector: 'sam-date-range',
+  standalone: false,
     templateUrl: 'date-range.template.html',
     providers: [{
         provide: NG_VALUE_ACCESSOR,

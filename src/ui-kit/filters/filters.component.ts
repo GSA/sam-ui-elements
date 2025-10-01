@@ -12,6 +12,7 @@ import { SamPageNextService } from '../experimental/patterns/layout/architecture
 
 @Component({
   selector: 'sam-filters',
+  standalone: false,
   template: `
     <div samAccordion multi="true">
       <!-- Formly creates the Reactive form group from the

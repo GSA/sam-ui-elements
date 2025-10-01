@@ -9,6 +9,7 @@ import { AbstractSamFormly } from '../../sam-formly';
 import { SamTextComponent } from '../../../ui-kit';
 
 @Component({
+  standalone: false,
  template: `
    <sam-text [formControl]="formControl" [control]="formControl"></sam-text>
  `,

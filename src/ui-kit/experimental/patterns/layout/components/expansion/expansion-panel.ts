@@ -45,6 +45,7 @@ export const EXPANSION_PANEL_ANIMATION_TIMING = '225ms cubic-bezier(0.4,0.0,0.2,
 @Component({
   // styleUrls: ['./expansion-panel.css'],
   selector: 'md-expansion-panel, mat-expansion-panel, sam-expansion-panel',
+  standalone: false,
   templateUrl: './expansion-panel.html',
   encapsulation: ViewEncapsulation.None,
   providers: [
@@ -107,6 +108,7 @@ export class MdExpansionPanelComponent extends AccordionItem {
 
 @Directive({
   selector: '[samMatActionRow], [samMdActionRow]',
+  standalone: false,
 })
 export class MdExpansionPanelActionRowDirective {
   @HostBinding('class') hostClass = 'mat-action-row';

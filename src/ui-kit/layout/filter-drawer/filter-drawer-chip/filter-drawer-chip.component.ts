@@ -7,6 +7,7 @@ import {
 
 @Component({
   selector: 'sam-filter-drawer-chip',
+  standalone: false,
   template: `
   <span class="sam label">
     {{ label }}

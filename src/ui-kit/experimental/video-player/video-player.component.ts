@@ -15,6 +15,7 @@ interface InitPxVideoConfig {
 
 @Component({
   selector: 'sam-video-player',
+  standalone: false,
   templateUrl: './video-player.template.html',
   host: {
     '(document:fullscreenchange)': 'onToggleFullScreen($event)'

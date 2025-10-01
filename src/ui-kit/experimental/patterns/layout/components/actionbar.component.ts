@@ -7,6 +7,7 @@ import { SamPaginationNextComponent } from  '../../../../layout/pagination/pagin
 import { SamPageNextService } from '../architecture';
 
 @Component({
+  standalone: false,
   selector: 'sam-action-bar',
   template: `
     <ng-content select="sam-pagination-next"></ng-content>

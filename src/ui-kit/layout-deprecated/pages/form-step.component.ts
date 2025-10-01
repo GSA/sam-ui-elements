@@ -11,6 +11,7 @@ import {
 
 @Component ({
   selector: 'form-step',
+  standalone: false,
   template: `
     <page 
       [breadcrumbs]="crumbs" 

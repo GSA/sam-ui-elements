@@ -20,6 +20,7 @@ export interface OptionModel {
   disabled: boolean;
 }
 @Component({
+  standalone: false,
   selector: 'sam-listbox',
   templateUrl: './listbox.component.html',
   styleUrls: ['./listbox.component.scss'],

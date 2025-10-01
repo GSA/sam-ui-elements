@@ -12,6 +12,7 @@ import {
  */
 @Component({
   selector: 'sam-alert-next',
+  standalone: false,
   templateUrl: './alert.template.html'
 })
 export class SamAlertNextComponent {

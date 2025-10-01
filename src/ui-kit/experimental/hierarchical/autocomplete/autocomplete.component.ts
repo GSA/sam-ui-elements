@@ -11,6 +11,7 @@ const Hierarchical_Autocomplete_VALUE_ACCESSOR: any = {
 };
 
 @Component({
+  standalone: false,
   selector: 'sam-hierarchical-autocomplete',
   templateUrl: './autocomplete.component.html',
   styleUrls: ['./autocomplete.component.scss'],

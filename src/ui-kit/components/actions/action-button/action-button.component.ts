@@ -3,6 +3,7 @@ import { SamActionInterface } from '../action-interface';
 
 @Component({
   selector: 'sam-action-button',
+  standalone: false,
   templateUrl: 'action-button.template.html'
 })
 export class SamActionButton {

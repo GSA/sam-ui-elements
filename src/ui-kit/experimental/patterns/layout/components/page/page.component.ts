@@ -24,6 +24,7 @@ import { SamToolbarComponent } from '../../../../../layout/toolbar';
 import { SamPageNextService } from '../../architecture';
 
 @Component({
+  standalone: false,
   selector: 'sam-page-next',
   templateUrl: 'page.template.html',
   encapsulation: ViewEncapsulation.None,

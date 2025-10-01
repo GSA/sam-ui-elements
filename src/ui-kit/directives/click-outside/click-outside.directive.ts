@@ -11,6 +11,7 @@ import {
  * the target
  */
 @Directive({
+  standalone: false,
   selector: '[sam-click-outside]'
 })
 export class SamClickOutsideDirective {

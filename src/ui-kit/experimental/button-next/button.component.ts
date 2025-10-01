@@ -5,6 +5,7 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
  */
 @Component({
   selector: 'sam-button-next',
+  standalone: false,
   template: `
     <button
       [attr.id]="id"

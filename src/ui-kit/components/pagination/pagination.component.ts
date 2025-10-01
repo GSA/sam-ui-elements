@@ -5,6 +5,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
  */
 @Component({
   selector: 'sam-pagination',
+  standalone: false,
   templateUrl: 'pagination.template.html',
 })
 export class SamPaginationComponent {

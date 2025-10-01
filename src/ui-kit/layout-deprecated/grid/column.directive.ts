@@ -1,7 +1,8 @@
 import { Directive, ElementRef, Renderer2, Input } from '@angular/core';
 
 @Directive({
-  selector: '[columns]'
+  selector: '[columns]',
+  standalone: false
 })
 export class ColumnDirective {
   public columnsClass: string;

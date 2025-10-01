@@ -12,6 +12,7 @@ import {
 import { AbstractSamFormly } from '../../sam-formly';
 
 @Component({
+ standalone: false,
  template: `
    <sam-autocomplete [formControl]="formControl"
     [control]="formControl"

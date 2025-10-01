@@ -31,6 +31,7 @@ const Autocomplete_VALUE_ACCESSOR: any = {
 
 @Component({
   selector: "sam-sds-autocomplete",
+  standalone: false,
   templateUrl: "./autocomplete.component.html",
   styleUrls: ["./autocomplete.component.scss"],
   providers: [Autocomplete_VALUE_ACCESSOR],

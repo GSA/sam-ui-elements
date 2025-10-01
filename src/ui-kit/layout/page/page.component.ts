@@ -10,6 +10,7 @@ export class SamPageService {
  */
 @Component({
   selector: 'sam-page',
+  standalone: false,
   templateUrl: 'page.template.html',
   providers: [SamPageService]
 })
@@ -34,6 +35,7 @@ export class SamPageComponent {
  */
 @Component({
   selector: 'sam-page-sidebar',
+  standalone: false,
   template: `
     <div class="page-sidebar">
       <ng-content></ng-content>

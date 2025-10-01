@@ -12,6 +12,7 @@ import { Deprecator } from '../../utilities';
 */
 @Component({
   selector: 'sam-button',
+  standalone: false,
   template: `
   <button
     [attr.id]="id"

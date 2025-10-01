@@ -32,6 +32,7 @@ import {MdExpansionPanelComponent, EXPANSION_PANEL_ANIMATION_TIMING} from './exp
  * Please refer to README.md for examples on how to use it.
  */
 @Component({
+  standalone: false,
   selector: 'md-expansion-panel-header, mat-expansion-panel-header, sam-expansion-panel-header',
   // styleUrls: ['./expansion-panel-header.css'],
   templateUrl: './expansion-panel-header.html',
@@ -109,6 +110,7 @@ export class MdExpansionPanelHeader {
  * This direction is to be used inside of the MdExpansionPanelHeader component.
  */
 @Directive({
+  standalone: false,
   selector: 'md-panel-description, mat-panel-description',
   host : {
     class: 'mat-expansion-panel-header-description'
@@ -122,6 +124,7 @@ export class MdExpansionPanelDescription {}
  * This direction is to be used inside of the MdExpansionPanelHeader component.
  */
 @Directive({
+  standalone: false,
   selector: 'md-panel-title, mat-panel-title',
   host : {
     class: 'mat-expansion-panel-header-title'

@@ -4,7 +4,8 @@ import { IBreadcrumb } from '../../types';
 
 @Component({
     selector: 'sam-breadcrumbs',
-    templateUrl: 'breadcrumbs.template.html'
+    templateUrl: 'breadcrumbs.template.html',
+    standalone: false
 })
 export class SamBreadcrumbsComponent {
     /**

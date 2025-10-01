@@ -3,6 +3,7 @@ import { SamHeaderNavComponent } from './header-nav.component';
 
 @Component({
   selector: 'sam-header-nav-item',
+  standalone: false,
   template: `
     <li
       [ngClass]="{

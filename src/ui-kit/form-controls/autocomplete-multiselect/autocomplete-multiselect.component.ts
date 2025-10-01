@@ -24,6 +24,7 @@ import { KeyHelper } from '../../utilities/key-helper/key-helper';
 import { SamCache } from '../autocomplete/autocomplete.component';
 
 @Component({
+  standalone: false,
   selector: 'sam-autocomplete-multiselect',
   templateUrl: 'autocomplete-multiselect.template.html',
   providers: [

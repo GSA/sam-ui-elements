@@ -15,6 +15,7 @@ import {
  */
 @Component({
   selector: 'sam-tab',
+  standalone: false,
   template: `
     <div [class.hide]="!active">
       <ng-content></ng-content>
@@ -46,6 +47,7 @@ export class SamTabComponent {
  */
 @Component({
   selector: 'sam-tabs',
+  standalone: false,
   template: `
     <div class="sam-ui menu"
       [ngClass]="[themes[theme],size]"

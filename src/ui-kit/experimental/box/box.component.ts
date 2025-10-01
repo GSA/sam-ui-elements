@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: "sam-box",
+  standalone: false,
   template: `
     <div [ngClass]="css_classes">
       <ng-content></ng-content>

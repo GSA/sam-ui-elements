@@ -4,6 +4,7 @@ import { BadgeConfig } from './types';
 
 @Component({
   selector: 'sam-badge',
+  standalone: false,
   template: `
     <div class="sam-ui label small" [ngClass]="[attached]">
         <ng-content></ng-content>

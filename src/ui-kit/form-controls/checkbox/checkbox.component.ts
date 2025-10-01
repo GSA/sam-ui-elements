@@ -20,6 +20,7 @@ import { SamFormService } from '../../form-service';
  * The <sam-checkbox> component is a set of checkboxes
  */
 @Component({
+  standalone: false,
   selector: 'sam-checkbox',
   templateUrl: 'checkbox.template.html',
   providers: [{

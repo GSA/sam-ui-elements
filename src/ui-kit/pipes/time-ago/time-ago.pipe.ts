@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 import * as moment from 'moment';
 
 @Pipe({
+  standalone: false,
   name: 'timeago',
  // WARNING: If this is not set to false, values won't update unless the Object
  // or Array reference changes: https://stackoverflow.com/questions/34456430/

@@ -10,6 +10,7 @@ const Hierarchical_SelectedResult_VALUE_ACCESSOR: any = {
 
 @Component({
   selector: 'sam-selected-result',
+  standalone: false,
   templateUrl: './selected-result.component.html',
   styleUrls: ['./selected-result.component.scss'],
   providers: [Hierarchical_SelectedResult_VALUE_ACCESSOR]

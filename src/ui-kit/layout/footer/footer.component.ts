@@ -4,6 +4,7 @@ import { FooterModel } from './model/FooterModel';
 
 @Component({
   selector: 'sds-footer',
+  standalone: false,
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })

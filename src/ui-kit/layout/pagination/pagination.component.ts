@@ -22,6 +22,7 @@ import { Paginator } from './paginator';
  */
 @Component({
   selector: 'sam-pagination-next',
+  standalone: false,
   templateUrl: 'pagination.template.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })

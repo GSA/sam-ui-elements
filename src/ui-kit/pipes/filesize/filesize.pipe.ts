@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 // Transforms a filesize in bytes to a human readable decimal filesize using SI prefixes
-@Pipe({name: 'filesize'})
+@Pipe({standalone: false, name: 'filesize'})
 export class FilesizePipe implements PipeTransform {
 
   transform(size: number): string {

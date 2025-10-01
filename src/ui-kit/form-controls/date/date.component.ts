@@ -32,6 +32,7 @@ import {
  */
 @Component({
   selector: 'sam-date',
+  standalone: false,
   templateUrl: 'date.template.html',
   providers: [{
     provide: NG_VALUE_ACCESSOR,

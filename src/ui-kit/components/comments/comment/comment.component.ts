@@ -4,6 +4,7 @@ import { Comment } from '../interfaces';
 
 @Component({
   selector: 'sam-comment',
+  standalone: false,
   templateUrl: 'comment.template.html'
 })
 export class SamCommentComponent {

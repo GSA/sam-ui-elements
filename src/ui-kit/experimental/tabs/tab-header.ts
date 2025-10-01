@@ -51,6 +51,7 @@ const EXAGGERATED_OVERSCROLL = 60;
  * @docs-private
  */
 @Component({
+  standalone: false,
   selector: 'md-tab-header, mat-tab-header',
   templateUrl: 'tab-header.html',
   styleUrls: ['tab-header.scss'],

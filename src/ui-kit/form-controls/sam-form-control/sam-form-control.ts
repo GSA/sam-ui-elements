@@ -36,6 +36,7 @@ export function ValidatorToken(className) {
   };
 }
 @Component({
+  standalone: false,
   template: ''
 })
 export class SamFormControl

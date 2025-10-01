@@ -28,6 +28,7 @@ import { SamFormService } from '../../form-service';
  * The <sam-text> component provides a text input form control
  */
 @Component({
+  standalone: false,
   selector: 'sam-text',
   templateUrl: 'text.template.html',
   providers: [

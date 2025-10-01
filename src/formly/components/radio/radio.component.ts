@@ -7,6 +7,7 @@ import {SamRadioButtonComponent} from '../../../ui-kit';
 import {AbstractSamFormly} from '../../sam-formly';
 
 @Component({
+  standalone: false,
   template: `
     <sam-radio-button
       [formControl]="formControl"

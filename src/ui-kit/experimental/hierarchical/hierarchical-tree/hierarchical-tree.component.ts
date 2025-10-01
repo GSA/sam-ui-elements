@@ -8,6 +8,7 @@ import { first } from 'rxjs/operators';
 
 @Component({
   selector: "sam-hierarchical-tree",
+  standalone: false,
   templateUrl: "./hierarchical-tree.component.html",
   styleUrls: ["./hierarchical-tree.component.scss"]
 })

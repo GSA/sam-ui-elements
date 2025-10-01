@@ -9,6 +9,7 @@ import { SamFilterDrawerComponent } from '../../../../layout/filter-drawer';
 import { SamPageNextService } from '../architecture';
 
 @Component({
+  standalone: false,
   selector: 'sam-main',
   template: `
     <ng-content select="sam-alert-next"></ng-content>

@@ -17,6 +17,7 @@ export type ToolbarItemIcon = 'fa-download' | 'fa-share-alt'
 
 @Component({
   selector: 'sam-actions',
+  standalone: false,
   template: `
   <div class="section right">
     <ng-container *ngFor="let item of contentModel">

@@ -26,6 +26,7 @@ const MY_VALUE_ACCESSOR: any = {
  */
 @Component({
   selector: 'sam-date-time',
+  standalone: false,
   templateUrl: 'date-time.template.html',
   providers: [ MY_VALUE_ACCESSOR ]
 })

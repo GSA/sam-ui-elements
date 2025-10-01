@@ -28,6 +28,7 @@ export const _SamTable = CdkTable;
  * Todo: revert back to using CDK_TABLE_TEMPLATE in a later version
  */
 @Component({
+  standalone: false,
   selector: "sam-datatable, table[sam-datatable]",
   template: CDK_TABLE_TEMPLATE,
   //   template: `

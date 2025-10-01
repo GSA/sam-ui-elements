@@ -9,6 +9,7 @@ import { ToolbarItem } from '../../experimental/actions-list';
 
 @Component({
   selector: 'sam-toolbar',
+  standalone: false,
   template: `
   <div class="sam menu">
   <sam-aside-toggle [showToggle]="showToggle" [sidenav]="sidenav"

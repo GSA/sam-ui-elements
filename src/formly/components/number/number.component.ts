@@ -9,6 +9,7 @@ import {AbstractSamFormly} from '../../sam-formly';
 import {SamNumberComponent} from '../../../ui-kit';
 
 @Component({
+  standalone: false,
   template: `
    <sam-number [formControl]="formControl"
     [control]="formControl"
