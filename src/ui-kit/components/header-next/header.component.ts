@@ -9,9 +9,9 @@ import { faSquare, faCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { sdsBars } from '@gsa-sam/icons';
 
 @Component({
-  standalone: false,
-  selector: 'sam-header-next',
-  templateUrl: 'header.template.html'
+    selector: 'sam-header-next',
+    templateUrl: 'header.template.html',
+    standalone: false
 })
 export class SamHeaderNextComponent {
   @ViewChild('usaNavOpen', {static: true}) openNavBtn: ElementRef;

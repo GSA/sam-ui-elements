@@ -10,9 +10,8 @@ import {
 
 
 @Component ({
-  selector: 'form-step',
-  standalone: false,
-  template: `
+    selector: 'form-step',
+    template: `
     <page 
       [breadcrumbs]="crumbs" 
       (breadcrumbChange)="breadcrumbHandler($event)"
@@ -103,7 +102,8 @@ import {
       
       <div class="sam-ui divider"></div>
     </page>
-  `
+  `,
+    standalone: false
 })
 export class FormStepComponent implements OnChanges, AfterViewInit {
   /**

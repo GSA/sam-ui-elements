@@ -5,15 +5,15 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'sam-page-title',
-  standalone: false,
-  template: `
+    selector: 'sam-page-title',
+    template: `
     <h1 class="sam heading flex-column" [attr.id]="id" [attr.tabindex]="tabIndex" [class.inverted]="inverted">
       <span class="intro">{{ super }}</span> 
       {{ title }} 
     </h1>
     <ng-content></ng-content>
-  `
+  `,
+    standalone: false
 })
 export class SamPageTitle {
   /**

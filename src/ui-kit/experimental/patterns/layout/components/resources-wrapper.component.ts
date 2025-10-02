@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 
 @Component({
     selector: 'sam-resources-wrapper',
-  standalone: false,
-    template: '<ng-content></ng-content>'
+    template: '<ng-content></ng-content>',
+    standalone: false
 })
 export class SamResourcesWrapperComponent {
 }

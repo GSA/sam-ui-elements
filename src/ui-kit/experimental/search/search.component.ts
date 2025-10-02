@@ -31,30 +31,30 @@ import { fromEvent } from 'rxjs';
 import { map, tap, filter, debounceTime, switchAll } from 'rxjs/operators';
 
 @Component({
-  standalone: false,
-  selector: "sam-search",
-  templateUrl: 'search.template.html',
-  animations: [
-    trigger('search', [
-      transition('* => *', [
-        query('button', [
-          animate('300ms ease-in', keyframes([
-            style({opacity: 0, offset: 0}),
-            style({opacity: 1, offset: 1})
-          ]))
-        ], { optional: true })
-      ])
-    ]),
-    trigger('results', [
-      transition('* => *', [
-        query(':enter', style({ opacity: 0 }), { optional: true}),
-        query(':enter', stagger('50ms', [
-          animate('50ms ease-in', style({ opacity: 1 }))
-        ]), { optional: true })
-      ])
-    ])
-  ],
-  providers: [PrototypeSearchService]
+    selector: "sam-search",
+    templateUrl: 'search.template.html',
+    animations: [
+        trigger('search', [
+            transition('* => *', [
+                query('button', [
+                    animate('300ms ease-in', keyframes([
+                        style({ opacity: 0, offset: 0 }),
+                        style({ opacity: 1, offset: 1 })
+                    ]))
+                ], { optional: true })
+            ])
+        ]),
+        trigger('results', [
+            transition('* => *', [
+                query(':enter', style({ opacity: 0 }), { optional: true }),
+                query(':enter', stagger('50ms', [
+                    animate('50ms ease-in', style({ opacity: 1 }))
+                ]), { optional: true })
+            ])
+        ])
+    ],
+    providers: [PrototypeSearchService],
+    standalone: false
 })
 export class SamSearchComponent implements OnInit{
   

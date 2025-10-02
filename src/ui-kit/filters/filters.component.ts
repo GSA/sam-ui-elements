@@ -11,9 +11,8 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
 import { SamPageNextService } from '../experimental/patterns/layout/architecture';
 
 @Component({
-  selector: 'sam-filters',
-  standalone: false,
-  template: `
+    selector: 'sam-filters',
+    template: `
     <div samAccordion multi="true">
       <!-- Formly creates the Reactive form group from the
       empty group you provide by with the values from the
@@ -24,7 +23,8 @@ import { SamPageNextService } from '../experimental/patterns/layout/architecture
         [model]="model"></formly-form>
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SamFiltersComponent {
   @Input() public form: FormGroup;

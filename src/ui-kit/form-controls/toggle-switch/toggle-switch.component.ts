@@ -19,14 +19,14 @@ import {
  * TODO: Add Form Builder support
  */
 @Component({
-  selector: 'sam-toggle-switch',
-  standalone: false,
-  templateUrl: 'toggle-switch.template.html',
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => SamToggleSwitchComponent),
-    multi: true
-  }]
+    selector: 'sam-toggle-switch',
+    templateUrl: 'toggle-switch.template.html',
+    providers: [{
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SamToggleSwitchComponent),
+            multi: true
+        }],
+    standalone: false
 })
 export class SamToggleSwitchComponent implements ControlValueAccessor {
   /**

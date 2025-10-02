@@ -14,13 +14,13 @@ import {
  * The <sam-tab> component contains the content for a tab
  */
 @Component({
-  selector: 'sam-tab',
-  standalone: false,
-  template: `
+    selector: 'sam-tab',
+    template: `
     <div [class.hide]="!active">
       <ng-content></ng-content>
     </div>
-  `
+  `,
+    standalone: false
 })
 export class SamTabComponent {
   /**
@@ -46,9 +46,8 @@ export class SamTabComponent {
  * displaying tabs
  */
 @Component({
-  selector: 'sam-tabs',
-  standalone: false,
-  template: `
+    selector: 'sam-tabs',
+    template: `
     <div class="sam-ui menu"
       [ngClass]="[themes[theme],size]"
       *ngIf="tabs && tabs.length">
@@ -66,7 +65,8 @@ export class SamTabComponent {
       </ng-container>
     </div>
     <ng-content></ng-content>
-  `
+  `,
+    standalone: false
 })
 export class SamTabsComponent implements AfterContentInit {
   @ContentChildren(SamTabComponent) tabs: QueryList<SamTabComponent>;

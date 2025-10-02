@@ -34,9 +34,8 @@ export class SamSortHeaderIntl {
  * column definition.
  */
 @Component({
-selector: '[sam-sort-header]',
-  standalone: false,
-template: `
+    selector: '[sam-sort-header]',
+    template: `
 <div class="sam-sort-header-container"
      [class.sam-sort-header-position-before]="arrowPosition == 'before'">
   <button class="sam-sort-header-button" type="button"
@@ -58,8 +57,9 @@ template: `
   {{_intl.sortDescriptionLabel(id, _sort.direction)}}
 </span>
 `,
-encapsulation: ViewEncapsulation.None,
-changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SamSortHeaderComponent implements SamSortable, OnInit, OnDestroy {
     /** @docs-private  */

@@ -6,16 +6,16 @@ export class Popover {
 }
 
 @Component({
-  selector: 'sam-popover',
-  standalone: false,
-  template: `<ng-content></ng-content>`,
-  providers: [
-    {
-      provide: Popover,
-      useExisting: forwardRef(() => SamPopoverComponent),
-      multi: true
-    }
-  ]
+    selector: 'sam-popover',
+    template: `<ng-content></ng-content>`,
+    providers: [
+        {
+            provide: Popover,
+            useExisting: forwardRef(() => SamPopoverComponent),
+            multi: true
+        }
+    ],
+    standalone: false
 })
 export class SamPopoverComponent implements AfterViewInit {
 

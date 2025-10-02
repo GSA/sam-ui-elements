@@ -25,11 +25,11 @@ const Autocomplete_Autocomplete_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-  selector: "sam-sds-search-autocomplete",
-  standalone: false,
-  templateUrl: "./autocomplete-search.component.html",
-  styleUrls: ["./autocomplete-search.component.scss"],
-  providers: [Autocomplete_Autocomplete_VALUE_ACCESSOR],
+    selector: "sam-sds-search-autocomplete",
+    templateUrl: "./autocomplete-search.component.html",
+    styleUrls: ["./autocomplete-search.component.scss"],
+    providers: [Autocomplete_Autocomplete_VALUE_ACCESSOR],
+    standalone: false
 })
 export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
   /** Icons */

@@ -9,9 +9,9 @@ import { Observable, Subscription, fromEvent } from 'rxjs';
 import { merge } from 'rxjs/operators';
 
 @Component({
-  standalone: false,
-  selector: 'sam-image',
-  templateUrl: 'image.template.html'
+    selector: 'sam-image',
+    templateUrl: 'image.template.html',
+    standalone: false
 })
 export class SamImageComponent implements OnInit {
   /**

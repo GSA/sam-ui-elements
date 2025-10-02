@@ -7,10 +7,10 @@ export const _SamRow = CdkRow;
 
 /** Header template container that contains the cell outlet. Adds the right class and role. */
 @Component({
-  standalone: false,
-  selector: 'sam-header-row, tr[sam-header-row]',
-  template: CDK_ROW_TEMPLATE,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'sam-header-row, tr[sam-header-row]',
+    template: CDK_ROW_TEMPLATE,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SamHeaderRowComponent extends _SamHeaderRow {
     @HostBinding('class.sam-header-row') samHeaderRowClass = true;
@@ -19,10 +19,10 @@ export class SamHeaderRowComponent extends _SamHeaderRow {
 
 /** Data row template container that contains the cell outlet. Adds the right class and role. */
 @Component({
-  standalone: false,
-  selector: 'sam-row, tr[sam-row]',
-  template: CDK_ROW_TEMPLATE,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'sam-row, tr[sam-row]',
+    template: CDK_ROW_TEMPLATE,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SamRowComponent extends _SamRow {
     @HostBinding('class.sam-row') samRowClass = true;

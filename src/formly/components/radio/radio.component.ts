@@ -7,14 +7,14 @@ import {SamRadioButtonComponent} from '../../../ui-kit';
 import {AbstractSamFormly} from '../../sam-formly';
 
 @Component({
-  standalone: false,
-  template: `
+    template: `
     <sam-radio-button
       [formControl]="formControl"
       [control]="formControl">
     </sam-radio-button>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SamFormlyRadio extends AbstractSamFormly {
   @ViewChild(SamRadioButtonComponent, {static: true})

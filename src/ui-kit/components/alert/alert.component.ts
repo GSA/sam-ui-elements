@@ -5,9 +5,9 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
  * time-sensitive changes
  */
 @Component({
-  selector: 'sam-alert',
-  templateUrl: './alert.template.html',
-  standalone: false
+    selector: 'sam-alert',
+    templateUrl: './alert.template.html',
+    standalone: false
 })
 export class SamAlertComponent {
   /**

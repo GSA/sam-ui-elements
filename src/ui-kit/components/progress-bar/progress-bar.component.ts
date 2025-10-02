@@ -1,10 +1,9 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'sam-progress-bar',
-  standalone: false,
-  template: '<progress [attr.value]="value" [attr.max]="max"></progress>',
-  styles: [`
+    selector: 'sam-progress-bar',
+    template: '<progress [attr.value]="value" [attr.max]="max"></progress>',
+    styles: [`
     progress[value] {
       -webkit-appearance: none;
       appearance: none;
@@ -22,7 +21,8 @@ import { Component, Input } from '@angular/core';
       background-color: dodgerblue;
       border-color: transparent;
     }
-  `]
+  `],
+    standalone: false
 })
 export class SamProgress {
   /**

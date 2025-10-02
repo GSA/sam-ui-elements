@@ -25,10 +25,10 @@ const MY_VALUE_ACCESSOR: any = {
  * The <sam-date-time> component is a DateTime entry portion of a form
  */
 @Component({
-  selector: 'sam-date-time',
-  standalone: false,
-  templateUrl: 'date-time.template.html',
-  providers: [ MY_VALUE_ACCESSOR ]
+    selector: 'sam-date-time',
+    templateUrl: 'date-time.template.html',
+    providers: [MY_VALUE_ACCESSOR],
+    standalone: false
 })
 export class SamDateTimeComponent
   implements OnInit, OnChanges, ControlValueAccessor {

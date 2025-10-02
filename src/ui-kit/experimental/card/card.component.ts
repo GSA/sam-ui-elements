@@ -1,9 +1,9 @@
 import {Component, Input} from '@angular/core';
 
 @Component({
-  selector: 'sam-card',
-  standalone: false,
-  templateUrl: './card.template.html'
+    selector: 'sam-card',
+    templateUrl: './card.template.html',
+    standalone: false
 })
 export class SamCardComponent{
   @Input() raised: boolean;

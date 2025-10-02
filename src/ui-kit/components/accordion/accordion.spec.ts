@@ -14,7 +14,7 @@ import {
 } from './accordion.component';
 
 @Component({
-  template: `
+    template: `
     <sam-accordion>
       <sam-accordion-section name="aria-friendly-name">
         Content Goes Here
@@ -23,12 +23,13 @@ import {
         More Content Goes Here
       </sam-accordion-section>
     </sam-accordion>
-`
+`,
+    standalone: false
 })
 class AccordionDefault { }
 
 @Component({
-  template: `
+    template: `
     <sam-accordion [bordered]="true">
       <sam-accordion-section name="aria-friendly-name">
         Content Goes Here
@@ -37,12 +38,13 @@ class AccordionDefault { }
         More Content Goes Here
       </sam-accordion-section>
     </sam-accordion>
-`
+`,
+    standalone: false
 })
 class AccordionBordered { }
 
 @Component({
-  template: `
+    template: `
     <sam-accordion [expandIndex]="0">
       <sam-accordion-section name="aria-friendly-name">
         Content Goes Here
@@ -51,7 +53,8 @@ class AccordionBordered { }
         More Content Goes Here
       </sam-accordion-section>
     </sam-accordion>
-`
+`,
+    standalone: false
 })
 class AccordionInitialized { }
 

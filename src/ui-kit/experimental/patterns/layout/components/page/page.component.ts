@@ -24,11 +24,11 @@ import { SamToolbarComponent } from '../../../../../layout/toolbar';
 import { SamPageNextService } from '../../architecture';
 
 @Component({
-  standalone: false,
-  selector: 'sam-page-next',
-  templateUrl: 'page.template.html',
-  encapsulation: ViewEncapsulation.None,
-  styleUrls: ['./sam-page-next.scss'],
+    selector: 'sam-page-next',
+    templateUrl: 'page.template.html',
+    encapsulation: ViewEncapsulation.None,
+    styleUrls: ['./sam-page-next.scss'],
+    standalone: false
 })
 export class SamPageNextComponent extends MdSidenavContainer {
   /**

@@ -1,8 +1,8 @@
 import { Directive, ElementRef, Renderer2, Input } from '@angular/core';
 
 @Directive({
-  selector: '[grid]',
-  standalone: false
+    selector: '[grid]',
+    standalone: false
 })
 export class GridDirective {
   constructor( private renderer: Renderer2, public el: ElementRef ) {

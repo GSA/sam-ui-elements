@@ -14,7 +14,7 @@ import { SamFiltersComponent } from './filters.component';
     FormsModule,
     ReactiveFormsModule,
     SamUIKitModule, // Needs samAccordion
-    FormlyModule.forRoot()
+    FormlyModule
   ],
   declarations: [ SamFiltersComponent ],
   exports: [ SamFiltersComponent ]

@@ -16,8 +16,8 @@ import { By } from '@angular/platform-browser';
 import { SamClickOutsideDirective } from './click-outside.directive';
 
 @Component({
-  selector: 'test-cmp',
-  template: `
+    selector: 'test-cmp',
+    template: `
     <div #var sam-click-outside (clickOutside)="clickOutsideHandler()">
     <p class="test">
       test content
@@ -26,7 +26,8 @@ import { SamClickOutsideDirective } from './click-outside.directive';
     <p class="test2">
       click outside target content
     </p>
-  `
+  `,
+    standalone: false
 })
 class TestComponent {
     @Output() action: EventEmitter<any> = new EventEmitter<any>();

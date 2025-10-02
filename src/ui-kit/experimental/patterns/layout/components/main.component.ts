@@ -9,13 +9,13 @@ import { SamFilterDrawerComponent } from '../../../../layout/filter-drawer';
 import { SamPageNextService } from '../architecture';
 
 @Component({
-  standalone: false,
-  selector: 'sam-main',
-  template: `
+    selector: 'sam-main',
+    template: `
     <ng-content select="sam-alert-next"></ng-content>
     <ng-content select="sam-filter-drawer"></ng-content>
     <ng-content></ng-content>
-  `
+  `,
+    standalone: false
 })
 export class SamMainComponent implements AfterContentInit {
   @HostBinding('class') public classes = 'sam-main';

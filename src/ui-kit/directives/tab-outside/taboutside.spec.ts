@@ -6,8 +6,8 @@ import { By } from '@angular/platform-browser';
 import {SamTabOutsideDirective} from './taboutside.directive';
 
 @Component({
-  selector: 'test-cmp',
-  template: `
+    selector: 'test-cmp',
+    template: `
 <div #var sam-tab-outside
 (tabOutside)="tabOutsideHandler()">
 <p class="test">
@@ -16,7 +16,8 @@ test content
 </div>
 <p class="test2">
 click outside target content
-</p>`
+</p>`,
+    standalone: false
 })
 class TestComponent {
     @Output() action: EventEmitter<any> = new EventEmitter<any>();

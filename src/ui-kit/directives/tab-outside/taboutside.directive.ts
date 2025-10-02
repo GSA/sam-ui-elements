@@ -8,8 +8,8 @@ import {
 
 
 @Directive({
-  standalone: false,
-  selector: '[sam-tab-outside]'
+    selector: '[sam-tab-outside]',
+    standalone: false
 })
 export class SamTabOutsideDirective {
   /**

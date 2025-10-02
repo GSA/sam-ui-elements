@@ -36,8 +36,8 @@ export function ValidatorToken(className) {
   };
 }
 @Component({
-  standalone: false,
-  template: ''
+    template: '',
+    standalone: false
 })
 export class SamFormControl
   implements ControlValueAccessor, OnInit, AfterViewInit {

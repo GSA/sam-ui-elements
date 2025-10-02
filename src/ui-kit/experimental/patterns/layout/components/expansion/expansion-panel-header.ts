@@ -32,34 +32,34 @@ import {MdExpansionPanelComponent, EXPANSION_PANEL_ANIMATION_TIMING} from './exp
  * Please refer to README.md for examples on how to use it.
  */
 @Component({
-  standalone: false,
-  selector: 'md-expansion-panel-header, mat-expansion-panel-header, sam-expansion-panel-header',
-  // styleUrls: ['./expansion-panel-header.css'],
-  templateUrl: './expansion-panel-header.html',
-  encapsulation: ViewEncapsulation.None,
-  host: {
-    'class': 'mat-expansion-panel-header',
-    'role': 'button',
-    'tabindex': '0',
-    '[attr.aria-controls]': '_getPanelId()',
-    '[attr.aria-expanded]': '_isExpanded()',
-    '[class.mat-expanded]': '_isExpanded()',
-    '(click)': '_toggle()',
-    '(keyup)': '_keyup($event)',
-    '[@expansionHeight]': '_getExpandedState()',
-  },
-  animations: [
-    trigger('indicatorRotate', [
-      state('collapsed', style({transform: 'rotate(0deg)'})),
-      state('expanded', style({transform: 'translateY(3px) rotate(90deg)'})),
-      transition('expanded <=> collapsed', animate(EXPANSION_PANEL_ANIMATION_TIMING)),
-    ]),
-    trigger('expansionHeight', [
-      state('collapsed', style({height: '48px', 'line-height': '48px'})),
-      state('expanded', style({height: '48px', 'line-height': '48px'})),
-      transition('expanded <=> collapsed', animate(EXPANSION_PANEL_ANIMATION_TIMING)),
-    ]),
-  ],
+    selector: 'md-expansion-panel-header, mat-expansion-panel-header, sam-expansion-panel-header',
+    // styleUrls: ['./expansion-panel-header.css'],
+    templateUrl: './expansion-panel-header.html',
+    encapsulation: ViewEncapsulation.None,
+    host: {
+        'class': 'mat-expansion-panel-header',
+        'role': 'button',
+        'tabindex': '0',
+        '[attr.aria-controls]': '_getPanelId()',
+        '[attr.aria-expanded]': '_isExpanded()',
+        '[class.mat-expanded]': '_isExpanded()',
+        '(click)': '_toggle()',
+        '(keyup)': '_keyup($event)',
+        '[@expansionHeight]': '_getExpandedState()',
+    },
+    animations: [
+        trigger('indicatorRotate', [
+            state('collapsed', style({ transform: 'rotate(0deg)' })),
+            state('expanded', style({ transform: 'translateY(3px) rotate(90deg)' })),
+            transition('expanded <=> collapsed', animate(EXPANSION_PANEL_ANIMATION_TIMING)),
+        ]),
+        trigger('expansionHeight', [
+            state('collapsed', style({ height: '48px', 'line-height': '48px' })),
+            state('expanded', style({ height: '48px', 'line-height': '48px' })),
+            transition('expanded <=> collapsed', animate(EXPANSION_PANEL_ANIMATION_TIMING)),
+        ]),
+    ],
+    standalone: false
 })
 export class MdExpansionPanelHeader {
   constructor(@Host() public panel: MdExpansionPanelComponent) {}
@@ -110,11 +110,11 @@ export class MdExpansionPanelHeader {
  * This direction is to be used inside of the MdExpansionPanelHeader component.
  */
 @Directive({
-  standalone: false,
-  selector: 'md-panel-description, mat-panel-description',
-  host : {
-    class: 'mat-expansion-panel-header-description'
-  }
+    selector: 'md-panel-description, mat-panel-description',
+    host: {
+        class: 'mat-expansion-panel-header-description'
+    },
+    standalone: false
 })
 export class MdExpansionPanelDescription {}
 
@@ -124,10 +124,10 @@ export class MdExpansionPanelDescription {}
  * This direction is to be used inside of the MdExpansionPanelHeader component.
  */
 @Directive({
-  standalone: false,
-  selector: 'md-panel-title, mat-panel-title',
-  host : {
-    class: 'mat-expansion-panel-header-title'
-  }
+    selector: 'md-panel-title, mat-panel-title',
+    host: {
+        class: 'mat-expansion-panel-header-title'
+    },
+    standalone: false
 })
 export class MdExpansionPanelTitle {}

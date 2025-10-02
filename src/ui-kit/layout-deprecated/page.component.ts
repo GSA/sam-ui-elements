@@ -3,10 +3,10 @@ import { PageService } from './page.service';
 import { PageConfig } from './types';
 
 @Component({
-  selector: 'page',
-  templateUrl: 'page.template.html',
-  providers: [PageService],
-  standalone: false
+    selector: 'page',
+    templateUrl: 'page.template.html',
+    providers: [PageService],
+    standalone: false
 })
 export class PageTemplateComponent implements OnInit {
   /**

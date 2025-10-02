@@ -5,8 +5,9 @@ import { PointOfContactType } from '../../types';
  * The <sam-poc> component outputs Point of Contact information
  */
 @Component({
-  standalone: false, selector: 'sam-poc',
-  templateUrl: 'point-of-contact.template.html'
+    selector: 'sam-poc',
+    templateUrl: 'point-of-contact.template.html',
+    standalone: false
 })
 export class SamPointOfContactComponent {
   /**

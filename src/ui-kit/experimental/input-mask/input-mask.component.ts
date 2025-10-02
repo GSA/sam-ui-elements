@@ -13,7 +13,6 @@ export const VALUE_ACCESSOR: any = {
 
 @Component({
     selector: 'sam-input-mask',
-  standalone: false,
     template: `<input
         [disabled]='disabled'
         type='text'
@@ -24,9 +23,10 @@ export const VALUE_ACCESSOR: any = {
         (ngModelChange)='onModelChange($event)'
         (focus)='onFocus()'
         (blur)='onBlur()' />`,
-    providers: [ VALUE_ACCESSOR ],
+    providers: [VALUE_ACCESSOR],
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SamInputMaskComponent extends SamFormControl implements OnInit, OnChanges {
     @Input() template: string;

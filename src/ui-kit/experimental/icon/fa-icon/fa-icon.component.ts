@@ -34,10 +34,10 @@ import {
    * Fontawesome icon. Remove with real fontawesome package when on angular 5+
    */
   @Component({
-    standalone: false,
     selector: 'sam-fa-icon',
-    template: ``
-  })
+    template: ``,
+    standalone: false
+})
   export class SamFAIconComponent implements OnChanges {
     @HostBinding('class') public faIconClass = 'ng-fa-icon';
     // tslint:disable-next-line:no-input-rename

@@ -1,16 +1,16 @@
 import { Component, Input, ElementRef, TemplateRef, Renderer2, ViewChild, AfterViewInit, OnInit } from '@angular/core';
 
 @Component({
-  standalone: false,
-  selector: "sam-title",
-  template: `
+    selector: "sam-title",
+    template: `
     <ng-template #titleTemplate>
       <ng-content></ng-content>
     </ng-template>
 
     <ng-container [ngTemplateOutlet]="titleTpl">
     </ng-container>
-  `
+  `,
+    standalone: false
 })
 export class SamTitleComponent implements AfterViewInit, OnInit {
 

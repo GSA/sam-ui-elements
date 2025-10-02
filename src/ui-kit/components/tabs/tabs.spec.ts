@@ -9,12 +9,13 @@ import {
 } from '@angular/core';
 
 @Component({
-  template: `
+    template: `
     <sam-tabs #tabs>
       <sam-tab #tab1 tabTitle="test1">Content Goes Here</sam-tab>
       <sam-tab #tab2 tabTitle="test2">More Content Goes Here</sam-tab>
     </sam-tabs>
-`
+`,
+    standalone: false
 })
 class TabsDefault {
   @ViewChild('tabs', {static: true}) comp: SamTabsComponent;

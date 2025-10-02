@@ -4,9 +4,8 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
  * The <sam-button> component generates a button for user interaction
  */
 @Component({
-  selector: 'sam-button-next',
-  standalone: false,
-  template: `
+    selector: 'sam-button-next',
+    template: `
     <button
       [attr.id]="id"
       class="sam button" 
@@ -16,6 +15,7 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
       [type]="action=='submit' ? 'submit' : 'button'">
       <ng-content></ng-content>
     </button>`,
+    standalone: false
 })
 export class SamButtonNextComponent {
   /**

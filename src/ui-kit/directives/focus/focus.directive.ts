@@ -7,8 +7,8 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: '[sam-focus]',
-  standalone: false
+    selector: '[sam-focus]',
+    standalone: false
 })
 export class SamFocusDirective {
   /**

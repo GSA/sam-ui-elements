@@ -6,12 +6,13 @@ import { By } from '@angular/platform-browser';
 import { SamDragDropDirective } from './drag-drop.directive';
 
 @Component({
-  selector: 'test-cmp',
-  template: `
+    selector: 'test-cmp',
+    template: `
     <div #var sam-drag-drop (dragStateChange)="stateChange()" (dropEvent)="dropHandler()">
         <span #dummydrop>dummy</span>
     </div>
-  ` 
+  `,
+    standalone: false
 })
 class TestComponent {
     @Output() action: EventEmitter<any> = new EventEmitter<any>();

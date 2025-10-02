@@ -9,11 +9,11 @@ const Hierarchical_SelectedResult_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-  selector: 'sam-selected-result',
-  standalone: false,
-  templateUrl: './selected-result.component.html',
-  styleUrls: ['./selected-result.component.scss'],
-  providers: [Hierarchical_SelectedResult_VALUE_ACCESSOR]
+    selector: 'sam-selected-result',
+    templateUrl: './selected-result.component.html',
+    styleUrls: ['./selected-result.component.scss'],
+    providers: [Hierarchical_SelectedResult_VALUE_ACCESSOR],
+    standalone: false
 })
 export class SamHierarchicalSelectedResultComponent implements ControlValueAccessor {
 

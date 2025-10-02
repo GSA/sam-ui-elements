@@ -1,13 +1,13 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: "sam-layout",
-  standalone: false,
-  template: `
+    selector: "sam-layout",
+    template: `
     <div [ngClass]="css_classes">
       <ng-content></ng-content>
     </div>
-  `
+  `,
+    standalone: false
 })
 export class SamLayoutComponent {
 
@@ -25,13 +25,13 @@ export class SamLayoutComponent {
 
 
 @Component({
-  selector: "sam-layout-img",
-  standalone: false,
-  template: `
+    selector: "sam-layout-img",
+    template: `
     <div [ngClass]="css_classes">
       <ng-content></ng-content>
     </div>
-  `
+  `,
+    standalone: false
 })
 export class SamLayoutImgComponent {
 
@@ -46,13 +46,13 @@ export class SamLayoutImgComponent {
 }
 
 @Component({
-  selector: "sam-layout-content",
-  standalone: false,
-  template: `
+    selector: "sam-layout-content",
+    template: `
     <div [ngClass]="css_classes">
       <ng-content></ng-content>
     </div>
-  `
+  `,
+    standalone: false
 })
 export class SamLayoutContentComponent {
 

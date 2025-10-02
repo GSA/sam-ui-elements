@@ -20,10 +20,10 @@ export class MdTabBase {}
 export const _MdTabMixinBase = mixinDisabled(MdTabBase);
 
 @Component({
-  standalone: false,
-  selector: 'sam-tab-next',
-  templateUrl: 'tab.html',
-  inputs: ['disabled']
+    selector: 'sam-tab-next',
+    templateUrl: 'tab.html',
+    inputs: ['disabled'],
+    standalone: false
 })
 export class MdTab extends _MdTabMixinBase implements OnInit, CanDisable {
   /** Content for the tab label given by <ng-template md-tab-label>. */

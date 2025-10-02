@@ -23,13 +23,13 @@ import { SamFormService } from '../../form-service';
  */
 @Component({
     selector: 'sam-date-range',
-  standalone: false,
     templateUrl: 'date-range.template.html',
     providers: [{
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => SamDateRangeComponent),
-        multi: true
-    }]
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SamDateRangeComponent),
+            multi: true
+        }],
+    standalone: false
 })
 export class SamDateRangeComponent
     implements OnInit, OnChanges, ControlValueAccessor {

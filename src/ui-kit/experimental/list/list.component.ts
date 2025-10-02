@@ -1,13 +1,13 @@
 import { Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: "sam-list",
-  standalone: false,
-  template: `
+    selector: "sam-list",
+    template: `
     <ul [ngClass]="css_classes">
       <ng-content></ng-content>
     </ul>
-  `
+  `,
+    standalone: false
 })
 export class SamListComponent implements OnInit{
   
@@ -28,14 +28,14 @@ export class SamListComponent implements OnInit{
 }
 
 @Component({
-  selector: "sam-list-item",
-  standalone: false,
-  template: `
+    selector: "sam-list-item",
+    template: `
     <li [ngClass]="bullet">
       <span class="bullet" *ngIf="bullet"></span>
       <ng-content></ng-content>
     </li>
-  `
+  `,
+    standalone: false
 })
 export class SamListItemComponent{
   @Input() public bullet: string;

@@ -2,7 +2,10 @@ import {Pipe, PipeTransform} from '@angular/core';
 import * as moment from 'moment/moment';
 // import 'moment-timezone';
 
-@Pipe({standalone: false, name: 'dateTimeDisplay'})
+@Pipe({
+    name: 'dateTimeDisplay',
+    standalone: false
+})
 export class DateTimeDisplayPipe implements PipeTransform {
   transform(datetime: any): any {
     if (datetime === undefined) {

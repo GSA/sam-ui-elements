@@ -17,8 +17,8 @@ import {ScrollDispatcher} from './scroll-dispatcher';
  * can be listened to through the service.
  */
 @Directive({
-  standalone: false,
-  selector: '[cdk-scrollable], [cdkScrollable]'
+    selector: '[cdk-scrollable], [cdkScrollable]',
+    standalone: false
 })
 export class Scrollable implements OnInit, OnDestroy {
   private _elementScrolled: Subject<Event> = new Subject();

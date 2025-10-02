@@ -20,15 +20,15 @@ export interface OptionModel {
   disabled: boolean;
 }
 @Component({
-  standalone: false,
-  selector: 'sam-listbox',
-  templateUrl: './listbox.component.html',
-  styleUrls: ['./listbox.component.scss'],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => SamListBoxComponent),
-    multi: true
-  }]
+    selector: 'sam-listbox',
+    templateUrl: './listbox.component.html',
+    styleUrls: ['./listbox.component.scss'],
+    providers: [{
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SamListBoxComponent),
+            multi: true
+        }],
+    standalone: false
 })
 
 

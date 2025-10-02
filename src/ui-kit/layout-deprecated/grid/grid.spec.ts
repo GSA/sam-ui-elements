@@ -5,7 +5,8 @@ import { GridDirective } from './grid.directive';
 import { By } from '@angular/platform-browser';
 
 @Component({
-    template: `<div grid></div>` 
+    template: `<div grid></div>`,
+    standalone: false
 })
 class TestComponent {}
 

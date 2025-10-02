@@ -23,14 +23,14 @@ import { SamFormService } from '../../form-service';
  * sam.gov standards
  */
 @Component({
-  standalone: false,
-  selector: 'sam-radio-button',
-  templateUrl: 'radiobutton.template.html',
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => SamRadioButtonComponent),
-    multi: true
-  }]
+    selector: 'sam-radio-button',
+    templateUrl: 'radiobutton.template.html',
+    providers: [{
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SamRadioButtonComponent),
+            multi: true
+        }],
+    standalone: false
 })
 export class SamRadioButtonComponent {
   /**

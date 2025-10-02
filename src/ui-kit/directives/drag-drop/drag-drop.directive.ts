@@ -13,8 +13,8 @@ export enum DragState {
 }
 
 @Directive({
-  selector: '[sam-drag-drop]',
-  standalone: false,
+    selector: '[sam-drag-drop]',
+    standalone: false
 })
 export class SamDragDropDirective {
   /**

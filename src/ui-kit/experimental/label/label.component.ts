@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: "sam-label-next",
-  standalone: false,
-  template: `
+    selector: "sam-label-next",
+    template: `
     <span [ngClass]="css_classes">
       <ng-content></ng-content>
     </span>
-  `
+  `,
+    standalone: false
 })
 export class SamLabelNextComponent implements OnInit{
 

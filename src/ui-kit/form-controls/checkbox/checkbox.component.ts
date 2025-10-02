@@ -20,14 +20,14 @@ import { SamFormService } from '../../form-service';
  * The <sam-checkbox> component is a set of checkboxes
  */
 @Component({
-  standalone: false,
-  selector: 'sam-checkbox',
-  templateUrl: 'checkbox.template.html',
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => SamCheckboxComponent),
-    multi: true
-  }]
+    selector: 'sam-checkbox',
+    templateUrl: 'checkbox.template.html',
+    providers: [{
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SamCheckboxComponent),
+            multi: true
+        }],
+    standalone: false
 })
 export class SamCheckboxComponent implements ControlValueAccessor {
   /**

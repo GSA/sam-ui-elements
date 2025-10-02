@@ -29,10 +29,10 @@ const MY_VALUE_ACCESSOR: any = {
  * The <sam-select> component is a select/options group form control
  */
 @Component({
-  standalone: false,
-  selector: 'sam-select',
-  templateUrl: 'select.template.html',
-  providers: [MY_VALUE_ACCESSOR]
+    selector: 'sam-select',
+    templateUrl: 'select.template.html',
+    providers: [MY_VALUE_ACCESSOR],
+    standalone: false
 })
 export class SamSelectComponent implements ControlValueAccessor, AfterViewInit {
   

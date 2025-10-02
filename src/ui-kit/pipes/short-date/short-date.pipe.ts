@@ -2,8 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import * as moment from 'moment';
 
 @Pipe({
-  standalone: false,
-  name: 'shortDate'
+    name: 'shortDate',
+    standalone: false
 })
 export class ShortDatePipe implements PipeTransform {
   public sameDayFormat: string = 'h:mmA';

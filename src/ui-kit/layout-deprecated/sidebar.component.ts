@@ -2,9 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { PageService } from './page.service';
 
 @Component({
-  selector: 'sidebar',
-  template: '<ng-content></ng-content>',
-  standalone: false
+    selector: 'sidebar',
+    template: '<ng-content></ng-content>',
+    standalone: false
 })
 export class SidebarTemplateComponent implements OnInit {
   /**

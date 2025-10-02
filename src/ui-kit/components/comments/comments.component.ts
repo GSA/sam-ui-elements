@@ -20,9 +20,9 @@ import { CommentsService } from './comments.service';
 import { Comment } from './interfaces';
 
 @Component({
-  selector: 'sam-comments',
-  standalone: false,
-  templateUrl: 'comments.template.html',
+    selector: 'sam-comments',
+    templateUrl: 'comments.template.html',
+    standalone: false
 })
 export class SamCommentsComponent implements OnInit {
   /**

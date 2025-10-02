@@ -21,14 +21,14 @@ import {
 import { KeyHelper } from '../../../utilities/key-helper/key-helper';
 import  { numberInputKeys} from '../number-input-keys';
 @Component({
-  selector: 'sam-telephone',
-  standalone: false,
-  encapsulation: ViewEncapsulation.None,
-  templateUrl: 'telephone.template.html',
-  providers: [
-    AccessorToken(SamTelephone),
-    ValidatorToken(SamTelephone)
-  ]
+    selector: 'sam-telephone',
+    encapsulation: ViewEncapsulation.None,
+    templateUrl: 'telephone.template.html',
+    providers: [
+        AccessorToken(SamTelephone),
+        ValidatorToken(SamTelephone)
+    ],
+    standalone: false
 })
 export class SamTelephone extends SamFormControl
   implements OnChanges {

@@ -5,9 +5,9 @@ import { Component, Input } from '@angular/core';
  * website of the United States Government
  */
 @Component({
-  selector: 'sam-banner',
-  standalone: false,
-  templateUrl: 'banner.template.html'
+    selector: 'sam-banner',
+    templateUrl: 'banner.template.html',
+    standalone: false
 })
 export class SamBannerComponent {
   @Input() description = '';

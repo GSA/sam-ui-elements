@@ -5,10 +5,10 @@ import { SamHierarchicalTreeHeaderConfiguration } from '../models/SamHierarchica
 import { KeyHelper, KEYS } from '../../../utilities/key-helper/key-helper';
 
 @Component({
-  standalone: false,
-  selector: 'sam-hierarchical-tree-header',
-  templateUrl: './hierarchical-tree-header.component.html',
-  styleUrls: ['./hierarchical-tree-header.component.scss']
+    selector: 'sam-hierarchical-tree-header',
+    templateUrl: './hierarchical-tree-header.component.html',
+    styleUrls: ['./hierarchical-tree-header.component.scss'],
+    standalone: false
 })
 export class SamHierarchicalTreeHeaderComponent {
 

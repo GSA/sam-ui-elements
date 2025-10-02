@@ -126,21 +126,21 @@ suffixOptions.unshift({
  * @Input prefix: string - Prefix name/id attribute values
  */
 @Component({
-  selector: 'sam-name-entry',
-  standalone: false,
-  templateUrl: 'name-entry.template.html',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SamNameEntryComponent),
-      multi: true
-    },
-    {
-      provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => SamNameEntryComponent),
-      multi: true
-    }
-  ]
+    selector: 'sam-name-entry',
+    templateUrl: 'name-entry.template.html',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SamNameEntryComponent),
+            multi: true
+        },
+        {
+            provide: NG_VALIDATORS,
+            useExisting: forwardRef(() => SamNameEntryComponent),
+            multi: true
+        }
+    ],
+    standalone: false
 })
 export class SamNameEntryComponent implements ControlValueAccessor, Validator {
   /**

@@ -11,11 +11,11 @@ const Hierarchical_Autocomplete_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-  standalone: false,
-  selector: 'sam-hierarchical-autocomplete',
-  templateUrl: './autocomplete.component.html',
-  styleUrls: ['./autocomplete.component.scss'],
-  providers: [Hierarchical_Autocomplete_VALUE_ACCESSOR]
+    selector: 'sam-hierarchical-autocomplete',
+    templateUrl: './autocomplete.component.html',
+    styleUrls: ['./autocomplete.component.scss'],
+    providers: [Hierarchical_Autocomplete_VALUE_ACCESSOR],
+    standalone: false
 })
 export class SamHierarchicalAutocompleteComponent implements ControlValueAccessor {
 

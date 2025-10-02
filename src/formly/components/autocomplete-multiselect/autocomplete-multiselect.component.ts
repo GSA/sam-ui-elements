@@ -7,12 +7,12 @@ import {SamAutocompleteMultiselectComponent} from '../../../ui-kit';
 import {AbstractSamFormly} from '../../sam-formly';
 
 @Component({
-  standalone: false,
-  template: `
+    template: `
     <sam-autocomplete-multiselect [formControl]="formControl" [control]="formControl">
     </sam-autocomplete-multiselect>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SamFormlyAutoCompleteMultiselect extends AbstractSamFormly {
   @ViewChild(SamAutocompleteMultiselectComponent, {static: true})

@@ -74,10 +74,10 @@ export namespace UploadValidator {
 }
 
 @Component({
-  standalone: false,
-  selector: 'sam-upload-v2',
-  providers: [VALUE_ACCESSOR],
-  templateUrl: 'upload-v2.template.html',
+    selector: 'sam-upload-v2',
+    providers: [VALUE_ACCESSOR],
+    templateUrl: 'upload-v2.template.html',
+    standalone: false
 })
 export class SamUploadComponentV2 implements ControlValueAccessor {
   /**

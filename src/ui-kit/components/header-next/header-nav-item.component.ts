@@ -2,9 +2,8 @@ import { Component, Host } from '@angular/core';
 import { SamHeaderNavComponent } from './header-nav.component';
 
 @Component({
-  selector: 'sam-header-nav-item',
-  standalone: false,
-  template: `
+    selector: 'sam-header-nav-item',
+    template: `
     <li
       [ngClass]="{
         'usa-nav__primary-item': headerNav.type === 'primary',
@@ -13,7 +12,8 @@ import { SamHeaderNavComponent } from './header-nav.component';
     >
       <ng-content></ng-content>
     </li>
-  `
+  `,
+    standalone: false
 })
 export class SamHeaderNavItemComponent {
   constructor(@Host() public headerNav: SamHeaderNavComponent) {}

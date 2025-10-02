@@ -19,12 +19,12 @@ export const _MdTabLabelWrapperMixinBase = mixinDisabled(MdTabLabelWrapperBase);
  * @docs-private
  */
 @Directive({
-  selector: '[md-tab-label-wrapper], [mat-tab-label-wrapper]',
-  standalone: false,
-  inputs: ['disabled'],
-  host: {
-    '[class.mat-tab-disabled]': 'disabled'
-  }
+    selector: '[md-tab-label-wrapper], [mat-tab-label-wrapper]',
+    inputs: ['disabled'],
+    host: {
+        '[class.mat-tab-disabled]': 'disabled'
+    },
+    standalone: false
 })
 export class MdTabLabelWrapper extends _MdTabLabelWrapperMixinBase implements CanDisable {
   constructor(public elementRef: ElementRef) {

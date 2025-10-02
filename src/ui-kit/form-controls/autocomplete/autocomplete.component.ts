@@ -40,10 +40,10 @@ export interface SamCache {
 }
 
 @Component({
-  standalone: false,
-  selector: 'sam-autocomplete',
-  templateUrl: 'autocomplete.template.html',
-  providers: [AUTOCOMPLETE_VALUE_ACCESSOR]
+    selector: 'sam-autocomplete',
+    templateUrl: 'autocomplete.template.html',
+    providers: [AUTOCOMPLETE_VALUE_ACCESSOR],
+    standalone: false
 })
 export class SamAutocompleteComponent
   implements ControlValueAccessor, OnChanges, OnDestroy, SamCache {

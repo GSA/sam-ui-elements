@@ -5,9 +5,9 @@ import { Component, Output, EventEmitter } from '@angular/core';
  * the site
  */
 @Component({
-  selector: 'sam-header',
-  standalone: false,
-  templateUrl: 'header.template.html',
+    selector: 'sam-header',
+    templateUrl: 'header.template.html',
+    standalone: false
 })
 export class SamHeaderComponent {
   /**

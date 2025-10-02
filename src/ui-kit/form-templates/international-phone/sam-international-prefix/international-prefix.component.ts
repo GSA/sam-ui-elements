@@ -17,18 +17,18 @@ import { KeyHelper } from '../../../utilities/key-helper/key-helper';
 import { numberInputKeys } from '../number-input-keys';
 
 @Component({
-  standalone: false,
-  selector: 'sam-international-prefix',
-  templateUrl: 'international-prefix.template.html',
-  providers: [
-    AccessorToken(SamInternationalPrefix),
-    ValidatorToken(SamInternationalPrefix)
-  ],
-  styles: [
-    `.sam-international-prefix {
+    selector: 'sam-international-prefix',
+    templateUrl: 'international-prefix.template.html',
+    providers: [
+        AccessorToken(SamInternationalPrefix),
+        ValidatorToken(SamInternationalPrefix)
+    ],
+    styles: [
+        `.sam-international-prefix {
       text-align: right;
     }`
-  ]
+    ],
+    standalone: false
 })
 export class SamInternationalPrefix extends SamFormControl {
 

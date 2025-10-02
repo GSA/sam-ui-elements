@@ -9,10 +9,10 @@ export class SamPageService {
  * 
  */
 @Component({
-  selector: 'sam-page',
-  standalone: false,
-  templateUrl: 'page.template.html',
-  providers: [SamPageService]
+    selector: 'sam-page',
+    templateUrl: 'page.template.html',
+    providers: [SamPageService],
+    standalone: false
 })
 export class SamPageComponent {
 
@@ -34,13 +34,13 @@ export class SamPageComponent {
  * 
  */
 @Component({
-  selector: 'sam-page-sidebar',
-  standalone: false,
-  template: `
+    selector: 'sam-page-sidebar',
+    template: `
     <div class="page-sidebar">
       <ng-content></ng-content>
     </div>
-  `
+  `,
+    standalone: false
 })
 export class SamPageSidebarComponent implements OnInit {
 

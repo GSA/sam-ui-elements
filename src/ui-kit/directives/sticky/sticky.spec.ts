@@ -6,8 +6,8 @@ import { By } from '@angular/platform-browser';
 import {SamStickyComponent} from './sticky.component';
 
 @Component({
-  selector: 'test-cmp',
-  template: `
+    selector: 'test-cmp',
+    template: `
   <div class="test-container">
     <div #var sam-sticky 
     [container]="'test-container'" 
@@ -21,7 +21,8 @@ import {SamStickyComponent} from './sticky.component';
     <div style="width:1300px;height:2000px;">
       content
     </div>
-  </div>`
+  </div>`,
+    standalone: false
 })
 class TestComponent {
   @ViewChild('var', {static: true}) var;

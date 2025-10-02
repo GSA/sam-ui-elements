@@ -43,28 +43,27 @@ export const EXPANSION_PANEL_ANIMATION_TIMING = '225ms cubic-bezier(0.4,0.0,0.2,
  * Please refer to README.md for examples on how to use it.
  */
 @Component({
-  // styleUrls: ['./expansion-panel.css'],
-  selector: 'md-expansion-panel, mat-expansion-panel, sam-expansion-panel',
-  standalone: false,
-  templateUrl: './expansion-panel.html',
-  encapsulation: ViewEncapsulation.None,
-  providers: [
-    { provide: AccordionItem, useExisting: forwardRef(() => MdExpansionPanelComponent) }
-  ],
-  animations: [
-    trigger('bodyExpansion', [
-      state('collapsed', style({ height: '0px' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate(EXPANSION_PANEL_ANIMATION_TIMING)),
-    ]),
-    trigger('displayMode', [
-      state('collapsed', style({ margin: '0' })),
-      state('default', style({ margin: '16px 0' })),
-      state('flat', style({ margin: '0' })),
-      transition('flat <=> collapsed, default <=> collapsed, flat <=> default',
-        animate(EXPANSION_PANEL_ANIMATION_TIMING)),
-    ]),
-  ],
+    // styleUrls: ['./expansion-panel.css'],
+    selector: 'md-expansion-panel, mat-expansion-panel, sam-expansion-panel',
+    templateUrl: './expansion-panel.html',
+    encapsulation: ViewEncapsulation.None,
+    providers: [
+        { provide: AccordionItem, useExisting: forwardRef(() => MdExpansionPanelComponent) }
+    ],
+    animations: [
+        trigger('bodyExpansion', [
+            state('collapsed', style({ height: '0px' })),
+            state('expanded', style({ height: '*' })),
+            transition('expanded <=> collapsed', animate(EXPANSION_PANEL_ANIMATION_TIMING)),
+        ]),
+        trigger('displayMode', [
+            state('collapsed', style({ margin: '0' })),
+            state('default', style({ margin: '16px 0' })),
+            state('flat', style({ margin: '0' })),
+            transition('flat <=> collapsed, default <=> collapsed, flat <=> default', animate(EXPANSION_PANEL_ANIMATION_TIMING)),
+        ]),
+    ],
+    standalone: false
 })
 export class MdExpansionPanelComponent extends AccordionItem {
   @HostBinding('class') hostClass = 'mat-expansion-panel';
@@ -107,8 +106,8 @@ export class MdExpansionPanelComponent extends AccordionItem {
 }
 
 @Directive({
-  selector: '[samMatActionRow], [samMdActionRow]',
-  standalone: false,
+    selector: '[samMatActionRow], [samMdActionRow]',
+    standalone: false
 })
 export class MdExpansionPanelActionRowDirective {
   @HostBinding('class') hostClass = 'mat-action-row';
