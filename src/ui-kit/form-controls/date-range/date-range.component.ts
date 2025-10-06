@@ -15,7 +15,7 @@ import {
     NG_VALUE_ACCESSOR,
     ValidatorFn
 } from '@angular/forms';
-import * as moment from 'moment';
+import moment from 'moment';
 import { SamFormService } from '../../form-service';
 
 /**

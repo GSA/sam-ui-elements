@@ -1,5 +1,5 @@
 import { ShortDatePipe } from './short-date.pipe';
-import * as moment from 'moment';
+import moment from 'moment';
 
 describe('A pipe for shorter time formats', () => {
   const pipe = new ShortDatePipe();

@@ -8,7 +8,7 @@ import {
   OnChanges,
   forwardRef
 } from '@angular/core';
-import * as moment from 'moment';
+import moment from 'moment';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import {
   NG_VALUE_ACCESSOR,

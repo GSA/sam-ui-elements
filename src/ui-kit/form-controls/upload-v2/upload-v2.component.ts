@@ -13,7 +13,7 @@ import {
     ActionModalConfig, ToggleUploadFileAction,
     UploadedFileData
 } from '../../types';
-import * as moment from 'moment';
+import moment from 'moment';
 
 
 export type RequestGenerator =

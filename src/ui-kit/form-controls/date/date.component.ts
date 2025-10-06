@@ -10,7 +10,7 @@ import {
   forwardRef
 } from '@angular/core';
 
-import * as moment from 'moment';
+import moment from 'moment';
 
 import {
   NG_VALUE_ACCESSOR,
