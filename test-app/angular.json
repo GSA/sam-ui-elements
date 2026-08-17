@@ -82,7 +82,7 @@
               "src/assets",
               "src/favicon.ico"
             ],
-            "codeCoverage": false
+            "codeCoverage": true
           }
         }
       }
