@@ -1,4 +1,5 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+
 import { ChangeDetectorRef } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { FormsModule, FormControl } from '@angular/forms';

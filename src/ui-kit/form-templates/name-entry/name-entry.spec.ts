@@ -1,4 +1,5 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+
 
 // Load the implementations that should be tested
 import { SamNameEntryComponent } from './name-entry.component';

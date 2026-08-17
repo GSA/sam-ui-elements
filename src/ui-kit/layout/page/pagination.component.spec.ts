@@ -1,4 +1,5 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { TestBed, waitForAsync, ComponentFixture } from '@angular/core/testing';
+
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
@@ -10,7 +11,7 @@ describe('SamPageComponent', () => {
   let component: SamPageComponent;
   let fixture: ComponentFixture<SamPageComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SamPageComponent],
       imports: [FormsModule,SamExperimentalModule]

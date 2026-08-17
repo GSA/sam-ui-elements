@@ -1,13 +1,12 @@
 /* tslint:disable */
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceSearchItem, SamHiercarchicalServiceResult } from './hierarchical-interface';
 import { Sort } from "../../components/data-table/sort.directive";
-import 'rxjs/add/observable/of';
-import 'rxjs/add/operator/map'
 
 export class HierarchicalDataService implements SamHiercarchicalServiceInterface {
 
-  private loadedData;
+  private loadedData: any[];
   constructor() {
     const data = SampleHierarchicalData;
     for (let i = 0; i < data.length; i++) {
@@ -20,13 +19,13 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
 
   getDataByText(currentItems: number, searchValue?: string): Observable<SamHiercarchicalServiceResult> {
     let itemIncrease = 25;
-    let data = Observable.of(this.loadedData);
+    let data = of(this.loadedData);
     let itemsOb: Observable<Object[]>;
     if (searchValue) {
-      itemsOb = data.map(items => items.filter(itm =>
+      itemsOb = data.pipe(map(items => items.filter(itm =>
         (itm.name.indexOf(searchValue) !== -1 ||
           itm.subtext.indexOf(searchValue) !== -1
-        )));
+        ))));
     } else {
       itemsOb = data;
     }
@@ -40,13 +39,13 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
       items: subItemsitems,
       totalItems: totalItemCount
     };
-    return Observable.of(returnItem);
+    return of(returnItem);
   }
 
   getHiercarchicalById(item: SamHiercarchicalServiceSearchItem): Observable<SamHiercarchicalServiceResult> {
     let itemIncrease = 15;
     let temp = this.getSortedData(this.loadedData, item.sort);
-    let data = Observable.of(temp);
+    let data = of(temp);
     let itemsOb: Observable<Object[]>;
     itemsOb = this.filterItemsByAllFields(item, itemsOb, data);
     let items: object[] = this.itemsListOutofObservable(itemsOb);
@@ -59,7 +58,7 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
       items: subItemsitems,
       totalItems: totalItemCount
     };
-    return Observable.of(returnItem);
+    return of(returnItem);
   }
 
 
@@ -81,12 +80,12 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
 
   private filterItemsByAllFields(item: SamHiercarchicalServiceSearchItem, itemsOb: any, data: any) {
     if (item.searchValue) {
-      itemsOb = data.map(items => items.filter(itm => itm.parentId === item.id &&
+      itemsOb = data.pipe(map((items: any[]) => items.filter(itm => itm.parentId === item.id &&
         (itm.name.indexOf(item.searchValue) !== -1 ||
-          itm.subtext.indexOf(item.searchValue) !== -1)));
+          itm.subtext.indexOf(item.searchValue) !== -1))));
     }
     else {
-      itemsOb = data.map(items => items.filter(itm => itm.parentId === item.id));
+      itemsOb = data.pipe(map((items: any[]) => items.filter(itm => itm.parentId === item.id)));
     }
     return itemsOb;
   }

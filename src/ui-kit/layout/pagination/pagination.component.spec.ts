@@ -1,4 +1,5 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { TestBed, waitForAsync, ComponentFixture } from '@angular/core/testing';
+
 
 import { SamPaginationNextComponent } from './pagination.component';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +15,7 @@ describe('SamPaginationNextComponent', () => {
   let component: SamPaginationNextComponent;
   let fixture: ComponentFixture<SamPaginationNextComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SamPaginationNextComponent],
       imports: [FormsModule, SamIconsModule]

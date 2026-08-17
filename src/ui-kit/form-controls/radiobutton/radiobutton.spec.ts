@@ -1,4 +1,5 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+
 import { By } from '@angular/platform-browser';
 
 // Load the implementations that should be tested
@@ -72,7 +73,7 @@ describe('The Sam Radio Buttons component', () => {
       });
 
     it('should allow an initial value to be set by the model input',
-      async(() => {
+      waitForAsync(() => {
         component.model = 'ma';
         fixture.detectChanges();
 

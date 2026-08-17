@@ -1,4 +1,5 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+
 
 // Load the implementations that should be tested
 import { SamSelectComponent } from './select.component';
@@ -72,7 +73,7 @@ describe('The Sam Select component', () => {
     });
   
     it('should allow an initial value to be set by the model input',
-      async(() => {
+      waitForAsync(() => {
       component.model = 2;
       fixture.detectChanges();
 
@@ -104,7 +105,7 @@ describe('The Sam Select component', () => {
       expect(fixture.nativeElement.innerHTML).toContain(labelText);
     });
   
-    it('should disable the dropdown', async(() => {
+    it('should disable the dropdown', waitForAsync(() => {
       component.disabled = true;
       fixture.detectChanges();
       setTimeout(() => {

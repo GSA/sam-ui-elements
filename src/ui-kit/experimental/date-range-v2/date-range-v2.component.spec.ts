@@ -1,4 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { NgModule } from '@angular/core';
 import { SamWrapperModule } from '../../../ui-kit/wrappers';
 import { SamDateRangeV2Component } from './date-range-v2.component';

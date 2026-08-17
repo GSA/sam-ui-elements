@@ -1,5 +1,6 @@
 /* tslint:disable */
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+
 import { SdsHeaderComponent } from './header.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SdsTopBannerComponent } from './top-banner/top-banner.component';
@@ -10,7 +11,7 @@ describe('SdsHeaderComponent', () => {
   let component: SdsHeaderComponent;
   let fixture: ComponentFixture<SdsHeaderComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SdsHeaderComponent, SdsTopBannerComponent],
       imports: [RouterTestingModule]

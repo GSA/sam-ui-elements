@@ -1,4 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+
 
 import { SamHierarchicalSelectedResultComponent } from './selected-result.component';
 import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
@@ -10,7 +11,7 @@ describe('SamHierarchicalSelectedResultComponent', () => {
   let component: SamHierarchicalSelectedResultComponent;
   let fixture: ComponentFixture<SamHierarchicalSelectedResultComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SamHierarchicalSelectedResultComponent]
     })

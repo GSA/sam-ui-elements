@@ -1,4 +1,5 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+
 import { SamHierarchicalComponent } from './hierarchical.component';
 import { TreeMode, HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selectedItem.model';
 import { FormsModule } from '@angular/forms';
@@ -15,13 +16,12 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { SamSelectModule } from '../../../form-controls';
 import { SamFormService } from '../../../form-service';
 import { HierarchicalDataService } from '../hierarchical-test-service.spec';
-import 'rxjs/add/observable/of';
 
 describe('SamHierarchicalComponent', () => {
   let component: SamHierarchicalComponent;
   let fixture: ComponentFixture<SamHierarchicalComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SamHierarchicalComponent, SamHierarchicalAutocompleteComponent,
         SamHierarchicalSelectedResultComponent, SamHierarchicalTreeComponent,

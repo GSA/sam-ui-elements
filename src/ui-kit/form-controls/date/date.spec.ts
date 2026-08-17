@@ -1,4 +1,5 @@
-import { TestBed, tick,async } from '@angular/core/testing';
+import { TestBed, tick,waitForAsync } from '@angular/core/testing';
+
 import { FormsModule } from '@angular/forms';
 import { ChangeDetectorRef } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -15,7 +16,7 @@ describe('The Sam Date component', () => {
     let dayEl;
     let yearEl;
     // provide our implementations or mocks to the dependency injector
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       TestBed.configureTestingModule({
         imports: [SamWrapperModule, FormsModule],
         declarations: [SamDateComponent],
@@ -195,7 +196,7 @@ describe('The Sam Date component', () => {
     let dayEl;
     let yearEl;
     // provide our implementations or mocks to the dependency injector
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       TestBed.configureTestingModule({
         imports: [SamWrapperModule, FormsModule],
         declarations: [SamDateComponent],

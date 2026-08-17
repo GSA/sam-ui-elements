@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SAMSDSSelectedResultComponent } from "./selected-result.component";
 
@@ -17,7 +17,7 @@ describe("SDSSelectedResultComponent", () => {
   let component: SAMSDSSelectedResultComponent;
   let fixture: ComponentFixture<SAMSDSSelectedResultComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SAMSDSSelectedResultComponent],
       imports: [CommonModule, FormsModule, RouterModule],

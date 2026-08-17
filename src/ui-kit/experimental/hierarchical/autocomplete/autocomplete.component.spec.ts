@@ -1,11 +1,11 @@
 /* tslint:disable */
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   TestBed,
   fakeAsync,
   tick,
-} from "@angular/core/testing";
+} from '@angular/core/testing';
 import { SamHierarchicalAutocompleteComponent } from "./autocomplete.component";
 import { SamHierarchicalAutocompleteConfiguration } from "../models/SamHierarchicalAutocompleteConfiguration";
 import { FormsModule } from "@angular/forms";
@@ -14,14 +14,14 @@ import {
   TreeMode,
 } from "../hierarchical-tree-selectedItem.model";
 import { By } from "@angular/platform-browser";
-import "rxjs/add/observable/of";
+import "rxjs";
 import { HierarchicalDataService } from "../hierarchical-test-service.spec";
 
 describe("SamHierarchicalAutocompleteComponent", () => {
   let component: SamHierarchicalAutocompleteComponent;
   let fixture: ComponentFixture<SamHierarchicalAutocompleteComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SamHierarchicalAutocompleteComponent],
       imports: [FormsModule],

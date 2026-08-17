@@ -1,4 +1,5 @@
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+
 import { SamHierarchicalTreeComponent } from './hierarchical-tree.component';
 import { SamHierarchicalTreeGridComponent } from '../hierarchical-tree-grid/hierarchical-tree-grid.component';
 import { SamHierarchicalTreeHeaderComponent } from '../hierarchical-tree-header/hierarchical-tree-header.component';
@@ -11,7 +12,6 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { SamDataTableModule } from '../../../components/data-table';
 import { SamHierarchicalTreeConfiguration } from '../models/SamHierarchicalTreeConfiguration';
 import { HierarchicalDataService, SampleHierarchicalData } from '../hierarchical-test-service.spec';
-import 'rxjs/add/observable/of';
 import { SortDirection } from "../../../components/data-table/sort.directive";
 
 const sortOrder: SortDirection[] = ['asc', 'desc'];
