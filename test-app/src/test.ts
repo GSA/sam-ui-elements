@@ -1,23 +1,26 @@
-// This file is required by karma.conf.js and loads all spec files
 import { getTestBed } from '@angular/core/testing';
 import {
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
 
+// Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
 declare const __karma__: any;
 declare const require: any;
 
+// Prevent Karma from running prematurely.
 __karma__.loaded = function () {};
 
+// First, initialize the Angular testing environment.
 getTestBed().initTestEnvironment(
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting()
 );
 
+// Load all spec files (108 total: 1 app shell + 107 library specs)
+// Note: require.context was avoided because webpack's eager bundle compilation
+// for the full tree exceeds the karma browser-no-activity timeout.
 require('./app/app.component.spec');
-
-// Load all 107 library spec files
 require('./components/ui-kit/components/accordion/accordion.spec');
 require('./components/ui-kit/components/actions/action-button/action-button.spec');
 require('./components/ui-kit/components/actions/actions-dropdown/actions-dropdown.spec');
@@ -125,5 +128,5 @@ require('./components/ui-kit/utilities/key-helper/key-helper.spec');
 require('./components/ui-kit/utilities/pipe/pipe.spec');
 require('./components/ui-kit/wrappers/fieldset-wrapper/fieldset-wrapper.spec');
 require('./components/ui-kit/wrappers/label-wrapper/label-wrapper.spec');
-
+// Finally, start Karma to run the tests.
 __karma__.start();
