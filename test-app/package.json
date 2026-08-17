@@ -9,7 +9,8 @@
     "test": "npm run init && ng test --code-coverage --watch=false && node test-postjob && rimraf ./src/components",
     "test:watch": "npm run init && ng test --code-coverage && node test-postjob && rimraf ./src/components",
     "e2e": "ng e2e",
-    "init": "rimraf ./src/components && node test-setup"
+    "init": "rimraf ./src/components && node test-setup",
+    "lint": "ng lint"
   },
   "private": true,
   "dependencies": {
@@ -44,6 +45,8 @@
     "@angular/language-service": "19.2.25",
     "@types/jasmine": "5.1.15",
     "@types/node": "20.19.43",
+    "angular-eslint": "19.8.1",
+    "eslint": "9.39.2",
     "jasmine-core": "5.1.2",
     "jasmine-spec-reporter": "5.0.2",
     "karma": "6.4.4",
@@ -53,6 +56,7 @@
     "karma-jasmine": "5.1.0",
     "karma-jasmine-html-reporter": "2.2.0",
     "rimraf": "6.0.1",
-    "typescript": "5.8.3"
+    "typescript": "5.8.3",
+    "typescript-eslint": "8.54.0"
   }
 }
