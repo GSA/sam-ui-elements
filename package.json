@@ -7,7 +7,7 @@
     "url": "https://github.com/GSA/sam-ui-elements.git"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=24.0.0 <25"
   },
   "keywords": [
     "angular",
