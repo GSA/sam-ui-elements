@@ -84,55 +84,38 @@ describe('Sam International Prefix', () => {
           value: '5'
         }
       };
-  
+
+      // Trigger ngOnInit (which seeds the default value) before simulating input.
+      fixture.detectChanges();
+
       component.inputChange(mock);
 
-      fixture.detectChanges();
-      
-      return fixture.whenStable().then(
-        () => {
-          const val = fixture.debugElement.nativeElement.querySelector('.sam-international-prefix');
-          expect(val).toBeTruthy();
-        }
-      );
+      expect(component.value).toBe('5');
+      expect(component.inputValue).toBe('5');
     });
 
-    it('Should be empty when character entered (key input)', () => {
+    it('should not prevent a digit key from being entered', () => {
       const mock = {
-        currentTarget: {
-          value: '5'
-        },
-        preventDefault: function(){},
+        key: 5,
+        preventDefault: jasmine.createSpy('preventDefault'),
         stopPropagation: function(){}
       };
-  
+
       component.onKeyInput(mock);
-  
-      fixture.detectChanges();
-  
-      return fixture.whenStable().then(
-        () => {
-          expect(true).toBe(true);
-        }
-      );
+
+      expect(mock.preventDefault).not.toHaveBeenCalled();
     });
-  
-    it('Should be empty when non-digit entered', () => {
-      const mock1 = {
+
+    it('should prevent a non-digit key from being entered', () => {
+      const mock = {
         key: 'g',
-        preventDefault: function(){},
+        preventDefault: jasmine.createSpy('preventDefault'),
         stopPropagation: function(){}
       };
-  
-      component.onKeyInput(mock1);
-  
-      fixture.detectChanges();
-  
-      return fixture.whenStable().then(
-        () => {
-          expect(true).toBe(true);
-        }
-      );
+
+      component.onKeyInput(mock);
+
+      expect(mock.preventDefault).toHaveBeenCalled();
     });
   })
 });

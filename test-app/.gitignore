@@ -44,3 +44,4 @@ Thumbs.db
 # Angular CLI cache
 /.angular
 /src/components
+/src/spec-manifest.ts
