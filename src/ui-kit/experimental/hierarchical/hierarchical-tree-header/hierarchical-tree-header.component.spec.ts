@@ -32,7 +32,7 @@ describe('SamHierarchicalTreeHeaderComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SamHierarchicalTreeHeaderComponent);
     component = fixture.componentInstance;
-    component.options = options;
+    component.options = [...options];
 
     let config = new SamHierarchicalTreeHeaderConfiguration();
     config.minimumCharacterCountSearch = 0;
@@ -54,7 +54,7 @@ describe('SamHierarchicalTreeHeaderComponent', () => {
 
   it('navigateToParent with top level navigation', () => {
     spyOn(component.selectBreadcrumb, 'emit');
-    options.shift();
+    component.options.shift();
     component.navigateToParent();
     fixture.detectChanges();
     expect(component.selectBreadcrumb.emit).toHaveBeenCalledWith(null);

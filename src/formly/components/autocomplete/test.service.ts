@@ -1,4 +1,4 @@
-import { AutocompleteService } from '@gsa-sam/sam-ui-elements';
+import { AutocompleteService } from '../../../ui-kit/form-controls/autocomplete/autocomplete.service';
 /* tslint:disable */
 import { Observable,of } from 'rxjs';
 import { map } from 'rxjs/operators';

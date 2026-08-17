@@ -12,7 +12,7 @@ import {
 } from './';
 import { SamPipesModule } from '../../pipes';
 
-import { Observable,of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 
 const washingtonImg =
   'https://upload.wikimedia.org/wikipedia/commons/c/c6/Georgewashington.jpg';
@@ -107,7 +107,7 @@ export class CommentsDemoService implements CommentsService {
   postComment(_: any): Observable<Comment[]> {
     if (_.text === 'asdf') {
       const err = new Error('I errored, bro');
-      return Observable.throw(err);
+      return throwError(() => err);
     }
     this._comments.push(_);
     return of(this._comments);

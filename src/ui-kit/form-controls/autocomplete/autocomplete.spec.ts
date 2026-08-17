@@ -1,5 +1,6 @@
 
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { TestBed, waitForAsync, ComponentFixture } from '@angular/core/testing';
+
 import { By } from '@angular/platform-browser';
 import { FormsModule, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -14,7 +15,7 @@ import { SamAutocompleteComponent } from './autocomplete.component';
 import { AutocompleteService } from '../autocomplete/autocomplete.service';
 
 import { AutocompleteConfig } from '../../types';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 
 describe('The Sam Autocomplete Component', () => {
   describe('isolated tests', () => {
@@ -276,9 +277,9 @@ describe('The Sam Autocomplete Component', () => {
     it('Should work as a form control', () => {
       component.registerOnChange((_) => { });
       component.registerOnTouched((_) => { });
+      fixture.detectChanges();
       component.setDisabledState(true);
       let el = fixture.debugElement.query(By.css('input'));
-      fixture.detectChanges();
       expect(component.input.nativeElement.disabled).toBe(true);
       component.writeValue(null);
       expect(component.innerValue).toBe(null);

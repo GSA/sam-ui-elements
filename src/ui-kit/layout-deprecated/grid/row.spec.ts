@@ -1,4 +1,5 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+
 import { Component } from '@angular/core';
 // Load the implementations that should be tested
 import { RowDirective } from './row.directive';

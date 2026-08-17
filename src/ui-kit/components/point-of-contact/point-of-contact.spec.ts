@@ -1,4 +1,5 @@
-import { TestBed, async, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, waitForAsync, fakeAsync, tick } from '@angular/core/testing';
+
 import { By } from '@angular/platform-browser';
 
 // Load the implementations that should be tested

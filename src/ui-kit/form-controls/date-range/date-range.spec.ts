@@ -1,4 +1,5 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+
 import { FormsModule, FormControl } from '@angular/forms';
 // Load the implementations that should be tested
 import { SamDateRangeComponent } from './date-range.component';

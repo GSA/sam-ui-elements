@@ -84,60 +84,38 @@ describe('Sam International Prefix', () => {
           value: '5'
         }
       };
-  
+
+      // Trigger ngOnInit (which seeds the default value) before simulating input.
+      fixture.detectChanges();
+
       component.inputChange(mock);
 
-      fixture.detectChanges();
-      
-      fixture.whenStable().then(
-        () => {
-          const val = fixture.debugElement.querySelector('.sam-international-prefix').value;
-          expect(val).toBe(5);
-        }
-      )
+      expect(component.value).toBe('5');
+      expect(component.inputValue).toBe('5');
+    });
 
-      it('Should be empty when chanrecter entered', () => {
-        const mock = {
-          currentTarget: {
-            value: '5'
-          },
-          preventDefault: function(){},
-          stopPropagation: function(){}
-        };
-  
-        component.onKeyInput(mock);
-  
-        fixture.detectChanges();
-  
-        fixture.whenStable().then(
-          () => {
-            const val = fixture.debugElement.querySelector('.sam-international-prefix').value;
-            expect(val).toBe(5);
-          }
-        );
-      });
-  
-      it('Should be empty when chanrecter entered', () => {
-      
-        const mock1 = {
-          key: 'g',
-          preventDefault: function(){},
-          stopPropagation: function(){}
-        };
-  
-        component.onKeyInput(mock1);
-  
-        fixture.detectChanges();
-  
-        fixture.whenStable().then(
-          () => {
-            console.log(component.inputValue, 'test');
-            const val = fixture.debugElement.querySelector('.sam-international-prefix').value;
-            expect(val).toBe('');
-          }
-        )
-      });
+    it('should not prevent a digit key from being entered', () => {
+      const mock = {
+        key: 5,
+        preventDefault: jasmine.createSpy('preventDefault'),
+        stopPropagation: function(){}
+      };
 
+      component.onKeyInput(mock);
+
+      expect(mock.preventDefault).not.toHaveBeenCalled();
+    });
+
+    it('should prevent a non-digit key from being entered', () => {
+      const mock = {
+        key: 'g',
+        preventDefault: jasmine.createSpy('preventDefault'),
+        stopPropagation: function(){}
+      };
+
+      component.onKeyInput(mock);
+
+      expect(mock.preventDefault).toHaveBeenCalled();
     });
   })
 });

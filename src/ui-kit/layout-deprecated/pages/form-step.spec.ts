@@ -1,4 +1,5 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+
 import { RouterTestingModule } from '@angular/router/testing';
 import { Component } from '@angular/core';
 // Load the implementations that should be tested

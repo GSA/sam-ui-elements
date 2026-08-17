@@ -1,5 +1,5 @@
 import {
-  async,
+  waitForAsync,
   ComponentFixtureAutoDetect,
   ComponentFixture,
   TestBed
@@ -133,7 +133,7 @@ describe('The Sam Accordion component', () => {
     let component: SamAccordionComponent;
     let fixture: any;
 
-    beforeEach( async(() => {
+    beforeEach( waitForAsync(() => {
       TestBed.configureTestingModule({
         declarations: [
           AccordionBordered,

@@ -1,12 +1,12 @@
 import { SamSortable, SamSortDirective } from './';
-import { merge } from 'rxjs/observable/merge';
+import { merge } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { DataSource } from '@angular/cdk/collections';
-import { fromEvent } from 'rxjs/observable/fromEvent';
+import { fromEvent } from 'rxjs';
 import { RECORDS } from './data.sample.spec';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 /* tslint:disable */
 import { Observable } from 'rxjs';
-import 'rxjs/add/operator/map'
 /* tslint:enable */
 
 export interface CFDAData {
@@ -89,7 +89,7 @@ export class ExampleDataSource extends DataSource<any> {
         // this._paginator.pageChange,
       ];
 
-      return merge(...displayDataChanges).map(() => {
+      return merge(...displayDataChanges).pipe(map(() => {
         // Filter data
         this.filteredData = this._exampleDatabase.data.slice().filter((item: CFDAData) => {
           const searchStr = (item.agency + item.title).toLowerCase();
@@ -110,7 +110,7 @@ export class ExampleDataSource extends DataSource<any> {
         // this._paginator.totalPages = Math.ceil(this.filteredData.length / 10);
         this.renderedData = sortedData.splice(0, 10);
         return this.renderedData;
-      });
+      }));
     }
 
     disconnect() {}

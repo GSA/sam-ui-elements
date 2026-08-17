@@ -1,11 +1,11 @@
 /* tslint:disable */
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   TestBed,
   fakeAsync,
   tick,
-} from "@angular/core/testing";
+} from '@angular/core/testing';
 import { SAMSDSAutocompleteSearchComponent } from "./autocomplete-search.component";
 import { SAMSDSAutocompleteSearchConfiguration } from "./models/SAMSDSAutocompleteConfiguration";
 import { FormsModule } from "@angular/forms";
@@ -18,7 +18,7 @@ describe("SamAutocompleteComponent", () => {
   let component: SAMSDSAutocompleteSearchComponent;
   let fixture: ComponentFixture<SAMSDSAutocompleteSearchComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SAMSDSAutocompleteSearchComponent],
       imports: [FormsModule],

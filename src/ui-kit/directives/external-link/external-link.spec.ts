@@ -1,6 +1,6 @@
 import {
   TestBed,
-  async,
+  waitForAsync,
   fakeAsync,
   tick, 
   ComponentFixture} from '@angular/core/testing';

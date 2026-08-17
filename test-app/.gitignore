@@ -40,3 +40,8 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Angular CLI cache
+/.angular
+/src/components
+/src/spec-manifest.ts
