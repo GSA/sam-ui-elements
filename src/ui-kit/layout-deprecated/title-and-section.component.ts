@@ -3,8 +3,8 @@ import { Component, Input } from '@angular/core';
 import { BadgeConfig } from '../components/badge';
 
 @Component({
-  selector: 'title-and-section',
-  template: `
+    selector: 'title-and-section',
+    template: `
     <div [ngClass]="badgeOptions?.attached ? 'sam-ui segment' : ''">
       <h1 *ngIf="title || section"
           class="sam-ui header"
@@ -23,6 +23,7 @@ import { BadgeConfig } from '../components/badge';
       <div *ngIf="caption" [innerHTML]="caption"></div>
     </div>
 `,
+    standalone: false
 })
 export class TitleAndSectionComponent {
   /**

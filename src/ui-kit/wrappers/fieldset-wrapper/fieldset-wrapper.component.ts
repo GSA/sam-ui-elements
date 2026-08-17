@@ -8,8 +8,9 @@ import {
 import { AbstractControl } from '@angular/forms';
 
 @Component({
-  selector: 'sam-fieldset-wrapper',
-  templateUrl: 'fieldset-wrapper.template.html',
+    selector: 'sam-fieldset-wrapper',
+    templateUrl: 'fieldset-wrapper.template.html',
+    standalone: false
 })
 export class FieldsetWrapper {
 

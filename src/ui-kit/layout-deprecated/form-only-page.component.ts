@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'form-only',
-  template: `
+    selector: 'form-only',
+    template: `
     <div class="occupy-page"
       [style.background-color]="theme == 'inside' ? '#F9F9F9' : '' " 
       [style.border-top]=" theme == 'inside' ? '1px solid #F9F9F9' : '' ">
@@ -21,6 +21,7 @@ import { Component, Input } from '@angular/core';
       </div>
     </div>
 `,
+    standalone: false
 })
 export class FormOnlyPageTemplateComponent {
   /**

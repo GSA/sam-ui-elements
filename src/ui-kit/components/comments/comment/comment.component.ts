@@ -3,8 +3,9 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Comment } from '../interfaces';
 
 @Component({
-  selector: 'sam-comment',
-  templateUrl: 'comment.template.html'
+    selector: 'sam-comment',
+    templateUrl: 'comment.template.html',
+    standalone: false
 })
 export class SamCommentComponent {
   /**

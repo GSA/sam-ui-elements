@@ -18,15 +18,16 @@ import {
  * Fontawesome icon.
  */
 @Component({
-  selector: 'sam-icon',
-  template: `<sam-fa-icon
+    selector: 'sam-icon',
+    template: `<sam-fa-icon
     [icon]="iconProp"
     [title]="title"
     [spin]="spin"
     [size]="size"
     [fixedWidth]="fixedWidth"
     [rotate]="rotate">
-  </sam-fa-icon>`
+  </sam-fa-icon>`,
+    standalone: false
 })
 export class SamIconComponent {
   // tslint:disable-next-line:no-input-rename

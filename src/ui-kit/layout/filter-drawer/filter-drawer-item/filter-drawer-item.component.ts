@@ -6,8 +6,8 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'sam-filter-drawer-item',
-  template: `
+    selector: 'sam-filter-drawer-item',
+    template: `
   <div class="title">{{ label }}</div>
   <ng-container *ngFor="let value of values">
     <sam-filter-drawer-chip
@@ -16,8 +16,9 @@ import {
       (remove)="removeFilter(value)"
     ></sam-filter-drawer-chip>
   </ng-container>
-  `
- })
+  `,
+    standalone: false
+})
 export class SamFilterDrawerItemComponent {
   @Input() public label: string;
   @Input() public values: any[];

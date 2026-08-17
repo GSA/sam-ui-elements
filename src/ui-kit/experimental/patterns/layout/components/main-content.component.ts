@@ -1,11 +1,12 @@
 import { Component, HostBinding } from '@angular/core';
 
 @Component({
-  selector: 'sam-main-content',
-  template: `
+    selector: 'sam-main-content',
+    template: `
     <ng-content select="sam-action-bar"></ng-content>
     <ng-content></ng-content>
-  `
+  `,
+    standalone: false
 })
 export class SamMainContentComponent {
   @HostBinding('class.main-content')

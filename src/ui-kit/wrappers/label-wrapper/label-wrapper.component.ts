@@ -11,8 +11,9 @@ import {
 import { AbstractControl } from '@angular/forms';
 
 @Component({
-  selector: 'sam-label-wrapper',
-  templateUrl: 'label-wrapper.template.html',
+    selector: 'sam-label-wrapper',
+    templateUrl: 'label-wrapper.template.html',
+    standalone: false
 })
 export class LabelWrapper implements AfterViewChecked {
   /**

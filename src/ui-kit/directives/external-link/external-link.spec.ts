@@ -20,7 +20,7 @@ import {
 
 
 @Component({
-  template: `
+    template: `
     <a id="blank"
       target="_blank">
       Blank
@@ -37,7 +37,8 @@ import {
       hideIcon="true">
       Hidden
     </a>
-  `
+  `,
+    standalone: false
 })
 class TestComponent {}
 

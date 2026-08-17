@@ -15,7 +15,7 @@ import {
     NG_VALUE_ACCESSOR,
     ValidatorFn
 } from '@angular/forms';
-import * as moment from 'moment/moment';
+import moment from 'moment';
 import { SamFormService } from '../../form-service';
 
 /**
@@ -25,10 +25,11 @@ import { SamFormService } from '../../form-service';
     selector: 'sam-date-range',
     templateUrl: 'date-range.template.html',
     providers: [{
-        provide: NG_VALUE_ACCESSOR,
-        useExisting: forwardRef(() => SamDateRangeComponent),
-        multi: true
-    }]
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SamDateRangeComponent),
+            multi: true
+        }],
+    standalone: false
 })
 export class SamDateRangeComponent
     implements OnInit, OnChanges, ControlValueAccessor {

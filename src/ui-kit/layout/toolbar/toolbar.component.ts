@@ -8,8 +8,8 @@ import { MdSidenav } from '../../experimental/patterns/layout/components/sidenav
 import { ToolbarItem } from '../../experimental/actions-list';
 
 @Component({
-  selector: 'sam-toolbar',
-  template: `
+    selector: 'sam-toolbar',
+    template: `
   <div class="sam menu">
   <sam-aside-toggle [showToggle]="showToggle" [sidenav]="sidenav"
   [contentModel]="sidenavModel"
@@ -19,7 +19,8 @@ import { ToolbarItem } from '../../experimental/actions-list';
   (action)="action.emit($event)"
   ></sam-actions>
   </div>
-  `
+  `,
+    standalone: false
 })
 export class SamToolbarComponent {
   /**

@@ -9,12 +9,13 @@ import {AbstractSamFormly} from '../../sam-formly';
 import {SamNumberComponent} from '../../../ui-kit';
 
 @Component({
-  template: `
+    template: `
    <sam-number [formControl]="formControl"
     [control]="formControl"
    ></sam-number>
  `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SamFormlyNumber extends AbstractSamFormly {
   @ViewChild(SamNumberComponent, {static: true})

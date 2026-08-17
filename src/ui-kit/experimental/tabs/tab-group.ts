@@ -42,14 +42,15 @@ export type MdTabHeaderPosition = 'above' | 'below';
  * See: https://www.google.com/design/spec/components/tabs.html
  */
 @Component({
-  selector: 'sam-tabs-next',
-  templateUrl: 'tab-group.html',
-  styleUrls: ['tab-group.scss'],
-  host: {
-    'class': 'mat-tab-group',
-    '[class.mat-tab-group-dynamic-height]': 'dynamicHeight',
-    '[class.mat-tab-group-inverted-header]': 'headerPosition === "below"',
-  }
+    selector: 'sam-tabs-next',
+    templateUrl: 'tab-group.html',
+    styleUrls: ['tab-group.scss'],
+    host: {
+        'class': 'mat-tab-group',
+        '[class.mat-tab-group-dynamic-height]': 'dynamicHeight',
+        '[class.mat-tab-group-inverted-header]': 'headerPosition === "below"',
+    },
+    standalone: false
 })
 export class MdTabGroup {
   @ContentChildren(MdTab) _tabs: QueryList<MdTab>;

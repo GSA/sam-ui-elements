@@ -1,12 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: "sam-container",
-  template: `
+    selector: "sam-container",
+    template: `
     <div [ngClass]="css_classes">
       <ng-content></ng-content>
     </div>
-  `
+  `,
+    standalone: false
 })
 export class SamContainerComponent implements OnInit{
 

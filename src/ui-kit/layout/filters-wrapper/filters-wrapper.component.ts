@@ -29,8 +29,9 @@ import {
           {{resetBtnText}}
         </sam-button-next>
       </form>
-    `
-  })
+    `,
+    standalone: false
+})
   export class SamFiltersWrapperComponent
     implements OnInit, OnDestroy {
     

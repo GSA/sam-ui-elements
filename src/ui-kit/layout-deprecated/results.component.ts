@@ -1,8 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'results',
-  templateUrl: 'results.template.html'
+    selector: 'results',
+    templateUrl: 'results.template.html',
+    standalone: false
 })
 export class ResultsTemplateComponent {
 

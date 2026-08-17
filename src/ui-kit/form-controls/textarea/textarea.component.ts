@@ -21,15 +21,16 @@ import { TextAreaWidthType } from "../../types";
  * The <sam-text-area> component provides a textarea input form control
  */
 @Component({
-  selector: "sam-text-area",
-  templateUrl: "textarea.template.html",
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SamTextareaComponent),
-      multi: true,
-    },
-  ],
+    selector: "sam-text-area",
+    templateUrl: "textarea.template.html",
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SamTextareaComponent),
+            multi: true,
+        },
+    ],
+    standalone: false
 })
 export class SamTextareaComponent implements ControlValueAccessor {
   /**

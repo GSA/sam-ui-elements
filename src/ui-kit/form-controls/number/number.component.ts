@@ -20,8 +20,8 @@ import { SamFormService } from '../../form-service';
  *
  */
 @Component({
-  selector: 'sam-number',
-  template: `
+    selector: 'sam-number',
+    template: `
       <sam-label-wrapper
         [label]="label"
         [name]="name"
@@ -39,11 +39,12 @@ import { SamFormService } from '../../form-service';
           (change)="onInputChange($event.target.value)">
       </sam-label-wrapper>
   `,
-  providers: [ {
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => SamNumberComponent),
-    multi: true
-  } ]
+    providers: [{
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SamNumberComponent),
+            multi: true
+        }],
+    standalone: false
 })
 export class SamNumberComponent implements ControlValueAccessor {
   /**

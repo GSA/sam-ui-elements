@@ -7,7 +7,7 @@ import {
   FormControl, Validators, ControlValueAccessor,
   AbstractControl, NG_VALUE_ACCESSOR, ValidatorFn
 } from '@angular/forms';
-import * as moment from 'moment/moment';
+import moment from 'moment';
 import { Calendar } from './calendar';
 
 
@@ -22,31 +22,32 @@ interface ValidationResult {
 }
 
 @Component({
-  selector: 'sam-datepicker-v2',
-  animations: [
-    trigger('calendarAnimation', [
-      transition('* => left', [
-        animate(180, keyframes([
-          style({ transform: 'translateX(105%)', offset: 0.5 }),
-          style({ transform: 'translateX(-130%)', offset: 0.51 }),
-          style({ transform: 'translateX(0)', offset: 1 })
-        ]))
-      ]),
-      transition('* => right', [
-        animate(180, keyframes([
-          style({ transform: 'translateX(-105%)', offset: 0.5 }),
-          style({ transform: 'translateX(130%)', offset: 0.51 }),
-          style({ transform: 'translateX(0)', offset: 1 })
-        ]))
-      ])
-    ])
-  ],
-  templateUrl: `./picker.template.html`,
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => DatepickerComponent),
-    multi: true
-  }]
+    selector: 'sam-datepicker-v2',
+    animations: [
+        trigger('calendarAnimation', [
+            transition('* => left', [
+                animate(180, keyframes([
+                    style({ transform: 'translateX(105%)', offset: 0.5 }),
+                    style({ transform: 'translateX(-130%)', offset: 0.51 }),
+                    style({ transform: 'translateX(0)', offset: 1 })
+                ]))
+            ]),
+            transition('* => right', [
+                animate(180, keyframes([
+                    style({ transform: 'translateX(-105%)', offset: 0.5 }),
+                    style({ transform: 'translateX(130%)', offset: 0.51 }),
+                    style({ transform: 'translateX(0)', offset: 1 })
+                ]))
+            ])
+        ])
+    ],
+    templateUrl: `./picker.template.html`,
+    providers: [{
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => DatepickerComponent),
+            multi: true
+        }],
+    standalone: false
 })
 export class DatepickerComponent extends SamFormControl implements OnInit, OnChanges, ControlValueAccessor {
   private readonly DEFAULT_FORMAT = 'MM/DD/YYYY';

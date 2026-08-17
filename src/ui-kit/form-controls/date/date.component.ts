@@ -10,7 +10,7 @@ import {
   forwardRef
 } from '@angular/core';
 
-import * as moment from 'moment/moment';
+import moment from 'moment';
 
 import {
   NG_VALUE_ACCESSOR,
@@ -31,13 +31,14 @@ import {
  * The <sam-date> component is a Date entry portion of a form
  */
 @Component({
-  selector: 'sam-date',
-  templateUrl: 'date.template.html',
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => SamDateComponent),
-    multi: true
-  }]
+    selector: 'sam-date',
+    templateUrl: 'date.template.html',
+    providers: [{
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SamDateComponent),
+            multi: true
+        }],
+    standalone: false
 })
 export class SamDateComponent
   implements OnInit, OnChanges, ControlValueAccessor {

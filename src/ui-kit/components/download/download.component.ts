@@ -9,39 +9,40 @@ import { DownloadPackageType } from '../../types';
  * Sam Download Component
  */
 @Component({
-  selector: 'sam-download',
-  templateUrl: 'download.template.html',
-  animations: [
-    trigger('accordion', [
-      state('collapsed', style({
-        height: '0px',
-      })),
-      state('expanded', style({
-        height: '*',
-      })),
-      transition('collapsed => expanded', animate('100ms ease-in')),
-      transition('expanded => collapsed', animate('100ms ease-out'))
-    ]),
-    trigger('intro', [
-      state('fade', style({
-        opacity: 1,
-        transform: 'translateY(0)'
-      })),
-      transition('void => *', [
-        style({
-          opacity: 0,
-          transform: 'translateY(-30%)'
-        }),
-        animate('.5s .5s cubic-bezier(0.175, 0.885, 0.320, 1.275)')
-      ]),
-      transition('* => void', [
-        animate('.5s cubic-bezier(0.175, 0.885, 0.320, 1.275)', style({
-          opacity: 0,
-          transform: 'translateY(-30%)'
-        }))
-      ])
-    ])
-  ]
+    selector: 'sam-download',
+    templateUrl: 'download.template.html',
+    animations: [
+        trigger('accordion', [
+            state('collapsed', style({
+                height: '0px',
+            })),
+            state('expanded', style({
+                height: '*',
+            })),
+            transition('collapsed => expanded', animate('100ms ease-in')),
+            transition('expanded => collapsed', animate('100ms ease-out'))
+        ]),
+        trigger('intro', [
+            state('fade', style({
+                opacity: 1,
+                transform: 'translateY(0)'
+            })),
+            transition('void => *', [
+                style({
+                    opacity: 0,
+                    transform: 'translateY(-30%)'
+                }),
+                animate('.5s .5s cubic-bezier(0.175, 0.885, 0.320, 1.275)')
+            ]),
+            transition('* => void', [
+                animate('.5s cubic-bezier(0.175, 0.885, 0.320, 1.275)', style({
+                    opacity: 0,
+                    transform: 'translateY(-30%)'
+                }))
+            ])
+        ])
+    ],
+    standalone: false
 })
 export class SamDownloadComponent {
   /**

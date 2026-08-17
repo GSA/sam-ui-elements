@@ -3,12 +3,13 @@ import { Component, Input } from '@angular/core';
 import { BadgeConfig } from './types';
 
 @Component({
-  selector: 'sam-badge',
-  template: `
+    selector: 'sam-badge',
+    template: `
     <div class="sam-ui label small" [ngClass]="[attached]">
         <ng-content></ng-content>
     </div>
-  `
+  `,
+    standalone: false
 })
 export class SamBadgeComponent {
   private _options: BadgeConfig = {};

@@ -4,8 +4,9 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
  * The <sam-pagination> allows users to select a page
  */
 @Component({
-  selector: 'sam-pagination',
-  templateUrl: 'pagination.template.html',
+    selector: 'sam-pagination',
+    templateUrl: 'pagination.template.html',
+    standalone: false
 })
 export class SamPaginationComponent {
 

@@ -7,7 +7,7 @@ import {
 import { FieldWrapper } from '@ngx-formly/core';
 
 @Component({
-template: `
+    template: `
   <sam-expansion-panel>
     <sam-expansion-panel-header>
       {{ to.accordionLabel }}
@@ -15,6 +15,7 @@ template: `
     <ng-container #fieldComponent></ng-container>
   </sam-expansion-panel>
 `,
+    standalone: false
 })
 export class FilterWrapperComponent extends FieldWrapper {
 @ViewChild('fieldComponent', {read: ViewContainerRef, static: true})

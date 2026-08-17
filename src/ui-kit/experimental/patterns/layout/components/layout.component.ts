@@ -8,10 +8,11 @@ import { SamActionBarComponent } from './actionbar.component';
 import { SamMainComponent } from './main.component';
 
 @Component({
-  selector: 'sam-layout-b',
-  template: `
+    selector: 'sam-layout-b',
+    template: `
     <ng-content></ng-content>
-  `
+  `,
+    standalone: false
 })
 export class SamLayoutComponent {
   @HostBinding('class.container') container: boolean = true;

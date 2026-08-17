@@ -7,13 +7,14 @@ import { SamPaginationNextComponent } from  '../../../../layout/pagination/pagin
 import { SamPageNextService } from '../architecture';
 
 @Component({
-  selector: 'sam-action-bar',
-  template: `
+    selector: 'sam-action-bar',
+    template: `
     <ng-content select="sam-pagination-next"></ng-content>
     <div class="actions-container">
       <ng-content select="[samPageAction]"></ng-content>
     </div>
-  `
+  `,
+    standalone: false
 })
 export class SamActionBarComponent {
   @ContentChild(SamPaginationNextComponent, {static: true})

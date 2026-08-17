@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'sam-header-nav',
-  template: `
+    selector: 'sam-header-nav',
+    template: `
     <ul
       [ngClass]="{
         'usa-nav__primary usa-accordion': type === 'primary',
@@ -11,7 +11,8 @@ import { Component, Input, OnInit } from '@angular/core';
     >
       <ng-content></ng-content>
     </ul>
-  `
+  `,
+    standalone: false
 })
 export class SamHeaderNavComponent implements OnInit {
   @Input() type: string;

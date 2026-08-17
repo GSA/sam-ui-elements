@@ -13,10 +13,10 @@ import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
 import { SamFormService } from '../../form-service';
 
 @Component({
-  selector: 'sam-intl-telephone-group',
-  encapsulation: ViewEncapsulation.None,
-  styles: [
-    `
+    selector: 'sam-intl-telephone-group',
+    encapsulation: ViewEncapsulation.None,
+    styles: [
+        `
     .usa-fieldset-inputs {
       max-width: 58rem;
     }
@@ -78,8 +78,9 @@ import { SamFormService } from '../../form-service';
       }
     }
     `
-  ],
-  templateUrl: 'international.template.html'
+    ],
+    templateUrl: 'international.template.html',
+    standalone: false
 })
 export class SamIntlPhoneGroup extends SamFieldset
   implements OnInit {

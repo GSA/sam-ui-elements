@@ -6,8 +6,8 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'sam-filter-drawer-chip',
-  template: `
+    selector: 'sam-filter-drawer-chip',
+    template: `
   <span class="sam label">
     {{ label }}
     <button *ngIf="!disabled"
@@ -18,7 +18,8 @@ import {
       <span class="fa fa-times" aria-hidden="true"></span>
     </button>
   </span>
-  `
+  `,
+    standalone: false
 })
 export class SamFilterDrawerChip {
   @Input() public label: string;

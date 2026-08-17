@@ -28,15 +28,16 @@ import { SamFormService } from '../../form-service';
  * The <sam-text> component provides a text input form control
  */
 @Component({
-  selector: 'sam-text',
-  templateUrl: 'text.template.html',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SamTextComponent),
-      multi: true
-    }
-  ]
+    selector: 'sam-text',
+    templateUrl: 'text.template.html',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SamTextComponent),
+            multi: true
+        }
+    ],
+    standalone: false
 })
 export class SamTextComponent implements ControlValueAccessor,
   OnInit, AfterViewInit, OnDestroy {

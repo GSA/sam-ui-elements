@@ -6,14 +6,15 @@ import { SamMainComponent } from '../';
 import { SamPageNextService } from '../../architecture';
 
 @Component({
-  selector: 'sam-reporting-main',
-  templateUrl: './reporting-main.template.html',
-  providers: [
-    {
-      provide: SamMainComponent,
-      useValue: forwardRef(() => SamReportingMainComponent)
-    }
-  ]
+    selector: 'sam-reporting-main',
+    templateUrl: './reporting-main.template.html',
+    providers: [
+        {
+            provide: SamMainComponent,
+            useValue: forwardRef(() => SamReportingMainComponent)
+        }
+    ],
+    standalone: false
 })
 export class SamReportingMainComponent extends SamMainComponent {
   @HostBinding('class.sam-reporting-main')

@@ -9,10 +9,11 @@ import { AbstractSamFormly } from '../../sam-formly';
 import { SamCheckboxComponent } from '../../../ui-kit';
 
 @Component({
- template: `
+    template: `
    <sam-checkbox [formControl]="formControl"></sam-checkbox>
  `,
- changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SamFormlyCheckbox extends AbstractSamFormly {
   @ViewChild(SamCheckboxComponent, {static: true})

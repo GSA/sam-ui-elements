@@ -14,8 +14,9 @@ import {
  * accordion item
  */
 @Component({
-  selector: 'sam-accordion-section',
-  templateUrl: 'accordion.template.html'
+    selector: 'sam-accordion-section',
+    templateUrl: 'accordion.template.html',
+    standalone: false
 })
 export class SamAccordionSection implements OnInit {
   /**
@@ -81,12 +82,13 @@ export class SamAccordionSection implements OnInit {
  * data
  */
 @Component({
-  selector: 'sam-accordion',
-  template: `
+    selector: 'sam-accordion',
+    template: `
     <div class='accordion-list' [ngClass]='accordionClass'>
       <ng-content></ng-content>             
     </div>
 `,
+    standalone: false
 })
 export class SamAccordionComponent implements OnInit {
   /**

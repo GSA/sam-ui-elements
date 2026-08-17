@@ -8,7 +8,7 @@ import {
   forwardRef,
   OnChanges
 } from '@angular/core';
-import * as moment from 'moment/moment';
+import moment from 'moment';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
 import { SamDateComponent } from '../date/date.component';
@@ -25,9 +25,10 @@ const MY_VALUE_ACCESSOR: any = {
  * The <sam-date-time> component is a DateTime entry portion of a form
  */
 @Component({
-  selector: 'sam-date-time',
-  templateUrl: 'date-time.template.html',
-  providers: [ MY_VALUE_ACCESSOR ]
+    selector: 'sam-date-time',
+    templateUrl: 'date-time.template.html',
+    providers: [MY_VALUE_ACCESSOR],
+    standalone: false
 })
 export class SamDateTimeComponent
   implements OnInit, OnChanges, ControlValueAccessor {

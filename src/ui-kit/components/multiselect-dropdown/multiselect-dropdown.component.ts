@@ -14,7 +14,8 @@ import { OptionsType } from '../../types';
  */
 @Component({
     selector: 'sam-multiselect-dropdown',
-    templateUrl: 'multiselect-dropdown.template.html'
+    templateUrl: 'multiselect-dropdown.template.html',
+    standalone: false
 })
 export class SamMultiSelectDropdownComponent implements OnChanges {
   /**

@@ -10,8 +10,8 @@ import { ToolbarItem } from '../../experimental/actions-list';
 import { SamPageNextService } from '../../experimental/patterns/layout/architecture';
 
 @Component({
-  selector: 'sam-aside-toggle',
-  template: `
+    selector: 'sam-aside-toggle',
+    template: `
     <button *ngIf="sidenav && showToggle" class="sam button tertiary small"
       (click)="handleClick()"
       [disabled]="contentModel?.disabled">    
@@ -21,7 +21,8 @@ import { SamPageNextService } from '../../experimental/patterns/layout/architect
       ></span>
       {{ contentModel?.label }}
     </button>
-  `
+  `,
+    standalone: false
 })
 export class SamAsideToggleComponent {
   /**

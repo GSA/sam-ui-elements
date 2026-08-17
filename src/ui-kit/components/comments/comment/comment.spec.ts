@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
-import * as moment from 'moment';
+import moment from 'moment';
 import { By } from '@angular/platform-browser';
 
 // Load the implementations that should be tested

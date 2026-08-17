@@ -1,7 +1,8 @@
 import { Input, Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 @Component({
-  template: ''
+    template: '',
+    standalone: false
 })
 export class SamFieldset {
   /**

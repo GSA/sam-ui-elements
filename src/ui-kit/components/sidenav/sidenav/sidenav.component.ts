@@ -15,8 +15,9 @@ import { MenuItem } from '../interfaces';
  * The <sam-sidenav> component builds a side navigation bar
  */
 @Component({
-  selector: 'sam-sidenav',
-  templateUrl: './sidenav.template.html'
+    selector: 'sam-sidenav',
+    templateUrl: './sidenav.template.html',
+    standalone: false
 })
 export class SamSidenavComponent implements OnInit {
   /**

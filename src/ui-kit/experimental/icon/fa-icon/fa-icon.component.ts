@@ -35,8 +35,9 @@ import {
    */
   @Component({
     selector: 'sam-fa-icon',
-    template: ``
-  })
+    template: ``,
+    standalone: false
+})
   export class SamFAIconComponent implements OnChanges {
     @HostBinding('class') public faIconClass = 'ng-fa-icon';
     // tslint:disable-next-line:no-input-rename

@@ -9,7 +9,10 @@ import {
 /**
  * The sam-sticky directive is made to help nav bar stick on the page
  */
-@Directive({ selector: '[sam-sticky]' })
+@Directive({
+    selector: '[sam-sticky]',
+    standalone: false
+})
 export class SamStickyComponent implements OnInit {
 
   // Research sticky polyfill

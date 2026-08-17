@@ -2,13 +2,14 @@ import { Component, Input, OnInit} from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
-  selector: "sam-youtube",
-  template: `
+    selector: "sam-youtube",
+    template: `
   <div class="sam embed video ratio16by9">
     <iframe [src]="videoUrl" allow="autoplay; encrypted-media" allowfullscreen>
     </iframe>
   </div>
-  `
+  `,
+    standalone: false
 })
 export class SamYoutubeComponent implements OnInit{
   /**

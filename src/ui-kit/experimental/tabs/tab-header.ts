@@ -51,14 +51,15 @@ const EXAGGERATED_OVERSCROLL = 60;
  * @docs-private
  */
 @Component({
-  selector: 'md-tab-header, mat-tab-header',
-  templateUrl: 'tab-header.html',
-  styleUrls: ['tab-header.scss'],
-  encapsulation: ViewEncapsulation.None,
-  host: {
-    'class': 'mat-tab-header',
-    '[class.mat-tab-header-pagination-controls-enabled]': '_showPaginationControls',
-  }
+    selector: 'md-tab-header, mat-tab-header',
+    templateUrl: 'tab-header.html',
+    styleUrls: ['tab-header.scss'],
+    encapsulation: ViewEncapsulation.None,
+    host: {
+        'class': 'mat-tab-header',
+        '[class.mat-tab-header-pagination-controls-enabled]': '_showPaginationControls',
+    },
+    standalone: false
 })
 export class MdTabHeader implements AfterContentChecked, AfterContentInit, OnDestroy {
   @ContentChildren(MdTabLabelWrapper) _labelWrappers: QueryList<MdTabLabelWrapper>;

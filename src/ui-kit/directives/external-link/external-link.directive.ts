@@ -7,7 +7,8 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: 'a[target]'
+    selector: 'a[target]',
+    standalone: false
 })
 export class SamExternalLinkDirective
   implements AfterViewInit {

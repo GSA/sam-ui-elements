@@ -14,11 +14,12 @@ interface InitPxVideoConfig {
 }
 
 @Component({
-  selector: 'sam-video-player',
-  templateUrl: './video-player.template.html',
-  host: {
-    '(document:fullscreenchange)': 'onToggleFullScreen($event)'
-  }
+    selector: 'sam-video-player',
+    templateUrl: './video-player.template.html',
+    host: {
+        '(document:fullscreenchange)': 'onToggleFullScreen($event)'
+    },
+    standalone: false
 })
 
 export class SamVideoPlayerComponent {

@@ -8,9 +8,10 @@ import { HierarchicalDataSource } from './data-source';
 import { SamHierarchicalTreeGridConfiguration } from '../models/SamHierarchicalTreeGridConfiguration';
 
 @Component({
-  selector: 'sam-hierarchical-tree-grid',
-  templateUrl: './hierarchical-tree-grid.component.html',
-  styleUrls: ['./hierarchical-tree-grid.component.scss']
+    selector: 'sam-hierarchical-tree-grid',
+    templateUrl: './hierarchical-tree-grid.component.html',
+    styleUrls: ['./hierarchical-tree-grid.component.scss'],
+    standalone: false
 })
 export class SamHierarchicalTreeGridComponent implements OnInit, AfterViewChecked {
 

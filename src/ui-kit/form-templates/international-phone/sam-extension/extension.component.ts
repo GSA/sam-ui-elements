@@ -29,13 +29,14 @@ import {
 import { numberInputKeys } from '../number-input-keys';
 
 @Component({
-  selector: 'sam-extension',
-  encapsulation: ViewEncapsulation.None,
-  templateUrl: 'extension.template.html',
-  providers: [
-    AccessorToken(SamExtension),
-    ValidatorToken(SamExtension)
-  ]
+    selector: 'sam-extension',
+    encapsulation: ViewEncapsulation.None,
+    templateUrl: 'extension.template.html',
+    providers: [
+        AccessorToken(SamExtension),
+        ValidatorToken(SamExtension)
+    ],
+    standalone: false
 })
 export class SamExtension extends SamFormControl {
   /**

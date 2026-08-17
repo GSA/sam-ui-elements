@@ -20,13 +20,14 @@ import { KeyHelper } from '../../utilities/key-helper/key-helper';
 import { SamFormControl } from '../../form-controls/sam-form-control';
 
 @Component({
-  selector: 'sam-dollar',
-  templateUrl: 'dollar.template.html',
-  providers: [{
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SamDollarComponent),
-      multi: true
-  }]
+    selector: 'sam-dollar',
+    templateUrl: 'dollar.template.html',
+    providers: [{
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SamDollarComponent),
+            multi: true
+        }],
+    standalone: false
 })
 export class SamDollarComponent extends SamFormControl {
 /**

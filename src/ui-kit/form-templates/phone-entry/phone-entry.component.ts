@@ -24,13 +24,14 @@ import { SamFormService } from '../../form-service';
  * The <samPhoneInput> component is a Phone entry portion of a form
  */
 @Component( {
-  selector: 'sam-phone-entry',
-  templateUrl: 'phone-entry.template.html',
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => SamPhoneEntryComponent),
-    multi: true
-  }]
+    selector: 'sam-phone-entry',
+    templateUrl: 'phone-entry.template.html',
+    providers: [{
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SamPhoneEntryComponent),
+            multi: true
+        }],
+    standalone: false
 })
 export class SamPhoneEntryComponent implements OnInit, ControlValueAccessor {
   /**

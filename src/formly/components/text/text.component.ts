@@ -9,10 +9,11 @@ import { AbstractSamFormly } from '../../sam-formly';
 import { SamTextComponent } from '../../../ui-kit';
 
 @Component({
- template: `
+    template: `
    <sam-text [formControl]="formControl" [control]="formControl"></sam-text>
  `,
- changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SamFormlyText extends AbstractSamFormly {
   @ViewChild(SamTextComponent, {static: true}) public template: SamTextComponent;

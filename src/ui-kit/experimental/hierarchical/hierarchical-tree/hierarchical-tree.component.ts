@@ -7,9 +7,10 @@ import { first } from 'rxjs/operators';
 
 
 @Component({
-  selector: "sam-hierarchical-tree",
-  templateUrl: "./hierarchical-tree.component.html",
-  styleUrls: ["./hierarchical-tree.component.scss"]
+    selector: "sam-hierarchical-tree",
+    templateUrl: "./hierarchical-tree.component.html",
+    styleUrls: ["./hierarchical-tree.component.scss"],
+    standalone: false
 })
 
 export class SamHierarchicalTreeComponent implements OnInit {

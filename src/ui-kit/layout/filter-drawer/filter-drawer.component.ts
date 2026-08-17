@@ -19,8 +19,9 @@ import {
 
 
 @Component({
-  selector: 'sam-filter-drawer',
-  templateUrl: 'filter-drawer.template.html',
+    selector: 'sam-filter-drawer',
+    templateUrl: 'filter-drawer.template.html',
+    standalone: false
 })
 export class SamFilterDrawerComponent {
   /**

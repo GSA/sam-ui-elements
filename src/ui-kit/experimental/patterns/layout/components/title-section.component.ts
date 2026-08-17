@@ -5,7 +5,8 @@ import {
 } from '@angular/core';
 
 @Directive({
-  selector: '[samTitleSection]'
+    selector: '[samTitleSection]',
+    standalone: false
 })
 export class SamDatabankTitleSectionDirective {
   @Input('id') id = 'primary-content';

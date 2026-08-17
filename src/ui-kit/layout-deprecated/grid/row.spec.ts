@@ -5,7 +5,8 @@ import { RowDirective } from './row.directive';
 import { By } from '@angular/platform-browser';
 
 @Component({
-    template: `<div row></div>` 
+    template: `<div row></div>`,
+    standalone: false
 })
 class TestComponent {}
 

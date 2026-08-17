@@ -17,8 +17,9 @@ import { AbstractCell } from '../aria/abstract-grid/abstract-cell';
 import { Popover } from './popover';
 
 @Component({
-  selector: 'sam-picker',
-  template: `<ng-content></ng-content>`
+    selector: 'sam-picker',
+    template: `<ng-content></ng-content>`,
+    standalone: false
 })
 export class SamPickerComponent implements AfterViewInit {
 

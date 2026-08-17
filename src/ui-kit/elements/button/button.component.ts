@@ -11,8 +11,8 @@ import { Deprecator } from '../../utilities';
 * The <sam-button> component generates a button for user interaction
 */
 @Component({
-  selector: 'sam-button',
-  template: `
+    selector: 'sam-button',
+    template: `
   <button
     [attr.id]="id"
     class="sam-ui button"
@@ -23,6 +23,7 @@ import { Deprecator } from '../../utilities';
     {{ buttonText }}
     <ng-content></ng-content>
   </button>`,
+    standalone: false
 })
 export class SamButtonComponent {
   /**

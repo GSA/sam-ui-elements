@@ -37,14 +37,15 @@ export interface DateRangeSettings {
 }
 
 @Component({
-  selector: 'sam-date-range-v2',
-  templateUrl: './date-range-v2.component.html',
-  styleUrls: ['./date-range-v2.component.scss'],
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => SamDateRangeV2Component),
-    multi: true
-  }]
+    selector: 'sam-date-range-v2',
+    templateUrl: './date-range-v2.component.html',
+    styleUrls: ['./date-range-v2.component.scss'],
+    providers: [{
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SamDateRangeV2Component),
+            multi: true
+        }],
+    standalone: false
 })
 export class SamDateRangeV2Component implements OnInit, ControlValueAccessor {
 

@@ -9,12 +9,13 @@ import {AbstractSamFormly} from '../../sam-formly';
 import {SamDateRangeComponent} from '../../../ui-kit';
 
 @Component({
-  template: `
+    template: `
    <sam-date-range [formControl]="formControl"
     [control]="formControl"
    ></sam-date-range>
  `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SamFormlyDateRange extends AbstractSamFormly {
   @ViewChild(SamDateRangeComponent, {static: true})

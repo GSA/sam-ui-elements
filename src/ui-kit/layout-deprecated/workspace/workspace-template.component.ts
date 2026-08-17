@@ -10,8 +10,9 @@ import { Component } from '@angular/core';
  </workspace-template>
  */
 @Component({
-  selector: 'workspace-template',
-  templateUrl: 'workspace-template.html'
+    selector: 'workspace-template',
+    templateUrl: 'workspace-template.html',
+    standalone: false
 })
 export class WorkspaceTemplateComponent {
 

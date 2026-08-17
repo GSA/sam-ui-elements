@@ -12,8 +12,9 @@ import { KeyHelper, KEYS } from '../../../utilities/key-helper/key-helper';
 import {SamActionInterface} from '../action-interface';
 
 @Component({
-  selector: 'sam-actions-dropdown',
-  templateUrl: 'actions-dropdown.template.html'
+    selector: 'sam-actions-dropdown',
+    templateUrl: 'actions-dropdown.template.html',
+    standalone: false
 })
 export class SamActionsDropdownComponent {
   /**

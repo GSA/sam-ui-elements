@@ -17,11 +17,12 @@ class MockHttpClient {
 }
 
 @Component({
-  template: `
+    template: `
     <form [formGroup]="form">
       <sam-upload formControlName="upload"></sam-upload>
     </form>
-  `
+  `,
+    standalone: false
 })
 class TestHostComponent {
   public form: FormGroup = new FormGroup({

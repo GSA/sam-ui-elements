@@ -13,7 +13,7 @@ import {
     ActionModalConfig, ToggleUploadFileAction,
     UploadedFileData
 } from '../../types';
-import * as moment from 'moment';
+import moment from 'moment';
 
 
 export type RequestGenerator =
@@ -74,9 +74,10 @@ export namespace UploadValidator {
 }
 
 @Component({
-  selector: 'sam-upload-v2',
-  providers: [VALUE_ACCESSOR],
-  templateUrl: 'upload-v2.template.html',
+    selector: 'sam-upload-v2',
+    providers: [VALUE_ACCESSOR],
+    templateUrl: 'upload-v2.template.html',
+    standalone: false
 })
 export class SamUploadComponentV2 implements ControlValueAccessor {
   /**

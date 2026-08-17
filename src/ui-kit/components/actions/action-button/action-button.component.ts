@@ -2,8 +2,9 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { SamActionInterface } from '../action-interface';
 
 @Component({
-  selector: 'sam-action-button',
-  templateUrl: 'action-button.template.html'
+    selector: 'sam-action-button',
+    templateUrl: 'action-button.template.html',
+    standalone: false
 })
 export class SamActionButton {
 

@@ -16,8 +16,8 @@ export type ToolbarItemIcon = 'fa-download' | 'fa-share-alt'
   | 'fa-filter' | 'fa-chevron-circle-left';
 
 @Component({
-  selector: 'sam-actions',
-  template: `
+    selector: 'sam-actions',
+    template: `
   <div class="section right">
     <ng-container *ngFor="let item of contentModel">
       <button 
@@ -38,7 +38,8 @@ export type ToolbarItemIcon = 'fa-download' | 'fa-share-alt'
       (emitAction)="dropdownClick($event)">
     </sam-actions-dropdown>
   </div>
-  `
+  `,
+    standalone: false
 })
 export class SamActionsListComponent {
   /**

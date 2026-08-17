@@ -5,7 +5,8 @@ import { ColumnDirective } from './column.directive';
 import { By } from '@angular/platform-browser';
 
 @Component({
-    template: `<div columns='12'></div>` 
+    template: `<div columns='12'></div>`,
+    standalone: false
 })
 class TestComponent {}
 

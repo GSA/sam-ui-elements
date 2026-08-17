@@ -11,8 +11,9 @@ import {
  * time-sensitive changes
  */
 @Component({
-  selector: 'sam-alert-next',
-  templateUrl: './alert.template.html'
+    selector: 'sam-alert-next',
+    templateUrl: './alert.template.html',
+    standalone: false
 })
 export class SamAlertNextComponent {
   /**

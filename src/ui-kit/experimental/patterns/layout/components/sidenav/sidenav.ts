@@ -53,27 +53,28 @@ export class MdSidenavToggleResult {
  * Please refer to README.md for examples on how to use it.
  */
 @Component({
-  selector: 'md-sidenav, mat-sidenav, sam-aside',
-  // TODO(mmalerba): move template to separate file.
-  template: '<ng-content></ng-content>',
-  host: {
-    'class': 'mat-sidenav',
-    '(transitionend)': '_onTransitionEnd($event)',
-    '(keydown)': 'handleKeydown($event)',
-    // must prevent the browser from aligning text based on value
-    '[attr.align]': 'null',
-    '[class.mat-sidenav-closed]': '_isClosed',
-    '[class.mat-sidenav-closing]': '_isClosing',
-    '[class.mat-sidenav-end]': '_isEnd',
-    '[class.mat-sidenav-opened]': '_isOpened',
-    '[class.mat-sidenav-opening]': '_isOpening',
-    '[class.mat-sidenav-over]': '_modeOver',
-    '[class.mat-sidenav-push]': '_modePush',
-    '[class.mat-sidenav-side]': '_modeSide',
-    'tabIndex': '-1'
-  },
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
+    selector: 'md-sidenav, mat-sidenav, sam-aside',
+    // TODO(mmalerba): move template to separate file.
+    template: '<ng-content></ng-content>',
+    host: {
+        'class': 'mat-sidenav',
+        '(transitionend)': '_onTransitionEnd($event)',
+        '(keydown)': 'handleKeydown($event)',
+        // must prevent the browser from aligning text based on value
+        '[attr.align]': 'null',
+        '[class.mat-sidenav-closed]': '_isClosed',
+        '[class.mat-sidenav-closing]': '_isClosing',
+        '[class.mat-sidenav-end]': '_isEnd',
+        '[class.mat-sidenav-opened]': '_isOpened',
+        '[class.mat-sidenav-opening]': '_isOpening',
+        '[class.mat-sidenav-over]': '_modeOver',
+        '[class.mat-sidenav-push]': '_modePush',
+        '[class.mat-sidenav-side]': '_modeSide',
+        'tabIndex': '-1'
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class MdSidenav implements AfterContentInit, OnDestroy {
   private _focusTrap: FocusTrap;
@@ -328,20 +329,21 @@ export class MdSidenav implements AfterContentInit, OnDestroy {
  * and coordinates the backdrop and content styling.
  */
 @Component({
-  selector: 'md-sidenav-container, mat-sidenav-container',
-  // Do not use ChangeDetectionStrategy.OnPush. It does not work for this component because
-  // technically it is a sibling of MdSidenav (on the content tree) and isn't updated when MdSidenav
-  // changes its state.
-  template: ``, // Page component extends this component
-  // styleUrls: [
-  //   'sidenav.css',
-  //   'sidenav-transitions.css',
-  // ],
-  host: {
-    'class': 'mat-sidenav-container',
-    '[class.mat-sidenav-transition]': '_enableTransitions',
-  },
-  encapsulation: ViewEncapsulation.None,
+    selector: 'md-sidenav-container, mat-sidenav-container',
+    // Do not use ChangeDetectionStrategy.OnPush. It does not work for this component because
+    // technically it is a sibling of MdSidenav (on the content tree) and isn't updated when MdSidenav
+    // changes its state.
+    template: ``, // Page component extends this component
+    // styleUrls: [
+    //   'sidenav.css',
+    //   'sidenav-transitions.css',
+    // ],
+    host: {
+        'class': 'mat-sidenav-container',
+        '[class.mat-sidenav-transition]': '_enableTransitions',
+    },
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class MdSidenavContainer implements AfterContentInit {
   @ContentChildren(MdSidenav) _sidenavs: QueryList<MdSidenav>;

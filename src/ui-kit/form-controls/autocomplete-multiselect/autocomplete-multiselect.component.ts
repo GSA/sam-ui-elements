@@ -24,57 +24,56 @@ import { KeyHelper } from '../../utilities/key-helper/key-helper';
 import { SamCache } from '../autocomplete/autocomplete.component';
 
 @Component({
-  selector: 'sam-autocomplete-multiselect',
-  templateUrl: 'autocomplete-multiselect.template.html',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(
-        () => SamAutocompleteMultiselectComponent
-      ),
-      multi: true
-    }
-  ],
-  animations: [
-    trigger('dropdown', [
-      transition('void => *', [
-        animate('.15s ease-in-out', keyframes([
-          style({ filter: 'blur(3px)', height: '0', opacity: '0.5', offset: 0 }),
-          style({ filter: 'blur(0px)', height: '*', opacity: '1', offset: 1.0 })
-        ]))
-      ]),
-      transition('* => void', [
-        animate('.1s ease-out', keyframes([
-          style({ height: '*', opacity: '1', offset: 0 }),
-          style({ height: '0', opacity: '0', offset: 1.0 })
-        ]))
-      ])
-    ]),
-    trigger('label', [
-      transition('void => *', [
-        animate('.15s ease-in-out', keyframes([
-          style({
-            transform: 'scale(0)',
-            filter: 'blur(3px)',
-            opacity: '0.5',
-            offset: 0
-          }),
-          style({
-            transform: 'scale(1)',
-            filter: 'blur(0px)',
-            opacity: '1',
-            offset: 1.0
-          })
-        ]))
-      ]),
-      transition('* => void', [
-        animate('.1s ease-out', keyframes([
-          style({ filter: 'blur(0px)', opacity: '1', offset: 0 }),
-          style({ filter: 'blur(3px)', opacity: '0', offset: 1.0 })
-        ]))
-      ])
-    ])
-  ]
+    selector: 'sam-autocomplete-multiselect',
+    templateUrl: 'autocomplete-multiselect.template.html',
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SamAutocompleteMultiselectComponent),
+            multi: true
+        }
+    ],
+    animations: [
+        trigger('dropdown', [
+            transition('void => *', [
+                animate('.15s ease-in-out', keyframes([
+                    style({ filter: 'blur(3px)', height: '0', opacity: '0.5', offset: 0 }),
+                    style({ filter: 'blur(0px)', height: '*', opacity: '1', offset: 1.0 })
+                ]))
+            ]),
+            transition('* => void', [
+                animate('.1s ease-out', keyframes([
+                    style({ height: '*', opacity: '1', offset: 0 }),
+                    style({ height: '0', opacity: '0', offset: 1.0 })
+                ]))
+            ])
+        ]),
+        trigger('label', [
+            transition('void => *', [
+                animate('.15s ease-in-out', keyframes([
+                    style({
+                        transform: 'scale(0)',
+                        filter: 'blur(3px)',
+                        opacity: '0.5',
+                        offset: 0
+                    }),
+                    style({
+                        transform: 'scale(1)',
+                        filter: 'blur(0px)',
+                        opacity: '1',
+                        offset: 1.0
+                    })
+                ]))
+            ]),
+            transition('* => void', [
+                animate('.1s ease-out', keyframes([
+                    style({ filter: 'blur(0px)', opacity: '1', offset: 0 }),
+                    style({ filter: 'blur(3px)', opacity: '0', offset: 1.0 })
+                ]))
+            ])
+        ])
+    ],
+    standalone: false
 })
 export class SamAutocompleteMultiselectComponent
   implements ControlValueAccessor, AfterViewInit, SamCache {

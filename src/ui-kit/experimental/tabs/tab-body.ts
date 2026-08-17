@@ -54,33 +54,33 @@ export type MdTabBodyOriginState = 'left' | 'right';
  * @docs-private
  */
 @Component({
-  selector: 'md-tab-body, mat-tab-body',
-  templateUrl: 'tab-body.html',
-  styleUrls: ['tab-body.scss'],
-  encapsulation: ViewEncapsulation.None,
-  host: {
-    'class': 'mat-tab-body',
-  },
-  animations: [
-    trigger('translateTab', [
-      state('void', style({transform: 'translate3d(0%, 0, 0)'})),
-      state('left', style({transform: 'translate3d(-100%, 0, 0)'})),
-      state('left-origin-center', style({transform: 'translate3d(0%, 0, 0)'})),
-      state('right-origin-center', style({transform: 'translate3d(0%, 0, 0)'})),
-      state('center', style({transform: 'translate3d(0%, 0, 0)'})),
-      state('right', style({transform: 'translate3d(100%, 0, 0)'})),
-      transition('* => left, * => right, left => center, right => center',
-          animate('500ms cubic-bezier(0.35, 0, 0.25, 1)')),
-      transition('void => left-origin-center', [
-        style({transform: 'translate3d(-100%, 0, 0)'}),
-        animate('500ms cubic-bezier(0.35, 0, 0.25, 1)')
-      ]),
-      transition('void => right-origin-center', [
-        style({transform: 'translate3d(100%, 0, 0)'}),
-        animate('500ms cubic-bezier(0.35, 0, 0.25, 1)')
-      ])
-    ])
-  ]
+    selector: 'md-tab-body, mat-tab-body',
+    templateUrl: 'tab-body.html',
+    styleUrls: ['tab-body.scss'],
+    encapsulation: ViewEncapsulation.None,
+    host: {
+        'class': 'mat-tab-body',
+    },
+    animations: [
+        trigger('translateTab', [
+            state('void', style({ transform: 'translate3d(0%, 0, 0)' })),
+            state('left', style({ transform: 'translate3d(-100%, 0, 0)' })),
+            state('left-origin-center', style({ transform: 'translate3d(0%, 0, 0)' })),
+            state('right-origin-center', style({ transform: 'translate3d(0%, 0, 0)' })),
+            state('center', style({ transform: 'translate3d(0%, 0, 0)' })),
+            state('right', style({ transform: 'translate3d(100%, 0, 0)' })),
+            transition('* => left, * => right, left => center, right => center', animate('500ms cubic-bezier(0.35, 0, 0.25, 1)')),
+            transition('void => left-origin-center', [
+                style({ transform: 'translate3d(-100%, 0, 0)' }),
+                animate('500ms cubic-bezier(0.35, 0, 0.25, 1)')
+            ]),
+            transition('void => right-origin-center', [
+                style({ transform: 'translate3d(100%, 0, 0)' }),
+                animate('500ms cubic-bezier(0.35, 0, 0.25, 1)')
+            ])
+        ])
+    ],
+    standalone: false
 })
 export class MdTabBody implements OnInit, AfterViewChecked {
   /** The portal host inside of this container into which the tab body content will be loaded. */

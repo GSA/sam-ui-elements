@@ -6,8 +6,8 @@ import { By } from '@angular/platform-browser';
 import { SamFocusDirective } from './focus.directive';
 
 @Component({
-  selector: 'test-cmp',
-  template: `
+    selector: 'test-cmp',
+    template: `
     <div #var sam-focus (focus)="focusHandler()">
       <p class="test">
         test content
@@ -16,7 +16,8 @@ import { SamFocusDirective } from './focus.directive';
     <p class="test2">
       not focused content
     </p>
-  ` 
+  `,
+    standalone: false
 })
 class TestComponent {
     @Output() action: EventEmitter<any> = new EventEmitter<any>();

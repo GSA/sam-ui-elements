@@ -20,7 +20,8 @@ import {
 } from '../../../experimental/patterns/layout/architecture';
 
 @Directive({
-  selector: '[dynamicChips]'
+    selector: '[dynamicChips]',
+    standalone: false
 })
 export class DynamicChipsDirective implements OnInit {
 

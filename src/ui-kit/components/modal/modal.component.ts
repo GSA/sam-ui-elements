@@ -18,8 +18,9 @@ import { KeyHelper, KEYS } from '../../utilities/key-helper/key-helper';
  * The <sam-modal> component display a popover for user interaction
  */
 @Component({
-  selector: 'sam-modal',
-  templateUrl: './modal.template.html'
+    selector: 'sam-modal',
+    templateUrl: './modal.template.html',
+    standalone: false
 })
 export class SamModalComponent implements OnInit {
   /**

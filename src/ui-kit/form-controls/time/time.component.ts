@@ -8,7 +8,7 @@ import {
   OnChanges,
   forwardRef
 } from '@angular/core';
-import * as moment from 'moment/moment';
+import moment from 'moment';
 import { LabelWrapper } from '../../wrappers/label-wrapper';
 import {
   NG_VALUE_ACCESSOR,
@@ -23,13 +23,14 @@ import {SamFormService} from '../../form-service';
  * Provides a time input form control
  */
 @Component({
-  selector: 'sam-time',
-  templateUrl: 'time.template.html',
-  providers: [{
-    provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => SamTimeComponent),
-    multi: true
-  }]
+    selector: 'sam-time',
+    templateUrl: 'time.template.html',
+    providers: [{
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SamTimeComponent),
+            multi: true
+        }],
+    standalone: false
 })
 export class SamTimeComponent
   implements OnInit, OnChanges, ControlValueAccessor {

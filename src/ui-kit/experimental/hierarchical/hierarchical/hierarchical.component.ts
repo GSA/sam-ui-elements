@@ -10,11 +10,12 @@ const Hierarchical_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-  selector: 'sam-hierarchical',
-  templateUrl: './hierarchical.component.html',
-  styleUrls: ['./hierarchical.component.scss'],
-  providers: [Hierarchical_VALUE_ACCESSOR],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'sam-hierarchical',
+    templateUrl: './hierarchical.component.html',
+    styleUrls: ['./hierarchical.component.scss'],
+    providers: [Hierarchical_VALUE_ACCESSOR],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SamHierarchicalComponent implements AfterViewChecked, ControlValueAccessor {
 
