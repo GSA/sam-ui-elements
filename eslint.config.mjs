@@ -1,5 +1,5 @@
-const tseslint = require('typescript-eslint');
-const angular = require('angular-eslint');
+import tseslint from 'typescript-eslint';
+import angular from 'angular-eslint';
 
 const accessibilityWarnings = Object.fromEntries(
   angular.configs.templateAccessibility
@@ -7,7 +7,7 @@ const accessibilityWarnings = Object.fromEntries(
     .map((rule) => [rule, 'warn']),
 );
 
-module.exports = tseslint.config(
+export default tseslint.config(
   {
     ignores: [
       'dist/**',
