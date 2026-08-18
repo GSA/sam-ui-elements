@@ -17,7 +17,7 @@ Closes #<!-- issue number, e.g. 123 -->
 - [ ] Bug fix (non-breaking change which fixes an issue) → Apply `bugfix` label
 - [ ] New feature (non-breaking change which adds functionality) → Apply `enhancement` label
 - [ ] Breaking change (fix or feature that would cause existing functionality to change) → Apply `breaking` label
-- [ ] Documentation / configuration update → Apply `documentation` label
+- [ ] Documentation / configuration update → Apply `maintenance` label
 
 ## How to Test
 
