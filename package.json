@@ -24,7 +24,8 @@
   "scripts": {
     "release": "./node_modules/github-release-notes/bin/gren.js release",
     "ng": "ng",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "validate:publish": "node scripts/validate-publish-package.mjs"
   },
   "peerDependencies": {
     "@angular/forms": "^19.2.15",
