@@ -55,7 +55,7 @@
   },
   "devDependencies": {
     "@angularclass/hmr": "1.0.1",
-    "@angularclass/hmr-loader": "1.0.1",
+    "@angularclass/hmr-loader": "3.0.4",
     "@types/core-js": "0.9.28",
     "@types/hammerjs": "2.0.46",
     "@types/jasmine": "2.2.29",
