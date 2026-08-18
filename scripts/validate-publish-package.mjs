@@ -30,11 +30,12 @@ function resolvePackedImport(specifier, files) {
 }
 
 const files = packedFiles();
+const uiKitFiles = trackedUiKitFiles();
 const missing = [];
 
 if (!files.has(REQUIRED_ENTRY_POINT)) missing.push(REQUIRED_ENTRY_POINT);
 
-for (const path of trackedUiKitFiles()) {
+for (const path of uiKitFiles) {
   if (!files.has(path)) missing.push(path);
 }
 
@@ -53,7 +54,7 @@ if (missing.length > 0) {
 }
 
 console.log(`Verified ${files.size} packed files.`);
-console.log(`Verified ${trackedUiKitFiles().length} tracked src/ui-kit files.`);
+console.log(`Verified ${uiKitFiles.length} tracked src/ui-kit files.`);
 console.log(`Verified ${REQUIRED_ENTRY_POINT}.`);
 console.log(
   `Verified ${Object.values(consumerImports).reduce((sum, imports) => sum + imports.length, 0)} consumer deep imports across ${Object.keys(consumerImports).length} repositories.`,
