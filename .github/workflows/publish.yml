@@ -1,0 +1,123 @@
+name: Publish to npm
+
+# Publishes the raw-source @gsa-sam/sam-ui-elements package to public npm.
+# A full GitHub Release is the auditable, version-tagged live-publish trigger;
+# workflow_dispatch exists only for dry-run rehearsals.
+#
+# Trusted Publisher registration (npmjs.com package settings):
+#   Publisher: GitHub Actions
+#   Organization: GSA
+#   Repository: sam-ui-elements
+#   Workflow filename: publish.yml
+#   Environment name: release
+#
+# Until registration is complete, DRY_RUN defaults to true. DevSecOps must set
+# the release environment/repository variable DRY_RUN=false to enable a live
+# Release publish. No long-lived npm token is supported.
+
+on:
+  release:
+    types: [released]
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Run npm publish in --dry-run mode (no upload)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  package-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Verify raw-source package contents
+        run: node scripts/validate-publish-package.mjs
+
+  publish:
+    needs: [package-check]
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: read
+      id-token: write # required for npm Trusted Publishing (OIDC)
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Node
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: ".nvmrc"
+          registry-url: "https://registry.npmjs.org"
+
+      # Trusted Publishing requires npm >= 11.5.1. Pin the minimum rather than
+      # installing an unpinned latest npm in this security-sensitive job.
+      - name: Ensure npm supports Trusted Publishing
+        run: |
+          NPM_MIN="11.5.1"
+          CURRENT="$(npm --version)"
+          if [ "$(printf '%s\n' "$NPM_MIN" "$CURRENT" | sort -V | head -n1)" != "$NPM_MIN" ]; then
+            echo "npm $CURRENT < $NPM_MIN; upgrading"
+            npm install -g "npm@$NPM_MIN"
+          else
+            echo "npm $CURRENT satisfies >= $NPM_MIN"
+          fi
+
+      - name: Verify release tag matches package.json version
+        if: github.event_name == 'release'
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          PKG="$(node -p "require('./package.json').version")"
+          echo "Release tag: $GITHUB_REF_NAME (normalized: $TAG)   package.json: $PKG"
+          if [ "$TAG" != "$PKG" ]; then
+            echo "::error::Release tag ($GITHUB_REF_NAME) does not match package.json version ($PKG). Tags must be <version> or v<version>."
+            exit 1
+          fi
+
+      - name: Verify raw-source package contents
+        run: node scripts/validate-publish-package.mjs
+
+      - name: Determine dry-run mode
+        id: mode
+        run: |
+          # Manual dispatch is rehearsal-only. Only a full GitHub Release may
+          # perform a live publish, controlled by repo/environment DRY_RUN.
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            DRY="${{ inputs.dry-run }}"
+            if [ "$DRY" != "true" ]; then
+              echo "::error::workflow_dispatch runs must use dry-run=true. Publish a GitHub Release to run a live publish."
+              exit 1
+            fi
+          else
+            DRY="${{ vars.DRY_RUN }}"
+          fi
+          DRY="${DRY:-true}"
+          DRY="$(echo "$DRY" | tr '[:upper:]' '[:lower:]')"
+          if [ "$DRY" != "true" ] && [ "$DRY" != "false" ]; then
+            echo "::error::DRY_RUN must be 'true' or 'false' (got '$DRY')"
+            exit 1
+          fi
+          echo "dry-run=$DRY" >> "$GITHUB_OUTPUT"
+          echo "Publish dry-run mode: $DRY"
+
+      - name: Publish (dry-run)
+        if: steps.mode.outputs['dry-run'] == 'true'
+        run: npm publish --dry-run --access public --registry https://registry.npmjs.org
+
+      # npm obtains a short-lived OIDC credential based on this repository,
+      # workflow filename, and release environment. There is no token fallback.
+      - name: Publish (live, OIDC Trusted Publishing)
+        if: github.event_name == 'release' && steps.mode.outputs['dry-run'] == 'false'
+        run: npm publish --access public --registry https://registry.npmjs.org
