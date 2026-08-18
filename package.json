@@ -83,7 +83,7 @@
     "json-loader": "0.5.7",
     "karma": "0.13.22",
     "karma-coverage": "1.0.0",
-    "karma-jasmine": "1.0.2",
+    "karma-jasmine": "5.1.0",
     "karma-mocha-reporter": "2.2.5",
     "karma-phantomjs-launcher": "1.0.4",
     "karma-sonarqube-unit-reporter": "0.0.23",
