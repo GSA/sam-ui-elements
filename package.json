@@ -94,7 +94,7 @@
     "raw-loader": "4.0.2",
     "remap-istanbul": "^0.13.0",
     "rimraf": "2.5.2",
-    "source-map-loader": "0.1.5",
+    "source-map-loader": "5.0.0",
     "string-replace-loader": "3.3.0",
     "style-loader": "0.13.1",
     "to-string-loader": "1.2.0",
