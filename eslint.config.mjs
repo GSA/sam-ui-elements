@@ -64,8 +64,16 @@ export default tseslint.config(
   // reach them — `files: ['**/*.ts']` does not match `.js` or `.mjs`. They run
   // in Node with repository write access during release, which is the one place
   // a shell or path bug matters most here.
+  //
+  // Scoped to the paths `npm run lint:security` passes to ESLint. A wider glob
+  // would be inert: `npm run lint` is `ng lint`, and the Angular builder hands
+  // ESLint exactly the `lintFilePatterns` from angular.json — `src/**/*.ts`
+  // and `src/**/*.html` — so no `.js` file is ever presented to this config,
+  // whatever it matches. test-app is not covered here either: ESLint resolves
+  // the nearest flat config, which for `test-app/karma.conf.js` is
+  // `test-app/eslint.config.mjs`, not this file.
   {
-    files: ['**/*.{js,mjs,cjs}'],
+    files: ['scripts/**/*.{js,mjs,cjs}', 'mock-test.js'],
     plugins: {
       'node-security': nodeSecurity,
       'secure-coding': secureCoding,

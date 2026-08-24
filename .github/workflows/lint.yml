@@ -22,5 +22,7 @@ jobs:
         run: npm install --prefix test-app --no-package-lock
       - name: Lint library and documentation app
         run: npm run lint
+      - name: Lint Node release scripts
+        run: npm run lint:security
       - name: Lint test app
         run: npm --prefix test-app run lint
