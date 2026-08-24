@@ -45,3 +45,8 @@ Thumbs.db
 /.angular
 /src/components
 /src/spec-manifest.ts
+
+# Playwright
+/test-results
+/playwright-report
+/playwright/.cache

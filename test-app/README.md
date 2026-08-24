@@ -20,7 +20,7 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Run `npm run test:e2e` to execute the [Playwright](https://playwright.dev/) smoke test. It boots the dev server and asserts the app renders. In CI it runs headless; locally it will reuse a running dev server if one is already up.
 
 ## Further help
 
