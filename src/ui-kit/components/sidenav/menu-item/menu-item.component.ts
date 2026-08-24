@@ -1,11 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { SidenavService } from '../services';
-import { MenuItem } from '../interfaces';
+import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { SidenavService } from "../services";
+import { MenuItem } from "../interfaces";
 
 @Component({
-    selector: 'sam-menu-item',
-    templateUrl: './menu-item.template.html',
-    standalone: false
+  selector: "sam-menu-item",
+  templateUrl: "./menu-item.template.html",
+  standalone: false,
 })
 export class SamMenuItemComponent {
   /**
@@ -25,7 +25,7 @@ export class SamMenuItemComponent {
    */
   @Output() selection: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private service: SidenavService) { }
+  constructor(private service: SidenavService) {}
 
   updateUI(index: number, event: Event, menuItem: MenuItem): void {
     if (menuItem && menuItem.disabled) {
@@ -42,13 +42,11 @@ export class SamMenuItemComponent {
   }
 
   hasChildren(item: object) {
-
-    if (item['children'] && item['children'].length !== 0) {
-      return true
+    if (item["children"] && item["children"].length !== 0) {
+      return true;
     } else {
       return false;
     }
-
   }
 
   emitSelectedChild(event: any): void {

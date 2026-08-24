@@ -6,21 +6,22 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {Directive, TemplateRef, ViewContainerRef} from '@angular/core';
-import {TemplatePortalDirective} from '@angular/cdk/portal';
+import { Directive, TemplateRef, ViewContainerRef } from "@angular/core";
+import { TemplatePortalDirective } from "@angular/cdk/portal";
 
 /** Workaround for https://github.com/angular/angular/issues/17849 */
 export const _MdTabLabelBaseClass = TemplatePortalDirective;
 
 /** Used to flag tab labels for use with the portal directive */
 @Directive({
-    selector: '[sam-tab-label]',
-    standalone: false
+  selector: "[sam-tab-label]",
+  standalone: false,
 })
 export class MdTabLabel extends _MdTabLabelBaseClass {
-  constructor(templateRef: TemplateRef<any>, viewContainerRef: ViewContainerRef) {
+  constructor(
+    templateRef: TemplateRef<any>,
+    viewContainerRef: ViewContainerRef
+  ) {
     super(templateRef, viewContainerRef);
   }
 }
-
-

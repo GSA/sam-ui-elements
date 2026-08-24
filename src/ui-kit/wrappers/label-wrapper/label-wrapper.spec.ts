@@ -1,116 +1,119 @@
 import {
-    TestBed,
-    waitForAsync,
-    ComponentFixtureAutoDetect,
-    ComponentFixture
-} from '@angular/core/testing';
-import {Component, ChangeDetectorRef, Renderer2} from '@angular/core';
-import {By} from '@angular/platform-browser';
-import { FormControl } from '@angular/forms';
+  TestBed,
+  waitForAsync,
+  ComponentFixtureAutoDetect,
+  ComponentFixture,
+} from "@angular/core/testing";
+import { Component, ChangeDetectorRef, Renderer2 } from "@angular/core";
+import { By } from "@angular/platform-browser";
+import { FormControl } from "@angular/forms";
 // Load the implementations that should be tested
-import {LabelWrapper} from './label-wrapper.component';
+import { LabelWrapper } from "./label-wrapper.component";
 
-describe('The Sam Label Wrapper component', () => {
-  describe('isolated tests', () => {
+describe("The Sam Label Wrapper component", () => {
+  describe("isolated tests", () => {
     let component: LabelWrapper;
     const cdr: ChangeDetectorRef = undefined;
     const renderer: Renderer2 = undefined;
     beforeEach(() => {
       component = new LabelWrapper(cdr, renderer);
     });
-    
-    it('should display error messages with a form control', () => {
-        component.formatErrors(undefined);
-        
-        const control = new FormControl('');
-        component.formatErrors(control);
-        expect(component.errorMessage).toBe('');
 
-        control.markAsDirty();
-        control.setErrors({
-            maxlength: {
-                actualLength: 12,
-                requiredLength: 10
-            }
-        });
-        component.formatErrors(control);
-        expect(component.errorMessage)
-            .toBe('12 characters input but max length is 10');
+    it("should display error messages with a form control", () => {
+      component.formatErrors(undefined);
 
-        control.setErrors({
-            required: true
-        });
-        component.formatErrors(control);
-        expect(component.errorMessage).toBe('This field is required');
+      const control = new FormControl("");
+      component.formatErrors(control);
+      expect(component.errorMessage).toBe("");
 
-        control.setErrors({
-            isNotBeforeToday: true
-        });
-        component.formatErrors(control);
-        expect(component.errorMessage).toBe('Date must not be before today');
-        
-        control.setErrors({
-            dummyError: {
-                message: 'test message'
-            }
-        });
-        component.formatErrors(control);
-        expect(component.errorMessage).toBe('test message');
+      control.markAsDirty();
+      control.setErrors({
+        maxlength: {
+          actualLength: 12,
+          requiredLength: 10,
+        },
+      });
+      component.formatErrors(control);
+      expect(component.errorMessage).toBe(
+        "12 characters input but max length is 10"
+      );
 
-        control.setErrors({
-            dummyError: true
-        });
-        component.formatErrors(control);
-        expect(component.errorMessage).toBe('Invalid');
+      control.setErrors({
+        required: true,
+      });
+      component.formatErrors(control);
+      expect(component.errorMessage).toBe("This field is required");
 
-        control.reset();
-        control.markAsDirty();
-        component.formatErrors(control);
-        expect(component.errorMessage).toBe('');
+      control.setErrors({
+        isNotBeforeToday: true,
+      });
+      component.formatErrors(control);
+      expect(component.errorMessage).toBe("Date must not be before today");
+
+      control.setErrors({
+        dummyError: {
+          message: "test message",
+        },
+      });
+      component.formatErrors(control);
+      expect(component.errorMessage).toBe("test message");
+
+      control.setErrors({
+        dummyError: true,
+      });
+      component.formatErrors(control);
+      expect(component.errorMessage).toBe("Invalid");
+
+      control.reset();
+      control.markAsDirty();
+      component.formatErrors(control);
+      expect(component.errorMessage).toBe("");
     });
-    
-    it('should clear error messages', () => {
-      component.errorMessage = 'abc';
+
+    it("should clear error messages", () => {
+      component.errorMessage = "abc";
       component.clearError();
-      expect(component.errorMessage).toBe('');
+      expect(component.errorMessage).toBe("");
     });
-    
   });
 
-  describe('integration tests', () => {
+  describe("integration tests", () => {
     let component: LabelWrapper;
     let fixture: any;
-  
-    beforeEach( () => {
+
+    beforeEach(() => {
       TestBed.configureTestingModule({
-        declarations: [LabelWrapper]
+        declarations: [LabelWrapper],
       });
       fixture = TestBed.createComponent(LabelWrapper);
       component = fixture.componentInstance;
       fixture.detectChanges();
     });
-    
-    xit('should have toggleable hints', () => {
-        component.hint = 'Lorem Ipsum is simply dummy text of the printing and\
-         typesetting industry. Lorem Ipsum has been the industry\'s standard\
+
+    xit("should have toggleable hints", () => {
+      component.hint =
+        "Lorem Ipsum is simply dummy text of the printing and\
+         typesetting industry. Lorem Ipsum has been the industry's standard\
           dummy text ever since the 1500s, when an unknown printer took a \
           galley of type and scrambled it to make a type specimen book. It has \
           survived not only five centuries, but also the leap into electronic\
-           typesetting, remaining essentially unchanged.';
-        component.ngOnChanges({
-            hint: {
-              previousValue: false,
-              currentValue: true
-            }
-        });
-        fixture.detectChanges();
-        expect(component.hintContainer.nativeElement.getAttribute('style'))
-            .toContain('overflow: hidden;');
-            
-        component.toggleHint(false);
-        fixture.detectChanges();
-        expect(component.hintContainer.nativeElement.getAttribute('style'))
-            .toBe('');
+           typesetting, remaining essentially unchanged.";
+      component.ngOnChanges({
+        hint: {
+          previousValue: false,
+          currentValue: true,
+        },
+      });
+      fixture.detectChanges();
+      expect(
+        component.hintContainer.nativeElement.getAttribute("style")
+      ).toContain("overflow: hidden;");
+
+      component.toggleHint(false);
+      fixture.detectChanges();
+      expect(component.hintContainer.nativeElement.getAttribute("style")).toBe(
+        ""
+      );
     });
   });
 });

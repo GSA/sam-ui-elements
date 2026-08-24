@@ -8,82 +8,83 @@ import {
   EventEmitter,
   OnInit,
   AfterViewInit,
-  OnDestroy
-} from '@angular/core';
+  OnDestroy,
+} from "@angular/core";
 import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
   FormControl,
   Validators,
-  ValidatorFn
-} from '@angular/forms';
+  ValidatorFn,
+} from "@angular/forms";
 
-import { Subject, Subscription } from 'rxjs';
-import { takeUntil, filter } from 'rxjs/operators';
+import { Subject, Subscription } from "rxjs";
+import { takeUntil, filter } from "rxjs/operators";
 
-import { LabelWrapper } from '../../wrappers/label-wrapper';
-import { SamFormService } from '../../form-service';
+import { LabelWrapper } from "../../wrappers/label-wrapper";
+import { SamFormService } from "../../form-service";
 
 /**
  * The <sam-text> component provides a text input form control
  */
 @Component({
-    selector: 'sam-text',
-    templateUrl: 'text.template.html',
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => SamTextComponent),
-            multi: true
-        }
-    ],
-    standalone: false
+  selector: "sam-text",
+  templateUrl: "text.template.html",
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SamTextComponent),
+      multi: true,
+    },
+  ],
+  standalone: false,
 })
-export class SamTextComponent implements ControlValueAccessor,
-  OnInit, AfterViewInit, OnDestroy {
+export class SamTextComponent
+  implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy
+{
   /**
-  * Sets the text input value
-  */
-  @Input() public value = '';
+   * Sets the text input value
+   */
+  @Input() public value = "";
   /**
-  * Sets the label text
-  */
+   * Sets the label text
+   */
   @Input() public label: string;
   /**
-  * Sets the id attribute
-  */
+   * Sets the id attribute
+   */
   @Input() public id: string;
   /**
-  * Sets the name attribute
-  */
+   * Sets the name attribute
+   */
   @Input() public name: string;
   /**
-  * Sets the helpful hint text
-  */
+   * Sets the helpful hint text
+   */
   @Input() public hint: string;
   /**
-  * Sets the general error message
-  */
+   * Sets the general error message
+   */
   @Input() public errorMessage: string;
   /**
-  * Sets the disabled attribute
-  */
+   * Sets the disabled attribute
+   */
   @Input() public disabled: boolean;
   /**
-  * Sets the required attribute
-  */
+   * Sets the required attribute
+   */
   @Input() public required: boolean;
   /**
-  * Passes in the Angular FormControl
-  */
+   * Passes in the Angular FormControl
+   */
   @Input() public control: FormControl;
   /**
-  * Sets the maxlength attribute
-  */
+   * Sets the maxlength attribute
+   */
   @Input() public maxlength: number;
   /**
-  * Toggles validations to display with SamFormService events
-  */
+   * Toggles validations to display with SamFormService events
+   */
   @Input() public useFormService: boolean;
   /**
    * Optional text to be displayed when the text area is empty
@@ -102,7 +103,7 @@ export class SamTextComponent implements ControlValueAccessor,
   /**
    * Changes the HTML event the changes emit on
    */
-  @Input() public emitOn: 'input' | 'change' = 'input';
+  @Input() public emitOn: "input" | "change" = "input";
   /**
    * (deprecated) Lose focus event emit
    */
@@ -112,8 +113,8 @@ export class SamTextComponent implements ControlValueAccessor,
    */
   @Output() public blur = new EventEmitter<boolean>();
 
-  @ViewChild(LabelWrapper, {static: true}) public wrapper: LabelWrapper;
-  
+  @ViewChild(LabelWrapper, { static: true }) public wrapper: LabelWrapper;
+
   public onChange: any = (c) => null;
   public onTouched: any = () => null;
 
@@ -124,77 +125,74 @@ export class SamTextComponent implements ControlValueAccessor,
   private _changeSubsription: Subscription;
   private ngUnsubscribe = new Subject<any>();
 
-  constructor(private samFormService: SamFormService,
-    private cdr: ChangeDetectorRef) {}
+  constructor(
+    private samFormService: SamFormService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  public ngOnInit (): void {
+  public ngOnInit(): void {
     this._validateInputs();
     this._setupSubscriptions();
     this._setupFormControl();
   }
 
-  public ngAfterViewInit (): void {
+  public ngAfterViewInit(): void {
     if (this.control) {
       this.wrapper.formatErrors(this.control);
       this.cdr.detectChanges();
     }
   }
 
-  public ngOnDestroy (): void {
+  public ngOnDestroy(): void {
     this._unsubscribe();
     this.cdr.detach();
   }
 
-  public onLoseFocus (): void {
+  public onLoseFocus(): void {
     this._trimWhitespace();
     this.onBlur.emit(true);
     this.blur.emit(true);
   }
 
-  public registerOnChange (fn): void {
+  public registerOnChange(fn): void {
     this.onChange = fn;
   }
 
-  public registerOnTouched (fn): void {
+  public registerOnTouched(fn): void {
     this.onTouched = fn;
   }
 
-  public setDisabledState (disabled): void {
+  public setDisabledState(disabled): void {
     this.disabled = disabled;
   }
 
-  public writeValue (value): void {
-    this.value = value !== null
-      ? '' + value
-      : '';
-    if (!this.cdr['destroyed']) {
+  public writeValue(value): void {
+    this.value = value !== null ? "" + value : "";
+    if (!this.cdr["destroyed"]) {
       this.cdr.detectChanges();
     }
   }
 
-  private _validateInputs (): void {
+  private _validateInputs(): void {
     if (!this.name) {
-      throw new Error('<sam-text> requires a [name] parameter\
-       for 508 compliance');
+      throw new Error(
+        "<sam-text> requires a [name] parameter\
+       for 508 compliance"
+      );
     }
   }
 
-  private _setupSubscriptions (): void {
-    this._focusSubscription =
-      this.focusEvent
-        .subscribe(
-          this._handleFocusEvents.bind(this)
-        );
+  private _setupSubscriptions(): void {
+    this._focusSubscription = this.focusEvent.subscribe(
+      this._handleFocusEvents.bind(this)
+    );
 
-    this._changeSubsription = 
-      this.changeEvent.pipe(
-        filter(event => event.type === this.emitOn))
-        .subscribe(
-          e => this._setValue.call(this, e.event.target.value)
-        );
+    this._changeSubsription = this.changeEvent
+      .pipe(filter((event) => event.type === this.emitOn))
+      .subscribe((e) => this._setValue.call(this, e.event.target.value));
   }
 
-  private _setupFormControl (): void {
+  private _setupFormControl(): void {
     if (!this.control) {
       return;
     }
@@ -203,16 +201,13 @@ export class SamTextComponent implements ControlValueAccessor,
 
     if (!this.useFormService) {
       this.control.statusChanges
-      .pipe(
-        takeUntil(this.ngUnsubscribe)
-      )
-      .subscribe(() => {
-        this.wrapper.formatErrors(this.control);
-        this.cdr.detectChanges();
-      });
+        .pipe(takeUntil(this.ngUnsubscribe))
+        .subscribe(() => {
+          this.wrapper.formatErrors(this.control);
+          this.cdr.detectChanges();
+        });
     } else {
-      this.samFormService.formEventsUpdated$
-      .subscribe((evt: any) => {
+      this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
         if (this._isSubmitEvent(evt)) {
           this.wrapper.formatErrors(this.control);
         } else if (this._isResetEvent(evt)) {
@@ -222,44 +217,44 @@ export class SamTextComponent implements ControlValueAccessor,
     }
   }
 
-  private _unsubscribe (): void {
+  private _unsubscribe(): void {
     this.ngUnsubscribe.next(null);
     this.ngUnsubscribe.complete();
-    if(this._focusSubscription){
+    if (this._focusSubscription) {
       this._focusSubscription.unsubscribe();
     }
-    if(this._changeSubsription){
+    if (this._changeSubsription) {
       this._changeSubsription.unsubscribe();
     }
   }
 
-  private _trimWhitespace () {
+  private _trimWhitespace() {
     const trimmed = this.value.trim();
     if (trimmed !== this.value) {
       this._setValue(trimmed);
     }
   }
 
-  private _setValue (value): void {
+  private _setValue(value): void {
     this.value = value;
     this.onChange(this.value);
   }
 
-  private _handleFocusEvents (event): void {
-    if (event.type === 'focus') {
+  private _handleFocusEvents(event): void {
+    if (event.type === "focus") {
       this.onTouched();
-    } else if (event.type === 'blur') {
+    } else if (event.type === "blur") {
       this.onLoseFocus();
     }
   }
 
-  private _getValidators (): any[] {
+  private _getValidators(): any[] {
     const validators: ValidatorFn[] = [];
 
     if (this.control.validator) {
       validators.push(this.control.validator);
     }
-    
+
     if (this.required) {
       validators.push(Validators.required);
     }
@@ -271,13 +266,19 @@ export class SamTextComponent implements ControlValueAccessor,
     return validators;
   }
 
-  private _isSubmitEvent (evt): boolean {
-    return (!evt.root || evt.root === this.control.root)
-      && evt.eventType && evt.eventType === 'submit';
+  private _isSubmitEvent(evt): boolean {
+    return (
+      (!evt.root || evt.root === this.control.root) &&
+      evt.eventType &&
+      evt.eventType === "submit"
+    );
   }
 
-  private _isResetEvent (evt): boolean {
-    return (!evt.root || evt.root === this.control.root)
-      && evt.eventType && evt.eventType === 'reset';
+  private _isResetEvent(evt): boolean {
+    return (
+      (!evt.root || evt.root === this.control.root) &&
+      evt.eventType &&
+      evt.eventType === "reset"
+    );
   }
 }

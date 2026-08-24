@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SamStickyComponent } from './sticky.component';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { SamStickyComponent } from "./sticky.component";
 
 @NgModule({
-    imports: [CommonModule],
-    declarations: [ SamStickyComponent ],
-    exports: [ SamStickyComponent ],
+  imports: [CommonModule],
+  declarations: [SamStickyComponent],
+  exports: [SamStickyComponent],
 })
-export class SamStickyModule { }
+export class SamStickyModule {}
 
-export * from './sticky.component';
+export * from "./sticky.component";

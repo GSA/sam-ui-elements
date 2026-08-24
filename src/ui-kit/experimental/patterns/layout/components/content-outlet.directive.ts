@@ -1,10 +1,10 @@
-import { Directive, HostBinding } from '@angular/core';
+import { Directive, HostBinding } from "@angular/core";
 
 @Directive({
-    selector: '[samContentOutlet]',
-    standalone: false
+  selector: "[samContentOutlet]",
+  standalone: false,
 })
 export class SamContentOutletDirective {
-  @HostBinding('class.content-outlet')
-    public hasContentOutletStyle = true;
+  @HostBinding("class.content-outlet")
+  public hasContentOutletStyle = true;
 }

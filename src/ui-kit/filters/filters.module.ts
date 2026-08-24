@@ -1,12 +1,9 @@
-import { NgModule } from '@angular/core';
-import {
-  FormsModule,
-  ReactiveFormsModule
-} from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { FormlyModule } from '@ngx-formly/core';
-import { SamUIKitModule } from '../sam-ui-elements.module';
-import { SamFiltersComponent } from './filters.component';
+import { NgModule } from "@angular/core";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { CommonModule } from "@angular/common";
+import { FormlyModule } from "@ngx-formly/core";
+import { SamUIKitModule } from "../sam-ui-elements.module";
+import { SamFiltersComponent } from "./filters.component";
 
 @NgModule({
   imports: [
@@ -14,9 +11,9 @@ import { SamFiltersComponent } from './filters.component';
     FormsModule,
     ReactiveFormsModule,
     SamUIKitModule, // Needs samAccordion
-    FormlyModule
+    FormlyModule,
   ],
-  declarations: [ SamFiltersComponent ],
-  exports: [ SamFiltersComponent ]
+  declarations: [SamFiltersComponent],
+  exports: [SamFiltersComponent],
 })
 export class SamFilterModule {}

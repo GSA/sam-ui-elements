@@ -1,9 +1,9 @@
-import { getTestBed } from '@angular/core/testing';
+import { getTestBed } from "@angular/core/testing";
 import {
   BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting
-} from '@angular/platform-browser-dynamic/testing';
-import { loadSpecs } from './spec-manifest';
+  platformBrowserDynamicTesting,
+} from "@angular/platform-browser-dynamic/testing";
+import { loadSpecs } from "./spec-manifest";
 
 // Unfortunately there's no typing for the `__karma__` variable. Just declare it as any.
 declare const __karma__: any;

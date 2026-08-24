@@ -1,13 +1,13 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from "@angular/core";
 
 /**
- * The <sam-header> component contains navigational links to main sections of 
+ * The <sam-header> component contains navigational links to main sections of
  * the site
  */
 @Component({
-    selector: 'sam-header',
-    templateUrl: 'header.template.html',
-    standalone: false
+  selector: "sam-header",
+  templateUrl: "header.template.html",
+  standalone: false,
 })
 export class SamHeaderComponent {
   /**
@@ -22,5 +22,4 @@ export class SamHeaderComponent {
   refreshPage() {
     window.location.reload();
   }
-
 }

@@ -2,23 +2,24 @@ import {
   Component,
   ChangeDetectionStrategy,
   ViewChild,
-  ChangeDetectorRef
-} from '@angular/core';
+  ChangeDetectorRef,
+} from "@angular/core";
 
-import {AbstractSamFormly} from '../../sam-formly';
-import {SamNumberComponent} from '../../../ui-kit';
+import { AbstractSamFormly } from "../../sam-formly";
+import { SamNumberComponent } from "../../../ui-kit";
 
 @Component({
-    template: `
-   <sam-number [formControl]="formControl"
-    [control]="formControl"
-   ></sam-number>
- `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  template: `
+    <sam-number
+      [formControl]="formControl"
+      [control]="formControl"
+    ></sam-number>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SamFormlyNumber extends AbstractSamFormly {
-  @ViewChild(SamNumberComponent, {static: true})
+  @ViewChild(SamNumberComponent, { static: true })
   public template: SamNumberComponent;
 
   constructor(_cdr: ChangeDetectorRef) {

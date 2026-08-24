@@ -1,25 +1,24 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from "@angular/core";
 
 // Transforms a filesize in bytes to a human readable decimal filesize using SI prefixes
 @Pipe({
-    name: 'filesize',
-    standalone: false
+  name: "filesize",
+  standalone: false,
 })
 export class FilesizePipe implements PipeTransform {
-
   transform(size: number): string {
-    if (typeof size !== 'number') {
-      return '0';
+    if (typeof size !== "number") {
+      return "0";
     }
 
-    const symbols = ['B', 'KB', 'MB', 'GB', 'TB'];
+    const symbols = ["B", "KB", "MB", "GB", "TB"];
     const sizes = [1, 2 ** 10, 2 ** 20, 2 ** 30, 2 ** 40, 2 ** 50];
 
     let symbol = symbols[0];
     let base = sizes[0];
 
     if (size < sizes[1]) {
-      return '<1 KB';
+      return "<1 KB";
     } else if (size < sizes[2]) {
       symbol = symbols[1];
       base = sizes[1];
@@ -33,11 +32,10 @@ export class FilesizePipe implements PipeTransform {
       symbol = symbols[4];
       base = sizes[4];
     } else {
-      console.warn('file size symbol not supported');
+      console.warn("file size symbol not supported");
     }
 
     const rounded = Math.round(size / base);
     return `${rounded} ${symbol}`;
   }
 }
-

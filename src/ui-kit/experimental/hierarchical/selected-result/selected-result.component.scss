@@ -1,4 +1,4 @@
-.selected-item{
+.selected-item {
   border-radius: 2px;
   background: #dce4ef;
   display: inline-block;
@@ -11,26 +11,26 @@
   position: relative;
 }
 
-.selected-item-disabled{
+.selected-item-disabled {
   background: #d6d7d9;
   cursor: not-allowed;
   border: 1px solid #aeb0b5;
   color: #5b5b5b;
 }
 
-.header{
+.header {
   display: block;
   font-weight: 600;
 }
 
-.close{
+.close {
   position: absolute;
   top: 6px;
   right: 6px;
 }
 
-.close-disabled{
+.close-disabled {
   color: #aeb0b5;
-  
-  border:hidden;
+
+  border: hidden;
 }

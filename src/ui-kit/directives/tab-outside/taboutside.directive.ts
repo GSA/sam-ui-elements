@@ -3,13 +3,12 @@ import {
   ElementRef,
   Output,
   EventEmitter,
-  HostListener
-} from '@angular/core';
-
+  HostListener,
+} from "@angular/core";
 
 @Directive({
-    selector: '[sam-tab-outside]',
-    standalone: false
+  selector: "[sam-tab-outside]",
+  standalone: false,
 })
 export class SamTabOutsideDirective {
   /**
@@ -19,7 +18,7 @@ export class SamTabOutsideDirective {
 
   constructor(private _elementRef: ElementRef) {}
 
-  @HostListener('document:keyup', ['$event.target'])
+  @HostListener("document:keyup", ["$event.target"])
   public hasFocusChanged(target) {
     const isInsideHost = this._elementRef.nativeElement.contains(target);
     if (!isInsideHost) {

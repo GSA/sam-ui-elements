@@ -5,7 +5,7 @@ import {
   TestBed,
   fakeAsync,
   tick,
-} from '@angular/core/testing';
+} from "@angular/core/testing";
 import { SAMSDSAutocompleteComponent } from "./autocomplete.component";
 import { AutoCompleteSampleDataService } from "../autocomplete-search/autocomplete-seach-test-service.spec";
 import { SAMSDSAutocompletelConfiguration } from "./models/SDSAutocompletelConfiguration.model";

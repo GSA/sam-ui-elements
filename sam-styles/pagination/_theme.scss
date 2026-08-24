@@ -1,5 +1,8 @@
 @mixin sam-pagination-theme($theme) {
-  $primary: map-get($map: $theme, $key: primary);
+  $primary: map-get(
+    $map: $theme,
+    $key: primary,
+  );
 }
 
 @mixin sam-pagination-typography($config) {

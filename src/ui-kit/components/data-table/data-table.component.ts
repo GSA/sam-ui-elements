@@ -28,29 +28,29 @@ export const _SamTable = CdkTable;
  * Todo: revert back to using CDK_TABLE_TEMPLATE in a later version
  */
 @Component({
-    selector: "sam-datatable, table[sam-datatable]",
-    template: CDK_TABLE_TEMPLATE,
-    //   template: `
-    //     <ng-container headerRowPlaceholder></ng-container>
-    //     <ng-container rowPlaceholder></ng-container>
-    //     <ng-content select="[rowFooterPlaceholder]"></ng-content>`,
-    providers: [
-        { provide: CdkTable, useExisting: SamDataTableComponent },
-        { provide: CDK_TABLE, useExisting: SamDataTableComponent },
-        {
-            provide: _VIEW_REPEATER_STRATEGY,
-            useClass: _DisposeViewRepeaterStrategy,
-        },
-        { provide: _COALESCED_STYLE_SCHEDULER, useClass: _CoalescedStyleScheduler },
-    ],
-    encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: "sam-datatable, table[sam-datatable]",
+  template: CDK_TABLE_TEMPLATE,
+  //   template: `
+  //     <ng-container headerRowPlaceholder></ng-container>
+  //     <ng-container rowPlaceholder></ng-container>
+  //     <ng-content select="[rowFooterPlaceholder]"></ng-content>`,
+  providers: [
+    { provide: CdkTable, useExisting: SamDataTableComponent },
+    { provide: CDK_TABLE, useExisting: SamDataTableComponent },
+    {
+      provide: _VIEW_REPEATER_STRATEGY,
+      useClass: _DisposeViewRepeaterStrategy,
+    },
+    { provide: _COALESCED_STYLE_SCHEDULER, useClass: _CoalescedStyleScheduler },
+  ],
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SamDataTableComponent<T> extends _SamTable<T> {
   @Input() allowHorizontalScroll = false;
-  @HostBinding("class.sam-datatable-horizontal") samTableHorizontalClass = this
-    .allowHorizontalScroll;
+  @HostBinding("class.sam-datatable-horizontal") samTableHorizontalClass =
+    this.allowHorizontalScroll;
 
   ngOnChanges(c) {
     if (c.allowHorizontalScroll) {

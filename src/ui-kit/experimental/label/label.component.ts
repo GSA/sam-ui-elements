@@ -1,22 +1,20 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
-    selector: "sam-label-next",
-    template: `
+  selector: "sam-label-next",
+  template: `
     <span [ngClass]="css_classes">
       <ng-content></ng-content>
     </span>
   `,
-    standalone: false
+  standalone: false,
 })
-export class SamLabelNextComponent implements OnInit{
-
+export class SamLabelNextComponent implements OnInit {
   @Input() public size: string;
 
-  css_classes: string = 'sam label';
+  css_classes: string = "sam label";
 
-  ngOnInit(){
-    this.css_classes += this.size ? ` ${this.size}` : '';
+  ngOnInit() {
+    this.css_classes += this.size ? ` ${this.size}` : "";
   }
-
 }

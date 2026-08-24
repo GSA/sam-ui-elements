@@ -3,12 +3,12 @@ import {
   ElementRef,
   Output,
   EventEmitter,
-  HostListener
-} from '@angular/core';
+  HostListener,
+} from "@angular/core";
 
 @Directive({
-    selector: '[sam-focus]',
-    standalone: false
+  selector: "[sam-focus]",
+  standalone: false,
 })
 export class SamFocusDirective {
   /**
@@ -18,7 +18,7 @@ export class SamFocusDirective {
 
   constructor(private _elementRef: ElementRef) {}
 
-  @HostListener('document:click', ['$event.target'])
+  @HostListener("document:click", ["$event.target"])
   public onClick(targetElement) {
     const clickedInside =
       this._elementRef.nativeElement.contains(targetElement);
@@ -26,8 +26,8 @@ export class SamFocusDirective {
       this.focus.emit(undefined);
     }
   }
-  
-  @HostListener('document:keyup', ['$event.target'])
+
+  @HostListener("document:keyup", ["$event.target"])
   public hasFocusChanged(target) {
     const isInsideHost = this._elementRef.nativeElement.contains(target);
     if (isInsideHost) {

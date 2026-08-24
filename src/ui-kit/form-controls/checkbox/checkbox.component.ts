@@ -5,74 +5,76 @@ import {
   Output,
   EventEmitter,
   ChangeDetectorRef,
-  ViewChild
-} from '@angular/core';
+  ViewChild,
+} from "@angular/core";
 import {
   FormControl,
   ControlValueAccessor,
-  NG_VALUE_ACCESSOR
-} from '@angular/forms';
-import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
-import { OptionsType } from '../../types';
-import { SamFormService } from '../../form-service';
+  NG_VALUE_ACCESSOR,
+} from "@angular/forms";
+import { FieldsetWrapper } from "../../wrappers/fieldset-wrapper";
+import { OptionsType } from "../../types";
+import { SamFormService } from "../../form-service";
 
 /**
  * The <sam-checkbox> component is a set of checkboxes
  */
 @Component({
-    selector: 'sam-checkbox',
-    templateUrl: 'checkbox.template.html',
-    providers: [{
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => SamCheckboxComponent),
-            multi: true
-        }],
-    standalone: false
+  selector: "sam-checkbox",
+  templateUrl: "checkbox.template.html",
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SamCheckboxComponent),
+      multi: true,
+    },
+  ],
+  standalone: false,
 })
 export class SamCheckboxComponent implements ControlValueAccessor {
   /**
-  * Deprecated, Sets the bound value of the component
-  */
+   * Deprecated, Sets the bound value of the component
+   */
   @Input() model: any = [];
   /**
-  * Sets the array of checkbox values and labels (see OptionsType[])
-  */
+   * Sets the array of checkbox values and labels (see OptionsType[])
+   */
   @Input() options: OptionsType[];
   /**
-  * Sets the label text
-  */
+   * Sets the label text
+   */
   @Input() label: string;
   /**
-  * Sets the semantic description for the component
-  */
+   * Sets the semantic description for the component
+   */
   @Input() name: string;
   /**
-  * Sets helpful text for the using the component
-  */
+   * Sets helpful text for the using the component
+   */
   @Input() hint: string;
   /**
-  * Sets required text on component
-  */
+   * Sets required text on component
+   */
   @Input() required: boolean = false;
   /**
-  * Sets the form control error message
-  */
+   * Sets the form control error message
+   */
   @Input() errorMessage: string;
   /**
-  * If true, an addition checkbox is added that selects all the checkboxes
-  */
+   * If true, an addition checkbox is added that selects all the checkboxes
+   */
   @Input() hasSelectAll: boolean;
   /**
-  * Sets the angular FormControl
-  */
+   * Sets the angular FormControl
+   */
   @Input() control: FormControl;
   /**
-  * Toggles validations to display with SamFormService events
-  */
+   * Toggles validations to display with SamFormService events
+   */
   @Input() useFormService: boolean;
   /**
-  * Sets disabled state
-  */
+   * Sets disabled state
+   */
   @Input() disabled: boolean;
   /**
    * Sets the id
@@ -83,8 +85,8 @@ export class SamCheckboxComponent implements ControlValueAccessor {
 
   public optionId: string;
   /**
-  * Deprecated, Event emitted when the model value changes
-  */
+   * Deprecated, Event emitted when the model value changes
+   */
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
@@ -113,7 +115,10 @@ export class SamCheckboxComponent implements ControlValueAccessor {
     this.onTouched();
   }
 
-  constructor(protected samFormService: SamFormService, private cdr: ChangeDetectorRef) { }
+  constructor(
+    protected samFormService: SamFormService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     // initialize the order lookup map
@@ -153,7 +158,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
 
   setSelectAllCheck() {
     let activeOptionsNum = 0;
-    this.options.forEach(val => {
+    this.options.forEach((val) => {
       if (!val.disabled) {
         activeOptionsNum++;
       }
@@ -182,7 +187,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
     this.optionId = id;
     if (!isChecked) {
       // If the option was unchecked, remove it from the model
-      this.value = this.model.filter(val => val !== value);
+      this.value = this.model.filter((val) => val !== value);
     } else {
       // Else, insert the checked item into the model in the correct order
       let i = 0;
@@ -196,9 +201,8 @@ export class SamCheckboxComponent implements ControlValueAccessor {
         }
         i++;
       }
-      const clone = this.model.indexOf('') > -1
-        ? this.model.slice(1)
-        : this.model.slice(0);
+      const clone =
+        this.model.indexOf("") > -1 ? this.model.slice(1) : this.model.slice(0);
       clone.splice(i, 0, value);
       this.value = clone;
     }
@@ -209,15 +213,18 @@ export class SamCheckboxComponent implements ControlValueAccessor {
     this.onTouched();
     this.value = !isSelectAllChecked
       ? []
-      : this.options.map(option => option.value);
+      : this.options.map((option) => option.value);
     this.emitModel();
   }
 
   emitModel() {
-
     this.modelChange.emit(this.model);
 
-    this.optionSelected.emit({ model: this.model, selected: this.optionChange, id: this.optionId });
+    this.optionSelected.emit({
+      model: this.model,
+      selected: this.optionChange,
+      id: this.optionId,
+    });
   }
 
   registerOnChange(fn) {

@@ -1,8 +1,8 @@
-import { Input, Component } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Input, Component } from "@angular/core";
+import { FormGroup } from "@angular/forms";
 @Component({
-    template: '',
-    standalone: false
+  template: "",
+  standalone: false,
 })
 export class SamFieldset {
   /**
@@ -29,5 +29,4 @@ export class SamFieldset {
    * Pass in a Form Group for ReactiveForms Support
    */
   @Input() public group: FormGroup;
-
 }

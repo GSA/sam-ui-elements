@@ -27,26 +27,51 @@
       <option>&nbsp;&nbsp;&nbsp;&nbsp;Wage Determinations</option>
     </select>
     <div *ngIf="tabSearch" class="tab-search">CFDA Number</div>
-    <input #searchInput type="search" name="samsearch" placeholder="Search" (keydown.backspace)="inputBackspace($event)" (keydown.tab)="inputTab($event)">
-    <button (click)="closeAutocomplete('')" [routerLink]="['/patterns/pages/page/search']">
+    <input
+      #searchInput
+      type="search"
+      name="samsearch"
+      placeholder="Search"
+      (keydown.backspace)="inputBackspace($event)"
+      (keydown.tab)="inputTab($event)"
+    />
+    <button
+      (click)="closeAutocomplete('')"
+      [routerLink]="['/patterns/pages/page/search']"
+    >
       <sam-icon *ngIf="!loading" [icon]="faSearch"></sam-icon>
       <sam-icon *ngIf="loading" [icon]="faCircleNotch"></sam-icon>
     </button>
   </div>
-  
-  <ul class="search-results" [@results]="results.length" [style.width]="resultsWidth" [style.padding-bottom.px]="results.length ? '10' : '0'">
-    <ng-container *ngFor="let result of results; first as isFirst" >
-      
-      <li *ngIf="!tabSearch" (click)="closeAutocomplete(result.name)" [routerLink]="['/patterns/pages/page/search']">
+
+  <ul
+    class="search-results"
+    [@results]="results.length"
+    [style.width]="resultsWidth"
+    [style.padding-bottom.px]="results.length ? '10' : '0'"
+  >
+    <ng-container *ngFor="let result of results; first as isFirst">
+      <li
+        *ngIf="!tabSearch"
+        (click)="closeAutocomplete(result.name)"
+        [routerLink]="['/patterns/pages/page/search']"
+      >
         <span [innerHTML]="result.description"></span>
       </li>
-      
-      <li *ngIf="tabSearch && result.domain === 'in Assistance Listing'" (click)="closeAutocomplete(result.name)" [routerLink]="['/patterns/pages/page/search']">
+
+      <li
+        *ngIf="tabSearch && result.domain === 'in Assistance Listing'"
+        (click)="closeAutocomplete(result.name)"
+        [routerLink]="['/patterns/pages/page/search']"
+      >
         <span [innerHTML]="result.description"></span>
       </li>
-      
-      <li class="domain" *ngIf="isFirst && result.domain && !tabSearch" [innerHTML]="result.domain"></li>
-      
+
+      <li
+        class="domain"
+        *ngIf="isFirst && result.domain && !tabSearch"
+        [innerHTML]="result.domain"
+      ></li>
     </ng-container>
   </ul>
 </div>

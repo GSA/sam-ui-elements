@@ -12,21 +12,19 @@ import {
   ApplicationRef,
   Injector,
   NgZone,
-} from '@angular/core';
-import {OverlayState} from './overlay-state';
-import {DomPortalHost} from '@angular/cdk/portal';
-import {OverlayRef} from './overlay-ref';
-import {OverlayPositionBuilder} from './position/overlay-position-builder';
-import {OverlayContainer} from './overlay-container';
-import {ScrollStrategy, ScrollStrategyOptions} from './scroll/index';
-
+} from "@angular/core";
+import { OverlayState } from "./overlay-state";
+import { DomPortalHost } from "@angular/cdk/portal";
+import { OverlayRef } from "./overlay-ref";
+import { OverlayPositionBuilder } from "./position/overlay-position-builder";
+import { OverlayContainer } from "./overlay-container";
+import { ScrollStrategy, ScrollStrategyOptions } from "./scroll/index";
 
 /** Next overlay unique ID. */
 let nextUniqueId = 0;
 
 /** The default state for newly created overlays. */
 let defaultState = new OverlayState();
-
 
 /**
  * Service to create Overlays. Overlays are dynamically added pieces of floating UI, meant to be
@@ -38,13 +36,15 @@ let defaultState = new OverlayState();
  */
 @Injectable()
 export class Overlay {
-  constructor(public scrollStrategies: ScrollStrategyOptions,
-              private _overlayContainer: OverlayContainer,
-              private _componentFactoryResolver: ComponentFactoryResolver,
-              private _positionBuilder: OverlayPositionBuilder,
-              private _appRef: ApplicationRef,
-              private _injector: Injector,
-              private _ngZone: NgZone) { }
+  constructor(
+    public scrollStrategies: ScrollStrategyOptions,
+    private _overlayContainer: OverlayContainer,
+    private _componentFactoryResolver: ComponentFactoryResolver,
+    private _positionBuilder: OverlayPositionBuilder,
+    private _appRef: ApplicationRef,
+    private _injector: Injector,
+    private _ngZone: NgZone
+  ) {}
 
   /**
    * Creates an overlay.
@@ -68,10 +68,10 @@ export class Overlay {
    * @returns Newly-created pane element
    */
   private _createPaneElement(): HTMLElement {
-    let pane = document.createElement('div');
+    let pane = document.createElement("div");
 
     pane.id = `cdk-overlay-${nextUniqueId++}`;
-    pane.classList.add('cdk-overlay-pane');
+    pane.classList.add("cdk-overlay-pane");
     this._overlayContainer.getContainerElement().appendChild(pane);
 
     return pane;
@@ -83,7 +83,12 @@ export class Overlay {
    * @returns A portal host for the given DOM element.
    */
   private _createPortalHost(pane: HTMLElement): DomPortalHost {
-    return new DomPortalHost(pane, this._componentFactoryResolver, this._appRef, this._injector);
+    return new DomPortalHost(
+      pane,
+      this._componentFactoryResolver,
+      this._appRef,
+      this._injector
+    );
   }
 
   /**
@@ -91,9 +96,18 @@ export class Overlay {
    * @param pane DOM element for the overlay
    * @param state
    */
-  private _createOverlayRef(pane: HTMLElement, state: OverlayState): OverlayRef {
+  private _createOverlayRef(
+    pane: HTMLElement,
+    state: OverlayState
+  ): OverlayRef {
     let scrollStrategy = state.scrollStrategy || this.scrollStrategies.noop();
     let portalHost = this._createPortalHost(pane);
-    return new OverlayRef(portalHost, pane, state, scrollStrategy, this._ngZone);
+    return new OverlayRef(
+      portalHost,
+      pane,
+      state,
+      scrollStrategy,
+      this._ngZone
+    );
   }
 }

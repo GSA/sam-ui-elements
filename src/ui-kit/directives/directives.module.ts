@@ -1,15 +1,15 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 
-import { SamClickOutsideModule } from './click-outside';
-import { SamStickyModule } from './sticky';
-import { SamTabOutsideModule } from './tab-outside';
-import { SamFocusModule } from './focus';
-import { SamDragDropModule } from './drag-drop';
-import { SamExternalLinkModule } from './external-link';
+import { SamClickOutsideModule } from "./click-outside";
+import { SamStickyModule } from "./sticky";
+import { SamTabOutsideModule } from "./tab-outside";
+import { SamFocusModule } from "./focus";
+import { SamDragDropModule } from "./drag-drop";
+import { SamExternalLinkModule } from "./external-link";
 
 @NgModule({
-  imports: [ 
+  imports: [
     CommonModule,
     SamClickOutsideModule,
     SamDragDropModule,
@@ -18,9 +18,7 @@ import { SamExternalLinkModule } from './external-link';
     SamStickyModule,
     SamTabOutsideModule,
   ],
-  declarations: [
-
-  ],
+  declarations: [],
   exports: [
     SamClickOutsideModule,
     SamTabOutsideModule,
@@ -28,7 +26,6 @@ import { SamExternalLinkModule } from './external-link';
     SamDragDropModule,
     SamExternalLinkModule,
     SamStickyModule,
-  ]
-
+  ],
 })
 export class SamDirectivesModule {}

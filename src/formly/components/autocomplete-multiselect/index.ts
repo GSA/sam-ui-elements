@@ -1,1 +1,1 @@
-export * from './autocomplete-multiselect.component';
+export * from "./autocomplete-multiselect.component";

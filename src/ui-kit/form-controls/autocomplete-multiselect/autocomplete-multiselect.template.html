@@ -38,7 +38,7 @@
           [ngClass]="{ active: displayList() }"
         >
           <div
-            tabIndex="0"
+            tabindex="0"
             class="sam-ui mini label"
             *ngFor="let item of value"
             [@label]=""
@@ -48,11 +48,8 @@
           >
             <span class="sr-only">remove</span>
             <div class="label">
-              {{
-                keyValueConfig
-                  ? item[(keyValueConfig?.valueProperty)]
-                  : item?.value
-              }}
+              {{ keyValueConfig ? item[(keyValueConfig?.valueProperty)] :
+              item?.value }}
               <span
                 *ngIf="item?.value !== item[(keyValueConfig?.categoryProperty)]"
                 class="selected-category"
@@ -121,13 +118,12 @@
           [@dropdown]=""
         >
           <li
-            style="margin-left:10px;"
+            style="margin-left: 10px"
             class="free-text-item category-item"
             *ngIf="showResultsFreeText()"
             (click)="clearSearch(selectItem(searchText))"
           >
-            {{ searchText }} -
-            {{ freeTextSubtext }}
+            {{ searchText }} - {{ freeTextSubtext }}
           </li>
           <li *ngFor="let category of list.categories; let i = index">
             <ng-container>

@@ -1,1 +1,1 @@
-export { SidenavService } from './sidenav.service';
+export { SidenavService } from "./sidenav.service";

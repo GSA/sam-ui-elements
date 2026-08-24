@@ -1,17 +1,19 @@
-import { Component,
-         OnInit,
-         ViewChild,
-         ElementRef,
-         Input,
-         Output,
-         EventEmitter } from '@angular/core';
-import { Observable, Subscription, fromEvent } from 'rxjs';
-import { merge } from 'rxjs/operators';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  Input,
+  Output,
+  EventEmitter,
+} from "@angular/core";
+import { Observable, Subscription, fromEvent } from "rxjs";
+import { merge } from "rxjs/operators";
 
 @Component({
-    selector: 'sam-image',
-    templateUrl: 'image.template.html',
-    standalone: false
+  selector: "sam-image",
+  templateUrl: "image.template.html",
+  standalone: false,
 })
 export class SamImageComponent implements OnInit {
   /**
@@ -32,12 +34,13 @@ export class SamImageComponent implements OnInit {
    */
   @Output() public fileChange: EventEmitter<File> = new EventEmitter<File>();
 
-  @ViewChild('componentContainer', {static: true}) private componentContainer: ElementRef;
-  @ViewChild('filePicker', {static: true}) private filePicker: ElementRef;
-  @ViewChild('image', {static: true}) private _image: ElementRef;
-  @ViewChild('editButton', {static: true}) private editButton: ElementRef;
-  @ViewChild('cancelButton', {static: true}) private cancelButton: ElementRef;
-  @ViewChild('saveButton', {static: true}) private saveButton: ElementRef;
+  @ViewChild("componentContainer", { static: true })
+  private componentContainer: ElementRef;
+  @ViewChild("filePicker", { static: true }) private filePicker: ElementRef;
+  @ViewChild("image", { static: true }) private _image: ElementRef;
+  @ViewChild("editButton", { static: true }) private editButton: ElementRef;
+  @ViewChild("cancelButton", { static: true }) private cancelButton: ElementRef;
+  @ViewChild("saveButton", { static: true }) private saveButton: ElementRef;
 
   private fileChangeStream: Observable<any>;
   private editButtonStream: Observable<any>;
@@ -56,23 +59,20 @@ export class SamImageComponent implements OnInit {
   private tmpSrc: any;
 
   ngOnInit() {
-    this.fileChangeStream =
-      fromEvent(this.filePicker.nativeElement, 'change');
-    this.editButtonStream =
-      fromEvent(this.editButton.nativeElement, 'click');
-    this.cancelButtonStream =
-      fromEvent(this.cancelButton.nativeElement, 'click');
-    this.saveButtonStream =
-      fromEvent(this.saveButton.nativeElement, 'click');
+    this.fileChangeStream = fromEvent(this.filePicker.nativeElement, "change");
+    this.editButtonStream = fromEvent(this.editButton.nativeElement, "click");
+    this.cancelButtonStream = fromEvent(
+      this.cancelButton.nativeElement,
+      "click"
+    );
+    this.saveButtonStream = fromEvent(this.saveButton.nativeElement, "click");
 
     this.reader.onload = (event: any) => {
       this.tmpSrc = event.target.result;
     };
 
-    this.editModeSubscription =
-      this.editButtonStream.pipe(
-      merge(this.cancelButtonStream),
-      merge(this.saveButtonStream))
+    this.editModeSubscription = this.editButtonStream
+      .pipe(merge(this.cancelButtonStream), merge(this.saveButtonStream))
       .subscribe(
         (event) => {
           if (this.editable) {
@@ -84,44 +84,42 @@ export class SamImageComponent implements OnInit {
         }
       );
 
-    this.cancelButtonSubscription =
-      this.cancelButtonStream
-      .subscribe(
-        (event) => {
+    this.cancelButtonSubscription = this.cancelButtonStream.subscribe(
+      (event) => {
+        this.tmpValue = undefined;
+        this.tmpSrc = undefined;
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+
+    this.saveButtonSubscription = this.saveButtonStream.subscribe(
+      (event) => {
+        if (this.isImageTemporary()) {
+          this.value = this.tmpValue;
+          this.src = this.tmpSrc;
           this.tmpValue = undefined;
           this.tmpSrc = undefined;
-        },
-        (error) => { console.error(error); }
-      );
-
-    this.saveButtonSubscription =
-      this.saveButtonStream
-      .subscribe(
-        (event) => {
-          if (this.isImageTemporary()) {
-            this.value = this.tmpValue;
-            this.src = this.tmpSrc;
-            this.tmpValue = undefined;
-            this.tmpSrc = undefined;
-            this.fileChange.emit(this.value);
-          }
-        },
-        (error) => { console.error(error); }
-      );
-
-    this.fileChangeSubscription =
-      this.fileChangeStream
-      .subscribe(
-        (event) => {
-          if (event.target.files && event.target.files[0]) {
-            this.tmpValue = event.target.files[0];
-          }
-          this.reader.readAsDataURL(event.target.files[0]);
-        },
-        (error) => {
-          console.error(error);
+          this.fileChange.emit(this.value);
         }
-      );
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+
+    this.fileChangeSubscription = this.fileChangeStream.subscribe(
+      (event) => {
+        if (event.target.files && event.target.files[0]) {
+          this.tmpValue = event.target.files[0];
+        }
+        this.reader.readAsDataURL(event.target.files[0]);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
 
   public hideEditButton() {
@@ -129,11 +127,11 @@ export class SamImageComponent implements OnInit {
   }
 
   private toggleEdit() {
-    return this.editMode = !this.editMode;
+    return (this.editMode = !this.editMode);
   }
 
   public getFileName() {
-    let fileName = '';
+    let fileName = "";
     if (this.tmpValue) {
       fileName = this.tmpValue.name;
     }
@@ -143,14 +141,15 @@ export class SamImageComponent implements OnInit {
   public generateFilePickerLabelText() {
     const labelString = this.getFileName();
     const labelStrLen = 9;
-    const labelText = labelString && labelString.length > labelStrLen ?
-                        labelString.substr(0, labelStrLen - 1).concat('...') :
-                        labelString;
-    return labelText || 'Select a file';
+    const labelText =
+      labelString && labelString.length > labelStrLen
+        ? labelString.substr(0, labelStrLen - 1).concat("...")
+        : labelString;
+    return labelText || "Select a file";
   }
 
   public generateDoneText() {
-    return this.isImageTemporary() ? 'Save' : 'Done';
+    return this.isImageTemporary() ? "Save" : "Done";
   }
 
   public generateSrc() {

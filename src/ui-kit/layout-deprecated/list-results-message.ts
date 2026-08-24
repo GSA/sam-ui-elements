@@ -1,12 +1,12 @@
-import { Component, Input, OnChanges  } from '@angular/core';
+import { Component, Input, OnChanges } from "@angular/core";
 
 /**
-* ListResultsMessageComponent - Lists results message component
-*/
+ * ListResultsMessageComponent - Lists results message component
+ */
 @Component({
-    selector: 'list-results-message',
-    template: '{{ message }}',
-    standalone: false
+  selector: "list-results-message",
+  template: "{{ message }}",
+  standalone: false,
 })
 export class ListResultsMessageComponent implements OnChanges {
   @Input() public total: number;
@@ -33,17 +33,18 @@ export class ListResultsMessageComponent implements OnChanges {
       numberB = total;
     }
 
-    this.message = 'Showing ' 
-      + numberA.toLocaleString()
-      + ' - '
-      + numberB.toLocaleString()
-      + ' of '
-      + total.toLocaleString();
+    this.message =
+      "Showing " +
+      numberA.toLocaleString() +
+      " - " +
+      numberB.toLocaleString() +
+      " of " +
+      total.toLocaleString();
 
     if (this.suffix) {
-      this.message += ' ' + this.suffix;
+      this.message += " " + this.suffix;
     } else {
-      this.message += ' results';
+      this.message += " results";
     }
   }
 }

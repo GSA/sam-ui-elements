@@ -2,21 +2,21 @@
  * Returns true if passed parameter is a string
  */
 export function isString(obj: any): boolean {
-  return safeTypeOf(obj) === '[object String]';
+  return safeTypeOf(obj) === "[object String]";
 }
 
 /**
  * Returns true if type is [object Object]
  */
 export function isObject(obj: any): boolean {
-  return safeTypeOf(obj) === '[object Object]';
+  return safeTypeOf(obj) === "[object Object]";
 }
 
 /**
  * Returns true if type is [object Array]
  */
 export function isArray(obj: any): boolean {
-  return safeTypeOf(obj) === '[object Array]';
+  return safeTypeOf(obj) === "[object Array]";
 }
 
 /**

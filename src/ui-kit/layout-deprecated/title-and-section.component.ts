@@ -1,16 +1,14 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input } from "@angular/core";
 
-import { BadgeConfig } from '../components/badge';
+import { BadgeConfig } from "../components/badge";
 
 @Component({
-    selector: 'title-and-section',
-    template: `
+  selector: "title-and-section",
+  template: `
     <div [ngClass]="badgeOptions?.attached ? 'sam-ui segment' : ''">
-      <h1 *ngIf="title || section"
-          class="sam-ui header"
-          [attr.id]="id">
-        <sam-badge [options]="badgeOptions"
-          *ngIf="badge">{{ badge }}
+      <h1 *ngIf="title || section" class="sam-ui header" [attr.id]="id">
+        <sam-badge [options]="badgeOptions" *ngIf="badge"
+          >{{ badge }}
         </sam-badge>
         <div class="sup header">
           {{ section }}
@@ -18,12 +16,14 @@ import { BadgeConfig } from '../components/badge';
         {{ title }}
       </h1>
       <div *ngIf="typeLabel">
-        <h4>{{typeLabel}}: <span *ngIf="type">{{type}}</span></h4>
+        <h4>
+          {{ typeLabel }}: <span *ngIf="type">{{ type }}</span>
+        </h4>
       </div>
       <div *ngIf="caption" [innerHTML]="caption"></div>
     </div>
-`,
-    standalone: false
+  `,
+  standalone: false,
 })
 export class TitleAndSectionComponent {
   /**

@@ -3,23 +3,21 @@ import {
   ContentChild,
   HostBinding,
   forwardRef,
-} from '@angular/core';
-import { SamActionBarComponent } from './actionbar.component';
-import { SamMainComponent } from './main.component';
+} from "@angular/core";
+import { SamActionBarComponent } from "./actionbar.component";
+import { SamMainComponent } from "./main.component";
 
 @Component({
-    selector: 'sam-layout-b',
-    template: `
-    <ng-content></ng-content>
-  `,
-    standalone: false
+  selector: "sam-layout-b",
+  template: ` <ng-content></ng-content> `,
+  standalone: false,
 })
 export class SamLayoutComponent {
-  @HostBinding('class.container') container: boolean = true;
+  @HostBinding("class.container") container: boolean = true;
 
-  @ContentChild(forwardRef(() => SamActionBarComponent), {static: true})
+  @ContentChild(forwardRef(() => SamActionBarComponent), { static: true })
   public actions: SamActionBarComponent;
 
-  @ContentChild(SamMainComponent, {static: true})
+  @ContentChild(SamMainComponent, { static: true })
   public main: SamMainComponent;
 }

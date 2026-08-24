@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { SamDateTimeComponent } from './date-time.component';
-import { SamWrapperModule } from '../../wrappers';
-import { SamDateModule } from '../date';
-import { SamTimeModule } from '../time';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { SamDateTimeComponent } from "./date-time.component";
+import { SamWrapperModule } from "../../wrappers";
+import { SamDateModule } from "../date";
+import { SamTimeModule } from "../time";
 
 @NgModule({
   imports: [
@@ -12,15 +12,11 @@ import { SamTimeModule } from '../time';
     CommonModule,
     SamWrapperModule,
     SamDateModule,
-    SamTimeModule
+    SamTimeModule,
   ],
-  declarations: [
-    SamDateTimeComponent
-  ],
-  exports: [
-    SamDateTimeComponent
-  ]
+  declarations: [SamDateTimeComponent],
+  exports: [SamDateTimeComponent],
 })
 export class SamDateTimeModule {}
 
-export { SamDateTimeComponent } from './date-time.component';
+export { SamDateTimeComponent } from "./date-time.component";

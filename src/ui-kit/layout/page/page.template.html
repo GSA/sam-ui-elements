@@ -1,18 +1,19 @@
-<div class="sam page layout pattern-page" [ngClass]="{ 'has-sidebar': pageService.sidebar }">
-
+<div
+  class="sam page layout pattern-page"
+  [ngClass]="{ 'has-sidebar': pageService.sidebar }"
+>
   <ng-content select=".sam.breadcrumbs"></ng-content>
 
-	<div class="header">
+  <div class="header">
     <sam-title importance="highest">
       <div class="intro">{{ intro }}</div>
-			{{ title }}
+      {{ title }}
     </sam-title>
-	</div>
+  </div>
 
   <ng-content select="sam-page-sidebar"></ng-content>
 
-	<div class="page-content">
-		<ng-content></ng-content>
-	</div>
-
+  <div class="page-content">
+    <ng-content></ng-content>
+  </div>
 </div>

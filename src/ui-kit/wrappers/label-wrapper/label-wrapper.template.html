@@ -1,41 +1,46 @@
 <div #labelDiv [class.usa-input-error]="!!errorMessage">
-  
-  <label *ngIf="!!label" 
-    [attr.for]="name" 
-    [class.usa-input-error-label]="errorMessage">
-      {{ label || '' }}
-      <span *ngIf="required || requiredFlag"
-        class="usa-additional_text">
-        Required
-      </span>
-      <ng-content select="[label-right]"></ng-content>
+  <label
+    *ngIf="!!label"
+    [attr.for]="name"
+    [class.usa-input-error-label]="errorMessage"
+  >
+    {{ label || '' }}
+    <span *ngIf="required || requiredFlag" class="usa-additional_text">
+      Required
+    </span>
+    <ng-content select="[label-right]"></ng-content>
   </label>
-  
+
   <div *ngIf="hint" class="toggle-more" aria-live="polite">
-    <div #hintContainer
+    <div
+      #hintContainer
       class="usa-form-hint"
       [attr.id]="hintElId"
       [innerHTML]="hint"
       [style.overflow]="setOverflow()"
-      [style.height]="setHeight()">
-    </div>
-  
+      [style.height]="setHeight()"
+    ></div>
+
     <div *ngIf="showToggle && !showFullHint">
-      <a href="javascript:void(0)" [attr.aria-label]="toggleOpen ? 'Less info for ' + label : 'More info for ' + label "
-        [attr.aria-expanded]="toggleOpen" [attr.aria-controls]="hintElId"
-        (click)="toggleHint(toggleOpen)">
+      <a
+        href="javascript:void(0)"
+        [attr.aria-label]="toggleOpen ? 'Less info for ' + label : 'More info for ' + label "
+        [attr.aria-expanded]="toggleOpen"
+        [attr.aria-controls]="hintElId"
+        (click)="toggleHint(toggleOpen)"
+      >
         {{ toggleOpen ? "less": "more" }}
       </a>
     </div>
   </div>
 
-  
-  <span *ngIf="!!errorMessage"
+  <span
+    *ngIf="!!errorMessage"
     class="usa-input-error-message"
-    [attr.id]="errorElId">
+    [attr.id]="errorElId"
+  >
     {{errorMessage}}
   </span>
-  
+
   <ng-content></ng-content>
-  
 </div>

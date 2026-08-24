@@ -25,11 +25,11 @@ const Autocomplete_Autocomplete_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-    selector: "sam-sds-search-autocomplete",
-    templateUrl: "./autocomplete-search.component.html",
-    styleUrls: ["./autocomplete-search.component.scss"],
-    providers: [Autocomplete_Autocomplete_VALUE_ACCESSOR],
-    standalone: false
+  selector: "sam-sds-search-autocomplete",
+  templateUrl: "./autocomplete-search.component.html",
+  styleUrls: ["./autocomplete-search.component.scss"],
+  providers: [Autocomplete_Autocomplete_VALUE_ACCESSOR],
+  standalone: false,
 })
 export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
   /** Icons */
@@ -606,8 +606,8 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
     if (this.maxResults > this.results.length) {
       let scrollAreaHeight = this.resultsListElement.nativeElement.offsetHeight;
       let scrollTopPos = this.resultsListElement.nativeElement.scrollTop;
-      let scrollAreaMaxHeight = this.resultsListElement.nativeElement
-        .scrollHeight;
+      let scrollAreaMaxHeight =
+        this.resultsListElement.nativeElement.scrollHeight;
       if (scrollTopPos + scrollAreaHeight * 2 >= scrollAreaMaxHeight) {
         this.getAdditionalResults();
       }

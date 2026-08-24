@@ -1,30 +1,29 @@
-import { TestBed, waitForAsync } from '@angular/core/testing';
+import { TestBed, waitForAsync } from "@angular/core/testing";
 
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 // Load the implementations that should be tested
-import { WorkspaceTemplateComponent } from './workspace-template.component';
-import { By } from '@angular/platform-browser';
+import { WorkspaceTemplateComponent } from "./workspace-template.component";
+import { By } from "@angular/platform-browser";
 
-
-describe('Workspace template component', () => {
-  describe('rendered tests', () => {
+describe("Workspace template component", () => {
+  describe("rendered tests", () => {
     let component: WorkspaceTemplateComponent;
     let fixture: any;
-  
+
     // provide our implementations or mocks to the dependency injector
     beforeEach(() => {
       TestBed.configureTestingModule({
-        declarations: [WorkspaceTemplateComponent]
+        declarations: [WorkspaceTemplateComponent],
       });
-  
+
       fixture = TestBed.createComponent(WorkspaceTemplateComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
     });
-  
-    it('should initialize', function () {
-        fixture.detectChanges();
-        expect(true).toBe(true);
+
+    it("should initialize", function () {
+      fixture.detectChanges();
+      expect(true).toBe(true);
     });
   });
 });

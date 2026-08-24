@@ -3,48 +3,50 @@ import {
   ChangeDetectorRef,
   Input,
   ViewChild,
-  forwardRef
-} from '@angular/core';
-import {
-  LabelWrapper
-} from '../../wrappers/label-wrapper/label-wrapper.component';
+  forwardRef,
+} from "@angular/core";
+import { LabelWrapper } from "../../wrappers/label-wrapper/label-wrapper.component";
 import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
   FormControl,
-  Validators
-} from '@angular/forms';
-import { SamFormService } from '../../form-service';
+  Validators,
+} from "@angular/forms";
+import { SamFormService } from "../../form-service";
 
 /**
  *
  */
 @Component({
-    selector: 'sam-number',
-    template: `
-      <sam-label-wrapper
-        [label]="label"
-        [name]="name"
-        [hint]="hint"
-        [errorMessage]="errorMessage"
-        [required]="required">
-        <input
-          type="number"
-          [attr.min]="min ? min : null"
-          [attr.max]="max ? max : null"
-          [value]="value"
-          [attr.id]="name"
-          [disabled]="disabled"
-          (keydown)="keyDownHandler($event)"
-          (change)="onInputChange($event.target.value)">
-      </sam-label-wrapper>
+  selector: "sam-number",
+  template: `
+    <sam-label-wrapper
+      [label]="label"
+      [name]="name"
+      [hint]="hint"
+      [errorMessage]="errorMessage"
+      [required]="required"
+    >
+      <input
+        type="number"
+        [attr.min]="min ? min : null"
+        [attr.max]="max ? max : null"
+        [value]="value"
+        [attr.id]="name"
+        [disabled]="disabled"
+        (keydown)="keyDownHandler($event)"
+        (change)="onInputChange($event.target.value)"
+      />
+    </sam-label-wrapper>
   `,
-    providers: [{
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => SamNumberComponent),
-            multi: true
-        }],
-    standalone: false
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SamNumberComponent),
+      multi: true,
+    },
+  ],
+  standalone: false,
 })
 export class SamNumberComponent implements ControlValueAccessor {
   /**
@@ -88,25 +90,29 @@ export class SamNumberComponent implements ControlValueAccessor {
    */
   @Input() control: FormControl;
   /**
-  * Toggles validations to display with SamFormService events
-  */
+   * Toggles validations to display with SamFormService events
+   */
   @Input() useFormService: boolean;
 
-  @ViewChild(LabelWrapper, {static: true}) public wrapper: LabelWrapper;
-  public invalidKeys = ['e', 'E', ',', '-', '+'];
+  @ViewChild(LabelWrapper, { static: true }) public wrapper: LabelWrapper;
+  public invalidKeys = ["e", "E", ",", "-", "+"];
 
   public onChange: any = () => {
     this.wrapper.formatErrors(this.control);
-  }
+  };
   public onTouched: any = () => undefined;
 
-  constructor(private samFormService: SamFormService,
-    private cdr: ChangeDetectorRef) { }
+  constructor(
+    private samFormService: SamFormService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error('<sam-number> requires a [name] parameter\
-       for 508 compliance');
+      throw new Error(
+        "<sam-number> requires a [name] parameter\
+       for 508 compliance"
+      );
     }
 
     if (!this.control) {
@@ -130,12 +136,18 @@ export class SamNumberComponent implements ControlValueAccessor {
         this.cdr.detectChanges();
       });
     } else {
-      this.samFormService.formEventsUpdated$.subscribe( (evt: any) => {
-        if ((!evt.root || evt.root === this.control.root)
-          && evt.eventType && evt.eventType === 'submit') {
+      this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
+        if (
+          (!evt.root || evt.root === this.control.root) &&
+          evt.eventType &&
+          evt.eventType === "submit"
+        ) {
           this.wrapper.formatErrors(this.control);
-        } else if ((!evt.root || evt.root === this.control.root)
-          && evt.eventType && evt.eventType === 'reset') {
+        } else if (
+          (!evt.root || evt.root === this.control.root) &&
+          evt.eventType &&
+          evt.eventType === "reset"
+        ) {
           this.wrapper.clearError();
         }
       });

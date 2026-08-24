@@ -1,55 +1,55 @@
-import { Observable } from 'rxjs';
-import { Sort } from '../../components/data-table/sort.directive';
+import { Observable } from "rxjs";
+import { Sort } from "../../components/data-table/sort.directive";
 
 export interface SamHiercarchicalServiceInterface {
+  /**
+   *
+   * @param searchValue
+   */
+  getDataByText(
+    currentItems: number,
+    searchValue?: string
+  ): Observable<SamHiercarchicalServiceResult>;
 
-    /**
-     * 
-     * @param searchValue 
-     */
-    getDataByText(currentItems: number, searchValue?: string): Observable<SamHiercarchicalServiceResult>;
-
-
-    /**
-     * 
-     * @param id 
-     */
-    getHiercarchicalById(item :SamHiercarchicalServiceSearchItem): Observable<SamHiercarchicalServiceResult>;
-
+  /**
+   *
+   * @param id
+   */
+  getHiercarchicalById(
+    item: SamHiercarchicalServiceSearchItem
+  ): Observable<SamHiercarchicalServiceResult>;
 }
 
 export interface SamHiercarchicalServiceResult {
-    /**
-     * 
-     */
-    items: object[];
-    
-    /**
-     * 
-     */
-    totalItems: number;
+  /**
+   *
+   */
+  items: object[];
+
+  /**
+   *
+   */
+  totalItems: number;
 }
 
 export class SamHiercarchicalServiceSearchItem {
+  /**
+   *
+   */
+  id: string;
 
-    /**
-     * 
-     */
-    id: string;
+  /**
+   *
+   */
+  searchValue: string;
 
-    /**
-     * 
-     */
-    searchValue: string;
+  /**
+   *
+   */
+  sort: Sort;
 
-    /**
-     * 
-     */
-    sort: Sort;
-
-    /**
-     * 
-     */
-    currentItemCount: number;
+  /**
+   *
+   */
+  currentItemCount: number;
 }
-

@@ -1,43 +1,40 @@
-import { Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
-    selector: "sam-list",
-    template: `
+  selector: "sam-list",
+  template: `
     <ul [ngClass]="css_classes">
       <ng-content></ng-content>
     </ul>
   `,
-    standalone: false
+  standalone: false,
 })
-export class SamListComponent implements OnInit{
-  
+export class SamListComponent implements OnInit {
   @Input() public bulleted: boolean;
   @Input() public bullet: boolean;
   @Input() public columns: string;
   @Input() public orientation: string;
 
-  css_classes: string = 'sam list';
+  css_classes: string = "sam list";
 
-  ngOnInit(){
-    this.css_classes += this.bulleted ? ' bulleted' : '';
-    this.css_classes += this.columns ? ` ${this.columns} columns` : '';
-    this.css_classes += this.orientation ? ` ${this.orientation}` : '';
-    this.css_classes += this.bullet ? ` ${this.bullet}` : '';
+  ngOnInit() {
+    this.css_classes += this.bulleted ? " bulleted" : "";
+    this.css_classes += this.columns ? ` ${this.columns} columns` : "";
+    this.css_classes += this.orientation ? ` ${this.orientation}` : "";
+    this.css_classes += this.bullet ? ` ${this.bullet}` : "";
   }
-
 }
 
 @Component({
-    selector: "sam-list-item",
-    template: `
+  selector: "sam-list-item",
+  template: `
     <li [ngClass]="bullet">
       <span class="bullet" *ngIf="bullet"></span>
       <ng-content></ng-content>
     </li>
   `,
-    standalone: false
+  standalone: false,
 })
-export class SamListItemComponent{
+export class SamListItemComponent {
   @Input() public bullet: string;
 }
-

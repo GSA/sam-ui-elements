@@ -6,22 +6,19 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {UNIQUE_SELECTION_DISPATCHER_PROVIDER} from '../core/coordination/unique-selection-dispatcher';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { UNIQUE_SELECTION_DISPATCHER_PROVIDER } from "../core/coordination/unique-selection-dispatcher";
 import {
   MdExpansionPanelHeader,
   MdExpansionPanelDescription,
-  MdExpansionPanelTitle
-} from './expansion-panel-header';
+  MdExpansionPanelTitle,
+} from "./expansion-panel-header";
 import {
   MdExpansionPanelComponent,
   MdExpansionPanelActionRowDirective,
-} from './expansion-panel';
-import {
-  CdkAccordionDirective,
-  MdAccordionDirective,
-} from './accordion';
+} from "./expansion-panel";
+import { CdkAccordionDirective, MdAccordionDirective } from "./accordion";
 
 @NgModule({
   imports: [CommonModule],
@@ -32,7 +29,7 @@ import {
     MdExpansionPanelActionRowDirective,
     MdExpansionPanelHeader,
     MdExpansionPanelTitle,
-    MdExpansionPanelDescription
+    MdExpansionPanelDescription,
   ],
   declarations: [
     CdkAccordionDirective,
@@ -41,25 +38,25 @@ import {
     MdExpansionPanelActionRowDirective,
     MdExpansionPanelHeader,
     MdExpansionPanelTitle,
-    MdExpansionPanelDescription
+    MdExpansionPanelDescription,
   ],
-  providers: [UNIQUE_SELECTION_DISPATCHER_PROVIDER]
+  providers: [UNIQUE_SELECTION_DISPATCHER_PROVIDER],
 })
 export class MdExpansionModule {}
 
 export {
   CdkAccordionDirective,
   MdAccordionDirective,
-  MdAccordionDisplayMode
-} from './accordion';
-export {AccordionItem} from './accordion-item';
+  MdAccordionDisplayMode,
+} from "./accordion";
+export { AccordionItem } from "./accordion-item";
 export {
   MdExpansionPanelComponent,
   MdExpansionPanelState,
-  MdExpansionPanelActionRowDirective
-} from './expansion-panel';
+  MdExpansionPanelActionRowDirective,
+} from "./expansion-panel";
 export {
   MdExpansionPanelHeader,
   MdExpansionPanelDescription,
-  MdExpansionPanelTitle
-} from './expansion-panel-header';
+  MdExpansionPanelTitle,
+} from "./expansion-panel-header";

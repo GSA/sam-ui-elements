@@ -1,6 +1,6 @@
 import { ProgressComponent, ProgressIndicatorType } from "./progress.component";
 
-describe('The SAM Progress Bar Component', () => {
+describe("The SAM Progress Bar Component", () => {
   let component: ProgressComponent;
 
   beforeEach(() => {
@@ -10,14 +10,14 @@ describe('The SAM Progress Bar Component', () => {
     component.type = ProgressIndicatorType.Percent;
   });
 
-  it('should calculate percent string as percent of max', () => {
+  it("should calculate percent string as percent of max", () => {
     component.value = -10;
-    expect(component.calculateBarFillPercentage()).toBe('0%');
+    expect(component.calculateBarFillPercentage()).toBe("0%");
 
     component.value = 1;
-    expect(component.calculateBarFillPercentage()).toBe('1%');
+    expect(component.calculateBarFillPercentage()).toBe("1%");
 
     component.value = 100;
-    expect(component.calculateBarFillPercentage()).toBe('100%');
-  })
+    expect(component.calculateBarFillPercentage()).toBe("100%");
+  });
 });

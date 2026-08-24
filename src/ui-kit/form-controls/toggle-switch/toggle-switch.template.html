@@ -1,6 +1,12 @@
 <label class="sam-toggle-switch">
-  <input class="switch-input" role="switch" type="checkbox"
+  <input
+    class="switch-input"
+    role="switch"
+    type="checkbox"
     [attr.aria-label]="toggleSwitchText"
-    [(ngModel)]="isSwitchOn" (click)="onSwitchClick($event)" [attr.disabled]="disableSwitch ? disableSwitch : null">
+    [(ngModel)]="isSwitchOn"
+    (click)="onSwitchClick($event)"
+    [attr.disabled]="disableSwitch ? disableSwitch : null"
+  />
   <div class="switch-label"></div>
 </label>

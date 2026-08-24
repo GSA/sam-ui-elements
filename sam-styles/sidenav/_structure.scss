@@ -1,8 +1,8 @@
-@import '../core/style/elevation';
-@import '../core/style/layout-common';
-@import '../core/style/a11y';
+@import "../core/style/elevation";
+@import "../core/style/layout-common";
+@import "../core/style/a11y";
 
-@import 'transitions';
+@import "transitions";
 
 // Mixin to help with defining LTR/RTL 'transform: translate3d()' values.
 // @param $open The translation value when the sidenav is opened.
@@ -18,7 +18,8 @@
     visibility: hidden;
   }
 
-  &.mat-sidenav-opening, &.mat-sidenav-opened {
+  &.mat-sidenav-opening,
+  &.mat-sidenav-opened {
     transform: translate3d($open, 0, 0);
   }
 }
@@ -118,7 +119,7 @@
     @include mat-sidenav-transition(0, 100%);
   }
 
-  [dir='rtl'] & {
+  [dir="rtl"] & {
     @include mat-sidenav-transition(0, 100%);
 
     &.mat-sidenav-end {
@@ -129,7 +130,8 @@
     }
   }
 
-  &.mat-sidenav-opening, &.mat-sidenav-opened {
+  &.mat-sidenav-opening,
+  &.mat-sidenav-opened {
     &:not(.mat-sidenav-side) {
       // The elevation of z-16 is noted in the design specifications.
       // See https://material.io/guidelines/patterns/navigation-drawer.html#
@@ -138,8 +140,8 @@
   }
 }
 
-@media (max-width: 600px){
-  sam-aside.mat-sidenav.mat-sidenav-over{
+@media (max-width: 600px) {
+  sam-aside.mat-sidenav.mat-sidenav-over {
     background-color: #f1f1f1;
   }
 }
@@ -164,7 +166,7 @@
     font-size: 17px;
 
     &:focus {
-      border: 2px solid #2493FE;
+      border: 2px solid #2493fe;
     }
   }
 
@@ -175,5 +177,4 @@
   .usa-sidenav-sub_list li > sam-menu-item > ul {
     background-color: #f9f7f2 !important;
   }
-
 }

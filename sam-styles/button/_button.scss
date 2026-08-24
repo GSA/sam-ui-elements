@@ -1,4 +1,5 @@
-@mixin sam-button-theme($theme) {}
+@mixin sam-button-theme($theme) {
+}
 
 .sam.button {
   -moz-osx-font-smoothing: grayscale;
@@ -149,7 +150,7 @@
 
 .sam.button.tertiary.focus,
 .sam.button.tertiary:focus {
-  outline: .4rem solid #2491ff !important;
+  outline: 0.4rem solid #2491ff !important;
   outline-offset: 0px;
   box-shadow: none;
 }

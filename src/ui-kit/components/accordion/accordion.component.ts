@@ -5,18 +5,17 @@ import {
   Input,
   Output,
   EventEmitter,
-  OnInit
-} from '@angular/core';
-
+  OnInit,
+} from "@angular/core";
 
 /**
- * The <sam-accordion-section> component can generates content for a single 
+ * The <sam-accordion-section> component can generates content for a single
  * accordion item
  */
 @Component({
-    selector: 'sam-accordion-section',
-    templateUrl: 'accordion.template.html',
-    standalone: false
+  selector: "sam-accordion-section",
+  templateUrl: "accordion.template.html",
+  standalone: false,
 })
 export class SamAccordionSection implements OnInit {
   /**
@@ -47,7 +46,7 @@ export class SamAccordionSection implements OnInit {
   ngOnInit() {
     if (!this.name) {
       throw new Error(
-        '[name] is a required input for the <sam-accordian-section> component'
+        "[name] is a required input for the <sam-accordian-section> component"
       );
     }
   }
@@ -82,13 +81,13 @@ export class SamAccordionSection implements OnInit {
  * data
  */
 @Component({
-    selector: 'sam-accordion',
-    template: `
-    <div class='accordion-list' [ngClass]='accordionClass'>
-      <ng-content></ng-content>             
+  selector: "sam-accordion",
+  template: `
+    <div class="accordion-list" [ngClass]="accordionClass">
+      <ng-content></ng-content>
     </div>
-`,
-    standalone: false
+  `,
+  standalone: false,
 })
 export class SamAccordionComponent implements OnInit {
   /**
@@ -105,19 +104,19 @@ export class SamAccordionComponent implements OnInit {
   @Output() selectedIndexChange: EventEmitter<number> =
     new EventEmitter<number>();
 
-  public accordionClass: string = 'usa-accordion';
+  public accordionClass: string = "usa-accordion";
   public sections: SamAccordionSection[] = [];
 
   ngOnInit() {
     if (this.bordered) {
-      this.accordionClass = 'usa-accordion-bordered';
+      this.accordionClass = "usa-accordion-bordered";
     }
     this.setExpandIndex(this.expandIndex);
   }
 
   addSection(section: SamAccordionSection) {
     this.sections.push(section);
-    section.isExpandedChange.subscribe(s => {
+    section.isExpandedChange.subscribe((s) => {
       this.expandedChanged(s);
     });
   }
@@ -129,7 +128,7 @@ export class SamAccordionComponent implements OnInit {
   }
 
   collapseOthers(section: SamAccordionSection) {
-    this.sections.forEach(s => {
+    this.sections.forEach((s) => {
       if (s !== section) {
         s.collapse();
       }
@@ -137,7 +136,7 @@ export class SamAccordionComponent implements OnInit {
   }
 
   collapseAll() {
-    this.sections.forEach(s => {
+    this.sections.forEach((s) => {
       s.collapse();
     });
   }
@@ -153,5 +152,3 @@ export class SamAccordionComponent implements OnInit {
     });
   }
 }
-
-

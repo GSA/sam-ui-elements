@@ -1,31 +1,34 @@
-import { Component, Input } from '@angular/core';
-import { HeaderModel, Selectable, HeaderNavigationLink, HeaderSecondaryLink } from './model/HeaderModel';
-
+import { Component, Input } from "@angular/core";
+import {
+  HeaderModel,
+  Selectable,
+  HeaderNavigationLink,
+  HeaderSecondaryLink,
+} from "./model/HeaderModel";
 
 @Component({
-    selector: 'sds-header',
-    templateUrl: './header.component.html',
-    styleUrls: ['./header.component.scss'],
-    standalone: false
+  selector: "sds-header",
+  templateUrl: "./header.component.html",
+  styleUrls: ["./header.component.scss"],
+  standalone: false,
 })
 export class SdsHeaderComponent {
-
   /**
-   * Model used for the different display portions of the header 
+   * Model used for the different display portions of the header
    */
   @Input() model: HeaderModel;
 
   /**
    * Takes in a text string and removes all white space characters and returns the new string
-   * @param text 
+   * @param text
    */
   removeWhiteSpace(text: string) {
-    return text.replace(/ /g, '');
+    return text.replace(/ /g, "");
   }
 
   /**
    * Deselects previous seletion
-   * @param id 
+   * @param id
    */
   select(id: string) {
     this.deselect();
@@ -44,7 +47,9 @@ export class SdsHeaderComponent {
         this.model.home.selected = false;
       }
       if (this.model.navigationLinks) {
-        this.model.navigationLinks.forEach(function (item: HeaderNavigationLink) {
+        this.model.navigationLinks.forEach(function (
+          item: HeaderNavigationLink
+        ) {
           item.selected = false;
           if (item.children) {
             item.children.forEach(function (child: HeaderNavigationLink) {
@@ -62,7 +67,7 @@ export class SdsHeaderComponent {
   }
 
   /**
-   * Finds the navigation element by id in the header model 
+   * Finds the navigation element by id in the header model
    * @param id of the navigation item
    */
   find(id: string): Selectable {
@@ -87,7 +92,7 @@ export class SdsHeaderComponent {
 
   /**
    * Searchs the items in the navigation links
-   * @param id 
+   * @param id
    */
   private findNavigationLinks(id: string, toReturn: Selectable): Selectable {
     if (this.model.navigationLinks) {

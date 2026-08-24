@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { SamBreadcrumbsComponent } from './breadcrumbs.component';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { RouterModule } from "@angular/router";
+import { SamBreadcrumbsComponent } from "./breadcrumbs.component";
 
 @NgModule({
-    imports: [CommonModule, RouterModule],
-    declarations: [ SamBreadcrumbsComponent ],
-    exports: [ SamBreadcrumbsComponent ],
+  imports: [CommonModule, RouterModule],
+  declarations: [SamBreadcrumbsComponent],
+  exports: [SamBreadcrumbsComponent],
 })
-export class SamBreadcrumbsModule { }
+export class SamBreadcrumbsModule {}
 
-export { SamBreadcrumbsComponent } from './breadcrumbs.component';
+export { SamBreadcrumbsComponent } from "./breadcrumbs.component";

@@ -1,5 +1,8 @@
-<span [@indicatorRotate]="_getExpandedState()" *ngIf="!_getHideToggle()" 
-      class="mat-expansion-indicator"></span>
+<span
+  [@indicatorRotate]="_getExpandedState()"
+  *ngIf="!_getHideToggle()"
+  class="mat-expansion-indicator"
+></span>
 <span class="mat-content">
   <ng-content select="md-panel-title, mat-panel-title"></ng-content>
   <ng-content select="md-panel-description, mat-panel-description"></ng-content>

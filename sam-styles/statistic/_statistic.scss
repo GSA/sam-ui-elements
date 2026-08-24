@@ -11,7 +11,7 @@
     border: none;
 
     .value {
-      color: #323A45;
+      color: #323a45;
       font-weight: 700;
       font-size: 24px;
       letter-spacing: -0.6px;
@@ -30,7 +30,7 @@
     }
 
     .label {
-      color: #5B616B;
+      color: #5b616b;
       font-size: 14px;
       text-align: center;
       text-transform: uppercase;
@@ -45,62 +45,62 @@
   // COLORS
   // Green
   .green.statistic > .value > .circular {
-    background: #EAF2EB;
-    border: 1px solid #2E8540;
+    background: #eaf2eb;
+    border: 1px solid #2e8540;
   }
 
   .green.statistic:hover > .value > .circular {
     color: white;
-    background: #2E8540;
+    background: #2e8540;
   }
   // Blue
   .blue.statistic > .value > .circular {
-    background: #E5F0F4;
-    border: 1px solid #00A6D2;
+    background: #e5f0f4;
+    border: 1px solid #00a6d2;
   }
 
   .blue.statistic:hover > .value > .circular {
     color: white;
-    background: #00A6D2;
+    background: #00a6d2;
   }
   // Red
   .red.statistic > .value > .circular {
-    background: #F4E8E8;
-    border: 1px solid #981B1E;
+    background: #f4e8e8;
+    border: 1px solid #981b1e;
   }
 
   .red.statistic:hover > .value > .circular {
     color: white;
-    background: #981B1E;
+    background: #981b1e;
   }
   // Orange
   .orange.statistic > .value > .circular {
-    background: #FBEBE6;
-    border: 1px solid #D84009;
+    background: #fbebe6;
+    border: 1px solid #d84009;
   }
 
   .orange.statistic:hover > .value > .circular {
     color: white;
-    background: #D84009;
+    background: #d84009;
   }
   // Grey
   .grey.statistic > .value > .circular {
-    background: #EEEFF0;
-    border: 1px solid #AEB0B5;
+    background: #eeeff0;
+    border: 1px solid #aeb0b5;
   }
 
   .grey.statistic:hover > .value > .circular {
     color: white;
-    background: #AEB0B5;
+    background: #aeb0b5;
   }
   // Yellow
   .yellow.statistic > .value > .circular {
-    background: #FFF1D2;
-    border: 1px solid #FED06A;
+    background: #fff1d2;
+    border: 1px solid #fed06a;
   }
 
   .yellow.statistic:hover > .value > .circular {
     color: white;
-    background: #FED06A;
+    background: #fed06a;
   }
 }

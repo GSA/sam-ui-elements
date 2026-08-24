@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input
-} from '@angular/core';
+import { Component, Input } from "@angular/core";
 
 export interface ProgressIndicator {
   type: ProgressIndicatorType;
@@ -12,41 +9,41 @@ export interface ProgressIndicator {
 }
 
 export enum ProgressIndicatorType {
-  Percent = 'percent',
-  Nonnumerical = 'nonnumerical'
+  Percent = "percent",
+  Nonnumerical = "nonnumerical",
 }
 
 @Component({
-    selector: 'sam-progress',
-    templateUrl: 'progress.component.html',
-    standalone: false
+  selector: "sam-progress",
+  templateUrl: "progress.component.html",
+  standalone: false,
 })
 export class ProgressComponent implements ProgressIndicator {
   /**
-   * Whether the progress should be represented as a percent 
-   * or a non-numerical value. 
+   * Whether the progress should be represented as a percent
+   * or a non-numerical value.
    */
   @Input() public type: ProgressIndicatorType = ProgressIndicatorType.Percent;
   /**
-   * The minimum value in the range. If the type is non-numerical, 
-   * a default number is provided to calculate the progress for 
+   * The minimum value in the range. If the type is non-numerical,
+   * a default number is provided to calculate the progress for
    * screen reader users.
    */
   @Input() public min = 0;
   /**
-   * The maximum value in the range. If the type is non-numerical, 
-   * a default number is provided to calculate the progress for 
+   * The maximum value in the range. If the type is non-numerical,
+   * a default number is provided to calculate the progress for
    * screen reader users.
    */
   @Input() public max = 100;
   /**
-   * The current value of the progress bar. This number should 
+   * The current value of the progress bar. This number should
    * lie between the min and max.
    */
   @Input() public value: number;
   /**
    * A human readable version of the value. This is provided as
-   * a visual display and announced to screen readers if the 
+   * a visual display and announced to screen readers if the
    * type is not Percent.
    */
   @Input() public valueAsText: string;
@@ -55,6 +52,9 @@ export class ProgressComponent implements ProgressIndicator {
    * Calculates the bar fill percentage of the progress bar.
    */
   public calculateBarFillPercentage(): string {
-    return Math.min((Math.floor((Math.max(0, this.value) / this.max) * 100)), 100) + '%';
+    return (
+      Math.min(Math.floor((Math.max(0, this.value) / this.max) * 100), 100) +
+      "%"
+    );
   }
 }

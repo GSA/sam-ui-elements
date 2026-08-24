@@ -1,5 +1,5 @@
 export {
   SamFormControl,
   AccessorToken,
-  ValidatorToken
-} from './sam-form-control';
+  ValidatorToken,
+} from "./sam-form-control";

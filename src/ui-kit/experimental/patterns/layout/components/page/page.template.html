@@ -7,28 +7,30 @@
   </div>
   <ng-content select="sam-page-title"></ng-content>
   <div *ngIf="backButtonText" class="backBtn-right">
-    <button class="sam button inverted secondary" (click)="backBtnClick()" aria-label="close icon button"
-      [attr.title]="backButtonText">
+    <button
+      class="sam button inverted secondary"
+      (click)="backBtnClick()"
+      aria-label="close icon button"
+      [attr.title]="backButtonText"
+    >
       <sam-icon [icon]="closeIcon" size="lg"></sam-icon>
     </button>
   </div>
 </div>
 
-
-
-<div class="mat-sidenav-container"
-  [ngClass]="{'mat-sidenav-transition': _enableTransitions}">
-
-  <div class="mat-sidenav-backdrop"
+<div
+  class="mat-sidenav-container"
+  [ngClass]="{'mat-sidenav-transition': _enableTransitions}"
+>
+  <div
+    class="mat-sidenav-backdrop"
     (click)="_onBackdropClicked()"
-    [class.mat-sidenav-shown]="_isShowingBackdrop()">
-  </div>
+    [class.mat-sidenav-shown]="_isShowingBackdrop()"
+  ></div>
 
   <ng-content select="sam-aside"></ng-content>
 
-  <div class="mat-sidenav-content"
-    [ngStyle]="_getStyles()"
-    cdk-scrollable>
+  <div class="mat-sidenav-content" [ngStyle]="_getStyles()" cdk-scrollable>
     <ng-content select="sam-toolbar"></ng-content>
     <ng-content></ng-content>
   </div>
