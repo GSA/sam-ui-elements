@@ -1,6 +1,6 @@
 @import "reset"; // Core styles that can be used to apply sam.gov design treatments to any element.
-@import 'typography/all-typography';
-@import 'typography/theme'; // Mixin that renders all of the core styles that are not theme-dependent.
+@import "typography/all-typography";
+@import "typography/theme"; // Mixin that renders all of the core styles that are not theme-dependent.
 @mixin sam-core($typography-config: null) {
   // @include sam-reset();
   @include sam-typography($typography-config);
@@ -22,7 +22,7 @@
 }
 
 .usa-core-data-content > * {
-  background-color: #F1F1F1;
+  background-color: #f1f1f1;
   border: solid white 2px;
   text-align: center;
   float: right;
@@ -35,7 +35,7 @@
 
 .core-sample-data {
   height: 275px !important;
-  background-color: #F1F1F1;
+  background-color: #f1f1f1;
   width: 110%;
 }
 @media all and (min-width: 500px) {

@@ -1,36 +1,49 @@
-<div class="sam-actions"
-     sam-click-outside
-     (clickOutside)="hideActions($event)"
-     sam-tab-outside
-     (tabOutside)="hideActions($event)">
-
-  <button #actionButton class="usa-button"
-          [attr.id]="name"
-          aria-haspopup="true"
-          aria-controls="name+'menu'"
-          [attr.aria-label]="ariaLabelButtonText"
-          [attr.aria-expanded]="showActions ? 'true' : undefined"
-          (click)="toggleActions()"
-          (keydown)="leadKeyDownHandler($event)"
-          [ngClass]="buttonType === 'primary' ? 'usa-button-primary' : ''"
-          [disabled]="disabled">
+<div
+  class="sam-actions"
+  sam-click-outside
+  (clickOutside)="hideActions($event)"
+  sam-tab-outside
+  (tabOutside)="hideActions($event)"
+>
+  <button
+    #actionButton
+    class="usa-button"
+    [attr.id]="name"
+    aria-haspopup="true"
+    aria-controls="name+'menu'"
+    [attr.aria-label]="ariaLabelButtonText"
+    [attr.aria-expanded]="showActions ? 'true' : undefined"
+    (click)="toggleActions()"
+    (keydown)="leadKeyDownHandler($event)"
+    [ngClass]="buttonType === 'primary' ? 'usa-button-primary' : ''"
+    [disabled]="disabled"
+  >
     {{text}}&nbsp;
     <span class="fa fa-chevron-down"></span>
   </button>
 
-  <ul class="usa-unstyled-list"
-      [attr.id]="name+'menu'"
-      role="menu"
-      [attr.aria-labelledby]="name"
-      *ngIf="showActions">
-    <li *ngFor="let action of actions; let i = index" tabindex="-1" role="menuitem">
-      <button #actionsList class="usa-button" [attr.id]="'menuitem'+i"
-              (keydown)="keyDownHandler($event)"
-              (click)="chooseAction(action)">
+  <ul
+    class="usa-unstyled-list"
+    [attr.id]="name+'menu'"
+    role="menu"
+    [attr.aria-labelledby]="name"
+    *ngIf="showActions"
+  >
+    <li
+      *ngFor="let action of actions; let i = index"
+      tabindex="-1"
+      role="menuitem"
+    >
+      <button
+        #actionsList
+        class="usa-button"
+        [attr.id]="'menuitem'+i"
+        (keydown)="keyDownHandler($event)"
+        (click)="chooseAction(action)"
+      >
         <span [ngClass]="action?.icon"></span>&nbsp;
         <span>{{action?.label}}</span>
       </button>
     </li>
   </ul>
-
 </div>

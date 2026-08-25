@@ -53,7 +53,7 @@
 - OOP Principles
   - Single Resonsibility Principle
     - [ ] A class abstraction should be focused on completing a single, focused unit of functionality
-    - [ ] Properties and methods not directly achieving the purpose of the class should be moved into separate classes, functions, etc 
+    - [ ] Properties and methods not directly achieving the purpose of the class should be moved into separate classes, functions, etc
     - [ ] Each property and method name on a class makes sense in the context of the purpose of the class
   - Open/Closed Principle
     - [ ] Avoid breaking API changes when new functionality is required of a class/module/function

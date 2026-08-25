@@ -1,1 +1,1 @@
-export * from './deprecator';
+export * from "./deprecator";

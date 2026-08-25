@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
-    selector: 'sds-pagination',
-    templateUrl: 'sds-pagination.template.html',
-    standalone: false
+  selector: "sds-pagination",
+  templateUrl: "sds-pagination.template.html",
+  standalone: false,
 })
-export class SdsPaginationComponent {
-}
+export class SdsPaginationComponent {}

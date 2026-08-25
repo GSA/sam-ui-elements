@@ -1,1 +1,1 @@
-export { SamMenuItemComponent } from './menu-item.component';
+export { SamMenuItemComponent } from "./menu-item.component";

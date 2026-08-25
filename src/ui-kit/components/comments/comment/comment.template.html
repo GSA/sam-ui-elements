@@ -2,17 +2,28 @@
   <header>
     <figure>
       <span *ngIf="!comment?.image" class="fa fa-3x fa-user"></span>
-      <img *ngIf="comment?.image" [src]="comment?.image"/>
-      <figcaption class="usa-sr-only">Icon for user {{comment.username}}</figcaption>
+      <img *ngIf="comment?.image" [src]="comment?.image" />
+      <figcaption class="usa-sr-only">
+        Icon for user {{comment.username}}
+      </figcaption>
     </figure>
     <div class="comment-metadata">
       <strong class="username">{{comment?.username}}</strong>
-      <span *ngIf="comment?.datetime == 'Invalid Date'">{{comment?.datetime}}</span>
-      <time *ngIf="comment?.datetime != 'Invalid Date'" pubdate datetime="comment.datetime">{{ comment?.datetime | date:'medium' }}</time>
+      <span *ngIf="comment?.datetime == 'Invalid Date'"
+        >{{comment?.datetime}}</span
+      >
+      <time
+        *ngIf="comment?.datetime != 'Invalid Date'"
+        pubdate
+        datetime="comment.datetime"
+        >{{ comment?.datetime | date:'medium' }}</time
+      >
     </div>
-    <button class="usa-button-link remove-comment"
-            *ngIf="allowDelete"
-            (click)="emitClick()">
+    <button
+      class="usa-button-link remove-comment"
+      *ngIf="allowDelete"
+      (click)="emitClick()"
+    >
       <span class="fa fa-times"></span>
       <span class="usa-sr-only">Delete comment</span>
     </button>

@@ -1,2 +1,2 @@
-export { SamSegmentComponent } from './segment.component';
-export * from './segment.module';
+export { SamSegmentComponent } from "./segment.component";
+export * from "./segment.module";

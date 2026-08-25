@@ -1,38 +1,51 @@
-import { Component, Input, ViewChild, TemplateRef, ElementRef, forwardRef } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
-import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
-import { KeyHelper, KEYS } from '../../../utilities/key-helper/key-helper';
-import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
-import { SamHierarchicalAutocompleteConfiguration } from '../models/SamHierarchicalAutocompleteConfiguration';
+import {
+  Component,
+  Input,
+  ViewChild,
+  TemplateRef,
+  ElementRef,
+  forwardRef,
+} from "@angular/core";
+import {
+  NG_VALUE_ACCESSOR,
+  ControlValueAccessor,
+  FormControl,
+} from "@angular/forms";
+import { SamHiercarchicalServiceInterface } from "../hierarchical-interface";
+import { KeyHelper, KEYS } from "../../../utilities/key-helper/key-helper";
+import {
+  HierarchicalTreeSelectedItemModel,
+  TreeMode,
+} from "../hierarchical-tree-selectedItem.model";
+import { SamHierarchicalAutocompleteConfiguration } from "../models/SamHierarchicalAutocompleteConfiguration";
 const Hierarchical_Autocomplete_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamHierarchicalAutocompleteComponent),
-  multi: true
+  multi: true,
 };
 
 @Component({
-    selector: 'sam-hierarchical-autocomplete',
-    templateUrl: './autocomplete.component.html',
-    styleUrls: ['./autocomplete.component.scss'],
-    providers: [Hierarchical_Autocomplete_VALUE_ACCESSOR],
-    standalone: false
+  selector: "sam-hierarchical-autocomplete",
+  templateUrl: "./autocomplete.component.html",
+  styleUrls: ["./autocomplete.component.scss"],
+  providers: [Hierarchical_Autocomplete_VALUE_ACCESSOR],
+  standalone: false,
 })
 export class SamHierarchicalAutocompleteComponent implements ControlValueAccessor {
+  /**
+   * Ul list of elements
+   */
+  @ViewChild("resultsList", { static: true }) resultsListElement: ElementRef;
 
   /**
-   * Ul list of elements 
+   * input control
    */
-  @ViewChild('resultsList', {static: true}) resultsListElement: ElementRef;
-
-  /**
-   * input control 
-   */
-  @ViewChild('input', {static: true}) input: ElementRef;
+  @ViewChild("input", { static: true }) input: ElementRef;
 
   /**
    * Screen read field
    */
-  @ViewChild('srOnly', {static: true}) srOnly: ElementRef;
+  @ViewChild("srOnly", { static: true }) srOnly: ElementRef;
 
   /**
    * Allow to insert a customized template for suggestions to use
@@ -45,7 +58,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
   public model: HierarchicalTreeSelectedItemModel;
 
   /**
-   * Configuration for the Autocomplete control 
+   * Configuration for the Autocomplete control
    */
   @Input()
   public configuration: SamHierarchicalAutocompleteConfiguration;
@@ -82,14 +95,14 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
   private highlightedItem: object;
 
   /**
-   * value of the input field 
+   * value of the input field
    */
-  public inputValue: string = '';
+  public inputValue: string = "";
 
   /**
    * Proprty being set on the object is highlighted
    */
-  private HighlightedPropertyName = 'highlighted';
+  private HighlightedPropertyName = "highlighted";
 
   /**
    * Search string
@@ -109,8 +122,9 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
   @Input()
   public disabled: boolean;
 
-  private resultsAvailableMessage: string = ' results available. Use up and down arrows\
-  to scroll through results. Hit enter to select.';
+  private resultsAvailableMessage: string =
+    " results available. Use up and down arrows\
+  to scroll through results. Hit enter to select.";
 
   /**
    * Determines if the dropdown should be shown
@@ -121,14 +135,14 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
    * Clears the input fields and value
    */
   public clearInput(): void {
-    this.inputValue = '';
+    this.inputValue = "";
     this.onTouchedCallback();
     this.clearAndHideResults();
   }
 
   /**
-   * 
-   * @param event 
+   *
+   * @param event
    */
   checkForFocus(event): void {
     this.focusRemoved();
@@ -136,7 +150,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
   }
 
   /**
-   * 
+   *
    */
   private focusRemoved() {
     if (this.model.treeMode === TreeMode.SINGLE) {
@@ -145,19 +159,19 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
           this.model.clearItems();
           this.propogateChange(this.model);
         } else {
-          this.inputValue = this.model.getItems()[0][this.configuration.primaryTextField];
+          this.inputValue =
+            this.model.getItems()[0][this.configuration.primaryTextField];
         }
       } else {
-        this.inputValue = '';
+        this.inputValue = "";
       }
     } else {
-      this.inputValue = '';
+      this.inputValue = "";
     }
   }
 
-
   textChange(event) {
-    const searchString = event || '';
+    const searchString = event || "";
     this.getResults(searchString);
   }
 
@@ -165,45 +179,44 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
    * Event method used when focus is gained to the input
    */
   inputFocusHandler(): void {
-    this.getResults(this.inputValue || '');
+    this.getResults(this.inputValue || "");
     this.onTouchedCallback();
   }
 
   /**
    * Key event
-   * @param event 
+   * @param event
    */
   onKeydown(event): void {
     if (KeyHelper.is(KEYS.TAB, event)) {
       return;
-    }
-    else if (KeyHelper.is(KEYS.DOWN, event)) {
+    } else if (KeyHelper.is(KEYS.DOWN, event)) {
       this.onArrowDown();
-    }
-    else if (KeyHelper.is(KEYS.UP, event)) {
+    } else if (KeyHelper.is(KEYS.UP, event)) {
       this.onArrowUp();
-    }
-    else if (KeyHelper.is(KEYS.ENTER, event)) {
+    } else if (KeyHelper.is(KEYS.ENTER, event)) {
       this.selectItem(this.highlightedItem);
-    }
-    else if (KeyHelper.is(KEYS.ESC, event)) {
+    } else if (KeyHelper.is(KEYS.ESC, event)) {
       this.clearAndHideResults();
     }
   }
 
   /**
    * selects the item adding it to the model and closes the results
-   * @param item 
+   * @param item
    */
   public selectItem(item: object): void {
     this.model.addItem(item, this.configuration.primaryKeyField);
     this.propogateChange(this.model);
     let message = item[this.configuration.primaryTextField];
     this.inputValue = message;
-    if (this.configuration.secondaryTextField && item[this.configuration.secondaryTextField]) {
-      message += ': ' + item[this.configuration.secondaryTextField];
+    if (
+      this.configuration.secondaryTextField &&
+      item[this.configuration.secondaryTextField]
+    ) {
+      message += ": " + item[this.configuration.secondaryTextField];
     }
-    message += ' selected';
+    message += " selected";
     this.addScreenReaderMessage(message);
     this.focusRemoved();
     this.showResults = false;
@@ -252,13 +265,19 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
           if (this.results) {
             for (var i = 0; i < this.results.length && !foundItem; i++) {
               let item = this.results[i];
-              foundItem = item[this.configuration.primaryTextField] === this.inputValue;
+              foundItem =
+                item[this.configuration.primaryTextField] === this.inputValue;
             }
           }
           if (this.model.getItems().length > 0 && !foundItem) {
-            for (var i = 0; i < this.model.getItems().length && !foundItem; i++) {
+            for (
+              var i = 0;
+              i < this.model.getItems().length && !foundItem;
+              i++
+            ) {
               let item = this.model.getItems()[i];
-              foundItem = item[this.configuration.primaryTextField] === this.inputValue;
+              foundItem =
+                item[this.configuration.primaryTextField] === this.inputValue;
             }
           }
 
@@ -275,7 +294,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
   }
 
   private createFreeTextItem() {
-    let item = { 'type': 'custom' };
+    let item = { type: "custom" };
     item[this.configuration.primaryTextField] = this.inputValue;
     item[this.configuration.primaryKeyField] = this.inputValue;
     return item;
@@ -283,28 +302,31 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
 
   /**
    *  gets the inital results
-   * @param searchString 
+   * @param searchString
    */
   private getResults(searchString: string): void {
     if (searchString.length >= this.configuration.minimumCharacterCountSearch) {
-      if (!this.matchPastSearchString(searchString) ||
-        (this.matchPastSearchString(searchString) && !this.showResults)
-        || this.matchPastSearchString('')) {
+      if (
+        !this.matchPastSearchString(searchString) ||
+        (this.matchPastSearchString(searchString) && !this.showResults) ||
+        this.matchPastSearchString("")
+      ) {
         this.searchString = searchString;
         window.clearTimeout(this.timeoutNumber);
         this.timeoutNumber = window.setTimeout(() => {
-          this.service.getDataByText(0, searchString).subscribe(
-            (result) => {
-              this.results = result.items;
-              if (this.showFreeText()) {
-                this.results.unshift(this.createFreeTextItem());
-              }
-              this.maxResults = result.totalItems;
-              this.highlightedIndex = 0;
-              this.setHighlightedItem(this.results[this.highlightedIndex]);
-              this.showResults = true;
-              this.addScreenReaderMessage(this.maxResults + ' ' + this.resultsAvailableMessage)
-            });
+          this.service.getDataByText(0, searchString).subscribe((result) => {
+            this.results = result.items;
+            if (this.showFreeText()) {
+              this.results.unshift(this.createFreeTextItem());
+            }
+            this.maxResults = result.totalItems;
+            this.highlightedIndex = 0;
+            this.setHighlightedItem(this.results[this.highlightedIndex]);
+            this.showResults = true;
+            this.addScreenReaderMessage(
+              this.maxResults + " " + this.resultsAvailableMessage
+            );
+          });
         }, this.configuration.debounceTime);
       }
     }
@@ -312,7 +334,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
 
   /**
    * Checks if the new search string matches the old search string
-   * @param searchString 
+   * @param searchString
    */
   private matchPastSearchString(searchString: string) {
     return this.searchString === searchString;
@@ -320,7 +342,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
 
   /**
    * highlights the index being hovered
-   * @param index 
+   * @param index
    */
   listItemHover(index: number): void {
     this.highlightedIndex = index;
@@ -334,8 +356,9 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
     if (this.maxResults > this.results.length) {
       let scrollAreaHeight = this.resultsListElement.nativeElement.offsetHeight;
       let scrollTopPos = this.resultsListElement.nativeElement.scrollTop;
-      let scrollAreaMaxHeight = this.resultsListElement.nativeElement.scrollHeight;
-      if ((scrollTopPos + scrollAreaHeight * 2) >= scrollAreaMaxHeight) {
+      let scrollAreaMaxHeight =
+        this.resultsListElement.nativeElement.scrollHeight;
+      if (scrollTopPos + scrollAreaHeight * 2 >= scrollAreaMaxHeight) {
         this.getAdditionalResults();
       }
     }
@@ -345,8 +368,9 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
    * gets more results based when scrolling and adds the items
    */
   private getAdditionalResults() {
-    this.service.getDataByText(this.results.length, this.searchString).subscribe(
-      (result) => {
+    this.service
+      .getDataByText(this.results.length, this.searchString)
+      .subscribe((result) => {
         for (let i = 0; i < result.items.length; i++) {
           this.addResult(result.items[i]);
         }
@@ -356,7 +380,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
 
   /**
    * adds a single item to the list
-   * @param item 
+   * @param item
    */
   private addResult(item: object) {
     //add check to make sure item does not exist
@@ -367,13 +391,14 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
    * When paging up and down with arrow key it sets the highlighted item into view
    */
   private scrollSelectedItemToTop() {
-    let selectedChild = this.resultsListElement.nativeElement.children[this.highlightedIndex];
+    let selectedChild =
+      this.resultsListElement.nativeElement.children[this.highlightedIndex];
     this.resultsListElement.nativeElement.scrollTop = selectedChild.offsetTop;
   }
 
   /**
    * Sets the highlighted item by keyboard or mouseover
-   * @param item 
+   * @param item
    */
   private setHighlightedItem(item: Object): void {
     if (this.results && this.results.length > 0) {
@@ -383,9 +408,11 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
       this.highlightedItem = item;
       this.highlightedItem[this.HighlightedPropertyName] = true;
       let message = item[this.configuration.primaryTextField];
-      if (this.configuration.secondaryTextField && item[this.configuration.secondaryTextField]) {
-        message += ': ' + item[this.configuration.secondaryTextField]
-
+      if (
+        this.configuration.secondaryTextField &&
+        item[this.configuration.secondaryTextField]
+      ) {
+        message += ": " + item[this.configuration.secondaryTextField];
       }
       this.addScreenReaderMessage(message);
     }
@@ -393,16 +420,15 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
 
   /**
    * Adds message to be read by screen reader
-   * @param message 
+   * @param message
    */
   private addScreenReaderMessage(message: string) {
-    const srResults: HTMLElement = document.createElement('li');
+    const srResults: HTMLElement = document.createElement("li");
     srResults.innerText = message;
     if (this.srOnly && this.srOnly.nativeElement) {
       this.srOnly.nativeElement.appendChild(srResults);
     }
   }
-
 
   writeValue(obj: any): void {
     if (obj instanceof HierarchicalTreeSelectedItemModel) {

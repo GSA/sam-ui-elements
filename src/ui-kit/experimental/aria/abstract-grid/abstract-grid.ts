@@ -1,8 +1,8 @@
-import { AbstractRow } from './abstract-row';
-import { AbstractCell } from './abstract-cell';
-import { EventDispatcher } from '../utils/events';
+import { AbstractRow } from "./abstract-row";
+import { AbstractCell } from "./abstract-cell";
+import { EventDispatcher } from "../utils/events";
 
-export type AbstractGridEvent = 'keydown' | 'click';
+export type AbstractGridEvent = "keydown" | "click";
 
 export interface AbstractGridConfig {
   skipRows?: number;
@@ -12,7 +12,6 @@ export interface AbstractGridConfig {
 }
 
 export class AbstractGrid {
-
   public focused: AbstractCell = undefined;
 
   private _currentRow = 0;
@@ -27,8 +26,7 @@ export class AbstractGrid {
   private _onClickHandler = [];
   private _config: AbstractGridConfig = {};
 
-  constructor (host, config?: AbstractGridConfig) {
-
+  constructor(host, config?: AbstractGridConfig) {
     if (config) {
       this._config = config;
     }
@@ -42,40 +40,33 @@ export class AbstractGrid {
     }
   }
 
-  public onClick (callback: Function,
-    context: Object): void {
+  public onClick(callback: Function, context: Object): void {
     this._onClickHandler = [callback, context];
     const [cb, ctx] = this._onClickHandler;
-    this._dispatcher.on('click', cb, ctx);
+    this._dispatcher.on("click", cb, ctx);
   }
 
-  public onKeydown (callback: Function,
-    context: Object): void {
-    this._dispatcher.on('keydown', callback, context);
+  public onKeydown(callback: Function, context: Object): void {
+    this._dispatcher.on("keydown", callback, context);
   }
 
-  public getSelected (): AbstractCell {
-    return this._rows[this._currentRow]
-      .cells[this._currentCol];
+  public getSelected(): AbstractCell {
+    return this._rows[this._currentRow].cells[this._currentCol];
   }
 
-  public move (direction: string) {
+  public move(direction: string) {
     switch (direction) {
-      case 'up':
-        this._currentRow =
-          this._moveUp(this._currentRow);
+      case "up":
+        this._currentRow = this._moveUp(this._currentRow);
         break;
-      case 'down':
-        this._currentRow =
-          this._moveDown(this._currentRow);
+      case "down":
+        this._currentRow = this._moveDown(this._currentRow);
         break;
-      case 'right':
-        this._currentCol =
-          this._moveRight(this._currentCol);
+      case "right":
+        this._currentCol = this._moveRight(this._currentCol);
         break;
-      case 'left':
-        this._currentCol =
-          this._moveLeft(this._currentCol);
+      case "left":
+        this._currentCol = this._moveLeft(this._currentCol);
         break;
       default:
         break;
@@ -84,7 +75,7 @@ export class AbstractGrid {
     this._setFocus();
   }
 
-  private _main (element) {
+  private _main(element) {
     this._findGrid(element);
     this._findRows(element);
     this._clearGridEvents();
@@ -94,8 +85,7 @@ export class AbstractGrid {
     }
   }
 
-  private _initMutationObserver (element) {
-
+  private _initMutationObserver(element) {
     const config: MutationObserverInit = {
       attributes: false,
       childList: true,
@@ -113,106 +103,84 @@ export class AbstractGrid {
     this._observer.observe(this._node, config);
   }
 
-  private _initEventDispatcher () {
-    const keyEvents = ['keydown', 'click'];
+  private _initEventDispatcher() {
+    const keyEvents = ["keydown", "click"];
     this._dispatcher = new EventDispatcher(keyEvents);
   }
 
-  private _initGridEvents () {
-    this._rows.forEach(
-      row => {
-        row.cells.forEach(
-          cell => {
-            cell.onClick(this._clickListener, this);
-          }
-        );
-      }
-    );
+  private _initGridEvents() {
+    this._rows.forEach((row) => {
+      row.cells.forEach((cell) => {
+        cell.onClick(this._clickListener, this);
+      });
+    });
 
-    this._node.addEventListener(
-      'keydown',
-      this._keydownListener
-    );
+    this._node.addEventListener("keydown", this._keydownListener);
 
     if (this._config.useDefaultKeydownEvents !== false) {
-      this._dispatcher
-        .on('keydown', this._handleCellKeydown, this);
+      this._dispatcher.on("keydown", this._handleCellKeydown, this);
     }
-
 
     if (this._config.useDefaultClickEvents !== false) {
-      this._dispatcher
-        .on('click', this._handleCellClick, this);
+      this._dispatcher.on("click", this._handleCellClick, this);
     }
 
     const [cb, ctx] = this._onClickHandler;
     if (cb) {
-      this._dispatcher
-        .on('click', cb, ctx);
+      this._dispatcher.on("click", cb, ctx);
     }
   }
 
-  private _clearGridEvents (): void {
+  private _clearGridEvents(): void {
+    this._rows.forEach((row) => {
+      row.cells.forEach((cell) => {
+        cell.disconnect("click", this._clickListener);
+      });
+    });
 
-    this._rows.forEach(
-      row => {
-        row.cells.forEach(
-          cell => {
-            cell.disconnect('click', this._clickListener);
-          }
-        );
-      }
-    );
+    this._node.removeEventListener("keydown", this._keydownListener);
 
-    this._node.removeEventListener(
-      'keydown',
-      this._keydownListener
-    );
+    this._dispatcher.disconnect("keydown", this._handleCellKeydown);
 
-    this._dispatcher
-      .disconnect('keydown', this._handleCellKeydown);
-
-    this._dispatcher
-      .disconnect('click', this._handleCellClick);
+    this._dispatcher.disconnect("click", this._handleCellClick);
 
     const [cb, ctx] = this._onClickHandler;
     if (cb) {
-      this._dispatcher
-        .disconnect('click', cb);
+      this._dispatcher.disconnect("click", cb);
     }
   }
 
-  private _dispatchClick (e) {
-    return this._dispatcher.dispatch('click', e);
+  private _dispatchClick(e) {
+    return this._dispatcher.dispatch("click", e);
   }
 
-  private _dispatchKeydown (e) {
-    return this._dispatcher.dispatch('keydown', e);
+  private _dispatchKeydown(e) {
+    return this._dispatcher.dispatch("keydown", e);
   }
 
-  private _handleCellKeydown (e): void {
+  private _handleCellKeydown(e): void {
     const code = e.key;
 
     switch (code) {
-      case 'ArrowDown':
-        return this.move('down');
-      case 'ArrowUp':
-        return this.move('up');
-      case 'ArrowLeft':
-        return this.move('left');
-      case 'ArrowRight':
-        return this.move('right');
+      case "ArrowDown":
+        return this.move("down");
+      case "ArrowUp":
+        return this.move("up");
+      case "ArrowLeft":
+        return this.move("left");
+      case "ArrowRight":
+        return this.move("right");
       default:
         return;
     }
   }
 
-  private _handleCellClick (e): void {
-    this._setSelectedByElement((<Element> e));
+  private _handleCellClick(e): void {
+    this._setSelectedByElement(<Element>e);
     this.focused = this.getSelected();
   }
 
-  private _setInitialFocus () {
+  private _setInitialFocus() {
     this._currentCol = 0;
     this._currentRow = 0;
     this.focused = this.getSelected();
@@ -221,8 +189,8 @@ export class AbstractGrid {
     }
   }
 
-  private _findGrid (element: Element) {
-    const role = element.getAttribute('role');
+  private _findGrid(element: Element) {
+    const role = element.getAttribute("role");
 
     /**
      * querySelector doesn't include the element it is
@@ -230,21 +198,19 @@ export class AbstractGrid {
      * element is the grid first before querying for it
      */
 
-    if (role === 'grid') {
+    if (role === "grid") {
       this._node = element;
     } else {
       const gridEl = element.querySelector('[role="grid"]');
       if (gridEl) {
         this._node = gridEl;
       } else {
-        throw new TypeError(
-          'AbstractGrid must contain element with role grid'
-        );
+        throw new TypeError("AbstractGrid must contain element with role grid");
       }
     }
   }
 
-  private _findRows (element: Element): void {
+  private _findRows(element: Element): void {
     const rows = element.querySelectorAll('[role="row"]');
 
     for (let i = 0; i < rows.length; i++) {
@@ -253,22 +219,18 @@ export class AbstractGrid {
     }
   }
 
-  private _setSelectedByElement (target: Element): void {
-    this._rows.forEach(
-      (row, i) => {
-        row.cells.forEach(
-          (cell, j) => {
-            if (cell.node === target) {
-              this._currentRow = i;
-              this._currentCol = j;
-            }
-          }
-        );
-      }
-    );
+  private _setSelectedByElement(target: Element): void {
+    this._rows.forEach((row, i) => {
+      row.cells.forEach((cell, j) => {
+        if (cell.node === target) {
+          this._currentRow = i;
+          this._currentCol = j;
+        }
+      });
+    });
   }
 
-  private _setFocus () {
+  private _setFocus() {
     if (this.focused) {
       this.focused.removeFromTabOrder();
     }
@@ -281,7 +243,7 @@ export class AbstractGrid {
     }
   }
 
-  private _moveUp (row: number): number {
+  private _moveUp(row: number): number {
     const prev = row - 1;
 
     if (prev > 0) {
@@ -289,10 +251,9 @@ export class AbstractGrid {
     } else {
       return 0;
     }
-
   }
 
-  private _moveDown (row: number): number {
+  private _moveDown(row: number): number {
     const length = this._rows.length - 1;
     const next = row + 1;
 
@@ -301,10 +262,9 @@ export class AbstractGrid {
     } else {
       return next;
     }
-
   }
 
-  private _moveLeft (col: number): number {
+  private _moveLeft(col: number): number {
     const prev = col - 1;
 
     if (prev >= 0) {
@@ -314,9 +274,8 @@ export class AbstractGrid {
     }
   }
 
-  private _moveRight (col: number): number {
-    const length =
-      this._rows[this._currentRow].cells.length;
+  private _moveRight(col: number): number {
+    const length = this._rows[this._currentRow].cells.length;
     const next = col + 1;
 
     if (next < length - 1) {

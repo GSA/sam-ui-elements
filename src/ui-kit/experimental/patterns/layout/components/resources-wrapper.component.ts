@@ -1,10 +1,8 @@
-import { Component } from '@angular/core';
-
+import { Component } from "@angular/core";
 
 @Component({
-    selector: 'sam-resources-wrapper',
-    template: '<ng-content></ng-content>',
-    standalone: false
+  selector: "sam-resources-wrapper",
+  template: "<ng-content></ng-content>",
+  standalone: false,
 })
-export class SamResourcesWrapperComponent {
-}
+export class SamResourcesWrapperComponent {}

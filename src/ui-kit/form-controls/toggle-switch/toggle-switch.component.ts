@@ -3,15 +3,15 @@ import {
   Input,
   Output,
   EventEmitter,
-  forwardRef
-} from '@angular/core';
+  forwardRef,
+} from "@angular/core";
 import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
   FormControl,
   Validators,
-  ValidatorFn
-} from '@angular/forms';
+  ValidatorFn,
+} from "@angular/forms";
 
 /**
  * SAM Toggle Switch Component
@@ -19,14 +19,16 @@ import {
  * TODO: Add Form Builder support
  */
 @Component({
-    selector: 'sam-toggle-switch',
-    templateUrl: 'toggle-switch.template.html',
-    providers: [{
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => SamToggleSwitchComponent),
-            multi: true
-        }],
-    standalone: false
+  selector: "sam-toggle-switch",
+  templateUrl: "toggle-switch.template.html",
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SamToggleSwitchComponent),
+      multi: true,
+    },
+  ],
+  standalone: false,
 })
 export class SamToggleSwitchComponent implements ControlValueAccessor {
   /**
@@ -40,7 +42,7 @@ export class SamToggleSwitchComponent implements ControlValueAccessor {
   /**
    * String to pass to the label for 508 compliance
    */
-  @Input() public toggleSwitchText: string = 'Toggle Switch';
+  @Input() public toggleSwitchText: string = "Toggle Switch";
   /**
    * Event emitter to output the current state of the toggle switch
    */
@@ -54,7 +56,6 @@ export class SamToggleSwitchComponent implements ControlValueAccessor {
       this.isSwitchOn = val;
       this.onChange(val);
       this.switchStatusChange.emit(val);
-
     }
     if (event.stopPropagation) {
       event.stopPropagation();

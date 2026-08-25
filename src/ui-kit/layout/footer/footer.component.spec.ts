@@ -1,21 +1,24 @@
 /* tslint:disable */
-import { waitForAsync, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  waitForAsync,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from "@angular/core/testing";
 
-import { SdsFooterComponent } from './footer.component';
-import { RouterTestingModule } from '@angular/router/testing';
+import { SdsFooterComponent } from "./footer.component";
+import { RouterTestingModule } from "@angular/router/testing";
 
-
-
-describe('SdsFooterComponent', () => {
+describe("SdsFooterComponent", () => {
   let component: SdsFooterComponent;
   let fixture: ComponentFixture<SdsFooterComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SdsFooterComponent],
-      imports: [RouterTestingModule]
-    })
-      .compileComponents();
+      imports: [RouterTestingModule],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -23,8 +26,7 @@ describe('SdsFooterComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
-

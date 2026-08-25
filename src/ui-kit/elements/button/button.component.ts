@@ -1,35 +1,30 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 
-import { Deprecator } from '../../utilities';
+import { Deprecator } from "../../utilities";
 
 /**
-* The <sam-button> component generates a button for user interaction
-*/
+ * The <sam-button> component generates a button for user interaction
+ */
 @Component({
-    selector: 'sam-button',
-    template: `
-  <button
+  selector: "sam-button",
+  template: ` <button
     [attr.id]="id"
     class="sam-ui button"
     [ngClass]="btnClass"
     [disabled]="isDisabled"
     (click)="click($event)"
-    [type]="action=='submit' ? 'submit' : 'button'">
+    [type]="action == 'submit' ? 'submit' : 'button'"
+  >
     {{ buttonText }}
     <ng-content></ng-content>
   </button>`,
-    standalone: false
+  standalone: false,
 })
 export class SamButtonComponent {
   /**
-  * Sets the id that will assign to the button element
-  */
-  private _id = '';
+   * Sets the id that will assign to the button element
+   */
+  private _id = "";
   @Input()
   set id(id: string) {
     this._id = id;
@@ -39,99 +34,96 @@ export class SamButtonComponent {
   }
 
   /**
-  * Sets the action of the button
-  * (default,primary,secondary,tertiary,submit)
-  */
+   * Sets the action of the button
+   * (default,primary,secondary,tertiary,submit)
+   */
   private _action: string;
   @Input()
-  set action(action: string){
+  set action(action: string) {
     this._action = action;
-  };
+  }
   get action(): string {
     return this._action || this.buttonType;
   }
 
   /**
-  * Sets the button size
-  */
+   * Sets the button size
+   */
   private _size: string;
   @Input()
-  set size(size: string){
+  set size(size: string) {
     this._size = size;
-  };
-  get size():string {
+  }
+  get size(): string {
     return this._size || this.buttonSize;
   }
 
   /**
-  * Disables the button
-  */
+   * Disables the button
+   */
   private _isDisabled: boolean = false;
   @Input()
-  set isDisabled(isDisabled: boolean){
+  set isDisabled(isDisabled: boolean) {
     this._isDisabled = isDisabled;
-  };
-  get isDisabled():boolean {
+  }
+  get isDisabled(): boolean {
     return this._isDisabled || this.buttonDisabled;
   }
 
   /**
-  * Available options: dark
-  */
+   * Available options: dark
+   */
   @Input() theme: string;
 
   /**
-  * Emmits event on click
-  */
+   * Emmits event on click
+   */
   @Output() onClick: EventEmitter<any> = new EventEmitter();
 
-
-
   /**
-  * Sets the id that will assign to the button element (Deprecated)
-  */
+   * Sets the id that will assign to the button element (Deprecated)
+   */
   @Input() buttonId: string;
 
   /**
-  * Sets the text content that will show on the button (Deprecated)
-  */
+   * Sets the text content that will show on the button (Deprecated)
+   */
   @Input() buttonText: string;
 
   /**
-  * Sets the type of the button (Deprecated)
-  */
+   * Sets the type of the button (Deprecated)
+   */
   @Input() buttonType: string;
 
   /**
-  * Sets the button size (Deprecated)
-  */
+   * Sets the button size (Deprecated)
+   */
   @Input() buttonSize: string;
 
   /**
-  * Disables the button (Deprecated)
-  */
+   * Disables the button (Deprecated)
+   */
   @Input() buttonDisabled: boolean = false;
 
   /**
-  * Sets the button css class (Deprecated)
-  */
-  @Input() buttonClass: string = '';
-
+   * Sets the button css class (Deprecated)
+   */
+  @Input() buttonClass: string = "";
 
   private btnClassMap: any = {
     // Types
-    default: 'primary',
-    primary: 'primary',
-    secondary: 'secondary',
-    tertiary: 'basic blue',
-    negative: 'negative',
-    submit: 'primary',
+    default: "primary",
+    primary: "primary",
+    secondary: "secondary",
+    tertiary: "basic blue",
+    negative: "negative",
+    submit: "primary",
     // Sizes
-    small: 'tiny',
-    large: 'large',
+    small: "tiny",
+    large: "large",
     // Theme
-    dark: 'inverted',
-    next: 'next'
+    dark: "inverted",
+    next: "next",
   };
 
   get btnClass(): String {
@@ -156,29 +148,32 @@ export class SamButtonComponent {
 
     // Adds disabled class
     if (this.isDisabled) {
-      classMap.push('disabled');
+      classMap.push("disabled");
     }
 
-    return classMap.join(' ');
+    return classMap.join(" ");
   }
 
-  debug () {
+  debug() {
     const deprecated: string[][] = [
-      ['buttonId', 'id', 'PI 16 Sprint 2'],
-      ['buttonText', '<sam-button>Your Text</sam-button', 'PI 16 Sprint 2'],
-      ['buttonType', 'action', 'PI 16 Sprint 2'],
-      ['buttonType', 'action="secondary"', 'PI 16 Sprint 2', 'negative'],
-      ['buttonSize', 'size', 'PI 16 Sprint 2'],
-      ['buttonSize', 'Large size is not available - remove buttonSize to use normal size', 'PI 16 Sprint 2', 'large'],
-      ['buttonDisabled', 'isDisabled', 'PI 16 Sprint 2'],
-      ['buttonClass', 'Please remove this input', 'PI 16 Sprint 2'],
-    ]
+      ["buttonId", "id", "PI 16 Sprint 2"],
+      ["buttonText", "<sam-button>Your Text</sam-button", "PI 16 Sprint 2"],
+      ["buttonType", "action", "PI 16 Sprint 2"],
+      ["buttonType", 'action="secondary"', "PI 16 Sprint 2", "negative"],
+      ["buttonSize", "size", "PI 16 Sprint 2"],
+      [
+        "buttonSize",
+        "Large size is not available - remove buttonSize to use normal size",
+        "PI 16 Sprint 2",
+        "large",
+      ],
+      ["buttonDisabled", "isDisabled", "PI 16 Sprint 2"],
+      ["buttonClass", "Please remove this input", "PI 16 Sprint 2"],
+    ];
 
     const deprecator = new Deprecator(this);
-    deprecated.forEach(
-      prop => deprecator.deprecate(
-        prop[0], prop[1], prop[2], prop[3]
-      )
+    deprecated.forEach((prop) =>
+      deprecator.deprecate(prop[0], prop[1], prop[2], prop[3])
     );
     deprecator.render(this);
   }

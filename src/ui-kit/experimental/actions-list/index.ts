@@ -1,2 +1,2 @@
-export * from './actions-list.component';
-export * from './actions-list.module';
+export * from "./actions-list.component";
+export * from "./actions-list.module";

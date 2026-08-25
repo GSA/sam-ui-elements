@@ -25,12 +25,9 @@ export class SAMSDSSelectedItemModelHelper {
       )
     ) {
       if (selectionMode === SelectionMode.SINGLE) {
-
         SAMSDSSelectedItemModelHelper.clearItems(model);
-
       }
       model.items.push(itemToAdd);
-
     }
   }
 

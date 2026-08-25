@@ -1,13 +1,13 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 
 /**
  * The <sam-alert> component keeps users informed of important and (optionally)
  * time-sensitive changes
  */
 @Component({
-    selector: 'sam-alert',
-    templateUrl: './alert.template.html',
-    standalone: false
+  selector: "sam-alert",
+  templateUrl: "./alert.template.html",
+  standalone: false,
 })
 export class SamAlertComponent {
   /**
@@ -50,25 +50,25 @@ export class SamAlertComponent {
   @Output() toggle: EventEmitter<any> = new EventEmitter<any>();
 
   types: any = {
-    'error': { class: 'usa-alert-error', sr: 'error alert'},
-    'info': { class: 'usa-alert-info', sr: 'info alert'},
-    'success': { class: 'usa-alert-success', sr: 'success alert'},
-    'warning': { class: 'usa-alert-warning', sr: 'warning alert'},
+    error: { class: "usa-alert-error", sr: "error alert" },
+    info: { class: "usa-alert-info", sr: "info alert" },
+    success: { class: "usa-alert-success", sr: "success alert" },
+    warning: { class: "usa-alert-warning", sr: "warning alert" },
   };
   selectedType: string = this.types.success.class;
-  showMoreLinkText = 'Show Details';
+  showMoreLinkText = "Show Details";
 
   public closeAlert() {
-      this.onDismissClick();
-   }
+    this.onDismissClick();
+  }
 
-   public toggleContent() {
-       this.showMoreToggle = !this.showMoreToggle;
-       this.showMoreLinkText = this.showMoreToggle ?
-         'Hide Details' :
-         'Show Details';
-       this.toggle.emit(this.showMoreToggle);
-   }
+  public toggleContent() {
+    this.showMoreToggle = !this.showMoreToggle;
+    this.showMoreLinkText = this.showMoreToggle
+      ? "Hide Details"
+      : "Show Details";
+    this.toggle.emit(this.showMoreToggle);
+  }
 
   ngOnInit() {
     if (!this.typeNotDefined()) {

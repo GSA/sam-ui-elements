@@ -1,41 +1,40 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
+import { RouterModule } from "@angular/router";
 
-import { SamBoxComponent } from './box';
-import { SamContainerComponent } from './container';
-import { SamIconsModule } from './icon';
-import { SamLabelNextComponent } from './label';
-import { SamLayoutComponent } from './layout';
-import { SamLayoutContentComponent } from './layout';
-import { SamLayoutImgComponent } from './layout';
-import { SamListComponent } from './list';
-import { SamListItemComponent } from './list';
-import { SamMasterPageComponent } from './master-page';
-import { SamSearchComponent } from './search';
-import { SamYoutubeComponent } from './youtube';
-import { SamPickerComponent, SamPopoverComponent } from './picker';
-import { SamVideoPlayerModule } from './video-player';
-import { SamInputMaskModule } from './input-mask';
-import { SamLayoutComponentsModule } from './patterns';
-import { SamDollarComponent } from './dollar';
-import { SamWrapperModule } from '../wrappers';
-import { SamActionsListModule } from './actions-list';
-import { SamButtonNextModule } from './button-next';
-import { SamTabsNextModule } from './tabs';
-import { SamAlertNextModule } from './alert';
-import { SamTitleModule } from './title';
-import { SamHierarchicalModule } from './hierarchical/hierarchical.module';
-import { SamCardModule } from './card';
-import { SamSegmentModule } from './segment';
-import { SamProgressModule } from './progress/progress.module';
-import { SamListboxModule } from './listbox/listbox.module';
-import { SamSideNavigationToolbarModule } from './sideNavigationToolbar/sideNavigationToolbar.module';
-import { SamDateRangeV2Module } from './date-range-v2/date-range-v2.module';
-import { SdsSortModule } from './sort';
-import { SdsPaginationModule } from './pagination/sds-pagination.module';
-
+import { SamBoxComponent } from "./box";
+import { SamContainerComponent } from "./container";
+import { SamIconsModule } from "./icon";
+import { SamLabelNextComponent } from "./label";
+import { SamLayoutComponent } from "./layout";
+import { SamLayoutContentComponent } from "./layout";
+import { SamLayoutImgComponent } from "./layout";
+import { SamListComponent } from "./list";
+import { SamListItemComponent } from "./list";
+import { SamMasterPageComponent } from "./master-page";
+import { SamSearchComponent } from "./search";
+import { SamYoutubeComponent } from "./youtube";
+import { SamPickerComponent, SamPopoverComponent } from "./picker";
+import { SamVideoPlayerModule } from "./video-player";
+import { SamInputMaskModule } from "./input-mask";
+import { SamLayoutComponentsModule } from "./patterns";
+import { SamDollarComponent } from "./dollar";
+import { SamWrapperModule } from "../wrappers";
+import { SamActionsListModule } from "./actions-list";
+import { SamButtonNextModule } from "./button-next";
+import { SamTabsNextModule } from "./tabs";
+import { SamAlertNextModule } from "./alert";
+import { SamTitleModule } from "./title";
+import { SamHierarchicalModule } from "./hierarchical/hierarchical.module";
+import { SamCardModule } from "./card";
+import { SamSegmentModule } from "./segment";
+import { SamProgressModule } from "./progress/progress.module";
+import { SamListboxModule } from "./listbox/listbox.module";
+import { SamSideNavigationToolbarModule } from "./sideNavigationToolbar/sideNavigationToolbar.module";
+import { SamDateRangeV2Module } from "./date-range-v2/date-range-v2.module";
+import { SdsSortModule } from "./sort";
+import { SdsPaginationModule } from "./pagination/sds-pagination.module";
 
 @NgModule({
   imports: [
@@ -57,8 +56,7 @@ import { SdsPaginationModule } from './pagination/sds-pagination.module';
     SamCardModule,
     SamSegmentModule,
     SamProgressModule,
-    SamSideNavigationToolbarModule
-
+    SamSideNavigationToolbarModule,
   ],
   declarations: [
     SamBoxComponent,
@@ -108,7 +106,7 @@ import { SdsPaginationModule } from './pagination/sds-pagination.module';
     SamDateRangeV2Module,
     SamSideNavigationToolbarModule,
     SdsSortModule,
-    SdsPaginationModule
-  ]
+    SdsPaginationModule,
+  ],
 })
-export class SamExperimentalModule { }
+export class SamExperimentalModule {}

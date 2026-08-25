@@ -1,11 +1,11 @@
 // Media queries
 // TODO: Find a way to respect media query ranges.
 // TODO: For example the xs-breakpoint should not interfere with the sm-breakpoint.
-$mat-xsmall: 'max-width: 600px';
-$mat-small: 'max-width: 960px';
+$mat-xsmall: "max-width: 600px";
+$mat-small: "max-width: 960px";
 
 // TODO(crisbeto): this isn't being used anywhere within Material. keeping for backwards compat.
-$mat-font-family: Roboto, 'Helvetica Neue', sans-serif !default;
+$mat-font-family: Roboto, "Helvetica Neue", sans-serif !default;
 
 // TODO: Revisit all z-indices before beta
 // z-index master list
@@ -53,7 +53,8 @@ $swift-ease-in: all $swift-ease-in-duration $swift-ease-in-timing-function !defa
 
 $swift-ease-in-out-duration: 500ms !default;
 $swift-ease-in-out-timing-function: $ease-in-out-curve-function !default;
-$swift-ease-in-out: all $swift-ease-in-out-duration $swift-ease-in-out-timing-function !default;
+$swift-ease-in-out: all $swift-ease-in-out-duration
+  $swift-ease-in-out-timing-function !default;
 
 $swift-linear-duration: 80ms !default;
 $swift-linear-timing-function: linear !default;

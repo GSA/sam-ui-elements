@@ -1,17 +1,13 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 
-import { ProgressComponent } from './progress.component';
+import { ProgressComponent } from "./progress.component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-  ],
-  declarations: [
-    ProgressComponent
-  ],
-  exports: [ ProgressComponent ]
+  imports: [CommonModule],
+  declarations: [ProgressComponent],
+  exports: [ProgressComponent],
 })
 export class SamProgressModule {}
 
-export { ProgressComponent } from './progress.component';
+export { ProgressComponent } from "./progress.component";

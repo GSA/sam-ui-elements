@@ -7,83 +7,113 @@ import {
   Optional,
   forwardRef,
   TemplateRef,
-  AfterViewInit
-} from '@angular/core';
-import { animate, state, style, transition, trigger, keyframes } from '@angular/animations';
+  AfterViewInit,
+} from "@angular/core";
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+  keyframes,
+} from "@angular/animations";
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
-  FormControl
-} from '@angular/forms';
-import { LabelWrapper } from '../../wrappers/label-wrapper';
-import { AutocompleteService } from '../autocomplete/autocomplete.service';
-import { AutocompleteCache } from './autocomplete-cache';
+  FormControl,
+} from "@angular/forms";
+import { LabelWrapper } from "../../wrappers/label-wrapper";
+import { AutocompleteService } from "../autocomplete/autocomplete.service";
+import { AutocompleteCache } from "./autocomplete-cache";
 
-import { SamFormService } from '../../form-service';
-import { KeyHelper } from '../../utilities/key-helper/key-helper';
-import { SamCache } from '../autocomplete/autocomplete.component';
+import { SamFormService } from "../../form-service";
+import { KeyHelper } from "../../utilities/key-helper/key-helper";
+import { SamCache } from "../autocomplete/autocomplete.component";
 
 @Component({
-    selector: 'sam-autocomplete-multiselect',
-    templateUrl: 'autocomplete-multiselect.template.html',
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => SamAutocompleteMultiselectComponent),
-            multi: true
-        }
-    ],
-    animations: [
-        trigger('dropdown', [
-            transition('void => *', [
-                animate('.15s ease-in-out', keyframes([
-                    style({ filter: 'blur(3px)', height: '0', opacity: '0.5', offset: 0 }),
-                    style({ filter: 'blur(0px)', height: '*', opacity: '1', offset: 1.0 })
-                ]))
-            ]),
-            transition('* => void', [
-                animate('.1s ease-out', keyframes([
-                    style({ height: '*', opacity: '1', offset: 0 }),
-                    style({ height: '0', opacity: '0', offset: 1.0 })
-                ]))
-            ])
-        ]),
-        trigger('label', [
-            transition('void => *', [
-                animate('.15s ease-in-out', keyframes([
-                    style({
-                        transform: 'scale(0)',
-                        filter: 'blur(3px)',
-                        opacity: '0.5',
-                        offset: 0
-                    }),
-                    style({
-                        transform: 'scale(1)',
-                        filter: 'blur(0px)',
-                        opacity: '1',
-                        offset: 1.0
-                    })
-                ]))
-            ]),
-            transition('* => void', [
-                animate('.1s ease-out', keyframes([
-                    style({ filter: 'blur(0px)', opacity: '1', offset: 0 }),
-                    style({ filter: 'blur(3px)', opacity: '0', offset: 1.0 })
-                ]))
-            ])
-        ])
-    ],
-    standalone: false
+  selector: "sam-autocomplete-multiselect",
+  templateUrl: "autocomplete-multiselect.template.html",
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SamAutocompleteMultiselectComponent),
+      multi: true,
+    },
+  ],
+  animations: [
+    trigger("dropdown", [
+      transition("void => *", [
+        animate(
+          ".15s ease-in-out",
+          keyframes([
+            style({
+              filter: "blur(3px)",
+              height: "0",
+              opacity: "0.5",
+              offset: 0,
+            }),
+            style({
+              filter: "blur(0px)",
+              height: "*",
+              opacity: "1",
+              offset: 1.0,
+            }),
+          ])
+        ),
+      ]),
+      transition("* => void", [
+        animate(
+          ".1s ease-out",
+          keyframes([
+            style({ height: "*", opacity: "1", offset: 0 }),
+            style({ height: "0", opacity: "0", offset: 1.0 }),
+          ])
+        ),
+      ]),
+    ]),
+    trigger("label", [
+      transition("void => *", [
+        animate(
+          ".15s ease-in-out",
+          keyframes([
+            style({
+              transform: "scale(0)",
+              filter: "blur(3px)",
+              opacity: "0.5",
+              offset: 0,
+            }),
+            style({
+              transform: "scale(1)",
+              filter: "blur(0px)",
+              opacity: "1",
+              offset: 1.0,
+            }),
+          ])
+        ),
+      ]),
+      transition("* => void", [
+        animate(
+          ".1s ease-out",
+          keyframes([
+            style({ filter: "blur(0px)", opacity: "1", offset: 0 }),
+            style({ filter: "blur(3px)", opacity: "0", offset: 1.0 }),
+          ])
+        ),
+      ]),
+    ]),
+  ],
+  standalone: false,
 })
 export class SamAutocompleteMultiselectComponent
-  implements ControlValueAccessor, AfterViewInit, SamCache {
+  implements ControlValueAccessor, AfterViewInit, SamCache
+{
   /**
    * Gets DOM element for the textarea used for input
    */
-  @ViewChild('textArea', {static: false}) textArea: ElementRef;
-  @ViewChild('hiddenText', {static: true}) hiddenText: ElementRef;
-  @ViewChild('resultsList', {static: false}) resultsList: ElementRef;
-  @ViewChild(LabelWrapper, {static: true}) wrapper: LabelWrapper;
+  @ViewChild("textArea", { static: false }) textArea: ElementRef;
+  @ViewChild("hiddenText", { static: true }) hiddenText: ElementRef;
+  @ViewChild("resultsList", { static: false }) resultsList: ElementRef;
+  @ViewChild(LabelWrapper, { static: true }) wrapper: LabelWrapper;
 
   /**
    * Used when a to set the text for the hidden label for the textarea in the autocomplete
@@ -100,9 +130,9 @@ export class SamAutocompleteMultiselectComponent
    * in the list.
    */
   @Input() public keyValueConfig: KeyValueConfig = {
-    keyProperty: 'key',
-    valueProperty: 'value',
-    parentCategoryProperty: 'category'
+    keyProperty: "key",
+    valueProperty: "value",
+    parentCategoryProperty: "category",
   };
   /**
    * Used when a service is used to get autocomplete options
@@ -139,8 +169,8 @@ export class SamAutocompleteMultiselectComponent
    */
   @Input() public control: FormControl;
   /**
-  * Toggles validations to display with SamFormService events
-  */
+   * Toggles validations to display with SamFormService events
+   */
   @Input() public useFormService: boolean;
   /**
    * Provides an array of categories for selection
@@ -160,10 +190,9 @@ export class SamAutocompleteMultiselectComponent
    */
   @Input() public allowAny: boolean = false;
 
-
   @Input() public isFreeTextEnabled: boolean = false;
 
-  @Input() public freeTextSubtext: string = 'search';
+  @Input() public freeTextSubtext: string = "search";
   /**
    * Optional: Provides a default search string to use with service
    * in lieu of sending an empty string. If not provided, value
@@ -176,20 +205,20 @@ export class SamAutocompleteMultiselectComponent
    * Example:
    * this.autocompleteService.fetch(this.defaultSearchString, pageEnd, options)
    */
-  @Input() public defaultSearchString: string = '';
+  @Input() public defaultSearchString: string = "";
 
   /** Red error message text **/
-  @Input() public errorMessage: string = '';
+  @Input() public errorMessage: string = "";
 
   /**
    * Allow an add on icon to component
    */
-  @Input() public addOnIcon: string = 'fa-chevron-down';
+  @Input() public addOnIcon: string = "fa-chevron-down";
 
   /**
    * Allow a placeholder to component
    */
-  @Input() public placeholder: string = '';
+  @Input() public placeholder: string = "";
 
   /**
    * Allow to insert a customized template for suggestions to use
@@ -209,7 +238,7 @@ export class SamAutocompleteMultiselectComponent
    */
   @Input() public hideTextareaLabel: boolean = false;
 
-  public searchText: string = '';
+  public searchText: string = "";
 
   public innerValue: Array<any> = [];
   public isDisabled: boolean = false;
@@ -231,10 +260,11 @@ export class SamAutocompleteMultiselectComponent
     return this.innerValue;
   }
 
-  constructor(@Optional() private service: AutocompleteService,
+  constructor(
+    @Optional() private service: AutocompleteService,
     private ref: ChangeDetectorRef,
-    private samFormService: SamFormService) {
-  }
+    private samFormService: SamFormService
+  ) {}
 
   public ngOnInit() {
     if (this.list.length > 0) {
@@ -253,11 +283,17 @@ export class SamAutocompleteMultiselectComponent
       this.wrapper.formatErrors(this.control);
     } else {
       this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
-        if ((!evt.root || evt.root === this.control.root) &&
-          evt.eventType && evt.eventType === 'submit') {
+        if (
+          (!evt.root || evt.root === this.control.root) &&
+          evt.eventType &&
+          evt.eventType === "submit"
+        ) {
           this.wrapper.formatErrors(this.control);
-        } else if ((!evt.root || evt.root === this.control.root) &&
-          evt.eventType && evt.eventType === 'reset') {
+        } else if (
+          (!evt.root || evt.root === this.control.root) &&
+          evt.eventType &&
+          evt.eventType === "reset"
+        ) {
           this.wrapper.clearError();
         }
       });
@@ -280,8 +316,8 @@ export class SamAutocompleteMultiselectComponent
    * area.
    */
   public handleBackspaceEvent(event) {
-    if (KeyHelper.is('backspace', event)) {
-      if (event.target.value === '' && this.value.length > 0) {
+    if (KeyHelper.is("backspace", event)) {
+      if (event.target.value === "" && this.value.length > 0) {
         this.deselectItem(this.value[this.value.length - 1]);
       }
     }
@@ -293,7 +329,7 @@ export class SamAutocompleteMultiselectComponent
    * Clears list when escape is pressed
    */
   public handleEscapeEvent(event) {
-    if (KeyHelper.is('esc', event)) {
+    if (KeyHelper.is("esc", event)) {
       this.clearSearch();
       this.blurTextArea();
     }
@@ -308,7 +344,7 @@ export class SamAutocompleteMultiselectComponent
    * inserting a return character into the text area.
    */
   public handleEnterEvent(event) {
-    if (KeyHelper.is('enter', event)) {
+    if (KeyHelper.is("enter", event)) {
       event.preventDefault();
     }
 
@@ -323,16 +359,15 @@ export class SamAutocompleteMultiselectComponent
   public selectOnEnter(event) {
     const highlighted = this.getSelectedChildIndex(this.getResults());
 
-    if (event.target.value === ''
-      && highlighted === -1) {
+    if (event.target.value === "" && highlighted === -1) {
       return;
     }
 
-
-    if (((this.resultsList
-      && this.resultsList.nativeElement) || this.showResultsFreeText())
-      && KeyHelper.is('enter', event)) {
-
+    if (
+      ((this.resultsList && this.resultsList.nativeElement) ||
+        this.showResultsFreeText()) &&
+      KeyHelper.is("enter", event)
+    ) {
       if (this.showResultsFreeText() && highlighted === 0) {
         this.selectItem(this.searchText);
       } else {
@@ -346,11 +381,9 @@ export class SamAutocompleteMultiselectComponent
           }
           this.selectItem(this.getItem());
         }
-
       }
       this.clearSearch();
       this.list = [];
-
     }
     return event;
   }
@@ -360,8 +393,10 @@ export class SamAutocompleteMultiselectComponent
 
     const listItem = this.getItem();
 
-    if ((!listItem || listItem.value === 'No results found')
-      && highlighted === -1) {
+    if (
+      (!listItem || listItem.value === "No results found") &&
+      highlighted === -1
+    ) {
       returnValue = this.createReturnObject(event);
     } else {
       returnValue = listItem;
@@ -383,20 +418,22 @@ export class SamAutocompleteMultiselectComponent
     const selectedResultIndex: number =
       selectedChildIndex === -1 ? 0 : selectedChildIndex;
 
-    if (results[selectedResultIndex].classList.contains('category-name')) {
+    if (results[selectedResultIndex].classList.contains("category-name")) {
       return this.categories.filter((item) => {
-        if (item[this.keyValueConfig.parentCategoryProperty]
-          === results[selectedResultIndex].attributes['data-category'].value) {
+        if (
+          item[this.keyValueConfig.parentCategoryProperty] ===
+          results[selectedResultIndex].attributes["data-category"].value
+        ) {
           return item;
         }
       })[0];
     } else {
       const categoryIndex = parseInt(
-        results[selectedResultIndex].attributes['data-category'].value,
+        results[selectedResultIndex].attributes["data-category"].value,
         10
       );
       const itemIndex = parseInt(
-        results[selectedResultIndex].attributes['data-index'].value,
+        results[selectedResultIndex].attributes["data-index"].value,
         10
       );
       return this.getItemFromListByIndices(categoryIndex, itemIndex);
@@ -408,41 +445,41 @@ export class SamAutocompleteMultiselectComponent
   }
 
   public handleDownArrow(event) {
-    if (KeyHelper.is('down', event)) {
+    if (KeyHelper.is("down", event)) {
       const results = this.getResults();
       const selectedIndex = this.setSelectedChild(
         this.getSelectedChildIndex(results),
-        'Down',
+        "Down",
         results
       );
 
       this.reachedEndOfList(results, event.target.value);
 
       this.resultsList.nativeElement.scrollTop =
-        (results[selectedIndex].offsetParent.offsetParent.offsetTop
-          + results[selectedIndex].offsetTop)
-        - this.resultsList.nativeElement.clientTop;
+        results[selectedIndex].offsetParent.offsetParent.offsetTop +
+        results[selectedIndex].offsetTop -
+        this.resultsList.nativeElement.clientTop;
     }
 
     return event;
   }
 
   public handleUpArrow(event) {
-    if (KeyHelper.is('up', event)) {
+    if (KeyHelper.is("up", event)) {
       const results = this.getResults();
 
       const selectedIndex = this.setSelectedChild(
         this.getSelectedChildIndex(results),
-        'Up',
+        "Up",
         results
       );
 
       this.reachedEndOfList(results, event.target.value);
 
       this.resultsList.nativeElement.scrollTop =
-        (results[selectedIndex].offsetParent.offsetParent.offsetTop
-          + results[selectedIndex].offsetTop)
-        - this.resultsList.nativeElement.clientTop;
+        results[selectedIndex].offsetParent.offsetParent.offsetTop +
+        results[selectedIndex].offsetTop -
+        this.resultsList.nativeElement.clientTop;
     }
 
     return event;
@@ -456,15 +493,13 @@ export class SamAutocompleteMultiselectComponent
    * fire filter function
    */
   public reachedEndOfList(results, value) {
-    if (this.getSelectedChildIndex(results) + 1
-      === results.length) {
+    if (this.getSelectedChildIndex(results) + 1 === results.length) {
       this.endOfList = true;
       this.filterOptions(value);
     }
   }
 
   showResultsFreeText() {
-
     if (this.isFreeTextEnabled) {
       if (this.searchText) {
         let foundItem = false;
@@ -480,8 +515,7 @@ export class SamAutocompleteMultiselectComponent
               }
             }
           }
-        }
-        else {
+        } else {
           foundItem = this.findItemExistInList(this.list[0]);
         }
 
@@ -489,7 +523,9 @@ export class SamAutocompleteMultiselectComponent
           if (!foundItem) {
             for (var i = 0; i < this.value.length; i++) {
               let tempItem = this.value[i];
-              if (tempItem[this.keyValueConfig.valueProperty] === this.searchText) {
+              if (
+                tempItem[this.keyValueConfig.valueProperty] === this.searchText
+              ) {
                 foundItem = true;
               }
             }
@@ -503,7 +539,6 @@ export class SamAutocompleteMultiselectComponent
       return this.isFreeTextEnabled;
     }
   }
-
 
   private findItemExistInList(item: any) {
     let foundItem = false;
@@ -522,11 +557,13 @@ export class SamAutocompleteMultiselectComponent
       return [];
     }
     if (this.categoryIsSelectable) {
-      return this.resultsList.nativeElement
-        .querySelectorAll('li.category-item, li.category-name, li.free-text-item');
+      return this.resultsList.nativeElement.querySelectorAll(
+        "li.category-item, li.category-name, li.free-text-item"
+      );
     } else {
-      return this.resultsList.nativeElement
-        .querySelectorAll('li.category-item, li.free-text-item');
+      return this.resultsList.nativeElement.querySelectorAll(
+        "li.category-item, li.free-text-item"
+      );
     }
   }
 
@@ -538,7 +575,7 @@ export class SamAutocompleteMultiselectComponent
     }
 
     for (let i = 0; i < elements.length; i++) {
-      if (elements[i].classList.contains('selected')) {
+      if (elements[i].classList.contains("selected")) {
         selectedIndex = i;
       }
     }
@@ -546,31 +583,35 @@ export class SamAutocompleteMultiselectComponent
     return selectedIndex;
   }
 
-  public setSelectedChild(currentSelectedIndex: number,
-    direction: string, elements: any): number {
+  public setSelectedChild(
+    currentSelectedIndex: number,
+    direction: string,
+    elements: any
+  ): number {
     if (currentSelectedIndex !== -1) {
-      elements[currentSelectedIndex].classList.remove('selected');
+      elements[currentSelectedIndex].classList.remove("selected");
     }
 
     let indexToSelect;
 
-    if (direction === 'Down') {
-      indexToSelect = currentSelectedIndex === -1
-        || currentSelectedIndex === elements.length - 1
-        ? 0
-        : currentSelectedIndex + 1;
-
-    } else if (direction === 'Up') {
-      indexToSelect = currentSelectedIndex === -1 || currentSelectedIndex === 0
-        ? elements.length - 1
-        : currentSelectedIndex - 1;
+    if (direction === "Down") {
+      indexToSelect =
+        currentSelectedIndex === -1 ||
+        currentSelectedIndex === elements.length - 1
+          ? 0
+          : currentSelectedIndex + 1;
+    } else if (direction === "Up") {
+      indexToSelect =
+        currentSelectedIndex === -1 || currentSelectedIndex === 0
+          ? elements.length - 1
+          : currentSelectedIndex - 1;
     }
     this.addSelectedClass(elements, indexToSelect);
     return indexToSelect;
   }
 
   public addSelectedClass(elements: any, index: number): void {
-    elements[index].classList.add('selected');
+    elements[index].classList.add("selected");
     this.selectedEl = elements[index];
   }
 
@@ -583,14 +624,14 @@ export class SamAutocompleteMultiselectComponent
    * as the content changes.
    */
   public applyTextAreaWidth(event) {
-
-    if (!KeyHelper.is('down', event) && !KeyHelper.is('up', event)) {
+    if (!KeyHelper.is("down", event) && !KeyHelper.is("up", event)) {
       this.filterOptions(this.searchText);
     }
     this.ref.detectChanges();
 
     event.target.style.width = this.calculateTextAreaWidth(event.target);
-    event.target.style.height = Math.max(event.target.scrollHeight, this.textAreaMinHeight) + "px";
+    event.target.style.height =
+      Math.max(event.target.scrollHeight, this.textAreaMinHeight) + "px";
 
     return event;
   }
@@ -606,11 +647,12 @@ export class SamAutocompleteMultiselectComponent
    */
   public calculateTextAreaWidth(element: HTMLElement): string {
     // Width by default should be its `initial` value
-    let widthValue = 'initial';
+    let widthValue = "initial";
     const containerWidth = this.getParentContentWidth(element.parentElement);
     const elementsWidths = this.getSelectedContentWidth(element);
-    const enteredTextWidth =
-      this.getInternalElementWidth(this.hiddenText.nativeElement);
+    const enteredTextWidth = this.getInternalElementWidth(
+      this.hiddenText.nativeElement
+    );
     let accumulatorRow = 0;
     let spaceLeft = containerWidth;
 
@@ -619,12 +661,15 @@ export class SamAutocompleteMultiselectComponent
       if (accumulatorRow > containerWidth) {
         accumulatorRow = element;
       }
-      spaceLeft = ((containerWidth - accumulatorRow) - enteredTextWidth);
+      spaceLeft = containerWidth - accumulatorRow - enteredTextWidth;
     });
 
     // If there is 40px left move to the next line
     const padding = 40;
-    widthValue = spaceLeft - padding > 0 && elementsWidths && elementsWidths.length > 1 ? containerWidth - spaceLeft + 'px' : '100%';
+    widthValue =
+      spaceLeft - padding > 0 && elementsWidths && elementsWidths.length > 1
+        ? containerWidth - spaceLeft + "px"
+        : "100%";
 
     return widthValue;
   }
@@ -646,14 +691,18 @@ export class SamAutocompleteMultiselectComponent
     // and its data structure does not provide forEach on its
     // prototype.
     for (let i = 0; i < elementChildren.length; i++) {
-      if (elementChildren[i] !== element
-        && !elementChildren[i].classList.contains('usa-sr-only')
-        && !elementChildren[i].classList.contains('icon-container')) {
+      if (
+        elementChildren[i] !== element &&
+        !elementChildren[i].classList.contains("usa-sr-only") &&
+        !elementChildren[i].classList.contains("icon-container")
+      ) {
         const childStyles = window.getComputedStyle(elementChildren[i]);
         const childWidth = parseFloat(childStyles.width);
-        elementsWidths.push((childWidth +
-          parseFloat(childStyles['margin-right']) +
-          parseFloat(childStyles['margin-left'])));
+        elementsWidths.push(
+          childWidth +
+            parseFloat(childStyles["margin-right"]) +
+            parseFloat(childStyles["margin-left"])
+        );
       }
     }
     return elementsWidths;
@@ -668,11 +717,12 @@ export class SamAutocompleteMultiselectComponent
     const styles = window.getComputedStyle(element);
     let width = parseFloat(styles.width);
 
-    if (styles['box-sizing'] === 'border-box') {
-      width -= (parseFloat(styles['border-left-width']) +
-        parseFloat(styles['padding-left']) +
-        parseFloat(styles['padding-right']) +
-        parseFloat(styles['border-right-width']));
+    if (styles["box-sizing"] === "border-box") {
+      width -=
+        parseFloat(styles["border-left-width"]) +
+        parseFloat(styles["padding-left"]) +
+        parseFloat(styles["padding-right"]) +
+        parseFloat(styles["border-right-width"]);
     }
 
     return width;
@@ -692,9 +742,10 @@ export class SamAutocompleteMultiselectComponent
      * specifically needs to have the border removed from the
      * calculation.
      */
-    if (styles['box-sizing'] === 'border-box') {
-      width -= (parseFloat(styles['border-left-width']) +
-        parseFloat(styles['border-right-width']));
+    if (styles["box-sizing"] === "border-box") {
+      width -=
+        parseFloat(styles["border-left-width"]) +
+        parseFloat(styles["border-right-width"]);
     }
 
     return width;
@@ -706,31 +757,25 @@ export class SamAutocompleteMultiselectComponent
   public fetchFromService(searchString: string, options: any, context: this) {
     context.displaySpinner = true;
     return context.service
-      .fetch(searchString,
-        context.endOfList,
-        options
-      )
+      .fetch(searchString, context.endOfList, options)
       .subscribe(
         (data) => {
           context.cache.insert(data, searchString);
           context.displaySpinner = false;
           context.endOfList = false;
-          context.list =
-            context.handleEmptyList(
-              context.sortByCategory(
-                context.cache.get(searchString)
-              )
-            );
+          context.list = context.handleEmptyList(
+            context.sortByCategory(context.cache.get(searchString))
+          );
         },
         (err) => {
           context.displaySpinner = false;
           const errorObject = {
-            cannotBeSelected: true
+            cannotBeSelected: true,
           };
           errorObject[context.keyValueConfig.valueProperty] =
-            'An error occurred.';
+            "An error occurred.";
           errorObject[context.keyValueConfig.subheadProperty] =
-            'Please try again.';
+            "Please try again.";
           context.list = context.handleEmptyList(
             context.sortByCategory([errorObject])
           );
@@ -752,12 +797,12 @@ export class SamAutocompleteMultiselectComponent
     // If so, use defaultSearchString
     // If value is unset, defaultSearchString
     // is initialized to empty string
-    if (searchString === '') {
+    if (searchString === "") {
       searchString = this.defaultSearchString;
     }
     // Sets strig to lowercase for case-insensitive
     // matching in filter function.
-    searchString = searchString ? searchString.toLowerCase() : '';
+    searchString = searchString ? searchString.toLowerCase() : "";
 
     let options = null;
     if (this.serviceOptions) {
@@ -776,20 +821,28 @@ export class SamAutocompleteMultiselectComponent
     } else {
       this.list = this.options.filter((option) => {
         if (this.categoryIsSelectable) {
-          if (option[this.keyValueConfig.categoryProperty]
-            && option[this.keyValueConfig.categoryProperty]
-              .toLowerCase().includes(searchString)
-            && availableCategories
-              .indexOf(option[this.keyValueConfig.categoryProperty]) === -1) {
+          if (
+            option[this.keyValueConfig.categoryProperty] &&
+            option[this.keyValueConfig.categoryProperty]
+              .toLowerCase()
+              .includes(searchString) &&
+            availableCategories.indexOf(
+              option[this.keyValueConfig.categoryProperty]
+            ) === -1
+          ) {
             availableCategories.push(
               option[this.keyValueConfig.categoryProperty]
             );
           }
         }
-        if (option[this.keyValueConfig.keyProperty]
-          .toLowerCase().includes(searchString)
-          || option[this.keyValueConfig.valueProperty]
-            .toLowerCase().includes(searchString)) {
+        if (
+          option[this.keyValueConfig.keyProperty]
+            .toLowerCase()
+            .includes(searchString) ||
+          option[this.keyValueConfig.valueProperty]
+            .toLowerCase()
+            .includes(searchString)
+        ) {
           return option;
         }
       });
@@ -826,7 +879,7 @@ export class SamAutocompleteMultiselectComponent
      */
     const initialObject = {
       0: [],
-      categories: ['uncategorized'],
+      categories: ["uncategorized"],
       totalItems: function (this) {
         let totalItems = 0;
         this.categories.forEach((category, index) => {
@@ -835,7 +888,7 @@ export class SamAutocompleteMultiselectComponent
           }
         }, this);
         return totalItems;
-      }
+      },
     };
 
     return results.reduce((prev, curr) => {
@@ -854,7 +907,6 @@ export class SamAutocompleteMultiselectComponent
       }
       return prev;
     }, initialObject);
-
   }
 
   /**
@@ -862,12 +914,16 @@ export class SamAutocompleteMultiselectComponent
    * and value 'No results found'.
    */
   public handleEmptyList(object: any): any[] {
-    if (object.categories.length === 1 && object[0].length === 0 && !this.showResultsFreeText()) {
+    if (
+      object.categories.length === 1 &&
+      object[0].length === 0 &&
+      !this.showResultsFreeText()
+    ) {
       const noResultsObject = {
-        cannotBeSelected: true
+        cannotBeSelected: true,
       };
       noResultsObject[this.keyValueConfig.keyProperty] = null;
-      noResultsObject[this.keyValueConfig.valueProperty] = 'No results found';
+      noResultsObject[this.keyValueConfig.valueProperty] = "No results found";
       object[0].push(noResultsObject);
     }
 
@@ -886,8 +942,11 @@ export class SamAutocompleteMultiselectComponent
     if (this.list && this.list.categories) {
       if (this.list.categories.length > 1) {
         return true;
-      } else if (this.list.categories.length === 1
-        && (this.list[0] && this.list[0].length > 0)) {
+      } else if (
+        this.list.categories.length === 1 &&
+        this.list[0] &&
+        this.list[0].length > 0
+      ) {
         return true;
       } else {
         return false;
@@ -909,7 +968,7 @@ export class SamAutocompleteMultiselectComponent
     if (this.isDisabled) {
       return false;
     }
-    return (this.value.length > 0) || !!this.searchText;
+    return this.value.length > 0 || !!this.searchText;
   }
 
   /***************************************************************
@@ -920,16 +979,18 @@ export class SamAutocompleteMultiselectComponent
    * Procedure to add an item to list of selected items
    */
   public selectItem(item): void {
-    if (typeof item === 'string') {
-      let added = { 'type': 'custom' };
+    if (typeof item === "string") {
+      let added = { type: "custom" };
       added[this.keyValueConfig.valueProperty] = item;
       this.value.push(added);
     } else {
       if (item && !item.cannotBeSelected) {
         const tmpArray = this.value.slice();
         const filteredItems = this.value.filter((selectedItem) => {
-          if (selectedItem[this.keyValueConfig.keyProperty]
-            === item[this.keyValueConfig.keyProperty]) {
+          if (
+            selectedItem[this.keyValueConfig.keyProperty] ===
+            item[this.keyValueConfig.keyProperty]
+          ) {
             return item;
           }
         });
@@ -977,7 +1038,7 @@ export class SamAutocompleteMultiselectComponent
     if (this.isDisabled) {
       return;
     }
-    if (KeyHelper.is('enter', event)) {
+    if (KeyHelper.is("enter", event)) {
       this.value = this.value.filter((item) => {
         if (item !== selectedItem) {
           return item;
@@ -998,7 +1059,7 @@ export class SamAutocompleteMultiselectComponent
   }
 
   public clearSearch() {
-    this.searchText = '';
+    this.searchText = "";
     if (this.textArea && this.textArea.nativeElement) {
       this.textArea.nativeElement.style.height = this.textAreaMinHeight + "px";
     }
@@ -1025,8 +1086,10 @@ export class SamAutocompleteMultiselectComponent
     }
     for (const key in this.options) {
       const x = this.value.find((obj) => {
-        return obj[this.keyValueConfig.keyProperty]
-          === this.options[key][this.keyValueConfig.keyProperty];
+        return (
+          obj[this.keyValueConfig.keyProperty] ===
+          this.options[key][this.keyValueConfig.keyProperty]
+        );
       });
       this.options[key]._marked = !!x ? true : false;
     }
@@ -1041,7 +1104,7 @@ export class SamAutocompleteMultiselectComponent
     }
 
     if (this.selectedEl) {
-      this.selectedEl.classList.remove('selected');
+      this.selectedEl.classList.remove("selected");
     }
     this.addSelectedClass(elements, listIndex);
     this.reachedEndOfList(elements, this.searchText);
@@ -1051,7 +1114,7 @@ export class SamAutocompleteMultiselectComponent
    * Implementation of SamCache Methods
    ***************************************************************/
 
-  public clearCache(){
+  public clearCache() {
     this.cache.clearAll();
   }
 
@@ -1082,7 +1145,6 @@ export class SamAutocompleteMultiselectComponent
 
   private onChangeCallback: (_: any) => void = (_: any) => null;
   private onTouchedCallback: () => void = () => null;
-
 }
 
 export interface KeyValueConfig {

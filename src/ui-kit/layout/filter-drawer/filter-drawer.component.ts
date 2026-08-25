@@ -6,22 +6,17 @@ import {
   QueryList,
   forwardRef,
   ViewChild,
-} from '@angular/core';
+} from "@angular/core";
 
-import {
-  SamPageNextService
-} from '../../experimental/patterns/layout/architecture';
+import { SamPageNextService } from "../../experimental/patterns/layout/architecture";
 
-import { ChipHostDirective } from './chip-host';
-import {
-  SamFilterDrawerItemComponent
-} from './filter-drawer-item';
-
+import { ChipHostDirective } from "./chip-host";
+import { SamFilterDrawerItemComponent } from "./filter-drawer-item";
 
 @Component({
-    selector: 'sam-filter-drawer',
-    templateUrl: 'filter-drawer.template.html',
-    standalone: false
+  selector: "sam-filter-drawer",
+  templateUrl: "filter-drawer.template.html",
+  standalone: false,
 })
 export class SamFilterDrawerComponent {
   /**
@@ -29,13 +24,13 @@ export class SamFilterDrawerComponent {
    */
   @Output() public clear = new EventEmitter<any>();
 
-  @ViewChild(forwardRef(() => ChipHostDirective), {static: true})
-    public chips: ChipHostDirective;
+  @ViewChild(forwardRef(() => ChipHostDirective), { static: true })
+  public chips: ChipHostDirective;
 
   @ContentChildren(forwardRef(() => SamFilterDrawerItemComponent))
-    public items: QueryList<SamFilterDrawerItemComponent>;
-  
-  public get showClear (): boolean {
+  public items: QueryList<SamFilterDrawerItemComponent>;
+
+  public get showClear(): boolean {
     if (!this.usingDirective) {
       return this.items.length > 0;
     } else {
@@ -43,11 +38,10 @@ export class SamFilterDrawerComponent {
     }
   }
 
-  public set showClear (value: boolean) {
+  public set showClear(value: boolean) {
     this._showClear = value;
   }
 
   public usingDirective = false;
   private _showClear = false;
-
 }

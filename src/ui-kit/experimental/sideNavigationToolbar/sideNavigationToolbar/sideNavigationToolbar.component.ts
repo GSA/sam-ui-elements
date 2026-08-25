@@ -1,34 +1,45 @@
-import { Component, Input, TemplateRef, ViewChild, ContentChildren, QueryList } from '@angular/core';
-import { SamSideNavigationToolbarItemComponent } from '../sideNavigationToolbarItem/sideNavigationToolbarItem.component';
+import {
+  Component,
+  Input,
+  TemplateRef,
+  ViewChild,
+  ContentChildren,
+  QueryList,
+} from "@angular/core";
+import { SamSideNavigationToolbarItemComponent } from "../sideNavigationToolbarItem/sideNavigationToolbarItem.component";
 
 @Component({
-    selector: 'sam-side-navigation-toolbar',
-    templateUrl: './sideNavigationToolbar.component.html',
-    styleUrls: ['./sideNavigationToolbar.component.scss'],
-    standalone: false
+  selector: "sam-side-navigation-toolbar",
+  templateUrl: "./sideNavigationToolbar.component.html",
+  styleUrls: ["./sideNavigationToolbar.component.scss"],
+  standalone: false,
 })
 export class SamSideNavigationToolbarComponent {
-
   /**
    * Containter of all the children of type SamSideNavigationToolbarItemComponent
    */
-  @ContentChildren(SamSideNavigationToolbarItemComponent) items: QueryList<SamSideNavigationToolbarItemComponent>;
-
+  @ContentChildren(SamSideNavigationToolbarItemComponent)
+  items: QueryList<SamSideNavigationToolbarItemComponent>;
 
   ngAfterContentInit() {
-    this.items.toArray().forEach((menuItem: SamSideNavigationToolbarItemComponent) => {
-      menuItem.sideNavigationToolbarItemSelected.subscribe((item) => this.selectedItem(item));
-    });
+    this.items
+      .toArray()
+      .forEach((menuItem: SamSideNavigationToolbarItemComponent) => {
+        menuItem.sideNavigationToolbarItemSelected.subscribe((item) =>
+          this.selectedItem(item)
+        );
+      });
   }
 
   /**
    * When Item is selected it closes all other sections
-   * @param item 
+   * @param item
    */
   selectedItem(item: SamSideNavigationToolbarItemComponent) {
-    this.items.toArray().forEach((menuItem: SamSideNavigationToolbarItemComponent) => {
-      menuItem.showSection = item === menuItem
-    });
+    this.items
+      .toArray()
+      .forEach((menuItem: SamSideNavigationToolbarItemComponent) => {
+        menuItem.showSection = item === menuItem;
+      });
   }
 }
-

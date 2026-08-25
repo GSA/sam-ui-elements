@@ -1,36 +1,35 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { By } from '@angular/platform-browser';
-import { SimpleChanges } from '@angular/core';
+import { TestBed } from "@angular/core/testing";
+import { RouterTestingModule } from "@angular/router/testing";
+import { By } from "@angular/platform-browser";
+import { SimpleChanges } from "@angular/core";
 
 // Load the implementations that should be tested
-import { SamAlertComponent } from './alert.component';
+import { SamAlertComponent } from "./alert.component";
 
 const defaultConfig = {
-  description: 'i-am-a-description',
-  title: 'i-am-a-title',
-  type: 'success',
+  description: "i-am-a-description",
+  title: "i-am-a-title",
+  type: "success",
 };
 
-describe('The Sam Alert component', () => {
-  describe('isolated tests', () => {
+describe("The Sam Alert component", () => {
+  describe("isolated tests", () => {
     let component: SamAlertComponent;
     beforeEach(() => {
       component = new SamAlertComponent();
     });
 
-    it('should toggleContent', () => {
+    it("should toggleContent", () => {
       component.showMoreToggle = false;
       component.toggleContent();
       expect(component.showMoreToggle).toBe(true);
-      expect(component.showMoreLinkText).toBe('Hide Details');
+      expect(component.showMoreLinkText).toBe("Hide Details");
       component.toggleContent();
       expect(component.showMoreToggle).toBe(false);
-      expect(component.showMoreLinkText).toBe('Show Details');
-
+      expect(component.showMoreLinkText).toBe("Show Details");
     });
 
-    it('should trigger dismiss on timer', () => {
+    it("should trigger dismiss on timer", () => {
       const dismissTime = 100;
       component.dismissTimer = dismissTime;
       component.dismiss.subscribe(() => {
@@ -39,7 +38,7 @@ describe('The Sam Alert component', () => {
       });
       component.ngOnInit();
     });
-    it('should NOT trigger dismiss on timer if userMustDismiss is true', () => {
+    it("should NOT trigger dismiss on timer if userMustDismiss is true", () => {
       const dismissTime = 100;
       component.userMustDismiss = true;
       component.dismissTimer = dismissTime;
@@ -52,23 +51,23 @@ describe('The Sam Alert component', () => {
         expect(true).toBe(true);
       }, 300);
     });
-    it('should trigger dismiss on method', () => {
+    it("should trigger dismiss on method", () => {
       component.dismiss.subscribe(() => {
         expect(true).toBe(true);
       });
       component.closeAlert();
     });
-    it('should check if type is defined', () => {
+    it("should check if type is defined", () => {
       expect(component.typeNotDefined()).toBe(true);
-      component.type = 'notAValidType';
+      component.type = "notAValidType";
       expect(component.typeNotDefined()).toBe(true);
-      component.type = 'success';
+      component.type = "success";
       expect(component.typeNotDefined()).toBe(false);
       component.ngOnInit();
-      expect(component.selectedType).toBe('usa-alert-success');
+      expect(component.selectedType).toBe("usa-alert-success");
     });
   });
-  describe('rendered tests', () => {
+  describe("rendered tests", () => {
     let component: SamAlertComponent;
     let fixture: any;
 
@@ -84,38 +83,30 @@ describe('The Sam Alert component', () => {
       component.title = defaultConfig.title;
       component.description = defaultConfig.description;
       fixture.detectChanges();
-
     });
 
-    it('title + description check', () => {
+    it("title + description check", () => {
       fixture.detectChanges();
       fixture.whenStable().then(() => {
         expect(
-          fixture.debugElement.query(
-            By.css('.usa-alert-heading')
-          )
-          .nativeElement.textContent.trim()
-        )
-        .toBe('i-am-a-title');
+          fixture.debugElement
+            .query(By.css(".usa-alert-heading"))
+            .nativeElement.textContent.trim()
+        ).toBe("i-am-a-title");
         expect(
-          fixture.debugElement.query(
-            By.css('.usa-alert-text')
-          )
-          .nativeElement.textContent.trim()
-        )
-        .toBe('i-am-a-description');
+          fixture.debugElement
+            .query(By.css(".usa-alert-text"))
+            .nativeElement.textContent.trim()
+        ).toBe("i-am-a-description");
       });
     });
-    it('type check', () => {
+    it("type check", () => {
       fixture.detectChanges();
       //fixture.whenStable().then(() => {
-        expect(
-          fixture.debugElement.query(
-            By.css('.usa-alert')
-          ).nativeElement.className
-        )
-        .toContain('usa-alert-success');
-    //  });
+      expect(
+        fixture.debugElement.query(By.css(".usa-alert")).nativeElement.className
+      ).toContain("usa-alert-success");
+      //  });
     });
   });
 });

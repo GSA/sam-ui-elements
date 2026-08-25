@@ -1,86 +1,91 @@
 import {
   Component,
-  OnInit, Input, Output, EventEmitter, forwardRef, ViewChild
-} from '@angular/core';
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  forwardRef,
+  ViewChild,
+} from "@angular/core";
 
 import {
   ControlValueAccessor,
   NG_VALUE_ACCESSOR,
   FormControl,
-} from '@angular/forms';
-import { FieldsetWrapper } from '../../../ui-kit/wrappers/fieldset-wrapper';
-
+} from "@angular/forms";
+import { FieldsetWrapper } from "../../../ui-kit/wrappers/fieldset-wrapper";
 
 export interface DateModel {
-  startDate: string,
-  endDate: string
-};
+  startDate: string;
+  endDate: string;
+}
 export interface DateConfig {
-  name: string,
-  placeholder: string,
-  label: string,
-  hint: string,
-  rangeStart: Date,
-  rangeEnd: Date,
-  showCalendar: boolean,
-  weekStart: number,
-  dateFormat: string,
-  disabled: boolean
+  name: string;
+  placeholder: string;
+  label: string;
+  hint: string;
+  rangeStart: Date;
+  rangeEnd: Date;
+  showCalendar: boolean;
+  weekStart: number;
+  dateFormat: string;
+  disabled: boolean;
 }
 
 export interface DateRangeSettings {
-  label: string,
-  hint: string,
-  cancelText: string,
-  errorMessage: string,
-  required:string
+  label: string;
+  hint: string;
+  cancelText: string;
+  errorMessage: string;
+  required: string;
 }
 
 @Component({
-    selector: 'sam-date-range-v2',
-    templateUrl: './date-range-v2.component.html',
-    styleUrls: ['./date-range-v2.component.scss'],
-    providers: [{
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => SamDateRangeV2Component),
-            multi: true
-        }],
-    standalone: false
+  selector: "sam-date-range-v2",
+  templateUrl: "./date-range-v2.component.html",
+  styleUrls: ["./date-range-v2.component.scss"],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SamDateRangeV2Component),
+      multi: true,
+    },
+  ],
+  standalone: false,
 })
 export class SamDateRangeV2Component implements OnInit, ControlValueAccessor {
-
- /**
-  * Date Range settings
-  */
+  /**
+   * Date Range settings
+   */
   @Input() dateRangeConfig: DateRangeSettings;
 
   /**
-  * Deprecated, Sets the bound value of the component
-  */
+   * Deprecated, Sets the bound value of the component
+   */
   @Input() model: DateModel = {
-    startDate: '',
-    endDate: ''
+    startDate: "",
+    endDate: "",
   };
 
   /**
-  * Start date configurations
-  */
+   * Start date configurations
+   */
   @Input() startDateConfig: DateConfig;
 
   /**
-  * End date configurations
-  */
+   * End date configurations
+   */
   @Input() endDateConfig: DateConfig;
   /**
    * Sets the angular FormControl
    */
 
   /**
-  * Sets the angular FormControl
-  */
+   * Sets the angular FormControl
+   */
   @Input() control: FormControl;
 
-  @ViewChild(FieldsetWrapper, {static: true})
+  @ViewChild(FieldsetWrapper, { static: true })
   public wrapper: FieldsetWrapper;
 
   public disabled: boolean;

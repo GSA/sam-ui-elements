@@ -6,8 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {Injectable, Optional, SkipSelf} from '@angular/core';
-
+import { Injectable, Optional, SkipSelf } from "@angular/core";
 
 /**
  * The OverlayContainer is the container in which all overlays will load.
@@ -22,7 +21,9 @@ export class OverlayContainer {
   /**
    * Base theme to be applied to all overlay-based components.
    */
-  get themeClass(): string { return this._themeClass; }
+  get themeClass(): string {
+    return this._themeClass;
+  }
   set themeClass(value: string) {
     if (this._containerElement) {
       this._containerElement.classList.remove(this._themeClass);
@@ -42,7 +43,9 @@ export class OverlayContainer {
    * @returns the container element
    */
   getContainerElement(): HTMLElement {
-    if (!this._containerElement) { this._createContainer(); }
+    if (!this._containerElement) {
+      this._createContainer();
+    }
     return this._containerElement;
   }
 
@@ -51,8 +54,8 @@ export class OverlayContainer {
    * with the 'cdk-overlay-container' class on the document body.
    */
   protected _createContainer(): void {
-    let container = document.createElement('div');
-    container.classList.add('cdk-overlay-container');
+    let container = document.createElement("div");
+    container.classList.add("cdk-overlay-container");
 
     if (this._themeClass) {
       container.classList.add(this._themeClass);
@@ -63,7 +66,9 @@ export class OverlayContainer {
   }
 }
 
-export function OVERLAY_CONTAINER_PROVIDER_FACTORY(parentContainer: OverlayContainer) {
+export function OVERLAY_CONTAINER_PROVIDER_FACTORY(
+  parentContainer: OverlayContainer
+) {
   return parentContainer || new OverlayContainer();
 }
 
@@ -71,5 +76,5 @@ export const OVERLAY_CONTAINER_PROVIDER = {
   // If there is already an OverlayContainer available, use that. Otherwise, provide a new one.
   provide: OverlayContainer,
   deps: [[new Optional(), new SkipSelf(), OverlayContainer]],
-  useFactory: OVERLAY_CONTAINER_PROVIDER_FACTORY
+  useFactory: OVERLAY_CONTAINER_PROVIDER_FACTORY,
 };

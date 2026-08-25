@@ -1,1 +1,1 @@
-export * from './are-equal';
+export * from "./are-equal";

@@ -1,5 +1,5 @@
-@import '../patterns/layout/components/core/style/variables';
-@import 'tabs-common';
+@import "../patterns/layout/components/core/style/variables";
+@import "tabs-common";
 
 .mat-tab-header {
   display: flex;
@@ -33,7 +33,7 @@
 }
 
 // The pagination control that is displayed on the left side of the tab header.
-.mat-tab-header-pagination-before{
+.mat-tab-header-pagination-before {
   padding-left: 4px;
   .mat-tab-header-pagination-chevron {
     transform: rotate(-135deg);
@@ -51,7 +51,7 @@
 .mat-tab-header-pagination-chevron {
   border-style: solid;
   border-width: 2px 2px 0 0;
-  content: '';
+  content: "";
   height: 8px;
   width: 8px;
 }

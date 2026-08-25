@@ -1,48 +1,48 @@
-.sam.icon{
+.sam.icon {
   display: inline-block;
   font-size: inherit;
   height: 1em;
-  vertical-align: -.15em;
+  vertical-align: -0.15em;
 }
 
 // ICON IN HEADER
 // --------------------------------
-.sam.heading .icon{
+.sam.heading .icon {
   display: inline-block;
   margin-right: 3px;
   width: 50px;
   height: 50px;
 }
 
-.sam-icons__library{
+.sam-icons__library {
   display: flex;
   flex-wrap: wrap;
 }
-.icons-list{
+.icons-list {
   list-style-type: none;
   display: flex;
   flex-wrap: wrap;
 }
-.icons-list > li{
+.icons-list > li {
   height: 80px;
   width: 80px;
   text-align: center;
   padding: 5px;
 }
-.icons-list > li > *{
+.icons-list > li > * {
   display: block;
   padding: 0;
   font-size: 12px;
 }
-.icons-list > li > img{
+.icons-list > li > img {
   margin: auto;
   height: 30px;
 }
 
 .icon-arrow {
   color: white;
-  background-color: #7EFBE1;
-  border: 1px solid #7EFBE1;
+  background-color: #7efbe1;
+  border: 1px solid #7efbe1;
   border-radius: 50%;
   padding: 5px 12px;
   margin-right: 10px;

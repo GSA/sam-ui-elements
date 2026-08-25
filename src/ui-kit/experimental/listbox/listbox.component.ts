@@ -1,15 +1,19 @@
 import {
-  Component, Output,
-  forwardRef, Input,
-  EventEmitter, ElementRef, ViewChild
-} from '@angular/core';
+  Component,
+  Output,
+  forwardRef,
+  Input,
+  EventEmitter,
+  ElementRef,
+  ViewChild,
+} from "@angular/core";
 import {
   FormControl,
   ControlValueAccessor,
-  NG_VALUE_ACCESSOR
-} from '@angular/forms';
-import { KeyHelper, KEYS } from '../../utilities/key-helper/key-helper';
-import { FieldsetWrapper } from '../../wrappers/fieldset-wrapper';
+  NG_VALUE_ACCESSOR,
+} from "@angular/forms";
+import { KeyHelper, KEYS } from "../../utilities/key-helper/key-helper";
+import { FieldsetWrapper } from "../../wrappers/fieldset-wrapper";
 
 export interface OptionModel {
   name: string;
@@ -20,94 +24,94 @@ export interface OptionModel {
   disabled: boolean;
 }
 @Component({
-    selector: 'sam-listbox',
-    templateUrl: './listbox.component.html',
-    styleUrls: ['./listbox.component.scss'],
-    providers: [{
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => SamListBoxComponent),
-            multi: true
-        }],
-    standalone: false
+  selector: "sam-listbox",
+  templateUrl: "./listbox.component.html",
+  styleUrls: ["./listbox.component.scss"],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SamListBoxComponent),
+      multi: true,
+    },
+  ],
+  standalone: false,
 })
-
-
 export class SamListBoxComponent implements ControlValueAccessor {
   /**
-  * Deprecated, Sets the bound value of the component
-  */
+   * Deprecated, Sets the bound value of the component
+   */
   @Input() model: any = [];
   /**
-  * Sets the array of checkbox values and labels (see OptionsType[])
-  */
+   * Sets the array of checkbox values and labels (see OptionsType[])
+   */
   @Input() options: OptionModel[];
   /**
-  * Sets the label text
-  */
+   * Sets the label text
+   */
   @Input() label: string;
   /**
-  * Sets the semantic description for the component
-  */
+   * Sets the semantic description for the component
+   */
   @Input() name: string;
   /**
-  * Sets helpful text for the using the component
-  */
+   * Sets helpful text for the using the component
+   */
   @Input() hint: string;
   /**
-  * Sets required text on component
-  */
+   * Sets required text on component
+   */
   @Input() required: boolean = false;
   /**
-  * Sets the form control error message
-  */
+   * Sets the form control error message
+   */
   @Input() errorMessage: string;
   /**
-  * Sets the angular FormControl
-  */
+   * Sets the angular FormControl
+   */
   @Input() control: FormControl;
-  
+
   /**
    * Sets the id
    */
   @Input() id: string;
 
-  public optionsMode: string = 'checkbox';
+  public optionsMode: string = "checkbox";
 
   /**
-* Screen read field
-*/
-  @ViewChild('srOnly', {static: true}) srOnly: ElementRef;
+   * Screen read field
+   */
+  @ViewChild("srOnly", { static: true }) srOnly: ElementRef;
 
   /**
-* Ul list of elements 
-*/
-  @ViewChild('checkboxList', {static: true}) checkboxListElement: ElementRef;
+   * Ul list of elements
+   */
+  @ViewChild("checkboxList", { static: true }) checkboxListElement: ElementRef;
 
   /**
-* Mode to determine if single or multiple selection
-*/
+   * Mode to determine if single or multiple selection
+   */
   @Input() public isSingleMode: boolean;
 
   /**
-  * current index
-  */
+   * current index
+   */
   private currentIndex: number = 0;
 
   /**
- * current Item
- */
+   * current Item
+   */
   private currentItem: OptionModel;
 
-  private HighlightedPropertyName = 'highlighted';
+  private HighlightedPropertyName = "highlighted";
 
   /**
-  * Deprecated, Event emitted when the model value changes
-  */
+   * Deprecated, Event emitted when the model value changes
+   */
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild(FieldsetWrapper, {static: true})
+  @ViewChild(FieldsetWrapper, { static: true })
   public wrapper: FieldsetWrapper;
   /*
    * We want our model to list the checked items in the order that they appear
@@ -117,7 +121,7 @@ export class SamListBoxComponent implements ControlValueAccessor {
   private _ordering: any = {};
   onChange: any = (c) => undefined;
   onTouched: any = () => undefined;
-   private disabled: boolean;
+  private disabled: boolean;
   get value() {
     return this.model;
   }
@@ -141,7 +145,7 @@ export class SamListBoxComponent implements ControlValueAccessor {
       });
       this.wrapper.formatErrors(this.control);
     }
-    this.optionsMode = this.isSingleMode ? 'radio' : 'checkbox';
+    this.optionsMode = this.isSingleMode ? "radio" : "checkbox";
   }
 
   setSelectedItem(val) {
@@ -166,8 +170,8 @@ export class SamListBoxComponent implements ControlValueAccessor {
   }
 
   /**
-    * on hovering set current index 
-    */
+   * on hovering set current index
+   */
   onHover(index: number): void {
     this.currentIndex = index;
     this.setfocus();
@@ -175,8 +179,8 @@ export class SamListBoxComponent implements ControlValueAccessor {
   }
 
   /**
-    * set selected item and emit on keyboard interaction
-    */
+   * set selected item and emit on keyboard interaction
+   */
   private setHighlightedItem(item: OptionModel): void {
     if (this.options && this.options.length > 0) {
       if (this.currentItem) {
@@ -184,30 +188,33 @@ export class SamListBoxComponent implements ControlValueAccessor {
       }
       this.currentItem = item;
       this.currentItem[this.HighlightedPropertyName] = true;
-      let message = item['lable'];
+      let message = item["lable"];
       this.addScreenReaderMessage(message);
     }
   }
 
   /**
-  * adding Screen Reader Message
-  */
+   * adding Screen Reader Message
+   */
   private addScreenReaderMessage(message: string) {
-    const srResults: HTMLElement = document.createElement('li');
+    const srResults: HTMLElement = document.createElement("li");
     srResults.innerText = message;
     if (this.srOnly && this.srOnly.nativeElement) {
       this.srOnly.nativeElement.appendChild(srResults);
     }
   }
   private setfocus() {
-    this.checkboxListElement.nativeElement.getElementsByTagName("li")[this.currentIndex].getElementsByTagName("input")[0].focus();
+    this.checkboxListElement.nativeElement
+      .getElementsByTagName("li")
+      [this.currentIndex].getElementsByTagName("input")[0]
+      .focus();
   }
 
   onChecked(ev, option) {
     this.onTouched();
     if (!ev.target.checked) {
       // If the option was unchecked, remove it from the model
-      this.value = this.model.filter(val => val !== option);
+      this.value = this.model.filter((val) => val !== option);
     } else {
       // Else, insert the checked item into the model in the correct order
       let i = 0;
@@ -222,11 +229,12 @@ export class SamListBoxComponent implements ControlValueAccessor {
         i++;
       }
       if (this.isSingleMode) {
-        this.value = [option]
+        this.value = [option];
       } else {
-        const clone = this.model.indexOf('') > -1
-          ? this.model.slice(1)
-          : this.model.slice(0);
+        const clone =
+          this.model.indexOf("") > -1
+            ? this.model.slice(1)
+            : this.model.slice(0);
         clone.splice(i, 0, option);
         this.value = clone;
       }
@@ -237,26 +245,29 @@ export class SamListBoxComponent implements ControlValueAccessor {
   onKeyDown(evt): void {
     if (KeyHelper.is(KEYS.TAB, evt)) {
       return;
-    }
-    else if (KeyHelper.is(KEYS.DOWN, evt)) {
+    } else if (KeyHelper.is(KEYS.DOWN, evt)) {
       evt.preventDefault();
       if (this.currentIndex < this.options.length - 1) {
         this.currentIndex += 1;
-        this.checkboxListElement.nativeElement.scrollTop = this.checkboxListElement.nativeElement.getElementsByTagName("li")[this.currentIndex].offsetTop;
+        this.checkboxListElement.nativeElement.scrollTop =
+          this.checkboxListElement.nativeElement.getElementsByTagName("li")[
+            this.currentIndex
+          ].offsetTop;
         this.setHighlightedItem(this.options[this.currentIndex]);
         this.setfocus();
       }
-    }
-    else if (KeyHelper.is(KEYS.UP, evt)) {
+    } else if (KeyHelper.is(KEYS.UP, evt)) {
       evt.preventDefault();
       if (this.currentIndex > 0) {
         this.currentIndex -= 1;
-        this.checkboxListElement.nativeElement.scrollTop = this.checkboxListElement.nativeElement.getElementsByTagName("li")[this.currentIndex].offsetTop;
+        this.checkboxListElement.nativeElement.scrollTop =
+          this.checkboxListElement.nativeElement.getElementsByTagName("li")[
+            this.currentIndex
+          ].offsetTop;
         this.setHighlightedItem(this.options[this.currentIndex]);
         this.setfocus();
       }
-    }
-    else if (KeyHelper.is(KEYS.SPACE, evt)) {
+    } else if (KeyHelper.is(KEYS.SPACE, evt)) {
       this.onChecked(evt, this.currentItem);
     }
   }

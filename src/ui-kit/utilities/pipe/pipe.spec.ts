@@ -1,11 +1,10 @@
-import { pipe } from './pipe';
+import { pipe } from "./pipe";
 
-describe('Pipe function', () => {
-
-  it('Should create a function pipeline', () => {
-    const a = x => x + 1;
-    const b = y => y + 10;
-    const c = z => z * 2;
+describe("Pipe function", () => {
+  it("Should create a function pipeline", () => {
+    const a = (x) => x + 1;
+    const b = (y) => y + 10;
+    const c = (z) => z * 2;
 
     const testValue = 10;
     const expected = 42;
@@ -14,4 +13,4 @@ describe('Pipe function', () => {
 
     expect(pipeline(testValue)).toEqual(expected);
   });
-})
+});

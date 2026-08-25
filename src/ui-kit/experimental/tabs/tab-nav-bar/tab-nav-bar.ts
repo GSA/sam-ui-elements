@@ -14,22 +14,25 @@ import {
   HostBinding,
   Input,
   OnDestroy,
-  ViewEncapsulation
-} from '@angular/core';
-import {CanDisable, mixinDisabled} from '../../patterns/layout/components/core/common-behaviors/disabled';
-import {Subject, Subscription} from 'rxjs';
+  ViewEncapsulation,
+} from "@angular/core";
+import {
+  CanDisable,
+  mixinDisabled,
+} from "../../patterns/layout/components/core/common-behaviors/disabled";
+import { Subject, Subscription } from "rxjs";
 
 /**
  * Navigation component matching the styles of the tab group header.
  * Provides anchored navigation with animated ink bar.
  */
 @Component({
-    selector: '[md-tab-nav-bar], [mat-tab-nav-bar]',
-    templateUrl: 'tab-nav-bar.html',
-    styleUrls: ['tab-nav-bar.scss'],
-    host: { 'class': 'mat-tab-nav-bar' },
-    encapsulation: ViewEncapsulation.None,
-    standalone: false
+  selector: "[md-tab-nav-bar], [mat-tab-nav-bar]",
+  templateUrl: "tab-nav-bar.html",
+  styleUrls: ["tab-nav-bar.scss"],
+  host: { class: "mat-tab-nav-bar" },
+  encapsulation: ViewEncapsulation.None,
+  standalone: false,
 })
 export class MdTabNav implements AfterContentInit, OnDestroy {
   /** Subject that emits when the component has been destroyed. */
@@ -41,7 +44,7 @@ export class MdTabNav implements AfterContentInit, OnDestroy {
   /** Subscription for window.resize event **/
   private _resizeSubscription: Subscription;
 
-  constructor() { }
+  constructor() {}
 
   /** Notifies the component that the active link has been changed. */
   updateActiveLink(element: ElementRef) {
@@ -62,9 +65,7 @@ export class MdTabNav implements AfterContentInit, OnDestroy {
     this._onDestroy.next();
     this._resizeSubscription.unsubscribe();
   }
-
 }
-
 
 // Boilerplate for applying mixins to MdTabLink.
 export class MdTabLinkBase {}
@@ -74,14 +75,14 @@ export const _MdTabLinkMixinBase = mixinDisabled(MdTabLinkBase);
  * Link inside of a `md-tab-nav-bar`.
  */
 @Directive({
-    selector: '[md-tab-link], [mat-tab-link], [mdTabLink], [matTabLink]',
-    inputs: ['disabled'],
-    host: {
-        'class': 'mat-tab-link',
-        '[attr.aria-disabled]': 'disabled.toString()',
-        '[class.mat-tab-disabled]': 'disabled'
-    },
-    standalone: false
+  selector: "[md-tab-link], [mat-tab-link], [mdTabLink], [matTabLink]",
+  inputs: ["disabled"],
+  host: {
+    class: "mat-tab-link",
+    "[attr.aria-disabled]": "disabled.toString()",
+    "[class.mat-tab-disabled]": "disabled",
+  },
+  standalone: false,
 })
 export class MdTabLink extends _MdTabLinkMixinBase implements CanDisable {
   /** Whether the tab link is active or not. */
@@ -89,7 +90,9 @@ export class MdTabLink extends _MdTabLinkMixinBase implements CanDisable {
 
   /** Whether the link is active. */
   @Input()
-  get active(): boolean { return this._isActive; }
+  get active(): boolean {
+    return this._isActive;
+  }
   set active(value: boolean) {
     this._isActive = value;
     if (value) {
@@ -98,15 +101,15 @@ export class MdTabLink extends _MdTabLinkMixinBase implements CanDisable {
   }
 
   /** @docs-private */
-  @HostBinding('tabIndex')
+  @HostBinding("tabIndex")
   get tabIndex(): number {
     return this.disabled ? -1 : 0;
   }
 
-  constructor(private _mdTabNavBar: MdTabNav,
-              private _elementRef: ElementRef) {
+  constructor(
+    private _mdTabNavBar: MdTabNav,
+    private _elementRef: ElementRef
+  ) {
     super();
-
   }
-
 }

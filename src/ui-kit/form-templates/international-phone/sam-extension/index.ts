@@ -1,1 +1,1 @@
-export { SamExtension } from './extension.component';
+export { SamExtension } from "./extension.component";

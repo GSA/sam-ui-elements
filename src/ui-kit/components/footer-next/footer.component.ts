@@ -1,9 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input } from "@angular/core";
 
 @Component({
-    selector: 'sam-footer-next',
-    templateUrl: 'footer.template.html',
-    standalone: false
+  selector: "sam-footer-next",
+  templateUrl: "footer.template.html",
+  standalone: false,
 })
 export class SamFooterNextComponent {
   @Input() agency: string;

@@ -1,5 +1,5 @@
-export { BadgeConfig } from './components/badge';
-export { PageConfig } from './layout-deprecated/types';
+export { BadgeConfig } from "./components/badge";
+export { PageConfig } from "./layout-deprecated/types";
 
 export interface OptionsType {
   /**
@@ -21,7 +21,7 @@ export interface OptionsType {
   /**
    * The machine read description of the input. Will default to label value if none is provided
    */
-  ariaLabel?: string
+  ariaLabel?: string;
 }
 
 export interface AutocompleteDropdownButton {
@@ -90,7 +90,7 @@ export interface AutocompleteConfig {
   addOnIconClass?: string;
   /**
    * Adds an icon name for screen reader to understand
-  */
+   */
   addOnIconName?: string;
   /**
    * Allows any text inside the input to register as a selection
@@ -133,8 +133,8 @@ export interface AutocompleteKeyValueConfig {
   valueProperty: string;
 }
 // Download
-export type AccessType = 'Public'|'Private';
-export type ExpansionType = 'collapsed'|'expanded';
+export type AccessType = "Public" | "Private";
+export type ExpansionType = "collapsed" | "expanded";
 export interface DownloadPackageType {
   /**
    * Sets a package id value
@@ -266,20 +266,20 @@ export interface IBreadcrumb {
 
 export interface NameEntryType {
   /**
-  * Sets the first name field
-  */
+   * Sets the first name field
+   */
   firstName: string;
   /**
-  * Sets the middle name field
-  */
+   * Sets the middle name field
+   */
   middleName: string;
   /**
-  * Sets the last name field
-  */
+   * Sets the last name field
+   */
   lastName: string;
   /**
-  * Sets the suffix field
-  */
+   * Sets the suffix field
+   */
   suffix: string;
 }
 
@@ -313,7 +313,7 @@ export interface TextAreaWidthType {
    * when type = '' | 'normal' sets the default css settings
    * when type = 'full' sets the dynamic css settings
    */
-  type: '' | 'normal' | 'full';
+  type: "" | "normal" | "full";
 
   /**
    * Flag for dynamic css settings
@@ -354,30 +354,30 @@ export interface UploadedFileData {
 }
 
 export interface ActionModalConfig {
-    /**
-     * sets the modal title
-     */
-    title?: string,
-    /**
-     * sets the modal description
-     */
-    description?: string
+  /**
+   * sets the modal title
+   */
+  title?: string;
+  /**
+   * sets the modal description
+   */
+  description?: string;
 }
 export interface ToggleUploadFileAction {
-    /**
-     * sets the upload file edit action toggle
-     */
-    isEdit?: boolean,
-    /**
-     * sets the upload file secure action toggle
-     */
-    isSecure?: boolean,
-    /**
-     * sets the upload file sort action toggle
-     */
-    isSort?: boolean,
-    /**
-     * sets the upload file remove action toggle
-     */
-    isRemove?: boolean
+  /**
+   * sets the upload file edit action toggle
+   */
+  isEdit?: boolean;
+  /**
+   * sets the upload file secure action toggle
+   */
+  isSecure?: boolean;
+  /**
+   * sets the upload file sort action toggle
+   */
+  isSort?: boolean;
+  /**
+   * sets the upload file remove action toggle
+   */
+  isRemove?: boolean;
 }

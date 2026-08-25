@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {OverlayRef} from '../overlay-ref';
+import { OverlayRef } from "../overlay-ref";
 
 /**
  * Describes a strategy that will be used by an overlay

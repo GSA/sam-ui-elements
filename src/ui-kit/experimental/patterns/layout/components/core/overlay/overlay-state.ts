@@ -6,10 +6,9 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {PositionStrategy} from './position/position-strategy';
-import {Direction} from '@angular/cdk/bidi';
-import {ScrollStrategy} from './scroll/scroll-strategy';
-
+import { PositionStrategy } from "./position/position-strategy";
+import { Direction } from "@angular/cdk/bidi";
+import { ScrollStrategy } from "./scroll/scroll-strategy";
 
 /**
  * OverlayState is a bag of values for either the initial configuration or current state of an
@@ -23,13 +22,13 @@ export class OverlayState {
   scrollStrategy: ScrollStrategy;
 
   /** Custom class to add to the overlay pane. */
-  panelClass?: string = '';
+  panelClass?: string = "";
 
   /** Whether the overlay has a backdrop. */
   hasBackdrop?: boolean = false;
 
   /** Custom class to add to the backdrop */
-  backdropClass?: string = 'cdk-overlay-dark-backdrop';
+  backdropClass?: string = "cdk-overlay-dark-backdrop";
 
   /** The width of the overlay panel. If a number is provided, pixel units are assumed. */
   width?: number | string;
@@ -44,7 +43,7 @@ export class OverlayState {
   minHeight?: number | string;
 
   /** The direction of the text in the overlay panel. */
-  direction?: Direction = 'ltr';
+  direction?: Direction = "ltr";
 
   // TODO(jelbourn): configuration still to add
   // - focus trap

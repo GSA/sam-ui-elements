@@ -1,24 +1,22 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
-    selector: "sam-container",
-    template: `
+  selector: "sam-container",
+  template: `
     <div [ngClass]="css_classes">
       <ng-content></ng-content>
     </div>
   `,
-    standalone: false
+  standalone: false,
 })
-export class SamContainerComponent implements OnInit{
-
+export class SamContainerComponent implements OnInit {
   @Input() public size: string;
   @Input() public weight: string;
 
-  css_classes: string = 'sam container';
+  css_classes: string = "sam container";
 
-  ngOnInit(){
-    this.css_classes += this.size ? ` ${this.size}` : '';
-    this.css_classes += this.weight ? ` ${this.weight}` : '';
+  ngOnInit() {
+    this.css_classes += this.size ? ` ${this.size}` : "";
+    this.css_classes += this.weight ? ` ${this.weight}` : "";
   }
-
 }

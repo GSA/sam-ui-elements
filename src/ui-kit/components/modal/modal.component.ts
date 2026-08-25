@@ -6,27 +6,25 @@ import {
   EventEmitter,
   ElementRef,
   ViewChild,
-  ChangeDetectorRef
-} from '@angular/core';
-import { ScrollHelpers } from '../../dom-helpers';
-import {
-  IconProp
-} from '@fortawesome/fontawesome-svg-core';
-import { KeyHelper, KEYS } from '../../utilities/key-helper/key-helper';
+  ChangeDetectorRef,
+} from "@angular/core";
+import { ScrollHelpers } from "../../dom-helpers";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
+import { KeyHelper, KEYS } from "../../utilities/key-helper/key-helper";
 
 /**
  * The <sam-modal> component display a popover for user interaction
  */
 @Component({
-    selector: 'sam-modal',
-    templateUrl: './modal.template.html',
-    standalone: false
+  selector: "sam-modal",
+  templateUrl: "./modal.template.html",
+  standalone: false,
 })
 export class SamModalComponent implements OnInit {
   /**
    * Sets ID html attribute of modal
    */
-  @Input() id: string = '';
+  @Input() id: string = "";
   /**
    * Sets type of modal, takes values of "success", "warning", "error", "plain"
    * "info" or "primary"
@@ -43,11 +41,11 @@ export class SamModalComponent implements OnInit {
   /**
    * Sets the cancel button text
    */
-  @Input() cancelButtonLabel: string = '';
+  @Input() cancelButtonLabel: string = "";
   /**
    * Sets the submit button text
    */
-  @Input() submitButtonLabel: string = '';
+  @Input() submitButtonLabel: string = "";
   /**
    *  Disables the submit button.
    */
@@ -71,7 +69,7 @@ export class SamModalComponent implements OnInit {
   /**
    * Sets the modal button
    */
-  @Input() buttonPosition: string = 'center';
+  @Input() buttonPosition: string = "center";
   /**
    * Sets the modal condensed styles
    */
@@ -107,19 +105,19 @@ export class SamModalComponent implements OnInit {
    */
   @Output() submit: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild('modalRoot', {static: false}) public modalRoot: ElementRef;
-  @ViewChild('modalContent', {static: false}) public modalContent: ElementRef;
-  @ViewChild('closeButton', {static: true}) public closeButton: ElementRef;
+  @ViewChild("modalRoot", { static: false }) public modalRoot: ElementRef;
+  @ViewChild("modalContent", { static: false }) public modalContent: ElementRef;
+  @ViewChild("closeButton", { static: true }) public closeButton: ElementRef;
   public show = false;
   public clickOutsideReady = false;
   public types: any = {
-    'success': { class: 'usa-alert-success', sr: 'success alert' },
-    'warning': { class: 'usa-alert-warning', sr: 'warning alert' },
-    'error': { class: 'usa-alert-error', sr: 'error alert' },
-    'info': { class: 'usa-alert-info', sr: 'information alert' },
-    'plain': { class: 'usa-alert-plain', sr: 'plain alert' },
-    'primary': { class: 'sam-primary' },
-    'download': { class: 'usa-alert-download' }
+    success: { class: "usa-alert-success", sr: "success alert" },
+    warning: { class: "usa-alert-warning", sr: "warning alert" },
+    error: { class: "usa-alert-error", sr: "error alert" },
+    info: { class: "usa-alert-info", sr: "information alert" },
+    plain: { class: "usa-alert-plain", sr: "plain alert" },
+    primary: { class: "sam-primary" },
+    download: { class: "usa-alert-download" },
   };
   public selectedType: string = this.types.success.class;
 
@@ -127,7 +125,7 @@ export class SamModalComponent implements OnInit {
   private internalId;
   private _focusModalElement: boolean = false;
   private _focusableString: string =
-      'a[href], area, button, select, textarea, *[tabindex], \
+    'a[href], area, button, select, textarea, *[tabindex], \
       input:not([type="hidden"])';
 
   private _allFocusableElements: NodeListOf<Element>;
@@ -136,12 +134,15 @@ export class SamModalComponent implements OnInit {
 
   private args = undefined;
   public modalElIds = {
-    closeId: '',
-    submitId: '',
-    cancelId: ''
+    closeId: "",
+    submitId: "",
+    cancelId: "",
   };
 
-  constructor(private hostElement: ElementRef, public cdr: ChangeDetectorRef) {
+  constructor(
+    private hostElement: ElementRef,
+    public cdr: ChangeDetectorRef
+  ) {
     this.internalId = Date.now();
   }
 
@@ -152,7 +153,6 @@ export class SamModalComponent implements OnInit {
     }
     this.setModalElementIds();
   }
-
 
   ngOnDestroy() {
     this.show = false;
@@ -199,13 +199,16 @@ export class SamModalComponent implements OnInit {
   }
 
   set5082() {
-    this._allFocusableElements =
-        document.querySelectorAll(this._focusableString);
+    this._allFocusableElements = document.querySelectorAll(
+      this._focusableString
+    );
     this._modalFocusableElements =
-        this.modalRoot.nativeElement.querySelectorAll(this._focusableString);
+      this.modalRoot.nativeElement.querySelectorAll(this._focusableString);
     let modulFocus = this._modalFocusableElements[0] as HTMLBaseElement;
     let firstFocus = this._modalFocusableElements[1] as HTMLBaseElement;
-    let lastFocus = this._modalFocusableElements[this._modalFocusableElements.length - 1] as HTMLBaseElement;
+    let lastFocus = this._modalFocusableElements[
+      this._modalFocusableElements.length - 1
+    ] as HTMLBaseElement;
 
     if (this._focusModalElement) {
       modulFocus.focus();
@@ -242,7 +245,6 @@ export class SamModalComponent implements OnInit {
         }
       });
 
-
       lastFocus.addEventListener("keydown", function (ev: KeyboardEvent) {
         if (!ev.shiftKey && ev.keyCode === 9) {
           ev.preventDefault();
@@ -250,9 +252,7 @@ export class SamModalComponent implements OnInit {
         }
       });
     }
-
   }
-
 
   closeModal(emit: boolean = true) {
     this.enableScroll();
@@ -263,8 +263,6 @@ export class SamModalComponent implements OnInit {
       this.close.emit(this.args);
     }
     this.args = undefined;
-
-
   }
 
   submitBtnClick() {
@@ -284,26 +282,25 @@ export class SamModalComponent implements OnInit {
   }
   private setModalElementIds() {
     if (this.id) {
-      this.modalElIds.cancelId = this.id + 'Cancel';
-      this.modalElIds.closeId = this.id + 'Close';
-      this.modalElIds.submitId = this.id + 'Submit';
+      this.modalElIds.cancelId = this.id + "Cancel";
+      this.modalElIds.closeId = this.id + "Close";
+      this.modalElIds.submitId = this.id + "Submit";
     }
   }
   // enable modal Scroll when opened
   enableScroll(): void {
-    this.hostElement.nativeElement.style.display = 'none';
-    document.body.classList.remove('modal-open');
+    this.hostElement.nativeElement.style.display = "none";
+    document.body.classList.remove("modal-open");
   }
   // disable modal scroll when closed
   disableScroll(): void {
-    this.hostElement.nativeElement.style.display = 'block';
-    document.body.classList.add('modal-open');
-
+    this.hostElement.nativeElement.style.display = "block";
+    document.body.classList.add("modal-open");
   }
 
   closeEscape(event): void {
     if (this.closeOnEscape && KeyHelper.is(KEYS.ESC, event)) {
-      this.closeModal()
+      this.closeModal();
     }
     event.stopPropagation();
   }

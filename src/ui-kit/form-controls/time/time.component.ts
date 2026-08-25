@@ -6,85 +6,103 @@ import {
   EventEmitter,
   OnInit,
   OnChanges,
-  forwardRef
-} from '@angular/core';
-import moment from 'moment';
-import { LabelWrapper } from '../../wrappers/label-wrapper';
+  forwardRef,
+} from "@angular/core";
+import moment from "moment";
+import { LabelWrapper } from "../../wrappers/label-wrapper";
 import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
   FormControl,
   Validators,
-  ValidatorFn
-} from '@angular/forms';
-import {SamFormService} from '../../form-service';
+  ValidatorFn,
+} from "@angular/forms";
+import { SamFormService } from "../../form-service";
 
 /**
  * Provides a time input form control
  */
 @Component({
-    selector: 'sam-time',
-    templateUrl: 'time.template.html',
-    providers: [{
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => SamTimeComponent),
-            multi: true
-        }],
-    standalone: false
+  selector: "sam-time",
+  templateUrl: "time.template.html",
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SamTimeComponent),
+      multi: true,
+    },
+  ],
+  standalone: false,
 })
 export class SamTimeComponent
-  implements OnInit, OnChanges, ControlValueAccessor {
-  INPUT_FORMAT: string = 'H:m';
-  OUTPUT_FORMAT: string = 'HH:mm';
-  
+  implements OnInit, OnChanges, ControlValueAccessor
+{
+  INPUT_FORMAT: string = "H:m";
+  OUTPUT_FORMAT: string = "HH:mm";
+
   /**
-  * Sets the required text
-  */
+   * Sets the required text
+   */
   @Input() public required: boolean = false;
   /**
-  * Sets the disabled attribute
-  */
+   * Sets the disabled attribute
+   */
   @Input() public disabled: boolean = false;
   /**
-  * Sets the label
-  */
+   * Sets the label
+   */
   @Input() public label: string;
   /**
-  * Sets the name attribute 
-  */
+   * Sets the name attribute
+   */
   @Input() public name: string;
   /**
-  * Sets the hint text
-  */
+   * Sets the hint text
+   */
   @Input() public hint: string;
   /**
-  * Passes in the Angular FormControl
-  */
+   * Passes in the Angular FormControl
+   */
   @Input() public control: FormControl;
   /**
-  * Toggles validations to display with SamFormService events
-  */
+   * Toggles validations to display with SamFormService events
+   */
   @Input() public useFormService: boolean;
 
-  @ViewChild(LabelWrapper, {static: true}) public wrapper: LabelWrapper;
-  @ViewChild('hour', {static: true}) public hourV;
-  @ViewChild('minute', {static: true}) public minuteV;
-  @ViewChild('ampm', {static: true}) public ampmV;
+  @ViewChild(LabelWrapper, { static: true }) public wrapper: LabelWrapper;
+  @ViewChild("hour", { static: true }) public hourV;
+  @ViewChild("minute", { static: true }) public minuteV;
+  @ViewChild("ampm", { static: true }) public ampmV;
 
   public value: string = undefined;
   public hours: number = undefined;
   public formattedHours: string = undefined;
   public minutes: number = undefined;
-  public amPm: string = 'am';
+  public amPm: string = "am";
   public minuteBlurFlag = true;
-  public allowChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
-    'Backspace', 'ArrowLeft', 'ArrowRight', 'Tab', 'Delete'];
+  public allowChars = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "Backspace",
+    "ArrowLeft",
+    "ArrowRight",
+    "Tab",
+    "Delete",
+  ];
 
-  constructor(private samFormService: SamFormService) { }
+  constructor(private samFormService: SamFormService) {}
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error('SamTimeComponent required a [name] for 508 compliance');
+      throw new Error("SamTimeComponent required a [name] for 508 compliance");
     }
     if (this.control) {
       if (!this.useFormService) {
@@ -94,11 +112,17 @@ export class SamTimeComponent
         this.wrapper.formatErrors(this.control);
       } else {
         this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
-          if ((!evt.root || evt.root === this.control.root)
-            && evt.eventType && evt.eventType === 'submit') {
+          if (
+            (!evt.root || evt.root === this.control.root) &&
+            evt.eventType &&
+            evt.eventType === "submit"
+          ) {
             this.wrapper.formatErrors(this.control);
-          } else if ((!evt.root || evt.root === this.control.root)
-            && evt.eventType && evt.eventType === 'reset') {
+          } else if (
+            (!evt.root || evt.root === this.control.root) &&
+            evt.eventType &&
+            evt.eventType === "reset"
+          ) {
             this.wrapper.clearError();
           }
         });
@@ -125,10 +149,10 @@ export class SamTimeComponent
     // convert from 24 hour to 12 hour time
 
     if (hours > 12) {
-      this.amPm = 'pm';
+      this.amPm = "pm";
       hours -= 12;
     } else {
-      this.amPm = 'am';
+      this.amPm = "am";
     }
 
     if (hours === 0) {
@@ -144,7 +168,7 @@ export class SamTimeComponent
     if (hoursInt === 12) {
       hoursInt = 0;
     }
-    if (this.amPm === 'pm') {
+    if (this.amPm === "pm") {
       return hoursInt + 12;
     } else {
       return hoursInt;
@@ -154,8 +178,8 @@ export class SamTimeComponent
   selectChange() {
     // this.parseValueString();
     const m = moment({
-      hour: this.formatHours(this.hourV.nativeElement.value), 
-      minute: this.minuteV.nativeElement.value
+      hour: this.formatHours(this.hourV.nativeElement.value),
+      minute: this.minuteV.nativeElement.value,
     }).format(this.OUTPUT_FORMAT);
     this.onInputChange(m);
   }
@@ -163,20 +187,20 @@ export class SamTimeComponent
   onInputChange(override) {
     let returnVal = override;
     if (!returnVal) {
-      returnVal = 'Invalid Time';
-    } 
+      returnVal = "Invalid Time";
+    }
     this.onChange(returnVal);
   }
-  
+
   hourTouched(event) {
-    if (event.srcElement.value.substring(0, 1) === '0') {
+    if (event.srcElement.value.substring(0, 1) === "0") {
       this.hourV.nativeElement.value = event.srcElement.value.substring(1);
     }
     this.setTouched();
   }
 
   minuteTouched(event) {
-    if (event.srcElement.value.substring(0, 1) === '0') {
+    if (event.srcElement.value.substring(0, 1) === "0") {
       this.minuteV.nativeElement.value = event.srcElement.value.substring(1);
     }
     this.setTouched();
@@ -189,10 +213,16 @@ export class SamTimeComponent
   isValid() {
     const hours = parseInt(this.hourV.nativeElement.value, 10);
     const minutes = parseInt(this.minuteV.nativeElement.value, 10);
-    return !isNaN(hours) && !isNaN(minutes)
-        && typeof hours === 'number' && typeof minutes === 'number'
-        && hours >= 1 && hours <= 12
-        && minutes >= 0 && minutes <= 59;
+    return (
+      !isNaN(hours) &&
+      !isNaN(minutes) &&
+      typeof hours === "number" &&
+      typeof minutes === "number" &&
+      hours >= 1 &&
+      hours <= 12 &&
+      minutes >= 0 &&
+      minutes <= 59
+    );
   }
 
   getTime(): any {
@@ -208,13 +238,13 @@ export class SamTimeComponent
       hours = 0;
     }
 
-    if (this.amPm === 'pm') {
+    if (this.amPm === "pm") {
       hours += 12;
     }
 
     return moment({
-      hour: hours, 
-      minute: this.minuteV.nativeElement.value
+      hour: hours,
+      minute: this.minuteV.nativeElement.value,
     });
   }
 
@@ -222,20 +252,24 @@ export class SamTimeComponent
   isEmptyField() {
     const hours = this.hours;
     const minutes = this.minutes;
-    return (isNaN(hours) || hours === undefined)
-      && (isNaN(minutes) || this.minutes === undefined);
+    return (
+      (isNaN(hours) || hours === undefined) &&
+      (isNaN(minutes) || this.minutes === undefined)
+    );
   }
-  
+
   hoursPress(event) {
     if (this._checkCopyPasteChar(event.key)) {
       return;
     }
     const inputNum = parseInt(event.key, 10);
     let possibleNum;
-    if (!isNaN(this.hourV.nativeElement.value) 
-      && this.hourV.nativeElement.value !== '') {
-      possibleNum = (parseInt(this.hourV.nativeElement.value, 10) * 10)
-        + inputNum;
+    if (
+      !isNaN(this.hourV.nativeElement.value) &&
+      this.hourV.nativeElement.value !== ""
+    ) {
+      possibleNum =
+        parseInt(this.hourV.nativeElement.value, 10) * 10 + inputNum;
     } else {
       possibleNum = inputNum;
     }
@@ -244,14 +278,16 @@ export class SamTimeComponent
       return;
     }
     if (this._keyIsNumber(event.key)) {
-      if (event.target.value.length === 1 || 
-        (event.target.value.length === 0 && possibleNum > 1)) {
+      if (
+        event.target.value.length === 1 ||
+        (event.target.value.length === 0 && possibleNum > 1)
+      ) {
         this.minuteV.nativeElement.focus();
       }
       this.hourV.nativeElement.value = possibleNum;
       const val = moment({
-        hour: this.formatHours(possibleNum), 
-        minute: this.minuteV.nativeElement.value
+        hour: this.formatHours(possibleNum),
+        minute: this.minuteV.nativeElement.value,
       }).format(this.OUTPUT_FORMAT);
       this.onInputChange(val);
       event.preventDefault();
@@ -264,10 +300,12 @@ export class SamTimeComponent
     }
     const inputNum = parseInt(event.key, 10);
     let possibleNum;
-    if (!isNaN(parseInt(this.minuteV.nativeElement.value, 10)) 
-      && this.minuteV.nativeElement.value !== '') { 
-      possibleNum = (parseInt(this.minuteV.nativeElement.value, 10) * 10)
-        + inputNum;
+    if (
+      !isNaN(parseInt(this.minuteV.nativeElement.value, 10)) &&
+      this.minuteV.nativeElement.value !== ""
+    ) {
+      possibleNum =
+        parseInt(this.minuteV.nativeElement.value, 10) * 10 + inputNum;
     } else {
       possibleNum = inputNum;
     }
@@ -276,14 +314,16 @@ export class SamTimeComponent
       return;
     }
     if (this._keyIsNumber(event.key)) {
-      if (event.target.value.length === 1 || 
-        (event.target.value.length === 0 && possibleNum > 5)) {
+      if (
+        event.target.value.length === 1 ||
+        (event.target.value.length === 0 && possibleNum > 5)
+      ) {
         this.ampmV.nativeElement.focus();
       }
       this.minuteV.nativeElement.value = possibleNum;
       const val = moment({
-        hour: this.formatHours(this.hourV.nativeElement.value), 
-        minute: possibleNum
+        hour: this.formatHours(this.hourV.nativeElement.value),
+        minute: possibleNum,
       }).format(this.OUTPUT_FORMAT);
       this.onInputChange(val);
       event.preventDefault();
@@ -309,15 +349,15 @@ export class SamTimeComponent
   }
 
   _checkCopyPasteChar(char) {
-    if (char === 'c' || char === 'v') {
+    if (char === "c" || char === "v") {
       return true;
     }
   }
 
   removalKeyHandler() {
     const m = moment({
-      hour: this.formatHours(this.hourV.nativeElement.value), 
-      minute: this.minuteV.nativeElement.value
+      hour: this.formatHours(this.hourV.nativeElement.value),
+      minute: this.minuteV.nativeElement.value,
     }).format(this.OUTPUT_FORMAT);
     this.onChange(m);
   }
@@ -325,14 +365,14 @@ export class SamTimeComponent
   resetInput() {
     // this.hours = '';
     // this.minutes = '';
-    this.hourV.nativeElement.value = '';
-    this.minuteV.nativeElement.value = '';
-    this.ampmV.nativeElement.value = 'am';
+    this.hourV.nativeElement.value = "";
+    this.minuteV.nativeElement.value = "";
+    this.ampmV.nativeElement.value = "am";
   }
 
   onChange: any = () => undefined;
   onTouched: any = () => undefined;
-  
+
   registerOnChange(fn) {
     this.onChange = fn;
   }
@@ -349,7 +389,7 @@ export class SamTimeComponent
     if (value) {
       this.value = value;
     } else {
-      this.value = '';
+      this.value = "";
       this.resetInput();
     }
     this.parseValueString();

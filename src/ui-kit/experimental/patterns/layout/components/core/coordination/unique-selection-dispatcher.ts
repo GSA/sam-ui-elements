@@ -6,11 +6,13 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {Injectable, Optional, SkipSelf} from '@angular/core';
-
+import { Injectable, Optional, SkipSelf } from "@angular/core";
 
 // Users of the Dispatcher never need to see this type, but TypeScript requires it to be exported.
-export type UniqueSelectionDispatcherListener = (id: string, name: string) => void;
+export type UniqueSelectionDispatcherListener = (
+  id: string,
+  name: string
+) => void;
 
 /**
  * Class to coordinate unique selection based on name.
@@ -43,15 +45,18 @@ export class UniqueSelectionDispatcher {
   listen(listener: UniqueSelectionDispatcherListener): () => void {
     this._listeners.push(listener);
     return () => {
-      this._listeners = this._listeners.filter((registered: UniqueSelectionDispatcherListener) => {
-        return listener !== registered;
-      });
+      this._listeners = this._listeners.filter(
+        (registered: UniqueSelectionDispatcherListener) => {
+          return listener !== registered;
+        }
+      );
     };
   }
 }
 
 export function UNIQUE_SELECTION_DISPATCHER_PROVIDER_FACTORY(
-    parentDispatcher: UniqueSelectionDispatcher) {
+  parentDispatcher: UniqueSelectionDispatcher
+) {
   return parentDispatcher || new UniqueSelectionDispatcher();
 }
 
@@ -59,5 +64,5 @@ export const UNIQUE_SELECTION_DISPATCHER_PROVIDER = {
   // If there is already a dispatcher available, use that. Otherwise, provide a new one.
   provide: UniqueSelectionDispatcher,
   deps: [[new Optional(), new SkipSelf(), UniqueSelectionDispatcher]],
-  useFactory: UNIQUE_SELECTION_DISPATCHER_PROVIDER_FACTORY
+  useFactory: UNIQUE_SELECTION_DISPATCHER_PROVIDER_FACTORY,
 };

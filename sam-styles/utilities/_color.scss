@@ -1,11 +1,11 @@
 // COLOR UTILITIES
 // --------------------------------
-.sam.ink.black{
-  color: #0F0F0F;
+.sam.ink.black {
+  color: #0f0f0f;
 }
 
 // Background
-.bg-base-lightest{
+.bg-base-lightest {
   background-color: #f0f0f0;
 }
 
@@ -13,22 +13,21 @@
 // Responsive
 @media screen and (min-width: 600px) {
   .tablet\:bg-transparent-to-base-lightest {
-    background: linear-gradient(to right, transparent 0%,#f0f0f0 100%);
+    background: linear-gradient(to right, transparent 0%, #f0f0f0 100%);
   }
 }
 
-
 // Text
-.text-primary{
-  color: #0071bc!important;
+.text-primary {
+  color: #0071bc !important;
 }
 
-.text-red{
-  color:#e52207!important;
+.text-red {
+  color: #e52207 !important;
 }
 
 .text-gray-30 {
-  color: #adadad!important;
+  color: #adadad !important;
 }
 
 .text-base {
@@ -36,5 +35,5 @@
 }
 
 .text-base-dark {
-  color: #565c65 !important
+  color: #565c65 !important;
 }
