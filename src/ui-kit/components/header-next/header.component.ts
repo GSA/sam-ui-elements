@@ -3,19 +3,19 @@ import {
   ViewChild,
   ElementRef,
   HostListener,
-  Input
-} from '@angular/core';
-import { faSquare, faCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { sdsBars } from '@gsa-sam/icons';
+  Input,
+} from "@angular/core";
+import { faSquare, faCircle, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { sdsBars } from "@gsa-sam/icons";
 
 @Component({
-    selector: 'sam-header-next',
-    templateUrl: 'header.template.html',
-    standalone: false
+  selector: "sam-header-next",
+  templateUrl: "header.template.html",
+  standalone: false,
 })
 export class SamHeaderNextComponent {
-  @ViewChild('usaNavOpen', {static: true}) openNavBtn: ElementRef;
-  @ViewChild('usaNavClose', {static: true}) closeNavBtn: ElementRef;
+  @ViewChild("usaNavOpen", { static: true }) openNavBtn: ElementRef;
+  @ViewChild("usaNavClose", { static: true }) closeNavBtn: ElementRef;
   @Input() logoPath: string;
   @Input() notifications: boolean;
 
@@ -30,7 +30,7 @@ export class SamHeaderNextComponent {
   // When the mobile nav is active, and the close box isn't visible,
   // we know the user's viewport has been resized to be larger.
   // Let's make the page state consistent by deactivating the mobile nav.
-  @HostListener('window:resize', ['$event'])
+  @HostListener("window:resize", ["$event"])
   onBrowserResize(event) {
     if (
       this.mobileNavActive &&

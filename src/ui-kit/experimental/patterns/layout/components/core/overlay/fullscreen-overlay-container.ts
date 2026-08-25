@@ -6,8 +6,8 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {Injectable} from '@angular/core';
-import {OverlayContainer} from './overlay-container';
+import { Injectable } from "@angular/core";
+import { OverlayContainer } from "./overlay-container";
 
 /**
  * The FullscreenOverlayContainer is the alternative to OverlayContainer
@@ -23,7 +23,9 @@ export class FullscreenOverlayContainer extends OverlayContainer {
   protected _createContainer(): void {
     super._createContainer();
     this._adjustParentForFullscreenChange();
-    this._addFullscreenChangeListener(() => this._adjustParentForFullscreenChange());
+    this._addFullscreenChangeListener(() =>
+      this._adjustParentForFullscreenChange()
+    );
   }
 
   private _adjustParentForFullscreenChange(): void {
@@ -38,26 +40,28 @@ export class FullscreenOverlayContainer extends OverlayContainer {
   private _addFullscreenChangeListener(fn: () => void) {
     const document: any = window.document;
     if (document.fullscreenEnabled) {
-      document.addEventListener('fullscreenchange', fn);
+      document.addEventListener("fullscreenchange", fn);
     } else if (document.webkitFullscreenEnabled) {
-      document.addEventListener('webkitfullscreenchange', fn);
+      document.addEventListener("webkitfullscreenchange", fn);
     } else if ((document as any).mozFullScreenEnabled) {
-      document.addEventListener('mozfullscreenchange', fn);
+      document.addEventListener("mozfullscreenchange", fn);
     } else if ((document as any).msFullscreenEnabled) {
-      document.addEventListener('MSFullscreenChange', fn);
+      document.addEventListener("MSFullscreenChange", fn);
     }
   }
 
   /**
    * When the page is put into fullscreen mode, a specific element is specified.
    * Only that element and its children are visible when in fullscreen mode.
-  */
+   */
   getFullscreenElement(): Element {
     const document: any = window.document;
-    return document.fullscreenElement ||
-        document.webkitFullscreenElement ||
-        (document as any).mozFullScreenElement ||
-        (document as any).msFullscreenElement ||
-        null;
+    return (
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      (document as any).mozFullScreenElement ||
+      (document as any).msFullscreenElement ||
+      null
+    );
   }
 }

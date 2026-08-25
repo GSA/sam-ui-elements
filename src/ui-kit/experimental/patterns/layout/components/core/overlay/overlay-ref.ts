@@ -6,12 +6,12 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {NgZone} from '@angular/core';
-import {PortalHost, Portal} from '@angular/cdk/portal';
+import { NgZone } from "@angular/core";
+import { PortalHost, Portal } from "@angular/cdk/portal";
 
-import {OverlayState} from './overlay-state';
-import {ScrollStrategy} from './scroll/scroll-strategy';
-import {Observable, Subject} from 'rxjs';
+import { OverlayState } from "./overlay-state";
+import { ScrollStrategy } from "./scroll/scroll-strategy";
+import { Observable, Subject } from "rxjs";
 
 /**
  * Reference to an overlay that has been created with the Overlay service.
@@ -24,12 +24,12 @@ export class OverlayRef implements PortalHost {
   private _detachments = new Subject<void>();
 
   constructor(
-      private _portalHost: PortalHost,
-      private _pane: HTMLElement,
-      private _state: OverlayState,
-      private _scrollStrategy: ScrollStrategy,
-      private _ngZone: NgZone) {
-
+    private _portalHost: PortalHost,
+    private _pane: HTMLElement,
+    private _state: OverlayState,
+    private _scrollStrategy: ScrollStrategy,
+    private _ngZone: NgZone
+  ) {
     _scrollStrategy.attach(this);
   }
 
@@ -151,7 +151,7 @@ export class OverlayRef implements PortalHost {
 
   /** Updates the text direction of the overlay panel. */
   private updateDirection() {
-    this._pane.setAttribute('dir', this._state.direction!);
+    this._pane.setAttribute("dir", this._state.direction!);
   }
 
   /** Updates the size of the overlay based on the overlay config. */
@@ -175,13 +175,13 @@ export class OverlayRef implements PortalHost {
 
   /** Toggles the pointer events for the overlay pane element. */
   private _togglePointerEvents(enablePointer: boolean) {
-    this._pane.style.pointerEvents = enablePointer ? 'auto' : 'none';
+    this._pane.style.pointerEvents = enablePointer ? "auto" : "none";
   }
 
   /** Attaches a backdrop for this overlay. */
   private _attachBackdrop() {
-    this._backdropElement = document.createElement('div');
-    this._backdropElement.classList.add('cdk-overlay-backdrop');
+    this._backdropElement = document.createElement("div");
+    this._backdropElement.classList.add("cdk-overlay-backdrop");
 
     if (this._state.backdropClass) {
       this._backdropElement.classList.add(this._state.backdropClass);
@@ -193,12 +193,14 @@ export class OverlayRef implements PortalHost {
 
     // Forward backdrop clicks such that the consumer of the overlay can perform whatever
     // action desired when such a click occurs (usually closing the overlay).
-    this._backdropElement.addEventListener('click', () => this._backdropClick.next(null));
+    this._backdropElement.addEventListener("click", () =>
+      this._backdropClick.next(null)
+    );
 
     // Add class to fade-in the backdrop after one frame.
     requestAnimationFrame(() => {
       if (this._backdropElement) {
-        this._backdropElement.classList.add('cdk-overlay-backdrop-showing');
+        this._backdropElement.classList.add("cdk-overlay-backdrop-showing");
       }
     });
   }
@@ -235,17 +237,17 @@ export class OverlayRef implements PortalHost {
         }
       };
 
-      backdropToDetach.classList.remove('cdk-overlay-backdrop-showing');
+      backdropToDetach.classList.remove("cdk-overlay-backdrop-showing");
 
       if (this._state.backdropClass) {
         backdropToDetach.classList.remove(this._state.backdropClass);
       }
 
-      backdropToDetach.addEventListener('transitionend', finishDetach);
+      backdropToDetach.addEventListener("transitionend", finishDetach);
 
       // If the backdrop doesn't have a transition, the `transitionend` event won't fire.
       // In this case we make it unclickable and we try to remove it after a delay.
-      backdropToDetach.style.pointerEvents = 'none';
+      backdropToDetach.style.pointerEvents = "none";
 
       // Run this outside the Angular zone because there's nothing that Angular cares about.
       // If it were to run inside the Angular zone, every test that used Overlay would have to be
@@ -258,5 +260,5 @@ export class OverlayRef implements PortalHost {
 }
 
 function formatCssUnit(value: number | string) {
-  return typeof value === 'string' ? value as string : `${value}px`;
+  return typeof value === "string" ? (value as string) : `${value}px`;
 }

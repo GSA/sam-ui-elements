@@ -3,26 +3,26 @@ import {
   Output,
   EventEmitter,
   Component,
-  Optional
-} from '@angular/core';
-import { MdSidenav } from '../../experimental/patterns/layout/components/sidenav';
-import { ToolbarItem } from '../../experimental/actions-list';
-import { SamPageNextService } from '../../experimental/patterns/layout/architecture';
+  Optional,
+} from "@angular/core";
+import { MdSidenav } from "../../experimental/patterns/layout/components/sidenav";
+import { ToolbarItem } from "../../experimental/actions-list";
+import { SamPageNextService } from "../../experimental/patterns/layout/architecture";
 
 @Component({
-    selector: 'sam-aside-toggle',
-    template: `
-    <button *ngIf="sidenav && showToggle" class="sam button tertiary small"
+  selector: "sam-aside-toggle",
+  template: `
+    <button
+      *ngIf="sidenav && showToggle"
+      class="sam button tertiary small"
       (click)="handleClick()"
-      [disabled]="contentModel?.disabled">    
-      <span class="fa"
-        [ngClass]="contentModel?.icon"
-        aria-hidden="true"
-      ></span>
+      [disabled]="contentModel?.disabled"
+    >
+      <span class="fa" [ngClass]="contentModel?.icon" aria-hidden="true"></span>
       {{ contentModel?.label }}
     </button>
   `,
-    standalone: false
+  standalone: false,
 })
 export class SamAsideToggleComponent {
   /**
@@ -37,34 +37,39 @@ export class SamAsideToggleComponent {
    * The content model for button
    */
   @Input() public contentModel: ToolbarItem = {
-    label: 'Toggle',
-    icon: 'fa-chevron-circle-left',
-    disabled: false
-  }
+    label: "Toggle",
+    icon: "fa-chevron-circle-left",
+    disabled: false,
+  };
   /**
    * The event emitter for toggle events
    */
   @Output() public toggle = new EventEmitter<ToolbarItem>();
 
-  constructor(@Optional() public _pageService: SamPageNextService){ }
+  constructor(@Optional() public _pageService: SamPageNextService) {}
 
-  ngOnInit(){
-    if(this._pageService){
-      this._pageService.getPageMessage().subscribe((data)=>{
-        if(this.sidenav && data && data.event && data.event === 'open sidebar'){
+  ngOnInit() {
+    if (this._pageService) {
+      this._pageService.getPageMessage().subscribe((data) => {
+        if (
+          this.sidenav &&
+          data &&
+          data.event &&
+          data.event === "open sidebar"
+        ) {
           this.showToggle = true;
         }
       });
     }
   }
-  ngOnChanges(c){
-    if(c.showToggle && this.sidenav && this.showToggle){
+  ngOnChanges(c) {
+    if (c.showToggle && this.sidenav && this.showToggle) {
       this.sidenav.toggle(true);
     }
   }
-  public ariaLabel = 'Toggle '
+  public ariaLabel = "Toggle ";
 
-  public handleClick (): void {
+  public handleClick(): void {
     if (this.sidenav) {
       this.sidenav.toggle();
     }

@@ -1,3 +1,3 @@
-export { SamSidenavModule, SamSidenavComponent } from './sidenav';
-export { MenuItem } from './interfaces';
-export { SidenavService } from './services';
+export { SamSidenavModule, SamSidenavComponent } from "./sidenav";
+export { MenuItem } from "./interfaces";
+export { SidenavService } from "./services";

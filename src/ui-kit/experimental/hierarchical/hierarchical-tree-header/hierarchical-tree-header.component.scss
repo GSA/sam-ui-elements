@@ -1,15 +1,15 @@
-.sam-hierarchical-tree-header{
+.sam-hierarchical-tree-header {
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
 
-.sam-hierarchical-tree-header> *{
+.sam-hierarchical-tree-header > * {
   margin-left: 5px;
   margin-right: 5px;
 }
 
-.hierarchy-views{
+.hierarchy-views {
   display: flex;
   flex-direction: row;
   color: #205493;
@@ -21,7 +21,7 @@
   display: none;
 }
 
-.order-results{
+.order-results {
   background-color: white;
   color: black;
   border: 1px solid black;
@@ -30,6 +30,6 @@
   line-height: normal;
 }
 
-sam-select{
+sam-select {
   width: 30rem;
 }

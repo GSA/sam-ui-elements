@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable()
 export class PageService {
@@ -10,14 +10,14 @@ export class PageService {
   set sidebar(value: boolean) {
     this._sidebar = value;
     if (this._sidebar && !this.wideSidebar) {
-      this.sidebarColumns = '3';
-      this.mainContentColumns = '9';
+      this.sidebarColumns = "3";
+      this.mainContentColumns = "9";
     } else if (this._sidebar && this.wideSidebar) {
-      this.sidebarColumns = '4';
-      this.mainContentColumns = '8';
+      this.sidebarColumns = "4";
+      this.mainContentColumns = "8";
     } else {
-      this.sidebarColumns = '';
-      this.mainContentColumns = '12';
+      this.sidebarColumns = "";
+      this.mainContentColumns = "12";
     }
   }
 
@@ -28,8 +28,8 @@ export class PageService {
   set wideSidebar(value: boolean) {
     this._wideSidebar = value;
     if (this.wideSidebar && this.sidebar) {
-      this.sidebarColumns = '4';
-      this.mainContentColumns = '8';
+      this.sidebarColumns = "4";
+      this.mainContentColumns = "8";
     }
   }
 

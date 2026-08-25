@@ -5,105 +5,113 @@ import {
   EventEmitter,
   OnChanges,
   ChangeDetectorRef,
-  AfterViewInit
-} from '@angular/core';
+  AfterViewInit,
+} from "@angular/core";
 
-
-@Component ({
-    selector: 'form-step',
-    template: `
-    <page 
-      [breadcrumbs]="crumbs" 
+@Component({
+  selector: "form-step",
+  template: `
+    <page
+      [breadcrumbs]="crumbs"
       (breadcrumbChange)="breadcrumbHandler($event)"
       theme="inside"
-      [section]="sectionTitle" 
+      [section]="sectionTitle"
       [title]="pageTitle"
       [type]="type"
-      [typeLabel]="typeLabel">
-      
+      [typeLabel]="typeLabel"
+    >
       <sidebar>
-        <div sam-sticky limit=1200 container="page-content">
-          <img *ngIf="sideNavImage"
-            src="{{sideNavImage}}"
-            alt="{{sideNavImageAlt}}"/>
-          <sam-sidenav 
+        <div sam-sticky limit="1200" container="page-content">
+          <img
+            *ngIf="sideNavImage"
+            src="{{ sideNavImage }}"
+            alt="{{ sideNavImageAlt }}"
+          />
+          <sam-sidenav
             type="step"
-            (selection)="navHandler($event)" 
-            [labelLookup]="sideNavSelection" 
-            [model]="sideNavModel">
+            (selection)="navHandler($event)"
+            [labelLookup]="sideNavSelection"
+            [model]="sideNavModel"
+          >
           </sam-sidenav>
         </div>
       </sidebar>
-      
+
       <ng-container *ngIf="alerts && alerts.length > 0">
         <div *ngFor="let alert of alerts; let i = index">
-            <sam-alert
-                [attr.id]="'program-alert-' + i"
-                [type]="alerts[i].config.type"
-                [title]="alerts[i].config.title">
-                <div [innerHTML]="alerts[i].config.description"></div>
-            </sam-alert>
+          <sam-alert
+            [attr.id]="'program-alert-' + i"
+            [type]="alerts[i].config.type"
+            [title]="alerts[i].config.title"
+          >
+            <div [innerHTML]="alerts[i].config.description"></div>
+          </sam-alert>
         </div>
-       </ng-container>
-      
+      </ng-container>
+
       <ng-container message>
-        <sam-alert *ngIf="statusBannerLeadingText"
-                           [type]="statusBannerType"
-                           [(showMoreToggle)]="statusBannerExpanded"
-                           (toggle)="statusBannerExpandedChange.emit($event)">
-          <div leading-content>{{statusBannerLeadingText}}</div>
+        <sam-alert
+          *ngIf="statusBannerLeadingText"
+          [type]="statusBannerType"
+          [(showMoreToggle)]="statusBannerExpanded"
+          (toggle)="statusBannerExpandedChange.emit($event)"
+        >
+          <div leading-content>{{ statusBannerLeadingText }}</div>
           <div main-content>
             <ng-content select="[status-banner]"></ng-content>
           </div>
         </sam-alert>
       </ng-container>
 
-      <ng-content select="[form-sections]">
-      </ng-content>    
-      
-      <div class="sam-ui divider"></div> 
-      
+      <ng-content select="[form-sections]"> </ng-content>
+
+      <div class="sam-ui divider"></div>
+
       <div grid>
         <div columns="12" class="right aligned">
-          <sam-button 
-            [isDisabled]="disabled"
-            [buttonId]="'fal-form-nav-cancel'" 
-            buttonType="tertiary" 
-            buttonText="Cancel" 
-            (onClick)="formAction('cancel')">
-          </sam-button>
-          
-          <sam-button 
-            [isDisabled]="disabled"
-            [buttonId]="'fal-form-nav-back'" 
-            buttonType="secondary" 
-            *ngIf="sectionIndex - 1 >= 0" 
-            buttonText="Back" 
-            (onClick)="formAction('back')">
-          </sam-button>
-          
           <sam-button
-            [isDisabled]="disabled" 
+            [isDisabled]="disabled"
+            [buttonId]="'fal-form-nav-cancel'"
+            buttonType="tertiary"
+            buttonText="Cancel"
+            (onClick)="formAction('cancel')"
+          >
+          </sam-button>
+
+          <sam-button
+            [isDisabled]="disabled"
+            [buttonId]="'fal-form-nav-back'"
+            buttonType="secondary"
+            *ngIf="sectionIndex - 1 >= 0"
+            buttonText="Back"
+            (onClick)="formAction('back')"
+          >
+          </sam-button>
+
+          <sam-button
+            [isDisabled]="disabled"
             [buttonId]="'fal-form-nav-next'"
-            buttonType="secondary" 
-            *ngIf="sectionIndex + 1 < numberOfSections" 
-            buttonText="Next" 
-            (onClick)="formAction('next')">
+            buttonType="secondary"
+            *ngIf="sectionIndex + 1 < numberOfSections"
+            buttonText="Next"
+            (onClick)="formAction('next')"
+          >
           </sam-button>
-          
+
           <sam-button
-            [isDisabled]="disabled" 
-            [buttonId]="'fal-form-nav-done'" 
-            buttonText="Done" 
-            (onClick)="formAction('done')">
+            [isDisabled]="disabled"
+            [buttonId]="'fal-form-nav-done'"
+            buttonText="Done"
+            (onClick)="formAction('done')"
+          >
           </sam-button>
         </div>
       </div>
-      
+
       <div class="sam-ui divider"></div>
     </page>
   `,
-    standalone: false
+  standalone: false,
 })
 export class FormStepComponent implements OnChanges, AfterViewInit {
   /**
@@ -131,7 +139,7 @@ export class FormStepComponent implements OnChanges, AfterViewInit {
    */
   @Input() sectionIndex: number;
   /**
-   * Sets number of sections 
+   * Sets number of sections
    */
   @Input() numberOfSections: number;
   /**
@@ -143,7 +151,7 @@ export class FormStepComponent implements OnChanges, AfterViewInit {
    */
   @Input() pageTitle: string;
   /**
-   * Sets form step type 
+   * Sets form step type
    */
   @Input() type: string;
   /**
@@ -153,7 +161,7 @@ export class FormStepComponent implements OnChanges, AfterViewInit {
   /**
    * Sets the banner alert type
    */
-  @Input() statusBannerType: string = 'error';
+  @Input() statusBannerType: string = "error";
   /**
    * Sets the banner leading text
    */
@@ -163,7 +171,7 @@ export class FormStepComponent implements OnChanges, AfterViewInit {
    */
   @Input() statusBannerExpanded: boolean = false;
   /**
-   * Passes in a tab component 
+   * Passes in a tab component
    */
   @Input() tabsComponent: any;
   /**
@@ -203,8 +211,7 @@ export class FormStepComponent implements OnChanges, AfterViewInit {
    */
   @Output() statusBannerExpandedChange = new EventEmitter();
 
-  constructor(private cdr: ChangeDetectorRef) {
-  }
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
     this.cdr.detectChanges();
@@ -220,7 +227,7 @@ export class FormStepComponent implements OnChanges, AfterViewInit {
   }
 
   formAction(evtStr) {
-    this.action.emit({event: evtStr});
+    this.action.emit({ event: evtStr });
   }
 
   navHandler(evt) {

@@ -1,81 +1,71 @@
-import { TestBed, waitForAsync, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, waitForAsync, fakeAsync, tick } from "@angular/core/testing";
 
-import { Component, Output, ViewChild, EventEmitter } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { Component, Output, ViewChild, EventEmitter } from "@angular/core";
+import { By } from "@angular/platform-browser";
 
 // Load the implementations that should be tested
-import { SamFocusDirective } from './focus.directive';
+import { SamFocusDirective } from "./focus.directive";
 
 @Component({
-    selector: 'test-cmp',
-    template: `
+  selector: "test-cmp",
+  template: `
     <div #var sam-focus (focus)="focusHandler()">
-      <p class="test">
-        test content
-      </p>
+      <p class="test">test content</p>
     </div>
-    <p class="test2">
-      not focused content
-    </p>
+    <p class="test2">not focused content</p>
   `,
-    standalone: false
+  standalone: false,
 })
 class TestComponent {
-    @Output() action: EventEmitter<any> = new EventEmitter<any>();
-    @ViewChild('var', {static: true}) var;
-    focusHandler() {
-      this.action.emit(true);
-    }
+  @Output() action: EventEmitter<any> = new EventEmitter<any>();
+  @ViewChild("var", { static: true }) var;
+  focusHandler() {
+    this.action.emit(true);
+  }
 }
-describe('The Sam Focus directive', () => {
+describe("The Sam Focus directive", () => {
   let directive: SamFocusDirective;
   let component: TestComponent;
   let fixture: any;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        SamFocusDirective,
-        TestComponent
-      ],
+      declarations: [SamFocusDirective, TestComponent],
     });
 
     fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    directive =
-      fixture.debugElement
-      .query(
-        By.directive(SamFocusDirective)
-      )
+    directive = fixture.debugElement
+      .query(By.directive(SamFocusDirective))
       .injector.get(SamFocusDirective);
   });
 
-  it('should compile', () => {
+  it("should compile", () => {
     expect(true).toBe(true);
   });
 
-  it('should fire focus event', () => {
-    component.action.subscribe(val => {
+  it("should fire focus event", () => {
+    component.action.subscribe((val) => {
       expect(val).toBe(true);
     });
-    const el = fixture.debugElement.query(By.css('.test'));
+    const el = fixture.debugElement.query(By.css(".test"));
     el.nativeElement.click();
 
-    const el2 = fixture.debugElement.query(By.css('.test2'));
+    const el2 = fixture.debugElement.query(By.css(".test2"));
     el2.nativeElement.click();
   });
 
-  it('should check for focus on keyup', () => {
-    component.action.subscribe(val => {
+  it("should check for focus on keyup", () => {
+    component.action.subscribe((val) => {
       expect(val).toBe(true);
     });
-    const el = fixture.debugElement.query(By.css('.test'));
-    const evt = document.createEvent('Event');
-    evt.initEvent('keyup', true, true);
+    const el = fixture.debugElement.query(By.css(".test"));
+    const evt = document.createEvent("Event");
+    evt.initEvent("keyup", true, true);
     el.nativeElement.dispatchEvent(evt);
 
-    const el2 = fixture.debugElement.query(By.css('.test2'));
+    const el2 = fixture.debugElement.query(By.css(".test2"));
     el2.nativeElement.dispatchEvent(evt);
   });
 });

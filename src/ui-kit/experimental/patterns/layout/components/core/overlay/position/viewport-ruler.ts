@@ -6,8 +6,8 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {Injectable, Optional, SkipSelf} from "@angular/core";
-import {ScrollDispatcher} from "../scroll/scroll-dispatcher";
+import { Injectable, Optional, SkipSelf } from "@angular/core";
+import { ScrollDispatcher } from "../scroll/scroll-dispatcher";
 
 /**
  * Simple utility for getting the bounds of the browser viewport.
@@ -72,12 +72,20 @@ export class ViewportRuler {
     // `document.documentElement` works consistently, where the `top` and `left` values will
     // equal negative the scroll position.
     const top =
-      -documentRect!.top || document.body.scrollTop || window.scrollY || document.documentElement.scrollTop || 0;
+      -documentRect!.top ||
+      document.body.scrollTop ||
+      window.scrollY ||
+      document.documentElement.scrollTop ||
+      0;
 
     const left =
-      -documentRect!.left || document.body.scrollLeft || window.scrollX || document.documentElement.scrollLeft || 0;
+      -documentRect!.left ||
+      document.body.scrollLeft ||
+      window.scrollX ||
+      document.documentElement.scrollLeft ||
+      0;
 
-    return {top, left};
+    return { top, left };
   }
 
   /** Caches the latest client rectangle of the document element. */
@@ -86,7 +94,10 @@ export class ViewportRuler {
   }
 }
 
-export function VIEWPORT_RULER_PROVIDER_FACTORY(parentRuler: ViewportRuler, scrollDispatcher: ScrollDispatcher) {
+export function VIEWPORT_RULER_PROVIDER_FACTORY(
+  parentRuler: ViewportRuler,
+  scrollDispatcher: ScrollDispatcher
+) {
   return parentRuler || new ViewportRuler(scrollDispatcher);
 }
 

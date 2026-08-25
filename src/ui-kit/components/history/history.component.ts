@@ -1,9 +1,9 @@
-import { Component, Input } from '@angular/core';
-import { HistoryNodeType } from '../../types';
+import { Component, Input } from "@angular/core";
+import { HistoryNodeType } from "../../types";
 @Component({
-    selector: 'sam-history',
-    templateUrl: 'history.template.html',
-    standalone: false
+  selector: "sam-history",
+  templateUrl: "history.template.html",
+  standalone: false,
 })
 export class SamHistoryComponent {
   /**
@@ -18,5 +18,4 @@ export class SamHistoryComponent {
    * Sets the 'current' node on the id value defined in data
    */
   @Input() currentId: string;
-
 }

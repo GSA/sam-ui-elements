@@ -1,18 +1,17 @@
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule } from "@angular/forms";
 
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
-import { SamComponentsModule } from './components';
-import { SamDirectivesModule } from './directives';
-import { SamElementsModule } from './elements';
-import { SamFormControlsModule } from './form-controls';
-import { SamFormTemplatesModule } from './form-templates';
-import { SamLayoutModule } from './layout-deprecated';
-import { SamExperimentalModule } from './experimental';
-import { SamPipesModule } from './pipes';
-import { SamFormService } from './form-service';
-import { SamLayoutNextModule } from './layout';
+import { SamComponentsModule } from "./components";
+import { SamDirectivesModule } from "./directives";
+import { SamElementsModule } from "./elements";
+import { SamFormControlsModule } from "./form-controls";
+import { SamFormTemplatesModule } from "./form-templates";
+import { SamLayoutModule } from "./layout-deprecated";
+import { SamExperimentalModule } from "./experimental";
+import { SamPipesModule } from "./pipes";
+import { SamFormService } from "./form-service";
+import { SamLayoutNextModule } from "./layout";
 
 @NgModule({
   imports: [
@@ -26,7 +25,7 @@ import { SamLayoutNextModule } from './layout';
     SamLayoutModule,
     SamExperimentalModule,
     SamPipesModule,
-    SamLayoutNextModule
+    SamLayoutNextModule,
   ],
   exports: [
     SamComponentsModule,
@@ -37,8 +36,8 @@ import { SamLayoutNextModule } from './layout';
     SamLayoutModule,
     SamExperimentalModule,
     SamPipesModule,
-    SamLayoutNextModule
+    SamLayoutNextModule,
   ],
-  providers: [SamFormService]
+  providers: [SamFormService],
 })
-export class SamUIKitModule { }
+export class SamUIKitModule {}

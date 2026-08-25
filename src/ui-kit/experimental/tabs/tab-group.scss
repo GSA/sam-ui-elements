@@ -1,12 +1,12 @@
-@import '../patterns/layout/components/core/style/variables';
-@import '../patterns/layout/components/core/style/layout-common';
-@import 'tabs-common';
+@import "../patterns/layout/components/core/style/variables";
+@import "../patterns/layout/components/core/style/layout-common";
+@import "tabs-common";
 
 :host {
   display: flex;
   flex-direction: column;
   border-radius: 2px;
-  box-shadow: 0 1px 2px 1px rgba(0,0,0,.15);
+  box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.15);
   &.mat-tab-group-inverted-header {
     flex-direction: column-reverse;
   }
@@ -37,7 +37,7 @@
     overflow-x: hidden;
     overflow-y: auto;
     z-index: 1;
-    flex-grow: 1; 
+    flex-grow: 1;
   }
 
   &:focus {

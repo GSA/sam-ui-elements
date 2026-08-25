@@ -1,12 +1,12 @@
-import { Component, Input,  Output, EventEmitter, OnInit } from '@angular/core';
-import { PageService } from './page.service';
-import { PageConfig } from './types';
+import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
+import { PageService } from "./page.service";
+import { PageConfig } from "./types";
 
 @Component({
-    selector: 'page',
-    templateUrl: 'page.template.html',
-    providers: [PageService],
-    standalone: false
+  selector: "page",
+  templateUrl: "page.template.html",
+  providers: [PageService],
+  standalone: false,
 })
 export class PageTemplateComponent implements OnInit {
   /**
@@ -49,7 +49,7 @@ export class PageTemplateComponent implements OnInit {
    * Sets the TitleAndSectionComponent badgeOptions input
    */
   @Input() public options: PageConfig = {
-    badge: undefined
+    badge: undefined,
   };
   /**
    * Sets additional header options if true, by default it is false
@@ -85,15 +85,15 @@ export class PageTemplateComponent implements OnInit {
     this.breadcrumbChange.emit(evt);
   }
 
-  get sidebar(){
+  get sidebar() {
     return this.pageService.sidebar;
   }
 
-  get sidebarColumns(){
+  get sidebarColumns() {
     return this.pageService.sidebarColumns;
   }
 
-  get mainContentColumns(){
+  get mainContentColumns() {
     return this.pageService.mainContentColumns;
   }
 }

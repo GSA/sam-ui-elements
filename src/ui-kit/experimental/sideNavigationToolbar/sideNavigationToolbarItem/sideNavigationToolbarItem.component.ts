@@ -1,13 +1,12 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 
 @Component({
-    selector: 'sam-side-navigation-toolbar-item',
-    templateUrl: './sideNavigationToolbarItem.component.html',
-    styleUrls: ['./sideNavigationToolbarItem.component.scss'],
-    standalone: false
+  selector: "sam-side-navigation-toolbar-item",
+  templateUrl: "./sideNavigationToolbarItem.component.html",
+  styleUrls: ["./sideNavigationToolbarItem.component.scss"],
+  standalone: false,
 })
 export class SamSideNavigationToolbarItemComponent {
-
   /**
    * Text on the button for the menu item
    */
@@ -27,14 +26,15 @@ export class SamSideNavigationToolbarItemComponent {
   public id: string;
 
   /**
-   * Section is visible 
+   * Section is visible
    */
   public showSection: boolean = false;
 
   /**
    * Event of if the Section is opened
    */
-  @Output() public sideNavigationToolbarItemSelected = new EventEmitter<SamSideNavigationToolbarItemComponent>();
+  @Output() public sideNavigationToolbarItemSelected =
+    new EventEmitter<SamSideNavigationToolbarItemComponent>();
 
   /**
    * Opens the Section

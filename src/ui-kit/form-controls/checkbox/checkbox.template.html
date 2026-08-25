@@ -1,4 +1,9 @@
-<sam-fieldset-wrapper [label]="label" [hint]="hint" [errorMessage]="errorMessage" [required]="required">
+<sam-fieldset-wrapper
+  [label]="label"
+  [hint]="hint"
+  [errorMessage]="errorMessage"
+  [required]="required"
+>
   <ul class="usa-unstyled-list">
     <li *ngIf="hasSelectAll">
       <input
@@ -20,7 +25,11 @@
         (change)="onCheckChanged(option.value, $event.target.checked, option.name)"
         [checked]="isChecked(option.value)"
       />
-      <label [innerHtml]="option.label" [attr.aria-hidden]="true" [attr.for]="option.name"></label>
+      <label
+        [innerHtml]="option.label"
+        [attr.aria-hidden]="true"
+        [attr.for]="option.name"
+      ></label>
     </li>
   </ul>
 </sam-fieldset-wrapper>

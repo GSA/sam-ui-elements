@@ -1,1 +1,1 @@
-export * from './chip-host.directive';
+export * from "./chip-host.directive";

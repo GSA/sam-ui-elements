@@ -1,11 +1,10 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { SamSideNavigationToolbarItemComponent } from './sideNavigationToolbarItem.component';
-import { CommonModule } from '@angular/common';
-import { By } from '@angular/platform-browser';
+import { SamSideNavigationToolbarItemComponent } from "./sideNavigationToolbarItem.component";
+import { CommonModule } from "@angular/common";
+import { By } from "@angular/platform-browser";
 
-
-describe('SamSideNavigationToolbarItemComponent', () => {
+describe("SamSideNavigationToolbarItemComponent", () => {
   let component: SamSideNavigationToolbarItemComponent;
   let fixture: ComponentFixture<SamSideNavigationToolbarItemComponent>;
 
@@ -13,9 +12,8 @@ describe('SamSideNavigationToolbarItemComponent', () => {
     TestBed.configureTestingModule({
       declarations: [SamSideNavigationToolbarItemComponent],
       imports: [CommonModule],
-      providers: []
-    })
-      .compileComponents();
+      providers: [],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -24,7 +22,7 @@ describe('SamSideNavigationToolbarItemComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

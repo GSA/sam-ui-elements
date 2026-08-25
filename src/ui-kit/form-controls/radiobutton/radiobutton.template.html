@@ -2,16 +2,19 @@
   [label]="label"
   [hint]="hint"
   [errorMessage]="errorMessage"
-  [required]="required">
+  [required]="required"
+>
   <ul class="usa-unstyled-list">
     <li *ngFor="let option of options; let i = index">
-      <input [attr.id]="option.name"
+      <input
+        [attr.id]="option.name"
         [attr.aria-label]="option.ariaLabel ? option.ariaLabel : option.label"
         type="radio"
         (change)="onRadioChange(option.value)"
         [attr.disabled]="option.disabled || disabled ? 'disabled': undefined"
         [attr.name]="name"
-        [checked]="model === option.value">
+        [checked]="model === option.value"
+      />
       <label [attr.for]="option.name">{{option.label}}</label>
     </li>
   </ul>

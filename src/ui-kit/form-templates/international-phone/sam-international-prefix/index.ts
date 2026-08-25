@@ -1,3 +1,1 @@
-export {
-  SamInternationalPrefix
-} from './international-prefix.component';
+export { SamInternationalPrefix } from "./international-prefix.component";

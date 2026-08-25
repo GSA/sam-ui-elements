@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 /**
  Example usage:
@@ -10,10 +10,8 @@ import { Component } from '@angular/core';
  </workspace-template>
  */
 @Component({
-    selector: 'workspace-template',
-    templateUrl: 'workspace-template.html',
-    standalone: false
+  selector: "workspace-template",
+  templateUrl: "workspace-template.html",
+  standalone: false,
 })
-export class WorkspaceTemplateComponent {
-
-}
+export class WorkspaceTemplateComponent {}

@@ -2,13 +2,13 @@
         USWDS FOOTER
 *******************************/
 
-@import '~uswds/dist/scss/components/footer';
+@import "~uswds/dist/scss/components/footer";
 
 /*******************************
         SDS OVERRIDES
 *******************************/
 
-@import '~@gsa-sam/sam-styles/src/stylesheets/components/footer';
+@import "~@gsa-sam/sam-styles/src/stylesheets/components/footer";
 
 /*******************************
       SAM FRONTEND OVERRIDES
@@ -16,5 +16,5 @@
 
 sam-footer-nav-item + sam-footer-nav-item {
   padding-top: units(2);
-  @include u-display('block')
+  @include u-display("block");
 }

@@ -1,138 +1,147 @@
-import { TestBed, waitForAsync, ComponentFixture } from '@angular/core/testing';
+import { TestBed, waitForAsync, ComponentFixture } from "@angular/core/testing";
 
-import { By } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { By } from "@angular/platform-browser";
+import { FormsModule } from "@angular/forms";
+import { CommonModule } from "@angular/common";
+import { ChangeDetectorRef } from "@angular/core";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 // Load the implementations that should be tested
-import { SamUIKitModule } from '../../index';
+import { SamUIKitModule } from "../../index";
 import {
   SamAutocompleteMultiselectComponent,
-  KeyValueConfig
-} from './autocomplete-multiselect.component';
-import { AutocompleteService } from '../autocomplete/autocomplete.service';
-import { SamFormService } from '../../form-service';
-import { SamWrapperModule } from '../../wrappers';
+  KeyValueConfig,
+} from "./autocomplete-multiselect.component";
+import { AutocompleteService } from "../autocomplete/autocomplete.service";
+import { SamFormService } from "../../form-service";
+import { SamWrapperModule } from "../../wrappers";
 
-describe('The Sam Autocomplete Multiselect Component', () => {
-  describe('Isolation tests', () => {
+describe("The Sam Autocomplete Multiselect Component", () => {
+  describe("Isolation tests", () => {
     let component: SamAutocompleteMultiselectComponent;
     const cdr: ChangeDetectorRef = undefined;
     beforeEach(() => {
       component = new SamAutocompleteMultiselectComponent(
-        new AutocompleteService(), cdr, new SamFormService()
+        new AutocompleteService(),
+        cdr,
+        new SamFormService()
       );
     });
 
-    it('should clear search', () => {
-      component.searchText = 'test';
+    it("should clear search", () => {
+      component.searchText = "test";
       expect(component.displayClearAll()).toBe(true);
       component.clearSearch();
-      expect(component.searchText).toBe('');
+      expect(component.searchText).toBe("");
       expect(component.displayClearAll()).toBe(false);
     });
 
-    it('should display lists', () => {
+    it("should display lists", () => {
       const obj = {
         0: [],
-        categories: ['test']
+        categories: ["test"],
       };
       component.handleEmptyList(obj);
       expect(obj[0][0].cannotBeSelected).toBe(true);
       expect(obj[0][0].key).toBe(null);
-      expect(obj[0][0].value).toBe('No results found');
+      expect(obj[0][0].value).toBe("No results found");
       expect(component.getFirstFilteredItem([])).toBe(null);
-      const output = component.getFirstFilteredItem(
-        [{ key: 'keytest', value: 'valuetest' }]
-      );
+      const output = component.getFirstFilteredItem([
+        { key: "keytest", value: "valuetest" },
+      ]);
       expect(output).toBeDefined();
       expect(component.displayList()).toBe(false);
       component.categoryIsSelectable = true;
-      expect(component.displaySublist('test-cat', 0)).toBe(true);
+      expect(component.displaySublist("test-cat", 0)).toBe(true);
     });
 
-    it('should filter lists', () => {
-      expect(component.filterOptions('')).toBe(undefined);
-      component.options = [{
-        key: 'aaa',
-        value: 'aaa',
-      }, {
-        key: 'bbb',
-        value: 'bbb',
-      }];
+    it("should filter lists", () => {
+      expect(component.filterOptions("")).toBe(undefined);
+      component.options = [
+        {
+          key: "aaa",
+          value: "aaa",
+        },
+        {
+          key: "bbb",
+          value: "bbb",
+        },
+      ];
       component.ngOnInit();
-      const test = component.filterOptions('bbb');
+      const test = component.filterOptions("bbb");
       expect(test[0].length === 1).toBe(true);
-      expect(test[0][0].value).toBe('bbb');
+      expect(test[0][0].value).toBe("bbb");
     });
 
-    it('should support categories', () => {
+    it("should support categories", () => {
       component.keyValueConfig = {
-        keyProperty: 'key',
-        valueProperty: 'value',
-        categoryProperty: 'category',
-        parentCategoryProperty: 'category'
+        keyProperty: "key",
+        valueProperty: "value",
+        categoryProperty: "category",
+        parentCategoryProperty: "category",
       };
-      component.options = [{
-        key: 'aaa',
-        value: 'aaa',
-        category: 'cccc'
-      }, {
-        key: 'bbb',
-        value: 'bbb',
-        category: 'dddd'
-      }];
-      component.categories = [{
-        key: 'cccc',
-        value: 'cccc',
-        category: 'cccc'
-      }, {
-        key: 'dddd',
-        value: 'dddd',
-        category: 'dddd'
-      }];
+      component.options = [
+        {
+          key: "aaa",
+          value: "aaa",
+          category: "cccc",
+        },
+        {
+          key: "bbb",
+          value: "bbb",
+          category: "dddd",
+        },
+      ];
+      component.categories = [
+        {
+          key: "cccc",
+          value: "cccc",
+          category: "cccc",
+        },
+        {
+          key: "dddd",
+          value: "dddd",
+          category: "dddd",
+        },
+      ];
       component.categoryIsSelectable = true;
       component.ngOnInit();
-      const results = component.filterOptions('cccc');
-      expect((results.categories as string[]).indexOf('cccc')).toBe(1);
+      const results = component.filterOptions("cccc");
+      expect((results.categories as string[]).indexOf("cccc")).toBe(1);
     });
 
-    it('should support controlValueAccessor', () => {
+    it("should support controlValueAccessor", () => {
       component.registerOnChange((_) => undefined);
       component.registerOnTouched(() => undefined);
       component.setDisabledState(false);
     });
 
-      it('should support a way to clear cache', ()=>{
-          component.fetchFromService("test", null, component);
-          component['cache'].insert([{'key':'a', 'value': 'aaaa'}], 'test');
-          expect(component['cache']['cached']['test']).toBeDefined();
-          component.clearCache();
-          expect(component['cache']['cached']['test']).toBe(undefined);
-      });
+    it("should support a way to clear cache", () => {
+      component.fetchFromService("test", null, component);
+      component["cache"].insert([{ key: "a", value: "aaaa" }], "test");
+      expect(component["cache"]["cached"]["test"]).toBeDefined();
+      component.clearCache();
+      expect(component["cache"]["cached"]["test"]).toBe(undefined);
+    });
   });
 
-
-  describe('Rendered tests', () => {
+  describe("Rendered tests", () => {
     let component: SamAutocompleteMultiselectComponent;
     let fixture: ComponentFixture<SamAutocompleteMultiselectComponent>;
 
     // Autocomplete Dropdown With Button
     const options: Array<any> = [
-      { key: 'Christy', value: 'Christy' },
-      { key: 'Carlos', value: 'Carlos' },
-      { key: 'Colin', value: 'Colin' },
-      { key: 'Diego', value: 'Diego' }
+      { key: "Christy", value: "Christy" },
+      { key: "Carlos", value: "Carlos" },
+      { key: "Colin", value: "Colin" },
+      { key: "Diego", value: "Diego" },
     ];
     const keyValueConfig: KeyValueConfig = {
-      keyProperty: 'key',
-      valueProperty: 'value'
+      keyProperty: "key",
+      valueProperty: "value",
     };
     const required: boolean = true;
-    const label: string = 'My Test Component';
-
+    const label: string = "My Test Component";
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -143,12 +152,10 @@ describe('The Sam Autocomplete Multiselect Component', () => {
           BrowserAnimationsModule,
         ],
         declarations: [SamAutocompleteMultiselectComponent],
-        providers: [SamFormService]
+        providers: [SamFormService],
       });
 
-      fixture = TestBed.createComponent(
-        SamAutocompleteMultiselectComponent
-      );
+      fixture = TestBed.createComponent(SamAutocompleteMultiselectComponent);
       component = fixture.componentInstance;
       component.options = options;
       component.keyValueConfig = keyValueConfig;
@@ -156,69 +163,62 @@ describe('The Sam Autocomplete Multiselect Component', () => {
       component.required = required;
     });
 
-    it('Should display results when text is entered', () => {
-      component.searchText = 'c';
+    it("Should display results when text is entered", () => {
+      component.searchText = "c";
       component.filterOptions(component.searchText);
       fixture.detectChanges();
       fixture.whenStable().then(() => {
         const results = fixture.nativeElement.querySelectorAll(
-          'li.category-item, li.category-name'
+          "li.category-item, li.category-name"
         );
-        expect(results[0].innerText)
-          .toContain(component.options[0].value);
+        expect(results[0].innerText).toContain(component.options[0].value);
       });
     });
 
-    xit('Should display no results when no results are found', () => {
-      component.searchText = 'zzzzzzzzzz';
+    xit("Should display no results when no results are found", () => {
+      component.searchText = "zzzzzzzzzz";
       component.filterOptions(component.searchText);
       fixture.detectChanges();
       fixture.whenStable().then(() => {
-        const results =
-          fixture.nativeElement.querySelectorAll(
-            'li.category-item, li.category-name'
-          );
-        expect(results[0].innerText).toContain('No results found');
+        const results = fixture.nativeElement.querySelectorAll(
+          "li.category-item, li.category-name"
+        );
+        expect(results[0].innerText).toContain("No results found");
       });
     });
 
-
-    it('Should free text be displayed', () => {
+    it("Should free text be displayed", () => {
       expect(component.showResultsFreeText()).toBe(false);
       component.isFreeTextEnabled = true;
       expect(component.showResultsFreeText()).toBe(false);
-      component.searchText = 'Test';
+      component.searchText = "Test";
       expect(component.showResultsFreeText()).toBe(true);
     });
 
-    it('Should select free text', () => {
-      let text = 'TEST ITEM'
+    it("Should select free text", () => {
+      let text = "TEST ITEM";
       component.selectItem(text);
-      expect(component.value[0].type).toBe('custom');
-      expect(component.value[0][component.keyValueConfig.valueProperty]).toBe(text);
-
+      expect(component.value[0].type).toBe("custom");
+      expect(component.value[0][component.keyValueConfig.valueProperty]).toBe(
+        text
+      );
     });
 
-
-
-
-    xit('Should clear selected and input when clear all is clicked', () => {
-      component.searchText = 'c';
+    xit("Should clear selected and input when clear all is clicked", () => {
+      component.searchText = "c";
       component.writeValue(options.slice(0));
       fixture.detectChanges();
       component.clearSearch();
       component.deselectAll();
       fixture.detectChanges();
       expect(component.value).toEqual([]);
-      expect(component.textArea.nativeElement.value).toEqual('');
+      expect(component.textArea.nativeElement.value).toEqual("");
     });
 
-    xit('Should add item to value when an item is selected', () => {
-      component.searchText = 'c';
+    xit("Should add item to value when an item is selected", () => {
+      component.searchText = "c";
       fixture.detectChanges();
-      component.selectItem(
-        component.filterOptions(component.searchText)[0][0]
-      );
+      component.selectItem(component.filterOptions(component.searchText)[0][0]);
       fixture.detectChanges();
       expect(component.value[0]).toBe(component.options[0]);
     });

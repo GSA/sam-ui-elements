@@ -1,28 +1,27 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  ViewChild, ChangeDetectorRef
-} from '@angular/core';
-import {SamRadioButtonComponent} from '../../../ui-kit';
-import {AbstractSamFormly} from '../../sam-formly';
+  ViewChild,
+  ChangeDetectorRef,
+} from "@angular/core";
+import { SamRadioButtonComponent } from "../../../ui-kit";
+import { AbstractSamFormly } from "../../sam-formly";
 
 @Component({
-    template: `
-    <sam-radio-button
-      [formControl]="formControl"
-      [control]="formControl">
+  template: `
+    <sam-radio-button [formControl]="formControl" [control]="formControl">
     </sam-radio-button>
   `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SamFormlyRadio extends AbstractSamFormly {
-  @ViewChild(SamRadioButtonComponent, {static: true})
+  @ViewChild(SamRadioButtonComponent, { static: true })
   public template: SamRadioButtonComponent;
 
   public cdr: ChangeDetectorRef;
 
-  constructor (_cdr: ChangeDetectorRef) {
+  constructor(_cdr: ChangeDetectorRef) {
     super();
     this.cdr = _cdr;
   }

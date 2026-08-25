@@ -1,44 +1,45 @@
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 export interface SAMSDSAutocompleteServiceInterface {
-    /**
-     * 
-     * @param searchValue 
-     */
-    getDataByText(currentItems: number, searchValue?: string): Observable<SAMSDSHiercarchicalServiceResult>;
+  /**
+   *
+   * @param searchValue
+   */
+  getDataByText(
+    currentItems: number,
+    searchValue?: string
+  ): Observable<SAMSDSHiercarchicalServiceResult>;
 }
 
 export interface SAMSDSHiercarchicalServiceResult {
-    /**
-     * 
-     */
-    items: object[];
+  /**
+   *
+   */
+  items: object[];
 
-    /**
-     * 
-     */
-    totalItems: number;
+  /**
+   *
+   */
+  totalItems: number;
 }
 
 export class SDSHiercarchicalServiceSearchItem {
+  /**
+   *
+   */
+  id: string;
 
-    /**
-     * 
-     */
-    id: string;
+  /**
+   *
+   */
+  searchValue: string;
 
-    /**
-     * 
-     */
-    searchValue: string;
+  /**
+   *
+   */
+  // sort: Sort;
 
-    /**
-     * 
-     */
-    // sort: Sort;
-
-    /**
-     * 
-     */
-    currentItemCount: number;
+  /**
+   *
+   */
+  currentItemCount: number;
 }
-

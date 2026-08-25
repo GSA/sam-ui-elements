@@ -1,16 +1,16 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input } from "@angular/core";
 
 /**
  * The <sam-banner> component informs the user that the site is an official
  * website of the United States Government
  */
 @Component({
-    selector: 'sam-banner',
-    templateUrl: 'banner.template.html',
-    standalone: false
+  selector: "sam-banner",
+  templateUrl: "banner.template.html",
+  standalone: false,
 })
 export class SamBannerComponent {
-  @Input() description = '';
+  @Input() description = "";
 
   showDetail: boolean = false;
 

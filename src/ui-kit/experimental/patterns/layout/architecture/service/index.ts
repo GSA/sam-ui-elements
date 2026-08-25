@@ -1,2 +1,2 @@
-export * from './page.service';
-export * from './service-property';
+export * from "./page.service";
+export * from "./service-property";

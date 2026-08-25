@@ -1,8 +1,7 @@
-import { Component, Injectable } from '@angular/core';
-import { AlertType } from '../../types';
+import { Component, Injectable } from "@angular/core";
+import { AlertType } from "../../types";
 @Injectable()
 export class SamAlertFooterService {
-
   private alerts: any = [];
 
   getAlerts() {
@@ -14,12 +13,11 @@ export class SamAlertFooterService {
   }
 
   dismissFooterAlert(i) {
-    this.alerts = this.alerts.filter(function(obj, idx){
+    this.alerts = this.alerts.filter(function (obj, idx) {
       if (idx === i) {
         return false;
       }
       return true;
     });
   }
-
 }

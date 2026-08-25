@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+test-app/node_modules/
+
+# Build output
+dist/
+test-app/dist/
+public/__build__/
+__build__/
+
+# Coverage
+coverage/
+test-app/coverage/
+
+# Generated / vendored
+src/typings/
+typings/
+tsd_typings/
+
+# Package manager
+package-lock.json

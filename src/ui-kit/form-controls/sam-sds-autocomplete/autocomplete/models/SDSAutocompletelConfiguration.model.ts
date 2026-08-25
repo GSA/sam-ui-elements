@@ -5,7 +5,8 @@ import { SelectionMode } from "../../selected-result/models/sds-selected-item-mo
 export class SAMSDSAutocompletelConfiguration
   implements
     SDSSelectedResultConfiguration,
-    SAMSDSAutocompleteSearchConfiguration {
+    SAMSDSAutocompleteSearchConfiguration
+{
   /**
    * sets the default debounce time to 250 milliseconds
    */

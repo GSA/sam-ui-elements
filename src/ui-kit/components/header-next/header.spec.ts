@@ -1,8 +1,8 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { SamHeaderNextComponent } from './header.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TestBed, ComponentFixture } from "@angular/core/testing";
+import { SamHeaderNextComponent } from "./header.component";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 // import { A11yModule } from '@angular/cdk';
-import {A11yModule} from '@angular/cdk/a11y';
+import { A11yModule } from "@angular/cdk/a11y";
 
 // INTEGRATION TESTING
 // ===============================
@@ -36,44 +36,42 @@ import {A11yModule} from '@angular/cdk/a11y';
 // - test if close button is displayes when mobile nav its open
 // - test if overlay its shown when mobile nav its open
 
-describe('SamHeaderNextComponent', () => {
+describe("SamHeaderNextComponent", () => {
   let component: SamHeaderNextComponent;
   let fixture: ComponentFixture<SamHeaderNextComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [FontAwesomeModule, A11yModule],
-      declarations: [SamHeaderNextComponent]
+      declarations: [SamHeaderNextComponent],
     });
     fixture = TestBed.createComponent(SamHeaderNextComponent);
     component = fixture.componentInstance;
   });
 
-  it('should create component', () => {
+  it("should create component", () => {
     expect(component).toBeDefined();
   });
 
-  it('should contain logo path', () => {
-    const logoPath = './path/to/logo';
+  it("should contain logo path", () => {
+    const logoPath = "./path/to/logo";
     component.logoPath = logoPath;
     fixture.detectChanges();
 
-    const logoElement: HTMLElement = fixture.nativeElement.querySelector(
-      '.usa-logo a img'
-    );
-    expect(logoElement.getAttribute('src')).toBe(logoPath);
+    const logoElement: HTMLElement =
+      fixture.nativeElement.querySelector(".usa-logo a img");
+    expect(logoElement.getAttribute("src")).toBe(logoPath);
   });
 
-  xit('should add notifications indicator to menu button', () => {
+  xit("should add notifications indicator to menu button", () => {
     component.notifications = true;
     fixture.detectChanges();
 
-    const menuButton: HTMLElement = fixture.nativeElement.querySelector(
-      '.usa-menu-btn'
-    );
+    const menuButton: HTMLElement =
+      fixture.nativeElement.querySelector(".usa-menu-btn");
 
-    expect(menuButton.querySelector('.fa-layers-counter')).not.toBeNull(
-      'notification icon exists'
+    expect(menuButton.querySelector(".fa-layers-counter")).not.toBeNull(
+      "notification icon exists"
     );
   });
 });

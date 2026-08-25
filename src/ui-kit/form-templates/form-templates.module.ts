@@ -1,14 +1,14 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-import { SamNameEntryModule } from './name-entry';
-import { SamPhoneEntryModule } from './phone-entry';
+import { SamNameEntryModule } from "./name-entry";
+import { SamPhoneEntryModule } from "./phone-entry";
 
-import { SamWrapperModule } from '../wrappers';
-import { SamFormControlsModule } from '../form-controls';
+import { SamWrapperModule } from "../wrappers";
+import { SamFormControlsModule } from "../form-controls";
 
-import { SamInternationalPhoneModule } from './international-phone';
+import { SamInternationalPhoneModule } from "./international-phone";
 
 @NgModule({
   imports: [
@@ -21,14 +21,12 @@ import { SamInternationalPhoneModule } from './international-phone';
     SamNameEntryModule,
     SamPhoneEntryModule,
   ],
-  declarations: [
-    
-  ],
+  declarations: [],
   exports: [
     SamNameEntryModule,
     SamPhoneEntryModule,
     SamWrapperModule,
-    SamInternationalPhoneModule
-  ]
+    SamInternationalPhoneModule,
+  ],
 })
 export class SamFormTemplatesModule {}

@@ -6,9 +6,16 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {Output, EventEmitter, Input, Injectable, OnDestroy, Optional} from '@angular/core';
-import {UniqueSelectionDispatcher} from '../core/coordination/unique-selection-dispatcher';
-import {CdkAccordionDirective} from './accordion';
+import {
+  Output,
+  EventEmitter,
+  Input,
+  Injectable,
+  OnDestroy,
+  Optional,
+} from "@angular/core";
+import { UniqueSelectionDispatcher } from "../core/coordination/unique-selection-dispatcher";
+import { CdkAccordionDirective } from "./accordion";
 
 /** Used to generate unique ID for each expansion panel. */
 let nextId = 0;
@@ -28,11 +35,11 @@ export class AccordionItem implements OnDestroy {
   /** The unique MdAccordianChild id. */
   readonly id = `cdk-accordion-child-${nextId++}`;
   /** Whether the MdAccordianChild is expanded. */
-  @Input() get expanded(): boolean { 
+  @Input() get expanded(): boolean {
     if (this._expanded === undefined) {
       return false;
     }
-    return this._expanded; 
+    return this._expanded;
   }
   set expanded(expanded: boolean) {
     // Only emit events and update the internal value if the value changes.
@@ -56,16 +63,23 @@ export class AccordionItem implements OnDestroy {
   /** Unregister function for _expansionDispatcher **/
   private _removeUniqueSelectionListener: () => void = () => {};
 
-  constructor(@Optional() public accordion: CdkAccordionDirective,
-              protected _expansionDispatcher: UniqueSelectionDispatcher) {
-     this._removeUniqueSelectionListener =
-       _expansionDispatcher.listen((id: string, accordionId: string) => {
-         if (this.accordion && !this.accordion.multi &&
-             this.accordion.id === accordionId && this.id !== id) {
-           this.expanded = false;
-         }
-       });
-    }
+  constructor(
+    @Optional() public accordion: CdkAccordionDirective,
+    protected _expansionDispatcher: UniqueSelectionDispatcher
+  ) {
+    this._removeUniqueSelectionListener = _expansionDispatcher.listen(
+      (id: string, accordionId: string) => {
+        if (
+          this.accordion &&
+          !this.accordion.multi &&
+          this.accordion.id === accordionId &&
+          this.id !== id
+        ) {
+          this.expanded = false;
+        }
+      }
+    );
+  }
 
   /** Emits an event for the accordion item being destroyed. */
   ngOnDestroy() {

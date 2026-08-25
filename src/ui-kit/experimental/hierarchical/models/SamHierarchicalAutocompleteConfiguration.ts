@@ -1,7 +1,6 @@
 export class SamHierarchicalAutocompleteConfiguration {
-
   /**
-   * sets the default debounce time to 250 milliseconds 
+   * sets the default debounce time to 250 milliseconds
    */
   constructor() {
     this.debounceTime = 250;
@@ -48,7 +47,6 @@ export class SamHierarchicalAutocompleteConfiguration {
    */
   public minimumCharacterCountSearch: number;
 
-
   /**
    * Allows option to allow user text not in the standard results
    */
@@ -57,11 +55,10 @@ export class SamHierarchicalAutocompleteConfiguration {
   /**
    * Text appeneded ad the end of free text
    */
-  public freeTextSubtext: string = 'search';
+  public freeTextSubtext: string = "search";
 
-     /**
+  /**
    * The aria-label for the auto-complete
    */
-  public ariaLabelText: string = 'Auto Complete';
-
+  public ariaLabelText: string = "Auto Complete";
 }

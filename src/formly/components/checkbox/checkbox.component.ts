@@ -2,24 +2,22 @@ import {
   Component,
   ChangeDetectionStrategy,
   ViewChild,
-  ChangeDetectorRef
-} from '@angular/core';
+  ChangeDetectorRef,
+} from "@angular/core";
 
-import { AbstractSamFormly } from '../../sam-formly';
-import { SamCheckboxComponent } from '../../../ui-kit';
+import { AbstractSamFormly } from "../../sam-formly";
+import { SamCheckboxComponent } from "../../../ui-kit";
 
 @Component({
-    template: `
-   <sam-checkbox [formControl]="formControl"></sam-checkbox>
- `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  template: ` <sam-checkbox [formControl]="formControl"></sam-checkbox> `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SamFormlyCheckbox extends AbstractSamFormly {
-  @ViewChild(SamCheckboxComponent, {static: true})
+  @ViewChild(SamCheckboxComponent, { static: true })
   public template: SamCheckboxComponent;
 
-  constructor (public cdr: ChangeDetectorRef) {
+  constructor(public cdr: ChangeDetectorRef) {
     super();
   }
 }

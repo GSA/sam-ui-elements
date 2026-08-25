@@ -1,23 +1,19 @@
 // panel-wrapper.component.ts
-import {
-  Component,
-  ViewChild,
-  ViewContainerRef
-} from '@angular/core';
-import { FieldWrapper } from '@ngx-formly/core';
+import { Component, ViewChild, ViewContainerRef } from "@angular/core";
+import { FieldWrapper } from "@ngx-formly/core";
 
 @Component({
-    template: `
-  <sam-expansion-panel>
-    <sam-expansion-panel-header>
-      {{ to.accordionLabel }}
-    </sam-expansion-panel-header>
-    <ng-container #fieldComponent></ng-container>
-  </sam-expansion-panel>
-`,
-    standalone: false
+  template: `
+    <sam-expansion-panel>
+      <sam-expansion-panel-header>
+        {{ to.accordionLabel }}
+      </sam-expansion-panel-header>
+      <ng-container #fieldComponent></ng-container>
+    </sam-expansion-panel>
+  `,
+  standalone: false,
 })
 export class FilterWrapperComponent extends FieldWrapper {
-@ViewChild('fieldComponent', {read: ViewContainerRef, static: true})
+  @ViewChild("fieldComponent", { read: ViewContainerRef, static: true })
   public fieldComponent: ViewContainerRef;
 }

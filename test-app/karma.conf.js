@@ -3,40 +3,45 @@
 
 module.exports = function (config) {
   config.set({
-    basePath: '',
+    basePath: "",
     browserNoActivityTimeout: 120000,
-    frameworks: ['jasmine', '@angular-devkit/build-angular'],
+    frameworks: ["jasmine", "@angular-devkit/build-angular"],
     plugins: [
-      require('karma-jasmine'),
-      require('karma-chrome-launcher'),
-      require('karma-jasmine-html-reporter'),
-      require('karma-coverage'),
-      require('@angular-devkit/build-angular/plugins/karma')
+      require("karma-jasmine"),
+      require("karma-chrome-launcher"),
+      require("karma-jasmine-html-reporter"),
+      require("karma-coverage"),
+      require("@angular-devkit/build-angular/plugins/karma"),
     ],
     client: {
-      clearContext: false // leave Jasmine Spec Runner output visible in browser
+      clearContext: false, // leave Jasmine Spec Runner output visible in browser
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage'),
-      subdir: '.',
+      dir: require("path").join(__dirname, "./coverage"),
+      subdir: ".",
       reporters: [
-        { type: 'html' },
-        { type: 'lcovonly', file: 'lcov.info' },
-        { type: 'text-summary' }
-      ]
+        { type: "html" },
+        { type: "lcovonly", file: "lcov.info" },
+        { type: "text-summary" },
+      ],
     },
-    reporters: ['progress', 'kjhtml'],
+    reporters: ["progress", "kjhtml"],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['ChromeHeadless'],
+    browsers: ["ChromeHeadless"],
     customLaunchers: {
       ChromeHeadless: {
-        base: 'Chrome',
-        flags: ['--headless', '--no-sandbox', '--disable-gpu', '--remote-debugging-port=9222']
-      }
+        base: "Chrome",
+        flags: [
+          "--headless",
+          "--no-sandbox",
+          "--disable-gpu",
+          "--remote-debugging-port=9222",
+        ],
+      },
     },
-    singleRun: false
+    singleRun: false,
   });
 };

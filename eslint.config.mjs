@@ -1,37 +1,37 @@
-import tseslint from 'typescript-eslint';
-import angular from 'angular-eslint';
+import tseslint from "typescript-eslint";
+import angular from "angular-eslint";
 
-const asWarnings = (configs) => Object.fromEntries(
-  configs.flatMap((config) => Object.entries(config.rules || {}))
-    .map(([rule, setting]) => [
-      rule,
-      setting === 'off' || setting === 0
-        ? 'off'
-        : Array.isArray(setting)
-          ? ['warn', ...setting.slice(1)]
-          : 'warn',
-    ]),
-);
+const asWarnings = (configs) =>
+  Object.fromEntries(
+    configs
+      .flatMap((config) => Object.entries(config.rules || {}))
+      .map(([rule, setting]) => [
+        rule,
+        setting === "off" || setting === 0
+          ? "off"
+          : Array.isArray(setting)
+            ? ["warn", ...setting.slice(1)]
+            : "warn",
+      ])
+  );
 
 const recommendedTypeScriptWarnings = asWarnings([
   ...tseslint.configs.recommended,
   ...angular.configs.tsRecommended,
 ]);
 
-const accessibilityWarnings = asWarnings(
-  angular.configs.templateAccessibility,
-);
+const accessibilityWarnings = asWarnings(angular.configs.templateAccessibility);
 
 export default tseslint.config(
   {
     ignores: [
-      'dist/**',
-      'node_modules/**',
-      'src/ui-kit/experimental/patterns/layout/components/core/**',
+      "dist/**",
+      "node_modules/**",
+      "src/ui-kit/experimental/patterns/layout/components/core/**",
     ],
   },
   {
-    files: ['**/*.ts'],
+    files: ["**/*.ts"],
     extends: [
       ...tseslint.configs.recommended,
       ...angular.configs.tsRecommended,
@@ -40,8 +40,8 @@ export default tseslint.config(
     rules: recommendedTypeScriptWarnings,
   },
   {
-    files: ['**/*.html'],
+    files: ["**/*.html"],
     extends: angular.configs.templateAccessibility,
     rules: accessibilityWarnings,
-  },
+  }
 );

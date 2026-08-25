@@ -5,26 +5,25 @@ import {
   ViewChild,
   ChangeDetectorRef,
   AfterViewInit,
-  forwardRef
-} from '@angular/core';
+  forwardRef,
+} from "@angular/core";
 
 import {
   ControlValueAccessor,
   FormControl,
   ValidatorFn,
   NG_VALUE_ACCESSOR,
-  NG_VALIDATORS
-} from '@angular/forms';
+  NG_VALIDATORS,
+} from "@angular/forms";
 
-import { SamFormService } from '../../form-service';
-import { LabelWrapper } from '../../wrappers/label-wrapper';
-
+import { SamFormService } from "../../form-service";
+import { LabelWrapper } from "../../wrappers/label-wrapper";
 
 export function AccessorToken(className) {
   return {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => className),
-    multi: true
+    multi: true,
   };
 }
 
@@ -32,16 +31,16 @@ export function ValidatorToken(className) {
   return {
     provide: NG_VALIDATORS,
     useExisting: forwardRef(() => className),
-    multi: true
+    multi: true,
   };
 }
 @Component({
-    template: '',
-    standalone: false
+  template: "",
+  standalone: false,
 })
 export class SamFormControl
-  implements ControlValueAccessor, OnInit, AfterViewInit {
-
+  implements ControlValueAccessor, OnInit, AfterViewInit
+{
   /**
    * Sets the label text
    */
@@ -51,7 +50,7 @@ export class SamFormControl
    */
   @Input() public name: string;
   /**
-   * Sets the id attribute on the input element, 
+   * Sets the id attribute on the input element,
    * this is linked with the label
    */
   @Input() public id: string;
@@ -64,8 +63,8 @@ export class SamFormControl
    */
   @Input() public hint: string;
   /**
-   * (Deprecated) Sets the error message manually, 
-   * errors should be set in the the form controls directly 
+   * (Deprecated) Sets the error message manually,
+   * errors should be set in the the form controls directly
    * to populate error messages
    */
   @Input() public errorMessage: string;
@@ -74,7 +73,7 @@ export class SamFormControl
    */
   @Input() public required: boolean;
   /**
-   * Takes the form control to watch for changes to update 
+   * Takes the form control to watch for changes to update
    * the label error messages
    */
   @Input() public control: FormControl;
@@ -98,8 +97,12 @@ export class SamFormControl
   protected _value: any = null;
   protected _disabled: boolean;
 
-  public onChange: (_?: any) => any = (_) => { return _; };
-  public onTouched: () => any = () => { return; };
+  public onChange: (_?: any) => any = (_) => {
+    return _;
+  };
+  public onTouched: () => any = () => {
+    return;
+  };
 
   public get value(): any {
     return this._value;
@@ -120,7 +123,8 @@ export class SamFormControl
 
   constructor(
     public samFormService: SamFormService,
-    public cdr: ChangeDetectorRef) { }
+    public cdr: ChangeDetectorRef
+  ) {}
 
   // Lifecycle Hooks
 
@@ -154,21 +158,16 @@ export class SamFormControl
 
   private initReactiveForms() {
     if (this.control) {
-
       const validators: ValidatorFn[] = [];
 
       if (this.disableValidation) {
-
         if (this.control.validator) {
           validators.push(this.control.validator);
         }
-
       } else {
-
-        this.defaultValidators.forEach(
-          validator => validators.push(validator)
+        this.defaultValidators.forEach((validator) =>
+          validators.push(validator)
         );
-
       }
 
       this.control.setValidators(validators);
@@ -178,37 +177,33 @@ export class SamFormControl
   }
 
   private setValidationMethod() {
-
     if (!this.useFormService) {
-
       this.control.statusChanges.subscribe(
         (_: any) => {
           this.wrapper.formatErrors(this.control);
           this.cdr.detectChanges();
         },
-        (err: any) => console.error('Error occurred')
+        (err: any) => console.error("Error occurred")
       );
-
     } else {
-
-      this.samFormService.formEventsUpdated$
-        .subscribe((evt: any) => {
-          if ((!evt.root
-            || evt.root === this.control.root)
-            && evt.eventType
-            && evt.eventType === 'submit') {
-
+      this.samFormService.formEventsUpdated$.subscribe(
+        (evt: any) => {
+          if (
+            (!evt.root || evt.root === this.control.root) &&
+            evt.eventType &&
+            evt.eventType === "submit"
+          ) {
             this.wrapper.formatErrors(this.control);
-
-          } else if ((!evt.root
-            || evt.root === this.control.root)
-            && evt.eventType
-            && evt.eventType === 'reset') {
-
+          } else if (
+            (!evt.root || evt.root === this.control.root) &&
+            evt.eventType &&
+            evt.eventType === "reset"
+          ) {
             this.wrapper.clearError();
           }
-        }, (err: any) => console.error('Error occured')
-        );
+        },
+        (err: any) => console.error("Error occured")
+      );
     }
   }
 
@@ -218,5 +213,4 @@ export class SamFormControl
       this.cdr.detectChanges();
     }
   }
-
 }

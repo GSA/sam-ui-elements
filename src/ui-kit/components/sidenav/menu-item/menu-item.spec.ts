@@ -1,17 +1,17 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { EventEmitter, ElementRef, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { TestBed, ComponentFixture } from "@angular/core/testing";
+import { By } from "@angular/platform-browser";
+import { EventEmitter, ElementRef, Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 
-import { SamMenuItemComponent } from './';
-import { SamSidenavModule } from '../';
-import { SidenavService } from '../services';
-import { SamUIKitModule } from '../../../index';
+import { SamMenuItemComponent } from "./";
+import { SamSidenavModule } from "../";
+import { SidenavService } from "../services";
+import { SamUIKitModule } from "../../../index";
 
-import { data } from '../services/testdata';
+import { data } from "../services/testdata";
 
-describe('The Sam MenuItem component', () => {
-  describe('isolated tests', () => {
+describe("The Sam MenuItem component", () => {
+  describe("isolated tests", () => {
     let component: SamMenuItemComponent;
     let service: SidenavService;
     beforeEach(() => {
@@ -20,32 +20,29 @@ describe('The Sam MenuItem component', () => {
       component = new SamMenuItemComponent(service);
     });
 
-    it('should support updateUI on changes', () => {
-      component.selection.subscribe(val => {
-        expect(val.label).toBe('stuff');
+    it("should support updateUI on changes", () => {
+      component.selection.subscribe((val) => {
+        expect(val.label).toBe("stuff");
       });
-      component.updateUI(0, new Event('custom'), undefined);
+      component.updateUI(0, new Event("custom"), undefined);
     });
 
-    it('should emit on selecting children', () => {
-      component.selection.subscribe(val => {
+    it("should emit on selecting children", () => {
+      component.selection.subscribe((val) => {
         expect(val).toBe(true);
       });
       component.emitSelectedChild(true);
     });
-    it('should show children', () => {
+    it("should show children", () => {
       let obj = {};
       expect(component.hasChildren(obj)).toBe(false);
-      let obj2 = { 'children': [{}] };
+      let obj2 = { children: [{}] };
       expect(component.hasChildren(obj2)).toBe(true);
-      let obj3 = { 'children': [] };
+      let obj3 = { children: [] };
       expect(component.hasChildren(obj3)).toBe(false);
-
     });
-
-
   });
-  describe('rendered tests', () => {
+  describe("rendered tests", () => {
     let component: SamMenuItemComponent;
     let fixture: any;
 
@@ -58,7 +55,7 @@ describe('The Sam MenuItem component', () => {
       component = fixture.componentInstance;
     });
 
-    it('should compile', function () {
+    it("should compile", function () {
       fixture.detectChanges();
       expect(true).toBe(true);
     });

@@ -1,30 +1,30 @@
 // Include structure
-@import '../breadcrumbs/structure';
-@import '../menu/structure';
-@import '../table/structure';
-@import '../pagination/structure';
-@import '../sidenav/structure';
-@import '../expansion/expansion-panel';
-@import '../expansion/expansion-panel-header';
-@import '../filters/sam-filter-drawer';
-@import '../progress/structure';
-@import '../tag/tag';
-@import '../tag/tag-outline';
-@import '../utilities/link';
-@import '../utilities/margin';
-@import '../utilities/padding';
-@import '../utilities/border';
-@import '../utilities/float';
-@import '../utilities/text-styles';
-@import '../icon/icon';
-@import '../card/card';
-@import '../alert/alert';
-@import '../button/button';
-@import '../banner/banner';
-@import '../comment/comment';
+@import "../breadcrumbs/structure";
+@import "../menu/structure";
+@import "../table/structure";
+@import "../pagination/structure";
+@import "../sidenav/structure";
+@import "../expansion/expansion-panel";
+@import "../expansion/expansion-panel-header";
+@import "../filters/sam-filter-drawer";
+@import "../progress/structure";
+@import "../tag/tag";
+@import "../tag/tag-outline";
+@import "../utilities/link";
+@import "../utilities/margin";
+@import "../utilities/padding";
+@import "../utilities/border";
+@import "../utilities/float";
+@import "../utilities/text-styles";
+@import "../icon/icon";
+@import "../card/card";
+@import "../alert/alert";
+@import "../button/button";
+@import "../banner/banner";
+@import "../comment/comment";
 
 // Include theme
-@import '../core/theming/all-theme';
+@import "../core/theming/all-theme";
 
 // Include non-theme styles for core.
 @include sam-core();
@@ -50,7 +50,7 @@ $theme: sam-theme($primary, $secondary);
 // -------------------------------------
 $theme-respect-user-font-size: false;
 // $theme-font-path: '~@gsa-sam/sam-styles/src/fonts';
-$theme-font-role-heading: 'sans';
+$theme-font-role-heading: "sans";
 $theme-font-weight-semibold: 600;
 
 // Color settings
@@ -59,25 +59,25 @@ $theme-font-weight-semibold: 600;
 
 // Spacing settings
 // -------------------------------------
-$theme-grid-container-max-width: 'desktop-lg';
+$theme-grid-container-max-width: "desktop-lg";
 
 // Components settings
 // -------------------------------------
 // Header
-$theme-header-max-width: 'desktop-lg';
-$theme-header-min-width: 'tablet';
+$theme-header-max-width: "desktop-lg";
+$theme-header-min-width: "tablet";
 
 // Required
 // -------------------------------------
-@import '../packages/required';
+@import "../packages/required";
 
 // Global
 // -------------------------------------
-@import '../packages/global';
+@import "../packages/global";
 
 // Components
 // -------------------------------------
-@import '../packages/uswds-components';
+@import "../packages/uswds-components";
 
 // Utilities
 // -------------------------------------

@@ -6,20 +6,22 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {ScrollStrategy, getMdScrollStrategyAlreadyAttachedError} from './scroll-strategy';
-import {OverlayRef} from '../overlay-ref';
-import {Subscription} from 'rxjs';
-import {ScrollDispatcher} from './scroll-dispatcher';
-
+import {
+  ScrollStrategy,
+  getMdScrollStrategyAlreadyAttachedError,
+} from "./scroll-strategy";
+import { OverlayRef } from "../overlay-ref";
+import { Subscription } from "rxjs";
+import { ScrollDispatcher } from "./scroll-dispatcher";
 
 /**
  * Strategy that will close the overlay as soon as the user starts scrolling.
  */
 export class CloseScrollStrategy implements ScrollStrategy {
-  private _scrollSubscription: Subscription|null = null;
+  private _scrollSubscription: Subscription | null = null;
   private _overlayRef: OverlayRef;
 
-  constructor(private _scrollDispatcher: ScrollDispatcher) { }
+  constructor(private _scrollDispatcher: ScrollDispatcher) {}
 
   attach(overlayRef: OverlayRef) {
     if (this._overlayRef) {

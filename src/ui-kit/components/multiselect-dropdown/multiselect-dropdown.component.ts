@@ -5,17 +5,18 @@ import {
   EventEmitter,
   ViewChild,
   ElementRef,
-  OnChanges } from '@angular/core';
-import { OptionsType } from '../../types';
+  OnChanges,
+} from "@angular/core";
+import { OptionsType } from "../../types";
 
 /**
  * The <sam-multiselect-dropdown> component provides a form control to\
  * multiselect a list
  */
 @Component({
-    selector: 'sam-multiselect-dropdown',
-    templateUrl: 'multiselect-dropdown.template.html',
-    standalone: false
+  selector: "sam-multiselect-dropdown",
+  templateUrl: "multiselect-dropdown.template.html",
+  standalone: false,
 })
 export class SamMultiSelectDropdownComponent implements OnChanges {
   /**
@@ -55,11 +56,11 @@ export class SamMultiSelectDropdownComponent implements OnChanges {
    */
   @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChild('optionsList', {static: true}) list: ElementRef;
+  @ViewChild("optionsList", { static: true }) list: ElementRef;
 
   public elementLabel: string;
 
-  ngOnChanges( ) {
+  ngOnChanges() {
     this.updateLabel();
   }
 
@@ -68,45 +69,47 @@ export class SamMultiSelectDropdownComponent implements OnChanges {
       this.elementLabel = this.label;
     } else if (this.model.length === 1) {
       this.elementLabel = this.labelForValue(this.model[0]);
-    } else if (this.model.length > 1 &&
-        this.model.length === this.options.length) {
-      this.elementLabel = 'All';
+    } else if (
+      this.model.length > 1 &&
+      this.model.length === this.options.length
+    ) {
+      this.elementLabel = "All";
     } else if (this.model.length > 1) {
       this.elementLabel = `Multiple ${this.label} Selected`;
     } else {
-      throw new Error('Unable to display dropdown label');
+      throw new Error("Unable to display dropdown label");
     }
   }
 
   labelForValue(val) {
-      const option = this.options.find(o => o.value === val);
-      if (option) {
-        return option.label;
-      }
+    const option = this.options.find((o) => o.value === val);
+    if (option) {
+      return option.label;
+    }
   }
 
   toggleItemList(event) {
-      if (this.isEnterEvent(event)) {
-          const element = this.list.nativeElement;
-          element.style.visibility =
-            element.style.visibility !== 'visible' ?
-            'visible' :
-            'hidden';
-      }
+    if (this.isEnterEvent(event)) {
+      const element = this.list.nativeElement;
+      element.style.visibility =
+        element.style.visibility !== "visible" ? "visible" : "hidden";
+    }
   }
 
   isEnterEvent(event) {
     const enterKey = 32;
     const spaceKey = 13;
     // Returns true if event is click or key code is enter (32) or space (13)
-    return event.type === 'click' ||
+    return (
+      event.type === "click" ||
       event.keyCode === enterKey ||
-      event.keyCode === spaceKey;
+      event.keyCode === spaceKey
+    );
   }
 
-  onMoveOutside( ) {
-    if (this.list.nativeElement.style.visibility === 'visible') {
-      this.list.nativeElement.style.visibility = 'hidden';
+  onMoveOutside() {
+    if (this.list.nativeElement.style.visibility === "visible") {
+      this.list.nativeElement.style.visibility = "hidden";
     }
   }
 
@@ -115,4 +118,3 @@ export class SamMultiSelectDropdownComponent implements OnChanges {
     this.modelChange.emit(event);
   }
 }
-

@@ -30,12 +30,12 @@ const Autocomplete_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-    selector: "sam-sds-autocomplete",
-    templateUrl: "./autocomplete.component.html",
-    styleUrls: ["./autocomplete.component.scss"],
-    providers: [Autocomplete_VALUE_ACCESSOR],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: "sam-sds-autocomplete",
+  templateUrl: "./autocomplete.component.html",
+  styleUrls: ["./autocomplete.component.scss"],
+  providers: [Autocomplete_VALUE_ACCESSOR],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SAMSDSAutocompleteComponent implements ControlValueAccessor {
   /**

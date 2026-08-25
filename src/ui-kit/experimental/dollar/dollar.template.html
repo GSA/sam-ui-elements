@@ -2,7 +2,8 @@
   [label]="label"
   [name]="id"
   [hint]="hint"
-  [required]="required">
+  [required]="required"
+>
   <input
     [attr.type]="attrType"
     [attr.title]="title ? title : undefined"
@@ -15,5 +16,6 @@
     (keydown)="onKeyInput($event)"
     (ngModelChange)="onInputChange()"
     (focus)="onFocus()"
-    (blur)="onLoseFocus()">
+    (blur)="onLoseFocus()"
+  />
 </sam-label-wrapper>

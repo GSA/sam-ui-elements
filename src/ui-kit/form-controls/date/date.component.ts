@@ -7,10 +7,10 @@ import {
   EventEmitter,
   OnInit,
   OnChanges,
-  forwardRef
-} from '@angular/core';
+  forwardRef,
+} from "@angular/core";
 
-import moment from 'moment';
+import moment from "moment";
 
 import {
   NG_VALUE_ACCESSOR,
@@ -18,100 +18,114 @@ import {
   FormControl,
   Validators,
   ValidatorFn,
-  AbstractControl
-} from '@angular/forms';
+  AbstractControl,
+} from "@angular/forms";
 
-import { SamFormService } from '../../form-service';
+import { SamFormService } from "../../form-service";
 
-import {
-  KeyHelper
-} from '../../utilities/key-helper/key-helper';
+import { KeyHelper } from "../../utilities/key-helper/key-helper";
 
 /**
  * The <sam-date> component is a Date entry portion of a form
  */
 @Component({
-    selector: 'sam-date',
-    templateUrl: 'date.template.html',
-    providers: [{
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => SamDateComponent),
-            multi: true
-        }],
-    standalone: false
+  selector: "sam-date",
+  templateUrl: "date.template.html",
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SamDateComponent),
+      multi: true,
+    },
+  ],
+  standalone: false,
 })
 export class SamDateComponent
-  implements OnInit, OnChanges, ControlValueAccessor {
+  implements OnInit, OnChanges, ControlValueAccessor
+{
   /**
-  * Sets the general error message for component
-  */
-  @Input() public errorMessage: string = '';
+   * Sets the general error message for component
+   */
+  @Input() public errorMessage: string = "";
   /**
-  * Sets the name attribute for component
-  */
-  @Input() public name: string = '';
+   * Sets the name attribute for component
+   */
+  @Input() public name: string = "";
   /**
-  * Sets the label text
-  */
-  @Input() public label: string = '';
+   * Sets the label text
+   */
+  @Input() public label: string = "";
   /**
-  * Toggles whether a "required" designation is shown
-  */
+   * Toggles whether a "required" designation is shown
+   */
   @Input() public required: boolean = false;
   /**
-  * Sets the helpful hint text
-  */
-  @Input() public hint: string = '';
+   * Sets the helpful hint text
+   */
+  @Input() public hint: string = "";
   /**
-  * Sets the disabled status of component, defaults to false
-  */
+   * Sets the disabled status of component, defaults to false
+   */
   @Input() public disabled: boolean = false;
   /**
-  * Deprecated - Sets the current value of the form control
-  */
+   * Deprecated - Sets the current value of the form control
+   */
   @Input() public value: string;
   /**
    * Toggles default component validations
    */
   @Input() public defaultValidations: boolean = false;
   /**
-  * Passes in the Angular FormControl
-  */
+   * Passes in the Angular FormControl
+   */
   @Input() public control: FormControl;
   /**
-  * Toggles validations to display with SamFormService events
-  */
+   * Toggles validations to display with SamFormService events
+   */
   @Input() public useFormService: boolean;
   /**
-  * Deprecated - Event emitted when value changes
-  */
+   * Deprecated - Event emitted when value changes
+   */
   @Output() public valueChange = new EventEmitter<any>();
   /**
-  * (deprecated) Event emitted when form control loses focus
-  */
+   * (deprecated) Event emitted when form control loses focus
+   */
   @Output() public blurEvent = new EventEmitter<any>();
   /**
-  * Event emitted when form control loses focus
-  */
+   * Event emitted when form control loses focus
+   */
   @Output() public blur = new EventEmitter<any>();
 
   @Output() public focus = new EventEmitter<any>();
-  @ViewChild('month', {static: true}) public month;
-  @ViewChild('day', {static: true}) public day;
-  @ViewChild('year', {static: true}) public year;
-  @ViewChild('wrapper', {static: true}) public wrapper;
+  @ViewChild("month", { static: true }) public month;
+  @ViewChild("day", { static: true }) public day;
+  @ViewChild("year", { static: true }) public year;
+  @ViewChild("wrapper", { static: true }) public wrapper;
   public allowChars = [
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-    'backspace', 'left', 'right', 'tab', 'delete'
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "backspace",
+    "left",
+    "right",
+    "tab",
+    "delete",
   ];
 
   public model: any = {
     month: undefined,
     day: undefined,
-    year: undefined
+    year: undefined,
   };
-  public INPUT_FORMAT: string = 'Y-M-D';
-  public OUTPUT_FORMAT: string = 'YYYY-MM-DD';
+  public INPUT_FORMAT: string = "Y-M-D";
+  public OUTPUT_FORMAT: string = "YYYY-MM-DD";
   private thirtyDayMonths = [4, 6, 9, 11];
   private nonFebruaryDays = [30, 31];
   private maxMonth = 12;
@@ -133,7 +147,7 @@ export class SamDateComponent
     return {
       day: this.day.nativeElement.value,
       month: this.month.nativeElement.value,
-      year: this.year.nativeElement.value
+      year: this.year.nativeElement.value,
     };
   }
 
@@ -142,8 +156,8 @@ export class SamDateComponent
       if (c.dirty && !c.value) {
         return {
           dateRequiredError: {
-            message: 'This field is required'
-          }
+            message: "This field is required",
+          },
         };
       }
       return undefined;
@@ -157,17 +171,17 @@ export class SamDateComponent
     return (c: AbstractControl) => {
       const error = {
         dateError: {
-          message: ''
-        }
+          message: "",
+        },
       };
-      if (c.dirty && (c.value && c.value !== undefined)) {
+      if (c.dirty && c.value && c.value !== undefined) {
         const dateM = moment(c.value);
         if (!dateM.isValid()) {
-          error.dateError.message = 'Invalid date';
+          error.dateError.message = "Invalid date";
           return error;
         } else {
-          if (dateM.get('year') < minYear) {
-            error.dateError.message = 'Please enter 4 digit year';
+          if (dateM.get("year") < minYear) {
+            error.dateError.message = "Please enter 4 digit year";
             return error;
           }
         }
@@ -179,16 +193,18 @@ export class SamDateComponent
   onChange: any = () => undefined;
   onTouched: any = () => undefined;
 
-  constructor(private samFormService: SamFormService,
-    private cdr: ChangeDetectorRef) { }
+  constructor(
+    private samFormService: SamFormService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     if (!this.name) {
-      throw new Error('SamDateComponent required a name for 508 compliance');
+      throw new Error("SamDateComponent required a name for 508 compliance");
     }
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     if (this.control) {
       const validators: ValidatorFn[] = [];
       if (this.control.validator) {
@@ -209,11 +225,17 @@ export class SamDateComponent
         this.wrapper.formatErrors(this.control);
       } else {
         this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
-          if ((!evt.root || evt.root === this.control.root)
-            && evt.eventType && evt.eventType === 'submit') {
+          if (
+            (!evt.root || evt.root === this.control.root) &&
+            evt.eventType &&
+            evt.eventType === "submit"
+          ) {
             this.wrapper.formatErrors(this.control);
-          } else if ((!evt.root || evt.root === this.control.root)
-            && evt.eventType && evt.eventType === 'reset') {
+          } else if (
+            (!evt.root || evt.root === this.control.root) &&
+            evt.eventType &&
+            evt.eventType === "reset"
+          ) {
             this.wrapper.clearError();
           }
         });
@@ -222,14 +244,14 @@ export class SamDateComponent
   }
 
   ngOnChanges(changes) {
-    if (changes && changes['value']) {
+    if (changes && changes["value"]) {
       this.parseValueString();
     }
   }
 
   parseValueString() {
     if (this.value) {
-      // use the forgiving format (that doesn't need 0 
+      // use the forgiving format (that doesn't need 0
       // padding) for inputs
       const m = moment(this.value, this.INPUT_FORMAT);
       if (m.isValid()) {
@@ -240,13 +262,13 @@ export class SamDateComponent
         this.model.year = m.year();
       }
     } else {
-      this.model.month = '';
-      this.model.day = '';
-      this.model.year = '';
+      this.model.month = "";
+      this.model.day = "";
+      this.model.year = "";
 
-      this.month.nativeElement.value = '';
-      this.day.nativeElement.value = '';
-      this.year.nativeElement.value = '';
+      this.month.nativeElement.value = "";
+      this.day.nativeElement.value = "";
+      this.year.nativeElement.value = "";
     }
   }
 
@@ -293,8 +315,8 @@ export class SamDateComponent
 
   onMonthBlur(event) {
     this.isMonthBlur = true;
-    if (this.month.nativeElement.value === '0') {
-      this.month.nativeElement.value = '';
+    if (this.month.nativeElement.value === "0") {
+      this.month.nativeElement.value = "";
     }
   }
 
@@ -304,26 +326,35 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
-    if (this.isTabPressed && event && !(KeyHelper.is('shift', event)) && !(KeyHelper.is('tab', event)) || this.isMonthSelected) {
-      this.month.nativeElement.value = '';
+    if (
+      (this.isTabPressed &&
+        event &&
+        !KeyHelper.is("shift", event) &&
+        !KeyHelper.is("tab", event)) ||
+      this.isMonthSelected
+    ) {
+      this.month.nativeElement.value = "";
     }
-    this.isTabPressed = KeyHelper.is('tab', event);
+    this.isTabPressed = KeyHelper.is("tab", event);
     this.isMonthSelected = false;
     const inputNum = KeyHelper.getNumberFromKey(event);
 
     const possibleNum = this.getPossibleNum(this.month.nativeElement, event);
-    if (possibleNum > this.maxMonth
-      || !this.keys.isAllowed(event)) {
+    if (possibleNum > this.maxMonth || !this.keys.isAllowed(event)) {
       event.preventDefault();
       return;
     }
 
     if (inputNum !== undefined) {
-      if (event.target.value.length === 1 ||
-        (event.target.value.length === 0 && possibleNum > 1)) {
-        if (this.day.nativeElement.value
-          && this._shouldClearDayInput(possibleNum)) {
-          this.day.nativeElement.value = '';
+      if (
+        event.target.value.length === 1 ||
+        (event.target.value.length === 0 && possibleNum > 1)
+      ) {
+        if (
+          this.day.nativeElement.value &&
+          this._shouldClearDayInput(possibleNum)
+        ) {
+          this.day.nativeElement.value = "";
         }
         this.day.nativeElement.focus();
       }
@@ -339,15 +370,18 @@ export class SamDateComponent
     const inputNum = KeyHelper.getNumberFromKey(event);
     if (this.keys.isAllowed(event)) {
       const position = parseInt(item.selectionStart, 10);
-      possibleNum = item.value.substring(0, position) + inputNum + item.value.substring(position);
+      possibleNum =
+        item.value.substring(0, position) +
+        inputNum +
+        item.value.substring(position);
     }
     return parseInt(possibleNum, 10);
   }
 
   onDayBlur(event) {
     this.isDayBlur = true;
-    if (this.day.nativeElement.value === '0') {
-      this.day.nativeElement.value = '';
+    if (this.day.nativeElement.value === "0") {
+      this.day.nativeElement.value = "";
     }
   }
 
@@ -356,28 +390,34 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
-    if (this.isTabPressed && event && !(KeyHelper.is('shift', event)) && !(KeyHelper.is('tab', event))|| this.isDaySelected) {
-      this.day.nativeElement.value = '';
+    if (
+      (this.isTabPressed &&
+        event &&
+        !KeyHelper.is("shift", event) &&
+        !KeyHelper.is("tab", event)) ||
+      this.isDaySelected
+    ) {
+      this.day.nativeElement.value = "";
     }
-    this.isTabPressed = KeyHelper.is('tab', event);
+    this.isTabPressed = KeyHelper.is("tab", event);
     this.isDaySelected = false;
     const inputNum = KeyHelper.getNumberFromKey(event);
-    const possibleNum =
-      this.getPossibleNum(this.day.nativeElement, event);
+    const possibleNum = this.getPossibleNum(this.day.nativeElement, event);
     const maxDate = this.getMaxDate();
-    const numJumpThreshold =
-      this.getNumJumpThreshold(this.month.nativeElement.value);
+    const numJumpThreshold = this.getNumJumpThreshold(
+      this.month.nativeElement.value
+    );
 
-    if (possibleNum > maxDate
-      || !this.keys.isAllowed(event)) {
+    if (possibleNum > maxDate || !this.keys.isAllowed(event)) {
       event.preventDefault();
       return;
     }
     let dupModel;
     if (inputNum !== undefined) {
-      if (event.target.value.length === 1 ||
-        (event.target.value.length === 0
-          && possibleNum > numJumpThreshold)) {
+      if (
+        event.target.value.length === 1 ||
+        (event.target.value.length === 0 && possibleNum > numJumpThreshold)
+      ) {
         this.year.nativeElement.focus();
       }
       this.day.nativeElement.value = possibleNum;
@@ -393,10 +433,7 @@ export class SamDateComponent
     const thirty = 30;
     let maxDate = 31;
 
-    const month = parseInt(
-      this.month.nativeElement.value,
-      undefined
-    );
+    const month = parseInt(this.month.nativeElement.value, undefined);
 
     if (this.thirtyDayMonths.indexOf(month) !== -1) {
       maxDate = thirty;
@@ -404,8 +441,10 @@ export class SamDateComponent
 
     if (month === 2) {
       maxDate = februaryLeap;
-      if (this.year.nativeElement.value
-        && !this._isLeapYear(this.year.nativeElement.value)) {
+      if (
+        this.year.nativeElement.value &&
+        !this._isLeapYear(this.year.nativeElement.value)
+      ) {
         maxDate = february;
       }
     }
@@ -419,14 +458,16 @@ export class SamDateComponent
 
   onYearBlur(event) {
     this.isYearBlur = true;
-    if (this.year.nativeElement.value === '0') {
-      this.year.nativeElement.value = '';
+    if (this.year.nativeElement.value === "0") {
+      this.year.nativeElement.value = "";
     }
-    if (this.year.nativeElement.value
-      && !this._isLeapYear(this.year.nativeElement.value)
-      && this.month.nativeElement.value === '2'
-      && this.day.nativeElement.value === '29') {
-      this.day.nativeElement.value = '';
+    if (
+      this.year.nativeElement.value &&
+      !this._isLeapYear(this.year.nativeElement.value) &&
+      this.month.nativeElement.value === "2" &&
+      this.day.nativeElement.value === "29"
+    ) {
+      this.day.nativeElement.value = "";
     }
   }
 
@@ -437,24 +478,28 @@ export class SamDateComponent
     if (this._checkCopyPasteChar(key)) {
       return;
     }
-    if (this.isTabPressed && event && !(KeyHelper.is('shift', event)) && !(KeyHelper.is('tab', event)) || this.isYearSelected) {
-      this.year.nativeElement.value = '';
+    if (
+      (this.isTabPressed &&
+        event &&
+        !KeyHelper.is("shift", event) &&
+        !KeyHelper.is("tab", event)) ||
+      this.isYearSelected
+    ) {
+      this.year.nativeElement.value = "";
     }
-    this.isTabPressed = KeyHelper.is('tab', event);
+    this.isTabPressed = KeyHelper.is("tab", event);
     this.isYearSelected = false;
     const inputNum = KeyHelper.getNumberFromKey(event);
-    const possibleNum =
-      this.getPossibleNum(this.year.nativeElement, event);
+    const possibleNum = this.getPossibleNum(this.year.nativeElement, event);
 
-    if (possibleNum > maxValue
-      || !this.keys.isAllowed(event)) {
+    if (possibleNum > maxValue || !this.keys.isAllowed(event)) {
       event.preventDefault();
       return;
     }
     if (inputNum !== undefined) {
       const three = 3;
       if (event.target.value.length === three) {
-        this.blurEvent.emit('year entered');
+        this.blurEvent.emit("year entered");
         this.blur.emit();
       }
       this.year.nativeElement.value = possibleNum;
@@ -471,25 +516,31 @@ export class SamDateComponent
 
   onChangeHandler(override = undefined) {
     this.onTouched();
-    let dayCheck = this.isDateTouched || (!this.isDateTouched && this.day.nativeElement.value);
-    let monthCheck = this.isMonthTouched || (!this.isMonthTouched && this.month.nativeElement.value);
-    let yearCheck = this.isYearTouched || (!this.isYearTouched && this.year.nativeElement.value);
+    let dayCheck =
+      this.isDateTouched ||
+      (!this.isDateTouched && this.day.nativeElement.value);
+    let monthCheck =
+      this.isMonthTouched ||
+      (!this.isMonthTouched && this.month.nativeElement.value);
+    let yearCheck =
+      this.isYearTouched ||
+      (!this.isYearTouched && this.year.nativeElement.value);
     if (dayCheck && monthCheck && yearCheck && !this.isTabPressed) {
       if (this.isEmptyField(override)) {
         this.onChange(null);
         this.valueChange.emit(null);
       } else if (this.isYearTouched) {
         if (this.year.nativeElement.value.length != 4) {
-          this.onChange('Invalid Date');
-          this.valueChange.emit('Invalid Date');
+          this.onChange("Invalid Date");
+          this.valueChange.emit("Invalid Date");
         } else {
           const dateString = this.getDate(override).format(this.OUTPUT_FORMAT);
           this.onChange(dateString);
           this.valueChange.emit(dateString);
         }
-      } else if ((!this.getDate(override).isValid())) {
-        this.onChange('Invalid Date');
-        this.valueChange.emit('Invalid Date');
+      } else if (!this.getDate(override).isValid()) {
+        this.onChange("Invalid Date");
+        this.valueChange.emit("Invalid Date");
       } else {
         // use the strict format for outputs
         const dateString = this.getDate(override).format(this.OUTPUT_FORMAT);
@@ -506,7 +557,14 @@ export class SamDateComponent
     }
   }
   dateBlurred() {
-    if (this.isDateTouched && this.isMonthTouched && this.isYearTouched && this.isMonthBlur && this.isDayBlur && this.isYearBlur) {
+    if (
+      this.isDateTouched &&
+      this.isMonthTouched &&
+      this.isYearTouched &&
+      this.isMonthBlur &&
+      this.isDayBlur &&
+      this.isYearBlur
+    ) {
       this.blurEvent.emit(true);
       this.blur.emit(true);
     }
@@ -523,15 +581,17 @@ export class SamDateComponent
     if (override) {
       dupModel = override;
     }
-    return (isNaN(dupModel.day)
-      || dupModel.day === undefined
-      || dupModel.day === '')
-      && (isNaN(dupModel.month)
-        || dupModel.month === undefined
-        || dupModel.month === '')
-      && (isNaN(dupModel.year)
-        || dupModel.year === undefined
-        || dupModel.year === '');
+    return (
+      (isNaN(dupModel.day) ||
+        dupModel.day === undefined ||
+        dupModel.day === "") &&
+      (isNaN(dupModel.month) ||
+        dupModel.month === undefined ||
+        dupModel.month === "") &&
+      (isNaN(dupModel.year) ||
+        dupModel.year === undefined ||
+        dupModel.year === "")
+    );
   }
 
   isValid() {
@@ -540,20 +600,29 @@ export class SamDateComponent
   }
 
   monthName() {
-   return (this.required ? `${this.name} month required.` : `${this.name} month`) + ' Enter Month Here';
+    return (
+      (this.required ? `${this.name} month required.` : `${this.name} month`) +
+      " Enter Month Here"
+    );
   }
 
   dayName() {
-    return (this.required ? `${this.name} day required.` : `${this.name} day`) + ' Enter Day Here';
+    return (
+      (this.required ? `${this.name} day required.` : `${this.name} day`) +
+      " Enter Day Here"
+    );
   }
 
   yearName() {
-    return (this.required ? `${this.name} year required.` : `${this.name} year`) + ' Enter Year Here';
+    return (
+      (this.required ? `${this.name} year required.` : `${this.name} year`) +
+      " Enter Year Here"
+    );
   }
 
   triggerTouch(ev) {
     this.isYearTouched = true;
-    this.touchHandler()
+    this.touchHandler();
     this.onTouched();
   }
 
@@ -571,29 +640,29 @@ export class SamDateComponent
 
   triggerMonthTouch(event) {
     this.isMonthTouched = true;
-    if (event.target.value.substring(0, 1) === '0') {
+    if (event.target.value.substring(0, 1) === "0") {
       this.month.nativeElement.value = event.target.value.substring(1);
     }
-    this.touchHandler()
+    this.touchHandler();
     this.onTouched();
   }
   triggerDayTouch(event) {
     this.isDateTouched = true;
-    if (event.target.value.substring(0, 1) === '0') {
+    if (event.target.value.substring(0, 1) === "0") {
       this.day.nativeElement.value = event.target.value.substring(1);
     }
-    this.touchHandler()
+    this.touchHandler();
     this.onTouched();
   }
 
   resetInput() {
-    this.day.nativeElement.value = '';
-    this.month.nativeElement.value = '';
-    this.year.nativeElement.value = '';
+    this.day.nativeElement.value = "";
+    this.month.nativeElement.value = "";
+    this.year.nativeElement.value = "";
   }
 
   _checkCopyPasteChar(char) {
-    if (char === 'c' || char === 'v') {
+    if (char === "c" || char === "v") {
       return true;
     }
   }
@@ -609,21 +678,22 @@ export class SamDateComponent
     // It is problematic to reference DOM elements in Angular components
     // We should revisit that practice through our entire code base
     const win: any = window;
-    if (event.clipboardData && event.clipboardData.getData('text')) {
-      return event.clipboardData.getData('text');
-    } else if (win.clipboardData
-      && win.clipboardData.getData('text')) {
-      return win.clipboardData.getData('text');
+    if (event.clipboardData && event.clipboardData.getData("text")) {
+      return event.clipboardData.getData("text");
+    } else if (win.clipboardData && win.clipboardData.getData("text")) {
+      return win.clipboardData.getData("text");
     }
   }
 
   _shouldClearDayInput(num) {
-    if ((this.thirtyDayMonths.indexOf(parseInt(num, undefined)) !== -1
-      && this.day.nativeElement.value === '31')
-      || (num === '2'
-        && this.nonFebruaryDays.indexOf(
+    if (
+      (this.thirtyDayMonths.indexOf(parseInt(num, undefined)) !== -1 &&
+        this.day.nativeElement.value === "31") ||
+      (num === "2" &&
+        this.nonFebruaryDays.indexOf(
           parseInt(this.day.nativeElement.value, undefined)
-        ) !== -1)) {
+        ) !== -1)
+    ) {
       return true;
     }
   }
@@ -632,9 +702,10 @@ export class SamDateComponent
     const quadrennial = 4;
     const centennial = 100;
     const quadricentennial = 400;
-    return ((year % quadrennial === 0)
-      && (year % centennial !== 0))
-      || (year % quadricentennial === 0);
+    return (
+      (year % quadrennial === 0 && year % centennial !== 0) ||
+      year % quadricentennial === 0
+    );
   }
 
   // controlvalueaccessor methods
@@ -656,7 +727,7 @@ export class SamDateComponent
       this.parseValueString();
     } else {
       this.resetInput();
-      this.value = '';
+      this.value = "";
       this.parseValueString();
     }
   }

@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 
 @Injectable()
 export class SidenavService {
@@ -10,11 +10,11 @@ export class SidenavService {
   private model: any;
 
   setChildren(children: any[]): any[] {
-    return this.children = children;
+    return (this.children = children);
   }
 
   setModel(model: any): void {
-    return this.model = model;
+    return (this.model = model);
   }
 
   getData(): number[] {
@@ -35,8 +35,8 @@ export class SidenavService {
       this.indexArray.push(index);
     } else {
       this.indexArray[nodeDepth] = index;
-      if(this.indexArray.length > nodeDepth+1){
-        this.indexArray.splice(nodeDepth+1);
+      if (this.indexArray.length > nodeDepth + 1) {
+        this.indexArray.splice(nodeDepth + 1);
       }
     }
   }
@@ -51,14 +51,14 @@ export class SidenavService {
   }
 
   getPath(): string {
-    let path: string = '';
+    let path: string = "";
     let model: any = this.model;
     this.indexArray.forEach((index) => {
       model = model.children[index];
       if (!model.route) {
         console.warn(`Path contains undefined route on node with label \
           ${model.label}. This could cause problems with your router.`);
-        path += '/';
+        path += "/";
       }
       path += model.route;
     });

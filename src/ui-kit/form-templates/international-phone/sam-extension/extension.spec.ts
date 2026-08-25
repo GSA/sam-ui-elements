@@ -1,36 +1,30 @@
-import { SamExtension } from './extension.component';
-import { ChangeDetectorRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {
-  FormsModule,
-  FormControl,
-  ReactiveFormsModule
-} from '@angular/forms';
-import { TestBed } from '@angular/core/testing';
+import { SamExtension } from "./extension.component";
+import { ChangeDetectorRef } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule, FormControl, ReactiveFormsModule } from "@angular/forms";
+import { TestBed } from "@angular/core/testing";
 
-import { SamFormService } from '../../../form-service';
-import { SamWrapperModule } from '../../../wrappers';
-import { SamFormControlsModule } from '../../../form-controls';
+import { SamFormService } from "../../../form-service";
+import { SamWrapperModule } from "../../../wrappers";
+import { SamFormControlsModule } from "../../../form-controls";
 
 const mockEvent = {
   currentTarget: {
-    value: undefined
-  }
+    value: undefined,
+  },
 };
 
-describe('Sam extension', () => {
-
+describe("Sam extension", () => {
   let component: SamExtension;
 
-  describe('Standalone tests', () => {
-
+  describe("Standalone tests", () => {
     beforeEach(() => {
       component = new SamExtension(null, null);
-      component.name = 'extension';
-      component.label = 'Extension';
+      component.name = "extension";
+      component.label = "Extension";
     });
 
-    it('should validate country code less than 999', () => {
+    it("should validate country code less than 999", () => {
       const value = 5;
       const control = new FormControl();
       control.setValue(value);
@@ -39,10 +33,9 @@ describe('Sam extension', () => {
 
       expect(errs).toBe(null);
     });
-
   });
 
-  describe('Rendered tests', () => {
+  describe("Rendered tests", () => {
     let fixture;
 
     beforeEach(() => {
@@ -55,80 +48,68 @@ describe('Sam extension', () => {
           SamWrapperModule,
           SamFormControlsModule,
         ],
-        declarations: [
-          SamExtension,
-        ],
-        providers: [
-          SamFormService,
-          ChangeDetectorRef
-        ]
+        declarations: [SamExtension],
+        providers: [SamFormService, ChangeDetectorRef],
       });
 
       fixture = TestBed.createComponent(SamExtension);
       component = fixture.componentInstance;
-      component.name = 'extension';
-      component.label = 'Extension';
+      component.name = "extension";
+      component.label = "Extension";
     });
 
-    it('should set internal value when input changes', () => {
+    it("should set internal value when input changes", () => {
       const mock = {
         currentTarget: {
-          value: '5'
-        }
+          value: "5",
+        },
       };
 
       component.inputChange(mock);
 
       fixture.detectChanges();
 
-      fixture.whenStable().then(
-        () => {
-          const val = fixture.debugElement.querySelector('.sam-extension').value;
-          expect(val).toBe(5);
-        }
-      );
+      fixture.whenStable().then(() => {
+        const val = fixture.debugElement.querySelector(".sam-extension").value;
+        expect(val).toBe(5);
+      });
     });
 
-    it('Should be empty when chanrecter entered', () => {
+    it("Should be empty when chanrecter entered", () => {
       const mock = {
         currentTarget: {
-          value: '5'
+          value: "5",
         },
-        preventDefault: function(){},
-        stopPropagation: function(){}
+        preventDefault: function () {},
+        stopPropagation: function () {},
       };
 
       component.onKeyInput(mock);
 
       fixture.detectChanges();
 
-      fixture.whenStable().then(
-        () => {
-          const val = fixture.debugElement.querySelector('.sam-extension').value;
-          expect(val).toBe(5);
-        }
-      );
+      fixture.whenStable().then(() => {
+        const val = fixture.debugElement.querySelector(".sam-extension").value;
+        expect(val).toBe(5);
+      });
     });
 
-    it('Should be empty when chanrecter entered', () => {
-    
+    it("Should be empty when chanrecter entered", () => {
       const mock1 = {
-        key: 'g',
-        preventDefault: function(){},
-        stopPropagation: function(){}
+        key: "g",
+        preventDefault: function () {},
+        stopPropagation: function () {},
       };
 
       component.onKeyInput(mock1);
 
       fixture.detectChanges();
 
-      fixture.whenStable().then(
-        () => {
-          console.log(component.inputValue, 'test');
-          const val = fixture.debugElement.querySelector('.sam-extension').value;
-          expect(val).toBe('');
-        }
-      )
+      fixture.whenStable().then(() => {
+        console.log(component.inputValue, "test");
+        const val = fixture.debugElement.querySelector(".sam-extension").value;
+        expect(val).toBe("");
+      });
     });
-  })
+  });
 });

@@ -1,22 +1,23 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { SamSideNavigationToolbarComponent } from './sideNavigationToolbar.component';
-import { SamSideNavigationToolbarItemComponent } from '../sideNavigationToolbarItem/sideNavigationToolbarItem.component';
-import { CommonModule } from '@angular/common';
-import { By } from '@angular/platform-browser';
+import { SamSideNavigationToolbarComponent } from "./sideNavigationToolbar.component";
+import { SamSideNavigationToolbarItemComponent } from "../sideNavigationToolbarItem/sideNavigationToolbarItem.component";
+import { CommonModule } from "@angular/common";
+import { By } from "@angular/platform-browser";
 
-
-describe('SamSideNavigationToolbarComponent', () => {
+describe("SamSideNavigationToolbarComponent", () => {
   let component: SamSideNavigationToolbarComponent;
   let fixture: ComponentFixture<SamSideNavigationToolbarComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [SamSideNavigationToolbarComponent,SamSideNavigationToolbarItemComponent],
+      declarations: [
+        SamSideNavigationToolbarComponent,
+        SamSideNavigationToolbarItemComponent,
+      ],
       imports: [CommonModule],
-      providers: []
-    })
-      .compileComponents();
+      providers: [],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -25,7 +26,7 @@ describe('SamSideNavigationToolbarComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

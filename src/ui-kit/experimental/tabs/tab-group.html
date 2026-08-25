@@ -1,17 +1,22 @@
-<md-tab-header #tabHeader
-               [selectedIndex]="selectedIndex"
-               (indexFocused)="_focusChanged($event)"
-               (selectFocusedIndex)="selectedIndex = $event">
-  <div class="mat-tab-label" role="tab" md-tab-label-wrapper 
-       *ngFor="let tab of _tabs; let i = index"
-       [id]="_getTabLabelId(i)"
-       [tabIndex]="selectedIndex == i ? 0 : -1"
-       [attr.aria-controls]="_getTabContentId(i)"
-       [attr.aria-selected]="selectedIndex == i"
-       [class.mat-tab-label-active]="selectedIndex == i"
-       [disabled]="tab.disabled"
-       (click)="tabHeader.focusIndex = selectedIndex = i">
-
+<md-tab-header
+  #tabHeader
+  [selectedIndex]="selectedIndex"
+  (indexFocused)="_focusChanged($event)"
+  (selectFocusedIndex)="selectedIndex = $event"
+>
+  <div
+    class="mat-tab-label"
+    role="tab"
+    md-tab-label-wrapper
+    *ngFor="let tab of _tabs; let i = index"
+    [id]="_getTabLabelId(i)"
+    [tabIndex]="selectedIndex == i ? 0 : -1"
+    [attr.aria-controls]="_getTabContentId(i)"
+    [attr.aria-selected]="selectedIndex == i"
+    [class.mat-tab-label-active]="selectedIndex == i"
+    [disabled]="tab.disabled"
+    (click)="tabHeader.focusIndex = selectedIndex = i"
+  >
     <!-- If there is a label template, use it. -->
     <ng-template [ngIf]="tab.templateLabel">
       <ng-template [cdkPortalHost]="tab.templateLabel"></ng-template>
@@ -23,17 +28,19 @@
 </md-tab-header>
 
 <div class="mat-tab-body-wrapper" #tabBodyWrapper>
-  <md-tab-body role="tabpanel"
-               *ngFor="let tab of _tabs; let i = index"
-               [tabIndex]="selectedIndex == i ? 0 : -1"
-               [hidden]="selectedIndex !== i"
-               [id]="_getTabContentId(i)"
-               [attr.aria-labelledby]="_getTabLabelId(i)"
-               [class.mat-tab-body-active]="selectedIndex == i"
-               [content]="tab.content"
-               [position]="tab.position"
-               [origin]="tab.origin"
-               (onCentered)="_removeTabBodyWrapperHeight()"
-               (onCentering)="_setTabBodyWrapperHeight($event)">
+  <md-tab-body
+    role="tabpanel"
+    *ngFor="let tab of _tabs; let i = index"
+    [tabIndex]="selectedIndex == i ? 0 : -1"
+    [hidden]="selectedIndex !== i"
+    [id]="_getTabContentId(i)"
+    [attr.aria-labelledby]="_getTabLabelId(i)"
+    [class.mat-tab-body-active]="selectedIndex == i"
+    [content]="tab.content"
+    [position]="tab.position"
+    [origin]="tab.origin"
+    (onCentered)="_removeTabBodyWrapperHeight()"
+    (onCentering)="_setTabBodyWrapperHeight($event)"
+  >
   </md-tab-body>
 </div>

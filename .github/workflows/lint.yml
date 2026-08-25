@@ -18,6 +18,8 @@ jobs:
           node-version-file: .nvmrc
       - name: Install root dependencies
         run: npm install --no-package-lock --ignore-scripts
+      - name: Check formatting
+        run: npm run format:check
       - name: Install test-app dependencies
         run: npm install --prefix test-app --no-package-lock
       - name: Lint library and documentation app

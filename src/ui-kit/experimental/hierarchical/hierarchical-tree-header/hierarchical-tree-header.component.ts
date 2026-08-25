@@ -1,20 +1,26 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import { OptionsType } from '../../../../ui-kit/types';
-import { SamHierarchicalTreeHeaderConfiguration } from '../models/SamHierarchicalTreeHeaderConfiguration';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+} from "@angular/core";
+import { OptionsType } from "../../../../ui-kit/types";
+import { SamHierarchicalTreeHeaderConfiguration } from "../models/SamHierarchicalTreeHeaderConfiguration";
 
-import { KeyHelper, KEYS } from '../../../utilities/key-helper/key-helper';
+import { KeyHelper, KEYS } from "../../../utilities/key-helper/key-helper";
 
 @Component({
-    selector: 'sam-hierarchical-tree-header',
-    templateUrl: './hierarchical-tree-header.component.html',
-    styleUrls: ['./hierarchical-tree-header.component.scss'],
-    standalone: false
+  selector: "sam-hierarchical-tree-header",
+  templateUrl: "./hierarchical-tree-header.component.html",
+  styleUrls: ["./hierarchical-tree-header.component.scss"],
+  standalone: false,
 })
 export class SamHierarchicalTreeHeaderComponent {
-
   /**
-  * Options for the Dropdown
-  */
+   * Options for the Dropdown
+   */
   @Input() public options: OptionsType[];
 
   /**
@@ -23,8 +29,8 @@ export class SamHierarchicalTreeHeaderComponent {
   @Input() public configuration: SamHierarchicalTreeHeaderConfiguration;
 
   /**
-  * Event emitted when level change is clicked
-  */
+   * Event emitted when level change is clicked
+   */
   @Output() public selectBreadcrumb = new EventEmitter<string>();
 
   /**
@@ -35,7 +41,7 @@ export class SamHierarchicalTreeHeaderComponent {
   /**
    * Filter text
    */
-  @Input() public filterText = '';
+  @Input() public filterText = "";
 
   /**
    * Selected model (breadcrumb item selected)
@@ -45,37 +51,40 @@ export class SamHierarchicalTreeHeaderComponent {
   /**
    * Filter input reference
    */
-  @ViewChild('filter', {static: true}) filter: ElementRef;
-
+  @ViewChild("filter", { static: true }) filter: ElementRef;
 
   /**
-   * 
-   * @param event 
+   *
+   * @param event
    */
   onKeyup(event): void {
     if (KeyHelper.is(KEYS.TAB, event)) {
       return;
-    }
-    else if (KeyHelper.is(KEYS.BACKSPACE, event) || KeyHelper.is(KEYS.DELETE, event)) {
-      const searchString = event.target.value || '';
-      if (searchString.length >= this.configuration.minimumCharacterCountSearch) {
+    } else if (
+      KeyHelper.is(KEYS.BACKSPACE, event) ||
+      KeyHelper.is(KEYS.DELETE, event)
+    ) {
+      const searchString = event.target.value || "";
+      if (
+        searchString.length >= this.configuration.minimumCharacterCountSearch
+      ) {
         this.filterTextChange.emit(searchString);
       } else {
-        this.filterTextChange.emit('');
+        this.filterTextChange.emit("");
       }
-    }
-    else {
-      const searchString = event.target.value || '';
-      if (searchString.length >= this.configuration.minimumCharacterCountSearch) {
+    } else {
+      const searchString = event.target.value || "";
+      if (
+        searchString.length >= this.configuration.minimumCharacterCountSearch
+      ) {
         this.filterTextChange.emit(searchString);
       }
     }
-
   }
 
   /**
    * emits the breadcrumb selected for a given item
-   * @param ev 
+   * @param ev
    */
   onLevelChange(ev: Event): void {
     this.selectBreadcrumb.emit(this.selectModel);

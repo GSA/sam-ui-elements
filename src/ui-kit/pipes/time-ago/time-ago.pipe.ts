@@ -1,9 +1,9 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import moment from 'moment';
+import { Pipe, PipeTransform } from "@angular/core";
+import moment from "moment";
 
 @Pipe({
-    name: 'timeago',
-    standalone: false
+  name: "timeago",
+  standalone: false,
 })
 export class TimeAgoPipe implements PipeTransform {
   transform(datetime: number): string {
