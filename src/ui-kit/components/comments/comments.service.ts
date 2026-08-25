@@ -1,10 +1,9 @@
-import { Observable,of } from 'rxjs';
+import { Observable, of } from "rxjs";
 
-import { Comment } from './';
+import { Comment } from "./";
 
 export class CommentsService {
-
-  _username: string = '';
+  _username: string = "";
   _disabled: boolean = false;
   _comments: Comment[] = [];
 

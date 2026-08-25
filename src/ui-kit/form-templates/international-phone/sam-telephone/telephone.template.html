@@ -4,7 +4,8 @@
   [name]="name"
   [hint]="hint"
   [errorMessage]="errorMessage"
-  [required]="required">
+  [required]="required"
+>
   <input
     [(ngModel)]="inputValue"
     (change)="inputChange($event)"
@@ -15,5 +16,6 @@
     [placeholder]="placeholder"
     [attr.id]="name"
     [attr.name]="name"
-    [disabled]="disabled"/>
+    [disabled]="disabled"
+  />
 </sam-label-wrapper>

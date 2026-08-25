@@ -6,54 +6,45 @@ import {
   ChangeDetectorRef,
   SimpleChanges,
   ViewChild,
-  ViewEncapsulation
-} from '@angular/core';
+  ViewEncapsulation,
+} from "@angular/core";
 
-import {
-  ValidatorFn,
-  FormControl,
-  ValidationErrors
-} from '@angular/forms';
+import { ValidatorFn, FormControl, ValidationErrors } from "@angular/forms";
 
-import { SamFormService } from '../../../form-service';
+import { SamFormService } from "../../../form-service";
 
-import {
-  KeyHelper
-} from '../../../utilities/key-helper/key-helper';
+import { KeyHelper } from "../../../utilities/key-helper/key-helper";
 
 import {
   SamFormControl,
   AccessorToken,
-  ValidatorToken
-} from '../../../form-controls/sam-form-control';
-import { numberInputKeys } from '../number-input-keys';
+  ValidatorToken,
+} from "../../../form-controls/sam-form-control";
+import { numberInputKeys } from "../number-input-keys";
 
 @Component({
-    selector: 'sam-extension',
-    encapsulation: ViewEncapsulation.None,
-    templateUrl: 'extension.template.html',
-    providers: [
-        AccessorToken(SamExtension),
-        ValidatorToken(SamExtension)
-    ],
-    standalone: false
+  selector: "sam-extension",
+  encapsulation: ViewEncapsulation.None,
+  templateUrl: "extension.template.html",
+  providers: [AccessorToken(SamExtension), ValidatorToken(SamExtension)],
+  standalone: false,
 })
 export class SamExtension extends SamFormControl {
   /**
-     * A placeholder value for the extention. In this 
-     * component, placeholder should represent the number
-     * format, e.g., 1234 .
-     */
-  placeholder: string = 'ex: 1234';
+   * A placeholder value for the extention. In this
+   * component, placeholder should represent the number
+   * format, e.g., 1234 .
+   */
+  placeholder: string = "ex: 1234";
 
   /**
    * is extension required
    */
   private keys: KeyHelper = new KeyHelper(...numberInputKeys);
-  public inputValue: any = '';
+  public inputValue: any = "";
 
-  protected defaultValue = '';
-  public defaultValidators = [ this.extensionValidator ];
+  protected defaultValue = "";
+  public defaultValidators = [this.extensionValidator];
 
   public get value(): any {
     return this._value;
@@ -66,11 +57,10 @@ export class SamExtension extends SamFormControl {
 
   constructor(
     public samFormService: SamFormService,
-    public cdr: ChangeDetectorRef) {
-
+    public cdr: ChangeDetectorRef
+  ) {
     super(samFormService, cdr);
   }
-
 
   public ngOnInit() {
     super.ngOnInit();
@@ -79,23 +69,17 @@ export class SamExtension extends SamFormControl {
   }
 
   public inputChange(event) {
-    this.value = event.currentTarget.value
-      ? event.currentTarget.value
-      : '';
+    this.value = event.currentTarget.value ? event.currentTarget.value : "";
     this.onChange(this.value);
   }
 
   public validate(c: FormControl) {
-    const errs = this.defaultValidators
-      .map(fn => fn(c))
-      .filter(err => err);
+    const errs = this.defaultValidators.map((fn) => fn(c)).filter((err) => err);
 
-    return errs.length > 0
-      ? errs[0]
-      : null;
+    return errs.length > 0 ? errs[0] : null;
   }
 
-  onKeyInput(event){
+  onKeyInput(event) {
     if (!this.keys.isAllowed(event)) {
       event.preventDefault();
       return;
@@ -105,10 +89,9 @@ export class SamExtension extends SamFormControl {
     this.value = val;
   }
 
-  private extensionValidator (c: FormControl) {
+  private extensionValidator(c: FormControl) {
     const regex: RegExp = /^[0-9]{1,20}$/g;
-    const message =
-      'Phone extensions must be 20 digits or fewer';
+    const message = "Phone extensions must be 20 digits or fewer";
 
     return c && c.value && !c.value.toString().match(regex)
       ? { extension: { message: message } }

@@ -15,16 +15,9 @@
             "index": "src/index.html",
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
-            "polyfills": [
-              "zone.js"
-            ],
-            "assets": [
-              "src/assets",
-              "src/favicon.ico"
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
+            "polyfills": ["zone.js"],
+            "assets": ["src/assets", "src/favicon.ico"],
+            "styles": ["src/styles.css"],
             "scripts": []
           },
           "configurations": {
@@ -49,18 +42,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "test-app:build"
+            "buildTarget": "test-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "test-app:build:production"
+              "buildTarget": "test-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "test-app:build"
+            "buildTarget": "test-app:build"
           }
         },
         "test": {
@@ -69,35 +62,23 @@
             "preserveSymlinks": false,
             "main": "src/test.ts",
             "karmaConfig": "./karma.conf.js",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [],
-            "styles": [
-              "src/styles.css"
-            ],
-            "assets": [
-              "src/assets",
-              "src/favicon.ico"
-            ],
+            "styles": ["src/styles.css"],
+            "assets": ["src/assets", "src/favicon.ico"],
             "codeCoverage": true
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }
     }
   },
-  "defaultProject": "test-app",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",

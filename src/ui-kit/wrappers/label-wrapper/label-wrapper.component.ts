@@ -6,14 +6,14 @@ import {
   AfterViewChecked,
   ChangeDetectorRef,
   ElementRef,
-  Renderer2
-} from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+  Renderer2,
+} from "@angular/core";
+import { AbstractControl } from "@angular/forms";
 
 @Component({
-    selector: 'sam-label-wrapper',
-    templateUrl: 'label-wrapper.template.html',
-    standalone: false
+  selector: "sam-label-wrapper",
+  templateUrl: "label-wrapper.template.html",
+  standalone: false,
 })
 export class LabelWrapper implements AfterViewChecked {
   /**
@@ -40,28 +40,29 @@ export class LabelWrapper implements AfterViewChecked {
   /**
    * set to false if more/less is not required
    */
-  @Input() public showFullHint :  boolean = false;
+  @Input() public showFullHint: boolean = false;
 
   /**
    * set the error message
    */
-  @Input() public set errorMessage (message: string) {
+  @Input() public set errorMessage(message: string) {
     this._errorMessage = message;
     this.setDescribedByEl();
-  };
+  }
 
-  public get errorMessage (): string {
+  public get errorMessage(): string {
     return this._errorMessage;
   }
 
-  @ViewChild('labelDiv', {static: true}) public labelDiv: ElementRef;
-  @ViewChild('hintContainer', {static: false}) public hintContainer: ElementRef;
+  @ViewChild("labelDiv", { static: true }) public labelDiv: ElementRef;
+  @ViewChild("hintContainer", { static: false })
+  public hintContainer: ElementRef;
   public input: HTMLElement;
   public showToggle: boolean = false;
   public errorElId: string;
   public hintElId: string;
 
-  private _errorMessage = '';
+  private _errorMessage = "";
   private toggleOpen: boolean = false;
   private lineSize: number;
   private lineLimit: number = 2;
@@ -69,13 +70,16 @@ export class LabelWrapper implements AfterViewChecked {
 
   constructor(
     private cdr: ChangeDetectorRef,
-    private _rend: Renderer2) { }
+    private _rend: Renderer2
+  ) {}
 
   public ngOnChanges(c) {
-    if (!this.checkMore
-        && c.hint
-        && c.hint.previousValue !== c.hint.currentValue) {
-      // needs to be open to recalc correctly in 
+    if (
+      !this.checkMore &&
+      c.hint &&
+      c.hint.previousValue !== c.hint.currentValue
+    ) {
+      // needs to be open to recalc correctly in
       // ngAfterViewChecked
       this.showToggle = false;
       this.toggleOpen = false;
@@ -86,19 +90,17 @@ export class LabelWrapper implements AfterViewChecked {
 
   public ngAfterViewInit() {
     this.calcToggle();
-    if(!this.name){
+    if (!this.name) {
       return;
     }
     const selector = `#${this.name}`;
     let lookup;
-    try{
-      lookup =
-      this.labelDiv.nativeElement
-        .querySelector(selector);
-    } catch(exception){
-      console.error(selector + ' not found in label wrapper setup');
+    try {
+      lookup = this.labelDiv.nativeElement.querySelector(selector);
+    } catch (exception) {
+      console.error(selector + " not found in label wrapper setup");
     }
-    if(lookup){
+    if (lookup) {
       this.input = lookup;
       this.setLabelIds();
       this.setDescribedByEl();
@@ -115,37 +117,26 @@ export class LabelWrapper implements AfterViewChecked {
 
   public calcToggle() {
     if (this.hintContainer) {
-      const numOfLines =
-        this.calculateNumberOfLines(
-          this.hintContainer.nativeElement
-        );
-      this.showToggle = numOfLines > this.lineLimit
-        ? true
-        : false;
+      const numOfLines = this.calculateNumberOfLines(
+        this.hintContainer.nativeElement
+      );
+      this.showToggle = numOfLines > this.lineLimit ? true : false;
     }
   }
 
-  public setInputLabelElement (elRefId) {
+  public setInputLabelElement(elRefId) {
     if (this.input) {
       if (elRefId) {
-        this._rend.setAttribute(
-          this.input,
-          'aria-describedby',
-          elRefId
-        );
+        this._rend.setAttribute(this.input, "aria-describedby", elRefId);
       } else {
-        this._rend.removeAttribute(
-          this.input,
-          'aria-describedby'
-        );
+        this._rend.removeAttribute(this.input, "aria-describedby");
       }
-
     }
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener("window:resize", ["$event"])
   public onResize(event) {
-    // needs to be open to recalc correctly in 
+    // needs to be open to recalc correctly in
     // ngAfterViewChecked
     this.showToggle = false;
     this.toggleOpen = false;
@@ -157,18 +148,17 @@ export class LabelWrapper implements AfterViewChecked {
     this.toggleOpen = !status;
   }
 
-  public calculateNumberOfLines (obj) {
+  public calculateNumberOfLines(obj) {
     if (!this.lineSize) {
       const other = obj.cloneNode(true);
-      other.innerHTML = 'a<br>b';
-      other.style.visibility = 'hidden';
-      const el = <HTMLElement>document
-        .getElementsByTagName('body')[0];
+      other.innerHTML = "a<br>b";
+      other.style.visibility = "hidden";
+      const el = <HTMLElement>document.getElementsByTagName("body")[0];
       el.appendChild(other);
       this.lineSize = other.offsetHeight / 2;
       el.removeChild(other);
     }
-    const val = Math.floor(obj.offsetHeight /  this.lineSize);
+    const val = Math.floor(obj.offsetHeight / this.lineSize);
     return val;
   }
 
@@ -178,7 +168,7 @@ export class LabelWrapper implements AfterViewChecked {
     }
 
     if (control.pristine) {
-      this.errorMessage = '';
+      this.errorMessage = "";
       return;
     }
 
@@ -187,8 +177,10 @@ export class LabelWrapper implements AfterViewChecked {
         const errorObject = control.errors[k];
 
         if (errorObject.message) {
-          if (Object.prototype.toString.call(errorObject.message)
-            === '[object String]') {
+          if (
+            Object.prototype.toString.call(errorObject.message) ===
+            "[object String]"
+          ) {
             this.errorMessage = errorObject.message;
             return;
           }
@@ -202,74 +194,71 @@ export class LabelWrapper implements AfterViewChecked {
 
       // this.errorMessage = 'Invalid';
     } else if (!control.errors) {
-      this.errorMessage = '';
+      this.errorMessage = "";
     }
   }
 
   public clearError() {
-    this.errorMessage = '';
+    this.errorMessage = "";
   }
 
-  public setOverflow (): string {
-    return this.showToggle
-      && !this.showFullHint
-      && !this.toggleOpen
-        ? 'hidden'
-        : '';
+  public setOverflow(): string {
+    return this.showToggle && !this.showFullHint && !this.toggleOpen
+      ? "hidden"
+      : "";
   }
 
-  public setHeight (): string {
-    return this.showToggle
-      && !this.showFullHint
-      && !this.toggleOpen
-        ? '2.88em'
-        : '';
+  public setHeight(): string {
+    return this.showToggle && !this.showFullHint && !this.toggleOpen
+      ? "2.88em"
+      : "";
   }
 
   private setInvalidErrors(error, errorObject) {
     switch (error) {
-      case 'maxlength':
+      case "maxlength":
         const actualLength = errorObject.actualLength;
         const requiredLength = errorObject.requiredLength;
-        this.errorMessage = actualLength
-          + ' characters input but max length is '
-          + requiredLength;
+        this.errorMessage =
+          actualLength +
+          " characters input but max length is " +
+          requiredLength;
         return;
-      case 'required':
-        this.errorMessage = 'This field is required';
+      case "required":
+        this.errorMessage = "This field is required";
         return;
-      case 'isNotBeforeToday':
-        this.errorMessage = 'Date must not be before today';
+      case "isNotBeforeToday":
+        this.errorMessage = "Date must not be before today";
         return;
       default:
-        return this.errorMessage = 'Invalid';
+        return (this.errorMessage = "Invalid");
     }
   }
 
-  private setLabelIds () {
+  private setLabelIds() {
     this.setErrorLabelId();
     this.setHintLabelId();
   }
 
-  private setErrorLabelId () {
-    this.errorElId = this.name + '-error';
+  private setErrorLabelId() {
+    this.errorElId = this.name + "-error";
     this.cdr.detectChanges();
   }
 
-  private setHintLabelId () {
+  private setHintLabelId() {
     if (this.hint) {
-      this.hintElId = this.name + '-hint';
+      this.hintElId = this.name + "-hint";
       this.cdr.detectChanges();
     }
   }
 
-  private setDescribedByEl () {
+  private setDescribedByEl() {
     if (this.errorMessage) {
       this.setInputLabelElement(this.errorElId);
     } else if (this.hint) {
       this.setInputLabelElement(this.hintElId);
     } else {
-      this.setInputLabelElement('');
+      this.setInputLabelElement("");
     }
   }
 }

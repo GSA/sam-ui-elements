@@ -9,32 +9,26 @@ import {
   Output,
   EventEmitter,
   ContentChild,
-  Optional
-} from '@angular/core';
-import {
-  faLongArrowAltLeft,
-  faTimes,
-} from '@fortawesome/free-solid-svg-icons';
+  Optional,
+} from "@angular/core";
+import { faLongArrowAltLeft, faTimes } from "@fortawesome/free-solid-svg-icons";
 
-import {
-  MdSidenavContainer,
-  MdSidenav
-} from '../sidenav/sidenav';
-import { SamToolbarComponent } from '../../../../../layout/toolbar';
-import { SamPageNextService } from '../../architecture';
+import { MdSidenavContainer, MdSidenav } from "../sidenav/sidenav";
+import { SamToolbarComponent } from "../../../../../layout/toolbar";
+import { SamPageNextService } from "../../architecture";
 
 @Component({
-    selector: 'sam-page-next',
-    templateUrl: 'page.template.html',
-    encapsulation: ViewEncapsulation.None,
-    styleUrls: ['./sam-page-next.scss'],
-    standalone: false
+  selector: "sam-page-next",
+  templateUrl: "page.template.html",
+  encapsulation: ViewEncapsulation.None,
+  styleUrls: ["./sam-page-next.scss"],
+  standalone: false,
 })
 export class SamPageNextComponent extends MdSidenavContainer {
   /**
    * Text string for the back button
    */
-  @Input() public backButtonText = '';
+  @Input() public backButtonText = "";
   /**
    * Forces the sidebar closed on initialization
    */
@@ -44,58 +38,63 @@ export class SamPageNextComponent extends MdSidenavContainer {
    */
   @Output() public backButtonClick = new EventEmitter<any>();
 
-  @HostListener('window:resize')
+  @HostListener("window:resize")
   public resize() {
     if (this.aside) {
       this._responsiveAside();
     }
   }
-  
-  @ContentChild(MdSidenav, {static: true}) public aside: MdSidenav;
-  
-  @ContentChild(SamToolbarComponent, {static: true})
-    public toolbar: SamToolbarComponent;
+
+  @ContentChild(MdSidenav, { static: true }) public aside: MdSidenav;
+
+  @ContentChild(SamToolbarComponent, { static: true })
+  public toolbar: SamToolbarComponent;
 
   public backIcon = faLongArrowAltLeft;
   public closeIcon = faTimes;
-  constructor(_element: ElementRef, _renderer: Renderer2, _ngZone: NgZone, @Optional() public _pageService: SamPageNextService) {
+  constructor(
+    _element: ElementRef,
+    _renderer: Renderer2,
+    _ngZone: NgZone,
+    @Optional() public _pageService: SamPageNextService
+  ) {
     super(null, _element, _renderer, _ngZone);
   }
 
-  public ngOnInit(){
-    if(this._pageService){
+  public ngOnInit() {
+    if (this._pageService) {
       this._pageService.getPageMessage().subscribe((data) => {
-        if(data && data.event && data.event === 'open sidebar'){
+        if (data && data.event && data.event === "open sidebar") {
           this.aside.toggle(true);
         }
       });
     }
   }
-  
-  public ngAfterContentInit (): void {
+
+  public ngAfterContentInit(): void {
     super.ngAfterContentInit();
 
     this._setupToolbar();
   }
 
-  public ngAfterViewInit (): void {
+  public ngAfterViewInit(): void {
     this._setupAside();
   }
 
-  public backBtnClick (): void {
+  public backBtnClick(): void {
     this.backButtonClick.emit();
   }
-  
-  private _setupAside (): void {
+
+  private _setupAside(): void {
     if (this.aside) {
       this._responsiveAside();
-      if(this.startSidebarClosed){
+      if (this.startSidebarClosed) {
         this.aside.toggle(false);
       }
     }
   }
-  
-  private _setupToolbar (): void {
+
+  private _setupToolbar(): void {
     if (this.toolbar) {
       if (this.aside) {
         // Attach sidenav to toolbar
@@ -103,9 +102,9 @@ export class SamPageNextComponent extends MdSidenavContainer {
       }
     }
   }
-  
-  private _responsiveAside (): void {
-    this.aside.mode = !this._isSmallScreen() ? 'side' : 'over';
+
+  private _responsiveAside(): void {
+    this.aside.mode = !this._isSmallScreen() ? "side" : "over";
 
     if (this.aside.opened && this._isSmallScreen()) {
       this.aside.opened = false;
@@ -113,8 +112,8 @@ export class SamPageNextComponent extends MdSidenavContainer {
       this.aside.opened = true;
     }
   }
-  
-  private _isSmallScreen (): boolean {
+
+  private _isSmallScreen(): boolean {
     return window.innerWidth <= 600 ? true : false;
   }
 }

@@ -1,16 +1,17 @@
-import { SamHierarchicalAutocompleteConfiguration } from './SamHierarchicalAutocompleteConfiguration';
-import { SelectedResultConfiguration } from './SamHierarchicalSelectedResultConfiguration';
-import { SamHierarchicalTreeConfiguration } from './SamHierarchicalTreeConfiguration';
-import { SamHierarchicalTreeGridColumn } from './SamHierarchicalTreeGridColumn';
+import { SamHierarchicalAutocompleteConfiguration } from "./SamHierarchicalAutocompleteConfiguration";
+import { SelectedResultConfiguration } from "./SamHierarchicalSelectedResultConfiguration";
+import { SamHierarchicalTreeConfiguration } from "./SamHierarchicalTreeConfiguration";
+import { SamHierarchicalTreeGridColumn } from "./SamHierarchicalTreeGridColumn";
 
-
-export class SamHierarchicalConfiguration implements SamHierarchicalAutocompleteConfiguration, SelectedResultConfiguration, SamHierarchicalTreeConfiguration {
-
-
-
+export class SamHierarchicalConfiguration
+  implements
+    SamHierarchicalAutocompleteConfiguration,
+    SelectedResultConfiguration,
+    SamHierarchicalTreeConfiguration
+{
   /**
-    * sets the default debounce time to 250 milliseconds 
-    */
+   * sets the default debounce time to 250 milliseconds
+   */
   constructor() {
     this.debounceTime = 250;
     this.modalCancelButtonLabel = "Cancel";
@@ -71,11 +72,11 @@ export class SamHierarchicalConfiguration implements SamHierarchicalAutocomplete
   /**
    * Column definitions to be displayed
    */
-  public gridColumnsDisplayed: SamHierarchicalTreeGridColumn[]
+  public gridColumnsDisplayed: SamHierarchicalTreeGridColumn[];
 
   /**
-  *  Field for model that determines number of child elements
-  */
+   *  Field for model that determines number of child elements
+   */
   public childCountField: string;
 
   /**
@@ -84,7 +85,7 @@ export class SamHierarchicalConfiguration implements SamHierarchicalAutocomplete
   public filterPlaceholderText: String;
 
   /**
-   * Top Level Breadcrumb Text 
+   * Top Level Breadcrumb Text
    */
   public topLevelBreadcrumbText: string;
 
@@ -93,21 +94,21 @@ export class SamHierarchicalConfiguration implements SamHierarchicalAutocomplete
    */
   public minimumCharacterCountSearch: number;
 
-
   /**
    * Determines if the the advanced lookup is hidden
    */
   public hideAdvancedLookup: boolean;
 
   /**
-  * Used for the Grid hidden button Screen Reader text to traverse down the tree
-  */
-  public navigateScreenReaderText: string = 'Go to';
+   * Used for the Grid hidden button Screen Reader text to traverse down the tree
+   */
+  public navigateScreenReaderText: string = "Go to";
 
   /**
-  * Text when no results in advanced
-  */
-  public emptyResultText: string = 'There are no results. Try again with another selection.';
+   * Text when no results in advanced
+   */
+  public emptyResultText: string =
+    "There are no results. Try again with another selection.";
 
   /**
    * Allows option to allow user text not in the standard results
@@ -117,12 +118,10 @@ export class SamHierarchicalConfiguration implements SamHierarchicalAutocomplete
   /**
    * Text appeneded ad the end of free text
    */
-  public freeTextSubtext: string = 'search';
+  public freeTextSubtext: string = "search";
 
-      /**
+  /**
    * The aria-label for the auto-complete
    */
-  public ariaLabelText: string = 'Auto Complete';
-
-
+  public ariaLabelText: string = "Auto Complete";
 }

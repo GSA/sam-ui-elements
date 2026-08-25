@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SamTabsComponent, SamTabComponent } from './tabs.component';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { SamTabsComponent, SamTabComponent } from "./tabs.component";
 
 @NgModule({
-    declarations: [ SamTabsComponent, SamTabComponent ],
-    exports: [ SamTabsComponent, SamTabComponent ],
-    imports: [CommonModule]
+  declarations: [SamTabsComponent, SamTabComponent],
+  exports: [SamTabsComponent, SamTabComponent],
+  imports: [CommonModule],
 })
-export class SamTabsModule { }
+export class SamTabsModule {}
 
-export { SamTabsComponent, SamTabComponent } from './tabs.component';
+export { SamTabsComponent, SamTabComponent } from "./tabs.component";

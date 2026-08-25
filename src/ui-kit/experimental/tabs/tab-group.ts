@@ -16,13 +16,12 @@ import {
   ContentChildren,
   ElementRef,
   Renderer2,
-} from '@angular/core';
-import {coerceBooleanProperty} from '@angular/cdk/coercion';
-import {Observable} from 'rxjs';
-import {MdTab} from './tab';
+} from "@angular/core";
+import { coerceBooleanProperty } from "@angular/cdk/coercion";
+import { Observable } from "rxjs";
+import { MdTab } from "./tab";
 // import {map} from '@angular/cdk';
-import {map} from 'rxjs/operators';
-
+import { map } from "rxjs/operators";
 
 /** Used to generate unique ID's for each tab component */
 let nextId = 0;
@@ -34,7 +33,7 @@ export class MdTabChangeEvent {
 }
 
 /** Possible positions for the tab header. */
-export type MdTabHeaderPosition = 'above' | 'below';
+export type MdTabHeaderPosition = "above" | "below";
 
 /**
  * Material design tab-group component.  Supports basic tab pairs (label + content) and includes
@@ -42,20 +41,20 @@ export type MdTabHeaderPosition = 'above' | 'below';
  * See: https://www.google.com/design/spec/components/tabs.html
  */
 @Component({
-    selector: 'sam-tabs-next',
-    templateUrl: 'tab-group.html',
-    styleUrls: ['tab-group.scss'],
-    host: {
-        'class': 'mat-tab-group',
-        '[class.mat-tab-group-dynamic-height]': 'dynamicHeight',
-        '[class.mat-tab-group-inverted-header]': 'headerPosition === "below"',
-    },
-    standalone: false
+  selector: "sam-tabs-next",
+  templateUrl: "tab-group.html",
+  styleUrls: ["tab-group.scss"],
+  host: {
+    class: "mat-tab-group",
+    "[class.mat-tab-group-dynamic-height]": "dynamicHeight",
+    "[class.mat-tab-group-inverted-header]": 'headerPosition === "below"',
+  },
+  standalone: false,
 })
 export class MdTabGroup {
   @ContentChildren(MdTab) _tabs: QueryList<MdTab>;
 
-  @ViewChild('tabBodyWrapper', {static: true}) _tabBodyWrapper: ElementRef;
+  @ViewChild("tabBodyWrapper", { static: true }) _tabBodyWrapper: ElementRef;
 
   /** Whether this component has been initialized. */
   private _isInitialized: boolean = false;
@@ -68,31 +67,41 @@ export class MdTabGroup {
 
   /** Whether the tab group should grow to the size of the active tab. */
   @Input()
-  get dynamicHeight(): boolean { return this._dynamicHeight; }
-  set dynamicHeight(value: boolean) { this._dynamicHeight = coerceBooleanProperty(value); }
+  get dynamicHeight(): boolean {
+    return this._dynamicHeight;
+  }
+  set dynamicHeight(value: boolean) {
+    this._dynamicHeight = coerceBooleanProperty(value);
+  }
   private _dynamicHeight: boolean = false;
 
   private _selectedIndex: number | null = null;
 
   /** The index of the active tab. */
   @Input()
-  set selectedIndex(value: number | null) { this._indexToSelect = value; }
-  get selectedIndex(): number | null { return this._selectedIndex; }
+  set selectedIndex(value: number | null) {
+    this._indexToSelect = value;
+  }
+  get selectedIndex(): number | null {
+    return this._selectedIndex;
+  }
 
   /** Position of the tab header. */
   @Input()
-  headerPosition: MdTabHeaderPosition = 'above';
+  headerPosition: MdTabHeaderPosition = "above";
 
   /** Output to enable support for two-way binding on `[(selectedIndex)]` */
   @Output() get selectedIndexChange(): Observable<number> {
-    return map.call(this.selectChange, event => event.index);
+    return map.call(this.selectChange, (event) => event.index);
   }
 
   /** Event emitted when focus has changed within a tab group. */
-  @Output() focusChange: EventEmitter<MdTabChangeEvent> = new EventEmitter<MdTabChangeEvent>();
+  @Output() focusChange: EventEmitter<MdTabChangeEvent> =
+    new EventEmitter<MdTabChangeEvent>();
 
   /** Event emitted when the tab selection has changed. */
-  @Output() selectChange: EventEmitter<MdTabChangeEvent> = new EventEmitter<MdTabChangeEvent>(true);
+  @Output() selectChange: EventEmitter<MdTabChangeEvent> =
+    new EventEmitter<MdTabChangeEvent>(true);
 
   private _groupId: number;
 
@@ -110,8 +119,10 @@ export class MdTabGroup {
     // Clamp the next selected index to the bounds of 0 and the tabs length. Note the `|| 0`, which
     // ensures that values like NaN can't get through and which would otherwise throw the
     // component into an infinite loop (since Math.max(NaN, 0) === NaN).
-    let indexToSelect = this._indexToSelect =
-        Math.min(this._tabs.length - 1, Math.max(this._indexToSelect || 0, 0));
+    let indexToSelect = (this._indexToSelect = Math.min(
+      this._tabs.length - 1,
+      Math.max(this._indexToSelect || 0, 0)
+    ));
 
     // If there is a change in selected index, emit a change event. Should not trigger if
     // the selected index has not yet been initialized.
@@ -146,7 +157,7 @@ export class MdTabGroup {
   }
 
   private _createChangeEvent(index: number): MdTabChangeEvent {
-    const event = new MdTabChangeEvent;
+    const event = new MdTabChangeEvent();
     event.index = index;
     if (this._tabs && this._tabs.length) {
       event.tab = this._tabs.toArray()[index];
@@ -169,22 +180,31 @@ export class MdTabGroup {
    * height property is true.
    */
   _setTabBodyWrapperHeight(tabHeight: number): void {
-    if (!this._dynamicHeight || !this._tabBodyWrapperHeight) { return; }
+    if (!this._dynamicHeight || !this._tabBodyWrapperHeight) {
+      return;
+    }
 
-    this._renderer.setStyle(this._tabBodyWrapper.nativeElement, 'height',
-        this._tabBodyWrapperHeight + 'px');
+    this._renderer.setStyle(
+      this._tabBodyWrapper.nativeElement,
+      "height",
+      this._tabBodyWrapperHeight + "px"
+    );
 
     // This conditional forces the browser to paint the height so that
     // the animation to the new height can have an origin.
     if (this._tabBodyWrapper.nativeElement.offsetHeight) {
-      this._renderer.setStyle(this._tabBodyWrapper.nativeElement, 'height',
-          tabHeight + 'px');
+      this._renderer.setStyle(
+        this._tabBodyWrapper.nativeElement,
+        "height",
+        tabHeight + "px"
+      );
     }
   }
 
   /** Removes the height of the tab body wrapper. */
   _removeTabBodyWrapperHeight(): void {
-    this._tabBodyWrapperHeight = this._tabBodyWrapper.nativeElement.clientHeight;
-    this._renderer.setStyle(this._tabBodyWrapper.nativeElement, 'height', '');
+    this._tabBodyWrapperHeight =
+      this._tabBodyWrapper.nativeElement.clientHeight;
+    this._renderer.setStyle(this._tabBodyWrapper.nativeElement, "height", "");
   }
 }

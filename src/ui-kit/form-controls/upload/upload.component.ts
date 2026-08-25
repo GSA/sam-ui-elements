@@ -1,23 +1,36 @@
-import { Observable ,  Subscription } from 'rxjs';
-import { Component, ElementRef, Input, ViewChild,
-  forwardRef } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpEventType,
-  HttpHeaderResponse, HttpRequest, HttpEvent } from '@angular/common/http';
-import { DragState } from '../../directives/drag-drop/drag-drop.directive';
+import { Observable, Subscription } from "rxjs";
+import {
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
+  forwardRef,
+} from "@angular/core";
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpEventType,
+  HttpHeaderResponse,
+  HttpRequest,
+  HttpEvent,
+} from "@angular/common/http";
+import { DragState } from "../../directives/drag-drop/drag-drop.directive";
 // import { HttpEvent } from '@angular/common/http/src/response';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { switchMap } from 'rxjs/operators';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { switchMap } from "rxjs/operators";
 
-export type RequestGenerator =
-  (file: File) => HttpRequest<any> | Observable<HttpRequest<any>>;
-export type DeleteRequestGenerator =
-  (uf: UploadFile) => HttpRequest<any> | Observable<HttpRequest<any>>;
+export type RequestGenerator = (
+  file: File
+) => HttpRequest<any> | Observable<HttpRequest<any>>;
+export type DeleteRequestGenerator = (
+  uf: UploadFile
+) => HttpRequest<any> | Observable<HttpRequest<any>>;
 
 export enum UploadStatus {
   Initial,
   Uploading,
   Done,
-  Error
+  Error,
 }
 
 export class Upload {
@@ -40,13 +53,13 @@ function toArray(list) {
 const VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamUploadComponent),
-  multi: true
+  multi: true,
 };
 
 export namespace UploadValidator {
   export function Required(control) {
     const error = {
-      'required': 'A file is required.'
+      required: "A file is required.",
     };
 
     const model: UploadFile[] = control.value;
@@ -66,13 +79,12 @@ export namespace UploadValidator {
 }
 
 @Component({
-    selector: 'sam-upload',
-    providers: [VALUE_ACCESSOR],
-    templateUrl: 'upload.template.html',
-    standalone: false
+  selector: "sam-upload",
+  providers: [VALUE_ACCESSOR],
+  templateUrl: "upload.template.html",
+  standalone: false,
 })
 export class SamUploadComponent implements ControlValueAccessor {
-
   /**
    * The request the gets called after a file has been selected for upload.
    * Report progress must be true if you want the progress bar.
@@ -116,7 +128,7 @@ export class SamUploadComponent implements ControlValueAccessor {
   /*
    * Input 508 identifier
    */
-  @Input() public name = 'upload';
+  @Input() public name = "upload";
 
   public dragState: DragState = DragState.NotDragging;
 
@@ -137,16 +149,14 @@ export class SamUploadComponent implements ControlValueAccessor {
   private onTouched: Function;
 
   /* The hidden file input dom element */
-  @ViewChild('file', {static: true}) private fileInput: ElementRef;
+  @ViewChild("file", { static: true }) private fileInput: ElementRef;
 
-  constructor(private httpClient: HttpClient) {
-
-  }
+  constructor(private httpClient: HttpClient) {}
 
   onDragStateChange(dragState) {
-    dragState !== DragState.NotDragging ?
-        this.shouldShowDropTarget = true :
-        this.shouldShowDropTarget = false;
+    dragState !== DragState.NotDragging
+      ? (this.shouldShowDropTarget = true)
+      : (this.shouldShowDropTarget = false);
   }
 
   registerOnChange(fn) {
@@ -161,7 +171,7 @@ export class SamUploadComponent implements ControlValueAccessor {
     this.disabled = disabled;
   }
 
-  writeValue(value: null|undefined|any) {
+  writeValue(value: null | undefined | any) {
     if (value && value.length) {
       this._model = value;
     } else {
@@ -192,10 +202,10 @@ export class SamUploadComponent implements ControlValueAccessor {
       return;
     }
 
-    const ufs = asArray.map(f => {
+    const ufs = asArray.map((f) => {
       return {
         file: f,
-        upload: new Upload()
+        upload: new Upload(),
       };
     });
 
@@ -215,21 +225,21 @@ export class SamUploadComponent implements ControlValueAccessor {
   }
 
   validateFiles(ufs: UploadFile[]) {
-    ufs.forEach(uf => {
+    ufs.forEach((uf) => {
       const { file } = uf;
       if (this.maxFileSizeInBytes && file.size > this.maxFileSizeInBytes) {
         uf.upload.status = UploadStatus.Error;
-        uf.upload.error = 'File too large';
+        uf.upload.error = "File too large";
       }
       if (this.pattern && !this.pattern.test(file.name)) {
         uf.upload.status = UploadStatus.Error;
-        uf.upload.error = 'File type not supported';
+        uf.upload.error = "File type not supported";
       }
     });
   }
 
   doUpload(ufs: UploadFile[]) {
-    ufs.forEach(uf => {
+    ufs.forEach((uf) => {
       const { upload } = uf;
 
       if (upload.status !== UploadStatus.Initial) {
@@ -248,20 +258,18 @@ export class SamUploadComponent implements ControlValueAccessor {
             upload.status = UploadStatus.Error;
           }
           if (event.ok === false) {
-            upload.error = 'Upload failed';
+            upload.error = "Upload failed";
             upload.status = UploadStatus.Error;
             this.emit();
           }
         },
-        error => {
-          console.error('upload error', error);
+        (error) => {
+          console.error("upload error", error);
           let toJson: any = {};
           try {
             toJson = JSON.parse(error);
-          } catch (ex) {
-
-          }
-          upload.error = toJson.statusText || toJson.message || 'Upload failed';
+          } catch (ex) {}
+          upload.error = toJson.statusText || toJson.message || "Upload failed";
           upload.status = UploadStatus.Error;
           this.emit();
         },
@@ -293,7 +301,7 @@ export class SamUploadComponent implements ControlValueAccessor {
   }
 
   removeFileFromList(uf: UploadFile) {
-    this._model = this._model.filter(_uf => _uf !== uf);
+    this._model = this._model.filter((_uf) => _uf !== uf);
     if (!this._model.length) {
       this._clearInput();
     }
@@ -328,8 +336,7 @@ export class SamUploadComponent implements ControlValueAccessor {
   }
 
   _numFilesValid() {
-    return this._model
-      .filter(uf => uf.upload.status !== UploadStatus.Error)
+    return this._model.filter((uf) => uf.upload.status !== UploadStatus.Error)
       .length;
   }
 
@@ -337,28 +344,34 @@ export class SamUploadComponent implements ControlValueAccessor {
     const request = this.deleteRequest(uf);
 
     if (request instanceof Observable) {
-      return request.pipe(switchMap(req => this.httpClient.request(req)));
+      return request.pipe(switchMap((req) => this.httpClient.request(req)));
     } else if (request instanceof HttpRequest) {
       return this.httpClient.request(request);
     } else {
-      throw new Error('Request must be an HttpRequest or Observerable<HttpRequest>');
+      throw new Error(
+        "Request must be an HttpRequest or Observerable<HttpRequest>"
+      );
     }
   }
 
-  _getHttpEventSteam(uf: UploadFile): Observable<HttpEvent<any>>  {
+  _getHttpEventSteam(uf: UploadFile): Observable<HttpEvent<any>> {
     const { file, upload } = uf;
     const request = this.uploadRequest(file);
 
     if (request instanceof Observable) {
-      return request.pipe(switchMap((req: HttpRequest<any>) => {
-        upload.request = req;
-        return this.httpClient.request(req);
-      }));
+      return request.pipe(
+        switchMap((req: HttpRequest<any>) => {
+          upload.request = req;
+          return this.httpClient.request(req);
+        })
+      );
     } else if (request instanceof HttpRequest) {
       upload.request = request;
       return this.httpClient.request(request);
     } else {
-      throw new Error('Request must be an HttpRequest or Observerable<HttpRequest>');
+      throw new Error(
+        "Request must be an HttpRequest or Observerable<HttpRequest>"
+      );
     }
   }
 
@@ -366,15 +379,18 @@ export class SamUploadComponent implements ControlValueAccessor {
     // clear the input's internal value, or it will not
     // emit the change event if we select a file, deselect that file,
     // and select the same file again
-    this.fileInput.nativeElement.value = '';
+    this.fileInput.nativeElement.value = "";
   }
 
   _checkAcceptableFileType(uploadFiles) {
     // restrict the file type
     // (<input accept="file_extension|audio/*|video/*|image/*|media_type">)
-    uploadFiles.forEach(uf => {
-      if (this.accept && !uf.type.startsWith(this.accept.split('/')[0])
-        && uf.name.indexOf(this.accept) < 0) {
+    uploadFiles.forEach((uf) => {
+      if (
+        this.accept &&
+        !uf.type.startsWith(this.accept.split("/")[0]) &&
+        uf.name.indexOf(this.accept) < 0
+      ) {
         this.isAcceptableFileType = false;
       } else {
         this.isAcceptableFileType = true;

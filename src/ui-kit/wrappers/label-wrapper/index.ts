@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { LabelWrapper } from './label-wrapper.component';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { LabelWrapper } from "./label-wrapper.component";
 
 @NgModule({
-    declarations: [ LabelWrapper ],
-    exports: [ LabelWrapper ],
-    imports: [CommonModule]
+  declarations: [LabelWrapper],
+  exports: [LabelWrapper],
+  imports: [CommonModule],
 })
-export class SamLabelWrapperModule { }
+export class SamLabelWrapperModule {}
 
-export { LabelWrapper } from './label-wrapper.component';
+export { LabelWrapper } from "./label-wrapper.component";

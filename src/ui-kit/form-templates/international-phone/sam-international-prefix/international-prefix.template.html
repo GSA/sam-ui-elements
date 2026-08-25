@@ -4,13 +4,16 @@
   [name]="name"
   [hint]="hint"
   [errorMessage]="errorMessage"
-  [required]="required">
-  <input #input
+  [required]="required"
+>
+  <input
+    #input
     class="sam-international-prefix"
-    [(ngModel)]="inputValue" 
+    [(ngModel)]="inputValue"
     (change)="inputChange($event)"
-    type="text" 
-    [attr.id]="name" 
+    type="text"
+    [attr.id]="name"
     (keydown)="onKeyInput($event)"
-    [disabled]="disabled"/>
+    [disabled]="disabled"
+  />
 </sam-label-wrapper>

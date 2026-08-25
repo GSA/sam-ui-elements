@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { ServiceModel, ServiceProperty } from './service-property';
-import { DataStore } from '../store';
-import { Observable ,  Subject } from 'rxjs';
+import { ServiceModel, ServiceProperty } from "./service-property";
+import { DataStore } from "../store";
+import { Observable, Subject } from "rxjs";
 
-export type DataLayoutProperty = 'data'
-  | 'filters' | 'pagination' | 'sort' | 'filterFields';
+export type DataLayoutProperty =
+  "data" | "filters" | "pagination" | "sort" | "filterFields";
 
 export type SamPageEvents = "open sidebar" | "close sidebar";
 
@@ -14,7 +14,7 @@ export class SamPageNextService {
   private pageSubject = new Subject<any>();
   public model: ServiceModel;
 
-  constructor (private _store: DataStore) {
+  constructor(private _store: DataStore) {
     this._setupModel();
   }
 
@@ -26,36 +26,34 @@ export class SamPageNextService {
     return this.pageSubject.asObservable();
   }
 
-  public get (property: DataLayoutProperty): ServiceProperty {
+  public get(property: DataLayoutProperty): ServiceProperty {
     return this.model.properties[property];
   }
 
-  private _setupModel () {
+  private _setupModel() {
     this.model = new ServiceModel(
-      { name: 'value', value: {}},
+      { name: "value", value: {} },
       this._store.state,
       {
         pagination: {},
         sort: {},
         data: {},
         filters: {},
-        filterFields: []
+        filterFields: [],
       }
     );
 
     this.model.registerChanges(this._updateFn(this));
   }
 
-  private _updateFn (context) {
+  private _updateFn(context) {
     return function (event) {
       return function (value) {
-        context._store.update(
-          {
-            type: event,
-            payload: value
-          }
-        )
-      }
-    }
+        context._store.update({
+          type: event,
+          payload: value,
+        });
+      };
+    };
   }
 }

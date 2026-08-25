@@ -1,32 +1,32 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Observable, BehaviorSubject, of } from "rxjs";
-import { SamHiercarchicalServiceInterface, SamHiercarchicalServiceResult } from "../hierarchical-interface";
+import {
+  SamHiercarchicalServiceInterface,
+  SamHiercarchicalServiceResult,
+} from "../hierarchical-interface";
 import { SamHierarchicalTreeConfiguration } from "../models/SamHierarchicalTreeConfiguration";
 import { Sort } from "../../../components/data-table/sort.directive";
-import { first } from 'rxjs/operators';
-
+import { first } from "rxjs/operators";
 
 @Component({
-    selector: "sam-hierarchical-tree",
-    templateUrl: "./hierarchical-tree.component.html",
-    styleUrls: ["./hierarchical-tree.component.scss"],
-    standalone: false
+  selector: "sam-hierarchical-tree",
+  templateUrl: "./hierarchical-tree.component.html",
+  styleUrls: ["./hierarchical-tree.component.scss"],
+  standalone: false,
 })
-
 export class SamHierarchicalTreeComponent implements OnInit {
-
   /**
-   * 
+   *
    */
   private resultItems: Object[] = [];
 
   /**
-   * 
+   *
    */
   private totalItems = 0;
 
   /**
-   * Hierarchy level changes event 
+   * Hierarchy level changes event
    */
   public selectHierarchyLevel = new BehaviorSubject<object>(null);
 
@@ -36,7 +36,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   public sortLevel = new BehaviorSubject<Sort>(null);
 
   /**
-   * 
+   *
    */
   public scrolled = new BehaviorSubject<Object>(null);
 
@@ -56,7 +56,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   public selectBreadcrumb = new BehaviorSubject<string>(null);
 
   /**
-   * Items selected 
+   * Items selected
    */
   public results: object[];
 
@@ -75,7 +75,6 @@ export class SamHierarchicalTreeComponent implements OnInit {
    */
   public selectedValue: string;
 
-
   private sort: Sort;
 
   /**
@@ -83,17 +82,15 @@ export class SamHierarchicalTreeComponent implements OnInit {
    */
   @Input() public isSingleMode: boolean;
 
-
   /**
    * Copy of the service
    */
   @Input() service: SamHiercarchicalServiceInterface;
 
   /**
-  * hierarchy tree picker configurations 
-  */
+   * hierarchy tree picker configurations
+   */
   @Input() configuration: SamHierarchicalTreeConfiguration;
-
 
   /**
    * selected items from service in the breadcrumb
@@ -107,44 +104,31 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
   public ngOnInit() {
     this.addInitialBreadcrumb();
-    this.selectHierarchyLevel.subscribe(
-      value => this.selectItem(value)
-    );
-    this.selectBreadcrumb.subscribe(
-      value => {
-        this.breadcrumbSelected(value);
-      }
-    );
-    this.selectResults$.subscribe(
-      res => {
-        this.setSelectedResults(res);
-      }
-    );
-    this.filterTextSubject.subscribe(
-      text => {
-        this.filterText = text;
-        this.getResults();
-      }
-    );
+    this.selectHierarchyLevel.subscribe((value) => this.selectItem(value));
+    this.selectBreadcrumb.subscribe((value) => {
+      this.breadcrumbSelected(value);
+    });
+    this.selectResults$.subscribe((res) => {
+      this.setSelectedResults(res);
+    });
+    this.filterTextSubject.subscribe((text) => {
+      this.filterText = text;
+      this.getResults();
+    });
 
-    this.sortLevel.subscribe(
-      sort => {
-        this.sort = sort;
-        this.getResults();
-      }
-    );
+    this.sortLevel.subscribe((sort) => {
+      this.sort = sort;
+      this.getResults();
+    });
 
-
-    this.scrolled.subscribe(
-      scroll => {
-        this.getResults(true);
-      }
-    );
+    this.scrolled.subscribe((scroll) => {
+      this.getResults(true);
+    });
   }
 
   /**
-   * Sets the selected items 
-   * @param res 
+   * Sets the selected items
+   * @param res
    */
   private setSelectedResults(res: any) {
     this.results = [];
@@ -153,10 +137,12 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
   /**
    * Selects a breadcrum and remove all crumbs above it in the stack
-   * @param value 
+   * @param value
    */
   public breadcrumbSelected(value: string) {
-    let item = this.breadcrumbStack.find(itm => itm[this.configuration.primaryKeyField] === value);
+    let item = this.breadcrumbStack.find(
+      (itm) => itm[this.configuration.primaryKeyField] === value
+    );
     let pos = this.breadcrumbStack.indexOf(item);
     if (pos === -1) {
       pos = this.breadcrumbStack.length;
@@ -172,7 +158,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   }
 
   /**
-   * Creates the top level breadcrumb 
+   * Creates the top level breadcrumb
    */
   private addInitialBreadcrumb(): void {
     const breadCrumbItem = {};
@@ -185,10 +171,10 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
   /**
    *  Selects a new item
-   * @param value 
+   * @param value
    */
   public selectItem(value: object) {
-    this.filterText = '';
+    this.filterText = "";
     let selected = null;
     if (value) {
       selected = value[this.configuration.primaryKeyField];
@@ -200,7 +186,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
 
   /**
    * Creats a new breadcrumb item and adds a new breadcrumb
-   * @param value 
+   * @param value
    */
   private createBreadcrumb(value: object) {
     const breadCrumbItem = {};
@@ -228,34 +214,36 @@ export class SamHierarchicalTreeComponent implements OnInit {
           id: this.selectedValue,
           searchValue: this.filterText,
           sort: this.sort,
-          currentItemCount: this.resultItems.length
-        }
-        this.service.getHiercarchicalById(item).pipe(first()).subscribe(
-          (result: SamHiercarchicalServiceResult) => {
+          currentItemCount: this.resultItems.length,
+        };
+        this.service
+          .getHiercarchicalById(item)
+          .pipe(first())
+          .subscribe((result: SamHiercarchicalServiceResult) => {
             if (result) {
-              this.resultItems = this.resultItems.concat(result.items)
+              this.resultItems = this.resultItems.concat(result.items);
             }
             this.gridResults = of(this.resultItems);
-          }
-        );
+          });
       }
     } else {
       let item = {
         id: this.selectedValue,
         searchValue: this.filterText,
         sort: this.sort,
-        currentItemCount: 0
-      }
-      this.service.getHiercarchicalById(item).pipe(first()).subscribe(
-        (result: SamHiercarchicalServiceResult) => {
+        currentItemCount: 0,
+      };
+      this.service
+        .getHiercarchicalById(item)
+        .pipe(first())
+        .subscribe((result: SamHiercarchicalServiceResult) => {
           if (result) {
             this.resultItems = result.items;
             this.totalItems = result.totalItems;
           }
           this.results = [];
           this.gridResults = of(this.resultItems);
-        }
-      );
+        });
     }
   }
 }

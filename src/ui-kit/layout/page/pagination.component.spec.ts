@@ -1,22 +1,21 @@
-import { TestBed, waitForAsync, ComponentFixture } from '@angular/core/testing';
+import { TestBed, waitForAsync, ComponentFixture } from "@angular/core/testing";
 
-import { FormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
-import { By } from '@angular/platform-browser';
-import { } from '../../';
-import { SamPageComponent } from './page.component';
-import { SamExperimentalModule } from '../../../ui-kit/experimental/experimental.module';
+import { FormsModule } from "@angular/forms";
+import { RouterTestingModule } from "@angular/router/testing";
+import { By } from "@angular/platform-browser";
+import {} from "../../";
+import { SamPageComponent } from "./page.component";
+import { SamExperimentalModule } from "../../../ui-kit/experimental/experimental.module";
 
-describe('SamPageComponent', () => {
+describe("SamPageComponent", () => {
   let component: SamPageComponent;
   let fixture: ComponentFixture<SamPageComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SamPageComponent],
-      imports: [FormsModule,SamExperimentalModule]
-    })
-      .compileComponents();
+      imports: [FormsModule, SamExperimentalModule],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -25,24 +24,16 @@ describe('SamPageComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
-
   });
 
-
-  it('intro', () => {
-
-
-    component.intro ="test into";
-  
+  it("intro", () => {
+    component.intro = "test into";
 
     fixture.detectChanges();
 
-    const el = fixture.debugElement.query(By.css('.intro'));
-    expect(el.nativeElement.innerHTML).toContain('test into');
-
-
+    const el = fixture.debugElement.query(By.css(".intro"));
+    expect(el.nativeElement.innerHTML).toContain("test into");
   });
-
 });

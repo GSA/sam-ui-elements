@@ -1,43 +1,60 @@
-import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewChild, forwardRef, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
-import { SamHiercarchicalServiceInterface } from '../hierarchical-interface';
-import { HierarchicalTreeSelectedItemModel, TreeMode } from '../hierarchical-tree-selectedItem.model';
-import { SamHierarchicalConfiguration } from '../models/SamHierarchicalConfiguration';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  TemplateRef,
+  ViewChild,
+  forwardRef,
+  AfterViewChecked,
+  ChangeDetectorRef,
+} from "@angular/core";
+import {
+  NG_VALUE_ACCESSOR,
+  ControlValueAccessor,
+  FormControl,
+} from "@angular/forms";
+import { SamHiercarchicalServiceInterface } from "../hierarchical-interface";
+import {
+  HierarchicalTreeSelectedItemModel,
+  TreeMode,
+} from "../hierarchical-tree-selectedItem.model";
+import { SamHierarchicalConfiguration } from "../models/SamHierarchicalConfiguration";
 const Hierarchical_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamHierarchicalComponent),
-  multi: true
+  multi: true,
 };
 
 @Component({
-    selector: 'sam-hierarchical',
-    templateUrl: './hierarchical.component.html',
-    styleUrls: ['./hierarchical.component.scss'],
-    providers: [Hierarchical_VALUE_ACCESSOR],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: "sam-hierarchical",
+  templateUrl: "./hierarchical.component.html",
+  styleUrls: ["./hierarchical.component.scss"],
+  providers: [Hierarchical_VALUE_ACCESSOR],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
-export class SamHierarchicalComponent implements AfterViewChecked, ControlValueAccessor {
-
+export class SamHierarchicalComponent
+  implements AfterViewChecked, ControlValueAccessor
+{
   /**
-   * 
+   *
    */
-  @ViewChild('advancedLookup', {static: true}) advancedLookup;
+  @ViewChild("advancedLookup", { static: true }) advancedLookup;
 
   /**
-  * modal component 
-  */
-  @ViewChild('modal', {static: true}) modal;
+   * modal component
+   */
+  @ViewChild("modal", { static: true }) modal;
 
   /**
-  * autocomplete component
-  */
-  @ViewChild('autocomplete', {static: true}) autocomplete
+   * autocomplete component
+   */
+  @ViewChild("autocomplete", { static: true }) autocomplete;
 
   /**
-  * hierarchicaltree component
-  */
-  @ViewChild('hierarchicaltree', {static: true}) hierarchicaltree;
+   * hierarchicaltree component
+   */
+  @ViewChild("hierarchicaltree", { static: true }) hierarchicaltree;
 
   /**
    * Stored Event for ControlValueAccessor
@@ -52,35 +69,33 @@ export class SamHierarchicalComponent implements AfterViewChecked, ControlValueA
   public disabled: boolean;
 
   /**
-   * Configuration for the control 
+   * Configuration for the control
    */
   @Input()
   public configuration: SamHierarchicalConfiguration;
 
   /**
-  * Instance of the SamHiercarchicalServiceInterface provided
-  */
+   * Instance of the SamHiercarchicalServiceInterface provided
+   */
   @Input()
   public service: SamHiercarchicalServiceInterface;
 
   /**
-  * The data model that has the selected item
-  */
+   * The data model that has the selected item
+   */
   public model: HierarchicalTreeSelectedItemModel;
 
   /**
-  * Allow to insert a customized template for suggestions results
-  */
+   * Allow to insert a customized template for suggestions results
+   */
   @Input() suggestionTemplate: TemplateRef<any>;
 
   /**
-  * Allow to insert a customized template for selected items
-  */
+   * Allow to insert a customized template for selected items
+   */
   @Input() selectedItemTemplate: TemplateRef<any>;
 
-  constructor(private cdr: ChangeDetectorRef) {
-
-  }
+  constructor(private cdr: ChangeDetectorRef) {}
   public singleMode: boolean = false;
 
   ngAfterViewChecked() {
@@ -89,8 +104,8 @@ export class SamHierarchicalComponent implements AfterViewChecked, ControlValueA
   }
 
   /**
-  * Open modal click
-  */
+   * Open modal click
+   */
   onModalClick() {
     if (!this.disabled) {
       this.onTouchedCallback();
@@ -101,28 +116,30 @@ export class SamHierarchicalComponent implements AfterViewChecked, ControlValueA
   }
 
   /**
-  * Modal Submit click
-  */
+   * Modal Submit click
+   */
   onModalSubmitClick() {
     this.modal.closeModal();
     if (this.hierarchicaltree.results.length > 0) {
       if (this.isSingleMode()) {
         this.autocomplete.selectItem(this.hierarchicaltree.results[0]);
       } else {
-        this.model.addItems(<object[]>this.hierarchicaltree.results, this.configuration.primaryKeyField);
+        this.model.addItems(
+          <object[]>this.hierarchicaltree.results,
+          this.configuration.primaryKeyField
+        );
         this.propogateChange(this.model);
       }
     }
   }
 
   /**
-  * Determines if it is single select mode
-  */
+   * Determines if it is single select mode
+   */
   isSingleMode(): boolean {
     if (this.model) {
       return this.model.treeMode === TreeMode.SINGLE;
-    }
-    else {
+    } else {
       return false;
     }
   }

@@ -6,85 +6,86 @@ import {
   Output,
   EventEmitter,
   OnInit,
-  forwardRef
-} from '@angular/core';
-import { LabelWrapper } from '../../wrappers/label-wrapper';
+  forwardRef,
+} from "@angular/core";
+import { LabelWrapper } from "../../wrappers/label-wrapper";
 import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
   AbstractControl,
   FormControl,
   Validators,
-  ValidatorFn
-} from '@angular/forms';
-import { SamFormService } from '../../form-service';
-
+  ValidatorFn,
+} from "@angular/forms";
+import { SamFormService } from "../../form-service";
 
 /**
  * The <samPhoneInput> component is a Phone entry portion of a form
  */
-@Component( {
-    selector: 'sam-phone-entry',
-    templateUrl: 'phone-entry.template.html',
-    providers: [{
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => SamPhoneEntryComponent),
-            multi: true
-        }],
-    standalone: false
+@Component({
+  selector: "sam-phone-entry",
+  templateUrl: "phone-entry.template.html",
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SamPhoneEntryComponent),
+      multi: true,
+    },
+  ],
+  standalone: false,
 })
 export class SamPhoneEntryComponent implements OnInit, ControlValueAccessor {
   /**
-  * The label text to appear above the input
-  */
-  @Input() label: string = 'Phone Number';
+   * The label text to appear above the input
+   */
+  @Input() label: string = "Phone Number";
   /**
-  * Sets the hint text
-  */
+   * Sets the hint text
+   */
   @Input() hint: string;
   /**
-  * Angular model string value, should match the format of the
-  * phoneNumberTemplate
-  */
-  @Input() model: string = '';
+   * Angular model string value, should match the format of the
+   * phoneNumberTemplate
+   */
+  @Input() model: string = "";
   /**
-  * String value that is the phone number should match. Default is
-  * "_+(___)___-____" (underscores denote where numbers are allowed)
-  */
-  @Input() phoneNumberTemplate: string = '_+(___)___-____';
+   * String value that is the phone number should match. Default is
+   * "_+(___)___-____" (underscores denote where numbers are allowed)
+   */
+  @Input() phoneNumberTemplate: string = "_+(___)___-____";
   /**
-  * Prefix name/id attribute values
-  */
-  @Input() prefix: string = '';
+   * Prefix name/id attribute values
+   */
+  @Input() prefix: string = "";
   /**
-  * Flag to determine whether Phone Entry is required for submission
-  */
+   * Flag to determine whether Phone Entry is required for submission
+   */
   @Input() required: boolean = false;
   /**
-  * Flag for when model is only numbers
-  */
+   * Flag for when model is only numbers
+   */
   @Input() numbersOnly: boolean;
   /**
-  * Input to pass in a formControl
-  */
+   * Input to pass in a formControl
+   */
   @Input() control: AbstractControl;
   /**
-  * Toggles validations to display with SamFormService events
-  */
+   * Toggles validations to display with SamFormService events
+   */
   @Input() useFormService: boolean;
   /**
-  * Toggles default validations
-  */
+   * Toggles default validations
+   */
   @Input() useDefaultValidations: boolean = true;
   /**
-  * Event emitter when model changes, outputs a string
-  */
+   * Event emitter when model changes, outputs a string
+   */
   @Output() emitter = new EventEmitter<string>();
 
-  @ViewChild(LabelWrapper, {static: true})
+  @ViewChild(LabelWrapper, { static: true })
   public wrapper: LabelWrapper;
-  @ViewChild('phoneInput', {static: true}) phoneInput;
-  errorMsg: string = '';
+  @ViewChild("phoneInput", { static: true }) phoneInput;
+  errorMsg: string = "";
 
   phoneNumberTemplateLength = this.phoneNumberTemplate.length;
   phoneNumberMirror = this.phoneNumberTemplate;
@@ -101,7 +102,7 @@ export class SamPhoneEntryComponent implements OnInit, ControlValueAccessor {
     if (!val && !this.numbersOnly) {
       val = this.phoneNumberTemplate;
     } else if (!val && this.numbersOnly) {
-      val = '';
+      val = "";
     }
     this.model = val;
     let modelCopy = this.model;
@@ -115,15 +116,17 @@ export class SamPhoneEntryComponent implements OnInit, ControlValueAccessor {
     this.phoneInput.nativeElement.value = this.phoneNumberMirror;
   }
 
-  constructor(private samFormService: SamFormService,
-    private cdr: ChangeDetectorRef) { }
+  constructor(
+    private samFormService: SamFormService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.phoneNumber = this.phoneNumberTemplate;
     this.phoneNumberMirror = this.phoneNumberTemplate;
     this.phoneNumberTemplateLength = this.phoneNumberTemplate.length;
     for (let i = 0; i < this.phoneNumberTemplate.length; i++) {
-      if (this.phoneNumberTemplate.charAt(i) !== '_') {
+      if (this.phoneNumberTemplate.charAt(i) !== "_") {
         this.badIndex.push(i);
       }
     }
@@ -154,13 +157,17 @@ export class SamPhoneEntryComponent implements OnInit, ControlValueAccessor {
         });
       } else {
         this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
-          if ((!evt.root || evt.root === this.control.root)
-            && evt.eventType
-            && evt.eventType === 'submit') {
+          if (
+            (!evt.root || evt.root === this.control.root) &&
+            evt.eventType &&
+            evt.eventType === "submit"
+          ) {
             this.wrapper.formatErrors(this.control);
-          } else if ((!evt.root || evt.root === this.control.root)
-            && evt.eventType
-            && evt.eventType === 'reset') {
+          } else if (
+            (!evt.root || evt.root === this.control.root) &&
+            evt.eventType &&
+            evt.eventType === "reset"
+          ) {
             this.wrapper.clearError();
           }
         });
@@ -175,15 +182,17 @@ export class SamPhoneEntryComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  validatePhoneNumber (template): ValidatorFn {
+  validatePhoneNumber(template): ValidatorFn {
     return (c): { [key: string]: any } => {
-      const digitCount = c.value.replace(/[^0-9]/g, '').length;
-      const correctDigitCount = template.replace(/[^_]/g, '').length;
+      const digitCount = c.value.replace(/[^0-9]/g, "").length;
+      const correctDigitCount = template.replace(/[^_]/g, "").length;
 
       if (digitCount < correctDigitCount) {
-        if ((digitCount === correctDigitCount - 1
-          && this.model.match(/^\d/g)) || digitCount < correctDigitCount - 1) {
-          return { phoneError: { message: 'Invalid phone number'}};
+        if (
+          (digitCount === correctDigitCount - 1 && this.model.match(/^\d/g)) ||
+          digitCount < correctDigitCount - 1
+        ) {
+          return { phoneError: { message: "Invalid phone number" } };
         }
       }
       return undefined;
@@ -193,7 +202,7 @@ export class SamPhoneEntryComponent implements OnInit, ControlValueAccessor {
   formatWithTemplate(numberStr: string) {
     let templateStr = this.phoneNumberTemplate;
     let idx = 0;
-    while (templateStr.indexOf('_') > -1 && idx < numberStr.length) {
+    while (templateStr.indexOf("_") > -1 && idx < numberStr.length) {
       templateStr = templateStr.replace(/_/, numberStr.charAt(idx++));
     }
     return templateStr;
@@ -202,7 +211,7 @@ export class SamPhoneEntryComponent implements OnInit, ControlValueAccessor {
   getIdentifier(str) {
     let returnString = str;
     if (this.prefix.length > 0) {
-      returnString = this.prefix + '-' + returnString;
+      returnString = this.prefix + "-" + returnString;
     }
 
     return returnString;
@@ -213,9 +222,10 @@ export class SamPhoneEntryComponent implements OnInit, ControlValueAccessor {
     const end = this.phoneInput.nativeElement.selectionEnd;
 
     // if a number
-    if (!event.shiftKey
-      && (event.keyCode >= 48 && event.keyCode <= 57)
-      || (event.keyCode >= 96 && event.keyCode <= 105) ) {
+    if (
+      (!event.shiftKey && event.keyCode >= 48 && event.keyCode <= 57) ||
+      (event.keyCode >= 96 && event.keyCode <= 105)
+    ) {
       this.handleNumber(event, start, end);
       // if backspace or delete
     } else if (event.keyCode === 8 || event.keyCode === 46) {
@@ -245,19 +255,28 @@ export class SamPhoneEntryComponent implements OnInit, ControlValueAccessor {
     if (start !== end) {
       for (let idx = start; idx < end; idx++) {
         if (this.badIndex.indexOf(idx) === -1) {
-          updatedPhoneNumber = this.replaceAt(idx, '_', updatedPhoneNumber);
+          updatedPhoneNumber = this.replaceAt(idx, "_", updatedPhoneNumber);
         }
       }
     }
 
-    updatedPhoneNumber =
-      this.replaceAt(replacePos, event.key, updatedPhoneNumber);
-    this.phoneInput.nativeElement.value =
-      updatedPhoneNumber.substr(0, this.phoneNumberTemplate.length);
-    this.phoneNumber =
-      updatedPhoneNumber.substr(0, this.phoneNumberTemplate.length);
-    this.phoneInput.nativeElement
-      .setSelectionRange(positionIncrement, positionIncrement);
+    updatedPhoneNumber = this.replaceAt(
+      replacePos,
+      event.key,
+      updatedPhoneNumber
+    );
+    this.phoneInput.nativeElement.value = updatedPhoneNumber.substr(
+      0,
+      this.phoneNumberTemplate.length
+    );
+    this.phoneNumber = updatedPhoneNumber.substr(
+      0,
+      this.phoneNumberTemplate.length
+    );
+    this.phoneInput.nativeElement.setSelectionRange(
+      positionIncrement,
+      positionIncrement
+    );
   }
 
   handleBackspace(event, start, end) {
@@ -267,27 +286,32 @@ export class SamPhoneEntryComponent implements OnInit, ControlValueAccessor {
       // for selections
       for (let idx = start; idx < end; idx++) {
         if (this.badIndex.indexOf(idx) === -1) {
-          this.phoneNumber = this.replaceAt(idx, '_', this.phoneNumber);
+          this.phoneNumber = this.replaceAt(idx, "_", this.phoneNumber);
         }
       }
       positionDecrement = start;
     } else {
       // single characters
-      this.phoneNumber =
-        this.replaceAt(positionDecrement, '_', this.phoneNumber).substr(0, 16);
+      this.phoneNumber = this.replaceAt(
+        positionDecrement,
+        "_",
+        this.phoneNumber
+      ).substr(0, 16);
     }
     this.phoneInput.nativeElement.value = this.phoneNumber;
-    this.phoneInput.nativeElement
-      .setSelectionRange(positionDecrement, positionDecrement);
+    this.phoneInput.nativeElement.setSelectionRange(
+      positionDecrement,
+      positionDecrement
+    );
   }
 
   updateModel() {
     let updateModel = this.phoneNumber;
     if (this.numbersOnly) {
       for (const idx in this.badIndex) {
-        updateModel = this.replaceAt(this.badIndex[idx], '_', updateModel);
+        updateModel = this.replaceAt(this.badIndex[idx], "_", updateModel);
       }
-      this.model = updateModel.replace(/_/g, '');
+      this.model = updateModel.replace(/_/g, "");
     } else {
       this.model = updateModel;
     }
@@ -304,23 +328,23 @@ export class SamPhoneEntryComponent implements OnInit, ControlValueAccessor {
   }
 
   getPositionIncrement(pos) {
-    if (this.phoneNumberTemplate.indexOf('_', pos + 1) === -1) {
+    if (this.phoneNumberTemplate.indexOf("_", pos + 1) === -1) {
       return pos + 1;
     }
-    return this.phoneNumberTemplate.indexOf('_', pos + 1);
+    return this.phoneNumberTemplate.indexOf("_", pos + 1);
   }
 
   getPositionDecrement(pos) {
-    if (this.phoneNumberTemplate.lastIndexOf('_', pos - 1) === -1) {
-      return this.phoneNumberTemplate.indexOf('_');
+    if (this.phoneNumberTemplate.lastIndexOf("_", pos - 1) === -1) {
+      return this.phoneNumberTemplate.indexOf("_");
     }
-    return this.phoneNumberTemplate.lastIndexOf('_', pos - 1);
+    return this.phoneNumberTemplate.lastIndexOf("_", pos - 1);
   }
 
   replaceAt(index, character, str) {
-    return str.substr(0, index)
-      + character
-      + str.substr(index + character.length);
+    return (
+      str.substr(0, index) + character + str.substr(index + character.length)
+    );
   }
 
   onChange: any = () => undefined;

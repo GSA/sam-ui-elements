@@ -1,10 +1,10 @@
 version: 2
 updates:
-  - package-ecosystem: 'npm'
-    directory: '/'
-    target-branch: 'master'
+  - package-ecosystem: "npm"
+    directory: "/"
+    target-branch: "master"
     schedule:
-      interval: 'weekly'
+      interval: "weekly"
     open-pull-requests-limit: 10
     cooldown:
       default-days: 5
@@ -12,19 +12,19 @@ updates:
     groups:
       minor:
         patterns:
-          - '*'
+          - "*"
         update-types:
-          - 'minor'
+          - "minor"
       patch:
         patterns:
-          - '*'
+          - "*"
         update-types:
-          - 'patch'
-  - package-ecosystem: 'npm'
-    directory: '/test-app'
-    target-branch: 'master'
+          - "patch"
+  - package-ecosystem: "npm"
+    directory: "/test-app"
+    target-branch: "master"
     schedule:
-      interval: 'weekly'
+      interval: "weekly"
     open-pull-requests-limit: 10
     cooldown:
       default-days: 5
@@ -32,20 +32,20 @@ updates:
     groups:
       minor:
         patterns:
-          - '*'
+          - "*"
         update-types:
-          - 'minor'
+          - "minor"
       patch:
         patterns:
-          - '*'
+          - "*"
         update-types:
-          - 'patch'
-  - package-ecosystem: 'github-actions'
-    directory: '/'
-    target-branch: 'master'
+          - "patch"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    target-branch: "master"
     schedule:
-      interval: 'weekly'
+      interval: "weekly"
     groups:
       github-actions:
         patterns:
-          - '*'
+          - "*"

@@ -2,23 +2,24 @@ import {
   Component,
   ChangeDetectionStrategy,
   ViewChild,
-  ChangeDetectorRef
-} from '@angular/core';
+  ChangeDetectorRef,
+} from "@angular/core";
 
-import {AbstractSamFormly} from '../../sam-formly';
-import {SamDateRangeComponent} from '../../../ui-kit';
+import { AbstractSamFormly } from "../../sam-formly";
+import { SamDateRangeComponent } from "../../../ui-kit";
 
 @Component({
-    template: `
-   <sam-date-range [formControl]="formControl"
-    [control]="formControl"
-   ></sam-date-range>
- `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  template: `
+    <sam-date-range
+      [formControl]="formControl"
+      [control]="formControl"
+    ></sam-date-range>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SamFormlyDateRange extends AbstractSamFormly {
-  @ViewChild(SamDateRangeComponent, {static: true})
+  @ViewChild(SamDateRangeComponent, { static: true })
   public template: SamDateRangeComponent;
 
   constructor(_cdr: ChangeDetectorRef) {

@@ -6,8 +6,11 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {Directive, ElementRef} from '@angular/core';
-import {CanDisable, mixinDisabled} from '../patterns/layout/components/core/common-behaviors/disabled';
+import { Directive, ElementRef } from "@angular/core";
+import {
+  CanDisable,
+  mixinDisabled,
+} from "../patterns/layout/components/core/common-behaviors/disabled";
 
 // Boilerplate for applying mixins to MdTabLabelWrapper.
 /** @docs-private */
@@ -19,14 +22,17 @@ export const _MdTabLabelWrapperMixinBase = mixinDisabled(MdTabLabelWrapperBase);
  * @docs-private
  */
 @Directive({
-    selector: '[md-tab-label-wrapper], [mat-tab-label-wrapper]',
-    inputs: ['disabled'],
-    host: {
-        '[class.mat-tab-disabled]': 'disabled'
-    },
-    standalone: false
+  selector: "[md-tab-label-wrapper], [mat-tab-label-wrapper]",
+  inputs: ["disabled"],
+  host: {
+    "[class.mat-tab-disabled]": "disabled",
+  },
+  standalone: false,
 })
-export class MdTabLabelWrapper extends _MdTabLabelWrapperMixinBase implements CanDisable {
+export class MdTabLabelWrapper
+  extends _MdTabLabelWrapperMixinBase
+  implements CanDisable
+{
   constructor(public elementRef: ElementRef) {
     super();
   }

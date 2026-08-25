@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SamPointOfContactComponent } from './point-of-contact.component';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { SamPointOfContactComponent } from "./point-of-contact.component";
 
 @NgModule({
-    declarations: [ SamPointOfContactComponent ],
-    exports: [ SamPointOfContactComponent ],
-    imports: [CommonModule]
+  declarations: [SamPointOfContactComponent],
+  exports: [SamPointOfContactComponent],
+  imports: [CommonModule],
 })
-export class SamPointOfContactModule { }
+export class SamPointOfContactModule {}
 
-export { SamPointOfContactComponent } from './point-of-contact.component';
+export { SamPointOfContactComponent } from "./point-of-contact.component";

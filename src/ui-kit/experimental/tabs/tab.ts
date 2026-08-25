@@ -5,14 +5,22 @@
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
-import {TemplatePortal} from '@angular/cdk/portal';
+import { TemplatePortal } from "@angular/cdk/portal";
 // import {TemplatePortal} from '@angular/cdk';
 import {
-  ViewContainerRef, Input, TemplateRef, ViewChild, OnInit, ContentChild,
-  Component
-} from '@angular/core';
-import {CanDisable, mixinDisabled} from '../patterns/layout/components/core/common-behaviors/';
-import {MdTabLabel} from './tab-label';
+  ViewContainerRef,
+  Input,
+  TemplateRef,
+  ViewChild,
+  OnInit,
+  ContentChild,
+  Component,
+} from "@angular/core";
+import {
+  CanDisable,
+  mixinDisabled,
+} from "../patterns/layout/components/core/common-behaviors/";
+import { MdTabLabel } from "./tab-label";
 
 // Boilerplate for applying mixins to MdTab.
 /** @docs-private */
@@ -20,24 +28,26 @@ export class MdTabBase {}
 export const _MdTabMixinBase = mixinDisabled(MdTabBase);
 
 @Component({
-    selector: 'sam-tab-next',
-    templateUrl: 'tab.html',
-    inputs: ['disabled'],
-    standalone: false
+  selector: "sam-tab-next",
+  templateUrl: "tab.html",
+  inputs: ["disabled"],
+  standalone: false,
 })
 export class MdTab extends _MdTabMixinBase implements OnInit, CanDisable {
   /** Content for the tab label given by <ng-template md-tab-label>. */
-  @ContentChild(MdTabLabel, {static: true}) templateLabel: MdTabLabel;
+  @ContentChild(MdTabLabel, { static: true }) templateLabel: MdTabLabel;
 
   /** Template inside the MdTab view that contains an <ng-content>. */
-  @ViewChild(TemplateRef, {static: true}) _content: TemplateRef<any>;
+  @ViewChild(TemplateRef, { static: true }) _content: TemplateRef<any>;
 
   /** The plain text label for the tab, used when there is no template label. */
-  @Input('label') textLabel: string = '';
+  @Input("label") textLabel: string = "";
 
   /** The portal that will be the hosted content of the tab */
   private _contentPortal: TemplatePortal | null = null;
-  get content(): TemplatePortal | null { return this._contentPortal; }
+  get content(): TemplatePortal | null {
+    return this._contentPortal;
+  }
 
   /**
    * The relatively indexed position where 0 represents the center, negative is left, and positive
@@ -56,6 +66,9 @@ export class MdTab extends _MdTabMixinBase implements OnInit, CanDisable {
   }
 
   ngOnInit() {
-    this._contentPortal = new TemplatePortal(this._content, this._viewContainerRef);
+    this._contentPortal = new TemplatePortal(
+      this._content,
+      this._viewContainerRef
+    );
   }
 }

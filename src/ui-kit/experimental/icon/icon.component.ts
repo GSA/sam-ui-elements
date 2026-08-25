@@ -1,7 +1,4 @@
-import {
-  Input,
-  Component
-} from '@angular/core';
+import { Input, Component } from "@angular/core";
 import {
   Icon,
   Styles,
@@ -11,27 +8,28 @@ import {
   FlipProp,
   FaSymbol,
   Transform,
-  RotateProp
-} from '@fortawesome/fontawesome-svg-core';
+  RotateProp,
+} from "@fortawesome/fontawesome-svg-core";
 
 /**
  * Fontawesome icon.
  */
 @Component({
-    selector: 'sam-icon',
-    template: `<sam-fa-icon
+  selector: "sam-icon",
+  template: `<sam-fa-icon
     [icon]="iconProp"
     [title]="title"
     [spin]="spin"
     [size]="size"
     [fixedWidth]="fixedWidth"
-    [rotate]="rotate">
+    [rotate]="rotate"
+  >
   </sam-fa-icon>`,
-    standalone: false
+  standalone: false,
 })
 export class SamIconComponent {
   // tslint:disable-next-line:no-input-rename
-  @Input('icon') iconProp: IconProp;
+  @Input("icon") iconProp: IconProp;
   @Input() title?: string;
   @Input() spin?: boolean;
   //@Input() pulse?: boolean;

@@ -1,1 +1,1 @@
-export * from './src/ui-kit';
+export * from "./src/ui-kit";

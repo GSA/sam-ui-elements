@@ -6,4 +6,4 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-export * from './tab-nav-bar';
+export * from "./tab-nav-bar";

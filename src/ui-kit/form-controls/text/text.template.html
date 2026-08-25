@@ -4,7 +4,8 @@
   [hint]="hint"
   [errorMessage]="errorMessage"
   [showFullHint]="showFullHint"
-  [required]="required">
+  [required]="required"
+>
   <input
     type="text"
     [ngModel]="value"
@@ -16,5 +17,6 @@
     (focus)="focusEvent.next({type: 'focus', event: $event})"
     (blur)="focusEvent.next({type: 'blur', event: $event})"
     (change)="changeEvent.next({type: 'change', event: $event})"
-    (input)="changeEvent.next({type: 'input', event: $event})">
+    (input)="changeEvent.next({type: 'input', event: $event})"
+  />
 </sam-label-wrapper>

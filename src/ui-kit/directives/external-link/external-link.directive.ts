@@ -3,34 +3,32 @@ import {
   AfterViewInit,
   ElementRef,
   Renderer2,
-  Input
-} from '@angular/core';
+  Input,
+} from "@angular/core";
 
 @Directive({
-    selector: 'a[target]',
-    standalone: false
+  selector: "a[target]",
+  standalone: false,
 })
-export class SamExternalLinkDirective
-  implements AfterViewInit {
-  
+export class SamExternalLinkDirective implements AfterViewInit {
   @Input() public hideIcon: boolean = false;
 
-  private get hasExternalIcon (): boolean {
-    return this.el.nativeElement
-      .querySelectorAll('.fa-external-link')
-      .length > 0;
+  private get hasExternalIcon(): boolean {
+    return (
+      this.el.nativeElement.querySelectorAll(".fa-external-link").length > 0
+    );
   }
 
-  private get canRenderIcon (): boolean {
+  private get canRenderIcon(): boolean {
     return !(this.hasExternalIcon || this.hideIcon);
   }
 
-  constructor (
+  constructor(
     private el: ElementRef,
-    private renderer: Renderer2) {}
+    private renderer: Renderer2
+  ) {}
 
-  public ngAfterViewInit () {
-
+  public ngAfterViewInit() {
     if (this.canRenderIcon) {
       this.renderIcon();
     }
@@ -38,40 +36,36 @@ export class SamExternalLinkDirective
     this.render(this.createSrText());
   }
 
-  private render (el): void {
-    this.renderer.appendChild(
-      this.el.nativeElement,
-      el
-    );
+  private render(el): void {
+    this.renderer.appendChild(this.el.nativeElement, el);
   }
 
-  private renderIcon (): void {
+  private renderIcon(): void {
     this.render(this.createSpace());
     this.render(this.createIcon());
   }
 
-  private createSpace (): HTMLSpanElement {
-    const space = this.renderer.createElement('span');
+  private createSpace(): HTMLSpanElement {
+    const space = this.renderer.createElement("span");
     space.innerText = " ";
-    space.setAttribute('aria-hidden', true);
+    space.setAttribute("aria-hidden", true);
 
     return space;
   }
 
-  private createIcon (): HTMLSpanElement {
-    const icon = this.renderer.createElement('span');
-    icon.classList.add('fa', 'fa-external-link', 'fa-sm');
-    icon.setAttribute('aria-hidden', true);
+  private createIcon(): HTMLSpanElement {
+    const icon = this.renderer.createElement("span");
+    icon.classList.add("fa", "fa-external-link", "fa-sm");
+    icon.setAttribute("aria-hidden", true);
 
     return icon;
   }
 
-  private createSrText (): HTMLSpanElement {
-    const span = this.renderer.createElement('span');
-    span.innerText = ' (opens in new window)';
-    span.classList.add('usa-sr-only');
-    
+  private createSrText(): HTMLSpanElement {
+    const span = this.renderer.createElement("span");
+    span.innerText = " (opens in new window)";
+    span.classList.add("usa-sr-only");
+
     return span;
   }
-
 }

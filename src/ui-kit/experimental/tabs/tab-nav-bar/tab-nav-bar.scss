@@ -1,5 +1,5 @@
-@import '../tabs-common';
-@import '../../patterns/layout/components/core/style/variables';
+@import "../tabs-common";
+@import "../../patterns/layout/components/core/style/variables";
 
 // Wraps the bar containing the anchors
 .mat-tab-nav-bar {
@@ -15,9 +15,9 @@
   @include tab-label;
   display: inline-block;
   vertical-align: top;
-  text-decoration: none;  // Removes anchor underline styling
+  text-decoration: none; // Removes anchor underline styling
   position: relative;
-  overflow: hidden;  // Keeps the ripple from extending outside the element bounds
+  overflow: hidden; // Keeps the ripple from extending outside the element bounds
 }
 
 // @media ($mat-xsmall) {

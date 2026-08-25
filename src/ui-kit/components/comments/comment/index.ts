@@ -1,1 +1,1 @@
-export { SamCommentComponent } from './comment.component';
+export { SamCommentComponent } from "./comment.component";

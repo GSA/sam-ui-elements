@@ -1,20 +1,20 @@
 import {
-    Component,
-    Input,
-    Output,
-    EventEmitter,
-    ViewChild,
-    ElementRef,
-    ViewChildren
-} from '@angular/core';
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+  ViewChildren,
+} from "@angular/core";
 
-import { KeyHelper, KEYS } from '../../../utilities/key-helper/key-helper';
-import {SamActionInterface} from '../action-interface';
+import { KeyHelper, KEYS } from "../../../utilities/key-helper/key-helper";
+import { SamActionInterface } from "../action-interface";
 
 @Component({
-    selector: 'sam-actions-dropdown',
-    templateUrl: 'actions-dropdown.template.html',
-    standalone: false
+  selector: "sam-actions-dropdown",
+  templateUrl: "actions-dropdown.template.html",
+  standalone: false,
 })
 export class SamActionsDropdownComponent {
   /**
@@ -33,12 +33,12 @@ export class SamActionsDropdownComponent {
   /**
    * Sets the class of the button (primary or default)
    */
-  @Input() public buttonType: 'primary'|'default' = 'default';
-  @Input() public text: string = 'Actions';
+  @Input() public buttonType: "primary" | "default" = "default";
+  @Input() public text: string = "Actions";
   /**
    * Sets the aria-label of action button
    */
-  @Input() public ariaLabelButtonText: string = 'Actions';
+  @Input() public ariaLabelButtonText: string = "Actions";
   /**
    * Emits event when action changes
    */
@@ -48,20 +48,20 @@ export class SamActionsDropdownComponent {
    */
   @Output() public emitCallback: EventEmitter<any> = new EventEmitter<any>();
 
-  @ViewChildren('actionsList') public actionsList;
+  @ViewChildren("actionsList") public actionsList;
 
-  @ViewChild('actionButton', {static: true}) public actionButton;
+  @ViewChild("actionButton", { static: true }) public actionButton;
 
   showActions = false;
   focusIndex = -1;
 
   hideActions(event) {
-    return this.showActions = false;
+    return (this.showActions = false);
   }
 
   toggleActions() {
     this.showActions = !this.showActions;
-    if(this.showActions) {
+    if (this.showActions) {
       this.setFocusOnFirstItem();
     } else {
       this.focusIndex = -1;
@@ -77,8 +77,8 @@ export class SamActionsDropdownComponent {
     return;
   }
 
-  leadKeyDownHandler(event){
-    if(KeyHelper.is(KEYS.DOWN,event) && !this.showActions){
+  leadKeyDownHandler(event) {
+    if (KeyHelper.is(KEYS.DOWN, event) && !this.showActions) {
       this.toggleActions();
       event.preventDefault();
       event.stopPropagation();
@@ -88,21 +88,21 @@ export class SamActionsDropdownComponent {
   }
 
   setFocusOnFirstItem() {
-    this.actionsList.changes.subscribe(t => {
+    this.actionsList.changes.subscribe((t) => {
       this.ngForRendered();
-    })
+    });
   }
 
   ngForRendered() {
-    if(this.actionsList.length > 0) {
+    if (this.actionsList.length > 0) {
       this.focusIndex = 0;
       this.actionsList.toArray()[this.focusIndex].nativeElement.focus();
     }
   }
 
-  keyDownHandler(event){
-    if(KeyHelper.is(KEYS.DOWN, event)){
-      if(this.focusIndex+1<this.actionsList.toArray().length){
+  keyDownHandler(event) {
+    if (KeyHelper.is(KEYS.DOWN, event)) {
+      if (this.focusIndex + 1 < this.actionsList.toArray().length) {
         this.focusIndex++;
         this.actionsList.toArray()[this.focusIndex].nativeElement.focus();
       } else {
@@ -111,8 +111,8 @@ export class SamActionsDropdownComponent {
       }
       event.preventDefault();
       event.stopPropagation();
-    } else if(KeyHelper.is(KEYS.UP,event)){
-      if(this.focusIndex-1>=0){
+    } else if (KeyHelper.is(KEYS.UP, event)) {
+      if (this.focusIndex - 1 >= 0) {
         this.focusIndex--;
         this.actionsList.toArray()[this.focusIndex].nativeElement.focus();
       } else {
@@ -121,8 +121,8 @@ export class SamActionsDropdownComponent {
       }
       event.preventDefault();
       event.stopPropagation();
-    } else if (KeyHelper.is(KEYS.ESC, event)){
-      if(this.showActions) {
+    } else if (KeyHelper.is(KEYS.ESC, event)) {
+      if (this.showActions) {
         this.toggleActions();
       }
       this.actionButton.nativeElement.focus();

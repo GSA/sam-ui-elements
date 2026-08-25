@@ -1,31 +1,46 @@
-import { Observable ,  Subscription ,  isObservable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Observable, Subscription, isObservable } from "rxjs";
+import { switchMap } from "rxjs/operators";
 import {
-  Component, ElementRef, Input, ViewChild, Renderer2,
-  forwardRef, SimpleChanges,  Output,
-    EventEmitter, } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpEventType,
-  HttpHeaderResponse, HttpRequest, HttpEvent } from '@angular/common/http';
-import { DragState } from '../../directives/drag-drop/drag-drop.directive';
+  Component,
+  ElementRef,
+  Input,
+  ViewChild,
+  Renderer2,
+  forwardRef,
+  SimpleChanges,
+  Output,
+  EventEmitter,
+} from "@angular/core";
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpEventType,
+  HttpHeaderResponse,
+  HttpRequest,
+  HttpEvent,
+} from "@angular/common/http";
+import { DragState } from "../../directives/drag-drop/drag-drop.directive";
 // import { HttpEvent } from '@angular/http/src/response';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import {
-    ActionModalConfig, ToggleUploadFileAction,
-    UploadedFileData
-} from '../../types';
-import moment from 'moment';
+  ActionModalConfig,
+  ToggleUploadFileAction,
+  UploadedFileData,
+} from "../../types";
+import moment from "moment";
 
-
-export type RequestGenerator =
-  (file: File) => HttpRequest<any> | Observable<HttpRequest<any>>;
-export type DeleteRequestGenerator =
-  (uf: UploadFile) => HttpRequest<any> | Observable<HttpRequest<any>>;
+export type RequestGenerator = (
+  file: File
+) => HttpRequest<any> | Observable<HttpRequest<any>>;
+export type DeleteRequestGenerator = (
+  uf: UploadFile
+) => HttpRequest<any> | Observable<HttpRequest<any>>;
 
 export enum UploadStatus {
   Initial,
   Uploading,
   Done,
-  Error
+  Error,
 }
 
 export class Upload {
@@ -48,13 +63,13 @@ function toArray(list) {
 const VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamUploadComponentV2),
-  multi: true
+  multi: true,
 };
 
 export namespace UploadValidator {
   export function Required(control) {
     const error = {
-      'required': 'A file is required.'
+      required: "A file is required.",
     };
 
     const model: UploadFile[] = control.value;
@@ -74,16 +89,16 @@ export namespace UploadValidator {
 }
 
 @Component({
-    selector: 'sam-upload-v2',
-    providers: [VALUE_ACCESSOR],
-    templateUrl: 'upload-v2.template.html',
-    standalone: false
+  selector: "sam-upload-v2",
+  providers: [VALUE_ACCESSOR],
+  templateUrl: "upload-v2.template.html",
+  standalone: false,
 })
 export class SamUploadComponentV2 implements ControlValueAccessor {
   /**
    * Sets ID html attribute of upload component
    */
-  @Input() id: string = '';
+  @Input() id: string = "";
   /**
    * Files that were already uploaded to server
    */
@@ -97,7 +112,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
    * the view permission, and edit mode allows you to edit the file name
    * security check etc.
    */
-  @Input() public mode: 'edit' | 'publish' = 'edit';
+  @Input() public mode: "edit" | "publish" = "edit";
   /**
    * The request the gets called after a file has been selected for upload.
    * Report progress must be true if you want the progress bar.
@@ -141,7 +156,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   /*
    * Input 508 identifier
    */
-  @Input() public name = 'upload';
+  @Input() public name = "upload";
 
   /**
    * Sets modal config for remove action
@@ -166,7 +181,8 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   /**
    * Event emitted on toggle access modal submit
    */
-  @Output() public toggleModalChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() public toggleModalChange: EventEmitter<any> =
+    new EventEmitter<any>();
 
   /**
    * Event emitted on toggle access modal open
@@ -176,7 +192,8 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   /**
    * Event emitted on toggle access modal close/cancel
    */
-  @Output() public toggleModalClose: EventEmitter<any> = new EventEmitter<any>();
+  @Output() public toggleModalClose: EventEmitter<any> =
+    new EventEmitter<any>();
 
   /**
    * Event emitted on toggling file access
@@ -200,42 +217,42 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   private onTouched: Function;
 
   /* The hidden file input dom element */
-  @ViewChild('file', {static: true}) private fileInput: ElementRef;
+  @ViewChild("file", { static: true }) private fileInput: ElementRef;
 
   /* get references to modals */
-  @ViewChild('removeModal', {static: true}) removeModal;
-  @ViewChild('toggleModal', {static: true}) toggleModal;
+  @ViewChild("removeModal", { static: true }) removeModal;
+  @ViewChild("toggleModal", { static: true }) toggleModal;
 
   public uploadElIds = {
-    tableId: 'tableId',
-    fileName: 'fileName',
-    fileLinkId: 'fileLinkId',
-    editId: 'editId',
-    editInputId: 'editInputId',
-    removeId: 'removeId',
-    moveUp: 'moveUp',
-    moveDown: 'moveDown',
-    replyActionId: 'replyActionId',
-    updateFileActionId: 'updateFileActionId',
-    fileError: 'fileError',
-    fileSecure: 'fileSecure',
-    fileSecureLabel: 'fileSecureLabel',
-    browseClick: 'browseClick',
-    editFileName: 'edit-file-name',
-    fileNameInput: 'file-name-input',
-    resetName: 'reset-name',
-    applyName: 'apply-name',
-    delete: 'delete',
-    securityCheckboxInput: 'security-checkbox-input',
-    fileSize: 'fileSize',
-    date: 'date',
-    fileToolTip: 'fileToolTip'
+    tableId: "tableId",
+    fileName: "fileName",
+    fileLinkId: "fileLinkId",
+    editId: "editId",
+    editInputId: "editInputId",
+    removeId: "removeId",
+    moveUp: "moveUp",
+    moveDown: "moveDown",
+    replyActionId: "replyActionId",
+    updateFileActionId: "updateFileActionId",
+    fileError: "fileError",
+    fileSecure: "fileSecure",
+    fileSecureLabel: "fileSecureLabel",
+    browseClick: "browseClick",
+    editFileName: "edit-file-name",
+    fileNameInput: "file-name-input",
+    resetName: "reset-name",
+    applyName: "apply-name",
+    delete: "delete",
+    securityCheckboxInput: "security-checkbox-input",
+    fileSize: "fileSize",
+    date: "date",
+    fileToolTip: "fileToolTip",
   };
 
-
-  constructor(private httpClient: HttpClient, private renderer: Renderer2) {
-
-  }
+  constructor(
+    private httpClient: HttpClient,
+    private renderer: Renderer2
+  ) {}
 
   ngOnInit() {
     this.setUploadElementIds();
@@ -246,18 +263,22 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
 
   ngOnChanges(changes: SimpleChanges) {
     if (!this.isEditMode()) {
-      this.fileCtrlConfig.forEach(fctrl => fctrl.isNameEditMode = false);
+      this.fileCtrlConfig.forEach((fctrl) => (fctrl.isNameEditMode = false));
     }
 
-    if(changes && changes['uploadedFiles'] && changes['uploadedFiles'].previousValue != changes['uploadedFiles'].currentValue) {
+    if (
+      changes &&
+      changes["uploadedFiles"] &&
+      changes["uploadedFiles"].previousValue !=
+        changes["uploadedFiles"].currentValue
+    ) {
       this.fileCtrlConfig = [];
-      this.setUploadTableData(changes['uploadedFiles'].currentValue);
+      this.setUploadTableData(changes["uploadedFiles"].currentValue);
     }
   }
 
   setUploadedFiles(uploadedFiles) {
-    this.fileCtrlConfig = uploadedFiles
-      .map(uf => this.initilizeFileCtrl(uf));
+    this.fileCtrlConfig = uploadedFiles.map((uf) => this.initilizeFileCtrl(uf));
     this.updateFilePos();
   }
 
@@ -273,7 +294,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     this.disabled = disabled;
   }
 
-  writeValue(value: null|undefined|any) {
+  writeValue(value: null | undefined | any) {
     if (value && value.length) {
       this.setUploadTableData(value);
     } else {
@@ -282,10 +303,10 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     }
   }
   setUploadTableData(value: any[]) {
-    const uploadedFilesConfig = value.map(file => {
+    const uploadedFilesConfig = value.map((file) => {
       return {
         file: file,
-        upload: new Upload()
+        upload: new Upload(),
       };
     });
     this.populateFiles(value, uploadedFilesConfig);
@@ -298,10 +319,10 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     if (asArray.length === 0) {
       return;
     }
-    const uploadedFilesConfig = asArray.map(file => {
+    const uploadedFilesConfig = asArray.map((file) => {
       return {
         file: file,
-        upload: new Upload()
+        upload: new Upload(),
       };
     });
     this.populateFiles(asArray, uploadedFilesConfig);
@@ -311,12 +332,12 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     this.emit();
   }
 
-  initilizeFileCtrl({name, size, url, icon, disabled, isSecure, postedDate}) {
+  initilizeFileCtrl({ name, size, url, icon, disabled, isSecure, postedDate }) {
     if (!isSecure) {
       isSecure = false;
     }
     if (!postedDate) {
-      postedDate = moment().format('MMM DD, YYYY h:mm a');
+      postedDate = moment().format("MMM DD, YYYY h:mm a");
     }
 
     return {
@@ -337,13 +358,13 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
 
   getTableRowClass(fctrl) {
     if (this.shouldShowDropTarget() || !this.isEditMode()) {
-      return '';
+      return "";
     }
-    return !fctrl.isLast ? '' : 'no-border';
+    return !fctrl.isLast ? "" : "no-border";
   }
 
   getFileNameClass() {
-    return this.isEditMode() ? '' : 'upload-table-file-link';
+    return this.isEditMode() ? "" : "upload-table-file-link";
   }
 
   startUpload() {
@@ -351,21 +372,21 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   }
 
   validateFiles(ufs: UploadFile[]) {
-    ufs.forEach(uf => {
+    ufs.forEach((uf) => {
       const { file } = uf;
       if (this.maxFileSizeInBytes && file.size > this.maxFileSizeInBytes) {
         uf.upload.status = UploadStatus.Error;
-        uf.upload.error = 'File too large';
+        uf.upload.error = "File too large";
       }
       if (this.pattern && !this.pattern.test(file.name)) {
         uf.upload.status = UploadStatus.Error;
-        uf.upload.error = 'File type not supported';
+        uf.upload.error = "File type not supported";
       }
     });
   }
 
   doUpload(ufs: UploadFile[]) {
-    ufs.forEach(uf => {
+    ufs.forEach((uf) => {
       const { upload } = uf;
 
       if (upload.status !== UploadStatus.Initial) {
@@ -384,20 +405,18 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
             upload.status = UploadStatus.Error;
           }
           if (event.ok === false) {
-            upload.error = 'Upload failed';
+            upload.error = "Upload failed";
             upload.status = UploadStatus.Error;
             this.emit();
           }
         },
-        error => {
-          console.error('upload error', error);
+        (error) => {
+          console.error("upload error", error);
           let toJson: any = {};
           try {
             toJson = JSON.parse(error);
-          } catch (ex) {
-
-          }
-          upload.error = toJson.statusText || toJson.message || 'Upload failed';
+          } catch (ex) {}
+          upload.error = toJson.statusText || toJson.message || "Upload failed";
           upload.status = UploadStatus.Error;
           this.emit();
         },
@@ -435,14 +454,14 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     this.removeModal.openModal(index);
   }
 
-  onRemoveModalOpen(data){
+  onRemoveModalOpen(data) {
     this.modalOpen.emit(data);
   }
 
   onRemoveModalSubmit(index) {
     this.removeModal.closeModal();
     const file = this.fileCtrlConfig.splice(index, 1)[0];
-    const uf = this._model.find(f => f.file.name === file.originName);
+    const uf = this._model.find((f) => f.file.name === file.originName);
     if (uf) {
       this.removeUploadedFile(uf);
     }
@@ -470,9 +489,9 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   }
 
   onAccessToggle(fileIndex, secure) {
-    let toggleData = {fileIndex, secure};
+    let toggleData = { fileIndex, secure };
     if (secure) {
-        this.toggleModal.openModal(toggleData);
+      this.toggleModal.openModal(toggleData);
     }
     this.toggleAccess.emit(toggleData);
   }
@@ -491,7 +510,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   }
 
   isEditMode() {
-    return this.mode === 'edit';
+    return this.mode === "edit";
   }
 
   swapFiles(x, y) {
@@ -510,7 +529,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   }
 
   removeFileFromList(uf: UploadFile) {
-    this._model = this._model.filter(_uf => _uf !== uf);
+    this._model = this._model.filter((_uf) => _uf !== uf);
     if (!this._model.length) {
       this._clearInput();
     }
@@ -523,7 +542,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
 
   getError(index) {
     const fileName = this.fileCtrlConfig[index].fileName;
-    return this._model.find(f => f.file.name === fileName).upload.error;
+    return this._model.find((f) => f.file.name === fileName).upload.error;
   }
 
   shouldShowProgressBar(uf: UploadFile) {
@@ -532,7 +551,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
 
   shouldShowError(index) {
     const fileName = this.fileCtrlConfig[index].fileName;
-    const uf = this._model.find(f => f.file.name === fileName);
+    const uf = this._model.find((f) => f.file.name === fileName);
     if (!!uf) {
       return uf.upload.status === UploadStatus.Error;
     }
@@ -559,8 +578,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   }
 
   _numFilesValid() {
-    return this._model
-      .filter(uf => uf.upload.status !== UploadStatus.Error)
+    return this._model.filter((uf) => uf.upload.status !== UploadStatus.Error)
       .length;
   }
 
@@ -568,28 +586,34 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     const request = this.deleteRequest(uf);
 
     if (isObservable(request)) {
-      return request.pipe(switchMap(req => this.httpClient.request(req)));
+      return request.pipe(switchMap((req) => this.httpClient.request(req)));
     } else if (request instanceof HttpRequest) {
       return this.httpClient.request(request);
     } else {
-      throw new Error('Request must be an HttpRequest or Observerable<HttpRequest>');
+      throw new Error(
+        "Request must be an HttpRequest or Observerable<HttpRequest>"
+      );
     }
   }
 
-  _getHttpEventSteam(uf: UploadFile): Observable<HttpEvent<any>>  {
+  _getHttpEventSteam(uf: UploadFile): Observable<HttpEvent<any>> {
     const { file, upload } = uf;
     const request = this.uploadRequest(file);
 
     if (isObservable(request)) {
-      return request.pipe(switchMap((req: HttpRequest<any>) => {
-        upload.request = req;
-        return this.httpClient.request(req);
-      }));
+      return request.pipe(
+        switchMap((req: HttpRequest<any>) => {
+          upload.request = req;
+          return this.httpClient.request(req);
+        })
+      );
     } else if (request instanceof HttpRequest) {
       upload.request = request;
       return this.httpClient.request(request);
     } else {
-      throw new Error('Request must be an HttpRequest or Observerable<HttpRequest>');
+      throw new Error(
+        "Request must be an HttpRequest or Observerable<HttpRequest>"
+      );
     }
   }
 
@@ -597,12 +621,12 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     // clear the input's internal value, or it will not
     // emit the change event if we select a file, deselect that file,
     // and select the same file again
-    this.fileInput.nativeElement.value = '';
+    this.fileInput.nativeElement.value = "";
   }
 
   private setUploadElementIds() {
     if (this.id) {
-      Object.keys(this.uploadElIds).forEach(key => {
+      Object.keys(this.uploadElIds).forEach((key) => {
         this.setElementId(key);
       });
     }
@@ -615,8 +639,8 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   }
 
   private populateFiles(value, uploadedFilesConfig) {
-   this.validateUploadedFiles(value, uploadedFilesConfig);
-   this.populateFileUploadTable(uploadedFilesConfig);
+    this.validateUploadedFiles(value, uploadedFilesConfig);
+    this.populateFileUploadTable(uploadedFilesConfig);
   }
 
   private validateUploadedFiles(value, uploadedFilesConfig) {
@@ -635,7 +659,9 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
     // set up file table row config
     this.fileCtrlConfig = [
       ...this.fileCtrlConfig,
-      ...uploadedFilesConfig.map(uploadFile => this.initilizeFileCtrl(uploadFile.file))
+      ...uploadedFilesConfig.map((uploadFile) =>
+        this.initilizeFileCtrl(uploadFile.file)
+      ),
     ];
     this.updateFilePos();
   }

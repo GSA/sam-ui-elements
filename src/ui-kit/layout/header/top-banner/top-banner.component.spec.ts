@@ -1,30 +1,25 @@
 /* tslint:disable */
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { SdsTopBannerComponent } from './top-banner.component';
+import { SdsTopBannerComponent } from "./top-banner.component";
 
-
-
-describe('SdsTopBannerComponent', () => {
+describe("SdsTopBannerComponent", () => {
   let component: SdsTopBannerComponent;
   let fixture: ComponentFixture<SdsTopBannerComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [SdsTopBannerComponent],
-      imports: []
-    })
-      .compileComponents();
+      imports: [],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SdsTopBannerComponent);
     component = fixture.componentInstance;
-
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
-

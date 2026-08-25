@@ -1,7 +1,7 @@
-import { Component, Input, forwardRef } from '@angular/core';
-import { LabelWrapper } from '../../wrappers/label-wrapper';
+import { Component, Input, forwardRef } from "@angular/core";
+import { LabelWrapper } from "../../wrappers/label-wrapper";
 //import * as suffixes from './suffixes.json';
-import { NameEntryType } from '../../types';
+import { NameEntryType } from "../../types";
 import {
   NG_VALUE_ACCESSOR,
   NG_VALIDATORS,
@@ -9,113 +9,113 @@ import {
   ControlValueAccessor,
   FormControl,
   Validators,
-  ValidatorFn
-} from '@angular/forms';
+  ValidatorFn,
+} from "@angular/forms";
 
 const suffixes = [
   {
-    "suffix": "II",
-    "description": "The Second"
+    suffix: "II",
+    description: "The Second",
   },
   {
-    "suffix": "III",
-    "description": "The Third"
+    suffix: "III",
+    description: "The Third",
   },
   {
-    "suffix": "IV",
-    "description": "The Fourth"
+    suffix: "IV",
+    description: "The Fourth",
   },
   {
-    "suffix": "J.D.",
-    "description": "Juris Doctor"
+    suffix: "J.D.",
+    description: "Juris Doctor",
   },
   {
-    "suffix": "Jr.",
-    "description": "Junior"
+    suffix: "Jr.",
+    description: "Junior",
   },
   {
-    "suffix": "Ret.",
-    "description": "Retired"
+    suffix: "Ret.",
+    description: "Retired",
   },
   {
-    "suffix": "Sr.",
-    "description": "Senior"
+    suffix: "Sr.",
+    description: "Senior",
   },
   {
-    "suffix": "USA",
-    "description": "United States Army"
+    suffix: "USA",
+    description: "United States Army",
   },
   {
-    "suffix": "USA, Ret.",
-    "description": "United States Army, Retired"
+    suffix: "USA, Ret.",
+    description: "United States Army, Retired",
   },
   {
-    "suffix": "USAF",
-    "description": "United States Air Force"
+    suffix: "USAF",
+    description: "United States Air Force",
   },
   {
-    "suffix": "USAF, Ret.",
-    "description": "United States Air Force, Retired"
+    suffix: "USAF, Ret.",
+    description: "United States Air Force, Retired",
   },
   {
-    "suffix": "USAFR",
-    "description": "United States Air Force Reserve"
+    suffix: "USAFR",
+    description: "United States Air Force Reserve",
   },
   {
-    "suffix": "USAR",
-    "description": "United States Army Reserve"
+    suffix: "USAR",
+    description: "United States Army Reserve",
   },
   {
-    "suffix": "USCG",
-    "description": "United States Coast Guard"
+    suffix: "USCG",
+    description: "United States Coast Guard",
   },
   {
-    "suffix": "USCG, Ret.",
-    "description": "United States Coast Guard, Retired"
+    suffix: "USCG, Ret.",
+    description: "United States Coast Guard, Retired",
   },
   {
-    "suffix": "USMC",
-    "description": "United States Marine Corps"
+    suffix: "USMC",
+    description: "United States Marine Corps",
   },
   {
-    "suffix": "USMC, Ret.",
-    "description": "United States Marine Corps, Retired"
+    suffix: "USMC, Ret.",
+    description: "United States Marine Corps, Retired",
   },
   {
-    "suffix": "USMCR",
-    "description": "United States Marine Corps Reserve"
+    suffix: "USMCR",
+    description: "United States Marine Corps Reserve",
   },
   {
-    "suffix": "USN",
-    "description": "United States Navy"
+    suffix: "USN",
+    description: "United States Navy",
   },
   {
-    "suffix": "USN, Ret.",
-    "description": "United States Navy, Retired"
+    suffix: "USN, Ret.",
+    description: "United States Navy, Retired",
   },
   {
-    "suffix": "USNR",
-    "description": "United States Navy Reserve"
+    suffix: "USNR",
+    description: "United States Navy Reserve",
   },
   {
-    "suffix": "V",
-    "description": "The Fifth"
+    suffix: "V",
+    description: "The Fifth",
   },
   {
-    "suffix": "VI",
-    "description": "The Sixth"
-  }
+    suffix: "VI",
+    description: "The Sixth",
+  },
 ];
 const suffixOptions = (suffixes as any).map((item) => {
   return {
     label: item.suffix,
-    value: item.suffix
+    value: item.suffix,
   };
 });
 //
 suffixOptions.unshift({
-  label: 'None',
-  value: ''
+  label: "None",
+  value: "",
 });
 
 /**
@@ -126,45 +126,45 @@ suffixOptions.unshift({
  * @Input prefix: string - Prefix name/id attribute values
  */
 @Component({
-    selector: 'sam-name-entry',
-    templateUrl: 'name-entry.template.html',
-    providers: [
-        {
-            provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => SamNameEntryComponent),
-            multi: true
-        },
-        {
-            provide: NG_VALIDATORS,
-            useExisting: forwardRef(() => SamNameEntryComponent),
-            multi: true
-        }
-    ],
-    standalone: false
+  selector: "sam-name-entry",
+  templateUrl: "name-entry.template.html",
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SamNameEntryComponent),
+      multi: true,
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => SamNameEntryComponent),
+      multi: true,
+    },
+  ],
+  standalone: false,
 })
 export class SamNameEntryComponent implements ControlValueAccessor, Validator {
   /**
-  * The bound value of the component
-  */
-  @Input() public legend: string = 'Name';
+   * The bound value of the component
+   */
+  @Input() public legend: string = "Name";
   /**
-  * Label text for template
-  */
+   * Label text for template
+   */
   @Input() public model: NameEntryType = {
-    firstName: '',
-    middleName: '',
-    lastName: '',
-    suffix: ''
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    suffix: "",
   };
   /**
-  * Prefix name/id attribute values
-  */
-  @Input() public prefix: string = '';
+   * Prefix name/id attribute values
+   */
+  @Input() public prefix: string = "";
 
-  public fNameErrorMsg: string = '';
-  public mNameErrorMsg: string = '';
-  public lNameErrorMsg: string = '';
-  public suffixErrorMsg: string = '';
+  public fNameErrorMsg: string = "";
+  public mNameErrorMsg: string = "";
+  public lNameErrorMsg: string = "";
+  public suffixErrorMsg: string = "";
 
   public get value() {
     return this.model;
@@ -174,10 +174,10 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator {
     let val = value;
     if (!val) {
       val = {
-        firstName: '',
-        middleName: '',
-        lastName: '',
-        suffix: ''
+        firstName: "",
+        middleName: "",
+        lastName: "",
+        suffix: "",
       };
     }
     this.model = val;
@@ -185,7 +185,7 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator {
 
   disabled = undefined;
   store = {
-    suffixes: suffixOptions
+    suffixes: suffixOptions,
   };
 
   public setSubmitted() {
@@ -201,19 +201,19 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator {
     if (!this.validateFirstName()) {
       obj.firstName = {
         errorMessage: this.fNameErrorMsg,
-        valid: false
+        valid: false,
       };
     }
     if (!this.validateMiddleName()) {
       obj.middleName = {
         errorMessage: this.mNameErrorMsg,
-        valid: false
+        valid: false,
       };
     }
     if (!this.validateLastName()) {
       obj.lastName = {
         errorMessage: this.lNameErrorMsg,
-        valid: false
+        valid: false,
       };
     }
     return Object.keys(obj).length ? obj : undefined;
@@ -222,7 +222,7 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator {
   public getIdentifer(str) {
     let newString = str;
     if (this.prefix.length > 0) {
-      newString = this.prefix + '-' + newString;
+      newString = this.prefix + "-" + newString;
     }
     return newString;
   }
@@ -231,14 +231,14 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator {
     let error = false;
     if (/^[0-9]+$/.test(this.model.firstName)) {
       error = true;
-      this.fNameErrorMsg = 'Please enter a valid name';
+      this.fNameErrorMsg = "Please enter a valid name";
     }
     if (this.model.firstName.length === 0) {
       error = true;
-      this.fNameErrorMsg = 'This field is required';
+      this.fNameErrorMsg = "This field is required";
     }
     if (!error) {
-      this.fNameErrorMsg = '';
+      this.fNameErrorMsg = "";
     }
     return !error;
   }
@@ -247,10 +247,10 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator {
     let error = false;
     if (/^[0-9]+$/.test(this.model.middleName)) {
       error = true;
-      this.mNameErrorMsg = 'Please enter a valid name';
+      this.mNameErrorMsg = "Please enter a valid name";
     }
     if (!error) {
-      this.mNameErrorMsg = '';
+      this.mNameErrorMsg = "";
     }
     return !error;
   }
@@ -259,14 +259,14 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator {
     let error = false;
     if (/^[0-9]+$/.test(this.model.lastName)) {
       error = true;
-      this.lNameErrorMsg = 'Please enter a valid name';
+      this.lNameErrorMsg = "Please enter a valid name";
     }
     if (this.model.lastName.length === 0) {
       error = true;
-      this.lNameErrorMsg = 'This field is required';
+      this.lNameErrorMsg = "This field is required";
     }
     if (!error) {
-      this.lNameErrorMsg = '';
+      this.lNameErrorMsg = "";
     }
     return !error;
   }

@@ -14,14 +14,27 @@
     </div>
   </div> -->
 
-  <button type="button" class="order-results" (click)="navigateToParent()">Up</button>
+  <button type="button" class="order-results" (click)="navigateToParent()">
+    Up
+  </button>
 
   <!-- Agency Level Selector -->
-  <sam-select [(ngModel)]="selectModel" (change)="onLevelChange($event)" name="levelSelect" class="levelSelect"
-    [options]="options">
+  <sam-select
+    [(ngModel)]="selectModel"
+    (change)="onLevelChange($event)"
+    name="levelSelect"
+    class="levelSelect"
+    [options]="options"
+  >
   </sam-select>
 
   <!-- Search Control -->
-  <input (keyup)="onKeyup($event)" #filter aria-label="search" [attr.placeholder]="configuration.filterPlaceholderText"
-    autocomplete="off" [(ngModel)]="filterText">
+  <input
+    (keyup)="onKeyup($event)"
+    #filter
+    aria-label="search"
+    [attr.placeholder]="configuration.filterPlaceholderText"
+    autocomplete="off"
+    [(ngModel)]="filterText"
+  />
 </div>

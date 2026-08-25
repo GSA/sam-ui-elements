@@ -22,6 +22,8 @@ jobs:
             test-app/package-lock.json
       - name: Install root dependencies
         run: npm ci
+      - name: Check formatting
+        run: npm run format:check
       - name: Install test-app dependencies
         run: npm ci --prefix test-app
       - name: Lint library and documentation app

@@ -6,28 +6,25 @@ import {
   OnInit,
   SimpleChanges,
   ChangeDetectionStrategy,
-} from '@angular/core';
-
-
+} from "@angular/core";
 
 import {
   faChevronLeft,
   faChevronRight,
-} from '@fortawesome/free-solid-svg-icons';
+} from "@fortawesome/free-solid-svg-icons";
 
-import { Paginator } from './paginator';
+import { Paginator } from "./paginator";
 
 /**
  * The <sam-pagination> allows users to select a page
  */
 @Component({
-    selector: 'sam-pagination-next',
-    templateUrl: 'pagination.template.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+  selector: "sam-pagination-next",
+  templateUrl: "pagination.template.html",
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class SamPaginationNextComponent implements OnInit {
-
   public paginator: Paginator;
 
   public faChevronLeft = faChevronLeft;
@@ -36,12 +33,12 @@ export class SamPaginationNextComponent implements OnInit {
   /**
    * Sets the number of units per page
    */
-  @Input() public get pageSize (): number | string {
+  @Input() public get pageSize(): number | string {
     return this.paginator.getUnitsPerPage();
   }
 
-  public set pageSize (size: number | string) {
-    if (typeof size === 'number') {
+  public set pageSize(size: number | string) {
+    if (typeof size === "number") {
       this.paginator.setUnitsPerPage(size);
     } else {
       this.paginator.setUnitsPerPage(parseInt(size, 10));
@@ -79,7 +76,7 @@ export class SamPaginationNextComponent implements OnInit {
   /**
    * The type of units per page, e.g., Results, Items, etc
    */
-  @Input() public unit: string = 'Items';
+  @Input() public unit: string = "Items";
   /**
    * Sets the default size of the units displayed
    * Defaults to 10
@@ -95,23 +92,23 @@ export class SamPaginationNextComponent implements OnInit {
   @Output() public unitsChange = new EventEmitter<number>();
 
   private _defaultOptions = [
-    { value: '5', label: '5' },
-    { value: '10', label: '10' },
-    { value: '25', label: '25' },
-    { value: '50', label: '50' },
-    { value: '100', label: '100' },
+    { value: "5", label: "5" },
+    { value: "10", label: "10" },
+    { value: "25", label: "25" },
+    { value: "50", label: "50" },
+    { value: "100", label: "100" },
   ];
 
-  constructor () {
+  constructor() {
     this.options = this._defaultOptions;
     this._setupPagination();
   }
 
-  public ngOnChanges (c: SimpleChanges): void {
+  public ngOnChanges(c: SimpleChanges): void {
     this._processChanges(c);
   }
 
-  public ngOnInit (): void {
+  public ngOnInit(): void {
     this._emitInitialEvents();
   }
 
@@ -125,20 +122,19 @@ export class SamPaginationNextComponent implements OnInit {
     this._updatePage();
   }
 
-  public printDisplayingString (): string {
+  public printDisplayingString(): string {
     return this.paginator.printDisplayingString();
   }
 
   public printPerPageString(): string {
-    return this.paginator.printPerPageString()
+    return this.paginator.printPerPageString();
   }
 
-  private _processChanges (c: SimpleChanges): void {
-
+  private _processChanges(c: SimpleChanges): void {
     if (c.defaultSize) {
       this.paginator.setUnitsPerPage(this.defaultSize);
     }
-    
+
     if (c.unit) {
       this.paginator.unit = this.unit;
     }
@@ -153,7 +149,7 @@ export class SamPaginationNextComponent implements OnInit {
     }
   }
 
-  private _setupPagination (): void {
+  private _setupPagination(): void {
     this.paginator = new Paginator(
       this.unit,
       this.defaultSize,
@@ -161,12 +157,12 @@ export class SamPaginationNextComponent implements OnInit {
     );
   }
 
-  private _updatePage (): void {
+  private _updatePage(): void {
     this.currentPage = this.paginator.getCurrentPage();
     this.pageChange.emit(this.currentPage);
   }
 
-  private _emitInitialEvents (): void {
+  private _emitInitialEvents(): void {
     this.pageChange.emit(this.paginator.getCurrentPage());
     this.unitsChange.emit(this.paginator.getUnitsPerPage());
   }

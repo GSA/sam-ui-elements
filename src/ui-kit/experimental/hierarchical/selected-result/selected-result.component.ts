@@ -1,25 +1,28 @@
-import { Component, Input, TemplateRef, forwardRef } from '@angular/core';
-import { HierarchicalTreeSelectedItemModel } from '../hierarchical-tree-selectedItem.model';
-import { SelectedResultConfiguration } from '../models/SamHierarchicalSelectedResultConfiguration';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormControl } from '@angular/forms';
+import { Component, Input, TemplateRef, forwardRef } from "@angular/core";
+import { HierarchicalTreeSelectedItemModel } from "../hierarchical-tree-selectedItem.model";
+import { SelectedResultConfiguration } from "../models/SamHierarchicalSelectedResultConfiguration";
+import {
+  NG_VALUE_ACCESSOR,
+  ControlValueAccessor,
+  FormControl,
+} from "@angular/forms";
 const Hierarchical_SelectedResult_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamHierarchicalSelectedResultComponent),
-  multi: true
+  multi: true,
 };
 
 @Component({
-    selector: 'sam-selected-result',
-    templateUrl: './selected-result.component.html',
-    styleUrls: ['./selected-result.component.scss'],
-    providers: [Hierarchical_SelectedResult_VALUE_ACCESSOR],
-    standalone: false
+  selector: "sam-selected-result",
+  templateUrl: "./selected-result.component.html",
+  styleUrls: ["./selected-result.component.scss"],
+  providers: [Hierarchical_SelectedResult_VALUE_ACCESSOR],
+  standalone: false,
 })
 export class SamHierarchicalSelectedResultComponent implements ControlValueAccessor {
-
   /**
-  * Allow to insert a customized template for suggestions to use
-  */
+   * Allow to insert a customized template for suggestions to use
+   */
   @Input() itemTemplate: TemplateRef<any>;
 
   /**
@@ -28,8 +31,8 @@ export class SamHierarchicalSelectedResultComponent implements ControlValueAcces
   public model: HierarchicalTreeSelectedItemModel;
 
   /**
-  * Configuration for the Selected Results control 
-  */
+   * Configuration for the Selected Results control
+   */
   @Input()
   public configuration: SelectedResultConfiguration;
 
@@ -48,7 +51,7 @@ export class SamHierarchicalSelectedResultComponent implements ControlValueAcces
 
   /**
    * Removes item from the model
-   * @param item 
+   * @param item
    */
   removeItem(item: object) {
     if (!this.disabled) {

@@ -1,19 +1,19 @@
-import { TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { TestBed } from "@angular/core/testing";
+import { FormsModule } from "@angular/forms";
 
 // Load the implementations that should be tested
-import { SamToggleSwitchComponent } from './toggle-switch.component';
-import { SamUIKitModule } from '../../index';
-import { By } from '@angular/platform-browser';
+import { SamToggleSwitchComponent } from "./toggle-switch.component";
+import { SamUIKitModule } from "../../index";
+import { By } from "@angular/platform-browser";
 
-describe('The Sam Toggle Switch component', () => {
-  describe('isolated tests', () => {
+describe("The Sam Toggle Switch component", () => {
+  describe("isolated tests", () => {
     let component: SamToggleSwitchComponent;
     beforeEach(() => {
       component = new SamToggleSwitchComponent();
     });
 
-    it('should be able to toggle', () => {
+    it("should be able to toggle", () => {
       component.onSwitchClick({ target: { checked: true } });
       expect(component.isSwitchOn).toBe(true);
       component.onSwitchClick({ target: { checked: false } });
@@ -24,7 +24,7 @@ describe('The Sam Toggle Switch component', () => {
       expect(component.isSwitchOn).toBe(false);
     });
 
-    it('should implement controlvalueaccessor', () => {
+    it("should implement controlvalueaccessor", () => {
       component.onChange();
       component.onTouched();
       component.registerOnChange((_) => undefined);
@@ -34,7 +34,7 @@ describe('The Sam Toggle Switch component', () => {
       expect(true).toBe(true);
     });
   });
-  describe('rendered tests', () => {
+  describe("rendered tests", () => {
     let component: SamToggleSwitchComponent;
     let fixture: any;
 
@@ -49,23 +49,20 @@ describe('The Sam Toggle Switch component', () => {
       component = fixture.componentInstance;
     });
 
-    it('should compile', () => {
+    it("should compile", () => {
       fixture.detectChanges();
       expect(true).toBe(true);
     });
 
-    it('should toggle', () => {
+    it("should toggle", () => {
       fixture.detectChanges();
       component.isSwitchOn = true;
       fixture.detectChanges();
       fixture.whenStable().then(() => {
         expect(
-          fixture.debugElement.query(
-            By.css('.switch-input')
-          )
-            .nativeElement.checked
-        )
-          .toBe(true);
+          fixture.debugElement.query(By.css(".switch-input")).nativeElement
+            .checked
+        ).toBe(true);
       });
     });
   });

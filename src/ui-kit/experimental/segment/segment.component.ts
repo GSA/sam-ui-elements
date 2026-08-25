@@ -1,8 +1,8 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from "@angular/core";
 
 @Component({
-    selector: 'sam-segment',
-    templateUrl: './segment.template.html',
-    standalone: false
+  selector: "sam-segment",
+  templateUrl: "./segment.template.html",
+  standalone: false,
 })
-export class SamSegmentComponent{}
+export class SamSegmentComponent {}

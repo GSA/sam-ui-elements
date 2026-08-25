@@ -5,7 +5,7 @@ import {
   TestBed,
   fakeAsync,
   tick,
-} from '@angular/core/testing';
+} from "@angular/core/testing";
 import { SamHierarchicalAutocompleteComponent } from "./autocomplete.component";
 import { SamHierarchicalAutocompleteConfiguration } from "../models/SamHierarchicalAutocompleteConfiguration";
 import { FormsModule } from "@angular/forms";

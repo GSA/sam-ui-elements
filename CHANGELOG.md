@@ -10,8 +10,10 @@
 ---
 
 ## 0.9.18 (28/08/2019)
+
 - Edited the Autocomplete Component
 - Edited the Entity Display Page
+
 ---
 
 ## v0.9.17 (22/08/2019)
@@ -64,9 +66,12 @@
 - [**closed**] IAE-21948 [#383](https://github.com/GSA/sam-ui-elements/pull/383)
 - [**closed**] sam-ui version changes to 0.9.12 [#382](https://github.com/GSA/sam-ui-elements/pull/382)
 
-### CSS 
-This patch adds `_banner.scss` to `sam-ui-elements`. 
+### CSS
+
+This patch adds `_banner.scss` to `sam-ui-elements`.
+
 - Remove `_banner.scss` file from your code as is not needed.
+
 ---
 
 ## v0.9.12 (02/08/2019)
@@ -79,6 +84,7 @@ This patch adds `_banner.scss` to `sam-ui-elements`.
 ---
 
 ## 0.9.11 (31/07/2019)
+
 IAE 21880 Entity display page added - c56f75e - entity display styles
 IAE 21853 508 change - 0d15cc5 - Delete autocomplete.component.html.bak
 Version Update to 0.9.11
@@ -86,13 +92,14 @@ Version Update to 0.9.11
 ---
 
 ## 0.9.1 (23/07/2019)
-version update #377 
+
+version update #377
 Entity view added #376 b
-Remove unused styles and files 
-Add background gradient to utilities 
-Add new utilities to sam-styles 
-IAE-18889 Directory Returning Duplicate Results 
-IAE-20497 - workspace dash styles update 
+Remove unused styles and files
+Add background gradient to utilities
+Add new utilities to sam-styles
+IAE-18889 Directory Returning Duplicate Results
+IAE-20497 - workspace dash styles update
 ---
 
 ## v0.9.0 (16/07/2019)
@@ -106,7 +113,7 @@ IAE-20497 - workspace dash styles update
 - [**closed**] Add background gradient to utilities [#374](https://github.com/GSA/sam-ui-elements/pull/374)
 - [**closed**] Add white background [#373](https://github.com/GSA/sam-ui-elements/pull/373)
 - [**closed**] Add new utilities to sam-styles [#372](https://github.com/GSA/sam-ui-elements/pull/372)
-- [**closed**] IAE-18889 Directory Returning Duplicate Results  [#370](https://github.com/GSA/sam-ui-elements/pull/370)
+- [**closed**] IAE-18889 Directory Returning Duplicate Results [#370](https://github.com/GSA/sam-ui-elements/pull/370)
 - [**closed**] IAE-20497 - workspace dash styles update [#369](https://github.com/GSA/sam-ui-elements/pull/369)
 - [**closed**] IAE-20497 Tier 1 Workspace [#366](https://github.com/GSA/sam-ui-elements/pull/366)
 - [**closed**] version update to 0.8.29 [#367](https://github.com/GSA/sam-ui-elements/pull/367)
@@ -129,7 +136,7 @@ IAE-20497 - workspace dash styles update
 
 #### closed
 
-- [**closed**] IAE-18889 Directory Returning Duplicate Results  [#370](https://github.com/GSA/sam-ui-elements/pull/370)
+- [**closed**] IAE-18889 Directory Returning Duplicate Results [#370](https://github.com/GSA/sam-ui-elements/pull/370)
 - [**closed**] IAE-20497 - workspace dash styles update [#369](https://github.com/GSA/sam-ui-elements/pull/369)
 - [**closed**] IAE-20497 Tier 1 Workspace [#366](https://github.com/GSA/sam-ui-elements/pull/366)
 - [**closed**] version update to 0.8.29 [#367](https://github.com/GSA/sam-ui-elements/pull/367)
@@ -145,10 +152,12 @@ IAE-20497 - workspace dash styles update
 ---
 
 ## 0.8.30 (19/06/2019)
+
 update version to 0.8.30
 ---
 
 ## 0.8.29 (19/06/2019)
+
 Updated the version to 0.8.29
 Updated the tier 1 workspace dashboard styles to match approved designs - non breaking change
 ---
@@ -158,6 +167,7 @@ Updated the tier 1 workspace dashboard styles to match approved designs - non br
 ---
 
 ## 0.8.27 (13/05/2019)
+
 [bugfix] IAE-18570 Resolving issues with reading of modal
 ---
 
@@ -234,11 +244,13 @@ Updated the tier 1 workspace dashboard styles to match approved designs - non br
 ---
 
 ## 0.8.15 (08/04/2019)
+
 Bug Fix - changed the padding on sam-footer using html and css
 Updated the version number to 0.8.15
 ---
 
 ## 0.8.14 (05/04/2019)
+
 IAE-17710 update CSS/HTML markup files for SAM Header mobile menu
 Version updated to 0.8.14
 
@@ -272,4 +284,4 @@ Version updated to 0.8.14
 
 #### enhancement
 
-- [**enhancement**] IAE 16693 Add  extension input for sam International phone number component [#308](https://github.com/GSA/sam-ui-elements/pull/308)
+- [**enhancement**] IAE 16693 Add extension input for sam International phone number component [#308](https://github.com/GSA/sam-ui-elements/pull/308)

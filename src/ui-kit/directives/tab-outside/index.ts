@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SamTabOutsideDirective } from './taboutside.directive';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { SamTabOutsideDirective } from "./taboutside.directive";
 
 @NgModule({
-    imports: [CommonModule],
-    declarations: [ SamTabOutsideDirective ],
-    exports: [ SamTabOutsideDirective ],
+  imports: [CommonModule],
+  declarations: [SamTabOutsideDirective],
+  exports: [SamTabOutsideDirective],
 })
-export class SamTabOutsideModule { }
+export class SamTabOutsideModule {}
 
-export { SamTabOutsideDirective } from './taboutside.directive';
+export { SamTabOutsideDirective } from "./taboutside.directive";

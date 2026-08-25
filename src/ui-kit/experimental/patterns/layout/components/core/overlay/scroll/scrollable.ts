@@ -6,10 +6,16 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {Directive, ElementRef, OnInit, OnDestroy, NgZone, Renderer2} from '@angular/core';
-import {Observable, Subject} from 'rxjs';
-import {ScrollDispatcher} from './scroll-dispatcher';
-
+import {
+  Directive,
+  ElementRef,
+  OnInit,
+  OnDestroy,
+  NgZone,
+  Renderer2,
+} from "@angular/core";
+import { Observable, Subject } from "rxjs";
+import { ScrollDispatcher } from "./scroll-dispatcher";
 
 /**
  * Sends an event when the directive's element is scrolled. Registers itself with the
@@ -17,23 +23,29 @@ import {ScrollDispatcher} from './scroll-dispatcher';
  * can be listened to through the service.
  */
 @Directive({
-    selector: '[cdk-scrollable], [cdkScrollable]',
-    standalone: false
+  selector: "[cdk-scrollable], [cdkScrollable]",
+  standalone: false,
 })
 export class Scrollable implements OnInit, OnDestroy {
   private _elementScrolled: Subject<Event> = new Subject();
   private _scrollListener: Function | null;
 
-  constructor(private _elementRef: ElementRef,
-              private _scroll: ScrollDispatcher,
-              private _ngZone: NgZone,
-              private _renderer: Renderer2) {}
+  constructor(
+    private _elementRef: ElementRef,
+    private _scroll: ScrollDispatcher,
+    private _ngZone: NgZone,
+    private _renderer: Renderer2
+  ) {}
 
   ngOnInit() {
     this._scrollListener = this._ngZone.runOutsideAngular(() => {
-      return this._renderer.listen(this.getElementRef().nativeElement, 'scroll', (event: Event) => {
-        this._elementScrolled.next(event);
-      });
+      return this._renderer.listen(
+        this.getElementRef().nativeElement,
+        "scroll",
+        (event: Event) => {
+          this._elementScrolled.next(event);
+        }
+      );
     });
 
     this._scroll.register(this);

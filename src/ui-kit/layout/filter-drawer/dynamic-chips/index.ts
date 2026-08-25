@@ -1,1 +1,1 @@
-export * from './dynamic-chips.directive';
+export * from "./dynamic-chips.directive";
