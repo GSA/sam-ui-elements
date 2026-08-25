@@ -68,8 +68,6 @@ api-config.json
 # Use this configuration name to create custome webpack configurations that are ignored by git
 config/webpack.local.js
 
-package-lock.json
-
 # Sonarqube
 .scannerwork/
 sonar-project.properties
