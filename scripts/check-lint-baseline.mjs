@@ -77,8 +77,14 @@ const totals = report.reduce(
 );
 
 if (bump) {
-  const rawCurrent = baselines[workspace];
-  const current = Number.isFinite(rawCurrent) ? rawCurrent : 0;
+  const current = baselines[workspace];
+  if (!Number.isFinite(current)) {
+    console.error(
+      `✖ ${workspace}: missing or invalid entry in ${baselinePath}`
+    );
+    process.exit(1);
+  }
+
   // Ratchet only ever moves down.
   const next = Math.min(current, totals.warnings);
 

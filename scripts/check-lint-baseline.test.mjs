@@ -180,6 +180,19 @@ test("--bump refuses to run when there are errors", () => {
   });
 });
 
+test("--bump on an unknown workspace fails loudly instead of silently reporting nothing to bump", () => {
+  withBaselines({ root: 10, "test-app": 4 }, () => {
+    withTempDir((dir) => {
+      const report = writeReport(dir, { warnings: 3 });
+      const { status, stderr } = run(["--bump", "roots", report]);
+      assert.equal(status, 1);
+      assert.match(stderr, /missing or invalid entry/);
+      const written = JSON.parse(readFileSync(baselinePath, "utf8"));
+      assert.ok(!("roots" in written));
+    });
+  });
+});
+
 test("a missing workspace entry in the baseline file fails loudly", () => {
   withBaselines({ "test-app": 4 }, () => {
     withTempDir((dir) => {
