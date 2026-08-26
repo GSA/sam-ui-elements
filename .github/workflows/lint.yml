@@ -28,5 +28,9 @@ jobs:
         run: npm ci --prefix test-app
       - name: Lint library and documentation app
         run: npm run lint
+      - name: Guard root ESLint warning baseline
+        run: npm run lint:baseline
       - name: Lint test app
         run: npm --prefix test-app run lint
+      - name: Guard test-app ESLint warning baseline
+        run: npm --prefix test-app run lint:baseline
