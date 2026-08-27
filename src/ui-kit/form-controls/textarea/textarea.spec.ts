@@ -142,5 +142,42 @@ describe("The Sam Textarea component", () => {
       component.writeValue("test");
       expect(component.value).toBe("test");
     });
+
+    it("should format errors through the SamFormService when useFormService is set", () => {
+      const formService = TestBed.inject(SamFormService);
+      const c = new FormControl("");
+      component.control = c;
+      component.useFormService = true;
+      component.ngOnInit();
+      component.ngAfterViewInit();
+
+      expect(() => formService.fireSubmit(c.root)).not.toThrow();
+      expect(() => formService.fireReset(c.root)).not.toThrow();
+    });
+
+    it("should emit focus events", () => {
+      fixture.detectChanges();
+      let focusEventValue: any;
+      let focusValue: any;
+      component.focusEvent.subscribe((val) => (focusEventValue = val));
+      component.focus.subscribe((val) => (focusValue = val));
+      component.onFocus("evt");
+      expect(focusEventValue).toBe("evt");
+      expect(focusValue).toBe("evt");
+    });
+
+    it("should trim trailing whitespace on blur", () => {
+      fixture.detectChanges();
+      component.value = "hello ";
+      component.onBlur();
+      expect(component.value).toBe("hello");
+    });
+
+    it("should not modify the value on blur when there's no trailing whitespace", () => {
+      fixture.detectChanges();
+      component.value = "hello";
+      component.onBlur();
+      expect(component.value).toBe("hello");
+    });
   });
 });
