@@ -777,12 +777,14 @@ describe("SamAutocompleteComponent", () => {
     expect(component.inputValue).toBe("");
   });
 
-  it("should set the input value from the first item on writeValue in multiple selection mode", () => {
+  it("should leave inputValue unchanged on writeValue in multiple selection mode", () => {
     component.configuration.selectionMode = SelectionMode.MULTIPLE;
+    component.inputValue = "unchanged";
     const model = new SAMSDSSelectedItemModel([{ id: "1", name: "Level 1" }]);
     component.writeValue(model);
-    // multiple mode intentionally leaves inputValue alone; assert no throw
-    // and that the model was still stored
+    // multiple mode intentionally leaves inputValue alone; assert it wasn't
+    // touched and that the model was still stored
+    expect(component.inputValue).toBe("unchanged");
     expect(component.model).toBe(model);
   });
 });

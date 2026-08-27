@@ -107,6 +107,10 @@ describe("The Sam Number component", () => {
       preventDefault.mockClear();
       component.keyDownHandler({ key: "-", preventDefault });
       expect(preventDefault).toHaveBeenCalled();
+
+      preventDefault.mockClear();
+      component.keyDownHandler({ key: "+", preventDefault });
+      expect(preventDefault).toHaveBeenCalled();
     });
 
     it("should allow valid numeric keys", () => {
