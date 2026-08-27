@@ -43,6 +43,13 @@ jobs:
       - name: Run test-app harness with coverage
         run: npm --prefix test-app test
 
+      # Ratcheting coverage-floor gate (#627): fails the build if measured
+      # coverage drops below any floor recorded in coverage-floor.json.
+      # Floors only ever move up, via `npm run coverage:bump`, landed as its
+      # own deliberate commit — feature/spec PRs must not edit that file.
+      - name: Enforce coverage-floor gate
+        run: npm run coverage:check
+
       # Coverage is reported here (Vitest's istanbul text-summary in the log
       # above, plus the lcov artifact below). Enforcement of the 80% new-code
       # floor (target 90%) is tracked by #576 and applied once the green
