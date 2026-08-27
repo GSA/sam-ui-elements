@@ -62,13 +62,15 @@ if (bump) {
       console.error(`✖ ${metric}: missing from coverage summary; cannot bump.`);
       process.exit(1);
     }
-    const floored = Math.floor(pct);
     const rawCurrent = floors[metric];
     // Treat a missing or malformed floor as 0 so a corrupt
     // coverage-floor.json can never poison the ratchet with NaN/null values.
     const current = Number.isFinite(rawCurrent) ? rawCurrent : 0;
-    // Ratchet only ever moves up.
-    next[metric] = Math.max(current, floored);
+    // Ratchet only ever moves up. Preserve the fractional measured value
+    // (istanbul reports two decimal places) rather than flooring it, so a
+    // sub-1% improvement (e.g. 53.12% -> 53.87%) is still locked in instead
+    // of silently discarded.
+    next[metric] = Math.max(current, pct);
     if (next[metric] > current) {
       raised = true;
       console.log(

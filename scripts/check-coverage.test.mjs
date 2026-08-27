@@ -127,6 +127,28 @@ test("--bump raises floors up to measured coverage", () => {
   });
 });
 
+test("--bump preserves fractional measured coverage instead of flooring it", () => {
+  withFloors({ statements: 53, branches: 39, functions: 50, lines: 52 }, () => {
+    withTempDir((dir) => {
+      const summary = writeSummary(dir, {
+        statements: 53.87,
+        branches: 39.12,
+        functions: 50.99,
+        lines: 52.5,
+      });
+      const { status } = run(["--bump", summary]);
+      assert.equal(status, 0);
+      const written = JSON.parse(readFileSync(floorPath, "utf8"));
+      assert.deepEqual(written, {
+        statements: 53.87,
+        branches: 39.12,
+        functions: 50.99,
+        lines: 52.5,
+      });
+    });
+  });
+});
+
 test("--bump never lowers a floor (ratchet-only)", () => {
   withFloors({ statements: 90, branches: 90, functions: 90, lines: 90 }, () => {
     withTempDir((dir) => {

@@ -19,6 +19,10 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Needed so `git show <base-sha>:coverage-floor.json` below can
+          # resolve the base branch's blob (mirrors lint.yml's guard step).
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
@@ -36,6 +40,16 @@ jobs:
 
       - name: Install test-app dependencies
         run: npm ci --prefix test-app
+
+      # Guards against coverage-floor.json being lowered directly on this PR
+      # branch (paired with a coverage regression) rather than earned via
+      # `npm run coverage:bump`. Mirrors the ESLint baseline guard in
+      # .github/workflows/lint.yml.
+      - name: Guard against a lowered coverage floor
+        if: github.event_name == 'pull_request'
+        run: |
+          git show "${{ github.event.pull_request.base.sha }}:coverage-floor.json" > /tmp/base-coverage-floor.json 2>/dev/null || echo '{}' > /tmp/base-coverage-floor.json
+          node scripts/check-coverage-floor-not-decreased.mjs /tmp/base-coverage-floor.json coverage-floor.json
 
       # Runs the full spec harness with coverage via Vitest (Analog's Angular
       # Vite plugin + istanbul coverage). `vitest run` exits non-zero on any
