@@ -17,14 +17,14 @@ describe("A pipe for shorter time formats", () => {
    * our filters broke. Most of the tests through the app need to be fixed.
    */
 
-  xit("should show month day time if date is same year as now", () => {
+  it.skip("should show month day time if date is same year as now", () => {
     const jan1 = moment().set("month", 1).set("day", 1);
     const jan2 = moment().set("month", 1).set("day", 2);
     const display = pipe.transform(jan1, jan2);
     expect(display.length).toEqual(pipe.sameYearFormat.length + 2);
   });
 
-  xit("should show month day year if date is not this year", () => {
+  it.skip("should show month day year if date is not this year", () => {
     const thisYear = moment();
     const lastYear = moment().subtract("year", 1);
     const display = pipe.transform(lastYear, thisYear);

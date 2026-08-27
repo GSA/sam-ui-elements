@@ -7,7 +7,7 @@ import { ElementRef } from "@angular/core";
 import { SamModalComponent } from "./modal.component";
 import { SamElementsModule } from "../../elements";
 
-xdescribe("The Sam Modal component", () => {
+describe.skip("The Sam Modal component", () => {
   describe("isolated tests", () => {
     let component: SamModalComponent;
     beforeEach(() => {

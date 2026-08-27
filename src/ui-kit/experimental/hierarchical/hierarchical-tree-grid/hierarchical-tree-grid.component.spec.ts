@@ -105,7 +105,7 @@ describe("The Sam hierarchical grid component", () => {
         },
       };
       let row = gridData[6];
-      spyOn(component.selectResults, "emit");
+      vi.spyOn(component.selectResults, "emit");
       component.onChecked(ev, row);
       fixture.detectChanges();
       expect(component.selectedList.length).toBe(1);
@@ -128,7 +128,7 @@ describe("The Sam hierarchical grid component", () => {
         },
       };
       let row = gridData[0];
-      spyOn(component.rowChanged, "emit");
+      vi.spyOn(component.rowChanged, "emit");
       component.onRowChange(ev, row);
       fixture.detectChanges();
       expect(component.selectedList.length).toBe(0);
@@ -142,7 +142,7 @@ describe("The Sam hierarchical grid component", () => {
         },
       };
       let row = gridData[6];
-      spyOn(component.rowChanged, "emit");
+      vi.spyOn(component.rowChanged, "emit");
       component.onRowChange(ev, row);
       fixture.detectChanges();
       expect(component.selectedList.length).toBe(0);
@@ -150,7 +150,7 @@ describe("The Sam hierarchical grid component", () => {
     });
 
     it("Scroll raised", () => {
-      spyOn(component.scrolled, "emit");
+      vi.spyOn(component.scrolled, "emit");
       let item = {
         target: {
           offsetHeight: 300,
@@ -164,7 +164,7 @@ describe("The Sam hierarchical grid component", () => {
     });
 
     it("Scroll not raised", () => {
-      spyOn(component.scrolled, "emit");
+      vi.spyOn(component.scrolled, "emit");
       let item = {
         target: {
           offsetHeight: 300,

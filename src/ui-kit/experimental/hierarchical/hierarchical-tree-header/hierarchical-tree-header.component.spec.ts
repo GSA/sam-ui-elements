@@ -41,14 +41,14 @@ describe("SamHierarchicalTreeHeaderComponent", () => {
   });
 
   it("navigateToParent with child", () => {
-    spyOn(component.selectBreadcrumb, "emit");
+    vi.spyOn(component.selectBreadcrumb, "emit");
     component.navigateToParent();
     fixture.detectChanges();
     expect(component.selectBreadcrumb.emit).toHaveBeenCalledWith("1");
   });
 
   it("navigateToParent with top level navigation", () => {
-    spyOn(component.selectBreadcrumb, "emit");
+    vi.spyOn(component.selectBreadcrumb, "emit");
     component.options.shift();
     component.navigateToParent();
     fixture.detectChanges();
@@ -57,7 +57,7 @@ describe("SamHierarchicalTreeHeaderComponent", () => {
 
   it("onLevelChange", () => {
     component.selectModel = "1";
-    spyOn(component.selectBreadcrumb, "emit");
+    vi.spyOn(component.selectBreadcrumb, "emit");
     component.onLevelChange(null);
     fixture.detectChanges();
     expect(component.selectBreadcrumb.emit).toHaveBeenCalledWith("1");
@@ -68,7 +68,7 @@ describe("SamHierarchicalTreeHeaderComponent", () => {
       key: "Delete",
       target: { value: "id" },
     };
-    spyOn(component.filterTextChange, "emit");
+    vi.spyOn(component.filterTextChange, "emit");
     component.onKeyup(event);
     fixture.detectChanges();
     expect(component.filterTextChange.emit).toHaveBeenCalledWith(
@@ -81,7 +81,7 @@ describe("SamHierarchicalTreeHeaderComponent", () => {
       key: "Backspace",
       target: { value: "id" },
     };
-    spyOn(component.filterTextChange, "emit");
+    vi.spyOn(component.filterTextChange, "emit");
     component.onKeyup(event);
     fixture.detectChanges();
     expect(component.filterTextChange.emit).toHaveBeenCalledWith(
@@ -95,7 +95,7 @@ describe("SamHierarchicalTreeHeaderComponent", () => {
       target: { value: "" },
     };
     component.configuration.minimumCharacterCountSearch = 3;
-    spyOn(component.filterTextChange, "emit");
+    vi.spyOn(component.filterTextChange, "emit");
     component.onKeyup(event);
     fixture.detectChanges();
     expect(component.filterTextChange.emit).toHaveBeenCalledWith(
@@ -109,7 +109,7 @@ describe("SamHierarchicalTreeHeaderComponent", () => {
       target: { value: "" },
     };
     component.configuration.minimumCharacterCountSearch = 3;
-    spyOn(component.filterTextChange, "emit");
+    vi.spyOn(component.filterTextChange, "emit");
     component.onKeyup(event);
     fixture.detectChanges();
     expect(component.filterTextChange.emit).toHaveBeenCalledWith(
@@ -123,7 +123,7 @@ describe("SamHierarchicalTreeHeaderComponent", () => {
       target: { value: "le" },
     };
     component.configuration.minimumCharacterCountSearch = 3;
-    spyOn(component.filterTextChange, "emit");
+    vi.spyOn(component.filterTextChange, "emit");
     component.onKeyup(event);
     fixture.detectChanges();
     expect(component.filterTextChange.emit).toHaveBeenCalledWith("");
@@ -135,7 +135,7 @@ describe("SamHierarchicalTreeHeaderComponent", () => {
       target: { value: "ie" },
     };
     component.configuration.minimumCharacterCountSearch = 3;
-    spyOn(component.filterTextChange, "emit");
+    vi.spyOn(component.filterTextChange, "emit");
     component.onKeyup(event);
     fixture.detectChanges();
     expect(component.filterTextChange.emit).toHaveBeenCalledWith("");
@@ -147,7 +147,7 @@ describe("SamHierarchicalTreeHeaderComponent", () => {
       target: { value: "leb" },
     };
     component.configuration.minimumCharacterCountSearch = 3;
-    spyOn(component.filterTextChange, "emit");
+    vi.spyOn(component.filterTextChange, "emit");
     component.onKeyup(event);
     fixture.detectChanges();
     expect(component.filterTextChange.emit).toHaveBeenCalledWith(
@@ -161,7 +161,7 @@ describe("SamHierarchicalTreeHeaderComponent", () => {
       target: { value: "trr" },
     };
     component.configuration.minimumCharacterCountSearch = 3;
-    spyOn(component.filterTextChange, "emit");
+    vi.spyOn(component.filterTextChange, "emit");
     component.onKeyup(event);
     fixture.detectChanges();
     expect(component.filterTextChange.emit).toHaveBeenCalledWith(
@@ -175,7 +175,7 @@ describe("SamHierarchicalTreeHeaderComponent", () => {
       target: { value: "trr" },
     };
     component.configuration.minimumCharacterCountSearch = 3;
-    spyOn(component.filterTextChange, "emit");
+    vi.spyOn(component.filterTextChange, "emit");
     component.onKeyup(event);
     fixture.detectChanges();
     expect(component.filterTextChange.emit).toHaveBeenCalledWith(
@@ -189,7 +189,7 @@ describe("SamHierarchicalTreeHeaderComponent", () => {
       target: { value: "tr" },
     };
     component.configuration.minimumCharacterCountSearch = 3;
-    spyOn(component.filterTextChange, "emit");
+    vi.spyOn(component.filterTextChange, "emit");
     component.onKeyup(event);
     fixture.detectChanges();
     expect(component.filterTextChange.emit).not.toHaveBeenCalled();

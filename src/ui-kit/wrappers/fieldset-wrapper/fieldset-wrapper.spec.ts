@@ -146,7 +146,7 @@ describe("The Sam Fieldset Wrapper component", () => {
       fixture.detectChanges();
     });
 
-    xit("should have toggleable hints", () => {
+    it.skip("should have toggleable hints", () => {
       component.hint =
         "Lorem Ipsum is simply dummy text of the printing \
         and typesetting industry. Lorem Ipsum has been the industry's \

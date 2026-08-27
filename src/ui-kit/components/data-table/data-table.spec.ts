@@ -80,7 +80,7 @@
 //   }
 // }
 
-// xdescribe("The Sam Data Table Tests", () => {
+// describe.skip("The Sam Data Table Tests", () => {
 //   let component: TestComponent, fixture: ComponentFixture<TestComponent>;
 
 //   beforeEach(() => {

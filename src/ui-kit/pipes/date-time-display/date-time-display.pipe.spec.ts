@@ -11,7 +11,7 @@ describe("DateTimeDisplayPipe test", () => {
     );
   });
 
-  xit("FilterMultiArrayObjectPipe Test: Not nested: Single array", () => {
+  it.skip("FilterMultiArrayObjectPipe Test: Not nested: Single array", () => {
     // This test is broken. Needs to be fixed, but I can't tell from the
     // file what the business rules should be and, subsequently, the correct
     // way to fix the test.

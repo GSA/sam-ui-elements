@@ -67,7 +67,7 @@ describe("The Sam Sticky directive", () => {
 
   it("trigger on scroll", () => {
     const expectedLimit = 1400;
-    spyOn(directive, "scroll");
+    vi.spyOn(directive, "scroll");
     window.dispatchEvent(new Event("scroll"));
     fixture.detectChanges();
     expect(directive.scroll).toHaveBeenCalled();

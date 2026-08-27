@@ -93,7 +93,7 @@ describe("The Sam Upload v2 component", () => {
     expect(wasOneUpload).toBe(true);
   });
 
-  xit("should delete the upload if the upload was a success and delete is clicked", () => {
+  it.skip("should delete the upload if the upload was a success and delete is clicked", () => {
     const url = "http://localhost/upload";
     const file = { name: "sample.jpeg", size: 1001 };
     const request = new HttpRequest("POST", url, file, {

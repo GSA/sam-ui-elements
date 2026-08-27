@@ -140,7 +140,7 @@ describe("SamListBoxComponent", () => {
     expect(fixture.nativeElement.innerHTML).toContain(labelText);
   });
 
-  xit("should disable", function () {
+  it.skip("should disable", function () {
     component.options[0].disabled = true;
     fixture.detectChanges();
     const value =
@@ -192,7 +192,7 @@ describe("SamListBoxComponent", () => {
     fixture.detectChanges();
   });
 
-  xit("should process arrow up and down keypresses", fakeAsync(() => {
+  it.skip("should process arrow up and down keypresses", fakeAsync(() => {
     component.options = options;
     fixture.detectChanges();
     tick();
@@ -220,7 +220,7 @@ describe("SamListBoxComponent", () => {
     expect(component.options[0]["highlighted"]).toBeTruthy();
   }));
 
-  xit("Up arrow when on first item", fakeAsync(() => {
+  it.skip("Up arrow when on first item", fakeAsync(() => {
     component.options = options;
     tick();
     fixture.detectChanges();
@@ -238,7 +238,7 @@ describe("SamListBoxComponent", () => {
     expect(component.options[0]["highlighted"]).toBeTruthy();
   }));
 
-  xit("Down arrow when on over lists item", fakeAsync(() => {
+  it.skip("Down arrow when on over lists item", fakeAsync(() => {
     component.options = options;
     tick();
     fixture.detectChanges();
@@ -268,7 +268,7 @@ describe("SamListBoxComponent", () => {
       },
     };
     component.model.push(options[1]);
-    spyOn(component.modelChange, "emit");
+    vi.spyOn(component.modelChange, "emit");
     component.onChecked(ev, options[1]);
     fixture.detectChanges();
     expect(component.model.length).toBe(0);

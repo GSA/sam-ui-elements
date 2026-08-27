@@ -82,7 +82,7 @@ describe("Sam International Prefix", () => {
     it("should not prevent a digit key from being entered", () => {
       const mock = {
         key: 5,
-        preventDefault: jasmine.createSpy("preventDefault"),
+        preventDefault: vi.fn(),
         stopPropagation: function () {},
       };
 
@@ -94,7 +94,7 @@ describe("Sam International Prefix", () => {
     it("should prevent a non-digit key from being entered", () => {
       const mock = {
         key: "g",
-        preventDefault: jasmine.createSpy("preventDefault"),
+        preventDefault: vi.fn(),
         stopPropagation: function () {},
       };
 

@@ -241,7 +241,7 @@ describe("The Sam Date component", () => {
       });
     });
 
-    xit("should work with leap years", () => {
+    it.skip("should work with leap years", () => {
       component.month.nativeElement.value = "2";
       component.day.nativeElement.value = "29";
       component.year.nativeElement.value = "2015";
@@ -249,7 +249,7 @@ describe("The Sam Date component", () => {
       expect(component.day.nativeElement.value).toBe("");
     });
 
-    xit("should update with key presses", function () {
+    it.skip("should update with key presses", function () {
       monthEl.triggerEventHandler("focus", {
         target: {
           value: "",

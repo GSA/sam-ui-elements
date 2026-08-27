@@ -123,7 +123,7 @@ describe("SamHierarchicalAutocompleteComponent", () => {
     expect(component.results[0]["highlighted"]).toBeTruthy();
   }));
 
-  xit("Select second item with down and up arrows", fakeAsync(() => {
+  it.skip("Select second item with down and up arrows", fakeAsync(() => {
     component.inputFocusHandler();
     fixture.detectChanges();
     tick();
@@ -233,7 +233,7 @@ describe("SamHierarchicalAutocompleteComponent", () => {
     expect(component.results[0]["highlighted"]).toBeTruthy();
   }));
 
-  xit("select item with enter key", fakeAsync(() => {
+  it.skip("select item with enter key", fakeAsync(() => {
     component.inputFocusHandler();
     fixture.detectChanges();
     tick();
