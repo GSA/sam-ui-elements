@@ -9,7 +9,10 @@
     "test": "vitest run --coverage --config vitest.config.mts",
     "test:watch": "vitest --config vitest.config.mts",
     "test:e2e": "playwright test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "lint:report": "ng lint --format json --output-file eslint-report.json",
+    "lint:baseline": "npm run lint:report && node ../scripts/check-lint-baseline.mjs test-app eslint-report.json",
+    "lint:baseline:bump": "npm run lint:report && node ../scripts/check-lint-baseline.mjs --bump test-app eslint-report.json"
   },
   "private": true,
   "dependencies": {
