@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: .nvmrc
@@ -26,7 +28,16 @@ jobs:
         run: npm run format:check
       - name: Install test-app dependencies
         run: npm ci --prefix test-app
+      - name: Guard against a raised ESLint warning baseline
+        if: github.event_name == 'pull_request'
+        run: |
+          git show "${{ github.event.pull_request.base.sha }}:eslint-baseline.json" > /tmp/base-eslint-baseline.json 2>/dev/null || echo '{}' > /tmp/base-eslint-baseline.json
+          node scripts/check-baseline-not-increased.mjs /tmp/base-eslint-baseline.json eslint-baseline.json
       - name: Lint library and documentation app
         run: npm run lint
+      - name: Guard root ESLint warning baseline
+        run: npm run lint:baseline
       - name: Lint test app
         run: npm --prefix test-app run lint
+      - name: Guard test-app ESLint warning baseline
+        run: npm --prefix test-app run lint:baseline
