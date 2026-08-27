@@ -15,7 +15,7 @@ export default defineConfig({
     trace: "on-first-retry",
   },
   webServer: {
-    command: "npm run init && npm start -- --host 127.0.0.1",
+    command: "npm start -- --host 127.0.0.1",
     url: "http://127.0.0.1:4200",
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

@@ -4,7 +4,8 @@
     "outDir": "../out-tsc/spec",
     "baseUrl": "./",
     "target": "es2022",
-    "types": ["vitest/globals", "node"]
+    "types": ["vitest/globals", "node"],
+    "skipLibCheck": true
   },
   "files": ["test-setup.ts"],
   "include": ["**/*.spec.ts", "../../src/**/*.spec.ts", "**/*.d.ts"]

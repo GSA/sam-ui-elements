@@ -50,6 +50,10 @@ if (!("innerText" in Element.prototype)) {
 // WebAnimationsPlayer touches is sufficient for tests that don't assert on
 // animation timing.
 if (!Element.prototype.animate) {
+  // Intentionally partial: only the members Angular's WebAnimationsPlayer
+  // touches are implemented. Cast through `unknown` to `Animation` rather
+  // than implementing the full interface (effect, finished, id, ready,
+  // timeline, etc.), which this no-op stub has no meaningful behavior for.
   Element.prototype.animate = function () {
     return {
       cancel() {},
@@ -63,7 +67,7 @@ if (!Element.prototype.animate) {
       playState: "finished",
       addEventListener() {},
       removeEventListener() {},
-    };
+    } as unknown as Animation;
   };
 }
 
