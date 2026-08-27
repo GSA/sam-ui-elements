@@ -147,7 +147,7 @@ describe("The Sam Comments component", () => {
       expect(service.getUsername()).toBe("");
     });
 
-    xit("service should have methods that return comments", () => {
+    it.skip("service should have methods that return comments", () => {
       expect(Array.isArray((service.getComments() as any).value)).toBe(true);
       expect(Array.isArray((service.postComment(undefined) as any).value)).toBe(
         true
@@ -229,11 +229,11 @@ describe("The Sam Comments component", () => {
       fixture.detectChanges();
     });
 
-    xit("Should allow adding new comments to be disabled", function () {
+    it.skip("Should allow adding new comments to be disabled", function () {
       component.disabled = true;
     });
 
-    xit("Should not allow users to input more than 250 characters", function () {
+    it.skip("Should not allow users to input more than 250 characters", function () {
       const dummyText =
         "A wonderful serenity has taken possession of my \
       entire soul, like these sweet mornings of spring which I enjoy with my \

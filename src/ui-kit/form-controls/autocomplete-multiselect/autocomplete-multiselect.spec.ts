@@ -175,7 +175,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
       });
     });
 
-    xit("Should display no results when no results are found", () => {
+    it.skip("Should display no results when no results are found", () => {
       component.searchText = "zzzzzzzzzz";
       component.filterOptions(component.searchText);
       fixture.detectChanges();
@@ -204,7 +204,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
       );
     });
 
-    xit("Should clear selected and input when clear all is clicked", () => {
+    it.skip("Should clear selected and input when clear all is clicked", () => {
       component.searchText = "c";
       component.writeValue(options.slice(0));
       fixture.detectChanges();
@@ -215,7 +215,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
       expect(component.textArea.nativeElement.value).toEqual("");
     });
 
-    xit("Should add item to value when an item is selected", () => {
+    it.skip("Should add item to value when an item is selected", () => {
       component.searchText = "c";
       fixture.detectChanges();
       component.selectItem(component.filterOptions(component.searchText)[0][0]);

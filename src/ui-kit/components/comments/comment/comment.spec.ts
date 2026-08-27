@@ -39,7 +39,7 @@ describe("The Sam Comment component", () => {
     expect(usernameEl.innerHTML).toContain(comment.username);
   });
 
-  xit("Should display a published time", () => {
+  it.skip("Should display a published time", () => {
     const timeEl = fixture.debugElement.query(By.css("time")).nativeElement;
     expect(timeEl.innerHTML).toContain(moment(comment.datetime).fromNow());
   });

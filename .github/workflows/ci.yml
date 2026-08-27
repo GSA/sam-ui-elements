@@ -37,15 +37,16 @@ jobs:
       - name: Install test-app dependencies
         run: npm ci --prefix test-app
 
-      # Runs the full spec harness with coverage. --watch=false makes karma
-      # exit non-zero on any spec failure, gating the build. Chrome is
-      # preinstalled on ubuntu-latest runners and used headless via karma.conf.
+      # Runs the full spec harness with coverage via Vitest (Analog's Angular
+      # Vite plugin + istanbul coverage). `vitest run` exits non-zero on any
+      # spec failure, gating the build.
       - name: Run test-app harness with coverage
         run: npm --prefix test-app test
 
-      # Coverage is reported here (karma text-summary in the log above, plus the
-      # lcov artifact below). Enforcement of the 80% new-code floor (target 90%)
-      # is tracked by #576 and applied once the green baseline number is set.
+      # Coverage is reported here (Vitest's istanbul text-summary in the log
+      # above, plus the lcov artifact below). Enforcement of the 80% new-code
+      # floor (target 90%) is tracked by #576 and applied once the green
+      # baseline number is set.
       - name: Upload coverage report
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

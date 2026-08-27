@@ -57,17 +57,9 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@analogjs/vitest-angular:test",
           "options": {
-            "preserveSymlinks": false,
-            "main": "src/test.ts",
-            "karmaConfig": "./karma.conf.js",
-            "polyfills": ["zone.js", "zone.js/testing"],
-            "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [],
-            "styles": ["src/styles.css"],
-            "assets": ["src/assets", "src/favicon.ico"],
-            "codeCoverage": true
+            "configFile": "./vitest.config.mts"
           }
         },
         "lint": {

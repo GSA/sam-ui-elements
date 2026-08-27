@@ -73,7 +73,7 @@ describe("The Sam Time component", () => {
       expect(true).toBe(true);
     });
 
-    xit("should parse hours and minutes", () => {
+    it.skip("should parse hours and minutes", () => {
       component.writeValue("14:44");
       component.parseValueString();
       fixture.detectChanges();
@@ -94,7 +94,7 @@ describe("The Sam Time component", () => {
       });
     });
 
-    xit("should render resets", () => {
+    it.skip("should render resets", () => {
       component.writeValue("12:12");
       fixture.detectChanges();
       component.writeValue("");
@@ -103,7 +103,7 @@ describe("The Sam Time component", () => {
       expect(component.minuteV.nativeElement.value).toBe("");
     });
 
-    xit("should process keypress", () => {
+    it.skip("should process keypress", () => {
       const hourEl = fixture.debugElement.queryAll(By.css("input"))[0];
       const minuteEl = fixture.debugElement.queryAll(By.css("input"))[1];
       hourEl.triggerEventHandler("keydown", {

@@ -249,12 +249,17 @@ describe("The Sam Autocomplete Component", () => {
     });
 
     it("Should have public property `inputValue` that binds to search input\
-      value", () => {
+      value", async () => {
       const input = fixture.debugElement.query(By.css('input[type="text"]'));
 
       expect(component.inputValue).toBeDefined();
 
       fixture.detectChanges();
+      // NgModel defers syncing the value set by writeValue() in beforeEach
+      // to a microtask (see Angular's NgModel#_updateValue). Flush it before
+      // simulating user input, otherwise it can land after our dispatched
+      // "input" event and overwrite the DOM with the stale pre-test value.
+      await fixture.whenStable();
       input.nativeElement.value = "test search";
       input.nativeElement.dispatchEvent(new Event("input"));
       fixture.detectChanges();
@@ -292,7 +297,7 @@ describe("The Sam Autocomplete Component", () => {
       expect(component.inputValue).toBeFalsy();
     });
 
-    xit("Should handle keyup", () => {
+    it.skip("Should handle keyup", () => {
       component.hasFocus = true;
       component.inputFocusHandler({
         target: {

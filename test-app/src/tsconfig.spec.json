@@ -3,11 +3,10 @@
   "compilerOptions": {
     "outDir": "../out-tsc/spec",
     "baseUrl": "./",
-    "types": ["jasmine", "node"],
-    "paths": {
-      "@gsa-sam/sam-ui-elements": ["./components/index.ts", "../src/index.ts"]
-    }
+    "target": "es2022",
+    "types": ["vitest/globals", "node"],
+    "skipLibCheck": true
   },
-  "files": ["test.ts", "polyfills.ts"],
-  "include": ["**/*.spec.ts", "**/*.d.ts"]
+  "files": ["test-setup.ts"],
+  "include": ["**/*.spec.ts", "../../src/**/*.spec.ts", "**/*.d.ts"]
 }

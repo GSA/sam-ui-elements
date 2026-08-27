@@ -41,7 +41,7 @@ describe("The Sam Date Range component", () => {
     /**
      * TODO: Needs refactoring since we upgraded version of moment
      */
-    xit("should have a date range validation", () => {
+    it.skip("should have a date range validation", () => {
       const c = new FormControl({
         startDate: "2012-01-01",
         endDate: "2014-01-01",

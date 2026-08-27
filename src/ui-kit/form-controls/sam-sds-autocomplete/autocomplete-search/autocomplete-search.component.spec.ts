@@ -72,7 +72,7 @@ describe("SamAutocompleteComponent", () => {
 
   it("Should have empty results with invalid search", fakeAsync(() => {
     const event = {
-      preventDefault: jasmine.createSpy("test"),
+      preventDefault: vi.fn(),
       target: component.input.nativeElement,
     };
     component.input.nativeElement.value = "search";
@@ -102,7 +102,7 @@ describe("SamAutocompleteComponent", () => {
     const list = fixture.debugElement.query(By.css(".sds-autocomplete"));
   }));
 
-  xit("Should have results with input and free text search on", fakeAsync(() => {
+  it.skip("Should have results with input and free text search on", fakeAsync(() => {
     component.inputValue = "search text";
     const event = {
       key: "Enter",
@@ -119,7 +119,7 @@ describe("SamAutocompleteComponent", () => {
 
   it("Should have results key press", fakeAsync(() => {
     const event = {
-      preventDefault: jasmine.createSpy("test"),
+      preventDefault: vi.fn(),
       target: component.input.nativeElement,
     };
     component.input.nativeElement.value = "Formu";
@@ -138,7 +138,7 @@ describe("SamAutocompleteComponent", () => {
   it("Should not highlight first result if free text is on", fakeAsync(() => {
     const event = {
       target: component.input.nativeElement,
-      preventDefault: jasmine.createSpy("test"),
+      preventDefault: vi.fn(),
     };
     component.configuration.isFreeTextEnabled = true;
     component.input.nativeElement.value = "id";
@@ -194,7 +194,7 @@ describe("SamAutocompleteComponent", () => {
     const downEvent = {
       key: "Down",
       target: { value: "id" },
-      preventDefault: jasmine.createSpy("test"),
+      preventDefault: vi.fn(),
     };
     component.onKeydown(downEvent);
     tick();
@@ -206,7 +206,7 @@ describe("SamAutocompleteComponent", () => {
     const upEvent = {
       key: "Up",
       target: { value: "id" },
-      preventDefault: jasmine.createSpy("test"),
+      preventDefault: vi.fn(),
     };
     component.onKeydown(upEvent);
     tick();
@@ -227,7 +227,7 @@ describe("SamAutocompleteComponent", () => {
     const downEvent = {
       key: "Up",
       target: { value: "id" },
-      preventDefault: jasmine.createSpy("test"),
+      preventDefault: vi.fn(),
     };
     component.onKeydown(downEvent);
     tick();
@@ -259,7 +259,7 @@ describe("SamAutocompleteComponent", () => {
     const downEvent = {
       key: "Down",
       target: { value: "id" },
-      preventDefault: jasmine.createSpy("test"),
+      preventDefault: vi.fn(),
     };
     component.onKeydown(downEvent);
     tick();
@@ -280,7 +280,7 @@ describe("SamAutocompleteComponent", () => {
     const downEvent = {
       key: "Down",
       target: { value: "id" },
-      preventDefault: jasmine.createSpy("test"),
+      preventDefault: vi.fn(),
     };
     component.onKeydown(downEvent);
     tick();
@@ -291,7 +291,7 @@ describe("SamAutocompleteComponent", () => {
     const upEvent = {
       key: "Up",
       target: { value: "id" },
-      preventDefault: jasmine.createSpy("test"),
+      preventDefault: vi.fn(),
     };
     component.highlightedChildIndex = 3;
     component.onKeydown(upEvent);
@@ -343,7 +343,7 @@ describe("SamAutocompleteComponent", () => {
 
   it("Should have delete have results", fakeAsync(() => {
     const event = {
-      // preventDefault: jasmine.createSpy("test"),
+      // preventDefault: vi.fn(),
       target: component.input.nativeElement,
     };
     component.input.nativeElement.value = "id";
@@ -384,7 +384,7 @@ describe("SamAutocompleteComponent", () => {
     expect(component.results[0]["highlighted"]).toBeTruthy();
   }));
 
-  xit("select item with enter key", fakeAsync(() => {
+  it.skip("select item with enter key", fakeAsync(() => {
     component.inputFocusHandler();
     fixture.detectChanges();
     tick();
@@ -403,7 +403,7 @@ describe("SamAutocompleteComponent", () => {
     expect(component.model.items.length).toBe(1);
   }));
 
-  xit("Should return only essentialModelFields", fakeAsync(() => {
+  it.skip("Should return only essentialModelFields", fakeAsync(() => {
     component.essentialModelFields = true;
     component.inputFocusHandler();
     fixture.detectChanges();
@@ -508,7 +508,7 @@ describe("SamAutocompleteComponent", () => {
     expect(component.resultsListElement).toBeDefined();
   }));
 
-  xit("Should have enable tag mode", fakeAsync(() => {
+  it.skip("Should have enable tag mode", fakeAsync(() => {
     component.configuration.isTagModeEnabled = true;
     component.inputValue = "searchtext";
     const event = {
@@ -541,7 +541,7 @@ describe("SamAutocompleteComponent", () => {
     component.configuration.inputReadOnly = true;
     const event = {
       key: "Backspace",
-      preventDefault: jasmine.createSpy("test"),
+      preventDefault: vi.fn(),
       target: {
         value: component.inputValue,
       },
