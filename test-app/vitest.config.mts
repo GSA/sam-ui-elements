@@ -77,7 +77,7 @@ export default defineConfig({
     ],
     coverage: {
       provider: "istanbul",
-      reporter: ["text-summary", "lcovonly"],
+      reporter: ["text-summary", "lcovonly", "json-summary"],
       reportsDirectory: "coverage",
       // Specs run directly against the library's root `../src` tree instead
       // of a copy inside test-app/src; without this, Vitest's coverage

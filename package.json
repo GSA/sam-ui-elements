@@ -30,6 +30,8 @@
     "lint:report": "ng lint --format json --output-file eslint-report.json",
     "lint:baseline": "npm run lint:report && node scripts/check-lint-baseline.mjs root eslint-report.json",
     "lint:baseline:bump": "npm run lint:report && node scripts/check-lint-baseline.mjs --bump root eslint-report.json",
+    "coverage:check": "node scripts/check-coverage.mjs test-app/coverage/coverage-summary.json",
+    "coverage:bump": "node scripts/check-coverage.mjs --bump test-app/coverage/coverage-summary.json",
     "validate:publish": "node scripts/validate-publish-package.mjs"
   },
   "peerDependencies": {
