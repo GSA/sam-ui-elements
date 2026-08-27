@@ -13,7 +13,7 @@
 //   type: 'success',
 // };
 
-// xdescribe('The Sam Alert component', () => {
+// describe.skip('The Sam Alert component', () => {
 //   describe('isolated tests', () => {
 //     let component: SamAlertNextComponent;
 //     beforeEach(() => {

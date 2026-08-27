@@ -105,7 +105,7 @@ describe("SamHierarchicalComponent", () => {
     expect(component.disabled).toBe(false);
   });
 
-  xit("Should change to show mode when the modal is opened", () => {
+  it.skip("Should change to show mode when the modal is opened", () => {
     component.onModalClick();
     expect(component.modal.show).toBeTruthy();
   });
@@ -116,7 +116,7 @@ describe("SamHierarchicalComponent", () => {
     expect(component.modal.show).toBe(false);
   });
 
-  xit("Should change to not show mode when the modal is closed", () => {
+  it.skip("Should change to not show mode when the modal is closed", () => {
     component.onModalClick();
     expect(component.modal.show).toBeTruthy();
     component.onModalSubmitClick();

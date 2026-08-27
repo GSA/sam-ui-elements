@@ -63,7 +63,7 @@ describe("SamHeaderNextComponent", () => {
     expect(logoElement.getAttribute("src")).toBe(logoPath);
   });
 
-  xit("should add notifications indicator to menu button", () => {
+  it.skip("should add notifications indicator to menu button", () => {
     component.notifications = true;
     fixture.detectChanges();
 
