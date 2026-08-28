@@ -16,16 +16,12 @@ describe("The Sam Image Component", () => {
     TestBed.configureTestingModule({
       declarations: [SamImageComponent],
     }).compileComponents();
-    let emittedFile: File;
 
     fixture = TestBed.createComponent(SamImageComponent);
     component = fixture.componentInstance;
     de = fixture.debugElement;
 
     component.editable = true;
-    component.fileChange.subscribe((file: File) => {
-      emittedFile = file;
-    });
     component.src = washingtonImg;
     fixture.detectChanges();
   });
@@ -48,5 +44,105 @@ describe("The Sam Image Component", () => {
       By.css("button.edit-button")
     ).nativeElement;
     expect(buttonEl.disabled).toBe(true);
+  });
+
+  it("uploads a file, sets tmp state, and emits fileChange on save", async () => {
+    const file = new File(["hello"], "washington.png", { type: "image/png" });
+    const fileInputEl: HTMLInputElement = de.query(
+      By.css("input#file")
+    ).nativeElement;
+    Object.defineProperty(fileInputEl, "files", { value: [file] });
+    fileInputEl.dispatchEvent(new Event("change"));
+
+    await new Promise((resolve) => setTimeout(resolve, 10));
+
+    expect(component.getFileName()).toBe("washington.png");
+
+    let emittedFile: File | undefined;
+    component.fileChange.subscribe((f) => {
+      emittedFile = f;
+    });
+
+    const saveButtonEl: HTMLButtonElement = de.query(
+      By.css("button.save-button")
+    ).nativeElement;
+    saveButtonEl.dispatchEvent(new Event("click"));
+
+    expect(emittedFile).toBe(file);
+    expect(component.src).toBeDefined();
+  });
+
+  it("clears tmp file state when cancel is clicked", async () => {
+    const file = new File(["hello"], "washington.png", { type: "image/png" });
+    const fileInputEl: HTMLInputElement = de.query(
+      By.css("input#file")
+    ).nativeElement;
+    Object.defineProperty(fileInputEl, "files", { value: [file] });
+    fileInputEl.dispatchEvent(new Event("change"));
+
+    await new Promise((resolve) => setTimeout(resolve, 10));
+    expect(component.getFileName()).toBe("washington.png");
+
+    const cancelButtonEl: HTMLButtonElement = de.query(
+      By.css("button.cancel-button")
+    ).nativeElement;
+    cancelButtonEl.dispatchEvent(new Event("click"));
+
+    expect(component.getFileName()).toBe("");
+    expect(component.isImageTemporary()).toBe(false);
+  });
+
+  it("drops a file onto the container when in edit mode", async () => {
+    component.editMode = true;
+    const file = new File(["hello"], "dropped.png", { type: "image/png" });
+
+    const containerEl: HTMLElement = de.query(
+      By.css("div.sam-image")
+    ).nativeElement;
+    const dropEvent = new Event("drop", {
+      bubbles: true,
+      cancelable: true,
+    }) as Event & { dataTransfer: { files: File[] } };
+    dropEvent.dataTransfer = { files: [file] };
+    containerEl.dispatchEvent(dropEvent);
+
+    await new Promise((resolve) => setTimeout(resolve, 10));
+
+    expect(component.getFileName()).toBe("dropped.png");
+  });
+
+  it("ignores a drop when not in edit mode", () => {
+    component.editMode = false;
+    const file = new File(["hello"], "dropped.png", { type: "image/png" });
+
+    const containerEl: HTMLElement = de.query(
+      By.css("div.sam-image")
+    ).nativeElement;
+    const dropEvent = new Event("drop", {
+      bubbles: true,
+      cancelable: true,
+    }) as Event & { dataTransfer: { files: File[] } };
+    dropEvent.dataTransfer = { files: [file] };
+    containerEl.dispatchEvent(dropEvent);
+
+    expect(component.getFileName()).toBe("");
+  });
+
+  it("stops propagation and prevents default on drag enter/over", () => {
+    const enterEvent = {
+      stopPropagation: vi.fn(),
+      preventDefault: vi.fn(),
+    };
+    component.onDragEnter(enterEvent as unknown as DragEvent);
+    expect(enterEvent.stopPropagation).toHaveBeenCalled();
+    expect(enterEvent.preventDefault).toHaveBeenCalled();
+
+    const overEvent = {
+      stopPropagation: vi.fn(),
+      preventDefault: vi.fn(),
+    };
+    component.onDragOver(overEvent as unknown as DragEvent);
+    expect(overEvent.stopPropagation).toHaveBeenCalled();
+    expect(overEvent.preventDefault).toHaveBeenCalled();
   });
 });
