@@ -4,7 +4,11 @@ import { FormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
 import { By } from "@angular/platform-browser";
 import {} from "../../";
-import { SamPageComponent } from "./page.component";
+import {
+  SamPageComponent,
+  SamPageSidebarComponent,
+  SamPageService,
+} from "./page.component";
 import { SamExperimentalModule } from "../../../ui-kit/experimental/experimental.module";
 
 describe("SamPageComponent", () => {
@@ -35,5 +39,16 @@ describe("SamPageComponent", () => {
 
     const el = fixture.debugElement.query(By.css(".intro"));
     expect(el.nativeElement.innerHTML).toContain("test into");
+  });
+});
+
+describe("SamPageSidebarComponent", () => {
+  it("marks the page service's sidebar flag true on init", () => {
+    const pageService = new SamPageService();
+    const sidebarComponent = new SamPageSidebarComponent(pageService);
+
+    sidebarComponent.ngOnInit();
+
+    expect(pageService.sidebar).toBe(true);
   });
 });

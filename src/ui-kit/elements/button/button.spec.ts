@@ -120,4 +120,75 @@ describe("The Sam Button component", () => {
     const btnElement = fixture.debugElement.query(By.css("#nextBtn"));
     expect(btnElement.nativeElement.innerHTML.trim()).toBe("Next");
   });
+
+  it("falls back to the deprecated inputs when the new-style inputs are unset", () => {
+    component.buttonId = "legacyId";
+    component.buttonType = "secondary";
+    component.buttonSize = "large";
+
+    expect(component.id).toBe("legacyId");
+    expect(component.action).toBe("secondary");
+    expect(component.size).toBe("large");
+  });
+
+  it("prefers the new-style inputs over the deprecated ones", () => {
+    component.buttonId = "legacyId";
+    component.id = "newId";
+    component.buttonType = "secondary";
+    component.action = "primary";
+    component.buttonSize = "large";
+    component.size = "small";
+
+    expect(component.id).toBe("newId");
+    expect(component.action).toBe("primary");
+    expect(component.size).toBe("small");
+  });
+
+  it("applies a theme class when the theme matches a known entry", () => {
+    component.theme = "dark";
+    fixture.detectChanges();
+
+    expect(component.btnClass).toContain("inverted");
+  });
+
+  it("applies the disabled class and disables the click emitter when isDisabled", () => {
+    component.isDisabled = true;
+    fixture.detectChanges();
+
+    expect(component.btnClass).toContain("disabled");
+
+    const clickSpy = vi.fn();
+    component.onClick.subscribe(clickSpy);
+    component.click({});
+
+    expect(clickSpy).not.toHaveBeenCalled();
+  });
+
+  it("emits onClick with the event when not disabled", () => {
+    const clickSpy = vi.fn();
+    component.onClick.subscribe(clickSpy);
+    const event = { type: "click" };
+
+    component.click(event);
+
+    expect(clickSpy).toHaveBeenCalledWith(event);
+  });
+
+  it("debug() reports deprecated members that are set on the component", () => {
+    const warnSpy = vi
+      .spyOn(console, "warn")
+      .mockImplementation(() => undefined);
+    const tableSpy = vi
+      .spyOn(console, "table")
+      .mockImplementation(() => undefined);
+
+    component.buttonId = "legacyId";
+    component.debug();
+
+    expect(warnSpy).toHaveBeenCalled();
+    expect(tableSpy).toHaveBeenCalled();
+
+    warnSpy.mockRestore();
+    tableSpy.mockRestore();
+  });
 });

@@ -163,5 +163,30 @@ describe("The Sam Filters Component", () => {
       const radio = fixture.debugElement.query(By.css("sam-radio-button"));
       expect(radio).not.toBeNull();
     });
+
+    it("pushes fields to the page service's filterFields property when provided", () => {
+      const service = TestBed.inject(SamPageNextService);
+      const setValueSpy = vi.spyOn(service.get("filterFields"), "setValue");
+
+      component.ngOnChanges({
+        fields: {
+          previousValue: undefined,
+          currentValue: component.fields,
+          firstChange: true,
+          isFirstChange: () => true,
+        },
+      });
+
+      expect(setValueSpy).toHaveBeenCalledWith(component.fields);
+    });
+
+    it("does nothing when ngOnChanges fires without a fields change", () => {
+      const service = TestBed.inject(SamPageNextService);
+      const setValueSpy = vi.spyOn(service.get("filterFields"), "setValue");
+
+      component.ngOnChanges({});
+
+      expect(setValueSpy).not.toHaveBeenCalled();
+    });
   });
 });
