@@ -24,6 +24,12 @@ describe("The Sam Toggle Switch component", () => {
       expect(component.isSwitchOn).toBe(false);
     });
 
+    it("should stop propagation when the event supports it", () => {
+      const stopPropagation = vi.fn();
+      component.onSwitchClick({ target: { checked: true }, stopPropagation });
+      expect(stopPropagation).toHaveBeenCalled();
+    });
+
     it("should implement controlvalueaccessor", () => {
       component.onChange();
       component.onTouched();

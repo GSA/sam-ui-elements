@@ -127,5 +127,17 @@ describe("The Sam Radio Buttons component", () => {
       component.name = "test-name";
       component.ngOnInit();
     });
+
+    it("should format errors when the control's value changes", () => {
+      const c = new FormControl("", () => {
+        return undefined;
+      });
+      component.control = c;
+      component.name = "test-name";
+      component.ngOnInit();
+      component.ngAfterViewInit();
+
+      expect(() => c.setValue("va")).not.toThrow();
+    });
   });
 });
