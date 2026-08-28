@@ -230,10 +230,17 @@ describe("OverlayRef", () => {
         ".cdk-overlay-backdrop"
       ) as HTMLElement;
 
-      overlayRef.detachBackdrop();
-      backdrop.dispatchEvent(new Event("transitionend"));
+      vi.useFakeTimers();
+      try {
+        overlayRef.detachBackdrop();
+        backdrop.dispatchEvent(new Event("transitionend"));
 
-      expect(document.body.querySelector(".cdk-overlay-backdrop")).toBeNull();
+        expect(document.body.querySelector(".cdk-overlay-backdrop")).toBeNull();
+
+        vi.runOnlyPendingTimers();
+      } finally {
+        vi.useRealTimers();
+      }
     });
   });
 });

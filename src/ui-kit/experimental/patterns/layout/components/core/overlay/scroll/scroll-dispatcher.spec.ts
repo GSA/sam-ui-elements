@@ -78,17 +78,19 @@ describe("ScrollDispatcher", () => {
     it("notifies subscribers on window scroll and resize events", () => {
       const dispatcher = new ScrollDispatcher(ngZone, createFakePlatform());
       const callback = vi.fn();
-      dispatcher.scrolled(0, callback);
+      const subscription = dispatcher.scrolled(0, callback);
 
       window.document.dispatchEvent(new Event("scroll"));
 
       expect(callback).toHaveBeenCalled();
+
+      subscription.unsubscribe();
     });
 
     it("shares a single global listener across multiple subscriptions", () => {
       const dispatcher = new ScrollDispatcher(ngZone, createFakePlatform());
-      dispatcher.scrolled(0, vi.fn());
-      dispatcher.scrolled(0, vi.fn());
+      const subscriptionA = dispatcher.scrolled(0, vi.fn());
+      const subscriptionB = dispatcher.scrolled(0, vi.fn());
 
       expect(dispatcher._globalSubscription).not.toBeNull();
 
@@ -96,6 +98,9 @@ describe("ScrollDispatcher", () => {
       window.document.dispatchEvent(new Event("scroll"));
 
       expect(dispatcher._globalSubscription).toBe(globalSubscription);
+
+      subscriptionA.unsubscribe();
+      subscriptionB.unsubscribe();
     });
 
     it("tears down the global listener once every subscription unsubscribes", () => {
@@ -119,21 +124,30 @@ describe("ScrollDispatcher", () => {
       subscription.unsubscribe();
 
       expect(dispatcher._globalSubscription).not.toBeNull();
+
+      dispatcher.deregister(scrollable as unknown as Scrollable);
     });
 
-    it("applies auditTime debouncing when a positive delay is provided", async () => {
-      const dispatcher = new ScrollDispatcher(ngZone, createFakePlatform());
-      const callback = vi.fn();
-      dispatcher.scrolled(20, callback);
+    it("applies auditTime debouncing when a positive delay is provided", () => {
+      vi.useFakeTimers();
+      try {
+        const dispatcher = new ScrollDispatcher(ngZone, createFakePlatform());
+        const callback = vi.fn();
+        const subscription = dispatcher.scrolled(20, callback);
 
-      dispatcher._notify();
-      dispatcher._notify();
+        dispatcher._notify();
+        dispatcher._notify();
 
-      expect(callback).not.toHaveBeenCalled();
+        expect(callback).not.toHaveBeenCalled();
 
-      await new Promise((resolve) => setTimeout(resolve, 30));
+        vi.advanceTimersByTime(30);
 
-      expect(callback).toHaveBeenCalledTimes(1);
+        expect(callback).toHaveBeenCalledTimes(1);
+
+        subscription.unsubscribe();
+      } finally {
+        vi.useRealTimers();
+      }
     });
   });
 

@@ -43,6 +43,9 @@ describe("BlockScrollStrategy", () => {
         originalScrollWidth
       );
     }
+
+    delete (document.body as any).scrollHeight;
+    delete (document.body as any).scrollWidth;
   });
 
   function mockBodyOverflow(scrollHeight: number, scrollWidth: number) {
