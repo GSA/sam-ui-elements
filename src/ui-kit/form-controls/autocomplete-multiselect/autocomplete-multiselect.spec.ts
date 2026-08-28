@@ -1,13 +1,13 @@
-import { TestBed, waitForAsync, ComponentFixture } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 import { By } from "@angular/platform-browser";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, FormControl } from "@angular/forms";
 import { CommonModule } from "@angular/common";
-import { ChangeDetectorRef } from "@angular/core";
+import { ChangeDetectorRef, ElementRef } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { of, throwError } from "rxjs";
+import { vi } from "vitest";
 
-// Load the implementations that should be tested
-import { SamUIKitModule } from "../../index";
 import {
   SamAutocompleteMultiselectComponent,
   KeyValueConfig,
@@ -15,6 +15,24 @@ import {
 import { AutocompleteService } from "../autocomplete/autocomplete.service";
 import { SamFormService } from "../../form-service";
 import { SamWrapperModule } from "../../wrappers";
+
+// jsdom does not lay out elements, so offsetParent/offsetTop are always
+// null/0. The component's arrow-key handlers read through
+// `results[i].offsetParent.offsetParent.offsetTop` to compute scrollTop;
+// stub these so keyboard-navigation specs can exercise the real click/keydown
+// path without crashing on a null offsetParent chain.
+function stubOffsets(
+  fixture: ComponentFixture<SamAutocompleteMultiselectComponent>
+) {
+  const all: NodeListOf<Element> = fixture.nativeElement.querySelectorAll("*");
+  all.forEach((el: Element) => {
+    Object.defineProperty(el, "offsetParent", {
+      value: el.parentElement,
+      configurable: true,
+    });
+    Object.defineProperty(el, "offsetTop", { value: 0, configurable: true });
+  });
+}
 
 describe("The Sam Autocomplete Multiselect Component", () => {
   describe("Isolation tests", () => {
@@ -26,6 +44,10 @@ describe("The Sam Autocomplete Multiselect Component", () => {
         cdr,
         new SamFormService()
       );
+    });
+
+    afterEach(() => {
+      vi.restoreAllMocks();
     });
 
     it("should clear search", () => {
@@ -111,7 +133,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
     });
 
     it("should support controlValueAccessor", () => {
-      component.registerOnChange((_) => undefined);
+      component.registerOnChange((_val) => undefined);
       component.registerOnTouched(() => undefined);
       component.setDisabledState(false);
     });
@@ -123,6 +145,276 @@ describe("The Sam Autocomplete Multiselect Component", () => {
       component.clearCache();
       expect(component["cache"]["cached"]["test"]).toBe(undefined);
     });
+
+    it("should populate the rendered dropdown from a successful service fetch", () => {
+      vi.useFakeTimers();
+      TestBed.configureTestingModule({
+        imports: [
+          CommonModule,
+          FormsModule,
+          SamWrapperModule,
+          BrowserAnimationsModule,
+        ],
+        declarations: [SamAutocompleteMultiselectComponent],
+        providers: [SamFormService, AutocompleteService],
+      });
+      const fixture = TestBed.createComponent(
+        SamAutocompleteMultiselectComponent
+      );
+      const withService = fixture.componentInstance;
+      withService.options = [];
+      withService.keyValueConfig = {
+        keyProperty: "key",
+        valueProperty: "value",
+      };
+      const service = TestBed.inject(AutocompleteService);
+      vi.spyOn(service, "fetch").mockReturnValue(
+        of([{ key: "aaa", value: "aaa" }])
+      );
+      fixture.detectChanges();
+
+      withService.filterOptions("aaa");
+      vi.advanceTimersByTime(250);
+      fixture.detectChanges();
+
+      const items = fixture.debugElement.queryAll(By.css("li.category-item"));
+      expect(items.length).toBe(1);
+      expect(items[0].nativeElement.textContent).toContain("aaa");
+      vi.useRealTimers();
+    });
+
+    it("should render an error item in the dropdown when a service fetch fails", () => {
+      vi.useFakeTimers();
+      TestBed.configureTestingModule({
+        imports: [
+          CommonModule,
+          FormsModule,
+          SamWrapperModule,
+          BrowserAnimationsModule,
+        ],
+        declarations: [SamAutocompleteMultiselectComponent],
+        providers: [SamFormService, AutocompleteService],
+      });
+      const fixture = TestBed.createComponent(
+        SamAutocompleteMultiselectComponent
+      );
+      const withService = fixture.componentInstance;
+      withService.options = [];
+      withService.keyValueConfig = {
+        keyProperty: "key",
+        valueProperty: "value",
+      };
+      const service = TestBed.inject(AutocompleteService);
+      vi.spyOn(service, "fetch").mockReturnValue(
+        throwError(() => new Error("boom"))
+      );
+      fixture.detectChanges();
+
+      withService.filterOptions("aaa");
+      vi.advanceTimersByTime(250);
+      fixture.detectChanges();
+
+      const items = fixture.debugElement.queryAll(By.css("li.category-item"));
+      expect(items.length).toBeGreaterThan(0);
+      expect(items[0].nativeElement.textContent).toContain(
+        "An error occurred."
+      );
+      expect(withService.displaySpinner).toBe(false);
+      vi.useRealTimers();
+    });
+
+    it("should not mark options when driven by a service (updateMarked is a no-op)", () => {
+      const service = new AutocompleteService();
+      const withService = new SamAutocompleteMultiselectComponent(
+        service,
+        cdr,
+        new SamFormService()
+      );
+      withService.options = [{ key: "aaa", value: "aaa" }];
+      withService.value = [{ key: "aaa", value: "aaa" }];
+
+      withService.updateMarked();
+
+      expect(withService.options[0]["_marked"]).toBe(undefined);
+    });
+
+    it("should mark selected options when not driven by a service", () => {
+      const withoutService = new SamAutocompleteMultiselectComponent(
+        null,
+        cdr,
+        new SamFormService()
+      );
+      withoutService.options = [
+        { key: "aaa", value: "aaa" },
+        { key: "bbb", value: "bbb" },
+      ];
+      withoutService.value = [{ key: "aaa", value: "aaa" }];
+
+      withoutService.updateMarked();
+
+      expect((withoutService.options[0] as { _marked?: boolean })._marked).toBe(
+        true
+      );
+      expect((withoutService.options[1] as { _marked?: boolean })._marked).toBe(
+        false
+      );
+    });
+
+    it("should append a value item when selecting a plain string with allowAny/free text", () => {
+      component.textArea = {
+        nativeElement: { focus: () => undefined },
+      } as unknown as ElementRef;
+      component.selectItem("Freeform");
+      expect(component.value[0].type).toBe("custom");
+      expect(component.value[0][component.keyValueConfig.valueProperty]).toBe(
+        "Freeform"
+      );
+    });
+
+    it("should not add a duplicate item when the same key is already selected", () => {
+      component.textArea = {
+        nativeElement: { focus: () => undefined },
+      } as unknown as ElementRef;
+      const item = { key: "aaa", value: "aaa" };
+      component.value = [item];
+
+      component.selectItem({ key: "aaa", value: "aaa (dup)" });
+
+      expect(component.value.length).toBe(1);
+      expect(component.value[0]).toBe(item);
+    });
+
+    it("should ignore items flagged as cannotBeSelected", () => {
+      component.textArea = {
+        nativeElement: { focus: () => undefined },
+      } as unknown as ElementRef;
+      component.value = [];
+
+      component.selectItem({ key: "x", value: "x", cannotBeSelected: true });
+
+      expect(component.value.length).toBe(0);
+    });
+
+    it("should select a category via selectItemByCategory when categorySelectable is enabled", () => {
+      component.textArea = {
+        nativeElement: { focus: () => undefined },
+      } as unknown as ElementRef;
+      component.categoryIsSelectable = true;
+      component.keyValueConfig = {
+        keyProperty: "key",
+        valueProperty: "value",
+        parentCategoryProperty: "cat",
+      };
+      component.categories = [{ key: "South", value: "South", cat: "South" }];
+
+      component.selectItemByCategory("South");
+
+      expect(component.value[0]).toEqual({
+        key: "South",
+        value: "South",
+        cat: "South",
+      });
+    });
+
+    it("should do nothing in selectItemByCategory when categorySelectable is disabled", () => {
+      component.categoryIsSelectable = false;
+      component.value = [];
+
+      component.selectItemByCategory("South");
+
+      expect(component.value.length).toBe(0);
+    });
+
+    it("should remove an item via deselectItem", () => {
+      component.textArea = {
+        nativeElement: { focus: () => undefined },
+      } as unknown as ElementRef;
+      const item = { key: "aaa", value: "aaa" };
+      component.value = [item];
+
+      component.deselectItem(item);
+
+      expect(component.value.length).toBe(0);
+    });
+
+    it("should not deselect when disabled", () => {
+      const item = { key: "aaa", value: "aaa" };
+      component.value = [item];
+      component.isDisabled = true;
+
+      component.deselectItem(item);
+
+      expect(component.value.length).toBe(1);
+    });
+
+    it("should never display clear-all when the component is disabled", () => {
+      component.isDisabled = true;
+      component.value = [{ key: "a", value: "a" }];
+      component.searchText = "c";
+
+      expect(component.displayClearAll()).toBe(false);
+    });
+
+    it("should not deselect via deselectItemOnEnter when disabled", () => {
+      const item = { key: "aaa", value: "aaa" };
+      component.value = [item];
+      component.isDisabled = true;
+
+      component.deselectItemOnEnter(
+        { code: "Enter", key: "Enter", preventDefault: () => undefined },
+        item
+      );
+
+      expect(component.value.length).toBe(1);
+    });
+
+    it("should remove all items via deselectAll", () => {
+      component.value = [
+        { key: "a", value: "a" },
+        { key: "b", value: "b" },
+      ];
+
+      component.deselectAll();
+
+      expect(component.value).toEqual([]);
+    });
+
+    it("should compute textarea width to push it to a new line when there is not enough space", () => {
+      component.hiddenText = {
+        nativeElement: document.createElement("span"),
+      } as unknown as ElementRef;
+      const container = document.createElement("div");
+      const chip = document.createElement("div");
+      const other = document.createElement("div");
+      container.appendChild(chip);
+      container.appendChild(other);
+      document.body.appendChild(container);
+
+      vi.spyOn(window, "getComputedStyle").mockImplementation((el: Element) => {
+        if (el === container) {
+          return {
+            width: "50px",
+            "box-sizing": "content-box",
+          } as unknown as CSSStyleDeclaration;
+        }
+        if (el === chip) {
+          return {
+            width: "40px",
+            "margin-left": "0px",
+            "margin-right": "0px",
+          } as unknown as CSSStyleDeclaration;
+        }
+        return {
+          width: "20px",
+          "box-sizing": "content-box",
+        } as unknown as CSSStyleDeclaration;
+      });
+
+      const width = component.calculateTextAreaWidth(other);
+
+      expect(width).toBe("100%");
+      document.body.removeChild(container);
+    });
   });
 
   describe("Rendered tests", () => {
@@ -130,7 +422,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
     let fixture: ComponentFixture<SamAutocompleteMultiselectComponent>;
 
     // Autocomplete Dropdown With Button
-    const options: Array<any> = [
+    const options: Array<{ key: string; value: string }> = [
       { key: "Christy", value: "Christy" },
       { key: "Carlos", value: "Carlos" },
       { key: "Colin", value: "Colin" },
@@ -195,8 +487,31 @@ describe("The Sam Autocomplete Multiselect Component", () => {
       expect(component.showResultsFreeText()).toBe(true);
     });
 
+    it("Should not show free text when the search text matches an existing value in a categorized list", () => {
+      component.keyValueConfig = {
+        keyProperty: "key",
+        valueProperty: "value",
+        categoryProperty: "cat",
+        parentCategoryProperty: "cat",
+      };
+      component.options = [{ key: "Al", value: "Alabama" }];
+      component.isFreeTextEnabled = true;
+      component.searchText = "Alabama";
+      component.filterOptions("Alabama");
+
+      expect(component.showResultsFreeText()).toBe(false);
+    });
+
+    it("Should not show free text when the search text matches an already-selected value", () => {
+      component.isFreeTextEnabled = true;
+      component.searchText = "Christy";
+      component.writeValue([{ key: "Christy", value: "Christy" }]);
+
+      expect(component.showResultsFreeText()).toBe(false);
+    });
+
     it("Should select free text", () => {
-      let text = "TEST ITEM";
+      const text = "TEST ITEM";
       component.selectItem(text);
       expect(component.value[0].type).toBe("custom");
       expect(component.value[0][component.keyValueConfig.valueProperty]).toBe(
@@ -204,23 +519,298 @@ describe("The Sam Autocomplete Multiselect Component", () => {
       );
     });
 
-    it.skip("Should clear selected and input when clear all is clicked", () => {
+    it("Should clear selected and input when clear all is clicked", async () => {
       component.searchText = "c";
       component.writeValue(options.slice(0));
       fixture.detectChanges();
+      await fixture.whenStable();
       component.clearSearch();
       component.deselectAll();
       fixture.detectChanges();
+      await fixture.whenStable();
       expect(component.value).toEqual([]);
       expect(component.textArea.nativeElement.value).toEqual("");
     });
 
-    it.skip("Should add item to value when an item is selected", () => {
+    it("Should add item to value when an item is selected", async () => {
       component.searchText = "c";
       fixture.detectChanges();
+      await fixture.whenStable();
       component.selectItem(component.filterOptions(component.searchText)[0][0]);
       fixture.detectChanges();
       expect(component.value[0]).toBe(component.options[0]);
+    });
+
+    it("Should select an item by clicking a rendered dropdown item", () => {
+      component.searchText = "c";
+      component.filterOptions(component.searchText);
+      fixture.detectChanges();
+
+      const item = fixture.debugElement.query(By.css("li.category-item"));
+      item.nativeElement.click();
+      fixture.detectChanges();
+
+      expect(component.value.length).toBe(1);
+    });
+
+    it("Should highlight an item on mouseenter (listItemHover)", () => {
+      component.searchText = "c";
+      component.filterOptions(component.searchText);
+      fixture.detectChanges();
+
+      const item = fixture.debugElement.query(By.css("li.category-item"));
+      item.triggerEventHandler("mouseenter", null);
+      fixture.detectChanges();
+
+      expect(item.nativeElement.classList.contains("selected")).toBe(true);
+    });
+
+    it("Should deselect a chip when it is clicked", () => {
+      component.writeValue(options.slice(0, 1));
+      fixture.detectChanges();
+
+      const chip = fixture.debugElement.query(By.css(".sam-ui.mini.label"));
+      chip.nativeElement.click();
+      fixture.detectChanges();
+
+      expect(component.value.length).toBe(0);
+    });
+
+    it("Should deselect a chip on Enter keydown (deselectItemOnEnter)", () => {
+      component.writeValue(options.slice(0, 2));
+      fixture.detectChanges();
+
+      const chip = fixture.debugElement.query(By.css(".sam-ui.mini.label"));
+      chip.nativeElement.dispatchEvent(
+        new KeyboardEvent("keydown", { key: "Enter", code: "Enter" })
+      );
+      fixture.detectChanges();
+
+      expect(component.value.length).toBe(1);
+      expect(component.value[0]).toBe(options[1]);
+    });
+
+    it("Should deselect the last chip on Backspace when the search text is empty", () => {
+      component.writeValue(options.slice(0, 2));
+      fixture.detectChanges();
+
+      const textarea = fixture.debugElement.query(By.css("textarea"));
+      textarea.nativeElement.value = "";
+      textarea.nativeElement.dispatchEvent(
+        new KeyboardEvent("keydown", {
+          key: "Backspace",
+          code: "Backspace",
+        })
+      );
+      fixture.detectChanges();
+
+      expect(component.value.length).toBe(1);
+      expect(component.value[0]).toBe(options[0]);
+    });
+
+    it("Should clear the search and blur the textarea on Escape", () => {
+      component.searchText = "c";
+      fixture.detectChanges();
+
+      const textarea = fixture.debugElement.query(By.css("textarea"));
+      textarea.nativeElement.dispatchEvent(
+        new KeyboardEvent("keydown", { key: "Escape", code: "Escape" })
+      );
+      fixture.detectChanges();
+
+      expect(component.searchText).toBe("");
+    });
+
+    it("Should navigate the rendered list with the down arrow and select the highlighted item on Enter", () => {
+      component.searchText = "c";
+      component.filterOptions("c");
+      fixture.detectChanges();
+      stubOffsets(fixture);
+
+      const textarea = fixture.debugElement.query(By.css("textarea"));
+      textarea.nativeElement.dispatchEvent(
+        new KeyboardEvent("keydown", { key: "Down", code: "ArrowDown" })
+      );
+      fixture.detectChanges();
+      textarea.nativeElement.dispatchEvent(
+        new KeyboardEvent("keydown", { key: "Enter", code: "Enter" })
+      );
+      fixture.detectChanges();
+
+      expect(component.value.length).toBe(1);
+    });
+
+    it("Should navigate the rendered list backwards with the up arrow", () => {
+      component.searchText = "c";
+      component.filterOptions("c");
+      fixture.detectChanges();
+      stubOffsets(fixture);
+
+      const textarea = fixture.debugElement.query(By.css("textarea"));
+      textarea.nativeElement.dispatchEvent(
+        new KeyboardEvent("keydown", { key: "Up", code: "ArrowUp" })
+      );
+      fixture.detectChanges();
+
+      const results = component.getResults();
+      expect(component.getSelectedChildIndex(results)).toBeGreaterThanOrEqual(
+        0
+      );
+    });
+
+    it("Should do nothing on Enter when nothing is highlighted and allowAny is false", () => {
+      component.allowAny = false;
+      component.searchText = "c";
+      component.filterOptions("c");
+      fixture.detectChanges();
+
+      component.selectOnEnter({
+        key: "Enter",
+        code: "Enter",
+        target: { value: "c" },
+        preventDefault: () => undefined,
+      });
+
+      expect(component.value.length).toBe(0);
+    });
+
+    it("Should select the free-text option when it is highlighted on down arrow and confirmed with Enter", () => {
+      component.allowAny = true;
+      component.isFreeTextEnabled = true;
+      component.searchText = "Nowhere";
+      component.filterOptions("Nowhere");
+      fixture.detectChanges();
+      stubOffsets(fixture);
+
+      // Driven directly through the public handlers rather than dispatched
+      // DOM events: dispatchEvent forces a change-detection re-render mid
+      // keydown that re-reads `results[selectedIndex]` after selectOnEnter
+      // has already cleared searchText, which throws in this jsdom
+      // environment. Calling the handlers directly still exercises the same
+      // public behavior without that render-timing artifact.
+      component.handleDownArrow({
+        key: "Down",
+        code: "ArrowDown",
+        target: { value: "Nowhere" },
+      });
+      component.selectOnEnter({
+        key: "Enter",
+        code: "Enter",
+        target: { value: "Nowhere" },
+        preventDefault: () => undefined,
+      });
+
+      expect(component.value[0].type).toBe("custom");
+      expect(component.value[0][component.keyValueConfig.valueProperty]).toBe(
+        "Nowhere"
+      );
+    });
+
+    it("Should build a custom value object via createReturnObject when allowAny is set, no item matches, and nothing is highlighted", () => {
+      component.allowAny = true;
+      component.searchText = "zzz";
+      component.filterOptions("zzz");
+      fixture.detectChanges();
+
+      component.selectOnEnter({
+        key: "Enter",
+        code: "Enter",
+        target: { value: "zzz" },
+        preventDefault: () => undefined,
+      });
+
+      expect(component.value[0]).toEqual({ key: "zzz", value: "zzz" });
+    });
+
+    it("Should return the category object from getItem when a category-name row is highlighted", () => {
+      component.categoryIsSelectable = true;
+      component.keyValueConfig = {
+        keyProperty: "key",
+        valueProperty: "value",
+        categoryProperty: "cat",
+        parentCategoryProperty: "cat",
+      };
+      component.categories = [{ key: "South", value: "South", cat: "South" }];
+      component.options = [{ key: "Al", value: "Alabama", cat: "South" }];
+      component.searchText = "";
+      component.filterOptions("");
+      fixture.detectChanges();
+      stubOffsets(fixture);
+
+      const results = component.getResults();
+      component.addSelectedClass(results, 0);
+
+      expect(component.getItem()).toEqual({
+        key: "South",
+        value: "South",
+        cat: "South",
+      });
+    });
+
+    it("Should select a category header by clicking it when categories are selectable", () => {
+      component.categoryIsSelectable = true;
+      component.keyValueConfig = {
+        keyProperty: "key",
+        valueProperty: "value",
+        categoryProperty: "cat",
+        parentCategoryProperty: "cat",
+      };
+      component.categories = [{ key: "South", value: "South", cat: "South" }];
+      component.options = [{ key: "Al", value: "Alabama", cat: "South" }];
+      component.searchText = "";
+      component.filterOptions("");
+      fixture.detectChanges();
+
+      const categoryHeader = fixture.debugElement.query(
+        By.css(".category-name")
+      );
+      categoryHeader.nativeElement.click();
+      fixture.detectChanges();
+
+      expect(component.value[0]).toEqual({
+        key: "South",
+        value: "South",
+        cat: "South",
+      });
+    });
+
+    it("Should format wrapper errors through statusChanges when a control is bound and useFormService is false", () => {
+      const control = new FormControl("");
+      component.control = control;
+      component.useFormService = false;
+      fixture.detectChanges();
+
+      const formatErrorsSpy = vi.spyOn(component.wrapper, "formatErrors");
+      control.markAsDirty();
+      control.setErrors({ required: { message: "Required" } });
+
+      expect(formatErrorsSpy).toHaveBeenCalledWith(control);
+    });
+
+    it("Should format wrapper errors on SamFormService submit events when useFormService is true", () => {
+      const control = new FormControl("");
+      component.control = control;
+      component.useFormService = true;
+      fixture.detectChanges();
+
+      const formatErrorsSpy = vi.spyOn(component.wrapper, "formatErrors");
+      const samFormService = TestBed.inject(SamFormService);
+      samFormService.fireSubmit(control.root);
+
+      expect(formatErrorsSpy).toHaveBeenCalledWith(control);
+    });
+
+    it("Should clear wrapper errors on SamFormService reset events when useFormService is true", () => {
+      const control = new FormControl("");
+      component.control = control;
+      component.useFormService = true;
+      fixture.detectChanges();
+
+      const clearErrorSpy = vi.spyOn(component.wrapper, "clearError");
+      const samFormService = TestBed.inject(SamFormService);
+      samFormService.fireReset(control.root);
+
+      expect(clearErrorSpy).toHaveBeenCalled();
     });
   });
 });
