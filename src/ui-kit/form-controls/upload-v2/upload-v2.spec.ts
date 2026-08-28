@@ -302,10 +302,12 @@ describe("The Sam Upload v2 component", () => {
       component.toggleAccess.subscribe(emitSpy);
 
       component.onAccessToggle(0, true);
-      expect(openModal).toHaveBeenCalled();
+      expect(openModal).toHaveBeenCalledWith({ fileIndex: 0, secure: true });
+      expect(openModal).toHaveBeenCalledTimes(1);
       expect(emitSpy).toHaveBeenCalledWith({ fileIndex: 0, secure: true });
 
       component.onAccessToggle(1, false);
+      expect(openModal).toHaveBeenCalledTimes(1);
       expect(emitSpy).toHaveBeenCalledWith({ fileIndex: 1, secure: false });
     });
 
