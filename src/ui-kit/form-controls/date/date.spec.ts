@@ -861,13 +861,14 @@ describe("The Sam Date component", () => {
         clipboardData?: { getData: (t: string) => string };
       };
       const originalClipboardData = win.clipboardData;
-      win.clipboardData = { getData: () => "07" };
-      const event = {
-        preventDefault: () => undefined,
-      };
+      const getData = vi.fn(() => "07");
+      win.clipboardData = { getData };
+      const preventDefault = vi.fn();
+      const event = { preventDefault };
       component.onMonthPaste(event);
       win.clipboardData = originalClipboardData;
-      expect(true).toBe(true);
+      expect(getData).toHaveBeenCalledWith("text");
+      expect(preventDefault).not.toHaveBeenCalled();
     });
 
     it("ignores 'c' and 'v' key presses to avoid interfering with copy/paste", () => {

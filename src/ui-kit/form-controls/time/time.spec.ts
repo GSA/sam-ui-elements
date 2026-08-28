@@ -218,11 +218,12 @@ describe("The Sam Time component", () => {
     }
 
     it("ignores 'c'/'v' key presses on hours and minutes", () => {
-      const before = component.hourV.nativeElement.value;
+      const beforeHour = component.hourV.nativeElement.value;
+      const beforeMinute = component.minuteV.nativeElement.value;
       component.hoursPress(press("c"));
-      expect(component.hourV.nativeElement.value).toBe(before);
+      expect(component.hourV.nativeElement.value).toBe(beforeHour);
       component.minutesPress(press("v"));
-      expect(component.minuteV.nativeElement.value).toBe(before);
+      expect(component.minuteV.nativeElement.value).toBe(beforeMinute);
     });
 
     it("rejects an hour above 12", () => {
