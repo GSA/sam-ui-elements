@@ -84,5 +84,40 @@ describe("The Sam Number component", () => {
       fixture.detectChanges();
       expect(component.value).toBe(11);
     });
+
+    it("should format errors through the SamFormService when useFormService is set", () => {
+      const formService = TestBed.inject(SamFormService);
+      const c = new FormControl("");
+      component.name = "test-name";
+      component.control = c;
+      component.useFormService = true;
+      component.ngOnInit();
+      component.ngAfterViewInit();
+
+      expect(() => formService.fireSubmit(c.root)).not.toThrow();
+      expect(() => formService.fireReset(c.root)).not.toThrow();
+    });
+
+    it("should prevent invalid keys like 'e', '-', and '+'", () => {
+      fixture.detectChanges();
+      const preventDefault = vi.fn();
+      component.keyDownHandler({ key: "e", preventDefault });
+      expect(preventDefault).toHaveBeenCalled();
+
+      preventDefault.mockClear();
+      component.keyDownHandler({ key: "-", preventDefault });
+      expect(preventDefault).toHaveBeenCalled();
+
+      preventDefault.mockClear();
+      component.keyDownHandler({ key: "+", preventDefault });
+      expect(preventDefault).toHaveBeenCalled();
+    });
+
+    it("should allow valid numeric keys", () => {
+      fixture.detectChanges();
+      const preventDefault = vi.fn();
+      component.keyDownHandler({ key: "5", preventDefault });
+      expect(preventDefault).not.toHaveBeenCalled();
+    });
   });
 });

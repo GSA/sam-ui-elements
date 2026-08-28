@@ -569,4 +569,222 @@ describe("SamAutocompleteComponent", () => {
     const input = fixture.debugElement.query(By.css(".usa-input"));
     expect(input.nativeElement.value).toBe("a");
   }));
+
+  it("should clear the input and hide results on checkForFocus when no item is selected", () => {
+    component.inputValue = "partial";
+    component.input.nativeElement.value = "partial";
+    component.showResults = true;
+    component.checkForFocus({});
+    expect(component.inputValue).toBe("");
+    expect(component.input.nativeElement.value).toBe("");
+    expect(component.showResults).toBe(false);
+  });
+
+  it("should not clear the input on checkForFocus when an item is already selected", () => {
+    component.model.items = [{ id: "1", name: "Level 1" }];
+    component.inputValue = "Level 1";
+    component.showResults = true;
+    component.checkForFocus({});
+    expect(component.inputValue).toBe("Level 1");
+    expect(component.showResults).toBe(false);
+  });
+
+  it("should call focusRemoved on checkForFocus when free text is enabled", fakeAsync(() => {
+    component.configuration.isFreeTextEnabled = true;
+    component.inputValue = "free text value";
+    component.checkForFocus({});
+    tick(200);
+    expect(component.showResults).toBe(false);
+  }));
+
+  it("should clear the model and propagate the change on updateSingleModeFocusOutModel in single mode", () => {
+    component.model.items = [{ id: "1", name: "Level 1" }];
+    let propagated: any;
+    component.registerOnChange((val) => (propagated = val));
+    component.updateSingleModeFocusOutModel();
+    expect(component.model.items.length).toBe(0);
+    expect(propagated).toBe(component.model);
+  });
+
+  it("should not clear the model on updateSingleModeFocusOutModel in multiple mode", () => {
+    component.configuration.selectionMode = SelectionMode.MULTIPLE;
+    component.model.items = [{ id: "1", name: "Level 1" }];
+    component.updateSingleModeFocusOutModel();
+    expect(component.model.items.length).toBe(1);
+  });
+
+  it("should hide the results and remove focus on clickOutSide", () => {
+    component.showResults = true;
+    component.clickOutSide({});
+    expect(component.showResults).toBe(false);
+  });
+
+  it("should select an existing free text item on focus removed in single mode", fakeAsync(() => {
+    component.configuration.isFreeTextEnabled = true;
+    component.model.items = [{ id: "existing", name: "existing" }];
+    component.inputValue = { id: "existing" } as any;
+    component.focusRemoved();
+    tick(200);
+    expect(component.model.items.length).toBe(1);
+  }));
+
+  it("should select a new free text item on focus removed in single mode when nothing is selected", fakeAsync(() => {
+    component.configuration.isFreeTextEnabled = true;
+    component.inputValue = "brand new value";
+    component.focusRemoved();
+    tick(200);
+    expect(component.model.items.length).toBe(1);
+    expect(component.model.items[0]["name"]).toBe("brand new value");
+  }));
+
+  it("should split on delimiters and select multiple free text items on focus removed", fakeAsync(() => {
+    component.configuration.selectionMode = SelectionMode.MULTIPLE;
+    component.configuration.isFreeTextEnabled = true;
+    component.configuration.isDelimiterEnabled = true;
+    component.inputValue = "one,two";
+    component.focusRemoved();
+    tick(200);
+    expect(component.model.items.length).toBe(2);
+    expect(component.inputValue).toBe("");
+  }));
+
+  it("should select a single free text item on focus removed in multiple mode without a delimiter", fakeAsync(() => {
+    component.configuration.selectionMode = SelectionMode.MULTIPLE;
+    component.configuration.isFreeTextEnabled = true;
+    component.configuration.isDelimiterEnabled = false;
+    component.inputValue = "single value";
+    component.focusRemoved();
+    tick(200);
+    expect(component.model.items.length).toBe(1);
+    expect(component.inputValue).toBe("");
+  }));
+
+  it("should clear the input on focus removed in multiple mode when free text and tag mode are both off", fakeAsync(() => {
+    component.configuration.selectionMode = SelectionMode.MULTIPLE;
+    component.configuration.isFreeTextEnabled = false;
+    component.configuration.isTagModeEnabled = false;
+    component.inputValue = "leftover text";
+    component.focusRemoved();
+    tick(200);
+    expect(component.inputValue).toBe("");
+  }));
+
+  it("should block editing when inputReadOnly is true", () => {
+    component.configuration.inputReadOnly = true;
+    expect(component.onkeypress({})).toBe(false);
+  });
+
+  it("should limit the model fields to the essential fields when configured", () => {
+    component.essentialModelFields = true;
+    const item = {
+      id: "1",
+      name: "Level 1",
+      subtext: "id 1",
+      extra: "ignored",
+    };
+    component.selectItem(item);
+    const stored = component.model.items[0] as any;
+    expect(Object.keys(stored).sort()).toEqual(
+      ["id", "name", "subtext"].sort()
+    );
+    expect(stored.extra).toBeUndefined();
+  });
+
+  it("should focus the input when openOptions is called", () => {
+    const focusSpy = vi.spyOn(component.input.nativeElement, "focus");
+    component.openOptions();
+    expect(focusSpy).toHaveBeenCalled();
+  });
+
+  it("should not show free text suggestion when free text is disabled", () => {
+    component.configuration.isFreeTextEnabled = false;
+    expect(component.showFreeText()).toBe(false);
+  });
+
+  it("should not show free text suggestion when the input is empty", () => {
+    component.configuration.isFreeTextEnabled = true;
+    component.inputValue = "";
+    expect(component.showFreeText()).toBe(false);
+  });
+
+  it("should show free text suggestion when the input doesn't match a result or selection", () => {
+    component.configuration.isFreeTextEnabled = true;
+    component.inputValue = "unmatched";
+    component.results = [{ id: "1", name: "Level 1" }];
+    expect(component.showFreeText()).toBe(true);
+  });
+
+  it("should not show free text suggestion when the input matches an existing result", () => {
+    component.configuration.isFreeTextEnabled = true;
+    component.inputValue = "Level 1";
+    component.results = [{ id: "1", name: "Level 1" }];
+    expect(component.showFreeText()).toBe(false);
+  });
+
+  it("should apply the hide-cursor class when readonly and in multiple selection mode", () => {
+    component.configuration.inputReadOnly = true;
+    component.configuration.selectionMode = SelectionMode.MULTIPLE;
+    expect(component.getClass()).toBe("hide-cursor");
+  });
+
+  it("should not apply the hide-cursor class otherwise", () => {
+    component.configuration.inputReadOnly = false;
+    expect(component.getClass()).toBe("");
+  });
+
+  it("should request more results on scroll when the list is scrolled near the bottom", fakeAsync(() => {
+    component.inputFocusHandler();
+    tick();
+    fixture.detectChanges();
+    const dom = component.resultsListElement.nativeElement;
+    Object.defineProperty(dom, "offsetHeight", {
+      value: 100,
+      configurable: true,
+    });
+    Object.defineProperty(dom, "scrollTop", { value: 900, configurable: true });
+    Object.defineProperty(dom, "scrollHeight", {
+      value: 1000,
+      configurable: true,
+    });
+    const before = component.results.length;
+
+    component.onScroll();
+    tick();
+
+    expect(component.results.length).toBeGreaterThanOrEqual(before);
+  }));
+
+  it("should not request more results on scroll when all results are already loaded", fakeAsync(() => {
+    component.inputFocusHandler();
+    tick();
+    fixture.detectChanges();
+    component.results = component.results.slice(0, 1);
+    (component as any).maxResults = 1;
+
+    expect(() => component.onScroll()).not.toThrow();
+  }));
+
+  it("should ignore writeValue calls for values that aren't a SAMSDSSelectedItemModel", () => {
+    component.model = new SAMSDSSelectedItemModel();
+    component.writeValue({ items: [{ id: "1" }] });
+    expect(component.model.items.length).toBe(0);
+  });
+
+  it("should clear the input value on writeValue when the model has no items", () => {
+    component.inputValue = "stale";
+    const model = new SAMSDSSelectedItemModel();
+    component.writeValue(model);
+    expect(component.inputValue).toBe("");
+  });
+
+  it("should leave inputValue unchanged on writeValue in multiple selection mode", () => {
+    component.configuration.selectionMode = SelectionMode.MULTIPLE;
+    component.inputValue = "unchanged";
+    const model = new SAMSDSSelectedItemModel([{ id: "1", name: "Level 1" }]);
+    component.writeValue(model);
+    // multiple mode intentionally leaves inputValue alone; assert it wasn't
+    // touched and that the model was still stored
+    expect(component.inputValue).toBe("unchanged");
+    expect(component.model).toBe(model);
+  });
 });

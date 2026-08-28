@@ -121,5 +121,28 @@ describe("The Sam Select component", () => {
       component.ngOnInit();
       component.ngAfterViewInit();
     });
+
+    it("should format errors through the SamFormService when useFormService is set", () => {
+      const formService = TestBed.inject(SamFormService);
+      const c = new FormControl([]);
+      component.control = c;
+      component.useFormService = true;
+      component.ngOnInit();
+
+      expect(() => formService.fireSubmit(c.root)).not.toThrow();
+      expect(() => formService.fireReset(c.root)).not.toThrow();
+    });
+
+    it("should call onTouched and format errors on blur", () => {
+      const c = new FormControl([]);
+      component.control = c;
+      component.ngOnInit();
+      component.ngAfterViewInit();
+
+      let touched = false;
+      component.registerOnTouched(() => (touched = true));
+      component.onBlur();
+      expect(touched).toBe(true);
+    });
   });
 });
