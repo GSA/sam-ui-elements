@@ -87,17 +87,58 @@ describe("The Sam Sticky directive", () => {
     expect(comp.nativeElement.style.position).toBe("static");
   });
 
-  it("ngOnInit and ngAfterViewChecked update elemWidth when it changes", () => {
-    const nativeElement = directive["el"].nativeElement;
-    Object.defineProperty(nativeElement, "offsetWidth", {
+  it("ngOnInit and ngAfterViewChecked pick up the element's current offsetWidth for later sticky positioning", () => {
+    const containerEl = fixture.debugElement.query(
+      By.css(".test-container")
+    ).nativeElement;
+    const compEl = fixture.debugElement.query(
+      By.css(".test-comp")
+    ).nativeElement;
+    const siblingEl = containerEl.children[1];
+
+    Object.defineProperty(compEl, "offsetWidth", {
       value: 250,
       configurable: true,
     });
 
+    // Pick up the new offsetWidth via the public lifecycle hooks.
     directive.ngOnInit();
     directive.ngAfterViewChecked();
 
-    expect(directive["elemWidth"]).toBe(250);
+    // Force the sticky-fixed branch so the picked-up width is applied.
+    Object.defineProperty(siblingEl, "offsetHeight", {
+      value: 5000,
+      configurable: true,
+    });
+    Object.defineProperty(compEl, "offsetHeight", {
+      value: 50,
+      configurable: true,
+    });
+    Object.defineProperty(compEl, "offsetTop", {
+      value: 0,
+      configurable: true,
+    });
+    Object.defineProperty(containerEl, "offsetHeight", {
+      value: 5000,
+      configurable: true,
+    });
+    Object.defineProperty(containerEl, "offsetTop", {
+      value: 0,
+      configurable: true,
+    });
+    Object.defineProperty(window, "pageYOffset", {
+      value: 200,
+      configurable: true,
+    });
+
+    directive.adjustStickyPos();
+
+    expect(compEl.style.width).toBe("250px");
+
+    Object.defineProperty(window, "pageYOffset", {
+      value: 0,
+      configurable: true,
+    });
   });
 
   it("getDocHeight returns the largest of body/documentElement height metrics", () => {
@@ -109,7 +150,9 @@ describe("The Sam Sticky directive", () => {
   });
 
   it("getElemDistanceToTop walks offsetParent chain and sums offsetTop", () => {
-    const nativeElement = directive["el"].nativeElement;
+    const nativeElement = fixture.debugElement.query(
+      By.css(".test-comp")
+    ).nativeElement;
     expect(directive.getElemDistanceToTop(nativeElement)).toBe(0);
 
     const fakeParent = { offsetTop: 40, offsetParent: null };

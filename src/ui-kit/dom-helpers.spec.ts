@@ -1,6 +1,19 @@
 import { ScrollHelpers } from "./dom-helpers";
 
 describe("ScrollHelpers", () => {
+  let originalOnWheel: typeof window.onwheel;
+  let originalOnKeyDown: typeof document.onkeydown;
+
+  beforeEach(() => {
+    originalOnWheel = window.onwheel;
+    originalOnKeyDown = document.onkeydown;
+  });
+
+  afterEach(() => {
+    window.onwheel = originalOnWheel;
+    document.onkeydown = originalOnKeyDown;
+  });
+
   it("returns undefined when window is falsy", () => {
     expect(ScrollHelpers(undefined)).toBeUndefined();
   });
@@ -23,7 +36,7 @@ describe("ScrollHelpers", () => {
     expect(document.onkeydown).toBeFalsy();
   });
 
-  it("preventDefaultForScrollKeys prevents default for arrow/page/space/home/end keys", () => {
+  it("preventDefaultForScrollKeys prevents default for arrow keys", () => {
     const helpers = ScrollHelpers(window);
     helpers.disableScroll();
 
