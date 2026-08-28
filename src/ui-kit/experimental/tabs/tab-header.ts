@@ -180,14 +180,16 @@ export class MdTabHeader
    */
   ngAfterContentInit() {
     this._realignInkBar = this._ngZone.runOutsideAngular(() => {
-      let resize =
+      const resize =
         typeof window !== "undefined"
-          ? auditTime.call(fromEvent(window, "resize"), 10)
+          ? fromEvent(window, "resize").pipe(auditTime(10))
           : observableOf(null);
 
-      return startWith.call(merge(resize), null).subscribe(() => {
-        this._updatePagination();
-      });
+      return merge(resize)
+        .pipe(startWith(null))
+        .subscribe(() => {
+          this._updatePagination();
+        });
     });
   }
 

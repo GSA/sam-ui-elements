@@ -92,7 +92,7 @@ export class MdTabGroup {
 
   /** Output to enable support for two-way binding on `[(selectedIndex)]` */
   @Output() get selectedIndexChange(): Observable<number> {
-    return map.call(this.selectChange, (event) => event.index);
+    return this.selectChange.pipe(map((event) => event.index));
   }
 
   /** Event emitted when focus has changed within a tab group. */

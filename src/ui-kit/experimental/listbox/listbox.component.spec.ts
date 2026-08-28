@@ -6,6 +6,7 @@ import {
 } from "@angular/core/testing";
 import { SamListBoxComponent } from "./listbox.component";
 import { By } from "@angular/platform-browser";
+import { CommonModule } from "@angular/common";
 import { SamWrapperModule } from "../../../ui-kit/wrappers";
 
 const options = [
@@ -81,7 +82,7 @@ describe("SamListBoxComponent", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SamWrapperModule],
+      imports: [SamWrapperModule, CommonModule],
       declarations: [SamListBoxComponent],
     });
     fixture = TestBed.createComponent(SamListBoxComponent);
@@ -98,7 +99,7 @@ describe("SamListBoxComponent", () => {
   });
 
   it("onCheck with single mode", () => {
-    let ev = {
+    const ev = {
       target: {
         checked: true,
       },
@@ -156,7 +157,7 @@ describe("SamListBoxComponent", () => {
   it("should implement controlvalueaccessor", () => {
     component.onChange();
     component.onTouched();
-    component.registerOnChange((_) => undefined);
+    component.registerOnChange(() => undefined);
     component.registerOnTouched(() => undefined);
     component.writeValue(["test"]);
     expect(component.model[0]).toBe("test");
@@ -177,7 +178,7 @@ describe("SamListBoxComponent", () => {
   });
 
   it("onChecked checked/unchecked", () => {
-    let ev = {
+    const ev = {
       target: {
         checked: true,
       },
@@ -207,7 +208,6 @@ describe("SamListBoxComponent", () => {
     component.onKeyDown(downEvent);
     tick();
     fixture.detectChanges();
-    const list = fixture.debugElement.query(By.css(".checkbox-container"));
     expect(component.options[1]["highlighted"]).toBeTruthy();
     const upEvent = {
       key: "Up",
@@ -242,7 +242,6 @@ describe("SamListBoxComponent", () => {
     component.options = options;
     tick();
     fixture.detectChanges();
-    const list = fixture.debugElement.query(By.css(".checkbox-container"));
     expect(component.options[0]["highlighted"]).toBeTruthy();
     component.onHover(component.options.length - 1);
     fixture.detectChanges();
@@ -262,7 +261,7 @@ describe("SamListBoxComponent", () => {
   }));
 
   it("Should remove item from selected reuslts", fakeAsync(() => {
-    let ev = {
+    const ev = {
       target: {
         checked: false,
       },
@@ -274,4 +273,32 @@ describe("SamListBoxComponent", () => {
     expect(component.model.length).toBe(0);
     expect(component.modelChange.emit).toHaveBeenCalledWith(component.model);
   }));
+
+  it("should not select disabled options when writing a value via setSelectedItem", () => {
+    const optionsWithDisabled = options.map((o, i) =>
+      i === 1 ? { ...o, disabled: true } : o
+    );
+    component.options = optionsWithDisabled;
+    fixture.detectChanges();
+    component.writeValue([
+      optionsWithDisabled[6].value,
+      optionsWithDisabled[1].value,
+    ]);
+    expect(component.model).toEqual([optionsWithDisabled[6].value]);
+  });
+
+  it("should default to an empty model when writeValue is called without an array", () => {
+    component.options = options;
+    fixture.detectChanges();
+    component.writeValue(undefined);
+    expect(component.model).toEqual([]);
+  });
+
+  it("should report whether a value is currently checked", () => {
+    component.options = options;
+    component.model = [options[2].value];
+    fixture.detectChanges();
+    expect(component.isChecked(options[2].value)).toBe(true);
+    expect(component.isChecked(options[3].value)).toBe(false);
+  });
 });
