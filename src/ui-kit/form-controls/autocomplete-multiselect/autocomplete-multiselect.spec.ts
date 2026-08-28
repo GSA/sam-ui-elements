@@ -46,6 +46,10 @@ describe("The Sam Autocomplete Multiselect Component", () => {
       );
     });
 
+    afterEach(() => {
+      vi.restoreAllMocks();
+    });
+
     it("should clear search", () => {
       component.searchText = "test";
       expect(component.displayClearAll()).toBe(true);
@@ -142,42 +146,81 @@ describe("The Sam Autocomplete Multiselect Component", () => {
       expect(component["cache"]["cached"]["test"]).toBe(undefined);
     });
 
-    it("should populate list from a successful service fetch", () => {
-      const service = new AutocompleteService();
+    it("should populate the rendered dropdown from a successful service fetch", () => {
+      vi.useFakeTimers();
+      TestBed.configureTestingModule({
+        imports: [
+          CommonModule,
+          FormsModule,
+          SamWrapperModule,
+          BrowserAnimationsModule,
+        ],
+        declarations: [SamAutocompleteMultiselectComponent],
+        providers: [SamFormService, AutocompleteService],
+      });
+      const fixture = TestBed.createComponent(
+        SamAutocompleteMultiselectComponent
+      );
+      const withService = fixture.componentInstance;
+      withService.options = [];
+      withService.keyValueConfig = {
+        keyProperty: "key",
+        valueProperty: "value",
+      };
+      const service = TestBed.inject(AutocompleteService);
       vi.spyOn(service, "fetch").mockReturnValue(
         of([{ key: "aaa", value: "aaa" }])
       );
-      const withService = new SamAutocompleteMultiselectComponent(
-        service,
-        cdr,
-        new SamFormService()
-      );
+      fixture.detectChanges();
 
-      withService.fetchFromService("aaa", null, withService);
+      withService.filterOptions("aaa");
+      vi.advanceTimersByTime(250);
+      fixture.detectChanges();
 
-      expect(withService["list"][0][0].value).toBe("aaa");
+      const items = fixture.debugElement.queryAll(By.css("li.category-item"));
+      expect(items.length).toBe(1);
+      expect(items[0].nativeElement.textContent).toContain("aaa");
+      vi.useRealTimers();
     });
 
-    it("should surface a service error into the list on a failed service fetch", () => {
-      const service = new AutocompleteService();
+    it("should render an error item in the dropdown when a service fetch fails", () => {
+      vi.useFakeTimers();
+      TestBed.configureTestingModule({
+        imports: [
+          CommonModule,
+          FormsModule,
+          SamWrapperModule,
+          BrowserAnimationsModule,
+        ],
+        declarations: [SamAutocompleteMultiselectComponent],
+        providers: [SamFormService, AutocompleteService],
+      });
+      const fixture = TestBed.createComponent(
+        SamAutocompleteMultiselectComponent
+      );
+      const withService = fixture.componentInstance;
+      withService.options = [];
+      withService.keyValueConfig = {
+        keyProperty: "key",
+        valueProperty: "value",
+      };
+      const service = TestBed.inject(AutocompleteService);
       vi.spyOn(service, "fetch").mockReturnValue(
         throwError(() => new Error("boom"))
       );
-      const withService = new SamAutocompleteMultiselectComponent(
-        service,
-        cdr,
-        new SamFormService()
+      fixture.detectChanges();
+
+      withService.filterOptions("aaa");
+      vi.advanceTimersByTime(250);
+      fixture.detectChanges();
+
+      const items = fixture.debugElement.queryAll(By.css("li.category-item"));
+      expect(items.length).toBeGreaterThan(0);
+      expect(items[0].nativeElement.textContent).toContain(
+        "An error occurred."
       );
-
-      withService.fetchFromService("aaa", null, withService);
-
-      // The error object has no categoryProperty configured, so
-      // sortByCategory groups it under its own synthetic category rather
-      // than the uncategorized bucket at index 0 -- assert against whichever
-      // bucket actually received it instead of assuming index 0.
-      const errorItem = withService["list"][0][0] ?? withService["list"][1][0];
-      expect(errorItem.value).toBe("An error occurred.");
       expect(withService.displaySpinner).toBe(false);
+      vi.useRealTimers();
     });
 
     it("should not mark options when driven by a service (updateMarked is a no-op)", () => {

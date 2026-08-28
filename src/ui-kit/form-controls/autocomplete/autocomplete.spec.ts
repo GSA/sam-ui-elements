@@ -218,6 +218,10 @@ describe("The Sam Autocomplete Component", () => {
       component.writeValue({ key: "key", value: "test" });
     });
 
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
     it("Should initialize with model", () => {
       fixture.detectChanges();
       expect(component.value).toEqual({ key: "key", value: "test" });
@@ -339,6 +343,7 @@ describe("The Sam Autocomplete Component", () => {
     });
 
     it("Should format wrapper errors on control statusChanges when not using SamFormService", () => {
+      vi.useFakeTimers();
       component.useFormService = false;
       fixture.detectChanges();
 
@@ -346,12 +351,10 @@ describe("The Sam Autocomplete Component", () => {
       component.control.markAsDirty();
       component.control.setErrors({ required: { message: "Required" } });
 
-      return new Promise<void>((resolve) => {
-        setTimeout(() => {
-          expect(formatErrorsSpy).toHaveBeenCalledWith(component.control);
-          resolve();
-        });
-      });
+      vi.runAllTimers();
+
+      expect(formatErrorsSpy).toHaveBeenCalledWith(component.control);
+      vi.useRealTimers();
     });
 
     it("Should format wrapper errors on SamFormService submit events when useFormService is true", () => {
