@@ -27,9 +27,22 @@ class HostComponent {
   @ViewChild(MdTabHeader) tabHeader: MdTabHeader;
 }
 
+function dispatchKeydown(target: Element, keyCode: number): void {
+  const event = new KeyboardEvent("keydown", {
+    bubbles: true,
+    cancelable: true,
+  });
+  // jsdom's KeyboardEvent constructor does not honor a `keyCode` init
+  // property, so it must be defined explicitly to match what real browsers
+  // report for legacy `event.keyCode` consumers like `_handleKeydown`.
+  Object.defineProperty(event, "keyCode", { get: () => keyCode });
+  target.dispatchEvent(event);
+}
+
 describe("The Sam Tab Header component", () => {
   let fixture: ComponentFixture<HostComponent>;
   let host: HostComponent;
+  let tabListContainer: HTMLElement;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -40,6 +53,9 @@ describe("The Sam Tab Header component", () => {
     host = fixture.componentInstance;
     fixture.detectChanges();
     fixture.detectChanges();
+    tabListContainer = fixture.nativeElement.querySelector(
+      ".mat-tab-label-container"
+    );
   });
 
   it("should render a label wrapper for each label without throwing", () => {
@@ -50,17 +66,13 @@ describe("The Sam Tab Header component", () => {
   });
 
   it("should move focus to the next valid tab on ArrowRight", () => {
-    host.tabHeader._handleKeydown({
-      keyCode: RIGHT_ARROW,
-    } as KeyboardEvent);
+    dispatchKeydown(tabListContainer, RIGHT_ARROW);
     expect(host.tabHeader.focusIndex).toBe(1);
   });
 
   it("should move focus to the previous valid tab on ArrowLeft", () => {
     host.tabHeader.focusIndex = 1;
-    host.tabHeader._handleKeydown({
-      keyCode: LEFT_ARROW,
-    } as KeyboardEvent);
+    dispatchKeydown(tabListContainer, LEFT_ARROW);
     expect(host.tabHeader.focusIndex).toBe(0);
   });
 
@@ -68,24 +80,20 @@ describe("The Sam Tab Header component", () => {
     const emitted: number[] = [];
     host.tabHeader.selectFocusedIndex.subscribe((index) => emitted.push(index));
     host.tabHeader.focusIndex = 2;
-    host.tabHeader._handleKeydown({ keyCode: ENTER } as KeyboardEvent);
+    dispatchKeydown(tabListContainer, ENTER);
     expect(emitted).toEqual([2]);
   });
 
   it("should skip disabled tabs when moving focus forward", () => {
     host.disabledIndexes.add(1);
     fixture.detectChanges();
-    host.tabHeader._handleKeydown({
-      keyCode: RIGHT_ARROW,
-    } as KeyboardEvent);
+    dispatchKeydown(tabListContainer, RIGHT_ARROW);
     expect(host.tabHeader.focusIndex).toBe(2);
   });
 
   it("should not move focus past the last tab", () => {
     host.tabHeader.focusIndex = 2;
-    host.tabHeader._handleKeydown({
-      keyCode: RIGHT_ARROW,
-    } as KeyboardEvent);
+    dispatchKeydown(tabListContainer, RIGHT_ARROW);
     expect(host.tabHeader.focusIndex).toBe(2);
   });
 

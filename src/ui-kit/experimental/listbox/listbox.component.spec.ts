@@ -260,7 +260,7 @@ describe("SamListBoxComponent", () => {
     expect(component.options[7]["highlighted"]).toBeTruthy();
   }));
 
-  it("Should remove item from selected reuslts", fakeAsync(() => {
+  it("Should remove item from selected results", fakeAsync(() => {
     const ev = {
       target: {
         checked: false,

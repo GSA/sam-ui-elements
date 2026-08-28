@@ -6,6 +6,7 @@ import {
   tick,
 } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { RIGHT_ARROW } from "@angular/cdk/keycodes";
 import { SamTabsNextModule, MdTabGroup, MdTabChangeEvent } from "./index";
 
 @Component({
@@ -81,18 +82,29 @@ describe("The Sam Tabs Next component", () => {
     fixture.detectChanges();
     const emitted: MdTabChangeEvent[] = [];
     host.tabGroup.focusChange.subscribe((event) => emitted.push(event));
-    host.tabGroup._focusChanged(1);
+
+    const tabListContainer = fixture.nativeElement.querySelector(
+      ".mat-tab-label-container"
+    ) as HTMLElement;
+    const event = new KeyboardEvent("keydown", {
+      bubbles: true,
+      cancelable: true,
+    });
+    Object.defineProperty(event, "keyCode", { get: () => RIGHT_ARROW });
+    tabListContainer.dispatchEvent(event);
+
     expect(emitted.length).toBe(1);
     expect(emitted[0].index).toBe(1);
   });
 
-  it("should build unique label and content ids per tab index", () => {
+  it("should build unique label and content ids per tab index, reflected on the rendered DOM", () => {
     fixture.detectChanges();
     fixture.detectChanges();
-    expect(host.tabGroup._getTabLabelId(0)).not.toBe(
-      host.tabGroup._getTabLabelId(1)
+    const labels = fixture.nativeElement.querySelectorAll(".mat-tab-label");
+    expect(labels[0].id).not.toBe(labels[1].id);
+    expect(labels[0].getAttribute("aria-controls")).toContain(
+      "md-tab-content-"
     );
-    expect(host.tabGroup._getTabContentId(0)).toContain("md-tab-content-");
   });
 
   it("should coerce the dynamicHeight input to a boolean", () => {

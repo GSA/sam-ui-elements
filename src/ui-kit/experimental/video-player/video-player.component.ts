@@ -95,14 +95,14 @@ export class SamVideoPlayerComponent {
   }
 
   ngOnDestroy() {
-    let pxAnounce = document.getElementById("px-video-aria-announce");
-    if (!pxAnounce) {
+    const pxAnnounceEl = document.getElementById("px-video-aria-announce");
+    if (!pxAnnounceEl) {
       return;
     }
-    if (typeof pxAnounce.remove === "function") {
-      pxAnounce.remove();
-    } else {
-      pxAnounce.parentNode.removeChild(pxAnounce);
+    if (typeof pxAnnounceEl.remove === "function") {
+      pxAnnounceEl.remove();
+    } else if (pxAnnounceEl.parentNode) {
+      pxAnnounceEl.parentNode.removeChild(pxAnnounceEl);
     }
   }
 
