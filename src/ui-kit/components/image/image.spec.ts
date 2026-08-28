@@ -11,8 +11,17 @@ describe("The Sam Image Component", () => {
   let fixture: ComponentFixture<SamImageComponent>;
   let component: SamImageComponent;
   let de: DebugElement;
+  let readAsDataURLSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
+    readAsDataURLSpy = vi
+      .spyOn(FileReader.prototype, "readAsDataURL")
+      .mockImplementation(function (this: FileReader, file: Blob) {
+        this.onload?.({
+          target: { result: `data:fake;name=${(file as File).name}` },
+        } as unknown as ProgressEvent<FileReader>);
+      });
+
     TestBed.configureTestingModule({
       declarations: [SamImageComponent],
     }).compileComponents();
@@ -24,6 +33,10 @@ describe("The Sam Image Component", () => {
     component.editable = true;
     component.src = washingtonImg;
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    readAsDataURLSpy.mockRestore();
   });
 
   it("has an edit button that opens file upload", () => {
@@ -46,15 +59,13 @@ describe("The Sam Image Component", () => {
     expect(buttonEl.disabled).toBe(true);
   });
 
-  it("uploads a file, sets tmp state, and emits fileChange on save", async () => {
+  it("uploads a file, sets tmp state, and emits fileChange on save", () => {
     const file = new File(["hello"], "washington.png", { type: "image/png" });
     const fileInputEl: HTMLInputElement = de.query(
       By.css("input#file")
     ).nativeElement;
     Object.defineProperty(fileInputEl, "files", { value: [file] });
     fileInputEl.dispatchEvent(new Event("change"));
-
-    await new Promise((resolve) => setTimeout(resolve, 10));
 
     expect(component.getFileName()).toBe("washington.png");
 
@@ -72,7 +83,7 @@ describe("The Sam Image Component", () => {
     expect(component.src).toBeDefined();
   });
 
-  it("clears tmp file state when cancel is clicked", async () => {
+  it("clears tmp file state when cancel is clicked", () => {
     const file = new File(["hello"], "washington.png", { type: "image/png" });
     const fileInputEl: HTMLInputElement = de.query(
       By.css("input#file")
@@ -80,7 +91,6 @@ describe("The Sam Image Component", () => {
     Object.defineProperty(fileInputEl, "files", { value: [file] });
     fileInputEl.dispatchEvent(new Event("change"));
 
-    await new Promise((resolve) => setTimeout(resolve, 10));
     expect(component.getFileName()).toBe("washington.png");
 
     const cancelButtonEl: HTMLButtonElement = de.query(
@@ -92,7 +102,7 @@ describe("The Sam Image Component", () => {
     expect(component.isImageTemporary()).toBe(false);
   });
 
-  it("drops a file onto the container when in edit mode", async () => {
+  it("drops a file onto the container when in edit mode", () => {
     component.editMode = true;
     const file = new File(["hello"], "dropped.png", { type: "image/png" });
 
@@ -105,8 +115,6 @@ describe("The Sam Image Component", () => {
     }) as Event & { dataTransfer: { files: File[] } };
     dropEvent.dataTransfer = { files: [file] };
     containerEl.dispatchEvent(dropEvent);
-
-    await new Promise((resolve) => setTimeout(resolve, 10));
 
     expect(component.getFileName()).toBe("dropped.png");
   });

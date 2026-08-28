@@ -44,6 +44,14 @@ describe("The Sam Modal component", () => {
       fixture.detectChanges();
     });
 
+    afterEach(() => {
+      if (component.show) {
+        component.closeModal(false);
+      }
+      component.ngOnDestroy();
+      document.body.classList.remove("modal-open");
+    });
+
     it("should open and close modal", function () {
       component.title = "test title";
       component.type = "success";
