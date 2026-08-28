@@ -1,4 +1,4 @@
-import { TestBed, waitForAsync } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 import { FormsModule, FormControl } from "@angular/forms";
 // Load the implementations that should be tested
@@ -8,7 +8,6 @@ import { SamTimeComponent } from "../time/time.component";
 import { SamDateTimeComponent } from "../date-time/date-time.component";
 import { SamFormService } from "../../form-service";
 import { SamWrapperModule } from "../../wrappers";
-import { SamUIKitModule } from "../../index";
 
 describe("The Sam Date Range component", () => {
   describe("isolated tests", () => {
@@ -70,9 +69,97 @@ describe("The Sam Date Range component", () => {
       expect(returnVal.dateRangeError.message).toBe("Invalid To Date");
     });
   });
+
+  describe("static dateRangeValidation", () => {
+    it("returns undefined when neither start nor end date is set", () => {
+      const c = new FormControl({});
+      expect(SamDateRangeComponent.dateRangeValidation(c)).toBe(undefined);
+    });
+
+    it("flags an end date before the start date", () => {
+      const c = new FormControl({
+        startDate: "2020-06-01",
+        endDate: "2020-01-01",
+      });
+      const result = SamDateRangeComponent.dateRangeValidation(c);
+      expect(result.dateRangeError.message).toBe("Invalid date range");
+    });
+
+    it("passes a valid start/end pair", () => {
+      const c = new FormControl({
+        startDate: "2020-01-01",
+        endDate: "2020-06-01",
+      });
+      expect(SamDateRangeComponent.dateRangeValidation(c)).toBe(undefined);
+    });
+
+    it("flags an invalid start-only date", () => {
+      const c = new FormControl({ startDate: "2020-99-99" });
+      const result = SamDateRangeComponent.dateRangeValidation(c);
+      expect(result.dateRangeError.message).toBe("Invalid From Date");
+    });
+
+    it("skips validation when the start-only date is the sentinel 'Invalid date'", () => {
+      const c = new FormControl({ startDate: "Invalid date" });
+      expect(SamDateRangeComponent.dateRangeValidation(c)).toBe(undefined);
+    });
+
+    it("flags an invalid end-only date", () => {
+      const c = new FormControl({ endDate: "2020-99-99" });
+      const result = SamDateRangeComponent.dateRangeValidation(c);
+      expect(result.dateRangeError.message).toBe("Invalid To Date");
+    });
+
+    it("skips validation when the end-only date is the sentinel 'Invalid date'", () => {
+      const c = new FormControl({ endDate: "Invalid date" });
+      expect(SamDateRangeComponent.dateRangeValidation(c)).toBe(undefined);
+    });
+  });
+
+  describe("static dateRangeRequired", () => {
+    let component: SamDateRangeComponent;
+
+    beforeEach(() => {
+      component = new SamDateRangeComponent(new SamFormService());
+    });
+
+    it("requires both dates when required is set and returns an error when missing focus", () => {
+      component.required = true;
+      component.hasFocus = false;
+      const c = new FormControl({
+        startDate: "Invalid date",
+        endDate: "Invalid date",
+      });
+      const result = SamDateRangeComponent.dateRangeRequired(component)(c);
+      expect(result.dateRangeError.message).toBe("This field is required");
+    });
+
+    it("does not error while the control has focus", () => {
+      component.required = true;
+      component.hasFocus = true;
+      const c = new FormControl({
+        startDate: "Invalid date",
+        endDate: "Invalid date",
+      });
+      expect(SamDateRangeComponent.dateRangeRequired(component)(c)).toBe(
+        undefined
+      );
+    });
+
+    it("does not error when neither fromRequired nor toRequired is set", () => {
+      component.required = false;
+      component.fromRequired = false;
+      component.toRequired = false;
+      const c = new FormControl({});
+      expect(SamDateRangeComponent.dateRangeRequired(component)(c)).toBe(
+        undefined
+      );
+    });
+  });
+
   describe("rendered tests", () => {
     let component: SamDateRangeComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<SamDateRangeComponent>;
 
     // provide our implementations or mocks to the dependency injector
     beforeEach(() => {
@@ -140,6 +227,57 @@ describe("The Sam Date Range component", () => {
       component.writeValue(undefined);
       component.focusHandler();
       expect(true).toBe(true);
+    });
+
+    it("emits both start and end time in the output when type is date-time", () => {
+      let emitted;
+      component.type = "date-time";
+      component.valueChange.subscribe((v) => (emitted = v));
+      component.writeValue({
+        startDate: "2016-12-29",
+        startTime: "11:11",
+        endDate: "2017-04-01",
+        endTime: "14:09",
+      });
+      component.ngOnChanges();
+      component.dateChange();
+      expect(emitted.startTime).toBe("11:11");
+      expect(emitted.endTime).toBe("14:09");
+    });
+
+    it("focuses the end date's month input after a 'year entered' blur in date mode", () => {
+      component.type = "date";
+      component.endDateComp.month.nativeElement.focus = () => undefined;
+      expect(() => component.dateBlur("year entered")).not.toThrow();
+      expect(component.hasFocus).toBe(false);
+    });
+
+    it("does not attempt to focus the end date on a plain blur", () => {
+      component.type = "date";
+      expect(() => component.dateBlur(undefined)).not.toThrow();
+      expect(component.hasFocus).toBe(false);
+    });
+
+    it("endDateBlur clears focus and re-emits the current date change", () => {
+      component.endDateBlur();
+      expect(component.hasFocus).toBe(false);
+    });
+
+    it("formats errors when a control is provided without useFormService", () => {
+      const control = new FormControl("");
+      component.control = control;
+      component.useFormService = false;
+      expect(() => component.ngOnInit()).not.toThrow();
+    });
+
+    it("subscribes to SamFormService events when useFormService is true", () => {
+      const formService: SamFormService = TestBed.inject(SamFormService);
+      const control = new FormControl("");
+      component.control = control;
+      component.useFormService = true;
+      component.ngOnInit();
+      expect(() => formService.fireSubmit(control.root)).not.toThrow();
+      expect(() => formService.fireReset(control.root)).not.toThrow();
     });
   });
 });

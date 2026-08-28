@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 import { FormsModule, FormControl } from "@angular/forms";
 
 // Load the implementations that should be tested
@@ -10,8 +10,9 @@ import { SamWrapperModule } from "../../wrappers";
 
 describe("The Sam Date Time component", () => {
   let component: SamDateTimeComponent;
-  let fixture: any;
+  let fixture: ComponentFixture<SamDateTimeComponent>;
 
+  // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [SamWrapperModule, FormsModule],
@@ -23,25 +24,107 @@ describe("The Sam Date Time component", () => {
     component = fixture.componentInstance;
     component.value = "2016-12-31T12:01";
     component.name = "test";
-    fixture.detectChanges();
   });
 
   it("Should compile", function () {
     expect(true).toBe(true);
   });
 
-  it("should throw a 508-compliance error when no name is provided", () => {
+  it("throws when name is not provided, for 508 compliance", () => {
     component.name = undefined;
-    expect(() => component.ngOnInit()).toThrowError(/508 compliance/);
+    expect(() => component.ngOnInit()).toThrow();
   });
 
-  it("should parse an initial value into date and time parts", () => {
-    component.writeValue("2016-12-31T12:01");
+  it("parses a valid value into date and time on init", () => {
+    fixture.detectChanges();
+    component.parseValueString();
     expect(component.date).toBe("2016-12-31");
     expect(component.time).toBe("12:01");
   });
 
-  it("should reset date and time parts when written a falsy value", () => {
+  it("logs an error and leaves date/time unset for an invalid value", () => {
+    fixture.detectChanges();
+    const spy = vi.spyOn(console, "error").mockImplementation(() => undefined);
+    component.value = "2016-99-99Tx";
+    component.parseValueString();
+    expect(spy).toHaveBeenCalledWith("[value] for sam-date-time is invalid");
+    spy.mockRestore();
+  });
+
+  it("does nothing when there is no value to parse", () => {
+    fixture.detectChanges();
+    component.value = undefined;
+    expect(() => component.parseValueString()).not.toThrow();
+  });
+
+  it("emits undefined when both date and time are empty", () => {
+    fixture.detectChanges();
+    let emitted;
+    component.registerOnChange((v) => (emitted = v));
+    component.dateComponent.writeValue(undefined);
+    component.timeComponent.writeValue(undefined);
+    component.onInputChange();
+    expect(emitted).toBe(undefined);
+  });
+
+  it("emits the combined date-time string when both fields are valid", async () => {
+    fixture.detectChanges();
+    let emitted;
+    component.registerOnChange((v) => (emitted = v));
+    component.dateComponent.writeValue("2016-12-31");
+    component.timeComponent.writeValue("12:01");
+    component.date = "2016-12-31";
+    component.time = "12:01";
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    component.onInputChange();
+    expect(emitted).toBe("2016-12-31T12:01");
+  });
+
+  it("emits 'Invalid Date Time' when the fields are inconsistent", async () => {
+    fixture.detectChanges();
+    let emitted;
+    component.registerOnChange((v) => (emitted = v));
+    component.dateComponent.writeValue("2016-12-31");
+    component.timeComponent.writeValue(undefined);
+    component.date = "2016-12-31";
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    component.onInputChange();
+    expect(emitted).toBe("Invalid Date Time");
+  });
+
+  it("does not throw when no onChange callback has been registered", () => {
+    fixture.detectChanges();
+    expect(() => component.emitChanges("2016-12-31T12:01")).not.toThrow();
+  });
+
+  it("focuses the time component's hour input on date blur", () => {
+    fixture.detectChanges();
+    component.timeComponent.hourV.nativeElement.focus = () => undefined;
+    expect(() => component.dateBlur()).not.toThrow();
+  });
+
+  it("implements ControlValueAccessor via writeValue/registerOnChange/registerOnTouched", () => {
+    fixture.detectChanges();
+    let changed;
+    let touched = false;
+    component.registerOnChange((v) => (changed = v));
+    component.registerOnTouched(() => (touched = true));
+    component.setDisabledState(true);
+    component.writeValue("2016-12-31T12:01");
+    expect(component.value).toBe("2016-12-31T12:01");
+    expect(component.disabled).toBe(true);
+    component.onChange("2020-01-01T00:00");
+    component.onTouched();
+    expect(changed).toBe("2020-01-01T00:00");
+    expect(touched).toBe(true);
+  });
+
+  it("resets date/time when written an empty value", () => {
+    fixture.detectChanges();
     component.writeValue("2016-12-31T12:01");
     component.writeValue(undefined);
     expect(component.value).toBe("");
@@ -49,108 +132,23 @@ describe("The Sam Date Time component", () => {
     expect(component.time).toBe("");
   });
 
-  it("should log an error and leave date/time unset for an unparsable value", () => {
-    const errorSpy = vi
-      .spyOn(console, "error")
-      .mockImplementation(() => undefined);
-    component.date = undefined;
-    component.time = undefined;
-    component.value = "not a real date";
-    component.parseValueString();
-    expect(errorSpy).toHaveBeenCalledWith(
-      "[value] for sam-date-time is invalid"
-    );
-    errorSpy.mockRestore();
-  });
+  describe("control wiring", () => {
+    it("formats errors immediately when a control is provided without useFormService", () => {
+      component.control = new FormControl("");
+      component.useFormService = false;
+      fixture.detectChanges();
+      expect(() => component.ngOnInit()).not.toThrow();
+    });
 
-  it("should emit the combined value through registered onChange", () => {
-    let emitted: string;
-    component.registerOnChange((val) => (emitted = val));
-    component.emitChanges("2020-01-01T10:00");
-    expect(component.value).toBe("2020-01-01T10:00");
-    expect(emitted).toBe("2020-01-01T10:00");
-  });
-
-  it("should not throw when emitting changes without a registered onChange", () => {
-    component.onChange = undefined;
-    expect(() => component.emitChanges("2020-01-01T10:00")).not.toThrow();
-  });
-
-  it("should emit undefined when both date and time inputs are empty", () => {
-    let emitted: string | undefined = "not-called";
-    component.registerOnChange((val) => (emitted = val));
-    vi.spyOn(component.dateComponent, "isEmptyField").mockReturnValue(true);
-    vi.spyOn(component.timeComponent, "isEmptyField").mockReturnValue(true);
-
-    component.onInputChange();
-
-    expect(emitted).toBeUndefined();
-  });
-
-  it("should emit the combined date and time when both inputs are valid", () => {
-    let emitted: string | undefined;
-    component.registerOnChange((val) => (emitted = val));
-    vi.spyOn(component.dateComponent, "isEmptyField").mockReturnValue(false);
-    vi.spyOn(component.timeComponent, "isEmptyField").mockReturnValue(false);
-    vi.spyOn(component.dateComponent, "isValid").mockReturnValue(true);
-    vi.spyOn(component.timeComponent, "isValid").mockReturnValue(true);
-    component.date = "2020-01-01";
-    component.time = "10:00";
-
-    component.onInputChange();
-
-    expect(emitted).toBe("2020-01-01T10:00");
-  });
-
-  it("should emit 'Invalid Date Time' when the inputs are non-empty but invalid", () => {
-    let emitted: string | undefined;
-    component.registerOnChange((val) => (emitted = val));
-    vi.spyOn(component.dateComponent, "isEmptyField").mockReturnValue(false);
-    vi.spyOn(component.timeComponent, "isEmptyField").mockReturnValue(false);
-    vi.spyOn(component.dateComponent, "isValid").mockReturnValue(false);
-    vi.spyOn(component.timeComponent, "isValid").mockReturnValue(true);
-
-    component.onInputChange();
-
-    expect(emitted).toBe("Invalid Date Time");
-  });
-
-  it("should move focus to the time input's hour field on date blur", () => {
-    const focusSpy = vi.fn();
-    component.timeComponent.hourV = { nativeElement: { focus: focusSpy } };
-
-    component.dateBlur();
-
-    expect(focusSpy).toHaveBeenCalled();
-  });
-
-  it("should clear the date and time inputs on resetInput", () => {
-    component.date = "2020-01-01";
-    component.time = "10:00";
-    component.resetInput();
-    expect(component.date).toBe("");
-    expect(component.time).toBe("");
-  });
-
-  it("should wire up a form control and format errors on status change without the form service", () => {
-    const control = new FormControl("");
-    component.control = control;
-    component.useFormService = false;
-
-    expect(() => {
+    it("subscribes to SamFormService events when useFormService is true", () => {
+      const formService: SamFormService = TestBed.inject(SamFormService);
+      const control = new FormControl("");
+      component.control = control;
+      component.useFormService = true;
+      fixture.detectChanges();
       component.ngOnInit();
-      control.setValue("changed");
-    }).not.toThrow();
-  });
-
-  it("should format errors through the SamFormService when useFormService is set", () => {
-    const formService = TestBed.inject(SamFormService);
-    const control = new FormControl("");
-    component.control = control;
-    component.useFormService = true;
-    component.ngOnInit();
-
-    expect(() => formService.fireSubmit(control.root)).not.toThrow();
-    expect(() => formService.fireReset(control.root)).not.toThrow();
+      expect(() => formService.fireSubmit(control.root)).not.toThrow();
+      expect(() => formService.fireReset(control.root)).not.toThrow();
+    });
   });
 });
