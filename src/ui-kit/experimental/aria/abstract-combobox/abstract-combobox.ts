@@ -65,6 +65,10 @@ export class AbstractCombobox {
 
   private _setupInputEvents(): void {
     this._input.addEventListener("input", (e) => {
+      // "input" is declared in _initEventDispatcher and exposed by onInput(),
+      // so it has to be dispatched here as well; only "search" used to be, which
+      // left onInput() registering callbacks that were never called.
+      this._dispatcher.dispatch("input", e);
       this._dispatcher.dispatch("search", e);
     });
 
