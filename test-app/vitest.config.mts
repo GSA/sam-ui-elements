@@ -38,6 +38,17 @@ export default defineConfig({
     ],
     alias: [
       {
+        // Deep imports like "@gsa-sam/sam-ui-elements/src/ui-kit/experimental/tabs"
+        // (matching how downstream consumers deep-import individual modules)
+        // must be resolved before the bare-package alias below, since Vite's
+        // alias matcher treats a bare string `find` as a path *prefix* match
+        // (via `startsWith`), so the string alias would otherwise swallow
+        // this pattern too and rewrite it to "<repo>/index.ts/src/...",
+        // which doesn't resolve (index.ts is a file, not a directory).
+        find: /^@gsa-sam\/sam-ui-elements\/(.*)$/,
+        replacement: resolve(__dirname, "../$1"),
+      },
+      {
         find: "@gsa-sam/sam-ui-elements",
         replacement: resolve(__dirname, "../index.ts"),
       },

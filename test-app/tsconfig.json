@@ -12,6 +12,12 @@
     "target": "ES2022",
     "useDefineForClassFields": false,
     "typeRoots": ["node_modules/@types"],
-    "lib": ["ES2022", "dom"]
+    "lib": ["ES2022", "dom"],
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@gsa-sam/sam-ui-elements": ["../index.ts"],
+      "@gsa-sam/sam-ui-elements/*": ["../*"]
+    }
   }
 }

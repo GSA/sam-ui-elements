@@ -32,6 +32,17 @@
   display: block;
   overflow: hidden;
 
+  // `tab-group.html` toggles the native `[hidden]` attribute to hide the
+  // inactive tab body. Without this rule, the unconditional `display: block`
+  // above (an author-stylesheet rule) always wins the cascade over the
+  // browser's built-in `[hidden] { display: none; }` user-agent rule,
+  // regardless of selector specificity — so the inactive tab's absolutely
+  // positioned (`@include mat-fill`) content never actually gets hidden and
+  // renders stacked on top of the active tab. See GH-665.
+  &[hidden] {
+    display: none;
+  }
+
   &.mat-tab-body-active {
     position: relative;
     overflow-x: hidden;
