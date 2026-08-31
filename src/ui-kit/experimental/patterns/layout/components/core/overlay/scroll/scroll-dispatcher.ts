@@ -93,7 +93,7 @@ export class ScrollDispatcher {
     // since it does add a perceptible delay in processing overhead.
     let observable =
       auditTimeInMs > 0
-        ? auditTime.call(this._scrolled.asObservable(), auditTimeInMs)
+        ? this._scrolled.asObservable().pipe(auditTime(auditTimeInMs))
         : this._scrolled.asObservable();
 
     this._scrolledCount++;
