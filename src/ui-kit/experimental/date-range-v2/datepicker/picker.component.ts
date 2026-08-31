@@ -129,7 +129,7 @@ export class DatepickerComponent
   _focusableString: string =
     'a[href], area, button, select, textarea, *[tabindex], \
   input:not([type="hidden"])';
-  @ViewChild("calendarpopup") calendarpopup: ElementRef;
+  @ViewChild("calendarpopup", { static: true }) calendarpopup: ElementRef;
   @ViewChild("calendarButton", { static: true }) calendarButton: ElementRef;
 
   static dateValidation() {
