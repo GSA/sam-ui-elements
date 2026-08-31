@@ -1,13 +1,17 @@
-import { TestBed, waitForAsync } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
 
 import { ChangeDetectorRef } from "@angular/core";
 import { By } from "@angular/platform-browser";
-import { FormsModule, FormControl } from "@angular/forms";
+import {
+  FormsModule,
+  FormControl,
+  AbstractControl,
+  ValidationErrors,
+} from "@angular/forms";
 // Load the implementations that should be tested
 import { SamPhoneEntryComponent } from "./phone-entry.component";
 import { SamFormControlsModule } from "../../form-controls";
 import { SamWrapperModule } from "../../wrappers";
-import { SamUIKitModule } from "../../index";
 import { SamFormService } from "../../form-service";
 
 describe("The Sam Phone Entry component", () => {
@@ -27,7 +31,7 @@ describe("The Sam Phone Entry component", () => {
     it("should implement controlvalueaccessor", () => {
       component.onChange();
       component.onTouched();
-      component.registerOnChange((_) => undefined);
+      component.registerOnChange(() => undefined);
       component.registerOnTouched(() => undefined);
       component.setDisabledState(false);
       // writevalue used in rendered tests
@@ -44,7 +48,6 @@ describe("The Sam Phone Entry component", () => {
     let component: SamPhoneEntryComponent;
     let fixture: any;
     let el;
-    const model = "";
 
     // provide our implementations or mocks to the dependency injector
     beforeEach(() => {
@@ -144,6 +147,64 @@ describe("The Sam Phone Entry component", () => {
         });
       }
       expect(component.model).toBe("1+(111)111-1111");
+    });
+
+    it("formats errors and calls detectChanges on control status changes when not using the form service", () => {
+      component.control = new FormControl("");
+      component.useFormService = false;
+      component.ngOnInit();
+
+      const formatErrorsSpy = vi.spyOn(component.wrapper, "formatErrors");
+
+      component.control.setErrors({ required: true });
+      component.control.updateValueAndValidity();
+
+      expect(formatErrorsSpy).toHaveBeenCalledWith(component.control);
+    });
+
+    it("formats errors on submit and clears them on reset when using the form service", () => {
+      const formService = TestBed.inject(SamFormService);
+      component.control = new FormControl("");
+      component.useFormService = true;
+      component.ngOnInit();
+
+      const formatErrorsSpy = vi.spyOn(component.wrapper, "formatErrors");
+      const clearErrorSpy = vi.spyOn(component.wrapper, "clearError");
+
+      formService.fireSubmit(component.control.root);
+      expect(formatErrorsSpy).toHaveBeenCalledWith(component.control);
+
+      formService.fireReset(component.control.root);
+      expect(clearErrorSpy).toHaveBeenCalled();
+    });
+
+    it("validatePhoneNumber flags an incomplete phone number as invalid", () => {
+      const validator = component.validatePhoneNumber(
+        component.phoneNumberTemplate
+      );
+      const control = new FormControl("1+(111)___-____");
+
+      const result: ValidationErrors | undefined = validator(
+        control as AbstractControl
+      );
+
+      expect(result).toEqual({
+        phoneError: { message: "Invalid phone number" },
+      });
+    });
+
+    it("validatePhoneNumber returns undefined for a complete phone number", () => {
+      component.model = "1+(111)111-1111";
+      const validator = component.validatePhoneNumber(
+        component.phoneNumberTemplate
+      );
+      const control = new FormControl("1+(111)111-1111");
+
+      const result: ValidationErrors | undefined = validator(
+        control as AbstractControl
+      );
+
+      expect(result).toBeUndefined();
     });
   });
 });
