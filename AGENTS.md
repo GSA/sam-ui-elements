@@ -24,6 +24,17 @@ This is a **raw-source, dual-workspace** Angular library, not a normal Angular C
 - The gate scripts are covered by `node --test scripts/check-coverage.test.mjs` and `node --test scripts/check-coverage-floor-not-decreased.test.mjs` (Node's built-in test runner, no extra deps). These are **not currently wired into any CI workflow** — run them manually after touching either script.
 - Playwright E2E smoke test (`test-app/e2e/`) runs via `npm --prefix test-app run test:e2e`, gated separately in `.github/workflows/e2e.yml`.
 
+### Playwright component-render harness (`test-app` gallery routes)
+
+`test-app` doubles as a real-browser render harness for library components that Vitest/jsdom can't meaningfully exercise (real layout, real CSS cascade, real animations). The convention, established in #665:
+
+- **One route per component/feature under test.** `test-app/src/app/app.module.ts` wires each gallery route (e.g. `/tabs` → `TabsGalleryComponent`) alongside the `/` home route that `smoke.spec.ts` asserts against. Add a new `<name>-gallery` component + route for each new component you need to render, rather than growing one shared route.
+- **`test-app/tsconfig.json` / `src/tsconfig.app.json` `paths`** map `@gsa-sam/sam-ui-elements` (and deep imports like `@gsa-sam/sam-ui-elements/src/ui-kit/experimental/tabs`) straight to the root `src/` tree, with `skipLibCheck: true` — this is what lets a gallery route import and render library source directly, the same way `vitest.config.mts`'s alias does for specs.
+- **`BrowserAnimationsModule`, not `NoopAnimationsModule`**, is registered in `app.module.ts` — real animations (e.g. `tab-body.ts`'s `translateTab` trigger) need to actually run for a browser test to exercise them.
+- **`test-app/esbuild/dedupe-angular-plugin.ts`** exists because library source under root `src/` and `test-app/src/app/**` resolve the same `@angular/*`/`rxjs`/`zone.js`/FontAwesome package names from two different `node_modules` starting points, which esbuild otherwise treats as two live copies — splitting Angular's DI-context tracking and throwing `NG0203 (MISSING_INJECTION_CONTEXT)`, or duplicating FontAwesome's icon registry, as soon as a root-tree component is instantiated. It forces every resolution of the shared package list to the single copy under `test-app/node_modules`. That package list lives in `test-app/dedupe-packages.ts` and is imported by both this plugin and `vitest.config.mts`'s `resolve.dedupe` — **edit that one file**, not either config, when the set of packages needing dedup changes; the two lists must stay identical or the next gallery route risks silently reintroducing `NG0203`.
+- `test-app/angular.json`'s `build`/`serve` targets use `@angular-builders/custom-esbuild` (still esbuild/Vite under the hood, not webpack) specifically so `dedupe-angular-plugin.ts` can be registered as a build plugin.
+- New e2e specs go in `test-app/e2e/`; assert deterministic, cascade-level properties (`getComputedStyle`/`toHaveCSS`, bounding boxes) rather than racing a fixed timeout against animation/detach timing — see `test-app/e2e/tabs.spec.ts`.
+
 ## Lint
 
 - `npm run lint` (root) / `npm --prefix test-app run lint` run `ng lint` (ESLint) per workspace.
