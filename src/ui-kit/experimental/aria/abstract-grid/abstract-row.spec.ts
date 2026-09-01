@@ -49,6 +49,22 @@ describe("AbstractRow", () => {
     expect(abstractRow.columnheaders.map((c) => c.key)).toEqual(["col"]);
   });
 
+  it("reuses the same AbstractCell instances in rowheaders/columnheaders as in cells", () => {
+    const row = buildRow([
+      { role: "columnheader", key: "col" },
+      { role: "rowheader", key: "row" },
+      { role: "gridcell", key: "a" },
+    ]);
+
+    const abstractRow = new AbstractRow(row);
+
+    const rowheaderInCells = abstractRow.cells.find((c) => c.key === "row");
+    const columnheaderInCells = abstractRow.cells.find((c) => c.key === "col");
+
+    expect(abstractRow.rowheaders[0]).toBe(rowheaderInCells);
+    expect(abstractRow.columnheaders[0]).toBe(columnheaderInCells);
+  });
+
   it("addCell appends a cell to the cells collection", () => {
     const row = buildRow([{ role: "gridcell", key: "a" }]);
     const abstractRow = new AbstractRow(row);

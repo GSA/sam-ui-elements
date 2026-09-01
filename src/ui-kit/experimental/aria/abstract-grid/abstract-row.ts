@@ -24,7 +24,7 @@ export class AbstractRow {
 
       this._setRowHeaders(cells, role);
 
-      return accumulator.concat(this._getCellsByRole(node, role));
+      return accumulator.concat(cells);
     }, []);
   }
 
