@@ -65,6 +65,7 @@ export class AbstractCombobox {
 
   private _setupInputEvents(): void {
     this._input.addEventListener("input", (e) => {
+      this._dispatcher.dispatch("input", e);
       this._dispatcher.dispatch("search", e);
     });
 
