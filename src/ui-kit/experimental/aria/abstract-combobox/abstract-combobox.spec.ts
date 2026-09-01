@@ -91,6 +91,19 @@ describe("AbstractCombobox", () => {
     expect(searchCalled).toBe(true);
   });
 
+  it("dispatches an input event whenever the input fires a native input event", () => {
+    const { input, combobox } = buildCombobox();
+    let inputCalled = false;
+
+    combobox.onInput(() => {
+      inputCalled = true;
+    }, {});
+
+    input.dispatchEvent(new Event("input"));
+
+    expect(inputCalled).toBe(true);
+  });
+
   it("ArrowRight moves the popup selection right and updates aria-activedescendant", () => {
     const { input, combobox } = buildCombobox();
     void combobox;
