@@ -3,7 +3,11 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "baseUrl": "./",
-    "types": []
+    "types": [],
+    "paths": {
+      "@gsa-sam/sam-ui-elements": ["../../index.ts"],
+      "@gsa-sam/sam-ui-elements/*": ["../../*"]
+    }
   },
   "exclude": ["test-setup.ts", "**/*.spec.ts"]
 }

@@ -93,7 +93,7 @@ describe("SamHierarchicalComponent", () => {
   });
 
   it("Should set the model property when the value is written ", () => {
-    let model = new HierarchicalTreeSelectedItemModel();
+    const model = new HierarchicalTreeSelectedItemModel();
     component.writeValue(model);
     expect(component.model).toBe(model);
   });
@@ -105,7 +105,7 @@ describe("SamHierarchicalComponent", () => {
     expect(component.disabled).toBe(false);
   });
 
-  it.skip("Should change to show mode when the modal is opened", () => {
+  it("Should change to show mode when the modal is opened", () => {
     component.onModalClick();
     expect(component.modal.show).toBeTruthy();
   });
@@ -116,9 +116,10 @@ describe("SamHierarchicalComponent", () => {
     expect(component.modal.show).toBe(false);
   });
 
-  it.skip("Should change to not show mode when the modal is closed", () => {
+  it("Should change to not show mode when the modal is closed", () => {
     component.onModalClick();
     expect(component.modal.show).toBeTruthy();
+    component.hierarchicaltree.results = [];
     component.onModalSubmitClick();
     expect(component.modal.show).toBe(false);
   });

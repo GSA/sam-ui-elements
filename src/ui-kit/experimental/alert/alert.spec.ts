@@ -1,59 +1,53 @@
-// import { TestBed } from '@angular/core/testing';
-// import { RouterTestingModule } from '@angular/router/testing';
-// import { By } from '@angular/platform-browser';
-// import { SimpleChanges } from '@angular/core';
-// import { SamIconsModule } from '../icon/icon.module';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { By } from "@angular/platform-browser";
+import { SamAlertNextComponent } from "./alert.component";
+import { SamIconsModule } from "../icon/icon.module";
 
-// // Load the implementations that should be tested
-// import { SamAlertNextComponent } from './alert.component';
+describe("The Sam Alert component", () => {
+  let component: SamAlertNextComponent;
+  let fixture: ComponentFixture<SamAlertNextComponent>;
 
-// const defaultConfig = {
-//   description: 'i-am-a-description',
-//   title: 'i-am-a-title',
-//   type: 'success',
-// };
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [SamAlertNextComponent],
+      imports: [SamIconsModule],
+    });
+    fixture = TestBed.createComponent(SamAlertNextComponent);
+    component = fixture.componentInstance;
+  });
 
-// describe.skip('The Sam Alert component', () => {
-//   describe('isolated tests', () => {
-//     let component: SamAlertNextComponent;
-//     beforeEach(() => {
-//       component = new SamAlertNextComponent();
-//     });
-//     it('should check if type is defined', () => {
-//       component.type = 'notAValidType';
-//       expect(component.typeNotDefined()).toBe(true);
-//       component.type = 'success';
-//       expect(component.typeNotDefined()).toBe(false);
-//       component.ngOnInit();
-//       expect(component.selectedType).toBe('sam-alert-success');
-//     });
-//   });
-//   describe('rendered tests', () => {
-//     let component: SamAlertNextComponent;
-//     let fixture: any;
+  it("should default to the success type when no type is set", () => {
+    component.type = undefined;
+    fixture.detectChanges();
+    expect(component.selectedType).toBe("sam-alert-success");
+    expect(component.selectedIcon).toBe(component.selectedIconTypes.success);
+  });
 
-//     beforeEach(() => {
-//       TestBed.configureTestingModule({
-//         declarations: [SamAlertNextComponent],
-//         imports: [RouterTestingModule, SamIconsModule],
-//       });
+  it("should apply the matching class and icon for a known type", () => {
+    component.type = "error";
+    fixture.detectChanges();
+    expect(component.selectedType).toBe("sam-alert-error");
+    expect(component.selectedIcon).toBe(component.selectedIconTypes.error);
+    const wrapper = fixture.debugElement.query(By.css(".sam-alert-error"));
+    expect(wrapper).not.toBeNull();
+  });
 
-//       fixture = TestBed.createComponent(SamAlertNextComponent);
-//       component = fixture.componentInstance;
-//       component.type = defaultConfig.type;
-//       fixture.detectChanges();
+  it("should keep the default success type when given an unknown type", () => {
+    component.type = "notAValidType";
+    fixture.detectChanges();
+    expect(component.typeNotDefined()).toBe(true);
+    expect(component.selectedType).toBe("sam-alert-success");
+  });
 
-//     });
-//     it('type check', () => {
-//       fixture.detectChanges();
-//       fixture.whenStable().then(() => {
-//         expect(
-//           fixture.debugElement.query(
-//             By.css('.sam-alert')
-//           ).nativeElement.className
-//         )
-//         .toContain('sam-alert-success');
-//       });
-//     });
-//   });
-// });
+  it("should treat an empty string type as not defined", () => {
+    component.type = "";
+    expect(component.typeNotDefined()).toBe(true);
+  });
+
+  it("should render the screen-reader text for the current type", () => {
+    component.type = "warning";
+    fixture.detectChanges();
+    const srText = fixture.debugElement.query(By.css(".sr-only"));
+    expect(srText.nativeElement.textContent.trim()).toBe("warning alert");
+  });
+});

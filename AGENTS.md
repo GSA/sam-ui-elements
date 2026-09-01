@@ -38,7 +38,18 @@ Assert `toBeVisible()`, computed style, focus order, and bounding boxes. **Do no
 Two related traps worth knowing:
 
 - **A spec can pass vacuously.** `picker.spec.ts` had a test asserting the datepicker calendar stays open when its button is clicked; it passed only because a `@ViewChild(..., { static: true })` query against an `*ngIf`-gated element was permanently `undefined`, so the guard early-returned. It asserted nothing while looking like coverage. When a spec exercises a defensive guard, confirm the guard is actually reachable.
-- **`test-app` cannot currently render library components at all** — no `paths` mapping to the root `src/`, and `app.module.ts` imports only `BrowserModule`. Adding a Playwright test for a component therefore also means harness work. The shared routed gallery shell (one route per component, stable URL) is being established in GSA/sam-ui-elements#665; check its state before hand-rolling scaffolding.
+- **`test-app` renders library components via the routed gallery shell** described below (established in #665) — a new component under test gets its own `<name>-gallery` route rather than hand-rolled harness scaffolding.
+
+### Playwright component-render harness (`test-app` gallery routes)
+
+`test-app` doubles as a real-browser render harness for library components that Vitest/jsdom can't meaningfully exercise (real layout, real CSS cascade, real animations). The convention, established in #665:
+
+- **One route per component/feature under test.** `test-app/src/app/app.module.ts` wires each gallery route (e.g. `/tabs` → `TabsGalleryComponent`) alongside the `/` home route that `smoke.spec.ts` asserts against. Add a new `<name>-gallery` component + route for each new component you need to render, rather than growing one shared route.
+- **`test-app/tsconfig.json` / `src/tsconfig.app.json` `paths`** map `@gsa-sam/sam-ui-elements` (and deep imports like `@gsa-sam/sam-ui-elements/src/ui-kit/experimental/tabs`) straight to the root `src/` tree, with `skipLibCheck: true` — this is what lets a gallery route import and render library source directly, the same way `vitest.config.mts`'s alias does for specs.
+- **`BrowserAnimationsModule`, not `NoopAnimationsModule`**, is registered in `app.module.ts` — real animations (e.g. `tab-body.ts`'s `translateTab` trigger) need to actually run for a browser test to exercise them.
+- **`test-app/esbuild/dedupe-angular-plugin.ts`** exists because library source under root `src/` and `test-app/src/app/**` resolve the same `@angular/*`/`rxjs`/`zone.js`/FontAwesome package names from two different `node_modules` starting points, which esbuild otherwise treats as two live copies — splitting Angular's DI-context tracking and throwing `NG0203 (MISSING_INJECTION_CONTEXT)`, or duplicating FontAwesome's icon registry, as soon as a root-tree component is instantiated. It forces every resolution of the shared package list to the single copy under `test-app/node_modules`. That package list lives in `test-app/dedupe-packages.ts` and is imported by both this plugin and `vitest.config.mts`'s `resolve.dedupe` — **edit that one file**, not either config, when the set of packages needing dedup changes; the two lists must stay identical or the next gallery route risks silently reintroducing `NG0203`.
+- `test-app/angular.json`'s `build`/`serve` targets use `@angular-builders/custom-esbuild` (still esbuild/Vite under the hood, not webpack) specifically so `dedupe-angular-plugin.ts` can be registered as a build plugin.
+- New e2e specs go in `test-app/e2e/`; assert deterministic, cascade-level properties (`getComputedStyle`/`toHaveCSS`, bounding boxes) rather than racing a fixed timeout against animation/detach timing — see `test-app/e2e/tabs.spec.ts`.
 
 ## Lint
 

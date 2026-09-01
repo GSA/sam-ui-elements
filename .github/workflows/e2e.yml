@@ -17,8 +17,18 @@ jobs:
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version-file: .nvmrc
+      # test-app compiles the library straight from the root `src/` tree
+      # (not from a published/installed package), so the root `node_modules`
+      # (@angular/core, @angular/cdk, rxjs, zone.js, etc. -- peerDependencies
+      # of the root package) must be present too, or esbuild can't resolve
+      # those imports from the library source files. `npm ci` (not `npm
+      # install --no-package-lock`) so this job resolves the exact versions
+      # pinned in package-lock.json, same as ci.yml -- otherwise an upstream
+      # major bump (e.g. rxjs 8) could silently enter this build unpinned.
+      - name: Install root dependencies
+        run: npm ci
       - name: Install test-app dependencies
-        run: npm install --prefix test-app --no-package-lock
+        run: npm ci --prefix test-app
       - name: Install Playwright browser
         run: npx playwright install --with-deps chromium
         working-directory: test-app
