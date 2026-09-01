@@ -98,6 +98,13 @@ export default defineConfig({
         "src/app/app.module.ts",
         "src/environments/**",
         "playwright.config.ts",
+        // Build tooling for the Playwright component-render harness, not
+        // library code: the esbuild dedupe plugin and the shared package
+        // list it exports to this config's resolve.dedupe. They run inside
+        // the bundler, so no spec can execute them; leaving them in scope
+        // only pads the denominator with permanently-0% files.
+        "dedupe-packages.ts",
+        "esbuild/**",
       ],
     },
   },
