@@ -35,6 +35,20 @@ describe("AbstractRow", () => {
     ]);
   });
 
+  it("populates rowheaders and columnheaders with their respective cells", () => {
+    const row = buildRow([
+      { role: "columnheader", key: "col" },
+      { role: "rowheader", key: "row" },
+      { role: "gridcell", key: "a" },
+      { role: "gridcell", key: "b" },
+    ]);
+
+    const abstractRow = new AbstractRow(row);
+
+    expect(abstractRow.rowheaders.map((c) => c.key)).toEqual(["row"]);
+    expect(abstractRow.columnheaders.map((c) => c.key)).toEqual(["col"]);
+  });
+
   it("addCell appends a cell to the cells collection", () => {
     const row = buildRow([{ role: "gridcell", key: "a" }]);
     const abstractRow = new AbstractRow(row);

@@ -43,9 +43,9 @@ export class AbstractRow {
 
   private _setRowHeaders(cells: AbstractCell[], role: CellRole): void {
     if (role === "rowheader") {
-      this.rowheaders.concat(cells);
+      this.rowheaders = this.rowheaders.concat(cells);
     } else if (role === "columnheader") {
-      this.columnheaders.concat(cells);
+      this.columnheaders = this.columnheaders.concat(cells);
     } else {
       return;
     }
