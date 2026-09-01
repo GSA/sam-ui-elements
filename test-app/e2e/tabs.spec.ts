@@ -23,6 +23,16 @@ test("switching tabs hides the previously active tab's content", async ({
   // animation to finish) to actually pin the previously-active tab's content
   // as hidden the instant the click happens, which is only true once
   // `[hidden]` wins the cascade.
-  await expect(firstTabContent).not.toBeVisible({ timeout: 100 });
+  // Deterministic form of the same assertion: rather than racing a fixed
+  // timeout against however long the runner takes to flip `[hidden]`
+  // (a loaded CI runner could need >100ms and produce a false red), assert
+  // the leaving tab body's computed `display` directly -- this is exactly
+  // the cascade property GH-665's fix (tab-group.scss `&[hidden]`) makes
+  // true, and it's true the instant Angular applies `[hidden]`, with no
+  // timing window to race.
+  const firstTabBody = page.locator("md-tab-body").filter({
+    has: firstTabContent,
+  });
+  await expect(firstTabBody).toHaveCSS("display", "none");
   await expect(secondTabContent).toBeVisible();
 });

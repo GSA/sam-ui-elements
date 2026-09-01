@@ -3,6 +3,7 @@ import { defineConfig } from "vite";
 import { coverageConfigDefaults } from "vitest/config";
 import { resolve } from "path";
 import angular from "@analogjs/vite-plugin-angular";
+import { DEDUPED_PACKAGES } from "./dedupe-packages";
 
 // Coverage settings MUST live in this root config. Vitest only reads
 // coverage options from the root vitest.config.ts; a shared/extended base
@@ -21,21 +22,9 @@ export default defineConfig({
     }),
   ],
   resolve: {
-    dedupe: [
-      "@angular/core",
-      "@angular/common",
-      "@angular/compiler",
-      "@angular/platform-browser",
-      "@angular/platform-browser-dynamic",
-      "@angular/forms",
-      "@angular/router",
-      "@angular/cdk",
-      "@angular/animations",
-      "@fortawesome/angular-fontawesome",
-      "@fortawesome/fontawesome-svg-core",
-      "rxjs",
-      "zone.js",
-    ],
+    // Shared with esbuild/dedupe-angular-plugin.ts (see dedupe-packages.ts)
+    // so the two lists can't silently drift out of sync again.
+    dedupe: DEDUPED_PACKAGES,
     alias: [
       {
         // Deep imports like "@gsa-sam/sam-ui-elements/src/ui-kit/experimental/tabs"

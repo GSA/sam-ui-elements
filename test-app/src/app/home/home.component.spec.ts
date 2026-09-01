@@ -6,7 +6,7 @@ describe("HomeComponent", () => {
       declarations: [HomeComponent],
     }).compileComponents();
   }));
-  it("should create the app", waitForAsync(() => {
+  it("should create", waitForAsync(() => {
     const fixture = TestBed.createComponent(HomeComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
@@ -16,7 +16,7 @@ describe("HomeComponent", () => {
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual("app");
   }));
-  it("should render title in a h1 tag", waitForAsync(() => {
+  it("should render the title in an h1", waitForAsync(() => {
     const fixture = TestBed.createComponent(HomeComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
