@@ -24,6 +24,22 @@ This is a **raw-source, dual-workspace** Angular library, not a normal Angular C
 - The gate scripts are covered by `node --test scripts/check-coverage.test.mjs` and `node --test scripts/check-coverage-floor-not-decreased.test.mjs` (Node's built-in test runner, no extra deps). These are **not currently wired into any CI workflow** — run them manually after touching either script.
 - Playwright E2E smoke test (`test-app/e2e/`) runs via `npm --prefix test-app run test:e2e`, gated separately in `.github/workflows/e2e.yml`.
 
+### Choosing between Vitest and Playwright
+
+Vitest is the primary tool and should cover component logic, inputs/outputs, `ControlValueAccessor` wiring, and lifecycle behavior. But the jsdom environment is **structurally incapable** of catching two classes of defect, and no amount of unit-spec effort will change that:
+
+- **Anything depending on the CSS cascade or layout.** jsdom does not apply a component's compiled `.scss`, so an author rule that beats the user-agent `[hidden] { display: none; }` looks correct in a spec (`getComputedStyle` reports `none`/`inline`) while the real browser renders both elements stacked.
+- **Anything depending on which element a real pointer actually hits.** A synthetic `el.click()` or a hand-built `{ target }` object dispatches against the element you named; a real mouse click hit-tests and can land on a nested child (e.g. an `.sr-only` span inside an icon button), which is what `event.target` comparisons then see.
+
+**Rule: when a bug is found that jsdom could not structurally have caught, its fix must include a Playwright test.** This grows the E2E suite along the actual risk surface rather than by component census — a blanket "E2E test per component" mandate would mostly re-assert what Vitest already covers faster. Playwright here is cheap to run (`fullyParallel: true`; nearly all of the ~2 min job is install + browser download + `ng serve` boot) and expensive to author, which is the opposite of the usual tradeoff.
+
+Assert `toBeVisible()`, computed style, focus order, and bounding boxes. **Do not add screenshot/visual-regression testing** for this class of bug — baseline churn and font-rendering flake cost more than they reveal, and explicit assertions state intent.
+
+Two related traps worth knowing:
+
+- **A spec can pass vacuously.** `picker.spec.ts` had a test asserting the datepicker calendar stays open when its button is clicked; it passed only because a `@ViewChild(..., { static: true })` query against an `*ngIf`-gated element was permanently `undefined`, so the guard early-returned. It asserted nothing while looking like coverage. When a spec exercises a defensive guard, confirm the guard is actually reachable.
+- **`test-app` renders library components via the routed gallery shell** described below (established in #665) — a new component under test gets its own `<name>-gallery` route rather than hand-rolled harness scaffolding.
+
 ### Playwright component-render harness (`test-app` gallery routes)
 
 `test-app` doubles as a real-browser render harness for library components that Vitest/jsdom can't meaningfully exercise (real layout, real CSS cascade, real animations). The convention, established in #665:
