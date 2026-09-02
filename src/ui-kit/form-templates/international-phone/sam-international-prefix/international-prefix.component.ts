@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   ViewChild,
   ElementRef,
+  OnInit,
 } from "@angular/core";
 
 import { FormControl } from "@angular/forms";
@@ -33,7 +34,7 @@ import { numberInputKeys } from "../number-input-keys";
   ],
   standalone: false,
 })
-export class SamInternationalPrefix extends SamFormControl {
+export class SamInternationalPrefix extends SamFormControl implements OnInit {
   @ViewChild("input", { static: true }) public input: ElementRef;
   private keys: KeyHelper = new KeyHelper(...numberInputKeys);
 

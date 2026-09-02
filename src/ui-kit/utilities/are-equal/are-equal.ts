@@ -36,7 +36,7 @@ export function areEqual(item1: any, item2: any): boolean {
       return true;
     }
 
-    let isArray1: boolean = item1 instanceof Array,
+    const isArray1: boolean = item1 instanceof Array,
       isArray2: boolean = item2 instanceof Array;
 
     if (isArray1 && isArray2) {

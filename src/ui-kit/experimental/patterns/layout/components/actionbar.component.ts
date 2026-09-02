@@ -1,4 +1,9 @@
-import { Component, ContentChild, Optional } from "@angular/core";
+import {
+  Component,
+  ContentChild,
+  Optional,
+  AfterContentInit,
+} from "@angular/core";
 import { SamPaginationNextComponent } from "../../../../layout/pagination/pagination.module";
 import { SamPageNextService } from "../architecture";
 
@@ -12,7 +17,7 @@ import { SamPageNextService } from "../architecture";
   `,
   standalone: false,
 })
-export class SamActionBarComponent {
+export class SamActionBarComponent implements AfterContentInit {
   @ContentChild(SamPaginationNextComponent, { static: true })
   public pagination: SamPaginationNextComponent;
 

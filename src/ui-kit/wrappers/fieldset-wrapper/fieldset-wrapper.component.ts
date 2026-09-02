@@ -4,6 +4,9 @@ import {
   ViewChild,
   HostListener,
   ChangeDetectorRef,
+  OnChanges,
+  AfterViewInit,
+  AfterViewChecked,
 } from "@angular/core";
 import { AbstractControl } from "@angular/forms";
 
@@ -12,7 +15,9 @@ import { AbstractControl } from "@angular/forms";
   templateUrl: "fieldset-wrapper.template.html",
   standalone: false,
 })
-export class FieldsetWrapper {
+export class FieldsetWrapper
+  implements OnChanges, AfterViewInit, AfterViewChecked
+{
   /**
    * sets the aria label for the anchor text
    */

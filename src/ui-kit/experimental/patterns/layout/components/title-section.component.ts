@@ -5,7 +5,7 @@ import { Directive, HostBinding, Input } from "@angular/core";
   standalone: false,
 })
 export class SamDatabankTitleSectionDirective {
-  @Input("id") id = "primary-content";
+  @Input() id = "primary-content";
   @HostBinding("class.sam") samClass = true;
   @HostBinding("class.heading") headingClass = true;
   @HostBinding("attr.id") attrId = this.id;

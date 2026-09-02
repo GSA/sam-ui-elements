@@ -28,7 +28,7 @@ describe("Column Directive", () => {
 
     it("Get column class value", function () {
       fixture.detectChanges();
-      let str = fixture.debugElement.query(By.css("div"));
+      const str = fixture.debugElement.query(By.css("div"));
       expect(str.nativeElement.getAttribute("class")).toContain("twelve");
     });
   });

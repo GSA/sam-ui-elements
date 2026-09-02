@@ -6,6 +6,8 @@ import {
   Output,
   EventEmitter,
   ChangeDetectorRef,
+  OnInit,
+  AfterViewInit,
 } from "@angular/core";
 import { LabelWrapper } from "../../wrappers/label-wrapper";
 import {
@@ -32,7 +34,9 @@ import { TextAreaWidthType } from "../../types";
   ],
   standalone: false,
 })
-export class SamTextareaComponent implements ControlValueAccessor {
+export class SamTextareaComponent
+  implements ControlValueAccessor, OnInit, AfterViewInit
+{
   /**
    * Sets the text input value
    */
@@ -210,7 +214,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
   setCharCounterMsg(value: string) {
     if (this.showCharCount) {
       if (this.value) {
-        let msg =
+        const msg =
           this.maxlength - value.length > 1 ? "characters " : "character ";
         this.characterCounterMsg =
           this.maxlength -

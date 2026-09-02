@@ -45,7 +45,7 @@ function testKey(key: string) {
   ) {
     const expected = true;
 
-    let event = prepMock(property, value);
+    const event = prepMock(property, value);
     const actual = KeyHelper.is(altKeyName || key, event);
 
     expect(expected).toBe(actual);
@@ -64,9 +64,9 @@ function prepMock(property: string, value: number | string) {
 }
 
 function createTests(key: string) {
-  let test = testKey(key);
-  let value = mocks.default[key];
-  let description = "Test " + key + " key";
+  const test = testKey(key);
+  const value = mocks.default[key];
+  const description = "Test " + key + " key";
 
   describe(description, () => {
     keyEventProps.forEach((prop) => {
@@ -95,13 +95,13 @@ function createTests(key: string) {
 
 function testSafari(key: string) {
   it("should work in Safari", () => {
-    let test = testKey(key);
+    const test = testKey(key);
     test("keyIdentifier", mocks.safari[key].keyIdentifier);
   });
 }
 
 function testMicrosoft(key: string) {
-  let test = testKey(key);
+  const test = testKey(key);
   it("should work in IE", () => {
     test("key", mocks.ie[key].key);
   });

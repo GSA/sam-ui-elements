@@ -32,7 +32,7 @@ export class SdsHeaderComponent {
    */
   select(id: string) {
     this.deselect();
-    let item = this.find(id);
+    const item = this.find(id);
     if (item) {
       item.selected = true;
     }

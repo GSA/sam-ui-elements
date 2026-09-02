@@ -6,6 +6,7 @@ import {
   EventEmitter,
   ElementRef,
   ViewChild,
+  OnInit,
 } from "@angular/core";
 import {
   FormControl,
@@ -36,7 +37,7 @@ export interface OptionModel {
   ],
   standalone: false,
 })
-export class SamListBoxComponent implements ControlValueAccessor {
+export class SamListBoxComponent implements ControlValueAccessor, OnInit {
   /**
    * Deprecated, Sets the bound value of the component
    */
@@ -188,7 +189,7 @@ export class SamListBoxComponent implements ControlValueAccessor {
       }
       this.currentItem = item;
       this.currentItem[this.HighlightedPropertyName] = true;
-      let message = item["lable"];
+      const message = item["lable"];
       this.addScreenReaderMessage(message);
     }
   }

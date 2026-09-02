@@ -2,7 +2,7 @@ export class SamHierarchicalTreeHeaderConfiguration {
   /**
    * Placeholder text for the Filter in the grid
    */
-  public filterPlaceholderText: String;
+  public filterPlaceholderText: string;
 
   /**
    * Mininumn Characters for search

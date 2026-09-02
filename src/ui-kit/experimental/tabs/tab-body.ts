@@ -107,7 +107,7 @@ export class MdTabBody implements OnInit, AfterViewChecked {
 
   /** The shifted index position of the tab body, where zero represents the active center tab. */
   _position: MdTabBodyPositionState;
-  @Input("position") set position(position: number) {
+  @Input() set position(position: number) {
     if (position < 0) {
       this._position = "left";
     } else if (position > 0) {
@@ -121,7 +121,7 @@ export class MdTabBody implements OnInit, AfterViewChecked {
   _origin: MdTabBodyOriginState;
 
   /** The origin position from which this tab should appear when it is centered into view. */
-  @Input("origin") set origin(origin: number) {
+  @Input() set origin(origin: number) {
     if (origin == null) {
       return;
     }

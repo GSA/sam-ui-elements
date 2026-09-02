@@ -73,7 +73,7 @@ export class DynamicChipsDirective implements OnInit {
   }
 
   private _renderChip(filter): void {
-    let chipRef = this._createChipComponent();
+    const chipRef = this._createChipComponent();
     this._setChipProperties(chipRef, filter);
   }
 

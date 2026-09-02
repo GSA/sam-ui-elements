@@ -5,6 +5,7 @@ import {
   ViewChild,
   ContentChildren,
   QueryList,
+  AfterContentInit,
 } from "@angular/core";
 import { SamSideNavigationToolbarItemComponent } from "../sideNavigationToolbarItem/sideNavigationToolbarItem.component";
 
@@ -14,7 +15,7 @@ import { SamSideNavigationToolbarItemComponent } from "../sideNavigationToolbarI
   styleUrls: ["./sideNavigationToolbar.component.scss"],
   standalone: false,
 })
-export class SamSideNavigationToolbarComponent {
+export class SamSideNavigationToolbarComponent implements AfterContentInit {
   /**
    * Containter of all the children of type SamSideNavigationToolbarItemComponent
    */

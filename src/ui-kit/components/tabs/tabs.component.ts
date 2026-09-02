@@ -8,6 +8,7 @@ import {
   Input,
   Output,
   EventEmitter,
+  OnChanges,
 } from "@angular/core";
 
 /**
@@ -75,7 +76,7 @@ export class SamTabComponent {
   `,
   standalone: false,
 })
-export class SamTabsComponent implements AfterContentInit {
+export class SamTabsComponent implements AfterContentInit, OnChanges {
   @ContentChildren(SamTabComponent) tabs: QueryList<SamTabComponent>;
 
   /**

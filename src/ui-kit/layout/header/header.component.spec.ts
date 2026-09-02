@@ -69,8 +69,8 @@ describe("SdsHeaderComponent", () => {
   });
 
   it("should remove white space", () => {
-    let before = "T E S T";
-    let after = "TEST";
+    const before = "T E S T";
+    const after = "TEST";
     expect(component.removeWhiteSpace(before)).toBe(after);
   });
 

@@ -11,6 +11,8 @@ import {
   ChangeDetectorRef,
   TemplateRef,
   OnDestroy,
+  OnInit,
+  AfterViewInit,
 } from "@angular/core";
 import {
   NG_VALUE_ACCESSOR,
@@ -46,7 +48,13 @@ export interface SamCache {
   standalone: false,
 })
 export class SamAutocompleteComponent
-  implements ControlValueAccessor, OnChanges, OnDestroy, SamCache
+  implements
+    ControlValueAccessor,
+    OnChanges,
+    OnDestroy,
+    SamCache,
+    OnInit,
+    AfterViewInit
 {
   @ViewChild("resultsList", { static: false }) resultsList: ElementRef;
   @ViewChild("resultsListKV", { static: false }) resultsListKV: ElementRef;
@@ -381,8 +389,8 @@ export class SamAutocompleteComponent
           return this.results.indexOf(this.inputValue) === -1;
         } else if (this.filteredKeyValuePairs) {
           let foundItem = false;
-          for (var i = 0; i < this.filteredKeyValuePairs.length; i++) {
-            let item = this.filteredKeyValuePairs[i];
+          for (let i = 0; i < this.filteredKeyValuePairs.length; i++) {
+            const item = this.filteredKeyValuePairs[i];
             if (item) {
               if (
                 item[this.config.keyValueConfig.valueProperty] ===
@@ -611,7 +619,7 @@ export class SamAutocompleteComponent
 
   setMessage(index): string {
     let message = "";
-    let isFirstItemFreeText = this.freeTextAvalible();
+    const isFirstItemFreeText = this.freeTextAvalible();
     if (index === 0 && isFirstItemFreeText) {
       message = this.inputValue + " - " + this.freeTextSubtext;
     } else if (this.results) {
@@ -643,7 +651,7 @@ export class SamAutocompleteComponent
 
     if (this.isFirstItem(selectedChildIndex)) {
       this.endOfList = true;
-      let child = children[children.length - 1];
+      const child = children[children.length - 1];
       child.classList.add("isSelected");
       this.selectedChild = child;
       this.activeDescendant = child.id;
@@ -666,7 +674,7 @@ export class SamAutocompleteComponent
           children[selectedChildIndex - 1].classList.contains("category")
         ) {
           this.endOfList = true;
-          let child = children[children.length - 1];
+          const child = children[children.length - 1];
           child.classList.add("isSelected");
           this.activeDescendant = child.id;
           this.selectedChild = child;
@@ -677,7 +685,7 @@ export class SamAutocompleteComponent
           return;
         }
       }
-      let child = children[selectedChildIndex - 1];
+      const child = children[selectedChildIndex - 1];
       child.classList.add("isSelected");
       this.selectedChild = child;
       this.activeDescendant = child.id;
@@ -688,7 +696,7 @@ export class SamAutocompleteComponent
   }
 
   listItemHover(index) {
-    let freeText = this.freeTextAvalible();
+    const freeText = this.freeTextAvalible();
     if (freeText) {
       ++index;
     }
@@ -700,7 +708,7 @@ export class SamAutocompleteComponent
       return;
     }
     const children = list.nativeElement.children;
-    let selectedChildIndex = this.getSelectedChildIndex(children);
+    const selectedChildIndex = this.getSelectedChildIndex(children);
     if (selectedChildIndex !== -1 && children[selectedChildIndex]) {
       children[selectedChildIndex].classList.remove("isSelected");
     }
@@ -727,7 +735,7 @@ export class SamAutocompleteComponent
   onEnterDown(list) {
     const children = list.nativeElement.children;
 
-    let freeText = this.freeTextAvalible();
+    const freeText = this.freeTextAvalible();
     let selectedChild = this.getSelectedChildIndex(children);
 
     if (selectedChild !== -1) {
@@ -1004,9 +1012,9 @@ export class SamAutocompleteComponent
         ? this.filteredKeyValuePairs
         : this.results;
     if (this.maxNumResultsToDisplay < resultsArray.length - 1) {
-      let scrollAreaHeight = element.nativeElement.offsetHeight;
-      let scrollTopPos = element.nativeElement.scrollTop;
-      let scrollAreaMaxHeight = element.nativeElement.scrollHeight;
+      const scrollAreaHeight = element.nativeElement.offsetHeight;
+      const scrollTopPos = element.nativeElement.scrollTop;
+      const scrollAreaMaxHeight = element.nativeElement.scrollHeight;
       if (scrollTopPos + scrollAreaHeight * 2 >= scrollAreaMaxHeight) {
         this.maxNumResultsToDisplay += this.STARTING_MAX_ITEMS;
       }
