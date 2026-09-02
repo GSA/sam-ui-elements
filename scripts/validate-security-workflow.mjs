@@ -47,6 +47,10 @@ if (!existsSync(workflowPath)) {
       /on:\s*\n(?=[\s\S]*pull_request:)(?=[\s\S]*push:\s*\n\s*branches:\s*\[master\])/,
     ],
     [
+      "supports manual dispatch, as documented",
+      /on:\s*\n(?=[\s\S]*workflow_dispatch:)/,
+    ],
+    [
       "uses least-privilege default permissions",
       /^permissions:\s*\n {2}contents:\s*read\s*$/m,
     ],

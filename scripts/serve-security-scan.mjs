@@ -59,8 +59,9 @@ createServer((request, response) => {
   const requestedPath = normalize(pathname).replace(/^(\.\.(\/|\\|$))+/, "");
   let filePath = join(root, requestedPath);
 
-  // Prevent path traversal outside the served root; fall back to the SPA
-  // index so client-side routes still resolve for the scanner.
+  // Prevent path traversal outside the served root: reject immediately
+  // with a 404 rather than falling back to the SPA index, so a traversal
+  // attempt never receives any served content.
   if (!filePath.startsWith(root)) {
     response.writeHead(404, securityHeaders).end("Not found");
     return;

@@ -92,7 +92,7 @@ test("fails when the security workflow is missing", () => {
   assert.match(result.stderr, /security\.yml exists/);
 });
 
-test("fails when the ZAP severity gate is disabled", () => {
+test("fails when ZAP's own rule actions are allowed to fail the scan", () => {
   const result = withMirror((dir) => {
     const path = join(dir, ".github/workflows/security.yml");
     const workflow = readFileSync(path, "utf8").replace(
