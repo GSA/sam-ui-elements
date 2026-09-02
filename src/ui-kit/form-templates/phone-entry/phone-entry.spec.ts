@@ -206,5 +206,83 @@ describe("The Sam Phone Entry component", () => {
 
       expect(result).toBeUndefined();
     });
+
+    it("writeValue() clears the model when a numbersOnly value is empty", () => {
+      component.numbersOnly = true;
+      component.writeValue("");
+      expect(component.model).toBe("");
+    });
+
+    it("writeValue() falls back to the template when a non-numbersOnly value is empty", () => {
+      component.numbersOnly = false;
+      component.writeValue("");
+      expect(component.model).toBe(component.phoneNumberTemplate);
+    });
+
+    it("preserves an existing control validator alongside the default one", () => {
+      const customValidator = vi.fn().mockReturnValue(null);
+      component.control = new FormControl("", customValidator);
+      component.useDefaultValidations = true;
+      component.ngOnInit();
+
+      component.control.updateValueAndValidity();
+
+      expect(customValidator).toHaveBeenCalled();
+    });
+
+    it("skips the default phone validator when useDefaultValidations is false", () => {
+      component.control = new FormControl("1+(111)___-____");
+      component.useDefaultValidations = false;
+      component.ngOnInit();
+
+      expect(component.control.errors).toBeNull();
+    });
+
+    it("formats an already-populated model with numbersOnly during ngOnInit", () => {
+      component.numbersOnly = true;
+      component.model = "5551234";
+      component.ngOnInit();
+      expect(component.phoneNumber).toContain("5551234".slice(0, 1));
+    });
+
+    it("process() moves the caret without altering the value on left/right arrow keys", () => {
+      el.nativeElement.focus();
+      el.nativeElement.setSelectionRange(2, 2);
+
+      el.triggerEventHandler("keydown", {
+        keyCode: 39,
+        preventDefault: () => undefined,
+      });
+
+      // process() always calls updateModel() at the end (even for the
+      // caret-move branches), syncing model to the still-unedited template.
+      expect(component.model).toBe(component.phoneNumberTemplate);
+    });
+
+    it("process() restores the phone number value on an unrecognized key", () => {
+      component.writeValue("1+(111)111-1111");
+      fixture.detectChanges();
+      el.nativeElement.focus();
+      el.nativeElement.setSelectionRange(2, 2);
+
+      el.triggerEventHandler("keydown", {
+        keyCode: 90,
+        key: "z",
+        preventDefault: () => undefined,
+      });
+
+      expect(el.nativeElement.value).toBe(component.phoneNumber);
+    });
+
+    it("getPositionIncrement() wraps to pos+1 when there is no further blank slot", () => {
+      const lastIndex = component.phoneNumberTemplate.length - 1;
+      expect(component.getPositionIncrement(lastIndex)).toBe(lastIndex + 1);
+    });
+
+    it("getPositionDecrement() wraps to the first blank slot when there is no earlier one", () => {
+      expect(component.getPositionDecrement(0)).toBe(
+        component.phoneNumberTemplate.indexOf("_")
+      );
+    });
   });
 });
