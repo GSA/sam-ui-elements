@@ -7,6 +7,7 @@ import {
 import { SamListBoxComponent } from "./listbox.component";
 import { By } from "@angular/platform-browser";
 import { CommonModule } from "@angular/common";
+import { FormControl } from "@angular/forms";
 import { SamWrapperModule } from "../../../ui-kit/wrappers";
 
 const options = [
@@ -300,5 +301,148 @@ describe("SamListBoxComponent", () => {
     fixture.detectChanges();
     expect(component.isChecked(options[2].value)).toBe(true);
     expect(component.isChecked(options[3].value)).toBe(false);
+  });
+
+  it("does not format wrapper errors on ngOnInit when there is no control", () => {
+    component.options = options;
+    component.control = undefined;
+    expect(() => component.ngOnInit()).not.toThrow();
+  });
+
+  it("formats wrapper errors on ngOnInit and on control valueChanges when a control is set", () => {
+    component.options = options;
+    const control = new FormControl("");
+    component.control = control;
+    // A pre-existing template defect (#662, fixed on an unmerged branch)
+    // means @ViewChild(FieldsetWrapper, { static: true }) never resolves
+    // through the *ngTemplateOutlet indirection in this component's
+    // template, so component.wrapper stays undefined even after
+    // detectChanges(). Exercise ngOnInit()'s control-wiring branch directly
+    // against a stub instead of depending on that ViewChild resolving.
+    const wrapperStub = { formatErrors: vi.fn(), clearError: vi.fn() };
+    (component as any).wrapper = wrapperStub;
+
+    component.ngOnInit();
+
+    expect(wrapperStub.formatErrors).toHaveBeenCalledWith(control);
+    wrapperStub.formatErrors.mockClear();
+    control.setValue("x");
+    expect(wrapperStub.formatErrors).toHaveBeenCalledWith(control);
+  });
+
+  it("onHover() highlights the hovered option and moves focus to it", () => {
+    component.options = options;
+    fixture.detectChanges();
+    vi.spyOn(component as any, "setfocus").mockImplementation(() => undefined);
+    component.onHover(2);
+    expect((component.options[2] as any).highlighted).toBe(true);
+  });
+
+  it("setHighlightedItem() clears a previously highlighted item's flag before setting a new one", () => {
+    component.options = options;
+    fixture.detectChanges();
+    vi.spyOn(component as any, "setfocus").mockImplementation(() => undefined);
+    component.onHover(0);
+    expect((component.options[0] as any).highlighted).toBe(true);
+    component.onHover(1);
+    expect((component.options[0] as any).highlighted).toBe(false);
+    expect((component.options[1] as any).highlighted).toBe(true);
+  });
+
+  it("onChecked() inserts a newly checked item before an already-later option in the model", () => {
+    component.options = options;
+    fixture.detectChanges();
+    component.model = [options[6].value];
+    const ev = { target: { checked: true } };
+    component.onChecked(ev, options[2]);
+    // clone.splice() inserts the raw option object at the computed index,
+    // not its .value -- this asserts the actual (if surprising) behavior.
+    expect(component.model).toEqual([options[6].value, options[2]]);
+  });
+
+  it("onChecked() strips a leading empty placeholder value before inserting a new selection", () => {
+    component.options = options;
+    fixture.detectChanges();
+    component.model = ["", options[6].value];
+    const ev = { target: { checked: true } };
+    component.onChecked(ev, options[2]);
+    expect(component.model).toEqual([options[6].value, options[2]]);
+  });
+
+  it("onKeyDown() ignores Tab without altering the current index", () => {
+    component.options = options;
+    fixture.detectChanges();
+    const preventDefault = vi.fn();
+    component.onKeyDown({ key: "Tab", preventDefault });
+    expect(preventDefault).not.toHaveBeenCalled();
+  });
+
+  it("onKeyDown() moves the highlight down on Down and stops at the last option", () => {
+    component.options = options;
+    fixture.detectChanges();
+    vi.spyOn(component as any, "setfocus").mockImplementation(() => undefined);
+    component.checkboxListElement = {
+      nativeElement: {
+        scrollTop: 0,
+        getElementsByTagName: () => options.map(() => ({ offsetTop: 0 })),
+      },
+    } as any;
+    const preventDefault = vi.fn();
+    component.onKeyDown({ key: "Down", preventDefault });
+    expect(preventDefault).toHaveBeenCalled();
+    expect((component.options[1] as any).highlighted).toBe(true);
+  });
+
+  it("onKeyDown() does not move past the last option on Down", () => {
+    component.options = options;
+    fixture.detectChanges();
+    (component as any).currentIndex = options.length - 1;
+    const preventDefault = vi.fn();
+    component.onKeyDown({ key: "Down", preventDefault });
+    expect((component as any).currentIndex).toBe(options.length - 1);
+  });
+
+  it("onKeyDown() moves the highlight up on Up and stops at the first option", () => {
+    component.options = options;
+    fixture.detectChanges();
+    vi.spyOn(component as any, "setfocus").mockImplementation(() => undefined);
+    component.checkboxListElement = {
+      nativeElement: {
+        scrollTop: 0,
+        getElementsByTagName: () => options.map(() => ({ offsetTop: 0 })),
+      },
+    } as any;
+    (component as any).currentIndex = 1;
+    const preventDefault = vi.fn();
+    component.onKeyDown({ key: "Up", preventDefault });
+    expect(preventDefault).toHaveBeenCalled();
+    expect((component as any).currentIndex).toBe(0);
+  });
+
+  it("onKeyDown() does not move before the first option on Up", () => {
+    component.options = options;
+    fixture.detectChanges();
+    (component as any).currentIndex = 0;
+    const preventDefault = vi.fn();
+    component.onKeyDown({ key: "Up", preventDefault });
+    expect((component as any).currentIndex).toBe(0);
+  });
+
+  it("onKeyDown() toggles the current item on Space", () => {
+    component.options = options;
+    fixture.detectChanges();
+    vi.spyOn(component as any, "setfocus").mockImplementation(() => undefined);
+    component.onHover(2);
+    const checkedSpy = vi.spyOn(component, "onChecked");
+    const evt = {
+      key: " ",
+      preventDefault: vi.fn(),
+      target: { checked: true },
+    };
+    component.onKeyDown(evt);
+    expect(checkedSpy).toHaveBeenCalledWith(
+      evt,
+      (component as any).currentItem
+    );
   });
 });

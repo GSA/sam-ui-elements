@@ -74,4 +74,76 @@ describe("SamHeaderNextComponent", () => {
       "notification icon exists"
     );
   });
+
+  describe("openMobileNav() / closeMobileNav() / navAnimationEnd()", () => {
+    beforeEach(() => {
+      fixture.detectChanges();
+    });
+
+    it("activates the mobile nav", () => {
+      component.openMobileNav();
+      expect(component.mobileNavActive).toBe(true);
+    });
+
+    it("deactivates the mobile nav and refocuses the open-nav button", () => {
+      component.mobileNavActive = true;
+      const focusSpy = vi.spyOn(component.openNavBtn.nativeElement, "focus");
+
+      component.closeMobileNav();
+
+      expect(component.mobileNavActive).toBe(false);
+      expect(focusSpy).toHaveBeenCalled();
+    });
+
+    it("focuses the close-nav button once the open animation ends", () => {
+      const focusSpy = vi.spyOn(component.closeNavBtn.nativeElement, "focus");
+
+      component.navAnimationEnd();
+
+      expect(focusSpy).toHaveBeenCalled();
+    });
+  });
+
+  describe("onBrowserResize()", () => {
+    beforeEach(() => {
+      fixture.detectChanges();
+    });
+
+    it("deactivates the mobile nav when it's active and the close button is no longer visible", () => {
+      component.mobileNavActive = true;
+      vi.spyOn(
+        component.closeNavBtn.nativeElement,
+        "getBoundingClientRect"
+      ).mockReturnValue({ width: 0 } as DOMRect);
+
+      component.onBrowserResize({} as Event);
+
+      expect(component.mobileNavActive).toBe(false);
+    });
+
+    it("leaves the mobile nav active when the close button is still visible", () => {
+      component.mobileNavActive = true;
+      vi.spyOn(
+        component.closeNavBtn.nativeElement,
+        "getBoundingClientRect"
+      ).mockReturnValue({ width: 40 } as DOMRect);
+
+      component.onBrowserResize({} as Event);
+
+      expect(component.mobileNavActive).toBe(true);
+    });
+
+    it("does nothing when the mobile nav is not active", () => {
+      component.mobileNavActive = false;
+      const getRectSpy = vi.spyOn(
+        component.closeNavBtn.nativeElement,
+        "getBoundingClientRect"
+      );
+
+      component.onBrowserResize({} as Event);
+
+      expect(getRectSpy).not.toHaveBeenCalled();
+      expect(component.mobileNavActive).toBe(false);
+    });
+  });
 });

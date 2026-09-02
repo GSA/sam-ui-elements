@@ -81,4 +81,106 @@ describe("Sam Multiselect Dropdown Component", function () {
       expect(label[0].innerHTML).toContain(component.label);
     });
   });
+
+  describe("labelForValue()", () => {
+    it("returns undefined when the value does not match any option", () => {
+      expect(component.labelForValue("unknown")).toBeUndefined();
+    });
+
+    it("returns the label for a matching option", () => {
+      expect(component.labelForValue("ma")).toBe("Maryland");
+    });
+  });
+
+  describe("updateLabel()", () => {
+    it("throws when model.length is not a valid, comparable number", () => {
+      // NaN fails every branch condition (===0, ===1, >1 with equal option
+      // count, >1) so execution falls through to the final else.
+      component.model = { length: NaN } as any;
+      expect(() => component.updateLabel()).toThrow(
+        "Unable to display dropdown label"
+      );
+    });
+  });
+
+  describe("isEnterEvent()", () => {
+    it("returns true for a click event", () => {
+      expect(component.isEnterEvent({ type: "click" })).toBe(true);
+    });
+
+    it("returns true when keyCode matches the enter constant used in this component", () => {
+      expect(component.isEnterEvent({ type: "keydown", keyCode: 32 })).toBe(
+        true
+      );
+    });
+
+    it("returns true when keyCode matches the space constant used in this component", () => {
+      expect(component.isEnterEvent({ type: "keydown", keyCode: 13 })).toBe(
+        true
+      );
+    });
+
+    it("returns false for an unrelated keydown", () => {
+      expect(component.isEnterEvent({ type: "keydown", keyCode: 65 })).toBe(
+        false
+      );
+    });
+  });
+
+  describe("toggleItemList()", () => {
+    it("toggles the list's visibility to visible when triggered by a click", () => {
+      component.list = {
+        nativeElement: { style: { visibility: "hidden" } },
+      } as any;
+      component.toggleItemList({ type: "click" });
+      expect(component.list.nativeElement.style.visibility).toBe("visible");
+    });
+
+    it("toggles the list's visibility back to hidden on a second click", () => {
+      component.list = {
+        nativeElement: { style: { visibility: "visible" } },
+      } as any;
+      component.toggleItemList({ type: "click" });
+      expect(component.list.nativeElement.style.visibility).toBe("hidden");
+    });
+
+    it("does nothing for an event that is not click/enter/space", () => {
+      component.list = {
+        nativeElement: { style: { visibility: "hidden" } },
+      } as any;
+      component.toggleItemList({ type: "keydown", keyCode: 65 });
+      expect(component.list.nativeElement.style.visibility).toBe("hidden");
+    });
+  });
+
+  describe("onMoveOutside()", () => {
+    it("hides the list when it is currently visible", () => {
+      component.list = {
+        nativeElement: { style: { visibility: "visible" } },
+      } as any;
+      component.onMoveOutside();
+      expect(component.list.nativeElement.style.visibility).toBe("hidden");
+    });
+
+    it("does nothing when the list is already hidden", () => {
+      component.list = {
+        nativeElement: { style: { visibility: "hidden" } },
+      } as any;
+      component.onMoveOutside();
+      expect(component.list.nativeElement.style.visibility).toBe("hidden");
+    });
+  });
+
+  describe("modelChanged()", () => {
+    it("refreshes the label and emits the new model", () => {
+      const spy = vi.fn();
+      component.modelChange.subscribe(spy);
+      component.model = ["ma"];
+
+      component.modelChanged(["ma"]);
+
+      expect(component.elementLabel).toBe("Maryland");
+      expect(spy).toHaveBeenCalledWith(["ma"]);
+    });
+  });
 });
