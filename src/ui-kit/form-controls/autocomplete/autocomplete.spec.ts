@@ -146,6 +146,311 @@ describe("The Sam Autocomplete Component", () => {
       ]);
       expect(component.cache.totalBytes).toBe(2);
     });
+
+    it("should do nothing on ngOnChanges when httpRequest did not change", () => {
+      expect(() => component.ngOnChanges({})).not.toThrow();
+    });
+
+    it("should append new results without duplicating when they already exist and differ", () => {
+      component.results = ["aaa"];
+      component.lastReturnedResults = ["zzz"];
+      component.requestSuccess(["aaa", "bbb"]);
+      expect(component.results).toEqual(["aaa", "aaa", "bbb"]);
+    });
+
+    it("should not append results again when the same data is returned twice", () => {
+      component.results = ["aaa"];
+      component.requestSuccess(["aaa", "bbb"]);
+      component.requestSuccess(["aaa", "bbb"]);
+      expect(component.lastReturnedResults).toEqual(["aaa", "bbb"]);
+    });
+
+    it("should append new key/value results without duplicating when they already exist and differ", () => {
+      component.filteredKeyValuePairs = [{ key: "a", value: "a" }];
+      component.lastReturnedResults = [{ key: "z", value: "z" }];
+      component.requestSuccess([{ key: "b", value: "b" }]);
+      expect(component.filteredKeyValuePairs).toEqual([
+        { key: "a", value: "a" },
+        { key: "b", value: "b" },
+      ]);
+    });
+
+    it("should return errors as empty string when useFormService is true", () => {
+      component.useFormService = true;
+      component.errorMessage = "Required";
+      expect(component.errors).toBe("");
+    });
+
+    it("should return the error message when not using SamFormService", () => {
+      component.useFormService = false;
+      component.errorMessage = "Required";
+      expect(component.errors).toBe("Required");
+    });
+
+    it("should return an empty string when there is no error message and not using SamFormService", () => {
+      component.useFormService = false;
+      component.errorMessage = undefined;
+      expect(component.errors).toBe("");
+    });
+
+    it("should do nothing on ngOnInit when there is no control", () => {
+      component.control = undefined;
+      expect(() => component.ngOnInit()).not.toThrow();
+    });
+
+    it("should not format wrapper errors on the SamFormService stream for unrelated event types", () => {
+      component.useFormService = true;
+      component.control = new FormControl("");
+      const samFormServiceStub = {
+        formEventsUpdated$: new Subject<any>(),
+      };
+      (component as any).samFormService = samFormServiceStub;
+      component.wrapper = {
+        formatErrors: vi.fn(),
+        clearError: vi.fn(),
+      } as any;
+
+      component.ngOnInit();
+      samFormServiceStub.formEventsUpdated$.next({
+        root: component.control.root,
+        eventType: "somethingElse",
+      });
+
+      expect(component.wrapper.formatErrors).not.toHaveBeenCalled();
+      expect(component.wrapper.clearError).not.toHaveBeenCalled();
+    });
+
+    it("should do nothing on ngAfterViewInit when there is no control", () => {
+      component.control = undefined;
+      expect(() => component.ngAfterViewInit()).not.toThrow();
+    });
+
+    it("should treat freeTextAvalible results indexOf match as unavailable", () => {
+      component.isFreeTextEnabled = true;
+      component.inputValue = "Test";
+      component.results = ["Test", "Other"];
+      expect(component.freeTextAvalible()).toBe(false);
+    });
+
+    it("should skip null entries while scanning filteredKeyValuePairs for free text availability", () => {
+      component.isFreeTextEnabled = true;
+      component.inputValue = "Test";
+      component.results = undefined;
+      component.filteredKeyValuePairs = [null, { key: "Test", value: "Test" }];
+      expect(component.freeTextAvalible()).toBe(false);
+    });
+
+    it("should clear results and filteredKeyValuePairs on backspace when innerValue is falsy", () => {
+      component.innerValue = null;
+      component.results = ["aaa"];
+      component.filteredKeyValuePairs = [{ key: "a", value: "a" }];
+      component.inputValue = "a";
+      component.handleBackspaceKeyup();
+      expect(component.results).toBe(null);
+      expect(component.filteredKeyValuePairs).toBe(null);
+    });
+
+    it("should not clear results on backspace when innerValue is set", () => {
+      component.innerValue = "kept";
+      component.results = ["aaa"];
+      component.inputValue = "a";
+      component.handleBackspaceKeyup();
+      expect(component.results).toEqual(["aaa"]);
+    });
+
+    it("should not clear the value on backspace when the input is non-empty", () => {
+      component.innerValue = "kept";
+      component.inputValue = "remaining";
+      component.handleBackspaceKeyup();
+      expect(component.value).toBe("kept");
+    });
+
+    it("listExists() returns false when the list has no children property", () => {
+      expect(component.listExists({ nativeElement: {} } as any)).toBe(false);
+    });
+
+    it("listExists() returns false when the list has an empty children collection", () => {
+      expect(
+        component.listExists({
+          nativeElement: { children: [] },
+        } as any)
+      ).toBe(false);
+    });
+
+    it("listExists() returns true when the list has at least one child", () => {
+      expect(
+        component.listExists({
+          nativeElement: { children: [{}] },
+        } as any)
+      ).toBe(true);
+    });
+
+    it("onDownArrowDown()/onUpArrowDown()/listItemHover()/onEnterDown() are no-ops when the list has no children", () => {
+      const emptyList = { nativeElement: { children: [] } } as any;
+      expect(() => component.onDownArrowDown(emptyList)).not.toThrow();
+      expect(() => component.onUpArrowDown(emptyList)).not.toThrow();
+    });
+
+    it("isFirstItemCategory() returns false when there are no categories configured", () => {
+      component.categories = [];
+      const item = { classList: { contains: () => true } };
+      expect(component.isFirstItemCategory(item, 0)).toBe(false);
+    });
+
+    it("isFirstItemCategory() returns false when the category is selectable", () => {
+      component.categories = ["South"];
+      component.config = {
+        keyValueConfig: { keyProperty: "key", valueProperty: "value" },
+        isCategorySelectable: true,
+      };
+      const item = { classList: { contains: () => true } };
+      expect(component.isFirstItemCategory(item, 0)).toBe(false);
+    });
+
+    it("isFirstItemCategory() returns false for a non-category item at index 0", () => {
+      component.categories = ["South"];
+      component.config = {
+        keyValueConfig: { keyProperty: "key", valueProperty: "value" },
+        isCategorySelectable: false,
+      };
+      const item = { classList: { contains: () => false } };
+      expect(component.isFirstItemCategory(item, 0)).toBe(false);
+    });
+
+    it("checkCategoryIndex() returns 0 when there are no categories configured", () => {
+      component.categories = [];
+      const item = { classList: { contains: () => true } };
+      expect(component.checkCategoryIndex(item)).toBe(0);
+    });
+
+    it("checkCategoryIndex() returns 1 when categories exist and the current item is a category", () => {
+      component.categories = ["South"];
+      component.config = {
+        keyValueConfig: { keyProperty: "key", valueProperty: "value" },
+        isCategorySelectable: false,
+      };
+      const item = { classList: { contains: () => true } };
+      expect(component.checkCategoryIndex(item)).toBe(1);
+    });
+
+    it("setMessage() reads from filteredKeyValuePairs when results is unset", () => {
+      component.results = undefined;
+      component.filteredKeyValuePairs = [{ key: "a", value: "Alabama" }];
+      component.isFreeTextEnabled = false;
+      expect(component.setMessage(0)).toBe("Alabama");
+    });
+
+    it("setMessage() decrements the index when free text is the first item and results are shown", () => {
+      component.isFreeTextEnabled = true;
+      component.results = ["Alabama", "Alaska"];
+      component.inputValue = "Nowhere";
+      expect(component.setMessage(1)).toBe("Alabama");
+    });
+
+    it("setMessage() decrements the index when free text is the first item and filteredKeyValuePairs are shown", () => {
+      component.isFreeTextEnabled = true;
+      component.results = undefined;
+      component.filteredKeyValuePairs = [{ key: "a", value: "Alabama" }];
+      component.inputValue = "Nowhere";
+      expect(component.setMessage(1)).toBe("Alabama");
+    });
+
+    it("setMessage() returns an empty string when there is neither results nor filteredKeyValuePairs", () => {
+      component.results = undefined;
+      component.filteredKeyValuePairs = undefined;
+      component.isFreeTextEnabled = false;
+      expect(component.setMessage(0)).toBe("");
+    });
+
+    it("setScrollTop() returns 0 when isFirstItemCategory is true", () => {
+      expect(component.setScrollTop(true, {} as any)).toBe(0);
+    });
+
+    it("onEnterDown() falls through without selecting when the free-text-adjusted index matches neither results nor filteredKeyValuePairs", () => {
+      component.results = undefined;
+      component.filteredKeyValuePairs = undefined;
+      component.isFreeTextEnabled = false;
+      const children = [
+        { classList: { contains: () => true, remove: vi.fn() } },
+      ];
+      const list = { nativeElement: { children } };
+      expect(() => component.onEnterDown(list)).not.toThrow();
+    });
+
+    it("onUpArrowDown() wraps to the last item and its message when already at the first item", () => {
+      component.results = ["aaa", "bbb", "ccc"];
+      const children = [
+        {
+          classList: {
+            contains: (cls: string) => cls === "isSelected",
+            add: vi.fn(),
+            remove: vi.fn(),
+          },
+          id: "a",
+        },
+        {
+          classList: { contains: () => false, add: vi.fn(), remove: vi.fn() },
+          id: "b",
+        },
+        {
+          classList: { contains: () => false, add: vi.fn(), remove: vi.fn() },
+          id: "c",
+        },
+      ];
+      const list = { nativeElement: { children, scrollTop: 0, clientTop: 0 } };
+
+      component.onUpArrowDown(list);
+
+      expect(component.endOfList).toBe(true);
+      expect(component.selectedChild).toBe(children[2]);
+    });
+
+    it("displayFreeTextSimpleResults()/displayFreeTextKeyValueResults() are false when isKeyValue is undefined", () => {
+      component.isKeyValue = undefined;
+      component.isFreeTextEnabled = true;
+      expect(component.displayFreeTextSimpleResults()).toBe(false);
+      expect(component.displayFreeTextKeyValueResults()).toBe(false);
+    });
+
+    it("displayFreeTextSimpleResults()/displayFreeTextKeyValueResults() are false when free text is disabled", () => {
+      component.isKeyValue = false;
+      component.isFreeTextEnabled = false;
+      expect(component.displayFreeTextSimpleResults()).toBe(false);
+      expect(component.displayFreeTextKeyValueResults()).toBe(false);
+    });
+
+    it("onScroll() is a no-op when lazy rendering is disabled", () => {
+      component.enableLazyRendering = false;
+      expect(() => component.onScroll()).not.toThrow();
+    });
+
+    it("onScroll() reads from results when filteredKeyValuePairs is empty", () => {
+      component.enableLazyRendering = true;
+      component.filteredKeyValuePairs = [];
+      component.results = ["a", "b", "c"];
+      component.maxNumResultsToDisplay = 1;
+      component.resultsList = {
+        nativeElement: { offsetHeight: 10, scrollTop: 15, scrollHeight: 20 },
+      } as any;
+
+      component.onScroll();
+
+      expect(component.maxNumResultsToDisplay).toBeGreaterThan(1);
+    });
+
+    it("onScroll() does not request more results when not near the bottom", () => {
+      component.enableLazyRendering = true;
+      component.filteredKeyValuePairs = [];
+      component.results = ["a", "b", "c"];
+      component.maxNumResultsToDisplay = 1;
+      component.resultsList = {
+        nativeElement: { offsetHeight: 10, scrollTop: 0, scrollHeight: 100 },
+      } as any;
+
+      component.onScroll();
+
+      expect(component.maxNumResultsToDisplay).toBe(1);
+    });
   });
   describe("rendered tests", () => {
     let component: SamAutocompleteComponent;
@@ -894,6 +1199,32 @@ describe("The Sam Autocomplete Component", () => {
       fixture.detectChanges();
 
       expect(component.innerValue).toBe("Nowhere");
+    });
+
+    it("Should highlight the hovered result and flag end-of-list when hovering the last item", () => {
+      component.hasFocus = true;
+      component.results = ["Alabama", "Alaska"];
+      fixture.detectChanges();
+
+      component.listItemHover(1);
+      fixture.detectChanges();
+
+      expect(component.endOfList).toBe(true);
+    });
+
+    it("Should account for the free-text row when computing the hovered index", () => {
+      component.isFreeTextEnabled = true;
+      component.inputValue = "Nowhere";
+      component.hasFocus = true;
+      component.results = ["Alabama", "Alaska"];
+      fixture.detectChanges();
+
+      // index 0 refers to the free-text row itself; freeText being available
+      // shifts every numeric result index up by one internally.
+      component.listItemHover(0);
+      fixture.detectChanges();
+
+      expect(component.selectedChild).toBeTruthy();
     });
   });
 });

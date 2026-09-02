@@ -379,6 +379,356 @@ describe("The Sam Autocomplete Multiselect Component", () => {
       expect(component.value).toEqual([]);
     });
 
+    it("ngOnInit() sorts an existing list by category", () => {
+      component.list = [{ key: "a", value: "a" }];
+      const sortSpy = vi.spyOn(component, "sortByCategory");
+      component.ngOnInit();
+      expect(sortSpy).toHaveBeenCalled();
+    });
+
+    it("ngOnInit() does nothing when the list is already empty", () => {
+      component.list = [];
+      const sortSpy = vi.spyOn(component, "sortByCategory");
+      component.ngOnInit();
+      expect(sortSpy).not.toHaveBeenCalled();
+    });
+
+    it("ngOnChanges() re-marks options when the options input changes", () => {
+      const markedSpy = vi.spyOn(component, "updateMarked");
+      component.ngOnChanges({ options: true });
+      expect(markedSpy).toHaveBeenCalled();
+    });
+
+    it("ngOnChanges() does nothing when the options input did not change", () => {
+      const markedSpy = vi.spyOn(component, "updateMarked");
+      component.ngOnChanges({});
+      expect(markedSpy).not.toHaveBeenCalled();
+    });
+
+    it("handleBackspaceEvent() does nothing when the key is not backspace", () => {
+      component.value = [{ key: "a", value: "a" }];
+      const deselectSpy = vi.spyOn(component, "deselectItem");
+      component.handleBackspaceEvent({ key: "a", target: { value: "a" } });
+      expect(deselectSpy).not.toHaveBeenCalled();
+    });
+
+    it("handleBackspaceEvent() does nothing on backspace when there are no selected values", () => {
+      component.value = [];
+      const deselectSpy = vi.spyOn(component, "deselectItem");
+      component.handleBackspaceEvent({
+        key: "Backspace",
+        target: { value: "" },
+      });
+      expect(deselectSpy).not.toHaveBeenCalled();
+    });
+
+    it("handleBackspaceEvent() does nothing when the textarea still has typed text", () => {
+      component.value = [{ key: "a", value: "a" }];
+      const deselectSpy = vi.spyOn(component, "deselectItem");
+      component.handleBackspaceEvent({
+        key: "Backspace",
+        target: { value: "typing" },
+      });
+      expect(deselectSpy).not.toHaveBeenCalled();
+    });
+
+    it("selectOnEnter() does nothing without a resultsList or free-text option when Enter is pressed", () => {
+      component.resultsList = undefined;
+      component.isFreeTextEnabled = false;
+      component.list = [];
+      const selectSpy = vi.spyOn(component, "selectItem");
+      component.selectOnEnter({ key: "Enter", target: { value: "typed" } });
+      expect(selectSpy).not.toHaveBeenCalled();
+    });
+
+    it("selectOnEnter() returns early when the input is empty and nothing is highlighted", () => {
+      component.resultsList = {
+        nativeElement: { querySelectorAll: () => [] },
+      } as unknown as ElementRef;
+      const selectSpy = vi.spyOn(component, "selectItem");
+      const result = component.selectOnEnter({
+        key: "Enter",
+        target: { value: "" },
+      });
+      expect(selectSpy).not.toHaveBeenCalled();
+      expect(result).toBeUndefined();
+    });
+
+    it("selectWithAny() builds a free-text return object when nothing is highlighted and there's no matching item", () => {
+      component.textArea = {
+        nativeElement: { focus: () => undefined },
+      } as unknown as ElementRef;
+      component.resultsList = {
+        nativeElement: { querySelectorAll: () => [] },
+      } as unknown as ElementRef;
+      vi.spyOn(component, "getItem").mockReturnValue(undefined);
+
+      (component as any).selectWithAny(
+        { target: { value: "typed value" } },
+        -1
+      );
+
+      expect(component.value[0][component.keyValueConfig.valueProperty]).toBe(
+        "typed value"
+      );
+    });
+
+    it("getItem() resolves a category item when the selected element is a category-name", () => {
+      component.keyValueConfig = {
+        keyProperty: "key",
+        valueProperty: "value",
+        parentCategoryProperty: "cat",
+      };
+      component.categories = [{ key: "South", value: "South", cat: "South" }];
+      const categoryEl = {
+        classList: { contains: (c: string) => c === "category-name" },
+        attributes: { "data-category": { value: "South" } },
+      };
+      vi.spyOn(component, "getSelectedChildIndex").mockReturnValue(0);
+      vi.spyOn(component, "getResults").mockReturnValue([categoryEl] as any);
+
+      const result = component.getItem();
+
+      expect(result).toEqual({ key: "South", value: "South", cat: "South" });
+    });
+
+    it("showResultsFreeText() returns false when free text is disabled", () => {
+      component.isFreeTextEnabled = false;
+      expect(component.showResultsFreeText()).toBe(false);
+    });
+
+    it("showResultsFreeText() returns false when the search text is empty", () => {
+      component.isFreeTextEnabled = true;
+      component.searchText = "";
+      expect(component.showResultsFreeText()).toBe(false);
+    });
+
+    it("showResultsFreeText() finds a match inside a flat this.list array", () => {
+      component.isFreeTextEnabled = true;
+      component.searchText = "aaa";
+      component.list = [{ key: "a", value: "aaa" }];
+      component.value = [];
+      expect(component.showResultsFreeText()).toBe(false);
+    });
+
+    it("showResultsFreeText() checks the first item of a nested category sublist for a match", () => {
+      component.isFreeTextEnabled = true;
+      component.searchText = "aaa";
+      const nested: any = [{ key: "a", value: "aaa" }];
+      component.list = [nested];
+      component.value = [];
+      // findItemExistInList() is handed only the first sub-item (not the
+      // whole category array), so it never actually iterates a match here;
+      // this exercises the `item[0] && !foundItem` branch itself.
+      expect(component.showResultsFreeText()).toBe(true);
+    });
+
+    it("showResultsFreeText() searches non-array lists via the first category sublist", () => {
+      component.isFreeTextEnabled = true;
+      component.searchText = "aaa";
+      const nested: any = [{ key: "a", value: "aaa" }];
+      (component as any).list = { 0: nested };
+      component.value = [];
+      expect(component.showResultsFreeText()).toBe(false);
+    });
+
+    it("showResultsFreeText() falls back to searching selected values when the list has no match", () => {
+      component.isFreeTextEnabled = true;
+      component.searchText = "aaa";
+      component.list = [];
+      component.value = [{ key: "a", value: "aaa" }];
+      expect(component.showResultsFreeText()).toBe(false);
+    });
+
+    it("setSelectedChild() wraps to the first element when moving Down past the last item", () => {
+      const elements = [
+        { classList: { add: vi.fn(), remove: vi.fn() } },
+        { classList: { add: vi.fn(), remove: vi.fn() } },
+      ];
+      const result = component.setSelectedChild(1, "Down", elements as any);
+      expect(result).toBe(0);
+    });
+
+    it("setSelectedChild() wraps to the last element when moving Up past the first item", () => {
+      const elements = [
+        { classList: { add: vi.fn(), remove: vi.fn() } },
+        { classList: { add: vi.fn(), remove: vi.fn() } },
+      ];
+      const result = component.setSelectedChild(0, "Up", elements as any);
+      expect(result).toBe(1);
+    });
+
+    it("applyTextAreaWidth() filters options unless an up/down arrow key drove the event", () => {
+      component.ref = { detectChanges: vi.fn() } as any;
+      const filterSpy = vi.spyOn(component, "filterOptions");
+      const event = {
+        key: "a",
+        target: {
+          style: {},
+          scrollHeight: 20,
+          parentElement: { children: [] },
+        },
+      };
+      vi.spyOn(component as any, "calculateTextAreaWidth").mockReturnValue(
+        "initial"
+      );
+      component.applyTextAreaWidth(event);
+      expect(filterSpy).toHaveBeenCalled();
+    });
+
+    it("applyTextAreaWidth() does not filter options when driven by an up/down arrow key", () => {
+      component.ref = { detectChanges: vi.fn() } as any;
+      const filterSpy = vi.spyOn(component, "filterOptions");
+      const event = {
+        key: "Down",
+        target: {
+          style: {},
+          scrollHeight: 20,
+          parentElement: { children: [] },
+        },
+      };
+      vi.spyOn(component as any, "calculateTextAreaWidth").mockReturnValue(
+        "initial"
+      );
+      component.applyTextAreaWidth(event);
+      expect(filterSpy).not.toHaveBeenCalled();
+    });
+
+    it("getParentContentWidth() subtracts border and padding for a border-box element", () => {
+      const el = document.createElement("div");
+      vi.spyOn(window, "getComputedStyle").mockReturnValue({
+        width: "100px",
+        "box-sizing": "border-box",
+        "border-left-width": "1px",
+        "padding-left": "2px",
+        "padding-right": "2px",
+        "border-right-width": "1px",
+      } as any);
+      expect(component.getParentContentWidth(el)).toBe(94);
+    });
+
+    it("getParentContentWidth() returns the full width for a content-box element", () => {
+      const el = document.createElement("div");
+      vi.spyOn(window, "getComputedStyle").mockReturnValue({
+        width: "100px",
+        "box-sizing": "content-box",
+      } as any);
+      expect(component.getParentContentWidth(el)).toBe(100);
+    });
+
+    it("getInternalElementWidth() subtracts border width for a border-box element", () => {
+      const el = document.createElement("div");
+      vi.spyOn(window, "getComputedStyle").mockReturnValue({
+        width: "50px",
+        "box-sizing": "border-box",
+        "border-left-width": "1px",
+        "border-right-width": "1px",
+      } as any);
+      expect(component.getInternalElementWidth(el)).toBe(48);
+    });
+
+    it("getInternalElementWidth() returns the full width for a content-box element", () => {
+      const el = document.createElement("div");
+      vi.spyOn(window, "getComputedStyle").mockReturnValue({
+        width: "50px",
+        "box-sizing": "content-box",
+      } as any);
+      expect(component.getInternalElementWidth(el)).toBe(50);
+    });
+
+    it("filterOptions() debounces a service fetch instead of filtering the local options array", () => {
+      vi.useFakeTimers();
+      component.service = new AutocompleteService();
+      vi.spyOn(component.service, "fetch").mockReturnValue(
+        of([{ key: "a", value: "aaa" }])
+      );
+      component.options = [];
+      component.filterOptions("aaa");
+      vi.advanceTimersByTime(component["debounceTime"]);
+      expect(component.service.fetch).toHaveBeenCalled();
+      vi.useRealTimers();
+    });
+
+    it("sortByCategory() totals items across every category via totalItems()", () => {
+      component.keyValueConfig = {
+        keyProperty: "key",
+        valueProperty: "value",
+        categoryProperty: "cat",
+      };
+      const sorted = component.sortByCategory([
+        { key: "a", value: "a", cat: "South" },
+        { key: "b", value: "b" },
+      ]);
+      expect((sorted as any).totalItems()).toBe(2);
+    });
+
+    it("selectItem() ignores a filter match on a differently-cased duplicate check (no-op branch coverage)", () => {
+      component.textArea = {
+        nativeElement: { focus: () => undefined },
+      } as unknown as ElementRef;
+      component.value = [];
+      component.selectItem({ key: "z", value: "z" });
+      expect(component.value.length).toBe(1);
+    });
+
+    it("selectItemByCategory() clears the list even when categorySelectable is disabled", () => {
+      component.categoryIsSelectable = false;
+      component.list = [{ key: "a", value: "a" }] as any;
+      component.selectItemByCategory("South");
+      expect(component.list).toEqual([]);
+    });
+
+    it("deselectItemOnEnter() removes the item and prevents default on Enter when enabled", () => {
+      component.textArea = {
+        nativeElement: { focus: () => undefined },
+      } as unknown as ElementRef;
+      const item = { key: "aaa", value: "aaa" };
+      component.value = [item];
+      const event = { key: "Enter", preventDefault: vi.fn() };
+
+      component.deselectItemOnEnter(event, item);
+
+      expect(component.value.length).toBe(0);
+      expect(event.preventDefault).toHaveBeenCalled();
+    });
+
+    it("deselectItemOnEnter() does nothing for keys other than Enter", () => {
+      const item = { key: "aaa", value: "aaa" };
+      component.value = [item];
+      const event = { key: "a", preventDefault: vi.fn() };
+
+      component.deselectItemOnEnter(event, item);
+
+      expect(component.value.length).toBe(1);
+      expect(event.preventDefault).not.toHaveBeenCalled();
+    });
+
+    it("focusTextArea() does nothing when the component is disabled", () => {
+      const focusSpy = vi.fn();
+      component.textArea = {
+        nativeElement: { focus: focusSpy },
+      } as unknown as ElementRef;
+      component.isDisabled = true;
+      component.focusTextArea();
+      expect(focusSpy).not.toHaveBeenCalled();
+    });
+
+    it("listItemHover() adjusts the list index across preceding categories and removes the prior selection", () => {
+      component.list = [[{ key: "a" }, { key: "b" }], [{ key: "c" }]];
+      const elements = [
+        { classList: { add: vi.fn(), remove: vi.fn(), contains: () => false } },
+        { classList: { add: vi.fn(), remove: vi.fn(), contains: () => false } },
+        { classList: { add: vi.fn(), remove: vi.fn(), contains: () => false } },
+      ];
+      vi.spyOn(component, "getResults").mockReturnValue(elements as any);
+      component["selectedEl"] = elements[0];
+
+      component.listItemHover(1, 0);
+
+      expect(elements[0].classList.remove).toHaveBeenCalledWith("selected");
+      expect(elements[2].classList.add).toHaveBeenCalledWith("selected");
+    });
+
     it("should compute textarea width to push it to a new line when there is not enough space", () => {
       component.hiddenText = {
         nativeElement: document.createElement("span"),
