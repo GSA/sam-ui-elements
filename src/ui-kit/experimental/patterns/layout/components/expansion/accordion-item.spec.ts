@@ -134,19 +134,33 @@ describe("AccordionItem", () => {
   });
 
   it("emits destroyed and deregisters the dispatcher listener on ngOnDestroy", () => {
-    const item = new AccordionItem(null, dispatcher);
+    // The item must stay expanded and live in a non-multi accordion for this to
+    // prove anything: if its listener were still registered, a notification
+    // about a *different* id in the *same* accordion would collapse it.
+    const accordion = new CdkAccordionDirective();
+    const item = new AccordionItem(accordion, dispatcher);
     const destroyedSpy = vi.fn();
     item.destroyed.subscribe(destroyedSpy);
+    item.expanded = true;
 
     item.ngOnDestroy();
 
     expect(destroyedSpy).toHaveBeenCalled();
 
-    // After destruction, notifications should no longer affect this item
-    // because its listener has been removed from the dispatcher.
+    dispatcher.notify("a-different-item-id", accordion.id);
+
+    expect(item.expanded).toBe(true);
+  });
+
+  it("collapses on that same notification while its listener is still registered", () => {
+    // Control for the test above — without this, a deregistration assertion
+    // could pass simply because the notification never had any effect.
     const accordion = new CdkAccordionDirective();
-    const other = new AccordionItem(accordion, dispatcher);
-    other.expanded = true;
+    const item = new AccordionItem(accordion, dispatcher);
+    item.expanded = true;
+
+    dispatcher.notify("a-different-item-id", accordion.id);
+
     expect(item.expanded).toBe(false);
   });
 });

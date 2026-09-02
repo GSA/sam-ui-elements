@@ -508,15 +508,23 @@ describe("The Sam Autocomplete Multiselect Component", () => {
       expect(component.showResultsFreeText()).toBe(false);
     });
 
-    it("showResultsFreeText() checks the first item of a nested category sublist for a match", () => {
+    it("showResultsFreeText() checks a nested category sublist for a match", () => {
       component.isFreeTextEnabled = true;
       component.searchText = "aaa";
       const nested: any = [{ key: "a", value: "aaa" }];
       component.list = [nested];
       component.value = [];
-      // findItemExistInList() is handed only the first sub-item (not the
-      // whole category array), so it never actually iterates a match here;
-      // this exercises the `item[0] && !foundItem` branch itself.
+      // The list already contains an exact "aaa", so free text must not be
+      // offered as a separate option.
+      expect(component.showResultsFreeText()).toBe(false);
+    });
+
+    it("showResultsFreeText() offers free text when a nested sublist has no match", () => {
+      component.isFreeTextEnabled = true;
+      component.searchText = "aaa";
+      const nested: any = [{ key: "b", value: "bbb" }];
+      component.list = [nested];
+      component.value = [];
       expect(component.showResultsFreeText()).toBe(true);
     });
 

@@ -353,14 +353,19 @@ describe("SamListBoxComponent", () => {
     expect((component.options[1] as never).highlighted).toBe(true);
   });
 
-  it("onChecked() inserts a newly checked item before an already-later option in the model", () => {
+  it("onChecked() inserts the option object, not its value, ahead of an already-later selection", () => {
     component.options = options;
     fixture.detectChanges();
     component.model = [options[6].value];
     const ev = { target: { checked: true } };
     component.onChecked(ev, options[2]);
-    // clone.splice() inserts the raw option object at the computed index,
-    // not its .value -- this asserts the actual (if surprising) behavior.
+    // Documents a latent inconsistency rather than endorsing it: clone.splice()
+    // inserts the raw option object, while isChecked() and setSelectedItem()
+    // both compare against option.value. The model can therefore hold a mix of
+    // values and option objects depending on how a selection was made. Left
+    // as-is here because changing it alters published behavior -- the existing
+    // "onChecked checked/unchecked" and "Should remove item from selected
+    // results" tests also pass option objects through the model.
     expect(component.model).toEqual([options[6].value, options[2]]);
   });
 

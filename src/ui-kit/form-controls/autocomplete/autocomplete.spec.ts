@@ -151,7 +151,14 @@ describe("The Sam Autocomplete Component", () => {
       expect(() => component.ngOnChanges({})).not.toThrow();
     });
 
-    it("should append new results without duplicating when they already exist and differ", () => {
+    it("appends a paged response onto the existing results, duplicates included", () => {
+      // requestSuccess() is the httpRequest paging path: each emission is a new
+      // page that gets pushed onto whatever is already displayed. It compares
+      // the whole payload against lastReturnedResults to skip a re-emission of
+      // the *same* page, but does not de-duplicate item-by-item, so an overlap
+      // between pages is appended as-is. Asserting the real contract here
+      // rather than the stricter one the old test name implied; de-duplicating
+      // would change published paging behavior and belongs in its own issue.
       component.results = ["aaa"];
       component.lastReturnedResults = ["zzz"];
       component.requestSuccess(["aaa", "bbb"]);
@@ -162,10 +169,13 @@ describe("The Sam Autocomplete Component", () => {
       component.results = ["aaa"];
       component.requestSuccess(["aaa", "bbb"]);
       component.requestSuccess(["aaa", "bbb"]);
+      // The second identical emission is skipped by the lastReturnedResults
+      // guard, so the page is appended exactly once.
+      expect(component.results).toEqual(["aaa", "aaa", "bbb"]);
       expect(component.lastReturnedResults).toEqual(["aaa", "bbb"]);
     });
 
-    it("should append new key/value results without duplicating when they already exist and differ", () => {
+    it("should append a paged key/value response onto the existing pairs", () => {
       component.filteredKeyValuePairs = [{ key: "a", value: "a" }];
       component.lastReturnedResults = [{ key: "z", value: "z" }];
       component.requestSuccess([{ key: "b", value: "b" }]);

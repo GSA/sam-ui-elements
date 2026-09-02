@@ -73,12 +73,30 @@ describe("Paginator", () => {
   });
 
   it("does not advance past the last valid page via nextPage()", () => {
-    // With 95 total units and 10 per page, page 10 covers units 91-95 and any
-    // page beyond exceeds the total by more than a full page, rejecting the
-    // increment.
+    // 95 units at 10 per page: page 10 covers units 91-95 and page 11 is empty.
     const paginator = new Paginator("Item", 10, 95, 10);
     paginator.nextPage();
     expect(paginator.getCurrentPage()).toBe(10);
+  });
+
+  it("does not advance past the last page when the total is an exact multiple of the page size", () => {
+    // 100 units at 10 per page is the common boundary: page 10 is exactly the
+    // last page, so page 11 holds nothing. _exceedsTotal() used to accept it
+    // because the remainder (10) was not strictly greater than the page size.
+    const paginator = new Paginator("Item", 10, 100, 10);
+    paginator.nextPage();
+    expect(paginator.getCurrentPage()).toBe(10);
+  });
+
+  it("keeps the first page valid for an empty data set", () => {
+    const paginator = new Paginator("Item", 10, 0);
+    expect(paginator.getCurrentPage()).toBe(1);
+  });
+
+  it("rejects a page beyond the only page of a partially-filled first page", () => {
+    const paginator = new Paginator("Item", 10, 7);
+    paginator.nextPage();
+    expect(paginator.getCurrentPage()).toBe(1);
   });
 
   it("goes back a page via previousPage()", () => {

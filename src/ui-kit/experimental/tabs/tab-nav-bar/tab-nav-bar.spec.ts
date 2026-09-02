@@ -47,6 +47,16 @@ describe("MdTabNav", () => {
 
     expect(unsubscribeSpy).toHaveBeenCalled();
   });
+
+  it("destroys cleanly when no resize subscription was ever created", () => {
+    // _resizeSubscription is never assigned by MdTabNav itself, so this is the
+    // ordinary lifecycle: create, then destroy. It used to throw
+    // "Cannot read properties of undefined (reading 'unsubscribe')".
+    const freshNav = new MdTabNav();
+    freshNav.ngAfterContentInit();
+
+    expect(() => freshNav.ngOnDestroy()).not.toThrow();
+  });
 });
 
 describe("MdTabLink", () => {

@@ -511,7 +511,12 @@ export class SamAutocompleteMultiselectComponent
                 foundItem = true;
               }
               if (item[0] && !foundItem) {
-                foundItem = this.findItemExistInList(item[0]);
+                // Pass the whole category sub-list. This previously passed
+                // item[0] -- a single sub-item -- to a function that iterates a
+                // list, so a nested list was only ever probed one character or
+                // property deep and a genuine match was missed, offering a
+                // duplicate free-text option.
+                foundItem = this.findItemExistInList(item);
               }
             }
           }
