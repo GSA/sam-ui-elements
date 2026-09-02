@@ -622,7 +622,7 @@ describe("SamAutocompleteComponent", () => {
   it("should select an existing free text item on focus removed in single mode", fakeAsync(() => {
     component.configuration.isFreeTextEnabled = true;
     component.model.items = [{ id: "existing", name: "existing" }];
-    component.inputValue = { id: "existing" } as any;
+    component.inputValue = { id: "existing" } as never;
     component.focusRemoved();
     tick(200);
     expect(component.model.items.length).toBe(1);
@@ -683,7 +683,7 @@ describe("SamAutocompleteComponent", () => {
       extra: "ignored",
     };
     component.selectItem(item);
-    const stored = component.model.items[0] as any;
+    const stored = component.model.items[0] as never;
     expect(Object.keys(stored).sort()).toEqual(
       ["id", "name", "subtext"].sort()
     );
@@ -759,7 +759,7 @@ describe("SamAutocompleteComponent", () => {
     tick();
     fixture.detectChanges();
     component.results = component.results.slice(0, 1);
-    (component as any).maxResults = 1;
+    component["maxResults"] = 1;
 
     expect(() => component.onScroll()).not.toThrow();
   }));
@@ -789,7 +789,7 @@ describe("SamAutocompleteComponent", () => {
   });
 
   it("checkForFocus() does nothing when there is no configuration", () => {
-    component.configuration = undefined as any;
+    component.configuration = undefined as never;
     expect(() => component.checkForFocus({})).not.toThrow();
     expect(component.showResults).toBe(false);
   });
@@ -802,14 +802,14 @@ describe("SamAutocompleteComponent", () => {
   });
 
   it("updateSingleModeFocusOutModel() does nothing when there is no configuration", () => {
-    component.configuration = undefined as any;
+    component.configuration = undefined as never;
     expect(() => component.updateSingleModeFocusOutModel()).not.toThrow();
   });
 
   it("focusRemoved() replaces an already-selected free text item with a new one on match", fakeAsync(() => {
     component.configuration.isFreeTextEnabled = true;
     component.model.items = [{ id: "repeat", name: "repeat" }];
-    component.inputValue = { id: "repeat" } as any;
+    component.inputValue = { id: "repeat" } as never;
     component.focusRemoved();
     tick(200);
     expect(component.model.items.length).toBe(1);
@@ -822,7 +822,7 @@ describe("SamAutocompleteComponent", () => {
 
   it("focusRemoved() does nothing when there is no configuration", fakeAsync(() => {
     component.inputValue = "leftover";
-    component.configuration = undefined as any;
+    component.configuration = undefined as never;
     expect(() => component.focusRemoved()).not.toThrow();
     tick(200);
   }));
@@ -906,7 +906,7 @@ describe("SamAutocompleteComponent", () => {
 
   it("onKeydown() does nothing on Escape when results are not showing", () => {
     component.showResults = false;
-    const clearSpy = vi.spyOn(component as any, "clearAndHideResults");
+    const clearSpy = vi.spyOn(component as never, "clearAndHideResults");
     component.onKeydown({ key: "Escape", target: {} });
     expect(clearSpy).not.toHaveBeenCalled();
   });
@@ -934,7 +934,7 @@ describe("SamAutocompleteComponent", () => {
     component.essentialModelFields = true;
     component.configuration.secondaryTextField = undefined;
     component.selectItem({ id: "1", name: "Level 1", subtext: "extra" });
-    const stored = component.model.items[0] as any;
+    const stored = component.model.items[0] as never;
     expect(stored.subtext).toBeUndefined();
   });
 
@@ -945,14 +945,14 @@ describe("SamAutocompleteComponent", () => {
     ];
     component.configuration.groupByChild = "elements";
     const flat = component.getFlatElements();
-    expect(flat.map((i: any) => i.id)).toEqual(["1", "1a", "1b", "2"]);
+    expect(flat.map((i: unknown) => i.id)).toEqual(["1", "1a", "1b", "2"]);
   });
 
   it("getFlatElements() does not recurse when the group-by child is empty", () => {
     component.results = [{ id: "1", elements: [] }];
     component.configuration.groupByChild = "elements";
     const flat = component.getFlatElements();
-    expect(flat.map((i: any) => i.id)).toEqual(["1"]);
+    expect(flat.map((i: unknown) => i.id)).toEqual(["1"]);
   });
 
   it("scrollToSelectedItem() is a no-op when highlightedIndex is negative", fakeAsync(() => {
@@ -960,12 +960,12 @@ describe("SamAutocompleteComponent", () => {
     tick();
     fixture.detectChanges();
     component.highlightedIndex = -1;
-    expect(() => (component as any).scrollToSelectedItem()).not.toThrow();
+    expect(() => component["scrollToSelectedItem"]()).not.toThrow();
   }));
 
   it("onArrowGroupDown() does nothing when there are no results", () => {
     component.results = [];
-    expect(() => (component as any).onArrowGroupDown()).not.toThrow();
+    expect(() => component["onArrowGroupDown"]()).not.toThrow();
   });
 
   it("onArrowGroupDown() stops incrementing once at the last result", fakeAsync(() => {
@@ -973,13 +973,13 @@ describe("SamAutocompleteComponent", () => {
     tick();
     fixture.detectChanges();
     component.highlightedIndex = component.results.length - 1;
-    (component as any).onArrowGroupDown();
+    component["onArrowGroupDown"]();
     expect(component.highlightedIndex).toBe(component.results.length - 1);
   }));
 
   it("onArrowGroupUp() does nothing when there are no results", () => {
     component.results = [];
-    expect(() => (component as any).onArrowGroupUp()).not.toThrow();
+    expect(() => component["onArrowGroupUp"]()).not.toThrow();
   });
 
   it("onArrowGroupUp() stays at index 0 when already at the top", fakeAsync(() => {
@@ -987,7 +987,7 @@ describe("SamAutocompleteComponent", () => {
     tick();
     fixture.detectChanges();
     component.highlightedIndex = 0;
-    (component as any).onArrowGroupUp();
+    component["onArrowGroupUp"]();
     expect(component.highlightedIndex).toBe(0);
   }));
 
@@ -1024,32 +1024,32 @@ describe("SamAutocompleteComponent", () => {
   it("getResults() does nothing when the search string is shorter than the minimum character count", () => {
     component.configuration.minimumCharacterCountSearch = 5;
     const fetchSpy = vi.spyOn(component.service, "getDataByText");
-    (component as any).getResults("ab");
+    component["getResults"]("ab");
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
   it("getResults() skips re-fetching when the same non-empty search string is repeated while results are showing", fakeAsync(() => {
     component.inputFocusHandler();
     component.inputValue = "Level";
-    (component as any).getResults("Level");
+    component["getResults"]("Level");
     tick();
     fixture.detectChanges();
     const fetchSpy = vi.spyOn(component.service, "getDataByText");
-    (component as any).getResults("Level");
+    component["getResults"]("Level");
     tick();
     expect(fetchSpy).not.toHaveBeenCalled();
   }));
 
   it("onScroll() throws when called before any results have loaded", () => {
-    (component as any).maxResults = 5;
-    component.results = undefined as any;
+    component["maxResults"] = 5;
+    component.results = undefined as never;
     expect(() => component.onScroll()).toThrow();
   });
 
   it("focusRemoved() clears an existing free-text single selection and creates a new one on mismatch", fakeAsync(() => {
     component.configuration.isTagModeEnabled = true;
     component.model.items = [{ id: "old", name: "old" }];
-    component.inputValue = "new value" as any;
+    component.inputValue = "new value" as never;
     component.focusRemoved();
     tick(200);
     expect(component.model.items.length).toBe(1);
@@ -1066,7 +1066,7 @@ describe("SamAutocompleteComponent", () => {
   }));
 
   it("focusRemoved() does nothing when the selection mode is neither SINGLE nor MULTIPLE", fakeAsync(() => {
-    component.configuration.selectionMode = undefined as any;
+    component.configuration.selectionMode = undefined as never;
     component.inputValue = "typed";
     const selectSpy = vi.spyOn(component, "selectItem");
     component.focusRemoved();
@@ -1090,42 +1090,42 @@ describe("SamAutocompleteComponent", () => {
       preventDefault: vi.fn(),
       target: otherEl,
     };
-    const getResultsSpy = vi.spyOn(component as any, "getResults");
-    component.textChange(event as any);
+    const getResultsSpy = vi.spyOn(component as never, "getResults");
+    component.textChange(event as never);
     expect(event.preventDefault).toHaveBeenCalled();
     expect(getResultsSpy).not.toHaveBeenCalled();
   });
 
   it("textChange() searches using an empty string when the target value is falsy", () => {
     component.input.nativeElement.focus();
-    const getResultsSpy = vi.spyOn(component as any, "getResults");
+    const getResultsSpy = vi.spyOn(component as never, "getResults");
     component.textChange({
       preventDefault: vi.fn(),
       target: component.input.nativeElement,
-    } as any);
+    } as never);
     expect(getResultsSpy).toHaveBeenCalledWith("");
   });
 
   it("textChange() does nothing in tag mode", () => {
     component.configuration.isTagModeEnabled = true;
-    const getResultsSpy = vi.spyOn(component as any, "getResults");
+    const getResultsSpy = vi.spyOn(component as never, "getResults");
     component.textChange({
       preventDefault: vi.fn(),
       target: component.input.nativeElement,
-    } as any);
+    } as never);
     expect(getResultsSpy).not.toHaveBeenCalled();
   });
 
   it("inputFocusHandler() does nothing in tag mode", () => {
     component.configuration.isTagModeEnabled = true;
-    const getResultsSpy = vi.spyOn(component as any, "getResults");
+    const getResultsSpy = vi.spyOn(component as never, "getResults");
     component.inputFocusHandler();
     expect(getResultsSpy).not.toHaveBeenCalled();
   });
 
   it("inputFocusHandler() calls onTouchedCallback without fetching results when focusInSearch is false", () => {
     component.configuration.focusInSearch = false;
-    const getResultsSpy = vi.spyOn(component as any, "getResults");
+    const getResultsSpy = vi.spyOn(component as never, "getResults");
     const touchedSpy = vi.fn();
     component.registerOnTouched(touchedSpy);
     component.inputFocusHandler();
@@ -1159,7 +1159,7 @@ describe("SamAutocompleteComponent", () => {
   it("onKeydown() selects the highlighted item on Enter when not in tag mode", () => {
     component.configuration.isTagModeEnabled = false;
     component.highlightedIndex = 0;
-    (component as any).highlightedItem = { id: "1", name: "Level 1" };
+    component["highlightedItem"] = { id: "1", name: "Level 1" };
     component.onKeydown({ key: "Enter", target: {} });
     expect(component.model.items[0]).toEqual({ id: "1", name: "Level 1" });
   });
@@ -1183,7 +1183,7 @@ describe("SamAutocompleteComponent", () => {
       component.resultsListElement.nativeElement,
       "querySelector"
     ).mockReturnValue(null);
-    expect(() => (component as any).scrollToSelectedItem()).not.toThrow();
+    expect(() => component["scrollToSelectedItem"]()).not.toThrow();
   }));
 
   it("showFreeText() stops scanning results once a match is found", () => {
@@ -1198,22 +1198,22 @@ describe("SamAutocompleteComponent", () => {
 
   it("onScroll() requests more results when scrolled to the bottom", () => {
     component.results = [{ id: "1" }];
-    (component as any).maxResults = 5;
+    component["maxResults"] = 5;
     component.resultsListElement = {
       nativeElement: { offsetHeight: 10, scrollTop: 90, scrollHeight: 100 },
-    } as any;
-    const additionalSpy = vi.spyOn(component as any, "getAdditionalResults");
+    } as never;
+    const additionalSpy = vi.spyOn(component as never, "getAdditionalResults");
     component.onScroll();
     expect(additionalSpy).toHaveBeenCalled();
   });
 
   it("onScroll() does not request more results when not scrolled near the bottom", () => {
     component.results = [{ id: "1" }];
-    (component as any).maxResults = 5;
+    component["maxResults"] = 5;
     component.resultsListElement = {
       nativeElement: { offsetHeight: 10, scrollTop: 0, scrollHeight: 1000 },
-    } as any;
-    const additionalSpy = vi.spyOn(component as any, "getAdditionalResults");
+    } as never;
+    const additionalSpy = vi.spyOn(component as never, "getAdditionalResults");
     component.onScroll();
     expect(additionalSpy).not.toHaveBeenCalled();
   });
@@ -1223,8 +1223,8 @@ describe("SamAutocompleteComponent", () => {
     tick();
     fixture.detectChanges();
     const previous: any = { name: "prev" };
-    (component as any).highlightedItem = previous;
-    (component as any).setHighlightedItem(undefined);
+    component["highlightedItem"] = previous;
+    component["setHighlightedItem"](undefined);
     expect(previous.highlighted).toBe(false);
   }));
 
@@ -1233,7 +1233,7 @@ describe("SamAutocompleteComponent", () => {
     tick();
     fixture.detectChanges();
     const item: any = { name: "Level X", subtext: "Extra info" };
-    (component as any).setHighlightedItem(item);
+    component["setHighlightedItem"](item);
     expect(component.srOnlyText).toContain("Extra info");
   }));
 
@@ -1242,13 +1242,13 @@ describe("SamAutocompleteComponent", () => {
     tick();
     fixture.detectChanges();
     const item: any = { name: "Level X" };
-    (component as any).setHighlightedItem(item);
+    component["setHighlightedItem"](item);
     expect(component.srOnlyText).toBe("Level X");
   }));
 
   it("showFreeText() returns false when the input value's length is zero without being empty", () => {
     component.configuration.isFreeTextEnabled = true;
-    component.inputValue = [] as any;
+    component.inputValue = [] as never;
     expect(component.showFreeText()).toBe(false);
   });
 });

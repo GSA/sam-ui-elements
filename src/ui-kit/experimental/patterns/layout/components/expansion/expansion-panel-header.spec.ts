@@ -6,7 +6,7 @@ import { SPACE, ENTER } from "@angular/cdk/keycodes";
 describe("MdExpansionPanelHeader", () => {
   function createHeader() {
     const dispatcher = new UniqueSelectionDispatcher();
-    const panel = new MdExpansionPanelComponent(null as any, dispatcher);
+    const panel = new MdExpansionPanelComponent(null as never, dispatcher);
     const header = new MdExpansionPanelHeader(panel);
     return { header, panel };
   }

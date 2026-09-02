@@ -69,23 +69,23 @@ describe("ScrollHelpers", () => {
     helpers.disableScroll();
 
     const preventDefault = vi.fn();
-    (window as any).event = { preventDefault };
+    window["event"] = { preventDefault };
 
     // window.onwheel is bound directly to the internal preventDefault(); call
     // it with no arguments so `e || window.event` falls through to the
     // window.event branch.
-    (window.onwheel as any)();
+    (window.onwheel as never)();
 
     expect(preventDefault).toHaveBeenCalled();
-    delete (window as any).event;
+    delete window["event"];
     helpers.enableScroll();
   });
 
   it("skips setting returnValue guard branches when addEventListener/removeEventListener are unavailable", () => {
     const originalAdd = window.addEventListener;
     const originalRemove = window.removeEventListener;
-    (window as any).addEventListener = undefined;
-    (window as any).removeEventListener = undefined;
+    window["addEventListener"] = undefined;
+    window["removeEventListener"] = undefined;
 
     const helpers = ScrollHelpers(window);
     expect(() => helpers.disableScroll()).not.toThrow();

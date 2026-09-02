@@ -11,7 +11,7 @@ function createFakeService() {
         },
       },
     },
-  } as any;
+  } as never;
 }
 
 describe("SamMainComponent", () => {
@@ -37,10 +37,10 @@ describe("SamMainComponent", () => {
   it("clears every filter key to null when the drawer emits clear", () => {
     const service = createFakeService();
     const main = new SamMainComponent(service);
-    let clearHandler: (evt: any) => void = () => {};
+    let clearHandler: (evt: unknown) => void = () => {};
     const drawer = {
       clear: {
-        subscribe: vi.fn((cb: (evt: any) => void) => (clearHandler = cb)),
+        subscribe: vi.fn((cb: (evt: unknown) => void) => (clearHandler = cb)),
       },
     } as unknown as SamFilterDrawerComponent;
     main.drawer = drawer;

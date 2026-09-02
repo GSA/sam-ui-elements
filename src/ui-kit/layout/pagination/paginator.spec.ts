@@ -2,7 +2,11 @@ import { Paginator } from "./paginator";
 
 describe("Paginator", () => {
   it("defaults units per page and total units when not provided", () => {
-    const paginator = new Paginator("Item", undefined as any, undefined as any);
+    const paginator = new Paginator(
+      "Item",
+      undefined as never,
+      undefined as never
+    );
     expect(paginator.getUnitsPerPage()).toBe(10);
     expect(paginator.getTotalUnits()).toBe(0);
     expect(paginator.getCurrentPage()).toBe(1);

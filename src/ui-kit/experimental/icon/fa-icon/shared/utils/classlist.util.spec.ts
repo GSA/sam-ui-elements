@@ -69,17 +69,23 @@ describe("faClassList", () => {
 
 describe("faLayerClassList", () => {
   it("includes fa-fw when fixedWidth is true", () => {
-    const classes = faLayerClassList({ fixedWidth: true, size: null } as any);
+    const classes = faLayerClassList({ fixedWidth: true, size: null } as never);
     expect(classes).toContain("fa-fw");
   });
 
   it("omits fa-fw when fixedWidth is false", () => {
-    const classes = faLayerClassList({ fixedWidth: false, size: null } as any);
+    const classes = faLayerClassList({
+      fixedWidth: false,
+      size: null,
+    } as never);
     expect(classes).not.toContain("fa-fw");
   });
 
   it("includes a size class when size is set", () => {
-    const classes = faLayerClassList({ fixedWidth: false, size: "2x" } as any);
+    const classes = faLayerClassList({
+      fixedWidth: false,
+      size: "2x",
+    } as never);
     expect(classes).toContain("fa-2x");
   });
 });

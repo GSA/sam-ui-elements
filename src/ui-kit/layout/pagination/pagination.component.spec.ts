@@ -78,14 +78,14 @@ describe("SamPaginationNextComponent", () => {
   });
 
   it("sets pageSize via a numeric string input", () => {
-    let paginator = new Paginator("Test Unit", 10, 100);
+    const paginator = new Paginator("Test Unit", 10, 100);
     component.paginator = paginator;
     component.pageSize = "20";
     expect(component.pageSize).toBe(20);
   });
 
   it("emits unitsChange with the updated units per page when pageSize is set", () => {
-    let paginator = new Paginator("Test Unit", 10, 100);
+    const paginator = new Paginator("Test Unit", 10, 100);
     component.paginator = paginator;
     const spy = vi.fn();
     component.unitsChange.subscribe(spy);
@@ -94,7 +94,7 @@ describe("SamPaginationNextComponent", () => {
   });
 
   it("ngOnChanges applies each changed input to the paginator", () => {
-    let paginator = new Paginator("Test Unit", 10, 100);
+    const paginator = new Paginator("Test Unit", 10, 100);
     component.paginator = paginator;
     component.defaultSize = 20;
     component.unit = "Results";
@@ -102,10 +102,10 @@ describe("SamPaginationNextComponent", () => {
     component.currentPage = 3;
 
     component.ngOnChanges({
-      defaultSize: {} as any,
-      unit: {} as any,
-      totalUnits: {} as any,
-      currentPage: {} as any,
+      defaultSize: {} as never,
+      unit: {} as never,
+      totalUnits: {} as never,
+      currentPage: {} as never,
     });
 
     expect(component.paginator.unit).toBe("Results");
@@ -114,7 +114,7 @@ describe("SamPaginationNextComponent", () => {
   });
 
   it("ngOnChanges does nothing when no watched input changed", () => {
-    let paginator = new Paginator("Test Unit", 10, 100);
+    const paginator = new Paginator("Test Unit", 10, 100);
     component.paginator = paginator;
     const priorPage = component.currentPage;
 
@@ -123,7 +123,7 @@ describe("SamPaginationNextComponent", () => {
   });
 
   it("emits pageChange and unitsChange with initial paginator values on ngOnInit", () => {
-    let paginator = new Paginator("Test Unit", 10, 100);
+    const paginator = new Paginator("Test Unit", 10, 100);
     component.paginator = paginator;
     const pageSpy = vi.fn();
     const unitsSpy = vi.fn();
@@ -137,7 +137,7 @@ describe("SamPaginationNextComponent", () => {
   });
 
   it("emits pageChange with the updated page after clicking next", () => {
-    let paginator = new Paginator("Test Unit", 10, 100);
+    const paginator = new Paginator("Test Unit", 10, 100);
     component.paginator = paginator;
     const spy = vi.fn();
     component.pageChange.subscribe(spy);

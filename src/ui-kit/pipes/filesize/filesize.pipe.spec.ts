@@ -29,7 +29,7 @@ describe("src/app/opportunity/pipes/filesize.pipe.spec.ts", () => {
   });
 
   it("FilesizePipe: returns '0' for non-numeric input", () => {
-    expect(pipe.transform("1024" as any)).toBe("0");
+    expect(pipe.transform("1024" as never)).toBe("0");
   });
 
   it("FilesizePipe: warns and falls back to the byte symbol above the largest supported size", () => {

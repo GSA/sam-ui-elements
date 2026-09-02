@@ -320,7 +320,7 @@ describe("SamListBoxComponent", () => {
     // detectChanges(). Exercise ngOnInit()'s control-wiring branch directly
     // against a stub instead of depending on that ViewChild resolving.
     const wrapperStub = { formatErrors: vi.fn(), clearError: vi.fn() };
-    (component as any).wrapper = wrapperStub;
+    component["wrapper"] = wrapperStub;
 
     component.ngOnInit();
 
@@ -333,20 +333,24 @@ describe("SamListBoxComponent", () => {
   it("onHover() highlights the hovered option and moves focus to it", () => {
     component.options = options;
     fixture.detectChanges();
-    vi.spyOn(component as any, "setfocus").mockImplementation(() => undefined);
+    vi.spyOn(component as never, "setfocus").mockImplementation(
+      () => undefined
+    );
     component.onHover(2);
-    expect((component.options[2] as any).highlighted).toBe(true);
+    expect((component.options[2] as never).highlighted).toBe(true);
   });
 
   it("setHighlightedItem() clears a previously highlighted item's flag before setting a new one", () => {
     component.options = options;
     fixture.detectChanges();
-    vi.spyOn(component as any, "setfocus").mockImplementation(() => undefined);
+    vi.spyOn(component as never, "setfocus").mockImplementation(
+      () => undefined
+    );
     component.onHover(0);
-    expect((component.options[0] as any).highlighted).toBe(true);
+    expect((component.options[0] as never).highlighted).toBe(true);
     component.onHover(1);
-    expect((component.options[0] as any).highlighted).toBe(false);
-    expect((component.options[1] as any).highlighted).toBe(true);
+    expect((component.options[0] as never).highlighted).toBe(false);
+    expect((component.options[1] as never).highlighted).toBe(true);
   });
 
   it("onChecked() inserts a newly checked item before an already-later option in the model", () => {
@@ -380,58 +384,64 @@ describe("SamListBoxComponent", () => {
   it("onKeyDown() moves the highlight down on Down and stops at the last option", () => {
     component.options = options;
     fixture.detectChanges();
-    vi.spyOn(component as any, "setfocus").mockImplementation(() => undefined);
+    vi.spyOn(component as never, "setfocus").mockImplementation(
+      () => undefined
+    );
     component.checkboxListElement = {
       nativeElement: {
         scrollTop: 0,
         getElementsByTagName: () => options.map(() => ({ offsetTop: 0 })),
       },
-    } as any;
+    } as never;
     const preventDefault = vi.fn();
     component.onKeyDown({ key: "Down", preventDefault });
     expect(preventDefault).toHaveBeenCalled();
-    expect((component.options[1] as any).highlighted).toBe(true);
+    expect((component.options[1] as never).highlighted).toBe(true);
   });
 
   it("onKeyDown() does not move past the last option on Down", () => {
     component.options = options;
     fixture.detectChanges();
-    (component as any).currentIndex = options.length - 1;
+    component["currentIndex"] = options.length - 1;
     const preventDefault = vi.fn();
     component.onKeyDown({ key: "Down", preventDefault });
-    expect((component as any).currentIndex).toBe(options.length - 1);
+    expect(component["currentIndex"]).toBe(options.length - 1);
   });
 
   it("onKeyDown() moves the highlight up on Up and stops at the first option", () => {
     component.options = options;
     fixture.detectChanges();
-    vi.spyOn(component as any, "setfocus").mockImplementation(() => undefined);
+    vi.spyOn(component as never, "setfocus").mockImplementation(
+      () => undefined
+    );
     component.checkboxListElement = {
       nativeElement: {
         scrollTop: 0,
         getElementsByTagName: () => options.map(() => ({ offsetTop: 0 })),
       },
-    } as any;
-    (component as any).currentIndex = 1;
+    } as never;
+    component["currentIndex"] = 1;
     const preventDefault = vi.fn();
     component.onKeyDown({ key: "Up", preventDefault });
     expect(preventDefault).toHaveBeenCalled();
-    expect((component as any).currentIndex).toBe(0);
+    expect(component["currentIndex"]).toBe(0);
   });
 
   it("onKeyDown() does not move before the first option on Up", () => {
     component.options = options;
     fixture.detectChanges();
-    (component as any).currentIndex = 0;
+    component["currentIndex"] = 0;
     const preventDefault = vi.fn();
     component.onKeyDown({ key: "Up", preventDefault });
-    expect((component as any).currentIndex).toBe(0);
+    expect(component["currentIndex"]).toBe(0);
   });
 
   it("onKeyDown() toggles the current item on Space", () => {
     component.options = options;
     fixture.detectChanges();
-    vi.spyOn(component as any, "setfocus").mockImplementation(() => undefined);
+    vi.spyOn(component as never, "setfocus").mockImplementation(
+      () => undefined
+    );
     component.onHover(2);
     const checkedSpy = vi.spyOn(component, "onChecked");
     const evt = {
@@ -440,9 +450,6 @@ describe("SamListBoxComponent", () => {
       target: { checked: true },
     };
     component.onKeyDown(evt);
-    expect(checkedSpy).toHaveBeenCalledWith(
-      evt,
-      (component as any).currentItem
-    );
+    expect(checkedSpy).toHaveBeenCalledWith(evt, component["currentItem"]);
   });
 });

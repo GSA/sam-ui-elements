@@ -39,7 +39,7 @@ describe("Scrollable", () => {
 
   it("emits on elementScrolled() when the listened scroll event fires", () => {
     scrollable.ngOnInit();
-    const listenCallback = (renderer.listen as any).mock.calls[0][2];
+    const listenCallback = (renderer.listen as never).mock.calls[0][2];
     const spy = vi.fn();
     scrollable.elementScrolled().subscribe(spy);
 

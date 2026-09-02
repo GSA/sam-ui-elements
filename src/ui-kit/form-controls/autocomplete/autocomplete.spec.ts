@@ -202,13 +202,13 @@ describe("The Sam Autocomplete Component", () => {
       component.useFormService = true;
       component.control = new FormControl("");
       const samFormServiceStub = {
-        formEventsUpdated$: new Subject<any>(),
+        formEventsUpdated$: new Subject<unknown>(),
       };
-      (component as any).samFormService = samFormServiceStub;
+      component["samFormService"] = samFormServiceStub;
       component.wrapper = {
         formatErrors: vi.fn(),
         clearError: vi.fn(),
-      } as any;
+      } as never;
 
       component.ngOnInit();
       samFormServiceStub.formEventsUpdated$.next({
@@ -266,14 +266,14 @@ describe("The Sam Autocomplete Component", () => {
     });
 
     it("listExists() returns false when the list has no children property", () => {
-      expect(component.listExists({ nativeElement: {} } as any)).toBe(false);
+      expect(component.listExists({ nativeElement: {} } as never)).toBe(false);
     });
 
     it("listExists() returns false when the list has an empty children collection", () => {
       expect(
         component.listExists({
           nativeElement: { children: [] },
-        } as any)
+        } as never)
       ).toBe(false);
     });
 
@@ -281,12 +281,12 @@ describe("The Sam Autocomplete Component", () => {
       expect(
         component.listExists({
           nativeElement: { children: [{}] },
-        } as any)
+        } as never)
       ).toBe(true);
     });
 
     it("onDownArrowDown()/onUpArrowDown()/listItemHover()/onEnterDown() are no-ops when the list has no children", () => {
-      const emptyList = { nativeElement: { children: [] } } as any;
+      const emptyList = { nativeElement: { children: [] } } as never;
       expect(() => component.onDownArrowDown(emptyList)).not.toThrow();
       expect(() => component.onUpArrowDown(emptyList)).not.toThrow();
     });
@@ -363,7 +363,7 @@ describe("The Sam Autocomplete Component", () => {
     });
 
     it("setScrollTop() returns 0 when isFirstItemCategory is true", () => {
-      expect(component.setScrollTop(true, {} as any)).toBe(0);
+      expect(component.setScrollTop(true, {} as never)).toBe(0);
     });
 
     it("onEnterDown() falls through without selecting when the free-text-adjusted index matches neither results nor filteredKeyValuePairs", () => {
@@ -431,7 +431,7 @@ describe("The Sam Autocomplete Component", () => {
       component.maxNumResultsToDisplay = 1;
       component.resultsList = {
         nativeElement: { offsetHeight: 10, scrollTop: 15, scrollHeight: 20 },
-      } as any;
+      } as never;
 
       component.onScroll();
 
@@ -445,7 +445,7 @@ describe("The Sam Autocomplete Component", () => {
       component.maxNumResultsToDisplay = 1;
       component.resultsList = {
         nativeElement: { offsetHeight: 10, scrollTop: 0, scrollHeight: 100 },
-      } as any;
+      } as never;
 
       component.onScroll();
 
@@ -938,7 +938,7 @@ describe("The Sam Autocomplete Component", () => {
     });
 
     it("Should populate results from an httpRequest observable (plain array)", () => {
-      const subject = new Subject<any>();
+      const subject = new Subject<unknown>();
       component.options = undefined;
       component.httpRequest = subject;
       component.ngOnChanges({ httpRequest: true });
@@ -949,7 +949,7 @@ describe("The Sam Autocomplete Component", () => {
     });
 
     it("Should emit onto keyEvents when driven by an httpRequest with no autocompleteService", () => {
-      const subject = new Subject<any>();
+      const subject = new Subject<unknown>();
       component.autocompleteService = null;
       component.options = undefined;
       component.httpRequest = subject;
@@ -966,7 +966,7 @@ describe("The Sam Autocomplete Component", () => {
     });
 
     it("Should populate filteredKeyValuePairs from an httpRequest observable (key/value array)", () => {
-      const subject = new Subject<any>();
+      const subject = new Subject<unknown>();
       component.options = undefined;
       component.httpRequest = subject;
       component.ngOnChanges({ httpRequest: true });
@@ -979,7 +979,7 @@ describe("The Sam Autocomplete Component", () => {
     });
 
     it("Should route httpRequest errors to requestError", () => {
-      const subject = new Subject<any>();
+      const subject = new Subject<unknown>();
       component.options = undefined;
       component.httpRequest =
         subject as unknown as typeof component.httpRequest;

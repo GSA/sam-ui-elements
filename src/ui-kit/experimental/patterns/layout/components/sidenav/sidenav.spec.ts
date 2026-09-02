@@ -331,8 +331,8 @@ describe("The Sam Sidenav component", () => {
   });
 
   it("should report zero width when there is no backing native element", () => {
-    (asInternals(host.sidenav) as any)._elementRef = { nativeElement: null };
-    expect((host.sidenav as any)._width).toBe(0);
+    (asInternals(host.sidenav) as never)._elementRef = { nativeElement: null };
+    expect((host.sidenav as never)._width).toBe(0);
   });
 
   it("should throw when a second sidenav without an explicit align is added (defaulting to start)", () => {
@@ -387,7 +387,7 @@ describe("The Sam Sidenav component", () => {
     fixture.detectChanges();
 
     const container = asContainerInternals(host.container);
-    expect((host.container as any)._isShowingBackdrop()).toBe(true);
+    expect((host.container as never)._isShowingBackdrop()).toBe(true);
     expect(container._getMarginLeft()).toBe(0);
   });
 
@@ -446,11 +446,11 @@ describe("The Sam Sidenav component", () => {
     });
     const rtlFixture = TestBed.createComponent(RtlHostComponent);
     rtlFixture.detectChanges();
-    const { sidenav, container } = rtlFixture.componentInstance as any;
+    const { sidenav, container } = rtlFixture.componentInstance as never;
 
     const openPromise = sidenav.open();
-    (sidenav as any)._onTransitionEnd({
-      target: (sidenav as any)._elementRef.nativeElement,
+    sidenav["_onTransitionEnd"]({
+      target: sidenav["_elementRef"].nativeElement,
       propertyName: "transform",
     } as TransitionEvent);
     await openPromise;
@@ -480,7 +480,7 @@ describe("The Sam Sidenav component", () => {
     Object.defineProperty(host.sidenav, "_width", {
       get: () => 40,
     });
-    const container = host.container as any;
+    const container = host.container as never;
 
     expect(container._getPositionLeft()).toBe(40);
     expect(container._getPositionRight()).toBe(0);

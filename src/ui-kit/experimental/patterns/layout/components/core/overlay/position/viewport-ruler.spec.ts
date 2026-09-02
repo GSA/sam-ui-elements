@@ -108,7 +108,7 @@ describe("VIEWPORT_RULER_PROVIDER_FACTORY", () => {
   it("creates a new ViewportRuler when no parent ruler exists", () => {
     const scrollDispatcher = createFakeScrollDispatcher();
     const result = VIEWPORT_RULER_PROVIDER_FACTORY(
-      null as any,
+      null as never,
       scrollDispatcher as unknown as ScrollDispatcher
     );
     expect(result).toBeInstanceOf(ViewportRuler);

@@ -41,7 +41,7 @@ describe("MdTabNav", () => {
   it("unsubscribes the resize subscription on ngOnDestroy", () => {
     const subscription = new Subscription();
     const unsubscribeSpy = vi.spyOn(subscription, "unsubscribe");
-    (tabNav as any)._resizeSubscription = subscription;
+    tabNav["_resizeSubscription"] = subscription;
 
     tabNav.ngOnDestroy();
 

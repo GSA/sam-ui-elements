@@ -7,7 +7,7 @@ describe("layoutReducer", () => {
     const result = layoutReducer(state, {
       type: "VALUE_CHANGED",
       payload: { replaced: true },
-    } as any);
+    } as never);
     expect(result).toEqual({ replaced: true });
   });
 
@@ -15,7 +15,7 @@ describe("layoutReducer", () => {
     const result = layoutReducer(state, {
       type: "data",
       payload: "new-data",
-    } as any);
+    } as never);
     expect(result).toEqual({ ...state, data: "new-data" });
   });
 
@@ -23,7 +23,7 @@ describe("layoutReducer", () => {
     const result = layoutReducer(state, {
       type: layoutEvents.DATA_CHANGED,
       payload: "new-data",
-    } as any);
+    } as never);
     expect(result).toEqual({ ...state, data: "new-data" });
   });
 
@@ -31,7 +31,7 @@ describe("layoutReducer", () => {
     const result = layoutReducer(state, {
       type: "filters",
       payload: "new-filters",
-    } as any);
+    } as never);
     expect(result).toEqual({ ...state, filters: "new-filters" });
   });
 
@@ -39,7 +39,7 @@ describe("layoutReducer", () => {
     const result = layoutReducer(state, {
       type: layoutEvents.FILTERS_CHANGED,
       payload: "new-filters",
-    } as any);
+    } as never);
     expect(result).toEqual({ ...state, filters: "new-filters" });
   });
 
@@ -47,7 +47,7 @@ describe("layoutReducer", () => {
     const result = layoutReducer(state, {
       type: "pagination",
       payload: { page: 2 },
-    } as any);
+    } as never);
     expect(result).toEqual({ ...state, pagination: { page: 2 } });
   });
 
@@ -55,7 +55,7 @@ describe("layoutReducer", () => {
     const result = layoutReducer(state, {
       type: layoutEvents.PAGE_CHANGED,
       payload: { page: 2 },
-    } as any);
+    } as never);
     expect(result).toEqual({ ...state, pagination: { page: 2 } });
   });
 
@@ -63,7 +63,7 @@ describe("layoutReducer", () => {
     const result = layoutReducer(state, {
       type: "sort",
       payload: { field: "name" },
-    } as any);
+    } as never);
     expect(result).toEqual({ ...state, sort: { field: "name" } });
   });
 
@@ -71,7 +71,7 @@ describe("layoutReducer", () => {
     const result = layoutReducer(state, {
       type: layoutEvents.SORT_CHANGED,
       payload: { field: "name" },
-    } as any);
+    } as never);
     expect(result).toEqual({ ...state, sort: { field: "name" } });
   });
 
@@ -79,7 +79,7 @@ describe("layoutReducer", () => {
     const result = layoutReducer(state, {
       type: layoutEvents.ERROR,
       payload: "error-data",
-    } as any);
+    } as never);
     expect(result).toEqual({ ...state, data: "error-data" });
   });
 
@@ -87,7 +87,7 @@ describe("layoutReducer", () => {
     const result = layoutReducer(state, {
       type: "filterFields",
       payload: [{ name: "field-a" }],
-    } as any);
+    } as never);
     expect(result).toEqual({ ...state, filterFields: [{ name: "field-a" }] });
   });
 
@@ -95,7 +95,7 @@ describe("layoutReducer", () => {
     const result = layoutReducer(state, {
       type: "SOMETHING_ELSE",
       payload: "ignored",
-    } as any);
+    } as never);
     expect(result).toBe(state);
   });
 });

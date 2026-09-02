@@ -49,7 +49,7 @@ describe("ListResultsMessage component", () => {
       component.showing = 10;
       component.ngOnChanges();
       fixture.detectChanges();
-      let text = fixture.debugElement.nativeElement.textContent;
+      const text = fixture.debugElement.nativeElement.textContent;
       expect(text).toBe("Showing 21 - 23 of 23 results");
     });
   });

@@ -53,7 +53,7 @@ describe("SamSortHeaderComponent", () => {
   it("subscribes to the sort directive's samSortChange and marks for check", () => {
     const sort = createSort();
     const header = createComponent(sort);
-    const cdrSpy = vi.spyOn((header as any)._changeDetectorRef, "markForCheck");
+    const cdrSpy = vi.spyOn(header["_changeDetectorRef"], "markForCheck");
     (sort.samSortChange as Subject<void>).next();
     expect(cdrSpy).toHaveBeenCalled();
   });
@@ -140,7 +140,7 @@ describe("SamSortHeaderComponent", () => {
   it("coerces disableClear through coerceBooleanProperty", () => {
     const sort = createSort();
     const header = createComponent(sort);
-    header.disableClear = "" as any;
+    header.disableClear = "" as never;
     expect(header.disableClear).toBe(true);
     header.disableClear = false;
     expect(header.disableClear).toBe(false);

@@ -8,7 +8,7 @@ function createFakeService() {
         pagination: { setValue: vi.fn() },
       },
     },
-  } as any;
+  } as never;
 }
 
 function createFakePagination() {
@@ -50,9 +50,9 @@ describe("SamActionBarComponent", () => {
     const pagination = createFakePagination();
     actionBar.pagination = pagination;
 
-    let pageChangeHandler: (evt: any) => void = () => {};
-    (pagination.pageChange.subscribe as any).mockImplementation(
-      (cb: (evt: any) => void) => (pageChangeHandler = cb)
+    let pageChangeHandler: (evt: unknown) => void = () => {};
+    (pagination.pageChange.subscribe as never).mockImplementation(
+      (cb: (evt: unknown) => void) => (pageChangeHandler = cb)
     );
 
     actionBar.ngAfterContentInit();
@@ -72,9 +72,9 @@ describe("SamActionBarComponent", () => {
     const pagination = createFakePagination();
     actionBar.pagination = pagination;
 
-    let unitsChangeHandler: (size: any) => void = () => {};
-    (pagination.unitsChange.subscribe as any).mockImplementation(
-      (cb: (size: any) => void) => (unitsChangeHandler = cb)
+    let unitsChangeHandler: (size: unknown) => void = () => {};
+    (pagination.unitsChange.subscribe as never).mockImplementation(
+      (cb: (size: unknown) => void) => (unitsChangeHandler = cb)
     );
 
     actionBar.ngAfterContentInit();

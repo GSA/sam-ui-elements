@@ -463,10 +463,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
       } as unknown as ElementRef;
       vi.spyOn(component, "getItem").mockReturnValue(undefined);
 
-      (component as any).selectWithAny(
-        { target: { value: "typed value" } },
-        -1
-      );
+      component["selectWithAny"]({ target: { value: "typed value" } }, -1);
 
       expect(component.value[0][component.keyValueConfig.valueProperty]).toBe(
         "typed value"
@@ -485,7 +482,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
         attributes: { "data-category": { value: "South" } },
       };
       vi.spyOn(component, "getSelectedChildIndex").mockReturnValue(0);
-      vi.spyOn(component, "getResults").mockReturnValue([categoryEl] as any);
+      vi.spyOn(component, "getResults").mockReturnValue([categoryEl] as never);
 
       const result = component.getItem();
 
@@ -527,7 +524,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
       component.isFreeTextEnabled = true;
       component.searchText = "aaa";
       const nested: any = [{ key: "a", value: "aaa" }];
-      (component as any).list = { 0: nested };
+      component["list"] = { 0: nested };
       component.value = [];
       expect(component.showResultsFreeText()).toBe(false);
     });
@@ -545,7 +542,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
         { classList: { add: vi.fn(), remove: vi.fn() } },
         { classList: { add: vi.fn(), remove: vi.fn() } },
       ];
-      const result = component.setSelectedChild(1, "Down", elements as any);
+      const result = component.setSelectedChild(1, "Down", elements as never);
       expect(result).toBe(0);
     });
 
@@ -554,12 +551,12 @@ describe("The Sam Autocomplete Multiselect Component", () => {
         { classList: { add: vi.fn(), remove: vi.fn() } },
         { classList: { add: vi.fn(), remove: vi.fn() } },
       ];
-      const result = component.setSelectedChild(0, "Up", elements as any);
+      const result = component.setSelectedChild(0, "Up", elements as never);
       expect(result).toBe(1);
     });
 
     it("applyTextAreaWidth() filters options unless an up/down arrow key drove the event", () => {
-      component.ref = { detectChanges: vi.fn() } as any;
+      component.ref = { detectChanges: vi.fn() } as never;
       const filterSpy = vi.spyOn(component, "filterOptions");
       const event = {
         key: "a",
@@ -569,7 +566,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
           parentElement: { children: [] },
         },
       };
-      vi.spyOn(component as any, "calculateTextAreaWidth").mockReturnValue(
+      vi.spyOn(component as never, "calculateTextAreaWidth").mockReturnValue(
         "initial"
       );
       component.applyTextAreaWidth(event);
@@ -577,7 +574,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
     });
 
     it("applyTextAreaWidth() does not filter options when driven by an up/down arrow key", () => {
-      component.ref = { detectChanges: vi.fn() } as any;
+      component.ref = { detectChanges: vi.fn() } as never;
       const filterSpy = vi.spyOn(component, "filterOptions");
       const event = {
         key: "Down",
@@ -587,7 +584,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
           parentElement: { children: [] },
         },
       };
-      vi.spyOn(component as any, "calculateTextAreaWidth").mockReturnValue(
+      vi.spyOn(component as never, "calculateTextAreaWidth").mockReturnValue(
         "initial"
       );
       component.applyTextAreaWidth(event);
@@ -603,7 +600,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
         "padding-left": "2px",
         "padding-right": "2px",
         "border-right-width": "1px",
-      } as any);
+      } as never);
       expect(component.getParentContentWidth(el)).toBe(94);
     });
 
@@ -612,7 +609,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
       vi.spyOn(window, "getComputedStyle").mockReturnValue({
         width: "100px",
         "box-sizing": "content-box",
-      } as any);
+      } as never);
       expect(component.getParentContentWidth(el)).toBe(100);
     });
 
@@ -623,7 +620,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
         "box-sizing": "border-box",
         "border-left-width": "1px",
         "border-right-width": "1px",
-      } as any);
+      } as never);
       expect(component.getInternalElementWidth(el)).toBe(48);
     });
 
@@ -632,7 +629,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
       vi.spyOn(window, "getComputedStyle").mockReturnValue({
         width: "50px",
         "box-sizing": "content-box",
-      } as any);
+      } as never);
       expect(component.getInternalElementWidth(el)).toBe(50);
     });
 
@@ -659,7 +656,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
         { key: "a", value: "a", cat: "South" },
         { key: "b", value: "b" },
       ]);
-      expect((sorted as any).totalItems()).toBe(2);
+      expect(sorted["totalItems"]()).toBe(2);
     });
 
     it("selectItem() ignores a filter match on a differently-cased duplicate check (no-op branch coverage)", () => {
@@ -673,7 +670,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
 
     it("selectItemByCategory() clears the list even when categorySelectable is disabled", () => {
       component.categoryIsSelectable = false;
-      component.list = [{ key: "a", value: "a" }] as any;
+      component.list = [{ key: "a", value: "a" }] as never;
       component.selectItemByCategory("South");
       expect(component.list).toEqual([]);
     });
@@ -720,7 +717,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
         { classList: { add: vi.fn(), remove: vi.fn(), contains: () => false } },
         { classList: { add: vi.fn(), remove: vi.fn(), contains: () => false } },
       ];
-      vi.spyOn(component, "getResults").mockReturnValue(elements as any);
+      vi.spyOn(component, "getResults").mockReturnValue(elements as never);
       component["selectedEl"] = elements[0];
 
       component.listItemHover(1, 0);

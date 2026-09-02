@@ -17,7 +17,7 @@ describe("ServiceProperty", () => {
   });
 
   it("subscribes to the source observable and updates its value on emit", () => {
-    const source = new Subject<any>();
+    const source = new Subject<unknown>();
     const property = new ServiceProperty({ name: "prop" }, source);
     source.next({ updated: true });
     expect(property.value).toEqual({ updated: true });
@@ -75,7 +75,7 @@ describe("ServiceModel", () => {
     const model = new ServiceModel({ name: "value", value: { a: 1 } }, of(), {
       sort: { field: "name" },
     });
-    const updateFn = vi.fn((key: string) => vi.fn());
+    const updateFn = vi.fn(() => vi.fn());
     model.registerChanges(updateFn);
 
     // registerChanges() only assigns the model's own update function; the
@@ -104,7 +104,7 @@ describe("ServiceModel", () => {
   });
 
   it("propagates value changes on a property key without affecting unrelated keys", async () => {
-    const source = new Subject<any>();
+    const source = new Subject<unknown>();
     const model = new ServiceModel({ name: "value", value: {} }, source, {
       filters: {},
       sort: {},

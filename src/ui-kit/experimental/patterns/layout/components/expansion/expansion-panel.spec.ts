@@ -10,7 +10,7 @@ describe("MdExpansionPanelComponent", () => {
       imports: [NoopAnimationsModule],
     });
     const dispatcher = new UniqueSelectionDispatcher();
-    return new MdExpansionPanelComponent(accordion as any, dispatcher);
+    return new MdExpansionPanelComponent(accordion as never, dispatcher);
   }
 
   it("hides the toggle based on its own hideToggle input when there is no accordion", () => {

@@ -96,7 +96,7 @@ describe("Sam Multiselect Dropdown Component", function () {
     it("throws when model.length is not a valid, comparable number", () => {
       // NaN fails every branch condition (===0, ===1, >1 with equal option
       // count, >1) so execution falls through to the final else.
-      component.model = { length: NaN } as any;
+      component.model = { length: NaN } as never;
       expect(() => component.updateLabel()).toThrow(
         "Unable to display dropdown label"
       );
@@ -131,7 +131,7 @@ describe("Sam Multiselect Dropdown Component", function () {
     it("toggles the list's visibility to visible when triggered by a click", () => {
       component.list = {
         nativeElement: { style: { visibility: "hidden" } },
-      } as any;
+      } as never;
       component.toggleItemList({ type: "click" });
       expect(component.list.nativeElement.style.visibility).toBe("visible");
     });
@@ -139,7 +139,7 @@ describe("Sam Multiselect Dropdown Component", function () {
     it("toggles the list's visibility back to hidden on a second click", () => {
       component.list = {
         nativeElement: { style: { visibility: "visible" } },
-      } as any;
+      } as never;
       component.toggleItemList({ type: "click" });
       expect(component.list.nativeElement.style.visibility).toBe("hidden");
     });
@@ -147,7 +147,7 @@ describe("Sam Multiselect Dropdown Component", function () {
     it("does nothing for an event that is not click/enter/space", () => {
       component.list = {
         nativeElement: { style: { visibility: "hidden" } },
-      } as any;
+      } as never;
       component.toggleItemList({ type: "keydown", keyCode: 65 });
       expect(component.list.nativeElement.style.visibility).toBe("hidden");
     });
@@ -157,7 +157,7 @@ describe("Sam Multiselect Dropdown Component", function () {
     it("hides the list when it is currently visible", () => {
       component.list = {
         nativeElement: { style: { visibility: "visible" } },
-      } as any;
+      } as never;
       component.onMoveOutside();
       expect(component.list.nativeElement.style.visibility).toBe("hidden");
     });
@@ -165,7 +165,7 @@ describe("Sam Multiselect Dropdown Component", function () {
     it("does nothing when the list is already hidden", () => {
       component.list = {
         nativeElement: { style: { visibility: "hidden" } },
-      } as any;
+      } as never;
       component.onMoveOutside();
       expect(component.list.nativeElement.style.visibility).toBe("hidden");
     });

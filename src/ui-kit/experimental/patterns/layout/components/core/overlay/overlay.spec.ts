@@ -22,12 +22,12 @@ describe("Overlay", () => {
     positionBuilder = { global: vi.fn() };
     overlay = new Overlay(
       scrollStrategies,
-      overlayContainer as any,
-      null as any,
+      overlayContainer as never,
+      null as never,
       positionBuilder,
-      null as any,
-      null as any,
-      null as any
+      null as never,
+      null as never,
+      null as never
     );
   });
 
@@ -68,7 +68,7 @@ describe("Overlay", () => {
   it("uses the state's own scroll strategy when one is configured", () => {
     const state = new OverlayState();
     const customStrategy = { attach: vi.fn() };
-    state.scrollStrategy = customStrategy as any;
+    state.scrollStrategy = customStrategy as never;
 
     overlay.create(state);
 

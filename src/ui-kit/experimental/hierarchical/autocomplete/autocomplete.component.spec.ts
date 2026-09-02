@@ -286,27 +286,27 @@ describe("SamHierarchicalAutocompleteComponent", () => {
     component.model.addItem({ id: "1", name: "Level 1" }, "id");
     component.inputValue = "";
     const clearSpy = vi.spyOn(component.model, "clearItems");
-    (component as any).focusRemoved();
+    component["focusRemoved"]();
     expect(clearSpy).toHaveBeenCalled();
   });
 
   it("focusRemoved() restores the selected item's text when the input still has a value in single mode", () => {
     component.model.addItem({ id: "1", name: "Level 1" }, "id");
     component.inputValue = "partial";
-    (component as any).focusRemoved();
+    component["focusRemoved"]();
     expect(component.inputValue).toBe("Level 1");
   });
 
   it("focusRemoved() clears the input in single mode when nothing is selected", () => {
     component.inputValue = "leftover";
-    (component as any).focusRemoved();
+    component["focusRemoved"]();
     expect(component.inputValue).toBe("");
   });
 
   it("focusRemoved() clears the input outside single tree mode", () => {
     component.model.treeMode = TreeMode.MULTIPLE;
     component.inputValue = "leftover";
-    (component as any).focusRemoved();
+    component["focusRemoved"]();
     expect(component.inputValue).toBe("");
   });
 
@@ -324,7 +324,7 @@ describe("SamHierarchicalAutocompleteComponent", () => {
 
   it("onArrowUp() does nothing when there are no results", () => {
     component.results = [];
-    expect(() => (component as any).onArrowUp()).not.toThrow();
+    expect(() => component["onArrowUp"]()).not.toThrow();
   });
 
   it("onArrowUp() does nothing when already at the first result", fakeAsync(() => {
@@ -332,13 +332,13 @@ describe("SamHierarchicalAutocompleteComponent", () => {
     tick();
     fixture.detectChanges();
     component.highlightedIndex = 0;
-    (component as any).onArrowUp();
+    component["onArrowUp"]();
     expect(component.highlightedIndex).toBe(0);
   }));
 
   it("onArrowDown() does nothing when there are no results", () => {
     component.results = [];
-    expect(() => (component as any).onArrowDown()).not.toThrow();
+    expect(() => component["onArrowDown"]()).not.toThrow();
   });
 
   it("onArrowDown() does nothing when already at the last result", fakeAsync(() => {
@@ -346,7 +346,7 @@ describe("SamHierarchicalAutocompleteComponent", () => {
     tick();
     fixture.detectChanges();
     component.highlightedIndex = component.results.length - 1;
-    (component as any).onArrowDown();
+    component["onArrowDown"]();
     expect(component.highlightedIndex).toBe(component.results.length - 1);
   }));
 
@@ -380,40 +380,40 @@ describe("SamHierarchicalAutocompleteComponent", () => {
   it("getResults() does nothing when the search string is shorter than the minimum character count", () => {
     component.configuration.minimumCharacterCountSearch = 5;
     const fetchSpy = vi.spyOn(component.service, "getDataByText");
-    (component as any).getResults("ab");
+    component["getResults"]("ab");
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
   it("getResults() skips a duplicate search while results are already shown", fakeAsync(() => {
     component.inputFocusHandler();
     component.inputValue = "Level";
-    (component as any).getResults("Level");
+    component["getResults"]("Level");
     tick();
     fixture.detectChanges();
     const fetchSpy = vi.spyOn(component.service, "getDataByText");
-    (component as any).getResults("Level");
+    component["getResults"]("Level");
     tick();
     expect(fetchSpy).not.toHaveBeenCalled();
   }));
 
   it("onScroll() requests more results when scrolled to the bottom", () => {
     component.results = [{ id: "1", name: "Level 1" }];
-    (component as any).maxResults = 5;
+    component["maxResults"] = 5;
     component.resultsListElement = {
       nativeElement: { offsetHeight: 10, scrollTop: 90, scrollHeight: 100 },
-    } as any;
-    const additionalSpy = vi.spyOn(component as any, "getAdditionalResults");
+    } as never;
+    const additionalSpy = vi.spyOn(component as never, "getAdditionalResults");
     component.onScroll();
     expect(additionalSpy).toHaveBeenCalled();
   });
 
   it("onScroll() does not request more results when not scrolled near the bottom", () => {
     component.results = [{ id: "1", name: "Level 1" }];
-    (component as any).maxResults = 5;
+    component["maxResults"] = 5;
     component.resultsListElement = {
       nativeElement: { offsetHeight: 10, scrollTop: 0, scrollHeight: 1000 },
-    } as any;
-    const additionalSpy = vi.spyOn(component as any, "getAdditionalResults");
+    } as never;
+    const additionalSpy = vi.spyOn(component as never, "getAdditionalResults");
     component.onScroll();
     expect(additionalSpy).not.toHaveBeenCalled();
   });
@@ -423,8 +423,8 @@ describe("SamHierarchicalAutocompleteComponent", () => {
     tick();
     fixture.detectChanges();
     const previous: any = { name: "prev", highlighted: true };
-    (component as any).highlightedItem = previous;
-    (component as any).setHighlightedItem({ name: "next" });
+    component["highlightedItem"] = previous;
+    component["setHighlightedItem"]({ name: "next" });
     expect(previous.highlighted).toBe(false);
   }));
 
@@ -433,8 +433,8 @@ describe("SamHierarchicalAutocompleteComponent", () => {
     tick();
     fixture.detectChanges();
     const item: any = { name: "Level X", subtext: "Extra info" };
-    (component as any).setHighlightedItem(item);
-    expect((component as any).highlightedItem.highlighted).toBe(true);
+    component["setHighlightedItem"](item);
+    expect(component["highlightedItem"].highlighted).toBe(true);
   }));
 
   it("writeValue() ignores values that are not a HierarchicalTreeSelectedItemModel", () => {
@@ -444,7 +444,7 @@ describe("SamHierarchicalAutocompleteComponent", () => {
   });
 
   it("textChange() searches using an empty string when the event is falsy", () => {
-    const getResultsSpy = vi.spyOn(component as any, "getResults");
+    const getResultsSpy = vi.spyOn(component as never, "getResults");
     component.textChange(undefined);
     expect(getResultsSpy).toHaveBeenCalledWith("");
   });
@@ -476,9 +476,9 @@ describe("SamHierarchicalAutocompleteComponent", () => {
     ];
     component.resultsListElement = {
       nativeElement: { children: [{ offsetTop: 0 }, { offsetTop: 20 }] },
-    } as any;
+    } as never;
     component.highlightedIndex = 1;
-    (component as any).onArrowUp();
+    component["onArrowUp"]();
     expect(component.highlightedIndex).toBe(0);
   });
 
@@ -489,9 +489,9 @@ describe("SamHierarchicalAutocompleteComponent", () => {
     ];
     component.resultsListElement = {
       nativeElement: { children: [{ offsetTop: 0 }, { offsetTop: 20 }] },
-    } as any;
+    } as never;
     component.highlightedIndex = 0;
-    (component as any).onArrowDown();
+    component["onArrowDown"]();
     expect(component.highlightedIndex).toBe(1);
   });
 
@@ -516,10 +516,10 @@ describe("SamHierarchicalAutocompleteComponent", () => {
     component.configuration.isFreeTextEnabled = true;
     component.inputValue = "Nowhere";
     vi.spyOn(component.service, "getDataByText").mockReturnValue(
-      of({ items: [{ id: "1", name: "Level 1" }], totalItems: 1 }) as any
+      of({ items: [{ id: "1", name: "Level 1" }], totalItems: 1 }) as never
     );
 
-    (component as any).getResults("Nowhere");
+    component["getResults"]("Nowhere");
     tick();
 
     expect(component.results[0]["type"]).toBe("custom");
@@ -527,14 +527,14 @@ describe("SamHierarchicalAutocompleteComponent", () => {
 
   it("onScroll() does not request more results once all results are loaded", () => {
     component.results = [{ id: "1", name: "Level 1" }];
-    (component as any).maxResults = 1;
-    const additionalSpy = vi.spyOn(component as any, "getAdditionalResults");
+    component["maxResults"] = 1;
+    const additionalSpy = vi.spyOn(component as never, "getAdditionalResults");
     component.onScroll();
     expect(additionalSpy).not.toHaveBeenCalled();
   });
 
   it("addScreenReaderMessage() is a no-op when srOnly is not yet available", () => {
-    component.srOnly = undefined as any;
-    expect(() => (component as any).addScreenReaderMessage("hi")).not.toThrow();
+    component.srOnly = undefined as never;
+    expect(() => component["addScreenReaderMessage"]("hi")).not.toThrow();
   });
 });
