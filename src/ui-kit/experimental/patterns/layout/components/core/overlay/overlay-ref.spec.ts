@@ -88,6 +88,58 @@ describe("OverlayRef", () => {
       expect(document.body.querySelector(".cdk-overlay-backdrop")).toBeNull();
     });
 
+    it("adds the fade-in class to the backdrop on the next frame", () => {
+      // requestAnimationFrame is stubbed so the deferred callback runs
+      // deterministically. Left to the real rAF, whether jsdom flushed the
+      // frame before the coverage snapshot depended on how long the rest of
+      // the suite kept the event loop busy, which made this branch's coverage
+      // vary with test-file execution order.
+      const frames: FrameRequestCallback[] = [];
+      vi.spyOn(window, "requestAnimationFrame").mockImplementation((cb) => {
+        frames.push(cb);
+        return 0;
+      });
+
+      state.hasBackdrop = true;
+      overlayRef.attach({} as any);
+      const backdrop = document.body.querySelector(
+        ".cdk-overlay-backdrop"
+      ) as HTMLElement;
+
+      expect(backdrop.classList.contains("cdk-overlay-backdrop-showing")).toBe(
+        false
+      );
+
+      frames.forEach((cb) => cb(0));
+
+      expect(backdrop.classList.contains("cdk-overlay-backdrop-showing")).toBe(
+        true
+      );
+    });
+
+    it("skips the fade-in class when the backdrop is detached before the frame runs", () => {
+      const frames: FrameRequestCallback[] = [];
+      vi.spyOn(window, "requestAnimationFrame").mockImplementation((cb) => {
+        frames.push(cb);
+        return 0;
+      });
+
+      state.hasBackdrop = true;
+      overlayRef.attach({} as any);
+      const backdrop = document.body.querySelector(
+        ".cdk-overlay-backdrop"
+      ) as HTMLElement;
+
+      // Simulates the overlay being torn down within the same frame it was
+      // attached; the guard inside the callback is what stops it throwing.
+      overlayRef["_backdropElement"] = null;
+      frames.forEach((cb) => cb(0));
+
+      expect(backdrop.classList.contains("cdk-overlay-backdrop-showing")).toBe(
+        false
+      );
+    });
+
     it("adds the configured panel class to the pane", () => {
       state.panelClass = "my-panel";
       overlayRef.attach({} as any);
