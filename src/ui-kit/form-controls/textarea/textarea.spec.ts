@@ -179,5 +179,65 @@ describe("The Sam Textarea component", () => {
       component.onBlur();
       expect(component.value).toBe("hello");
     });
+
+    it("marks the control pristine once on IE when a placeholder is set", () => {
+      const c = new FormControl("");
+      component.control = c;
+      component.useFormService = false;
+      component.placeholder = "type here";
+      // The IE placeholder workaround is gated on a private UA sniff that no
+      // test browser satisfies; set it directly to reach the branch.
+      component["isIE"] = true;
+      component.ngOnInit();
+      component.ngAfterViewInit();
+
+      c.markAsDirty();
+      c.setValue("a");
+      expect(c.pristine).toBe(true);
+
+      // The flag makes this a one-shot fix: a second change stays dirty.
+      c.markAsDirty();
+      c.setValue("ab");
+      expect(c.pristine).toBe(false);
+    });
+
+    it("ignores form-service events that are neither submit nor reset", () => {
+      const formService = TestBed.inject(SamFormService);
+      const c = new FormControl("");
+      component.control = c;
+      component.useFormService = true;
+      component.ngOnInit();
+      component.ngAfterViewInit();
+
+      const formatErrorsSpy = vi.spyOn(component.wrapper, "formatErrors");
+      const clearErrorSpy = vi.spyOn(component.wrapper, "clearError");
+
+      formService.formEvents.next({ root: c.root, eventType: "touched" });
+
+      expect(formatErrorsSpy).not.toHaveBeenCalled();
+      expect(clearErrorSpy).not.toHaveBeenCalled();
+    });
+
+    it("uses the singular 'character' wording at one remaining character", () => {
+      component.maxlength = 5;
+      component.showCharCount = true;
+      component.value = "abcd";
+
+      component.setCharCounterMsg(component.value);
+
+      expect(component.characterCounterMsg).toBe(
+        "1 character remaining of 5 characters."
+      );
+    });
+
+    it("does not build a counter message when the counter is hidden", () => {
+      component.showCharCount = false;
+      component.characterCounterMsg = "";
+      component.maxlength = 5;
+
+      component.setCharCounterMsg("abc");
+
+      expect(component.characterCounterMsg).toBe("");
+    });
   });
 });

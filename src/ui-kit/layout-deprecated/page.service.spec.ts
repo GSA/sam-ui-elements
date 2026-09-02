@@ -29,5 +29,20 @@ describe("PageService", () => {
       expect(service.sidebarColumns).toBe("");
       expect(service.mainContentColumns).toBe("12");
     });
+
+    it("applies wide columns when the sidebar is enabled after wideSidebar", () => {
+      service.wideSidebar = true;
+      service.sidebar = true;
+
+      expect(service.sidebarColumns).toBe("4");
+      expect(service.mainContentColumns).toBe("8");
+    });
+
+    it("does not size columns when wideSidebar is set without a sidebar", () => {
+      service.wideSidebar = true;
+
+      expect(service.sidebarColumns).toBeUndefined();
+      expect(service.mainContentColumns).toBeUndefined();
+    });
   });
 });
