@@ -39,18 +39,40 @@ GSA/ngx-uswds-icons#101, GSA/ngx-uswds#275).
 
 ## Initial baseline and triage
 
-This is the first security scan run on this repository, so `.zap/rules.tsv`
-starts with **no accepted exceptions**. Before making the DAST check required,
-run the workflow on `master` and triage every finding from the first run:
-fix it in `test-app`/library markup where possible, and only add a reviewed
-exception row if it cannot be addressed in this hosting/toolchain combination.
-ZAP's rule actions do **not** determine the gate: the JSON report's risk codes
-do, so pre-existing low-risk observations remain report-only while medium/high
-findings block immediately (new-code gate, not a red wall — pre-existing
-findings are triaged/burned down, not blocking initial rollout). CodeQL's
-pull-request comparison identifies findings introduced by changed code;
-existing default-branch findings remain visible in Security → Code scanning
-for separate triage rather than red-walling the rollout.
+This was the first security scan run on this repository. Its first CI run
+(#614) surfaced two findings that were triaged rather than fixed in that PR,
+and baselined in `.zap/rules.tsv` with an owner, a triage issue, and an
+expiry:
+
+- **`10003` Vulnerable JS Library (High)** — flags `@angular/core` 19.2.25
+  against GHSA-rgjc-h3x7-9mwg (CVE-2026-54267), an Angular client-hydration
+  DOM-clobbering advisory. That advisory's exploit path requires
+  `provideClientHydration()` (SSR); `test-app` is a pure client-rendered SPA
+  with no `platform-server` and no hydration, so the vulnerable path is not
+  reachable here. Fixing the underlying version is an Angular
+  major/minor upgrade, tracked in #679 (and the broader #574/#562 upgrade
+  work), not a CI-gate change.
+- **`10055` CSP: style-src unsafe-inline (Medium)** — `test-app`'s Angular
+  production build inlines critical CSS and per-component styles that
+  require `style-src 'unsafe-inline'` to render on this Angular version; this
+  is `test-app` toolchain behavior, not a property of the shipped
+  `@gsa-sam/sam-ui-elements` library. Also tracked in #679, to revisit
+  alongside the Angular upgrade (newer Angular supports nonce/hash-based
+  inline styles).
+
+Both exceptions are rule-wide (`*`) because they are properties of every
+page `test-app` currently renders, not of a specific URL; each has a
+2027-03-01 expiry and must be reviewed (renewed or removed) by then. Any
+_new_ finding surfaced by a future CI run must be triaged the same way: fix
+it in `test-app`/library markup where possible, and only add a reviewed
+exception row if it cannot be addressed in the current hosting/toolchain
+combination. ZAP's rule actions do **not** determine the gate: the JSON
+report's risk codes do, so low-risk observations remain report-only while
+unexcepted medium/high findings block immediately (new-code gate, not a red
+wall — pre-existing findings are triaged/burned down, not blocking initial
+rollout). CodeQL's pull-request comparison identifies findings introduced by
+changed code; existing default-branch findings remain visible in Security →
+Code scanning for separate triage rather than red-walling the rollout.
 
 ## Exception policy
 
