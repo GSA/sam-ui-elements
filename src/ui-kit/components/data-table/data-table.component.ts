@@ -49,8 +49,8 @@ export const _SamTable = CdkTable;
   standalone: false,
 })
 export class SamDataTableComponent<T>
-  extends _SamTable
-  implements OnChanges<T>
+  extends _SamTable<T>
+  implements OnChanges
 {
   @Input() allowHorizontalScroll = false;
   @HostBinding("class.sam-datatable-horizontal") samTableHorizontalClass =

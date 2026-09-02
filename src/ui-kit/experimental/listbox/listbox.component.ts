@@ -189,7 +189,7 @@ export class SamListBoxComponent implements ControlValueAccessor, OnInit {
       }
       this.currentItem = item;
       this.currentItem[this.HighlightedPropertyName] = true;
-      const message = item["lable"];
+      const message = item["label"];
       this.addScreenReaderMessage(message);
     }
   }
