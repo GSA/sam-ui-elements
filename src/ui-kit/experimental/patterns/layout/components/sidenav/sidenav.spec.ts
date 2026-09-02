@@ -2,6 +2,8 @@ import { Component, ElementRef, ViewChild } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { A11yModule } from "@angular/cdk/a11y";
 import { CommonModule } from "@angular/common";
+import { Directionality } from "@angular/cdk/bidi";
+import { EMPTY } from "rxjs";
 import { MdSidenav, MdSidenavContainer } from "./sidenav";
 
 interface SidenavInternals {
@@ -286,5 +288,203 @@ describe("The Sam Sidenav component", () => {
 
     expect(validateSpy).toHaveBeenCalled();
     expect(host.sidenav._isEnd).toBe(true);
+  });
+
+  it("should not stop propagation on Escape when disableClose is set", () => {
+    const stopPropagation = vi.fn();
+    host.disableClose = true;
+    fixture.detectChanges();
+    host.sidenav.handleKeydown({
+      keyCode: 27,
+      stopPropagation,
+    } as unknown as KeyboardEvent);
+    expect(stopPropagation).not.toHaveBeenCalled();
+  });
+
+  it("should close and stop propagation on Escape when disableClose is not set", () => {
+    const stopPropagation = vi.fn();
+    host.sidenav.handleKeydown({
+      keyCode: 27,
+      stopPropagation,
+    } as unknown as KeyboardEvent);
+    expect(stopPropagation).toHaveBeenCalled();
+  });
+
+  it("should ignore transitionend events targeting a different element", () => {
+    const closeSpy = vi.fn();
+    host.sidenav.onClose.subscribe(closeSpy);
+    asInternals(host.sidenav)._onTransitionEnd({
+      target: document.createElement("div"),
+      propertyName: "transform",
+    } as TransitionEvent);
+    expect(closeSpy).not.toHaveBeenCalled();
+  });
+
+  it("should ignore transitionend events for a non-transform property", () => {
+    const closeSpy = vi.fn();
+    host.sidenav.onClose.subscribe(closeSpy);
+    asInternals(host.sidenav)._onTransitionEnd({
+      target: asInternals(host.sidenav)._elementRef.nativeElement,
+      propertyName: "opacity",
+    } as TransitionEvent);
+    expect(closeSpy).not.toHaveBeenCalled();
+  });
+
+  it("should report zero width when there is no backing native element", () => {
+    (asInternals(host.sidenav) as any)._elementRef = { nativeElement: null };
+    expect((host.sidenav as any)._width).toBe(0);
+  });
+
+  it("should throw when a second sidenav without an explicit align is added (defaulting to start)", () => {
+    TestBed.resetTestingModule();
+
+    @Component({
+      template: `
+        <md-sidenav-container>
+          <md-sidenav>One</md-sidenav>
+          <md-sidenav>Two</md-sidenav>
+        </md-sidenav-container>
+      `,
+      standalone: false,
+    })
+    class DefaultAlignHostComponent {}
+
+    TestBed.configureTestingModule({
+      declarations: [DefaultAlignHostComponent, MdSidenav, MdSidenavContainer],
+      imports: [CommonModule, A11yModule],
+    });
+    const defaultFixture = TestBed.createComponent(DefaultAlignHostComponent);
+    expect(() => defaultFixture.detectChanges()).toThrow(
+      /already declared for 'align="start"'/
+    );
+  });
+
+  it("should not close a side-mode sidenav when re-validating drawers", async () => {
+    host.mode = "side";
+    fixture.detectChanges();
+    const openPromise = host.sidenav.open();
+    asInternals(host.sidenav)._onTransitionEnd({
+      target: asInternals(host.sidenav)._elementRef.nativeElement,
+      propertyName: "transform",
+    } as TransitionEvent);
+    await openPromise;
+
+    host.align = "end";
+    fixture.detectChanges();
+
+    expect(host.sidenav.opened).toBe(true);
+  });
+
+  it("should show and compute backdrop/margin values correctly when a start sidenav is open in over mode", async () => {
+    host.mode = "over";
+    fixture.detectChanges();
+    const openPromise = host.sidenav.open();
+    asInternals(host.sidenav)._onTransitionEnd({
+      target: asInternals(host.sidenav)._elementRef.nativeElement,
+      propertyName: "transform",
+    } as TransitionEvent);
+    await openPromise;
+    fixture.detectChanges();
+
+    const container = asContainerInternals(host.container);
+    expect((host.container as any)._isShowingBackdrop()).toBe(true);
+    expect(container._getMarginLeft()).toBe(0);
+  });
+
+  it('should throw when two sidenavs both explicitly declare align="end"', () => {
+    TestBed.resetTestingModule();
+
+    @Component({
+      template: `
+        <md-sidenav-container>
+          <md-sidenav align="end">One</md-sidenav>
+          <md-sidenav align="end">Two</md-sidenav>
+        </md-sidenav-container>
+      `,
+      standalone: false,
+    })
+    class DuplicateEndAlignHostComponent {}
+
+    TestBed.configureTestingModule({
+      declarations: [
+        DuplicateEndAlignHostComponent,
+        MdSidenav,
+        MdSidenavContainer,
+      ],
+      imports: [CommonModule, A11yModule],
+    });
+    const duplicateFixture = TestBed.createComponent(
+      DuplicateEndAlignHostComponent
+    );
+    expect(() => duplicateFixture.detectChanges()).toThrow(
+      /already declared for 'align="end"'/
+    );
+  });
+
+  it("should swap left/right sidenavs under an RTL Directionality", async () => {
+    TestBed.resetTestingModule();
+
+    @Component({
+      template: `
+        <md-sidenav-container>
+          <md-sidenav #sidenav align="end" mode="side">End</md-sidenav>
+        </md-sidenav-container>
+      `,
+      standalone: false,
+    })
+    class RtlHostComponent {
+      @ViewChild("sidenav") sidenav: MdSidenav;
+      @ViewChild(MdSidenavContainer) container: MdSidenavContainer;
+    }
+
+    TestBed.configureTestingModule({
+      declarations: [RtlHostComponent, MdSidenav, MdSidenavContainer],
+      imports: [CommonModule, A11yModule],
+      providers: [
+        { provide: Directionality, useValue: { value: "rtl", change: EMPTY } },
+      ],
+    });
+    const rtlFixture = TestBed.createComponent(RtlHostComponent);
+    rtlFixture.detectChanges();
+    const { sidenav, container } = rtlFixture.componentInstance as any;
+
+    const openPromise = sidenav.open();
+    (sidenav as any)._onTransitionEnd({
+      target: (sidenav as any)._elementRef.nativeElement,
+      propertyName: "transform",
+    } as TransitionEvent);
+    await openPromise;
+    // jsdom never lays elements out, so offsetWidth (and therefore _width)
+    // is always 0; stub it so the margin math below has a nonzero value to
+    // route to the correct side.
+    Object.defineProperty(sidenav, "_width", {
+      get: () => 40,
+    });
+
+    // Under RTL, an "end"-aligned sidenav becomes the *left* side, so its
+    // effective width (in "side" mode) shows up in the left margin.
+    expect(container._getMarginLeft()).toBe(40);
+    expect(container._getMarginRight()).toBe(0);
+  });
+
+  it("should compute push-mode position offsets separately from side-mode margins", async () => {
+    host.mode = "push";
+    fixture.detectChanges();
+    const openPromise = host.sidenav.open();
+    asInternals(host.sidenav)._onTransitionEnd({
+      target: asInternals(host.sidenav)._elementRef.nativeElement,
+      propertyName: "transform",
+    } as TransitionEvent);
+    await openPromise;
+    fixture.detectChanges();
+    Object.defineProperty(host.sidenav, "_width", {
+      get: () => 40,
+    });
+    const container = host.container as any;
+
+    expect(container._getPositionLeft()).toBe(40);
+    expect(container._getPositionRight()).toBe(0);
+    // Side-mode margins stay at 0 while in push mode.
+    expect(container._getMarginLeft()).toBe(0);
   });
 });
