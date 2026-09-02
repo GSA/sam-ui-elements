@@ -21,8 +21,20 @@ test("clicking the calendar icon opens the picker and it stays open", async ({
 }) => {
   await page.goto("/datepicker");
 
-  const calendarIcon = page.locator(".datepicker .fa-calendar");
-  await calendarIcon.click();
+  // Deliberately click the `.sr-only` *child* span rather than the icon
+  // itself. Defect 2 is only reproducible when `event.target` is a
+  // descendant of `#calendarButton`, and which element a real click lands on
+  // depends on CSS this harness does not load: `test-app` has no
+  // FontAwesome webfont CSS and no `.sr-only` rule, so the unclipped child
+  // currently fills the icon's box and wins the hit-test. Under a consumer's
+  // real stylesheet the `.sr-only` span collapses to 1x1 and a centre click
+  // would land on `.fa-calendar` itself -- where the old strict `!==`
+  // comparison also passes, silently defanging this regression guard.
+  // Targeting the child explicitly (with `force`, since it is intentionally
+  // hidden from assistive tech and may be zero-area) keeps the assertion
+  // pinned to the actual defect regardless of what CSS is present.
+  const srOnlyLabel = page.locator(".datepicker .fa-calendar .sr-only");
+  await srOnlyLabel.click({ force: true });
 
   const popup = page.locator("#sam-date-calendar-popup");
   await expect(popup).toBeVisible();
