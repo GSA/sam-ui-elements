@@ -1,0 +1,14 @@
+<h1>sam-datepicker-v2 gallery</h1>
+
+<!--
+  Sibling focusable elements outside the datepicker, so
+  test-app/e2e/datepicker.spec.ts can assert that opening the calendar
+  disables (tabindex="-1", aria-hidden="true") every other focusable element
+  on the page, and that closing it via an outside click restores them
+  (GH-666 acceptance criteria).
+-->
+<button type="button" id="before-button">Before</button>
+
+<sam-datepicker-v2 [(ngModel)]="date" name="gallery-date"> </sam-datepicker-v2>
+
+<button type="button" id="after-button">After</button>
