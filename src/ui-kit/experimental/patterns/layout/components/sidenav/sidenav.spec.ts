@@ -243,9 +243,9 @@ describe("The Sam Sidenav component", () => {
 
     expect(() => fixture.detectChanges()).not.toThrow();
 
-    // Flush the microtask queue so NgZone.onMicrotaskEmpty fires and the
+    // Wait for the fixture (and NgZone) to become stable so the
     // first()-gated subscription that enables transitions can run.
-    await Promise.resolve();
+    await fixture.whenStable();
     fixture.detectChanges();
 
     expect(
@@ -257,14 +257,14 @@ describe("The Sam Sidenav component", () => {
   it("should not throw when a sidenav is removed dynamically", async () => {
     host.showSecond = true;
     fixture.detectChanges();
-    await Promise.resolve();
+    await fixture.whenStable();
     fixture.detectChanges();
 
     host.showSecond = false;
 
     expect(() => fixture.detectChanges()).not.toThrow();
 
-    await Promise.resolve();
+    await fixture.whenStable();
     expect(() => fixture.detectChanges()).not.toThrow();
   });
 
@@ -280,9 +280,9 @@ describe("The Sam Sidenav component", () => {
     expect(() => fixture.detectChanges()).not.toThrow();
 
     // The container waits for the microtask queue to be empty (via
-    // first(this._ngZone.onMicrotaskEmpty)) before re-validating, since both
-    // drawers may be swapping sides at the same time.
-    await Promise.resolve();
+    // this._ngZone.onMicrotaskEmpty.pipe(first())) before re-validating,
+    // since both drawers may be swapping sides at the same time.
+    await fixture.whenStable();
 
     expect(validateSpy).toHaveBeenCalled();
     expect(host.sidenav._isEnd).toBe(true);
