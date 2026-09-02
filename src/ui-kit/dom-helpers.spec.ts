@@ -63,4 +63,35 @@ describe("ScrollHelpers", () => {
 
     helpers.enableScroll();
   });
+
+  it("falls back to window.event when the onwheel handler fires with no event object", () => {
+    const helpers = ScrollHelpers(window);
+    helpers.disableScroll();
+
+    const preventDefault = vi.fn();
+    (window as any).event = { preventDefault };
+
+    // window.onwheel is bound directly to the internal preventDefault(); call
+    // it with no arguments so `e || window.event` falls through to the
+    // window.event branch.
+    (window.onwheel as any)();
+
+    expect(preventDefault).toHaveBeenCalled();
+    delete (window as any).event;
+    helpers.enableScroll();
+  });
+
+  it("skips setting returnValue guard branches when addEventListener/removeEventListener are unavailable", () => {
+    const originalAdd = window.addEventListener;
+    const originalRemove = window.removeEventListener;
+    (window as any).addEventListener = undefined;
+    (window as any).removeEventListener = undefined;
+
+    const helpers = ScrollHelpers(window);
+    expect(() => helpers.disableScroll()).not.toThrow();
+    expect(() => helpers.enableScroll()).not.toThrow();
+
+    window.addEventListener = originalAdd;
+    window.removeEventListener = originalRemove;
+  });
 });

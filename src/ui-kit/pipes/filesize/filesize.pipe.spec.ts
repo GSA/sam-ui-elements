@@ -27,4 +27,18 @@ describe("src/app/opportunity/pipes/filesize.pipe.spec.ts", () => {
     expect(pipe.transform(1.5 * kb + 1)).toBe("2 KB");
     expect(pipe.transform(5.5 * mb - 1)).toBe("5 MB");
   });
+
+  it("FilesizePipe: returns '0' for non-numeric input", () => {
+    expect(pipe.transform("1024" as any)).toBe("0");
+  });
+
+  it("FilesizePipe: warns and falls back to the byte symbol above the largest supported size", () => {
+    const warnSpy = vi
+      .spyOn(console, "warn")
+      .mockImplementation(() => undefined);
+    const petabyte = 2 ** 50 + 1;
+    expect(pipe.transform(petabyte)).toContain("B");
+    expect(warnSpy).toHaveBeenCalledWith("file size symbol not supported");
+    warnSpy.mockRestore();
+  });
 });
