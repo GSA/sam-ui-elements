@@ -27,9 +27,16 @@ test("clicking the calendar icon opens the picker and it stays open", async ({
   const popup = page.locator("#sam-date-calendar-popup");
   await expect(popup).toBeVisible();
   // Regression guard for the "opens then immediately closes in the same
-  // event" defect: give the (buggy) global click handler every chance to
-  // run before asserting the popup is still there.
-  await page.waitForTimeout(250);
+  // event" defect: `handleGlobalClick` runs synchronously as the click
+  // event bubbles to `document`, in the same task as the click that opened
+  // the popup, so waiting for the next two paint frames (rather than a
+  // fixed timeout) is enough to let it run before re-asserting visibility.
+  await page.evaluate(
+    () =>
+      new Promise<void>((resolve) =>
+        requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+      )
+  );
   await expect(popup).toBeVisible();
 });
 
