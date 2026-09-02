@@ -1,0 +1,5 @@
+# ZAP exceptions: rule-id<TAB>IGNORE<TAB>scope<TAB>issue-url<TAB>owner<TAB>expiry(YYYY-MM-DD)<TAB>rationale
+# scope = a URL substring the exception is limited to (narrowest available scope), or * for rule-wide (must be justified).
+# Low-risk alerts are reported but do not block the medium/high gate; only rows below are suppressed.
+# No exceptions are currently approved -- triage any finding surfaced by the
+# first CI run per docs/security-scanning.md before adding a row here.
