@@ -141,7 +141,7 @@ describe("SamListBoxComponent", () => {
     expect(fixture.nativeElement.innerHTML).toContain(labelText);
   });
 
-  it.skip("should disable", function () {
+  it("should disable", function () {
     component.options[0].disabled = true;
     fixture.detectChanges();
     const value =
@@ -193,7 +193,7 @@ describe("SamListBoxComponent", () => {
     fixture.detectChanges();
   });
 
-  it.skip("should process arrow up and down keypresses", fakeAsync(() => {
+  it("should process arrow up and down keypresses", fakeAsync(() => {
     component.options = options;
     fixture.detectChanges();
     tick();
@@ -220,7 +220,7 @@ describe("SamListBoxComponent", () => {
     expect(component.options[0]["highlighted"]).toBeTruthy();
   }));
 
-  it.skip("Up arrow when on first item", fakeAsync(() => {
+  it("Up arrow when on first item", fakeAsync(() => {
     component.options = options;
     tick();
     fixture.detectChanges();
@@ -238,7 +238,7 @@ describe("SamListBoxComponent", () => {
     expect(component.options[0]["highlighted"]).toBeTruthy();
   }));
 
-  it.skip("Down arrow when on over lists item", fakeAsync(() => {
+  it("Down arrow when on over lists item", fakeAsync(() => {
     component.options = options;
     tick();
     fixture.detectChanges();
