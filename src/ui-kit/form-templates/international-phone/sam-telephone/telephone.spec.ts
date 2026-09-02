@@ -79,4 +79,96 @@ describe("Sam Telephone Component", () => {
 
     expect(component.inputValue).toEqual(expected);
   });
+
+  it("ignores changes that do not include countryCode", () => {
+    const before = component.template;
+
+    component.ngOnChanges({
+      placeholder: new SimpleChange(undefined, "other", false),
+    });
+
+    expect(component.template).toEqual(before);
+  });
+
+  it("treats a missing country code as North American", () => {
+    component.ngOnChanges({
+      countryCode: new SimpleChange(undefined, undefined, true),
+    });
+
+    expect(component.template).toEqual("(___)___-____");
+  });
+
+  it("validate() returns the first default validator error", () => {
+    component.ngOnChanges({
+      countryCode: new SimpleChange(undefined, 1, true),
+    });
+
+    const result = component.validate({ value: "12345" } as never);
+
+    expect(result.usaPhone.message).toBe(
+      "North American phone numbers must be 10 digits"
+    );
+  });
+
+  it("validate() returns null for a valid North American number", () => {
+    component.ngOnChanges({
+      countryCode: new SimpleChange(undefined, 1, true),
+    });
+
+    expect(component.validate({ value: "1234567890" } as never)).toBeNull();
+  });
+
+  it("validate() returns null when the control has no value", () => {
+    component.ngOnChanges({
+      countryCode: new SimpleChange(undefined, 1, true),
+    });
+
+    expect(component.validate({ value: "" } as never)).toBeNull();
+  });
+
+  it("validate() flags an international number outside the 4-15 digit range", () => {
+    component.ngOnChanges({
+      countryCode: new SimpleChange(undefined, 44, false),
+    });
+
+    const result = component.validate({ value: "123" } as never);
+
+    expect(result.intlPhone.message).toBe(
+      "International phone numbers must be between 4 and 15 digits"
+    );
+  });
+
+  it("validate() accepts an international number within range", () => {
+    component.ngOnChanges({
+      countryCode: new SimpleChange(undefined, 44, false),
+    });
+
+    expect(component.validate({ value: "123456" } as never)).toBeNull();
+  });
+
+  it("onKeyInput blocks a disallowed key", () => {
+    const preventDefault = vi.fn();
+
+    component.onKeyInput({ key: "a", preventDefault });
+
+    expect(preventDefault).toHaveBeenCalled();
+  });
+
+  it("onKeyInput allows a numeric key through", () => {
+    const preventDefault = vi.fn();
+
+    // KeyHelper compares `event.key` against numeric literals, so a string
+    // "1" does not match; a real digit keypress is identified by `code`.
+    component.onKeyInput({ code: "Digit1", preventDefault });
+
+    expect(preventDefault).not.toHaveBeenCalled();
+  });
+
+  it("input/focus/blur handlers are no-ops without an event target", () => {
+    const noTarget = { currentTarget: null };
+
+    expect(() => component.inputChange(noTarget)).not.toThrow();
+    expect(() => component.handleFocus(noTarget)).not.toThrow();
+    expect(() => component.handleBlur(noTarget)).not.toThrow();
+  });
 });
