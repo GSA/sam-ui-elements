@@ -44,7 +44,7 @@ export class SamHierarchicalSelectedResultComponent implements ControlValueAcces
   /**
    * Stored Event for ControlValueAccessor
    */
-  private propogateChange: (_: any) => void = (_: any) => null;
+  private propogateChange: (_val: any) => void = () => null;
 
   @Input()
   public disabled: boolean;

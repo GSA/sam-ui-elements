@@ -252,7 +252,7 @@ export class SamAutocompleteComponent
   public keyEvents: Subject<any> = new Subject();
 
   public onTouchedCallback: () => void = () => null;
-  public propogateChange: (_: any) => void = (_: any) => null;
+  public propogateChange: (_val: any) => void = () => null;
 
   constructor(
     @Optional() public autocompleteService: AutocompleteService,

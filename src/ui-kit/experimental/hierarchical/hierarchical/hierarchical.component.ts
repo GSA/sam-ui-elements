@@ -64,7 +64,7 @@ export class SamHierarchicalComponent
   /**
    * Stored Event for ControlValueAccessor
    */
-  public propogateChange: (_: any) => void = (_: any) => null;
+  public propogateChange: (_val: any) => void = () => null;
 
   public disabled: boolean;
 
