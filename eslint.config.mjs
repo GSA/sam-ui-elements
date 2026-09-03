@@ -23,8 +23,9 @@ const recommendedTypeScriptWarnings = asWarnings([
 // @angular-eslint/prefer-standalone is intentionally disabled, not just
 // downgraded to a warning: nearly every flagged component here is
 // `standalone: false` and registered via `declarations:` in a legacy
-// NgModule, several of which are in the frozen consumer-deep-imports.json
-// contract. Autofixing this rule flips Angular's default to
+// NgModule, several of which are in the frozen
+// scripts/consumer-deep-imports.json contract. Autofixing this rule flips
+// Angular's default to
 // `standalone: true` and broke 827 tests when tried (see #582/PR #675).
 // See AGENTS.md "Standalone-component lint policy (deferred)" for the
 // full rationale (GSA/sam-ui-elements#584).
