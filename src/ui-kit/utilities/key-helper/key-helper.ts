@@ -86,7 +86,7 @@ export class KeyHelper {
   }
 
   public static is(validKeyParam: string, event: KeyboardEvent | any): boolean {
-    let lowercased = validKeyParam.toLowerCase();
+    const lowercased = validKeyParam.toLowerCase();
     switch (lowercased) {
       case "enter":
         return this._isEnter(event);
