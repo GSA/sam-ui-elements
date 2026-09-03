@@ -86,7 +86,7 @@ export class SamHierarchicalTreeHeaderComponent {
    * emits the breadcrumb selected for a given item
    * @param ev
    */
-  onLevelChange(ev: Event): void {
+  onLevelChange(): void {
     this.selectBreadcrumb.emit(this.selectModel);
   }
 

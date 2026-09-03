@@ -64,7 +64,7 @@ export class HierarchicalTreeSelectedItemModel {
    * @param keyField
    */
   contatinsItem(key: string, keyField: string): boolean {
-    let item = this.items.find((o) => o[keyField] === key);
+    const item = this.items.find((o) => o[keyField] === key);
     return item !== null && item !== undefined;
   }
 

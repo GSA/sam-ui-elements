@@ -332,7 +332,7 @@ describe("The Sam Autocomplete Component", () => {
     });
 
     it("Should work as a form control", () => {
-      component.registerOnChange((_val) => {});
+      component.registerOnChange(() => {});
       component.registerOnTouched(() => {});
       fixture.detectChanges();
       component.setDisabledState(true);

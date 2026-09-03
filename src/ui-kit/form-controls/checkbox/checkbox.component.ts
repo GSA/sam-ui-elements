@@ -101,7 +101,7 @@ export class SamCheckboxComponent implements ControlValueAccessor {
    */
   private _ordering: any = {};
 
-  onChange: any = (c) => undefined;
+  onChange: any = () => undefined;
 
   onTouched: any = () => undefined;
 

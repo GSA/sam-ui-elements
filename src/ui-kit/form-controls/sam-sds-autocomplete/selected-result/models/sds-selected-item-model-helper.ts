@@ -90,7 +90,7 @@ export class SAMSDSSelectedItemModelHelper {
     keyField: string,
     items: object[]
   ): boolean {
-    let item = items.find((o) => o[keyField] === key);
+    const item = items.find((o) => o[keyField] === key);
     return item !== null && item !== undefined;
   }
 
