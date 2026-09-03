@@ -204,9 +204,9 @@ export class SamModalComponent implements OnInit {
     );
     this._modalFocusableElements =
       this.modalRoot.nativeElement.querySelectorAll(this._focusableString);
-    let modulFocus = this._modalFocusableElements[0] as HTMLBaseElement;
-    let firstFocus = this._modalFocusableElements[1] as HTMLBaseElement;
-    let lastFocus = this._modalFocusableElements[
+    const modulFocus = this._modalFocusableElements[0] as HTMLBaseElement;
+    const firstFocus = this._modalFocusableElements[1] as HTMLBaseElement;
+    const lastFocus = this._modalFocusableElements[
       this._modalFocusableElements.length - 1
     ] as HTMLBaseElement;
 
