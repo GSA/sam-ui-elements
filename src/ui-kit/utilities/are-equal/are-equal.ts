@@ -1,11 +1,11 @@
 /**
  * Checks if two items are equal by value rather than reference
  *
- * @param {*} item1 - The item in question
- * @param {*} item2 - An item to compare against
+ * @param item1 - The item in question
+ * @param item2 - An item to compare against
  * @returns {boolean}
  */
-export function areEqual(item1: any, item2: any): boolean {
+export function areEqual(item1: unknown, item2: unknown): boolean {
   const type1: string = typeof item1,
     type2: string = typeof item2;
 
@@ -29,7 +29,7 @@ export function areEqual(item1: any, item2: any): boolean {
    * @param item2
    * @returns {boolean}
    */
-  function areObjectsEqual(item1, item2): boolean {
+  function areObjectsEqual(item1: unknown, item2: unknown): boolean {
     // typeof null === 'object', so we have to check for null with the object
     // checks rather than with the other primitives
     if (item1 === null && item2 === null) {
@@ -40,9 +40,12 @@ export function areEqual(item1: any, item2: any): boolean {
       isArray2: boolean = item2 instanceof Array;
 
     if (isArray1 && isArray2) {
-      return areArraysEqual(item1, item2);
+      return areArraysEqual(item1 as unknown[], item2 as unknown[]);
     } else if (!isArray1 && !isArray2) {
-      return areNonArrayObjectsEqual(item1, item2);
+      return areNonArrayObjectsEqual(
+        item1 as Record<string, unknown>,
+        item2 as Record<string, unknown>
+      );
     } else {
       return false;
     }
@@ -51,12 +54,12 @@ export function areEqual(item1: any, item2: any): boolean {
   /**
    * Checks if two arrays are equal
    *
-   * @param {*} array1
-   * @param {*} array2
+   * @param array1
+   * @param array2
    *
    * @returns {boolean}
    */
-  function areArraysEqual(array1, array2): boolean {
+  function areArraysEqual(array1: unknown[], array2: unknown[]): boolean {
     const len1: number = array1.length,
       len2: number = array2.length;
 
@@ -78,12 +81,15 @@ export function areEqual(item1: any, item2: any): boolean {
   /**
    * Check if two non-array objects are equal
    *
-   * @param {*} array1
-   * @param {*} array2
+   * @param obj1
+   * @param obj2
    *
    * @returns {boolean}
    */
-  function areNonArrayObjectsEqual(obj1, obj2): boolean {
+  function areNonArrayObjectsEqual(
+    obj1: Record<string, unknown>,
+    obj2: Record<string, unknown>
+  ): boolean {
     const keys1 = Object.keys(obj1),
       keys2 = Object.keys(obj2),
       length = keys1.length;

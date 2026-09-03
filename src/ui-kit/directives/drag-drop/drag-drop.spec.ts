@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 import { Component, Output, ViewChild, EventEmitter } from "@angular/core";
 import { By } from "@angular/platform-browser";
@@ -41,7 +41,7 @@ class TestComponent {
 describe("The Sam Focus directive", () => {
   let directive: SamDragDropDirective;
   let component: TestComponent;
-  let fixture: any;
+  let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

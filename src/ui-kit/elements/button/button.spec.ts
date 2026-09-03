@@ -1,4 +1,4 @@
-import { TestBed, waitForAsync } from "@angular/core/testing";
+import { TestBed, waitForAsync, ComponentFixture } from "@angular/core/testing";
 
 import { By } from "@angular/platform-browser";
 
@@ -7,7 +7,7 @@ import { SamButtonComponent } from "./button.component";
 
 describe("The Sam Button component", () => {
   let component: SamButtonComponent;
-  let fixture: any;
+  let fixture: ComponentFixture<SamButtonComponent>;
 
   const primaryBtnConfig = {
     buttonType: "primary",
@@ -159,7 +159,7 @@ describe("The Sam Button component", () => {
 
     const clickSpy = vi.fn();
     component.onClick.subscribe(clickSpy);
-    component.click({});
+    component.click(new Event("click"));
 
     expect(clickSpy).not.toHaveBeenCalled();
   });
@@ -167,7 +167,7 @@ describe("The Sam Button component", () => {
   it("emits onClick with the event when not disabled", () => {
     const clickSpy = vi.fn();
     component.onClick.subscribe(clickSpy);
-    const event = { type: "click" };
+    const event = new Event("click");
 
     component.click(event);
 

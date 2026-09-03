@@ -42,8 +42,8 @@ export class SamFiltersWrapperComponent implements OnInit, OnDestroy {
    */
   @Input() public disabled = false;
 
-  public runReportEvent = new Subject<any>();
-  public resetReportEvent = new Subject<any>();
+  public runReportEvent = new Subject<unknown>();
+  public resetReportEvent = new Subject<unknown>();
   public disableAction = false;
   private _runReportSubscription: Subscription;
   private _resetReportSubscription: Subscription;

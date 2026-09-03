@@ -135,7 +135,7 @@ describe("The Sam Fieldset Wrapper component", () => {
 
   describe("integration tests", () => {
     let component: FieldsetWrapper;
-    let fixture: any;
+    let fixture: ComponentFixture<FieldsetWrapper>;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -158,6 +158,8 @@ describe("The Sam Fieldset Wrapper component", () => {
         hint: {
           previousValue: false,
           currentValue: true,
+          firstChange: false,
+          isFirstChange: () => false,
         },
       });
       fixture.detectChanges();

@@ -78,7 +78,7 @@ export class SamButtonComponent {
   /**
    * Emmits event on click
    */
-  @Output() onClick: EventEmitter<any> = new EventEmitter();
+  @Output() onClick: EventEmitter<Event> = new EventEmitter<Event>();
 
   /**
    * Sets the id that will assign to the button element (Deprecated)
@@ -110,7 +110,7 @@ export class SamButtonComponent {
    */
   @Input() buttonClass: string = "";
 
-  private btnClassMap: any = {
+  private btnClassMap: Record<string, string> = {
     // Types
     default: "primary",
     primary: "primary",
@@ -178,7 +178,7 @@ export class SamButtonComponent {
     deprecator.render(this);
   }
 
-  click($event) {
+  click($event: Event) {
     if (!this.isDisabled) {
       this.onClick.emit($event);
     }

@@ -50,7 +50,12 @@ export class SamPaginationNextComponent implements OnInit, OnChanges {
   /**
    * Options for selection
    */
-  @Input() public options: any[];
+  @Input() public options: {
+    value: string | number;
+    label: string;
+    disabled?: boolean;
+    selected?: boolean;
+  }[];
   /**
    * Sets the disabled status of the component,
    * defaults to false
