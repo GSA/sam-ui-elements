@@ -4,7 +4,7 @@ import {
   ViewChild,
   ChangeDetectorRef,
 } from "@angular/core";
-import { SamAutocompleteComponent, AutocompleteService } from "../../../ui-kit";
+import { SamAutocompleteComponent } from "../../../ui-kit";
 
 import { AbstractSamFormly } from "../../sam-formly";
 

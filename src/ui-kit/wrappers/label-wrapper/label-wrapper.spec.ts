@@ -1,11 +1,5 @@
-import {
-  TestBed,
-  waitForAsync,
-  ComponentFixtureAutoDetect,
-  ComponentFixture,
-} from "@angular/core/testing";
-import { Component, ChangeDetectorRef, Renderer2 } from "@angular/core";
-import { By } from "@angular/platform-browser";
+import { TestBed } from "@angular/core/testing";
+import { ChangeDetectorRef, Renderer2 } from "@angular/core";
 import { FormControl } from "@angular/forms";
 // Load the implementations that should be tested
 import { LabelWrapper } from "./label-wrapper.component";
