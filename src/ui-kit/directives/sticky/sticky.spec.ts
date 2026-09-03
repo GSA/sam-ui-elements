@@ -1,10 +1,16 @@
-import { TestBed, waitForAsync, fakeAsync, tick } from "@angular/core/testing";
+import {
+  TestBed,
+  waitForAsync,
+  fakeAsync,
+  tick,
+  ComponentFixture,
+} from "@angular/core/testing";
 
 import { Component, ViewChild } from "@angular/core";
 import { By } from "@angular/platform-browser";
 
 // Load the implementations that should be tested
-import { SamStickyComponent } from "./sticky.component";
+import { SamStickyComponent, OffsetParentLike } from "./sticky.component";
 
 @Component({
   selector: "test-cmp",
@@ -33,7 +39,7 @@ class TestComponent {
 describe("The Sam Sticky directive", () => {
   let directive: SamStickyComponent;
   let component: TestComponent;
-  let fixture: any;
+  let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -57,7 +63,7 @@ describe("The Sam Sticky directive", () => {
   });
 
   it("should handle when resized", () => {
-    directive.resize({});
+    directive.resize(new Event("resize"));
     const comp = fixture.debugElement.query(By.css(".test-comp"));
     fixture.detectChanges();
     expect(comp.nativeElement.getAttribute("style")).toContain(
@@ -71,7 +77,7 @@ describe("The Sam Sticky directive", () => {
     window.dispatchEvent(new Event("scroll"));
     fixture.detectChanges();
     expect(directive.scroll).toHaveBeenCalled();
-    directive.scroll(undefined);
+    directive.scroll(new Event("scroll"));
     directive.makeSticky();
 
     directive.limit = expectedLimit;
@@ -80,7 +86,7 @@ describe("The Sam Sticky directive", () => {
 
   it("resize() recalculates elemWidth and calls makeSticky", () => {
     const makeStickySpy = vi.spyOn(directive, "makeSticky");
-    directive.resize({});
+    directive.resize(new Event("resize"));
     expect(makeStickySpy).toHaveBeenCalled();
 
     const comp = fixture.debugElement.query(By.css(".test-comp"));
@@ -155,8 +161,11 @@ describe("The Sam Sticky directive", () => {
     ).nativeElement;
     expect(directive.getElemDistanceToTop(nativeElement)).toBe(0);
 
-    const fakeParent = { offsetTop: 40, offsetParent: null };
-    const fakeElem = { offsetTop: 10, offsetParent: fakeParent };
+    const fakeParent: OffsetParentLike = { offsetTop: 40, offsetParent: null };
+    const fakeElem: OffsetParentLike = {
+      offsetTop: 10,
+      offsetParent: fakeParent as unknown as Element,
+    };
     expect(directive.getElemDistanceToTop(fakeElem)).toBe(50);
   });
 
