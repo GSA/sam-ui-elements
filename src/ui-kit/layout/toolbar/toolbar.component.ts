@@ -57,5 +57,5 @@ export class SamToolbarComponent {
   /**
    * Emitter for interaction handling
    */
-  @Output() action: EventEmitter<any> = new EventEmitter<any>();
+  @Output() action: EventEmitter<ToolbarItem> = new EventEmitter<ToolbarItem>();
 }
