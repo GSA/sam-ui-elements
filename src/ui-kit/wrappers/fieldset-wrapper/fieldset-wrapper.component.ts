@@ -7,6 +7,8 @@ import {
   OnChanges,
   AfterViewInit,
   AfterViewChecked,
+  ElementRef,
+  SimpleChanges,
 } from "@angular/core";
 import { AbstractControl } from "@angular/forms";
 
@@ -33,7 +35,7 @@ export class FieldsetWrapper
   /**
    * Add an array of errorMessages
    */
-  @Input() public errorMessages: any[] = [];
+  @Input() public errorMessages: string[] = [];
   /**
    * set a single error message
    */
@@ -55,7 +57,8 @@ export class FieldsetWrapper
    * toggles the required text
    */
   @Input() public required: boolean = false;
-  @ViewChild("hintContainer", { static: false }) public hintContainer: any;
+  @ViewChild("hintContainer", { static: false })
+  public hintContainer: ElementRef<HTMLElement>;
   public showToggle: boolean = false;
   private toggleOpen: boolean = false;
   private lineSize: number;
@@ -64,7 +67,7 @@ export class FieldsetWrapper
   private hasMultipleControls = false;
   constructor(private cdr: ChangeDetectorRef) {}
 
-  public ngOnChanges(c) {
+  public ngOnChanges(c: SimpleChanges) {
     if (
       !this.checkMore &&
       c.hint &&
@@ -101,7 +104,7 @@ export class FieldsetWrapper
   }
 
   @HostListener("window:resize", ["$event"])
-  public onResize(event) {
+  public onResize(event: UIEvent) {
     // needs to be open to recalc correctly in
     // ngAfterViewChecked
     this.showToggle = false;
@@ -110,13 +113,13 @@ export class FieldsetWrapper
     this.cdr.detectChanges();
   }
 
-  public toggleHint(status) {
+  public toggleHint(status: boolean) {
     this.toggleOpen = !status;
   }
 
-  public calculateNumberOfLines(obj) {
+  public calculateNumberOfLines(obj: HTMLElement): number {
     if (!this.lineSize) {
-      const other = obj.cloneNode(true);
+      const other = obj.cloneNode(true) as HTMLElement;
       other.innerHTML = "a<br>b";
       other.style.visibility = "hidden";
       const el = <HTMLElement>document.getElementsByTagName("body")[0];
@@ -189,7 +192,10 @@ export class FieldsetWrapper
     }
   }
 
-  private setInvalidError(error, errorObject) {
+  private setInvalidError(
+    error: string,
+    errorObject: { actualLength?: number; requiredLength?: number }
+  ) {
     let msg;
     switch (error) {
       case "maxlength":

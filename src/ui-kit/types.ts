@@ -66,7 +66,7 @@ export interface HistoryNodeType {
   /**
    * Optional query params
    */
-  queryParams?: any;
+  queryParams?: Record<string, string | number | boolean>;
   /**
    * Title value for node
    */
@@ -107,7 +107,7 @@ export interface AutocompleteConfig {
   /**
    * Passes value to the custom autocomplete service fetch method call
    */
-  serviceOptions?: any;
+  serviceOptions?: unknown;
   /**
    * Set value to be used to determine if an item is a category.
    */
@@ -322,6 +322,17 @@ export interface TextAreaWidthType {
   full?: boolean;
 }
 
+export interface UploadedFileIcon {
+  /**
+   * The name shown as a title / aria-label for the icon
+   */
+  name?: string;
+  /**
+   * The CSS class(es) applied to render the icon
+   */
+  iconClass?: string;
+}
+
 export interface UploadedFileData {
   /**
    * Defines the file name for the uploaded file
@@ -346,7 +357,7 @@ export interface UploadedFileData {
   /**
    * sets the file icon
    */
-  icon: any;
+  icon: UploadedFileIcon;
   /**
    * Whether link to download should be disabled
    */
