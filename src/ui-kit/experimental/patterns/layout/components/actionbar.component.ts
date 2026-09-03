@@ -35,7 +35,7 @@ export class SamActionBarComponent {
     }
   }
 
-  private _onPageChange(event) {
+  private _onPageChange() {
     const pg = {
       pageSize: this.pagination.pageSize,
       currentPage: this.pagination.currentPage,
@@ -46,7 +46,7 @@ export class SamActionBarComponent {
     this._service.model.properties["pagination"].setValue(pg);
   }
 
-  private _onUnitsChange(size) {
+  private _onUnitsChange() {
     const pg = {
       pageSize: this.pagination.pageSize,
       currentPage: this.pagination.currentPage,

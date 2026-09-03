@@ -765,7 +765,7 @@ export class SamAutocompleteMultiselectComponent
             context.sortByCategory(context.cache.get(searchString))
           );
         },
-        (_err) => {
+        () => {
           context.displaySpinner = false;
           const errorObject = {
             cannotBeSelected: true,
@@ -1073,7 +1073,7 @@ export class SamAutocompleteMultiselectComponent
     this.textArea.nativeElement.blur();
   }
 
-  public checkForFocus(_event) {
+  public checkForFocus() {
     this.clearSearch();
     this.list = [];
   }

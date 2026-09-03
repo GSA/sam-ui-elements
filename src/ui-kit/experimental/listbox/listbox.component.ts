@@ -119,7 +119,7 @@ export class SamListBoxComponent implements ControlValueAccessor {
    * value is before another value
    */
   private _ordering: any = {};
-  onChange: any = (c) => undefined;
+  onChange: any = () => undefined;
   onTouched: any = () => undefined;
   private disabled: boolean;
   get value() {
@@ -188,7 +188,7 @@ export class SamListBoxComponent implements ControlValueAccessor {
       }
       this.currentItem = item;
       this.currentItem[this.HighlightedPropertyName] = true;
-      let message = item["lable"];
+      const message = item["lable"];
       this.addScreenReaderMessage(message);
     }
   }

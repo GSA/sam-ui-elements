@@ -171,7 +171,7 @@ export class MdSidenav implements AfterContentInit, OnDestroy {
    * opened.
    */
   private _restoreFocus() {
-    let activeEl = this._doc && this._doc.activeElement;
+    const activeEl = this._doc && this._doc.activeElement;
     if (activeEl && this._elementRef.nativeElement.contains(activeEl)) {
       if (this._elementFocusedBeforeSidenavWasOpened instanceof HTMLElement) {
         this._elementFocusedBeforeSidenavWasOpened.focus();
@@ -504,7 +504,7 @@ export class MdSidenavContainer implements AfterContentInit {
     // Ensure that we have at most one start and one end sidenav.
     // NOTE: We must call toArray on _sidenavs even though it's iterable
     // (see https://github.com/Microsoft/TypeScript/issues/3164).
-    for (let sidenav of this._sidenavs.toArray()) {
+    for (const sidenav of this._sidenavs.toArray()) {
       if (sidenav.align == "end") {
         if (this._end != null) {
           throwMdDuplicatedSidenavError("end");
