@@ -5,18 +5,15 @@ import {
   EventEmitter,
   ElementRef,
   ViewChild,
-  AfterViewInit,
   OnInit,
 } from "@angular/core";
 
 import {
   trigger,
-  state,
   style,
   animate,
   transition,
   query,
-  animateChild,
   keyframes,
   stagger,
 } from "@angular/animations";
@@ -144,7 +141,7 @@ export class SamSearchComponent implements OnInit {
 
   updateResultsWidth() {
     setTimeout(() => {
-      let styles = getComputedStyle(this.inputEl.nativeElement);
+      const styles = getComputedStyle(this.inputEl.nativeElement);
       this.resultsWidth = parseInt(styles.width.slice(0, -2)) + 48;
       this.resultsWidth = `${this.resultsWidth}px`;
     }, 1);

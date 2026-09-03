@@ -1,18 +1,15 @@
 import {
   Component,
   Input,
-  OnInit,
   ContentChildren,
   QueryList,
   ElementRef,
-  forwardRef,
   Renderer2,
   Output,
   EventEmitter,
 } from "@angular/core";
-import GLOBAL_STRINGS from "accessible-html5-video-player/js/strings.js";
 import * as InitPxVideo from "accessible-html5-video-player/js/px-video.js";
-declare var InitPxVideo: any;
+declare let InitPxVideo: any;
 
 // NOTE: Add px-video.js and strings.js files to your application .angular-cli.json script tag
 
@@ -89,7 +86,7 @@ export class SamVideoPlayerComponent {
     this.setElementAttribute(videoEl, "role", "presentation");
   }
 
-  onToggleFullScreen(event) {
+  onToggleFullScreen() {
     const isFullScreen = document["fullscreen"];
     this.onFullScreenChange.emit(isFullScreen);
   }

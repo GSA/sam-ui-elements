@@ -5,9 +5,6 @@ import {
   AfterViewInit,
   Output,
   EventEmitter,
-  forwardRef,
-  ViewChild,
-  Directive,
   Input,
 } from "@angular/core";
 
@@ -48,7 +45,7 @@ export class SamPickerComponent implements AfterViewInit {
     this.combobox.clearInput();
   }
 
-  private _onChange(e) {
+  private _onChange() {
     this.selected = this.combobox.selected;
     this.onChange.emit(this.selected);
   }
