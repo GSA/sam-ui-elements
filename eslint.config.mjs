@@ -59,6 +59,11 @@ export default tseslint.config(
     rules: {
       ...recommendedTypeScriptWarnings,
       "no-restricted-syntax": ["error", noUnboundRxjsOperatorRule],
+      // GSA/sam-ui-elements#585: promoted to errors once the codebase reached
+      // zero warnings for these two rules (unused declarations/imports/params
+      // and never-reassigned `let` bindings are fully cleaned up).
+      "prefer-const": "error",
+      "@typescript-eslint/no-unused-vars": "error",
     },
   },
   {
