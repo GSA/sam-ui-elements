@@ -20,7 +20,13 @@ const recommendedTypeScriptWarnings = asWarnings([
   ...angular.configs.tsRecommended,
 ]);
 
-const accessibilityWarnings = asWarnings(angular.configs.templateAccessibility);
+// Template accessibility debt (see #583) has been fully resolved: every rule
+// in `angular.configs.templateAccessibility` currently has 0 findings across
+// both workspaces. Per #580's promotion policy ("resolved rule categories are
+// promoted from warnings to errors"), these are enforced as errors directly
+// from the plugin's own recommended severities rather than downgraded to
+// warnings, so any future regression fails the build immediately instead of
+// silently inflating the warning baseline.
 
 // Bans the RxJS 5 "unbound operator" call pattern (e.g.
 // `first.call(observable).subscribe(...)`), which throws
@@ -64,6 +70,5 @@ export default tseslint.config(
   {
     files: ["**/*.html"],
     extends: angular.configs.templateAccessibility,
-    rules: accessibilityWarnings,
   }
 );

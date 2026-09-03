@@ -16,6 +16,7 @@
     [class.mat-tab-label-active]="selectedIndex == i"
     [disabled]="tab.disabled"
     (click)="tabHeader.focusIndex = selectedIndex = i"
+    (keydown.enter)="tabHeader.focusIndex = selectedIndex = i"
   >
     <!-- If there is a label template, use it. -->
     <ng-template [ngIf]="tab.templateLabel">

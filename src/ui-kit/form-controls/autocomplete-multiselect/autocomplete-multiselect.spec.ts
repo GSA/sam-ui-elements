@@ -774,6 +774,66 @@ describe("The Sam Autocomplete Multiselect Component", () => {
       });
     });
 
+    it("Should select a category header via keyboard (Enter), same as click", () => {
+      component.categoryIsSelectable = true;
+      component.keyValueConfig = {
+        keyProperty: "key",
+        valueProperty: "value",
+        categoryProperty: "cat",
+        parentCategoryProperty: "cat",
+      };
+      component.categories = [{ key: "South", value: "South", cat: "South" }];
+      component.options = [{ key: "Al", value: "Alabama", cat: "South" }];
+      component.searchText = "";
+      component.filterOptions("");
+      fixture.detectChanges();
+
+      const categoryHeader = fixture.debugElement.query(
+        By.css(".category-name")
+      );
+      categoryHeader.nativeElement.dispatchEvent(
+        new KeyboardEvent("keydown", { key: "Enter", code: "Enter" })
+      );
+      fixture.detectChanges();
+
+      expect(component.value[0]).toEqual({
+        key: "South",
+        value: "South",
+        cat: "South",
+      });
+    });
+
+    it("Should select an option via keyboard (Enter) on the rendered list item, same as click", () => {
+      component.searchText = "c";
+      component.filterOptions(component.searchText);
+      fixture.detectChanges();
+
+      const item = fixture.debugElement.query(By.css("li.category-item"));
+      item.nativeElement.dispatchEvent(
+        new KeyboardEvent("keydown", { key: "Enter", code: "Enter" })
+      );
+      fixture.detectChanges();
+
+      expect(component.value.length).toBe(1);
+    });
+
+    it("marks each rendered option's aria-selected from item._marked", () => {
+      component.searchText = "c";
+      component.filterOptions(component.searchText);
+      fixture.detectChanges();
+      stubOffsets(fixture);
+
+      const results = component.getResults();
+      component.addSelectedClass(results, 0);
+      fixture.detectChanges();
+
+      const items = fixture.debugElement.queryAll(By.css("li.category-item"));
+      expect(items[0].nativeElement.getAttribute("aria-selected")).toBe("true");
+      expect(items[1].nativeElement.getAttribute("aria-selected")).toBe(
+        "false"
+      );
+    });
+
     it("Should format wrapper errors through statusChanges when a control is bound and useFormService is false", () => {
       const control = new FormControl("");
       component.control = control;

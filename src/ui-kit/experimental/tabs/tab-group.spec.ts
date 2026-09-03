@@ -114,4 +114,13 @@ describe("The Sam Tabs Next component", () => {
     host.tabGroup.dynamicHeight = true;
     expect(host.tabGroup.dynamicHeight).toBe(true);
   });
+
+  it("should select a tab label via keyboard (Enter) same as click", () => {
+    fixture.detectChanges();
+    fixture.detectChanges();
+    const labels = fixture.nativeElement.querySelectorAll(".mat-tab-label");
+    labels[1].dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+    fixture.detectChanges();
+    expect(host.tabGroup.selectedIndex).toBe(1);
+  });
 });

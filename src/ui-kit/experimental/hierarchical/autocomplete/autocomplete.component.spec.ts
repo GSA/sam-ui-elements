@@ -281,4 +281,44 @@ describe("SamHierarchicalAutocompleteComponent", () => {
     );
     expect(listAfter).toBeFalsy();
   }));
+
+  it("marks the highlighted result option as aria-selected", fakeAsync(() => {
+    component.inputFocusHandler();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const options = fixture.debugElement.queryAll(By.css('li[role="option"]'));
+    expect(options[0].nativeElement.getAttribute("aria-selected")).toBe("true");
+    expect(options[1].nativeElement.getAttribute("aria-selected")).toBe(
+      "false"
+    );
+  }));
+
+  it("selects a result via keyboard (Enter) same as click", fakeAsync(() => {
+    component.inputFocusHandler();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const firstOption = fixture.debugElement.query(
+      By.css('li[role="option"]')
+    ).nativeElement;
+    firstOption.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+    fixture.detectChanges();
+    expect(component.model.getItems().length).toBe(1);
+  }));
+
+  it("clears the input via keyboard (Enter) on the clear button, same as click", fakeAsync(() => {
+    component.inputFocusHandler();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const clearButton = fixture.debugElement.query(
+      By.css('span[role="button"]')
+    ).nativeElement;
+    component.inputValue = "id";
+    fixture.detectChanges();
+    clearButton.dispatchEvent(new KeyboardEvent("keyup", { key: "Enter" }));
+    fixture.detectChanges();
+    expect(component.inputValue).toBe("");
+  }));
 });

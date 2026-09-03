@@ -115,4 +115,20 @@ describe("The Sam Search component", () => {
     expect(component.selectedOption).toBe("Contracting");
     expect(focusSpy).toHaveBeenCalled();
   });
+
+  it("should close the autocomplete via keyboard (Enter) on a result item, same as click", () => {
+    component.results = [
+      { name: "Department of Education", domain: false, description: "x" },
+    ] as SearchResult[];
+    fixture.detectChanges();
+
+    const resultItem: HTMLElement =
+      fixture.nativeElement.querySelector(".search-results li");
+    resultItem.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+
+    expect(component.results.length).toBe(0);
+    expect(component.inputEl.nativeElement.value).toBe(
+      "Department of Education"
+    );
+  });
 });

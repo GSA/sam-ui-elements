@@ -20,6 +20,7 @@
         role="combobox"
         [attr.id]="id+'-container'"
         [attr.aria-owns]="results && results.length > 0 ? 'sam-autocomplete-results' : filteredKeyValuePairs && filteredKeyValuePairs.length > 0  ? 'sam-autocomplete-results-kv':undefined"
+        [attr.aria-controls]="results && results.length > 0 ? 'sam-autocomplete-results' : filteredKeyValuePairs && filteredKeyValuePairs.length > 0  ? 'sam-autocomplete-results-kv':undefined"
         [attr.aria-expanded]="(((filteredKeyValuePairs && filteredKeyValuePairs.length > 0) || (displayFreeTextKeyValueResults()) ) && hasFocus)
         ||(((results && results.length > 0) || (displayFreeTextSimpleResults())) && hasFocus)
         "
@@ -40,12 +41,13 @@
           (ngModelChange)="onChange()"
           [attr.aria-activedescendant]="activeDescendant"
           aria-autocomplete="list"
-          [attr.aria-controls]="results && results.length > 0 ? 'sam-autocomplete-results' : filteredKeyValuePairs && filteredKeyValuePairs.length > 0  ? 'sam-autocomplete-results-kv':undefined"
         />
       </div>
       <span
         *ngIf="config && config.addOnIconClass && config.addOnIconName"
+        tabindex="0"
         (click)="addOnIconClick()"
+        (keydown.enter)="addOnIconClick()"
         class="add-on"
         role="button"
       >
@@ -71,16 +73,20 @@
           <li
             id="resultFreeText"
             *ngIf="freeTextAvalible()"
+            tabindex="0"
             (mouseenter)="listItemHover(i)"
             (click)="setSelected(inputValue)"
+            (keydown.enter)="setSelected(inputValue)"
           >
             <span>{{inputValue}} - {{freeTextSubtext}}</span>
           </li>
           <li
             [attr.id]="'resultItem_'+ i"
             *ngFor="let result of results; let i = index"
+            tabindex="0"
             (mouseenter)="listItemHover(i)"
             (click)="setSelected(result)"
+            (keydown.enter)="setSelected(result)"
           >
             {{result}}
           </li>
@@ -97,20 +103,24 @@
           <li
             id="resultFreeText"
             [class.multiple-values]="config?.keyValueConfig?.subheadProperty"
+            tabindex="0"
             (mouseenter)="listItemHover(i)"
             *ngIf="freeTextAvalible()"
             [ngClass]="freeTextClass()"
             (click)="setSelected(inputValue)"
+            (keydown.enter)="setSelected(inputValue)"
           >
             {{inputValue}} - {{freeTextSubtext}}
           </li>
           <li
             [attr.id]="'resultItem_'+ i"
             *ngFor="let obj of displayResults; let i = index"
+            tabindex="0"
             (mouseenter)="listItemHover(i)"
             [class.multiple-values]="config?.keyValueConfig?.subheadProperty"
             [ngClass]="itemClass(obj)"
             (click)="dropdownClick(obj)"
+            (keydown.enter)="dropdownClick(obj)"
           >
             <ng-container *ngIf="!itemTemplate; else itemTemplateRef">
               <span *ngIf="obj"

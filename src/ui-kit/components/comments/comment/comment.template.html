@@ -2,7 +2,7 @@
   <header>
     <figure>
       <span *ngIf="!comment?.image" class="fa fa-3x fa-user"></span>
-      <img *ngIf="comment?.image" [src]="comment?.image" />
+      <img *ngIf="comment?.image" [src]="comment?.image" alt="" />
       <figcaption class="usa-sr-only">
         Icon for user {{comment.username}}
       </figcaption>

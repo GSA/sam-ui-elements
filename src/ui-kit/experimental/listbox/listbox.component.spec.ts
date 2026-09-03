@@ -301,4 +301,18 @@ describe("SamListBoxComponent", () => {
     expect(component.isChecked(options[2].value)).toBe(true);
     expect(component.isChecked(options[3].value)).toBe(false);
   });
+
+  it("marks each listbox option's aria-selected from option.checked", () => {
+    component.options = options;
+    fixture.detectChanges();
+    const listItems = fixture.debugElement.queryAll(
+      By.css('li[role="option"]')
+    );
+    expect(listItems[0].nativeElement.getAttribute("aria-selected")).toBe(
+      "false"
+    );
+    expect(listItems[1].nativeElement.getAttribute("aria-selected")).toBe(
+      "true"
+    );
+  });
 });

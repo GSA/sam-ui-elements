@@ -138,6 +138,41 @@ describe("The Sam Upload component", () => {
     expect(component._model.length).toBe(0);
   });
 
+  it("should delete the upload via keyboard (Enter) on the rendered close icon, same as click", () => {
+    const url = "http://localhost/upload";
+    const file = fakeFile("sample.jpeg", 1001);
+    const request = new HttpRequest("POST", url, file, {
+      reportProgress: true,
+    });
+    const deleteRequest = new HttpRequest("DELETE", "files/1");
+
+    component.uploadRequest = () => request;
+    component.deleteRequest = () => deleteRequest;
+    component.onFilesChange(fakeFileList(file));
+    fixture.detectChanges();
+
+    const closeIcon = fixture.debugElement.query(
+      By.css(".file-delete .icon")
+    ).nativeElement;
+    closeIcon.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+
+    expect(component._model.length).toBe(0);
+  });
+
+  it("should trigger the hidden file input via keyboard (Enter) on the rendered browse link, same as click", () => {
+    fixture.detectChanges();
+
+    const fileInput: HTMLInputElement =
+      fixture.nativeElement.querySelector('input[type="file"]');
+    const clickSpy = vi.spyOn(fileInput, "click");
+
+    const browseLink: HTMLElement =
+      fixture.nativeElement.querySelector(".upload-cloud a");
+    browseLink.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+
+    expect(clickSpy).toHaveBeenCalled();
+  });
+
   describe("onDragStateChange", () => {
     it("shows the drop target when dragging", () => {
       component.onDragStateChange(DragState.DraggingInTarget);

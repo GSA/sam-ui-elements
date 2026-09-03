@@ -35,6 +35,7 @@
       <span class="close">
         <span
           role="button"
+          tabindex="0"
           class="fa fa-times"
           aria-label="Clear input"
           aria-hidden="false"
@@ -58,10 +59,13 @@
       <ng-container *ngIf="results && results.length > 0">
         <li
           role="option"
+          tabindex="-1"
+          [attr.aria-selected]="!!result['highlighted']"
           *ngFor="let result of results; let i = index"
           (mouseenter)="listItemHover(i)"
           [class]="result['highlighted'] ? 'selected-item' : ''"
           (click)="selectItem(result)"
+          (keydown.enter)="selectItem(result)"
         >
           <ng-container
             *ngIf="itemTemplate"
