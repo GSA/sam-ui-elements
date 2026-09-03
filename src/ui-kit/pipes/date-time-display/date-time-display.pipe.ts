@@ -7,9 +7,7 @@ import moment from "moment";
   standalone: false,
 })
 export class DateTimeDisplayPipe implements PipeTransform {
-  transform(
-    datetime: string | number | Date | undefined
-  ): string | undefined {
+  transform(datetime: string | number | Date | undefined): string | undefined {
     if (datetime === undefined) {
       console.warn("Invalid value passed into DateTimeDisplayPipe");
       return undefined;
