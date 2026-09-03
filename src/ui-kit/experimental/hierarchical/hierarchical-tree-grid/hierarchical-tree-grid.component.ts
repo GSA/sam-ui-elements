@@ -151,9 +151,9 @@ export class SamHierarchicalTreeGridComponent
   }
 
   onScroll(event) {
-    let scrollAreaHeight = event.target.offsetHeight;
-    let scrollTopPos = event.target.scrollTop;
-    let scrollAreaMaxHeight = event.target.scrollHeight;
+    const scrollAreaHeight = event.target.offsetHeight;
+    const scrollTopPos = event.target.scrollTop;
+    const scrollAreaMaxHeight = event.target.scrollHeight;
     if (scrollTopPos + scrollAreaHeight * 2 >= scrollAreaMaxHeight) {
       this.scrolled.emit(null);
     }

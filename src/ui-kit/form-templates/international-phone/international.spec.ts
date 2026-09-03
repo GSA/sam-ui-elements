@@ -75,7 +75,7 @@ describe("The Sam International Phone Group", () => {
       try {
         fixture.detectChanges();
         fail();
-      } catch (exception) {
+      } catch {
         expect(true).toBe(true);
         //fix component so it cleans up properly
         component.phoneName = "a";
@@ -91,7 +91,7 @@ describe("The Sam International Phone Group", () => {
       try {
         fixture.detectChanges();
         fail();
-      } catch (exception) {
+      } catch {
         expect(true).toBe(true);
         //fix component so it cleans up properly
         component.phoneName = "a";
@@ -107,7 +107,7 @@ describe("The Sam International Phone Group", () => {
       try {
         fixture.detectChanges();
         fail();
-      } catch (exception) {
+      } catch {
         expect(true).toBe(true);
         //fix component so it cleans up properly
         component.phoneName = "a";
