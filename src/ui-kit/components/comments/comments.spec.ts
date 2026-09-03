@@ -9,7 +9,6 @@ import {
   CommentsService,
   Comment,
 } from "./";
-import { SamPipesModule } from "../../pipes";
 
 import { Observable, of, throwError } from "rxjs";
 
@@ -88,7 +87,7 @@ export class CommentsDemoService implements CommentsService {
     return this._disabled;
   }
 
-  isCommentDeletable(comment: Comment): boolean {
+  isCommentDeletable(_comment: Comment): boolean {
     return true;
   }
 
@@ -126,11 +125,10 @@ export class CommentsDemoService implements CommentsService {
 
 describe("The Sam Comments component", () => {
   describe("isolated tests", () => {
-    let component: SamCommentsComponent;
     let service: CommentsService;
     beforeEach(() => {
       service = new CommentsService();
-      component = new SamCommentsComponent(service, undefined);
+      new SamCommentsComponent(service, undefined);
     });
     // service
     it("service should tell us if commenting is disabled", () => {
@@ -270,7 +268,7 @@ describe("The Sam Comments component", () => {
     });
 
     it("isSubmitDisabled handling", function () {
-      let formGroup = new FormGroup({
+      const formGroup = new FormGroup({
         test: new FormControl(""),
       });
       formGroup.controls["test"].markAsDirty();
