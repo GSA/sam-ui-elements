@@ -34,7 +34,7 @@ export class SamStickyComponent implements OnInit {
   private elemWidth: number;
 
   @HostListener("window:resize", ["$event"])
-  resize(event) {
+  resize() {
     // Set element to initial styles
     // to help finding the initial element width
     this.el.nativeElement.style.position = "static";
@@ -45,7 +45,7 @@ export class SamStickyComponent implements OnInit {
   }
 
   @HostListener("window:scroll", ["$event"])
-  scroll(event) {
+  scroll() {
     this.makeSticky();
   }
 

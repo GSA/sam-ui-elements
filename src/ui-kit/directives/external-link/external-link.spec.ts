@@ -1,18 +1,6 @@
-import {
-  TestBed,
-  waitForAsync,
-  fakeAsync,
-  tick,
-  ComponentFixture,
-} from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
-import {
-  Component,
-  Output,
-  ViewChild,
-  EventEmitter,
-  DebugElement,
-} from "@angular/core";
+import { Component } from "@angular/core";
 import { By } from "@angular/platform-browser";
 
 // Load the implementations that should be tested
@@ -34,8 +22,6 @@ import { SamExternalLinkDirective } from "./external-link.directive";
 class TestComponent {}
 
 describe("Sam External Link Directive", () => {
-  let directive: SamExternalLinkDirective;
-  let component: TestComponent;
   let fixture: ComponentFixture<TestComponent>;
 
   function findIcons(el) {
@@ -48,14 +34,13 @@ describe("Sam External Link Directive", () => {
     });
 
     fixture = TestBed.createComponent(TestComponent);
-    component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it("should add external link text for 508 compliance", () => {
     const cmps = fixture.debugElement.queryAll(By.css(".usa-sr-only"));
-    let el1 = cmps[0];
-    let el2 = cmps[1];
+    const el1 = cmps[0];
+    const el2 = cmps[1];
 
     expect(el1.nativeElement.innerText).toContain("(opens in new window)");
     expect(el2.nativeElement.innerText).toContain("(opens in new window)");
