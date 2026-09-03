@@ -87,7 +87,7 @@ export class CommentsDemoService implements CommentsService {
     return this._disabled;
   }
 
-  isCommentDeletable(_comment: Comment): boolean {
+  isCommentDeletable(): boolean {
     return true;
   }
 
