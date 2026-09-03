@@ -45,7 +45,8 @@ export class SamPickerComponent implements AfterViewInit {
     this.combobox.clearInput();
   }
 
-  private _onChange() {
+  private _onChange(e?: unknown) {
+    void e;
     this.selected = this.combobox.selected;
     this.onChange.emit(this.selected);
   }

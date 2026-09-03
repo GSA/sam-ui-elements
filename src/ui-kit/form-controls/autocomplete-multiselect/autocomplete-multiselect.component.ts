@@ -1073,7 +1073,8 @@ export class SamAutocompleteMultiselectComponent
     this.textArea.nativeElement.blur();
   }
 
-  public checkForFocus() {
+  public checkForFocus(event?: Event) {
+    void event;
     this.clearSearch();
     this.list = [];
   }

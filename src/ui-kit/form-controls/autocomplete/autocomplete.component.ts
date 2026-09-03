@@ -303,7 +303,8 @@ export class SamAutocompleteComponent
     this.endOfList = false;
   }
 
-  requestError() {
+  requestError(err?: unknown) {
+    void err;
     this.results = ["An error occurred. Try a different value."];
     const errorobj = {};
     errorobj[this.config.keyValueConfig.keyProperty] = "Error";
@@ -778,7 +779,8 @@ export class SamAutocompleteComponent
     }
   }
 
-  checkForFocus() {
+  checkForFocus(event?: Event) {
+    void event;
     if (
       !this.allowAny &&
       this.selectedInputValue !== this.inputValue &&

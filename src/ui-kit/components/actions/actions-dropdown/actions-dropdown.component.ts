@@ -54,7 +54,8 @@ export class SamActionsDropdownComponent {
   showActions = false;
   focusIndex = -1;
 
-  hideActions() {
+  hideActions(event: Event) {
+    void event;
     return (this.showActions = false);
   }
 

@@ -81,7 +81,9 @@ export class SAMSDSAutocompleteComponent implements ControlValueAccessor {
   /**
    * Stored Event for ControlValueAccessor
    */
-  public onChange = () => {};
+  public onChange = (val: unknown) => {
+    void val;
+  };
 
   // ControlValueAccessor (and Formly) is trying to update the value of the FormControl (our custom component) programatically
   // If there is a value we will just overwrite items
@@ -106,7 +108,8 @@ export class SAMSDSAutocompleteComponent implements ControlValueAccessor {
   }
 
   // Method that is fired when the child component event notifies us that the items array has been modified within the child component
-  updateItems() {
+  updateItems($event?: unknown) {
+    void $event;
     this.updateModel();
   }
 

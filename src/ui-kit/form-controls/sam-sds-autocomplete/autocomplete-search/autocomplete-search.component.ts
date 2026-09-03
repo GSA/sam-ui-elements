@@ -201,7 +201,8 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    *
    * @param event
    */
-  checkForFocus(): void {
+  checkForFocus(event?: Event): void {
+    void event;
     if (this.configuration) {
       if (
         this.configuration.isTagModeEnabled ||
@@ -226,7 +227,8 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
     }
   }
 
-  clickOutSide(): void {
+  clickOutSide(event?: Event): void {
+    void event;
     this.focusRemoved();
     this.showResults = false;
   }
@@ -286,7 +288,8 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
     }
   }
 
-  onkeypress() {
+  onkeypress(ev?: KeyboardEvent) {
+    void ev;
     return this.configuration.inputReadOnly ? false : true;
   }
   textChange(event) {

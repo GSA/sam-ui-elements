@@ -140,7 +140,8 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
    *
    * @param event
    */
-  checkForFocus(): void {
+  checkForFocus(event?: Event): void {
+    void event;
     this.focusRemoved();
     this.showResults = false;
   }

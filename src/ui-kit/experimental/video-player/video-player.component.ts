@@ -86,7 +86,8 @@ export class SamVideoPlayerComponent {
     this.setElementAttribute(videoEl, "role", "presentation");
   }
 
-  onToggleFullScreen() {
+  onToggleFullScreen(event?: Event) {
+    void event;
     const isFullScreen = document["fullscreen"];
     this.onFullScreenChange.emit(isFullScreen);
   }

@@ -312,7 +312,8 @@ export class SamDateComponent
     }
   }
 
-  onMonthBlur() {
+  onMonthBlur(event?: Event) {
+    void event;
     this.isMonthBlur = true;
     if (this.month.nativeElement.value === "0") {
       this.month.nativeElement.value = "";
@@ -377,7 +378,8 @@ export class SamDateComponent
     return parseInt(possibleNum, 10);
   }
 
-  onDayBlur() {
+  onDayBlur(event?: Event) {
+    void event;
     this.isDayBlur = true;
     if (this.day.nativeElement.value === "0") {
       this.day.nativeElement.value = "";
@@ -455,7 +457,8 @@ export class SamDateComponent
     return month === 2 ? 2 : three;
   }
 
-  onYearBlur() {
+  onYearBlur(event?: Event) {
+    void event;
     this.isYearBlur = true;
     if (this.year.nativeElement.value === "0") {
       this.year.nativeElement.value = "";
@@ -619,7 +622,8 @@ export class SamDateComponent
     );
   }
 
-  triggerTouch() {
+  triggerTouch(ev?: Event) {
+    void ev;
     this.isYearTouched = true;
     this.touchHandler();
     this.onTouched();
