@@ -415,7 +415,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
           let toJson: any = {};
           try {
             toJson = JSON.parse(error);
-          } catch (ex) {}
+          } catch {}
           upload.error = toJson.statusText || toJson.message || "Upload failed";
           upload.status = UploadStatus.Error;
           this.emit();
@@ -489,7 +489,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   }
 
   onAccessToggle(fileIndex, secure) {
-    let toggleData = { fileIndex, secure };
+    const toggleData = { fileIndex, secure };
     if (secure) {
       this.toggleModal.openModal(toggleData);
     }

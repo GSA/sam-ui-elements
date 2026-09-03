@@ -3,8 +3,6 @@ import {
   waitForAsync,
   ComponentFixture,
   TestBed,
-  fakeAsync,
-  tick,
 } from "@angular/core/testing";
 
 import { SdsFooterComponent } from "./footer.component";

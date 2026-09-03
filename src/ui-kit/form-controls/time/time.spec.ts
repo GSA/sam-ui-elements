@@ -18,7 +18,7 @@ describe("The Sam Time component", () => {
       try {
         component.ngOnInit();
         fail();
-      } catch (e) {
+      } catch {
         expect(true).toBe(true);
       }
     });
@@ -43,7 +43,7 @@ describe("The Sam Time component", () => {
 
     it("should implement controlvalueaccessor", () => {
       component.setDisabledState(false);
-      component.registerOnChange((_) => undefined);
+      component.registerOnChange(() => undefined);
       component.registerOnTouched(() => undefined);
       component.writeValue("12:12");
       expect(true).toBe(true);
