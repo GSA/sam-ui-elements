@@ -2,8 +2,6 @@ import {
   Component,
   Input,
   ViewChild,
-  Output,
-  EventEmitter,
   OnInit,
   OnChanges,
   forwardRef,
@@ -14,8 +12,6 @@ import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
   FormControl,
-  Validators,
-  ValidatorFn,
 } from "@angular/forms";
 import { SamFormService } from "../../form-service";
 

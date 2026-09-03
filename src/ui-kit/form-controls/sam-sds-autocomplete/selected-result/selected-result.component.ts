@@ -95,12 +95,12 @@ export class SAMSDSSelectedResultComponent implements ControlValueAccessor {
   getObjectValue(object: Object, propertyFields: string): string {
     let value = "";
     let current = object;
-    let fieldSplit = propertyFields.split(",");
+    const fieldSplit = propertyFields.split(",");
     for (let i = 0; i < fieldSplit.length; i++) {
-      let fieldValue = fieldSplit[i];
-      let fieldPartSplit = fieldValue.split(".");
+      const fieldValue = fieldSplit[i];
+      const fieldPartSplit = fieldValue.split(".");
       for (let j = 0; j < fieldPartSplit.length; j++) {
-        let fieldCheckValue = fieldPartSplit[j];
+        const fieldCheckValue = fieldPartSplit[j];
         if (current) {
           current = current[fieldCheckValue];
         }

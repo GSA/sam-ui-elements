@@ -8,9 +8,6 @@ import {
 import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
-  FormControl,
-  Validators,
-  ValidatorFn,
 } from "@angular/forms";
 
 /**
@@ -52,7 +49,7 @@ export class SamToggleSwitchComponent implements ControlValueAccessor {
   public onSwitchClick(event) {
     this.onTouched();
     if (!this.disableSwitch) {
-      let val = event.target.checked;
+      const val = event.target.checked;
       this.isSwitchOn = val;
       this.onChange(val);
       this.switchStatusChange.emit(val);

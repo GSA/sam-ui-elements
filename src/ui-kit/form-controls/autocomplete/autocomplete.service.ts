@@ -4,11 +4,11 @@ import { map } from "rxjs/operators";
 
 @Injectable()
 export class AutocompleteService {
-  setFetchMethod(_?: any): any {
+  setFetchMethod(): any {
     return;
   }
 
-  fetch(val: string, pageEnd: boolean, serviceOptions?: any): Observable<any> {
+  fetch(): Observable<any> {
     return of([]).pipe(map((o) => o));
   }
 }

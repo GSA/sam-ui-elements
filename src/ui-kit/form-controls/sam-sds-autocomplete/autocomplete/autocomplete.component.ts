@@ -3,13 +3,11 @@ import {
   Input,
   ViewChild,
   TemplateRef,
-  ElementRef,
   forwardRef,
 } from "@angular/core";
 import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
-  FormControl,
 } from "@angular/forms";
 import { SAMSDSSelectedItemModel } from "../selected-result/models/sds-selectedItem.model";
 import { SAMSDSAutocompleteServiceInterface } from "../autocomplete-search/models/SAMSDSAutocompleteServiceInterface";
@@ -86,7 +84,7 @@ export class SAMSDSAutocompleteComponent implements ControlValueAccessor {
   /**
    * Stored Event for ControlValueAccessor
    */
-  public onChange = (_: any) => {};
+  public onChange = () => {};
 
   // ControlValueAccessor (and Formly) is trying to update the value of the FormControl (our custom component) programatically
   // If there is a value we will just overwrite items
@@ -111,7 +109,7 @@ export class SAMSDSAutocompleteComponent implements ControlValueAccessor {
   }
 
   // Method that is fired when the child component event notifies us that the items array has been modified within the child component
-  updateItems($event) {
+  updateItems() {
     this.updateModel();
   }
 
