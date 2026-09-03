@@ -58,6 +58,15 @@ Two related traps worth knowing:
 - `.github/workflows/lint.yml` additionally runs `scripts/check-baseline-not-increased.mjs`, comparing `eslint-baseline.json` on the PR branch against the base branch — this closes the hole where a contributor could raise the ceiling by hand-editing the JSON in the same PR that adds new warnings. The `--bump` scripts are the only sanctioned way to change either baseline file; same rule as `coverage-floor.json` above.
 - Both `scripts/check-lint-baseline.test.mjs` and `scripts/check-baseline-not-increased.test.mjs` exist and pass but, like the coverage gate tests, are **not run in CI** — run `node --test scripts/*.test.mjs` manually when touching any gate script.
 
+### Standalone-component lint policy (deferred)
+
+`@angular-eslint/prefer-standalone` is **disabled** (not just downgraded to a warning) in both `eslint.config.mjs` (root) and `test-app/eslint.config.mjs`. This is a deliberate, evaluated decision (GSA/sam-ui-elements#584), not an oversight:
+
+- Of the 190 flagged components (root) and 3 (`test-app`), all but one already have `standalone: false` and are registered via `declarations:` in one of 46 `NgModule`s across the library. The single `standalone: true` outlier (`SamAutocompleteComponent`) is still consumed through `declarations:` in two NgModules, so the flag doesn't reflect real usage either.
+- Applying ESLint's own `--fix` for this rule strips `standalone: false`, flipping Angular's default to `standalone: true`. This was tried in #582/PR #675 and broke `TestBed.configureTestingModule` for every spec declaring one of these components — 827 failing tests. It is a behavior change, not a style fix, so it cannot be autofixed or done piecemeal without also rewriting every consuming `NgModule`'s `declarations:` to `imports:` and updating every affected spec's `TestBed` config (106+ specs use `declarations:`).
+- Several of the affected files (e.g. `hierarchical.module`, `progress.module`, `autocomplete.module`, `progress.component`, `autocomplete-multiselect.component`, `radiobutton.component`, `text.component`, `toolbar.component`) are in the frozen `scripts/consumer-deep-imports.json` contract — an uncoordinated standalone migration risks a breaking change for downstream consumers, not just an internal refactor.
+- **Decision: defer.** A real standalone migration is out of scope for lint-debt cleanup and would need its own epic, planned in consumer-safe slices (NgModule → `imports:` rewrites, spec updates, coordinated consumer rollout) rather than a mechanical lint fix. Until that epic exists, the rule stays off so it doesn't produce unactionable warnings.
+
 ## Formatting
 
 - `npm run format:check` / `npm run format` (Prettier). Applies to the whole repo — remember to run it on new root-level `scripts/*.mjs` files too, not just `src/`.
