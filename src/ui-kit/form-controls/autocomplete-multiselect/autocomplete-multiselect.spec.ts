@@ -133,7 +133,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
     });
 
     it("should support controlValueAccessor", () => {
-      component.registerOnChange((_val) => undefined);
+      component.registerOnChange(() => undefined);
       component.registerOnTouched(() => undefined);
       component.setDisabledState(false);
     });
