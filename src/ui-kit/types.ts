@@ -66,7 +66,10 @@ export interface HistoryNodeType {
   /**
    * Optional query params
    */
-  queryParams?: Record<string, string | number | boolean>;
+  queryParams?: Record<
+    string,
+    string | number | boolean | readonly (string | number | boolean)[] | null
+  >;
   /**
    * Title value for node
    */
