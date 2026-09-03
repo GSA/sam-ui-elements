@@ -9,10 +9,7 @@ import {
 } from "@angular/core";
 import { FieldsetWrapper } from "../../wrappers/fieldset-wrapper";
 import { OptionsType } from "../../types";
-import {
-  NG_VALUE_ACCESSOR,
-  FormControl,
-} from "@angular/forms";
+import { NG_VALUE_ACCESSOR, FormControl } from "@angular/forms";
 
 /**
  * The <sam-radio-button> component is a set of checkboxes compliant with

@@ -76,7 +76,10 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
       itemIncrease,
       totalItemCount
     );
-    const subItemsitems = items.slice(item.currentItemCount, maxSectionPosition);
+    const subItemsitems = items.slice(
+      item.currentItemCount,
+      maxSectionPosition
+    );
 
     const returnItem = {
       items: subItemsitems,

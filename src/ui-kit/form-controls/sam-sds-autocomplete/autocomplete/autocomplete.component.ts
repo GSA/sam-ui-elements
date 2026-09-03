@@ -5,10 +5,7 @@ import {
   TemplateRef,
   forwardRef,
 } from "@angular/core";
-import {
-  NG_VALUE_ACCESSOR,
-  ControlValueAccessor,
-} from "@angular/forms";
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { SAMSDSSelectedItemModel } from "../selected-result/models/sds-selectedItem.model";
 import { SAMSDSAutocompleteServiceInterface } from "../autocomplete-search/models/SAMSDSAutocompleteServiceInterface";
 import { SAMSDSAutocompletelConfiguration } from "./models/SDSAutocompletelConfiguration.model";

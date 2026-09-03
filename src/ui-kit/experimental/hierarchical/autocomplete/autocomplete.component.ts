@@ -6,10 +6,7 @@ import {
   ElementRef,
   forwardRef,
 } from "@angular/core";
-import {
-  NG_VALUE_ACCESSOR,
-  ControlValueAccessor,
-} from "@angular/forms";
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { SamHiercarchicalServiceInterface } from "../hierarchical-interface";
 import { KeyHelper, KEYS } from "../../../utilities/key-helper/key-helper";
 import {
@@ -353,7 +350,8 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
    */
   onScroll() {
     if (this.maxResults > this.results.length) {
-      const scrollAreaHeight = this.resultsListElement.nativeElement.offsetHeight;
+      const scrollAreaHeight =
+        this.resultsListElement.nativeElement.offsetHeight;
       const scrollTopPos = this.resultsListElement.nativeElement.scrollTop;
       const scrollAreaMaxHeight =
         this.resultsListElement.nativeElement.scrollHeight;

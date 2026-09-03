@@ -8,10 +8,7 @@ import {
   AfterViewChecked,
   ChangeDetectorRef,
 } from "@angular/core";
-import {
-  NG_VALUE_ACCESSOR,
-  ControlValueAccessor,
-} from "@angular/forms";
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { SamHiercarchicalServiceInterface } from "../hierarchical-interface";
 import {
   HierarchicalTreeSelectedItemModel,

@@ -1,8 +1,4 @@
-import {
-  Component,
-  ContentChildren,
-  QueryList,
-} from "@angular/core";
+import { Component, ContentChildren, QueryList } from "@angular/core";
 import { SamSideNavigationToolbarItemComponent } from "../sideNavigationToolbarItem/sideNavigationToolbarItem.component";
 
 @Component({

@@ -1,15 +1,5 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  ViewChild,
-  ElementRef,
-} from "@angular/core";
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
+import { Component, Input, OnInit, ViewChild, ElementRef } from "@angular/core";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 import { Observable, Subscription, Subject, of, fromEvent } from "rxjs";
 import { flatMap, catchError, merge } from "rxjs/operators";

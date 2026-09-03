@@ -1,8 +1,4 @@
-import {
-  Component,
-  ChangeDetectorRef,
-  ViewEncapsulation,
-} from "@angular/core";
+import { Component, ChangeDetectorRef, ViewEncapsulation } from "@angular/core";
 
 import { FormControl } from "@angular/forms";
 

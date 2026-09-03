@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  forwardRef,
-  ViewChild,
-} from "@angular/core";
+import { Component, OnInit, Input, forwardRef, ViewChild } from "@angular/core";
 
 import {
   ControlValueAccessor,
