@@ -9,7 +9,6 @@ import {
 import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
-  FormControl,
 } from "@angular/forms";
 import { SamHiercarchicalServiceInterface } from "../hierarchical-interface";
 import { KeyHelper, KEYS } from "../../../utilities/key-helper/key-helper";
@@ -144,7 +143,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
    *
    * @param event
    */
-  checkForFocus(event): void {
+  checkForFocus(): void {
     this.focusRemoved();
     this.showResults = false;
   }
@@ -263,19 +262,19 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
         if (this.inputValue.length !== 0) {
           let foundItem = false;
           if (this.results) {
-            for (var i = 0; i < this.results.length && !foundItem; i++) {
-              let item = this.results[i];
+            for (let i = 0; i < this.results.length && !foundItem; i++) {
+              const item = this.results[i];
               foundItem =
                 item[this.configuration.primaryTextField] === this.inputValue;
             }
           }
           if (this.model.getItems().length > 0 && !foundItem) {
             for (
-              var i = 0;
+              let i = 0;
               i < this.model.getItems().length && !foundItem;
               i++
             ) {
-              let item = this.model.getItems()[i];
+              const item = this.model.getItems()[i];
               foundItem =
                 item[this.configuration.primaryTextField] === this.inputValue;
             }
@@ -294,7 +293,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
   }
 
   private createFreeTextItem() {
-    let item = { type: "custom" };
+    const item = { type: "custom" };
     item[this.configuration.primaryTextField] = this.inputValue;
     item[this.configuration.primaryKeyField] = this.inputValue;
     return item;
@@ -354,9 +353,9 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
    */
   onScroll() {
     if (this.maxResults > this.results.length) {
-      let scrollAreaHeight = this.resultsListElement.nativeElement.offsetHeight;
-      let scrollTopPos = this.resultsListElement.nativeElement.scrollTop;
-      let scrollAreaMaxHeight =
+      const scrollAreaHeight = this.resultsListElement.nativeElement.offsetHeight;
+      const scrollTopPos = this.resultsListElement.nativeElement.scrollTop;
+      const scrollAreaMaxHeight =
         this.resultsListElement.nativeElement.scrollHeight;
       if (scrollTopPos + scrollAreaHeight * 2 >= scrollAreaMaxHeight) {
         this.getAdditionalResults();
@@ -391,7 +390,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
    * When paging up and down with arrow key it sets the highlighted item into view
    */
   private scrollSelectedItemToTop() {
-    let selectedChild =
+    const selectedChild =
       this.resultsListElement.nativeElement.children[this.highlightedIndex];
     this.resultsListElement.nativeElement.scrollTop = selectedChild.offsetTop;
   }
