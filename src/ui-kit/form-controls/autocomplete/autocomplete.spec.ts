@@ -420,6 +420,28 @@ describe("The Sam Autocomplete Component", () => {
       expect(emitCount).toBe(1);
     });
 
+    it("Should emit addOnIconEvent via keyboard (Space) on the add-on icon, same as click, and prevent page scroll", () => {
+      component.config = {
+        ...config,
+        addOnIconClass: "fa-search",
+        addOnIconName: "Search",
+      };
+      fixture.detectChanges();
+      let emitCount = 0;
+      component.addOnIconEvent.subscribe(() => emitCount++);
+
+      const addOn = fixture.debugElement.query(By.css(".add-on"));
+      const spaceEvent = new KeyboardEvent("keydown", {
+        key: " ",
+        code: "Space",
+      });
+      const preventDefaultSpy = vi.spyOn(spaceEvent, "preventDefault");
+      addOn.nativeElement.dispatchEvent(spaceEvent);
+
+      expect(emitCount).toBe(1);
+      expect(preventDefaultSpy).toHaveBeenCalled();
+    });
+
     it("Should mirror the combobox's aria-owns onto aria-controls for the visible results list", () => {
       component.hasFocus = true;
       component.results = ["Alabama", "Alaska"];

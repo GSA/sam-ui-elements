@@ -41,6 +41,7 @@
           aria-hidden="false"
           (click)="clearInput()"
           (keyup.enter)="clearInput()"
+          (keydown.space)="$event.preventDefault(); clearInput()"
         >
         </span>
       </span>

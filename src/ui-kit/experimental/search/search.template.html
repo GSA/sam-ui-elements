@@ -55,7 +55,7 @@
         *ngIf="!tabSearch"
         tabindex="0"
         (click)="closeAutocomplete(result.name)"
-        (keydown.enter)="closeAutocomplete(result.name)"
+        (keydown.enter)="$event.currentTarget.click()"
         [routerLink]="['/patterns/pages/page/search']"
       >
         <span [innerHTML]="result.description"></span>
@@ -65,7 +65,7 @@
         *ngIf="tabSearch && result.domain === 'in Assistance Listing'"
         tabindex="0"
         (click)="closeAutocomplete(result.name)"
-        (keydown.enter)="closeAutocomplete(result.name)"
+        (keydown.enter)="$event.currentTarget.click()"
         [routerLink]="['/patterns/pages/page/search']"
       >
         <span [innerHTML]="result.description"></span>

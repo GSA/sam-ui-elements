@@ -29,7 +29,13 @@ describe("The Sam Search component", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [SamSearchComponent],
-      imports: [NoopAnimationsModule, RouterTestingModule, SamIconsModule],
+      imports: [
+        NoopAnimationsModule,
+        RouterTestingModule.withRoutes([
+          { path: "patterns/pages/page/search", children: [] },
+        ]),
+        SamIconsModule,
+      ],
     });
     fixture = TestBed.createComponent(SamSearchComponent);
     component = fixture.componentInstance;
@@ -124,8 +130,14 @@ describe("The Sam Search component", () => {
 
     const resultItem: HTMLElement =
       fixture.nativeElement.querySelector(".search-results li");
+    const clickSpy = vi.spyOn(resultItem, "click");
+
     resultItem.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
 
+    // Enter must dispatch the element's own click (not just call
+    // closeAutocomplete directly), so that RouterLink's click handler -
+    // which navigates on click - also fires, matching mouse activation.
+    expect(clickSpy).toHaveBeenCalled();
     expect(component.results.length).toBe(0);
     expect(component.inputEl.nativeElement.value).toBe(
       "Department of Education"

@@ -22,8 +22,8 @@
           [class]="option['highlighted'] ? 'selected-item' : ''"
           *ngFor="let option of options; let i = index"
           role="option"
-          [attr.aria-selected]="!!option.checked"
-          aria-checked="false"
+          [attr.aria-selected]="isChecked(option.value)"
+          [attr.aria-checked]="isChecked(option.value)"
         >
           <input
             [disabled]="option.disabled || disabled ? 'disabled' : null"
@@ -32,7 +32,7 @@
             [attr.type]="optionsMode"
             [attr.aria-label]="option.name"
             [required]="option.required"
-            [checked]="option.checked"
+            [checked]="isChecked(option.value)"
             name="option"
             (change)="onChecked($event, option)"
           />

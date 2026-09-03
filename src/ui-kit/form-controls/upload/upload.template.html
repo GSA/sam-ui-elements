@@ -16,6 +16,7 @@
         role="button"
         (click)="file.click()"
         (keydown.enter)="file.click()"
+        (keydown.space)="$event.preventDefault(); file.click()"
         >&nbsp;browse</a
       >
     </div>
@@ -28,8 +29,10 @@
             tabindex="0"
             role="button"
             class="icon close fa fa-times-circle"
+            [attr.aria-label]="'Remove ' + uf.file.name"
             (click)="onCloseClick(uf)"
             (keydown.enter)="onCloseClick(uf)"
+            (keydown.space)="$event.preventDefault(); onCloseClick(uf)"
           ></span>
         </div>
       </div>
@@ -47,6 +50,7 @@
         role="button"
         (click)="file.click()"
         (keydown.enter)="file.click()"
+        (keydown.space)="$event.preventDefault(); file.click()"
         >&nbsp;browse</a
       >
     </div>

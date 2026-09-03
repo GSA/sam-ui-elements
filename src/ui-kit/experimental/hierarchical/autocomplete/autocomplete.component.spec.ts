@@ -321,4 +321,22 @@ describe("SamHierarchicalAutocompleteComponent", () => {
     fixture.detectChanges();
     expect(component.inputValue).toBe("");
   }));
+
+  it("clears the input via keyboard (Space) on the clear button, same as click, and prevents page scroll", fakeAsync(() => {
+    component.inputFocusHandler();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    const clearButton = fixture.debugElement.query(
+      By.css('span[role="button"]')
+    ).nativeElement;
+    component.inputValue = "id";
+    fixture.detectChanges();
+    const spaceEvent = new KeyboardEvent("keydown", { key: " " });
+    const preventDefaultSpy = vi.spyOn(spaceEvent, "preventDefault");
+    clearButton.dispatchEvent(spaceEvent);
+    fixture.detectChanges();
+    expect(component.inputValue).toBe("");
+    expect(preventDefaultSpy).toHaveBeenCalled();
+  }));
 });

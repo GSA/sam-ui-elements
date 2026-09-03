@@ -302,17 +302,41 @@ describe("SamListBoxComponent", () => {
     expect(component.isChecked(options[3].value)).toBe(false);
   });
 
-  it("marks each listbox option's aria-selected from option.checked", () => {
+  it("marks each listbox option's aria-selected/aria-checked from the canonical model selection, kept in sync as options are (un)checked", () => {
     component.options = options;
     fixture.detectChanges();
     const listItems = fixture.debugElement.queryAll(
       By.css('li[role="option"]')
     );
-    expect(listItems[0].nativeElement.getAttribute("aria-selected")).toBe(
+    expect(listItems[1].nativeElement.getAttribute("aria-selected")).toBe(
       "false"
     );
+    expect(listItems[1].nativeElement.getAttribute("aria-checked")).toBe(
+      "false"
+    );
+
+    const input1: HTMLInputElement =
+      listItems[1].nativeElement.querySelector("input");
+    input1.checked = true;
+    input1.dispatchEvent(new Event("change"));
+    fixture.detectChanges();
+
     expect(listItems[1].nativeElement.getAttribute("aria-selected")).toBe(
       "true"
+    );
+    expect(listItems[1].nativeElement.getAttribute("aria-checked")).toBe(
+      "true"
+    );
+
+    input1.checked = false;
+    input1.dispatchEvent(new Event("change"));
+    fixture.detectChanges();
+
+    expect(listItems[1].nativeElement.getAttribute("aria-selected")).toBe(
+      "false"
+    );
+    expect(listItems[1].nativeElement.getAttribute("aria-checked")).toBe(
+      "false"
     );
   });
 });

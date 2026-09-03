@@ -20,7 +20,10 @@ const recommendedTypeScriptWarnings = asWarnings([
   ...angular.configs.tsRecommended,
 ]);
 
-const accessibilityWarnings = asWarnings(angular.configs.templateAccessibility);
+// Template accessibility debt (see #583) has been fully resolved in this
+// workspace (0 findings). Per #580's promotion policy, these rules are
+// enforced at the plugin's own recommended `error` severity instead of being
+// downgraded to warnings, matching the root workspace's `eslint.config.mjs`.
 
 export default tseslint.config(
   {
@@ -38,6 +41,5 @@ export default tseslint.config(
   {
     files: ["**/*.html"],
     extends: angular.configs.templateAccessibility,
-    rules: accessibilityWarnings,
   }
 );

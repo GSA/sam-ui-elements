@@ -48,6 +48,7 @@
         tabindex="0"
         (click)="addOnIconClick()"
         (keydown.enter)="addOnIconClick()"
+        (keydown.space)="$event.preventDefault(); addOnIconClick()"
         class="add-on"
         role="button"
       >
