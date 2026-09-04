@@ -74,7 +74,7 @@ export class SamImageComponent implements OnInit {
     this.editModeSubscription = this.editButtonStream
       .pipe(merge(this.cancelButtonStream), merge(this.saveButtonStream))
       .subscribe(
-        (event) => {
+        () => {
           if (this.editable) {
             this.toggleEdit();
           }
@@ -85,7 +85,7 @@ export class SamImageComponent implements OnInit {
       );
 
     this.cancelButtonSubscription = this.cancelButtonStream.subscribe(
-      (event) => {
+      () => {
         this.tmpValue = undefined;
         this.tmpSrc = undefined;
       },
@@ -95,7 +95,7 @@ export class SamImageComponent implements OnInit {
     );
 
     this.saveButtonSubscription = this.saveButtonStream.subscribe(
-      (event) => {
+      () => {
         if (this.isImageTemporary()) {
           this.value = this.tmpValue;
           this.src = this.tmpSrc;

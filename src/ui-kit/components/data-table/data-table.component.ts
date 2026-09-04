@@ -10,13 +10,11 @@ import {
   CdkTable,
   _CoalescedStyleScheduler,
   _COALESCED_STYLE_SCHEDULER,
-  STICKY_POSITIONING_LISTENER,
   CDK_TABLE,
 } from "@angular/cdk/table";
 
 import {
   _DisposeViewRepeaterStrategy,
-  _RecycleViewRepeaterStrategy,
   _VIEW_REPEATER_STRATEGY,
 } from "@angular/cdk/collections";
 
@@ -57,10 +55,4 @@ export class SamDataTableComponent<T> extends _SamTable<T> {
       this.samTableHorizontalClass = this.allowHorizontalScroll;
     }
   }
-}
-function Directive(arg0: {
-  selector: string;
-  providers: { provide: any; useClass: any }[];
-}) {
-  throw new Error("Function not implemented.");
 }

@@ -1,7 +1,6 @@
 import { TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { By } from "@angular/platform-browser";
-import { SimpleChanges } from "@angular/core";
 
 // Load the implementations that should be tested
 import { SamAlertComponent } from "./alert.component";

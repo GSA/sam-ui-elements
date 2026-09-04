@@ -1,4 +1,4 @@
-import { TestBed, waitForAsync } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
 
 import { Component } from "@angular/core";
 // Load the implementations that should be tested
@@ -13,7 +13,6 @@ class TestComponent {}
 
 describe("Row Directive", () => {
   describe("rendered tests", () => {
-    let component: TestComponent;
     let fixture: any;
 
     // provide our implementations or mocks to the dependency injector
@@ -23,12 +22,11 @@ describe("Row Directive", () => {
       });
 
       fixture = TestBed.createComponent(TestComponent);
-      component = fixture.componentInstance;
     });
 
     it("Get row class value", function () {
       fixture.detectChanges();
-      let str = fixture.debugElement.query(By.css("div"));
+      const str = fixture.debugElement.query(By.css("div"));
       expect(str.nativeElement.getAttribute("class")).toContain("row");
     });
   });

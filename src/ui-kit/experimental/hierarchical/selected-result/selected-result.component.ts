@@ -1,11 +1,7 @@
 import { Component, Input, TemplateRef, forwardRef } from "@angular/core";
 import { HierarchicalTreeSelectedItemModel } from "../hierarchical-tree-selectedItem.model";
 import { SelectedResultConfiguration } from "../models/SamHierarchicalSelectedResultConfiguration";
-import {
-  NG_VALUE_ACCESSOR,
-  ControlValueAccessor,
-  FormControl,
-} from "@angular/forms";
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 const Hierarchical_SelectedResult_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamHierarchicalSelectedResultComponent),
@@ -44,7 +40,7 @@ export class SamHierarchicalSelectedResultComponent implements ControlValueAcces
   /**
    * Stored Event for ControlValueAccessor
    */
-  private propogateChange: (_: any) => void = (_: any) => null;
+  private propogateChange: (_val: any) => void = () => null;
 
   @Input()
   public disabled: boolean;

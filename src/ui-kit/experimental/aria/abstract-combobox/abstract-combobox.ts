@@ -1,6 +1,5 @@
 import { AbstractCell } from "../abstract-grid/abstract-cell";
 import { EventDispatcher } from "../utils/events";
-import { AbstractGrid } from "../abstract-grid/abstract-grid";
 
 interface AbstractPopup {
   onClick: (callback: Function, context: Object) => void;
@@ -49,7 +48,6 @@ export class AbstractCombobox {
   }
 
   private _setAriaValues() {
-    const inputId = this._input.id;
     const popupId = this._popup.node.id;
     const activeCell = this._popup.getSelected().node.id;
     this._input.setAttribute("aria-autocomplete", "list");
@@ -73,11 +71,11 @@ export class AbstractCombobox {
       this._handleKeydown(e);
     });
 
-    this._input.addEventListener("focus", (e) => {
+    this._input.addEventListener("focus", () => {
       this._popup.getSelected().addToTabOrder();
     });
 
-    this._input.addEventListener("blur", (e) => {
+    this._input.addEventListener("blur", () => {
       this._popup.getSelected().removeFromTabOrder();
     });
   }
@@ -116,7 +114,7 @@ export class AbstractCombobox {
   }
 
   private _setupPopupEvents(): void {
-    this._popup.onClick(function handleClick(e) {
+    this._popup.onClick(function handleClick() {
       this._onChange();
     }, this);
   }

@@ -4,7 +4,6 @@ import {
   Output,
   EventEmitter,
   ViewChild,
-  ElementRef,
   ViewChildren,
 } from "@angular/core";
 
@@ -55,7 +54,8 @@ export class SamActionsDropdownComponent {
   showActions = false;
   focusIndex = -1;
 
-  hideActions(event) {
+  hideActions(event: Event) {
+    void event;
     return (this.showActions = false);
   }
 
@@ -88,7 +88,7 @@ export class SamActionsDropdownComponent {
   }
 
   setFocusOnFirstItem() {
-    this.actionsList.changes.subscribe((t) => {
+    this.actionsList.changes.subscribe(() => {
       this.ngForRendered();
     });
   }

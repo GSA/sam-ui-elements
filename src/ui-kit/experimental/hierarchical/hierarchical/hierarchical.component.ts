@@ -8,11 +8,7 @@ import {
   AfterViewChecked,
   ChangeDetectorRef,
 } from "@angular/core";
-import {
-  NG_VALUE_ACCESSOR,
-  ControlValueAccessor,
-  FormControl,
-} from "@angular/forms";
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { SamHiercarchicalServiceInterface } from "../hierarchical-interface";
 import {
   HierarchicalTreeSelectedItemModel,
@@ -64,7 +60,7 @@ export class SamHierarchicalComponent
   /**
    * Stored Event for ControlValueAccessor
    */
-  public propogateChange: (_: any) => void = (_: any) => null;
+  public propogateChange: (_val: any) => void = () => null;
 
   public disabled: boolean;
 

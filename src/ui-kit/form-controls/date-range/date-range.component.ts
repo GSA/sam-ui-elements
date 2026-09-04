@@ -134,12 +134,6 @@ export class SamDateRangeComponent
   private endDateValue;
 
   public static dateRangeValidation(c: AbstractControl) {
-    const error = {
-      dateRangeError: {
-        message: "",
-      },
-    };
-
     if (c.value && c.value.startDate && c.value.endDate) {
       return SamDateRangeComponent.validateStartAndEnd(c);
     }

@@ -222,7 +222,7 @@ describe("The Sam Date Range component", () => {
       component.onChange();
       component.onTouched();
       component.registerOnTouched(() => undefined);
-      component.registerOnChange((_) => undefined);
+      component.registerOnChange(() => undefined);
       component.setDisabledState(false);
       component.writeValue(undefined);
       component.focusHandler();

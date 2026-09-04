@@ -16,7 +16,6 @@ import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
   FormControl,
-  Validators,
   ValidatorFn,
   AbstractControl,
 } from "@angular/forms";
@@ -313,7 +312,8 @@ export class SamDateComponent
     }
   }
 
-  onMonthBlur(event) {
+  onMonthBlur(event?: Event) {
+    void event;
     this.isMonthBlur = true;
     if (this.month.nativeElement.value === "0") {
       this.month.nativeElement.value = "";
@@ -378,7 +378,8 @@ export class SamDateComponent
     return parseInt(possibleNum, 10);
   }
 
-  onDayBlur(event) {
+  onDayBlur(event?: Event) {
+    void event;
     this.isDayBlur = true;
     if (this.day.nativeElement.value === "0") {
       this.day.nativeElement.value = "";
@@ -456,7 +457,8 @@ export class SamDateComponent
     return month === 2 ? 2 : three;
   }
 
-  onYearBlur(event) {
+  onYearBlur(event?: Event) {
+    void event;
     this.isYearBlur = true;
     if (this.year.nativeElement.value === "0") {
       this.year.nativeElement.value = "";
@@ -516,13 +518,13 @@ export class SamDateComponent
 
   onChangeHandler(override = undefined) {
     this.onTouched();
-    let dayCheck =
+    const dayCheck =
       this.isDateTouched ||
       (!this.isDateTouched && this.day.nativeElement.value);
-    let monthCheck =
+    const monthCheck =
       this.isMonthTouched ||
       (!this.isMonthTouched && this.month.nativeElement.value);
-    let yearCheck =
+    const yearCheck =
       this.isYearTouched ||
       (!this.isYearTouched && this.year.nativeElement.value);
     if (dayCheck && monthCheck && yearCheck && !this.isTabPressed) {
@@ -620,7 +622,8 @@ export class SamDateComponent
     );
   }
 
-  triggerTouch(ev) {
+  triggerTouch(ev?: Event) {
+    void ev;
     this.isYearTouched = true;
     this.touchHandler();
     this.onTouched();

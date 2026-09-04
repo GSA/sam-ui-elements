@@ -7,7 +7,7 @@ import { map } from "rxjs/operators";
 export class TestAutocompleteService implements AutocompleteService {
   public setFetchMethod() {}
 
-  public fetch(val: string): Observable<any> {
+  public fetch(): Observable<any> {
     return of([
       { key: "MD", value: "Maryland", category: "Places" },
       { key: "VA", value: "Virginia", category: "Places" },

@@ -1,7 +1,6 @@
 import {
   Component,
   Input,
-  ElementRef,
   TemplateRef,
   Renderer2,
   ViewChild,
@@ -38,11 +37,11 @@ export class SamTitleComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit() {
-    let template = this.titleTpl.elementRef.nativeElement;
-    let parent = template.parentNode;
-    let parentContent = parent.innerHTML;
+    const template = this.titleTpl.elementRef.nativeElement;
+    const parent = template.parentNode;
+    const parentContent = parent.innerHTML;
     parent.innerHTML = "";
-    let tag = this.renderer.createElement(this.getTitleTag(this.importance));
+    const tag = this.renderer.createElement(this.getTitleTag(this.importance));
     this.renderer.setAttribute(tag, "class", this.css_classes);
     this.renderer.setProperty(tag, "innerHTML", parentContent);
     this.renderer.appendChild(parent, tag);

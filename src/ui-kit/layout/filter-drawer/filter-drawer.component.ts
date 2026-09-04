@@ -8,8 +8,6 @@ import {
   ViewChild,
 } from "@angular/core";
 
-import { SamPageNextService } from "../../experimental/patterns/layout/architecture";
-
 import { ChipHostDirective } from "./chip-host";
 import { SamFilterDrawerItemComponent } from "./filter-drawer-item";
 

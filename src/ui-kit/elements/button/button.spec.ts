@@ -1,4 +1,4 @@
-import { TestBed, waitForAsync } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
 
 import { By } from "@angular/platform-browser";
 

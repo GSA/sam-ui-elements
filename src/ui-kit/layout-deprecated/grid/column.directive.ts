@@ -39,7 +39,7 @@ export class ColumnDirective {
 
   private reset() {
     for (let i = 1; i <= 12; i++) {
-      let number = this._columnsMap.get("" + i);
+      const number = this._columnsMap.get("" + i);
       this.renderer.removeClass(this.el.nativeElement, number);
     }
     this.renderer.removeClass(this.el.nativeElement, "wide");

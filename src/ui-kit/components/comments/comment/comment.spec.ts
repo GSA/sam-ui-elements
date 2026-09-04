@@ -1,5 +1,4 @@
 import { TestBed } from "@angular/core/testing";
-import { CommonModule } from "@angular/common";
 import moment from "moment";
 import { By } from "@angular/platform-browser";
 

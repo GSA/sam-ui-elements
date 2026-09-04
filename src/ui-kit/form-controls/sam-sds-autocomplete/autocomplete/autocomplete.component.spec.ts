@@ -1,11 +1,5 @@
 /* tslint:disable */
-import {
-  waitForAsync,
-  ComponentFixture,
-  TestBed,
-  fakeAsync,
-  tick,
-} from "@angular/core/testing";
+import { waitForAsync, ComponentFixture, TestBed } from "@angular/core/testing";
 import { SAMSDSAutocompleteComponent } from "./autocomplete.component";
 import { AutoCompleteSampleDataService } from "../autocomplete-search/autocomplete-seach-test-service.spec";
 import { SAMSDSAutocompletelConfiguration } from "./models/SDSAutocompletelConfiguration.model";
@@ -74,7 +68,7 @@ describe("SAMSDSAutocompleteComponent", () => {
     expect(component.model.items[0]).toEqual(myItems);
 
     // Set by empty Object
-    let myEmptyObjItems = new SAMSDSSelectedItemModel();
+    const myEmptyObjItems = new SAMSDSSelectedItemModel();
     component.writeValue(myEmptyObjItems);
     expect(component.model.items).toEqual([]);
 
@@ -96,13 +90,13 @@ describe("SAMSDSAutocompleteComponent", () => {
   });
 
   it("should handle registerOnChange", () => {
-    let item = {};
+    const item = {};
     component.registerOnChange(item);
     expect(component.onChange).toBe(item);
   });
 
   it("should handle registerOnTouched", () => {
-    let item = {};
+    const item = {};
     component.registerOnTouched(item);
     expect(component.onTouched).toBe(item);
   });

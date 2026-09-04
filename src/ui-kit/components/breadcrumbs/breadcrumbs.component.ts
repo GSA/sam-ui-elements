@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
-import { NavigationEnd, UrlSegment } from "@angular/router";
 import { IBreadcrumb } from "../../types";
 
 @Component({

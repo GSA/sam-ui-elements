@@ -1,6 +1,5 @@
 import { TestBed } from "@angular/core/testing";
 import { Component, ViewChild } from "@angular/core";
-import { By } from "@angular/platform-browser";
 
 // Load the implementations that should be tested
 import { SamTabsComponent, SamTabComponent } from "./tabs.component";

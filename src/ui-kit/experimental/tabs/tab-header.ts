@@ -16,7 +16,6 @@ import {
   ContentChildren,
   Output,
   EventEmitter,
-  Optional,
   AfterContentChecked,
   AfterContentInit,
   OnDestroy,
@@ -360,9 +359,9 @@ export class MdTabHeader
     // The view length is the visible width of the tab labels.
     const viewLength = this._tabListContainer.nativeElement.offsetWidth;
 
-    let labelBeforePos: number, labelAfterPos: number;
-    labelBeforePos = selectedLabel.getOffsetLeft();
-    labelAfterPos = labelBeforePos + selectedLabel.getOffsetWidth();
+    const labelBeforePos: number = selectedLabel.getOffsetLeft();
+    const labelAfterPos: number =
+      labelBeforePos + selectedLabel.getOffsetWidth();
 
     const beforeVisiblePos = this.scrollDistance;
     const afterVisiblePos = this.scrollDistance + viewLength;

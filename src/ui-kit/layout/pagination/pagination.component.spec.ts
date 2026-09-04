@@ -3,9 +3,6 @@ import { TestBed, waitForAsync, ComponentFixture } from "@angular/core/testing";
 import { SamPaginationNextComponent } from "./pagination.component";
 import { FormsModule } from "@angular/forms";
 
-import { RouterTestingModule } from "@angular/router/testing";
-import { By } from "@angular/platform-browser";
-
 import { SamIconsModule } from "../../../ui-kit/experimental/icon/icon.module";
 
 import { Paginator } from "./paginator";
@@ -32,12 +29,11 @@ describe("SamPaginationNextComponent", () => {
   });
 
   it("page size", () => {
-    let paginator = new Paginator("Test Unit", 10, 100);
     expect(component.pageSize).toBe(10);
   });
 
   it("next clicked", () => {
-    let paginator = new Paginator("Test Unit", 10, 100);
+    const paginator = new Paginator("Test Unit", 10, 100);
     component.paginator = paginator;
 
     component.onNextClick();
@@ -45,7 +41,7 @@ describe("SamPaginationNextComponent", () => {
   });
 
   it("previous clicked", () => {
-    let paginator = new Paginator("Test Unit", 10, 100);
+    const paginator = new Paginator("Test Unit", 10, 100);
     component.paginator = paginator;
     component.onNextClick();
     component.onPreviousClick();
@@ -53,26 +49,26 @@ describe("SamPaginationNextComponent", () => {
   });
 
   it("printDisplayingString", () => {
-    let paginator = new Paginator("Test Unit", 10, 100);
+    const paginator = new Paginator("Test Unit", 10, 100);
     component.paginator = paginator;
     expect(component.printDisplayingString()).toBe("1 – 10 of 100");
   });
 
   it("printPerPageString", () => {
-    let paginator = new Paginator("Test Unit", 10, 100);
+    const paginator = new Paginator("Test Unit", 10, 100);
     component.paginator = paginator;
     expect(component.printPerPageString()).toBe("Test Unit per page");
   });
 
   it("pageSize", () => {
-    let paginator = new Paginator("Test Unit", 10, 100);
+    const paginator = new Paginator("Test Unit", 10, 100);
     component.paginator = paginator;
     component.pageSize = 20;
     expect(component.printDisplayingString()).toBe("1 – 20 of 100");
   });
 
   it("totalPages", () => {
-    let paginator = new Paginator("Test Unit", 10, 100);
+    const paginator = new Paginator("Test Unit", 10, 100);
     component.paginator = paginator;
     expect(component.paginator.getTotalPages()).toBe(10);
   });

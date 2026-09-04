@@ -1,15 +1,6 @@
-import {
-  Component,
-  Input,
-  ElementRef,
-  OnChanges,
-  ChangeDetectorRef,
-  SimpleChanges,
-  ViewChild,
-  ViewEncapsulation,
-} from "@angular/core";
+import { Component, ChangeDetectorRef, ViewEncapsulation } from "@angular/core";
 
-import { ValidatorFn, FormControl, ValidationErrors } from "@angular/forms";
+import { FormControl } from "@angular/forms";
 
 import { SamFormService } from "../../../form-service";
 

@@ -1,8 +1,6 @@
 import { TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { RouterTestingModule } from "@angular/router/testing";
-import { Observable, Subject } from "rxjs";
-import { ActivatedRoute } from "@angular/router";
 
 // Load the implementations that should be tested
 import { SamBreadcrumbsComponent } from "./breadcrumbs.component";

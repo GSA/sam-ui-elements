@@ -2,7 +2,6 @@ import { SamSortable, SamSortDirective } from "./";
 import { merge } from "rxjs";
 import { map } from "rxjs/operators";
 import { DataSource } from "@angular/cdk/collections";
-import { fromEvent } from "rxjs";
 import { RECORDS } from "./data.sample.spec";
 import { BehaviorSubject } from "rxjs";
 /* tslint:disable */

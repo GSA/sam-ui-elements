@@ -18,7 +18,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   /**
    *
    */
-  private resultItems: Object[] = [];
+  private resultItems: object[] = [];
 
   /**
    *
@@ -38,7 +38,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   /**
    *
    */
-  public scrolled = new BehaviorSubject<Object>(null);
+  public scrolled = new BehaviorSubject<object>(null);
 
   /**
    * Event when something is checked/selected in the grid
@@ -121,7 +121,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
       this.getResults();
     });
 
-    this.scrolled.subscribe((scroll) => {
+    this.scrolled.subscribe(() => {
       this.getResults(true);
     });
   }
@@ -140,7 +140,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
    * @param value
    */
   public breadcrumbSelected(value: string) {
-    let item = this.breadcrumbStack.find(
+    const item = this.breadcrumbStack.find(
       (itm) => itm[this.configuration.primaryKeyField] === value
     );
     let pos = this.breadcrumbStack.indexOf(item);
@@ -196,7 +196,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
       breadCrumbItem["value"] = value[this.configuration.primaryKeyField];
       breadCrumbItem["label"] = value[this.configuration.primaryTextField];
     }
-    let breadcrumbStackPostion = this.breadcrumbStack.indexOf(breadCrumbItem);
+    const breadcrumbStackPostion = this.breadcrumbStack.indexOf(breadCrumbItem);
     if (breadcrumbStackPostion === -1 && value) {
       this.breadcrumbStackSelectable.unshift(breadCrumbItem);
       this.breadcrumbStack.unshift(value);
@@ -210,7 +210,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
   private getResults(isScroll?: boolean) {
     if (isScroll) {
       if (this.totalItems > this.resultItems.length) {
-        let item = {
+        const item = {
           id: this.selectedValue,
           searchValue: this.filterText,
           sort: this.sort,
@@ -227,7 +227,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
           });
       }
     } else {
-      let item = {
+      const item = {
         id: this.selectedValue,
         searchValue: this.filterText,
         sort: this.sort,

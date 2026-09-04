@@ -12,6 +12,7 @@ export class CommentsService {
   }
 
   isCommentDeletable(comment: Comment): boolean {
+    void comment;
     return true;
   }
 
@@ -23,11 +24,13 @@ export class CommentsService {
     return of(this._comments);
   }
 
-  postComment(_: any): Observable<Comment[]> {
+  postComment(comment: Comment): Observable<Comment[]> {
+    void comment;
     return of(this._comments);
   }
 
   deleteComment(comment: Comment): Observable<Comment[]> {
+    void comment;
     return of(this._comments);
   }
 

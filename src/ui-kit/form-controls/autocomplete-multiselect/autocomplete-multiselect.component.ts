@@ -11,7 +11,6 @@ import {
 } from "@angular/core";
 import {
   animate,
-  state,
   style,
   transition,
   trigger,
@@ -504,8 +503,8 @@ export class SamAutocompleteMultiselectComponent
       if (this.searchText) {
         let foundItem = false;
         if (Array.isArray(this.list)) {
-          for (var i = 0; i < this.list.length; i++) {
-            let item = this.list[i];
+          for (let i = 0; i < this.list.length; i++) {
+            const item = this.list[i];
             if (item) {
               if (item[this.keyValueConfig.valueProperty] === this.searchText) {
                 foundItem = true;
@@ -521,8 +520,8 @@ export class SamAutocompleteMultiselectComponent
 
         if (this.value) {
           if (!foundItem) {
-            for (var i = 0; i < this.value.length; i++) {
-              let tempItem = this.value[i];
+            for (let i = 0; i < this.value.length; i++) {
+              const tempItem = this.value[i];
               if (
                 tempItem[this.keyValueConfig.valueProperty] === this.searchText
               ) {
@@ -542,8 +541,8 @@ export class SamAutocompleteMultiselectComponent
 
   private findItemExistInList(item: any) {
     let foundItem = false;
-    for (var j = 0; j < item.length; j++) {
-      let subitem = item[j];
+    for (let j = 0; j < item.length; j++) {
+      const subitem = item[j];
       if (subitem[this.keyValueConfig.valueProperty] === this.searchText) {
         foundItem = true;
       }
@@ -685,7 +684,6 @@ export class SamAutocompleteMultiselectComponent
   public getSelectedContentWidth(element: HTMLElement): Array<number> {
     const elementChildren = element.parentElement.children;
 
-    const width = 0;
     const elementsWidths = [];
     // Cannot use forEach here since children is not a Javascript array
     // and its data structure does not provide forEach on its
@@ -767,7 +765,7 @@ export class SamAutocompleteMultiselectComponent
             context.sortByCategory(context.cache.get(searchString))
           );
         },
-        (err) => {
+        () => {
           context.displaySpinner = false;
           const errorObject = {
             cannotBeSelected: true,
@@ -980,7 +978,7 @@ export class SamAutocompleteMultiselectComponent
    */
   public selectItem(item): void {
     if (typeof item === "string") {
-      let added = { type: "custom" };
+      const added = { type: "custom" };
       added[this.keyValueConfig.valueProperty] = item;
       this.value.push(added);
     } else {
@@ -1075,7 +1073,8 @@ export class SamAutocompleteMultiselectComponent
     this.textArea.nativeElement.blur();
   }
 
-  public checkForFocus(event) {
+  public checkForFocus(event?: Event) {
+    void event;
     this.clearSearch();
     this.list = [];
   }
@@ -1096,7 +1095,7 @@ export class SamAutocompleteMultiselectComponent
   }
 
   public listItemHover(category, listIndex) {
-    let elements = this.getResults();
+    const elements = this.getResults();
 
     // Converts category list index to getResults() list index
     for (let i = 0; i < category; i++) {
@@ -1143,7 +1142,7 @@ export class SamAutocompleteMultiselectComponent
     this.isDisabled = isDisabled;
   }
 
-  private onChangeCallback: (_: any) => void = (_: any) => null;
+  private onChangeCallback: (_: any) => void = () => null;
   private onTouchedCallback: () => void = () => null;
 }
 

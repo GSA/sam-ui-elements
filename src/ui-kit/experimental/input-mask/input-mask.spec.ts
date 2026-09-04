@@ -1,15 +1,9 @@
-import { TestBed } from "@angular/core/testing";
-import { FormsModule } from "@angular/forms";
-
 // Load the implementations that should be tested
 import { SamInputMaskComponent } from "./input-mask.component";
 import { SamFormService } from "../../form-service";
-import { SamWrapperModule } from "../../wrappers";
-import { ChangeDetectorRef } from "@angular/core";
 
 describe("The Sam Input Mask component", () => {
   let component: SamInputMaskComponent;
-  let cdr: ChangeDetectorRef;
 
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {

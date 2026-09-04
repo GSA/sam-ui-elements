@@ -18,7 +18,6 @@ import {
 } from "@angular/forms";
 import { SamFormService } from "../../form-service";
 
-const noop = () => undefined;
 const MY_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamSelectComponent),

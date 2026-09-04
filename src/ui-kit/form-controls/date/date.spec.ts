@@ -157,7 +157,7 @@ describe("The Sam Date component", () => {
       try {
         component.ngOnInit();
         fail();
-      } catch (e) {
+      } catch {
         expect(true).toBe(true);
       }
     });

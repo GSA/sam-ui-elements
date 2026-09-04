@@ -21,7 +21,6 @@ describe("The Sam Header component", () => {
   });
 
   describe("rendered test", () => {
-    let component: SamHeaderComponent;
     let fixture: any;
 
     // provide our implementations or mocks to the dependency injector
@@ -31,7 +30,6 @@ describe("The Sam Header component", () => {
         declarations: [SamHeaderComponent],
       });
       fixture = TestBed.createComponent(SamHeaderComponent);
-      component = fixture.componentInstance;
     });
 
     it("should compile", function () {

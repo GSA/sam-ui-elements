@@ -1,7 +1,6 @@
 import {
   waitForAsync,
   ComponentFixtureAutoDetect,
-  ComponentFixture,
   TestBed,
 } from "@angular/core/testing";
 import { Component } from "@angular/core";
@@ -67,11 +66,10 @@ describe("The Sam Accordion component", () => {
   describe("isolated tests", () => {
     let component: SamAccordionComponent;
     let sectionComponent: SamAccordionSection;
-    let sectionComponent2: SamAccordionSection;
     beforeEach(() => {
       component = new SamAccordionComponent();
       sectionComponent = new SamAccordionSection(component);
-      sectionComponent2 = new SamAccordionSection(component);
+      new SamAccordionSection(component);
     });
     // section
     it('should check for "name" prop and throw error', () => {
@@ -79,7 +77,7 @@ describe("The Sam Accordion component", () => {
         sectionComponent.ngOnInit();
         // shouldn't get here
         expect(false).toBe(true);
-      } catch (e) {
+      } catch {
         expect(true).toBe(true);
       }
     });

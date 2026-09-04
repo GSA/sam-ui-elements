@@ -89,7 +89,8 @@ export class SamDragDropDirective {
   }
 
   @HostListener("dragleave", ["$event"])
-  public onElementDragend(event) {
+  public onElementDragend(event: DragEvent) {
+    void event;
     this._updateDragState(DragState.NotDragging);
   }
 

@@ -30,7 +30,7 @@ export class EventDispatcher {
     const name1 = callback.name;
 
     this._listeners[event] = this._listeners[event].filter((listener) => {
-      const [cb, context] = listener;
+      const [cb] = listener;
       const name2 = cb.name;
       if (name2 && name1 !== name2) {
         return listener;
@@ -72,7 +72,7 @@ export class EventDispatcher {
     const name1 = callback.name;
 
     return this._listeners[event].reduce((bool, ls) => {
-      const [cb, ctx] = ls;
+      const [cb] = ls;
       const name2 = cb.name;
 
       if (name1 && name2 && name1 === name2) {

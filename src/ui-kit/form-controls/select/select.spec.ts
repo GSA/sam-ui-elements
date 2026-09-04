@@ -16,7 +16,7 @@ describe("The Sam Select component", () => {
     });
 
     it("should implement controlvalueaccessor", () => {
-      component.registerOnChange((_) => undefined);
+      component.registerOnChange(() => undefined);
       component.registerOnTouched(() => undefined);
       component.setDisabledState(false);
       component.writeValue(["aaa"]);
@@ -27,7 +27,7 @@ describe("The Sam Select component", () => {
       try {
         component.ngOnInit();
         fail();
-      } catch (e) {
+      } catch {
         expect(true).toBe(true);
       }
     });

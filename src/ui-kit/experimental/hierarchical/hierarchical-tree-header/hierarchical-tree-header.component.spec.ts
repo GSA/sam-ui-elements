@@ -30,7 +30,7 @@ describe("SamHierarchicalTreeHeaderComponent", () => {
     component = fixture.componentInstance;
     component.options = [...options];
 
-    let config = new SamHierarchicalTreeHeaderConfiguration();
+    const config = new SamHierarchicalTreeHeaderConfiguration();
     config.minimumCharacterCountSearch = 0;
     component.configuration = config;
     fixture.detectChanges();

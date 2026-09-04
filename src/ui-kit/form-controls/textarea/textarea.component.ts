@@ -118,7 +118,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
   @ViewChild(LabelWrapper, { static: true }) wrapper: LabelWrapper;
 
   public characterCounterMsg: string;
-  public onChange: any = (_) => undefined;
+  public onChange: any = () => undefined;
   public onTouched: any = () => undefined;
 
   private inBrowser = typeof window !== "undefined";
@@ -210,7 +210,7 @@ export class SamTextareaComponent implements ControlValueAccessor {
   setCharCounterMsg(value: string) {
     if (this.showCharCount) {
       if (this.value) {
-        let msg =
+        const msg =
           this.maxlength - value.length > 1 ? "characters " : "character ";
         this.characterCounterMsg =
           this.maxlength -
