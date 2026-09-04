@@ -48,6 +48,12 @@ jobs:
       - name: Build test-app
         run: npm --prefix test-app run build
 
+      # Guards against the security CI configuration (workflow, ZAP gate,
+      # exception baseline, docs) drifting out of the shape the QASP-driven
+      # gate depends on -- see docs/security-scanning.md and #614.
+      - name: Validate security workflow
+        run: npm run validate:security-workflow
+
       # Guards against coverage-floor.json being lowered directly on this PR
       # branch (paired with a coverage regression) rather than earned via
       # `npm run coverage:bump`. Mirrors the ESLint baseline guard in

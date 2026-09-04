@@ -67,6 +67,7 @@ Two related traps worth knowing:
 - `.github/workflows/ci.yml` — installs both workspaces, runs `npm --prefix test-app test`, then `npm run coverage:check`.
 - `.github/workflows/lint.yml` — format check, baseline-not-increased guard, `ng lint` + baseline gate for both workspaces.
 - `.github/workflows/e2e.yml` — Playwright smoke test.
+- `.github/workflows/security.yml` — DAST (OWASP ZAP) against `test-app` built in production mode; SAST is GitHub CodeQL default setup (no committed workflow). See `docs/security-scanning.md`.
 - `.github/workflows/publish.yml` — npm Trusted Publisher (OIDC) flow, gated on `validate:publish`; only trigger is a GitHub Release (or a dry-run `workflow_dispatch`).
 
 ## Angular / TypeScript quirks
