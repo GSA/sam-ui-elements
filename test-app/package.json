@@ -51,7 +51,7 @@
     "@playwright/test": "1.62.1",
     "@types/node": "26.4.0",
     "@vitest/coverage-istanbul": "2.1.9",
-    "angular-eslint": "19.8.1",
+    "angular-eslint": "22.0.0",
     "eslint": "9.39.2",
     "jsdom": "30.0.1",
     "typescript": "5.8.3",
