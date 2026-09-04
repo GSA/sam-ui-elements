@@ -6,6 +6,7 @@ import {
   EventEmitter,
   ChangeDetectorRef,
   ViewChild,
+  OnInit,
 } from "@angular/core";
 import {
   FormControl,
@@ -31,7 +32,7 @@ import { SamFormService } from "../../form-service";
   ],
   standalone: false,
 })
-export class SamCheckboxComponent implements ControlValueAccessor {
+export class SamCheckboxComponent implements ControlValueAccessor, OnInit {
   /**
    * Deprecated, Sets the bound value of the component
    */

@@ -8,6 +8,7 @@ import {
   EventEmitter,
   forwardRef,
   AfterViewInit,
+  OnInit,
 } from "@angular/core";
 import { LabelWrapper } from "../../wrappers/label-wrapper";
 import { OptionsType } from "../../types";
@@ -34,7 +35,9 @@ const MY_VALUE_ACCESSOR: any = {
   providers: [MY_VALUE_ACCESSOR],
   standalone: false,
 })
-export class SamSelectComponent implements ControlValueAccessor, AfterViewInit {
+export class SamSelectComponent
+  implements ControlValueAccessor, AfterViewInit, OnInit
+{
   /**
    * Sets the bound value of the component
    */

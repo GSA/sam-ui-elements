@@ -23,11 +23,11 @@ export class AbstractCell {
     this._initCell();
   }
 
-  public onKeydown(callback: Function, context: Object) {
+  public onKeydown(callback: Function, context: object) {
     this._dispatcher.on("keydown", callback, context);
   }
 
-  public onClick(callback: Function, context: Object) {
+  public onClick(callback: Function, context: object) {
     this._dispatcher.on("click", callback, context);
   }
 

@@ -31,8 +31,8 @@ export class SamPaginationComponent {
   @Output() pageChange: EventEmitter<number> = new EventEmitter<number>();
 
   consecutivePageRange() {
-    var start = 2;
-    var end = this.totalPages - 1;
+    let start = 2;
+    let end = this.totalPages - 1;
     // If total number of pages less than or equal to 10, then display all page links
     // Otherwise, use the algorithm to calculate the start and end page to show between the first and last page
     if (this.totalPages > this.maxTotalPageWithoutEllipsis) {
@@ -51,7 +51,7 @@ export class SamPaginationComponent {
       }
     }
 
-    let ret = [];
+    const ret = [];
     for (let i = start; i <= end; i++) {
       ret.push(i);
     }

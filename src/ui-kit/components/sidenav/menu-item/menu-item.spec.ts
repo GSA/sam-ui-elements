@@ -34,11 +34,11 @@ describe("The Sam MenuItem component", () => {
       component.emitSelectedChild(true);
     });
     it("should show children", () => {
-      let obj = {};
+      const obj = {};
       expect(component.hasChildren(obj)).toBe(false);
-      let obj2 = { children: [{}] };
+      const obj2 = { children: [{}] };
       expect(component.hasChildren(obj2)).toBe(true);
-      let obj3 = { children: [] };
+      const obj3 = { children: [] };
       expect(component.hasChildren(obj3)).toBe(false);
     });
   });

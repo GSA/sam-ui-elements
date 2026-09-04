@@ -10,6 +10,9 @@ import {
   EventEmitter,
   ContentChild,
   Optional,
+  OnInit,
+  AfterContentInit,
+  AfterViewInit,
 } from "@angular/core";
 import { faLongArrowAltLeft, faTimes } from "@fortawesome/free-solid-svg-icons";
 
@@ -24,7 +27,10 @@ import { SamPageNextService } from "../../architecture";
   styleUrls: ["./sam-page-next.scss"],
   standalone: false,
 })
-export class SamPageNextComponent extends MdSidenavContainer {
+export class SamPageNextComponent
+  extends MdSidenavContainer
+  implements OnInit, AfterContentInit, AfterViewInit
+{
   /**
    * Text string for the back button
    */

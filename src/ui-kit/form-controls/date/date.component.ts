@@ -8,6 +8,7 @@ import {
   OnInit,
   OnChanges,
   forwardRef,
+  AfterViewInit,
 } from "@angular/core";
 
 import moment from "moment";
@@ -41,7 +42,7 @@ import { KeyHelper } from "../../utilities/key-helper/key-helper";
   standalone: false,
 })
 export class SamDateComponent
-  implements OnInit, OnChanges, ControlValueAccessor
+  implements OnInit, OnChanges, ControlValueAccessor, AfterViewInit
 {
   /**
    * Sets the general error message for component
@@ -516,13 +517,13 @@ export class SamDateComponent
 
   onChangeHandler(override = undefined) {
     this.onTouched();
-    let dayCheck =
+    const dayCheck =
       this.isDateTouched ||
       (!this.isDateTouched && this.day.nativeElement.value);
-    let monthCheck =
+    const monthCheck =
       this.isMonthTouched ||
       (!this.isMonthTouched && this.month.nativeElement.value);
-    let yearCheck =
+    const yearCheck =
       this.isYearTouched ||
       (!this.isYearTouched && this.year.nativeElement.value);
     if (dayCheck && monthCheck && yearCheck && !this.isTabPressed) {

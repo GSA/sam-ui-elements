@@ -6,6 +6,7 @@ import {
   OnInit,
   SimpleChanges,
   ChangeDetectionStrategy,
+  OnChanges,
 } from "@angular/core";
 
 import {
@@ -24,7 +25,7 @@ import { Paginator } from "./paginator";
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false,
 })
-export class SamPaginationNextComponent implements OnInit {
+export class SamPaginationNextComponent implements OnInit, OnChanges {
   public paginator: Paginator;
 
   public faChevronLeft = faChevronLeft;

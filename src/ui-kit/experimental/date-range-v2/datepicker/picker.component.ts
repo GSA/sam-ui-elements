@@ -112,10 +112,10 @@ export class DatepickerComponent
   // time
   @Input() calendarDays: Array<number>;
   @Input() currentMonth: string;
-  @Input() dayNames: Array<String> = ["S", "M", "T", "W", "T", "F", "S"]; // Default order: firstDayOfTheWeek = 0
+  @Input() dayNames: Array<string> = ["S", "M", "T", "W", "T", "F", "S"]; // Default order: firstDayOfTheWeek = 0
   @Input() hoveredDay: Date;
   @Input() months: Array<string>;
-  dayNamesOrdered: Array<String>;
+  dayNamesOrdered: Array<string>;
   calendar: Calendar;
   currentMonthNumber: number;
   currentYear: number;

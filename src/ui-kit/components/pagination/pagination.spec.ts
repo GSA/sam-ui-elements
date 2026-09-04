@@ -8,7 +8,7 @@ import { SamPaginationComponent } from "./pagination.component";
 describe("The Sam Pagination component", () => {
   let component: SamPaginationComponent;
   let fixture: any;
-  let srPage = '<span class="sr-only">Page</span>';
+  const srPage = '<span class="sr-only">Page</span>';
 
   const defaultOptions: any = {
     totalPages: 20,

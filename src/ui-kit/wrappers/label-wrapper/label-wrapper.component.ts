@@ -7,6 +7,8 @@ import {
   ChangeDetectorRef,
   ElementRef,
   Renderer2,
+  OnChanges,
+  AfterViewInit,
 } from "@angular/core";
 import { AbstractControl } from "@angular/forms";
 
@@ -15,7 +17,9 @@ import { AbstractControl } from "@angular/forms";
   templateUrl: "label-wrapper.template.html",
   standalone: false,
 })
-export class LabelWrapper implements AfterViewChecked {
+export class LabelWrapper
+  implements AfterViewChecked, OnChanges, AfterViewInit
+{
   /**
    * sets the label text
    */

@@ -15,6 +15,7 @@ import {
   Input,
   OnDestroy,
   ViewEncapsulation,
+  AfterContentChecked,
 } from "@angular/core";
 import {
   CanDisable,
@@ -34,7 +35,9 @@ import { Subject, Subscription } from "rxjs";
   encapsulation: ViewEncapsulation.None,
   standalone: false,
 })
-export class MdTabNav implements AfterContentInit, OnDestroy {
+export class MdTabNav
+  implements AfterContentInit, OnDestroy, AfterContentChecked
+{
   /** Subject that emits when the component has been destroyed. */
   private _onDestroy = new Subject<void>();
 

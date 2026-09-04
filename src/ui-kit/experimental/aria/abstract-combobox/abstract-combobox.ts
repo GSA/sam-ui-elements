@@ -3,8 +3,8 @@ import { EventDispatcher } from "../utils/events";
 import { AbstractGrid } from "../abstract-grid/abstract-grid";
 
 interface AbstractPopup {
-  onClick: (callback: Function, context: Object) => void;
-  onKeydown: (callback: Function, context: Object) => void;
+  onClick: (callback: Function, context: object) => void;
+  onKeydown: (callback: Function, context: object) => void;
   focused: AbstractCell;
 }
 
@@ -32,15 +32,15 @@ export class AbstractCombobox {
     this._setupPopupEvents();
   }
 
-  public onSearch(callback: Function, context: Object): void {
+  public onSearch(callback: Function, context: object): void {
     this._dispatcher.on("search", callback, context);
   }
 
-  public onInput(callback: Function, context: Object): void {
+  public onInput(callback: Function, context: object): void {
     this._dispatcher.on("input", callback, context);
   }
 
-  public onChange(callback: Function, context: Object): void {
+  public onChange(callback: Function, context: object): void {
     this._dispatcher.on("change", callback, context);
   }
 

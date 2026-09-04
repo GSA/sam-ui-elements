@@ -160,15 +160,15 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    * @param propertyFields comma seperated list with periods depth of object
    */
 
-  getObjectValue(object: Object, propertyFields: string): string {
+  getObjectValue(object: object, propertyFields: string): string {
     let value = "";
     let current = object;
-    let fieldSplit = propertyFields.split(",");
+    const fieldSplit = propertyFields.split(",");
     for (let i = 0; i < fieldSplit.length; i++) {
-      let fieldValue = fieldSplit[i];
-      let fieldPartSplit = fieldValue.split(".");
+      const fieldValue = fieldSplit[i];
+      const fieldPartSplit = fieldValue.split(".");
       for (let j = 0; j < fieldPartSplit.length; j++) {
-        let fieldCheckValue = fieldPartSplit[j];
+        const fieldCheckValue = fieldPartSplit[j];
         if (current) {
           current = current[fieldCheckValue];
         }
@@ -383,8 +383,8 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
   }
 
   updateDelimeterModel() {
-    let separatedValues = this.getSeparatedValue();
-    for (let i in separatedValues) {
+    const separatedValues = this.getSeparatedValue();
+    for (const i in separatedValues) {
       if (separatedValues[i]) {
         const val = this.createFreeTextItem(separatedValues[i].trim());
         this.selectItem(val);
@@ -417,7 +417,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
       this.model
     );
     this.propogateChange(this.model);
-    let message = this.getObjectValue(
+    const message = this.getObjectValue(
       item,
       this.configuration.primaryTextField
     );
@@ -447,7 +447,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
     const results = this.results;
     const flat = [];
     const flatten = (array: any) => {
-      for (let i in array) {
+      for (const i in array) {
         const item = array[i];
         flat.push(item);
         if (
@@ -511,14 +511,14 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
           let foundItem = false;
           if (this.results) {
             for (var i = 0; i < this.results.length && !foundItem; i++) {
-              let item = this.results[i];
+              const item = this.results[i];
               foundItem =
                 item[this.configuration.primaryTextField] === this.inputValue;
             }
           }
           if (this.model.items.length > 0 && !foundItem) {
             for (var i = 0; i < this.model.items.length && !foundItem; i++) {
-              let item = this.model.items[i];
+              const item = this.model.items[i];
               foundItem =
                 item[this.configuration.primaryTextField] === this.inputValue;
             }
@@ -537,7 +537,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
   }
 
   private createFreeTextItem(value) {
-    let item = { type: "custom" };
+    const item = { type: "custom" };
     item[this.configuration.primaryTextField] = value;
     item[this.configuration.primaryKeyField] = value;
     return item;
@@ -604,9 +604,10 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    */
   onScroll() {
     if (this.maxResults > this.results.length) {
-      let scrollAreaHeight = this.resultsListElement.nativeElement.offsetHeight;
-      let scrollTopPos = this.resultsListElement.nativeElement.scrollTop;
-      let scrollAreaMaxHeight =
+      const scrollAreaHeight =
+        this.resultsListElement.nativeElement.offsetHeight;
+      const scrollTopPos = this.resultsListElement.nativeElement.scrollTop;
+      const scrollAreaMaxHeight =
         this.resultsListElement.nativeElement.scrollHeight;
       if (scrollTopPos + scrollAreaHeight * 2 >= scrollAreaMaxHeight) {
         this.getAdditionalResults();
@@ -643,7 +644,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    * Sets the highlighted item by keyboard or mouseover
    * @param item
    */
-  private setHighlightedItem(item: Object): void {
+  private setHighlightedItem(item: object): void {
     if (this.results && this.results.length > 0) {
       if (this.highlightedItem) {
         this.highlightedItem[this.HighlightedPropertyName] = false;

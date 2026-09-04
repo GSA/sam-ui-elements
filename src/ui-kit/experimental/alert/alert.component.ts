@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
 import {
   faExclamationCircle,
   faInfoCircle,
@@ -15,7 +15,7 @@ import {
   templateUrl: "./alert.template.html",
   standalone: false,
 })
-export class SamAlertNextComponent {
+export class SamAlertNextComponent implements OnInit {
   /**
    * Sets the alert type, defaults to 'success'
    */

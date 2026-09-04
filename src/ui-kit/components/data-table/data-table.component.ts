@@ -4,6 +4,7 @@ import {
   ViewEncapsulation,
   HostBinding,
   Input,
+  OnChanges,
 } from "@angular/core";
 import {
   CDK_TABLE_TEMPLATE,
@@ -47,7 +48,10 @@ export const _SamTable = CdkTable;
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false,
 })
-export class SamDataTableComponent<T> extends _SamTable<T> {
+export class SamDataTableComponent<T>
+  extends _SamTable<T>
+  implements OnChanges
+{
   @Input() allowHorizontalScroll = false;
   @HostBinding("class.sam-datatable-horizontal") samTableHorizontalClass =
     this.allowHorizontalScroll;

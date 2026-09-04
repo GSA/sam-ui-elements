@@ -7,6 +7,8 @@ import {
   ElementRef,
   ViewChild,
   ChangeDetectorRef,
+  OnDestroy,
+  AfterViewChecked,
 } from "@angular/core";
 import { ScrollHelpers } from "../../dom-helpers";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -20,7 +22,7 @@ import { KeyHelper, KEYS } from "../../utilities/key-helper/key-helper";
   templateUrl: "./modal.template.html",
   standalone: false,
 })
-export class SamModalComponent implements OnInit {
+export class SamModalComponent implements OnInit, OnDestroy, AfterViewChecked {
   /**
    * Sets ID html attribute of modal
    */
@@ -204,9 +206,9 @@ export class SamModalComponent implements OnInit {
     );
     this._modalFocusableElements =
       this.modalRoot.nativeElement.querySelectorAll(this._focusableString);
-    let modulFocus = this._modalFocusableElements[0] as HTMLBaseElement;
-    let firstFocus = this._modalFocusableElements[1] as HTMLBaseElement;
-    let lastFocus = this._modalFocusableElements[
+    const modulFocus = this._modalFocusableElements[0] as HTMLBaseElement;
+    const firstFocus = this._modalFocusableElements[1] as HTMLBaseElement;
+    const lastFocus = this._modalFocusableElements[
       this._modalFocusableElements.length - 1
     ] as HTMLBaseElement;
 

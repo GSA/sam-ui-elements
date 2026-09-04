@@ -5,6 +5,7 @@ import {
   Optional,
   ViewChild,
   ElementRef,
+  OnDestroy,
 } from "@angular/core";
 import {
   FormBuilder,
@@ -24,7 +25,7 @@ import { Comment } from "./interfaces";
   templateUrl: "comments.template.html",
   standalone: false,
 })
-export class SamCommentsComponent implements OnInit {
+export class SamCommentsComponent implements OnInit, OnDestroy {
   /**
    * Sets disabled state
    */

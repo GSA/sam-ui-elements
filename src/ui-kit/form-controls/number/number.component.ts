@@ -4,6 +4,8 @@ import {
   Input,
   ViewChild,
   forwardRef,
+  OnInit,
+  AfterViewInit,
 } from "@angular/core";
 import { LabelWrapper } from "../../wrappers/label-wrapper/label-wrapper.component";
 import {
@@ -48,7 +50,9 @@ import { SamFormService } from "../../form-service";
   ],
   standalone: false,
 })
-export class SamNumberComponent implements ControlValueAccessor {
+export class SamNumberComponent
+  implements ControlValueAccessor, OnInit, AfterViewInit
+{
   /**
    * (deprecated) sets value
    */
