@@ -20,6 +20,17 @@ const recommendedTypeScriptWarnings = asWarnings([
   ...angular.configs.tsRecommended,
 ]);
 
+// @angular-eslint/prefer-standalone is intentionally disabled, not just
+// downgraded to a warning: nearly every flagged component here is
+// `standalone: false` and registered via `declarations:` in a legacy
+// NgModule, several of which are in the frozen
+// scripts/consumer-deep-imports.json contract. Autofixing this rule flips
+// Angular's default to
+// `standalone: true` and broke 827 tests when tried (see #582/PR #675).
+// See AGENTS.md "Standalone-component lint policy (deferred)" for the
+// full rationale (GSA/sam-ui-elements#584).
+recommendedTypeScriptWarnings["@angular-eslint/prefer-standalone"] = "off";
+
 const accessibilityWarnings = asWarnings(angular.configs.templateAccessibility);
 
 // Bans the RxJS 5 "unbound operator" call pattern (e.g.
