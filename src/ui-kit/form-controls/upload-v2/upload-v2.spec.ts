@@ -600,4 +600,122 @@ describe("The Sam Upload v2 component", () => {
       );
     });
   });
+
+  describe("writeValue", () => {
+    it("populates the upload table when given a non-empty array", () => {
+      component.writeValue([
+        { name: "a.pdf", size: 10, postedDate: "", icon: {} },
+      ]);
+      expect(component.fileCtrlConfig.length).toBe(1);
+    });
+
+    it("clears the model when given an empty value", () => {
+      component.writeValue([
+        { name: "a.pdf", size: 10, postedDate: "", icon: {} },
+      ]);
+      component.writeValue(undefined);
+      expect(component._model.length).toBe(0);
+    });
+  });
+
+  describe("initilizeFileCtrl", () => {
+    it("preserves an explicitly secure flag and posted date", () => {
+      const config = component.initilizeFileCtrl({
+        name: "a.pdf",
+        size: 10,
+        url: "",
+        icon: {},
+        disabled: false,
+        isSecure: true,
+        postedDate: "Jan 01, 2020 1:00 am",
+      });
+      expect(config.isSecure).toBe(true);
+      // initilizeFileCtrl exposes the incoming postedDate as `date`.
+      expect(config.date).toBe("Jan 01, 2020 1:00 am");
+    });
+  });
+
+  describe("doUpload", () => {
+    it("skips files that are not in the Initial state", () => {
+      const uf = fakeUploadFile(UploadStatus.Done);
+      const streamSpy = vi.spyOn(component, "_getHttpEventSteam");
+
+      component.doUpload([uf]);
+
+      expect(streamSpy).not.toHaveBeenCalled();
+      expect(uf.upload.status).toBe(UploadStatus.Done);
+    });
+  });
+
+  describe("name editing edge cases", () => {
+    it("leaves edit mode without scheduling a focus when toggled off", () => {
+      component.uploadedFiles = [
+        { name: "a.pdf", size: 10, postedDate: "", icon: {} },
+      ];
+      component.setUploadedFiles(component.uploadedFiles);
+      component.fileCtrlConfig[0].isNameEditMode = true;
+
+      component.onNameEditSwitch(0, { preventDefault: () => undefined });
+
+      expect(component.fileCtrlConfig[0].isNameEditMode).toBe(false);
+    });
+
+    it("overwrites the name by default when no overwrite flag is passed", () => {
+      component.uploadedFiles = [
+        { name: "a.pdf", size: 10, postedDate: "", icon: {} },
+      ];
+      component.setUploadedFiles(component.uploadedFiles);
+      component.fileCtrlConfig[0].shadowFileName = "renamed.pdf";
+
+      component.onNameEditComplete(0);
+
+      expect(component.fileCtrlConfig[0].fileName).toBe("renamed.pdf");
+    });
+  });
+
+  describe("remove flow edge cases", () => {
+    it("removes the row even when no model entry matches the file name", () => {
+      component.uploadedFiles = [
+        { name: "a.pdf", size: 10, postedDate: "", icon: {} },
+      ];
+      component.setUploadedFiles(component.uploadedFiles);
+      component._model = [];
+      component.removeModal = { closeModal: vi.fn() };
+
+      component.onRemoveModalSubmit(0);
+
+      expect(component.fileCtrlConfig.length).toBe(0);
+    });
+
+    it("removeFileFromList keeps the input value when files remain", () => {
+      const keep = fakeUploadFile(UploadStatus.Done, "keep.txt");
+      const drop = fakeUploadFile(UploadStatus.Done, "drop.txt");
+      component._model = [keep, drop];
+      const clearSpy = vi.spyOn(component, "_clearInput");
+
+      component.removeFileFromList(drop);
+
+      expect(component._model).toEqual([keep]);
+      expect(clearSpy).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("delete request resolution", () => {
+    it("resolves a plain HttpRequest-returning deleteRequest", () => {
+      const uf = fakeUploadFile(UploadStatus.Done);
+      component.deleteRequest = () => new HttpRequest("DELETE", "files/1");
+      expect(() => component._getDeleteRequestForFile(uf)).not.toThrow();
+    });
+  });
+
+  describe("element id prefixing edge cases", () => {
+    it("leaves ids untouched for a property that is not in the id map", () => {
+      const before = { ...component.uploadElIds };
+      component.id = "prefix";
+
+      component["setElementId"]("notARealProperty");
+
+      expect(component.uploadElIds).toEqual(before);
+    });
+  });
 });

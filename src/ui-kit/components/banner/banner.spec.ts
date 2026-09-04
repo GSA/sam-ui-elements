@@ -26,4 +26,20 @@ describe("The Sam Banner component", () => {
     component.toggleDetails();
     expect(component.showDetail).toBe(true);
   });
+
+  it("should close the detail when it is open", () => {
+    component.toggleDetails();
+    expect(component.showDetail).toBe(true);
+
+    component.closeDetail();
+
+    expect(component.showDetail).toBe(false);
+  });
+
+  it("should do nothing when the detail is already closed", () => {
+    expect(component.showDetail).toBe(false);
+
+    expect(() => component.closeDetail()).not.toThrow();
+    expect(component.showDetail).toBe(false);
+  });
 });

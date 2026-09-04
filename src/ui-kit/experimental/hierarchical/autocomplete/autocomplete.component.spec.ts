@@ -14,7 +14,7 @@ import {
   TreeMode,
 } from "../hierarchical-tree-selectedItem.model";
 import { By } from "@angular/platform-browser";
-import "rxjs";
+import { of } from "rxjs";
 import { HierarchicalDataService } from "../hierarchical-test-service.spec";
 
 describe("SamHierarchicalAutocompleteComponent", () => {
@@ -281,4 +281,260 @@ describe("SamHierarchicalAutocompleteComponent", () => {
     );
     expect(listAfter).toBeFalsy();
   }));
+
+  it("focusRemoved() clears the model when the input is emptied in single mode with a selected item", () => {
+    component.model.addItem({ id: "1", name: "Level 1" }, "id");
+    component.inputValue = "";
+    const clearSpy = vi.spyOn(component.model, "clearItems");
+    component["focusRemoved"]();
+    expect(clearSpy).toHaveBeenCalled();
+  });
+
+  it("focusRemoved() restores the selected item's text when the input still has a value in single mode", () => {
+    component.model.addItem({ id: "1", name: "Level 1" }, "id");
+    component.inputValue = "partial";
+    component["focusRemoved"]();
+    expect(component.inputValue).toBe("Level 1");
+  });
+
+  it("focusRemoved() clears the input in single mode when nothing is selected", () => {
+    component.inputValue = "leftover";
+    component["focusRemoved"]();
+    expect(component.inputValue).toBe("");
+  });
+
+  it("focusRemoved() clears the input outside single tree mode", () => {
+    component.model.treeMode = TreeMode.MULTIPLE;
+    component.inputValue = "leftover";
+    component["focusRemoved"]();
+    expect(component.inputValue).toBe("");
+  });
+
+  it("onKeydown() returns early on Tab without altering state", () => {
+    const selectSpy = vi.spyOn(component, "selectItem");
+    component.onKeydown({ key: "Tab", target: {} });
+    expect(selectSpy).not.toHaveBeenCalled();
+  });
+
+  it("selectItem() omits the secondary text field from the announced message when the item has none", () => {
+    component.configuration.secondaryTextField = undefined;
+    component.selectItem({ id: "1", name: "Level 1" });
+    expect(component.inputValue).toBe("Level 1");
+  });
+
+  it("onArrowUp() does nothing when there are no results", () => {
+    component.results = [];
+    expect(() => component["onArrowUp"]()).not.toThrow();
+  });
+
+  it("onArrowUp() does nothing when already at the first result", fakeAsync(() => {
+    component.inputFocusHandler();
+    tick();
+    fixture.detectChanges();
+    component.highlightedIndex = 0;
+    component["onArrowUp"]();
+    expect(component.highlightedIndex).toBe(0);
+  }));
+
+  it("onArrowDown() does nothing when there are no results", () => {
+    component.results = [];
+    expect(() => component["onArrowDown"]()).not.toThrow();
+  });
+
+  it("onArrowDown() does nothing when already at the last result", fakeAsync(() => {
+    component.inputFocusHandler();
+    tick();
+    fixture.detectChanges();
+    component.highlightedIndex = component.results.length - 1;
+    component["onArrowDown"]();
+    expect(component.highlightedIndex).toBe(component.results.length - 1);
+  }));
+
+  it("showFreeText() returns false when free text is disabled", () => {
+    component.configuration.isFreeTextEnabled = false;
+    expect(component.showFreeText()).toBe(false);
+  });
+
+  it("showFreeText() returns false when the input is empty", () => {
+    component.configuration.isFreeTextEnabled = true;
+    component.inputValue = "";
+    expect(component.showFreeText()).toBe(false);
+  });
+
+  it("showFreeText() finds a match among the model's selected items when there are no results", () => {
+    component.configuration.isFreeTextEnabled = true;
+    component.inputValue = "Level 1";
+    component.results = undefined;
+    component.model.addItem({ id: "1", name: "Level 1" }, "id");
+    expect(component.showFreeText()).toBe(false);
+  });
+
+  it("showFreeText() reports available free text when neither results nor model items match", () => {
+    component.configuration.isFreeTextEnabled = true;
+    component.inputValue = "Nowhere";
+    component.results = undefined;
+    component.model.addItem({ id: "1", name: "Level 1" }, "id");
+    expect(component.showFreeText()).toBe(true);
+  });
+
+  it("getResults() does nothing when the search string is shorter than the minimum character count", () => {
+    component.configuration.minimumCharacterCountSearch = 5;
+    const fetchSpy = vi.spyOn(component.service, "getDataByText");
+    component["getResults"]("ab");
+    expect(fetchSpy).not.toHaveBeenCalled();
+  });
+
+  it("getResults() skips a duplicate search while results are already shown", fakeAsync(() => {
+    component.inputFocusHandler();
+    component.inputValue = "Level";
+    component["getResults"]("Level");
+    tick();
+    fixture.detectChanges();
+    const fetchSpy = vi.spyOn(component.service, "getDataByText");
+    component["getResults"]("Level");
+    tick();
+    expect(fetchSpy).not.toHaveBeenCalled();
+  }));
+
+  it("onScroll() requests more results when scrolled to the bottom", () => {
+    component.results = [{ id: "1", name: "Level 1" }];
+    component["maxResults"] = 5;
+    component.resultsListElement = {
+      nativeElement: { offsetHeight: 10, scrollTop: 90, scrollHeight: 100 },
+    } as never;
+    const additionalSpy = vi.spyOn(component as never, "getAdditionalResults");
+    component.onScroll();
+    expect(additionalSpy).toHaveBeenCalled();
+  });
+
+  it("onScroll() does not request more results when not scrolled near the bottom", () => {
+    component.results = [{ id: "1", name: "Level 1" }];
+    component["maxResults"] = 5;
+    component.resultsListElement = {
+      nativeElement: { offsetHeight: 10, scrollTop: 0, scrollHeight: 1000 },
+    } as never;
+    const additionalSpy = vi.spyOn(component as never, "getAdditionalResults");
+    component.onScroll();
+    expect(additionalSpy).not.toHaveBeenCalled();
+  });
+
+  it("setHighlightedItem() clears a previously highlighted item's flag before setting a new one", fakeAsync(() => {
+    component.inputFocusHandler();
+    tick();
+    fixture.detectChanges();
+    const previous: any = { name: "prev", highlighted: true };
+    component["highlightedItem"] = previous;
+    component["setHighlightedItem"]({ name: "next" });
+    expect(previous.highlighted).toBe(false);
+  }));
+
+  it("setHighlightedItem() appends the secondary text field to the announced message when present", fakeAsync(() => {
+    component.inputFocusHandler();
+    tick();
+    fixture.detectChanges();
+    const item: any = { name: "Level X", subtext: "Extra info" };
+    component["setHighlightedItem"](item);
+    expect(component["highlightedItem"].highlighted).toBe(true);
+  }));
+
+  it("writeValue() ignores values that are not a HierarchicalTreeSelectedItemModel", () => {
+    const model = component.model;
+    component.writeValue({ items: [] });
+    expect(component.model).toBe(model);
+  });
+
+  it("textChange() searches using an empty string when the event is falsy", () => {
+    const getResultsSpy = vi.spyOn(component as never, "getResults");
+    component.textChange(undefined);
+    expect(getResultsSpy).toHaveBeenCalledWith("");
+  });
+
+  it("onKeydown() clears and hides results on Escape", fakeAsync(() => {
+    component.inputFocusHandler();
+    tick();
+    fixture.detectChanges();
+    component.onKeydown({ key: "Escape", target: { value: "id" } });
+    expect(component.showResults).toBe(false);
+    expect(component.results).toEqual([]);
+  }));
+
+  it("selectItem() does not append a secondary text field when the item has none", () => {
+    component.configuration.secondaryTextField = undefined;
+    component.selectItem({ id: "2", name: "Level 2" });
+    expect(component.inputValue).toBe("Level 2");
+  });
+
+  it("selectItem() appends the secondary text field to the message when present", () => {
+    component.selectItem({ id: "3", name: "Level 3", subtext: "Extra" });
+    expect(component.inputValue).toBe("Level 3");
+  });
+
+  it("onArrowUp() moves the highlight up by one when not already at the top", () => {
+    component.results = [
+      { id: "1", name: "Level 1" },
+      { id: "2", name: "Level 2" },
+    ];
+    component.resultsListElement = {
+      nativeElement: { children: [{ offsetTop: 0 }, { offsetTop: 20 }] },
+    } as never;
+    component.highlightedIndex = 1;
+    component["onArrowUp"]();
+    expect(component.highlightedIndex).toBe(0);
+  });
+
+  it("onArrowDown() moves the highlight down by one when not already at the bottom", () => {
+    component.results = [
+      { id: "1", name: "Level 1" },
+      { id: "2", name: "Level 2" },
+    ];
+    component.resultsListElement = {
+      nativeElement: { children: [{ offsetTop: 0 }, { offsetTop: 20 }] },
+    } as never;
+    component.highlightedIndex = 0;
+    component["onArrowDown"]();
+    expect(component.highlightedIndex).toBe(1);
+  });
+
+  it("showFreeText() returns false when a result matches the input value", () => {
+    component.configuration.isFreeTextEnabled = true;
+    component.inputValue = "Level 1";
+    component.results = [{ id: "1", name: "Level 1" }];
+    expect(component.showFreeText()).toBe(false);
+  });
+
+  it("showFreeText() stops scanning results once a match is found", () => {
+    component.configuration.isFreeTextEnabled = true;
+    component.inputValue = "Level 1";
+    component.results = [
+      { id: "1", name: "Level 1" },
+      { id: "2", name: "Level 2" },
+    ];
+    expect(component.showFreeText()).toBe(false);
+  });
+
+  it("getResults() prepends a free-text item to the results when free text is enabled and unmatched", fakeAsync(() => {
+    component.configuration.isFreeTextEnabled = true;
+    component.inputValue = "Nowhere";
+    vi.spyOn(component.service, "getDataByText").mockReturnValue(
+      of({ items: [{ id: "1", name: "Level 1" }], totalItems: 1 }) as never
+    );
+
+    component["getResults"]("Nowhere");
+    tick();
+
+    expect(component.results[0]["type"]).toBe("custom");
+  }));
+
+  it("onScroll() does not request more results once all results are loaded", () => {
+    component.results = [{ id: "1", name: "Level 1" }];
+    component["maxResults"] = 1;
+    const additionalSpy = vi.spyOn(component as never, "getAdditionalResults");
+    component.onScroll();
+    expect(additionalSpy).not.toHaveBeenCalled();
+  });
+
+  it("addScreenReaderMessage() is a no-op when srOnly is not yet available", () => {
+    component.srOnly = undefined as never;
+    expect(() => component["addScreenReaderMessage"]("hi")).not.toThrow();
+  });
 });

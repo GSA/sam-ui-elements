@@ -114,6 +114,16 @@ describe("The Sam Date Range component", () => {
       const c = new FormControl({ endDate: "Invalid date" });
       expect(SamDateRangeComponent.dateRangeValidation(c)).toBe(undefined);
     });
+
+    it("passes a valid start-only date", () => {
+      const c = new FormControl({ startDate: "2020-01-01" });
+      expect(SamDateRangeComponent.dateRangeValidation(c)).toBe(undefined);
+    });
+
+    it("passes a valid end-only date", () => {
+      const c = new FormControl({ endDate: "2020-01-01" });
+      expect(SamDateRangeComponent.dateRangeValidation(c)).toBe(undefined);
+    });
   });
 
   describe("static dateRangeRequired", () => {
@@ -154,6 +164,39 @@ describe("The Sam Date Range component", () => {
       expect(SamDateRangeComponent.dateRangeRequired(component)(c)).toBe(
         undefined
       );
+    });
+
+    it("errors when only the end date is the sentinel 'Invalid date'", () => {
+      component.required = true;
+      component.hasFocus = false;
+      const c = new FormControl({
+        startDate: "2020-01-01",
+        endDate: "Invalid date",
+      });
+      const result = SamDateRangeComponent.dateRangeRequired(component)(c);
+      expect(result.dateRangeError.message).toBe("This field is required");
+    });
+
+    it("does not error when both dates are present and valid", () => {
+      component.required = true;
+      component.hasFocus = false;
+      const c = new FormControl({
+        startDate: "2020-01-01",
+        endDate: "2020-06-01",
+      });
+      expect(SamDateRangeComponent.dateRangeRequired(component)(c)).toBe(
+        undefined
+      );
+    });
+
+    it("honors fromRequired/toRequired independently of the required input", () => {
+      component.required = false;
+      component.fromRequired = true;
+      component.toRequired = true;
+      component.hasFocus = false;
+      const c = new FormControl({ startDate: "Invalid date" });
+      const result = SamDateRangeComponent.dateRangeRequired(component)(c);
+      expect(result.dateRangeError.message).toBe("This field is required");
     });
   });
 
@@ -278,6 +321,74 @@ describe("The Sam Date Range component", () => {
       component.ngOnInit();
       expect(() => formService.fireSubmit(control.root)).not.toThrow();
       expect(() => formService.fireReset(control.root)).not.toThrow();
+    });
+
+    it("ignores SamFormService events that are neither submit nor reset", () => {
+      const formService: SamFormService = TestBed.inject(SamFormService);
+      const control = new FormControl("");
+      component.control = control;
+      component.useFormService = true;
+      component.ngOnInit();
+
+      const formatErrorsSpy = vi.spyOn(component.wrapper, "formatErrors");
+      const clearErrorSpy = vi.spyOn(component.wrapper, "clearError");
+
+      formService.formEvents.next({
+        root: control.root,
+        eventType: "touched",
+      });
+
+      expect(formatErrorsSpy).not.toHaveBeenCalled();
+      expect(clearErrorSpy).not.toHaveBeenCalled();
+    });
+
+    it("registers only a caller-supplied validator when defaultValidations is off", () => {
+      const customValidator = vi.fn().mockReturnValue(null);
+      const control = new FormControl("", customValidator);
+      component.control = control;
+      component.defaultValidations = false;
+      component.ngOnInit();
+
+      control.updateValueAndValidity();
+
+      expect(customValidator).toHaveBeenCalled();
+      expect(control.errors).toBeNull();
+    });
+
+    it("emits empty date strings when both models are empty", () => {
+      let emitted;
+      component.valueChange.subscribe((v) => (emitted = v));
+
+      component.startModel = { month: "", day: "", year: "" };
+      component.endModel = {
+        month: undefined,
+        day: undefined,
+        year: undefined,
+      };
+      component.dateChange();
+
+      expect(emitted.startDate).toBe("");
+      expect(emitted.endDate).toBe("");
+    });
+
+    it("isEmptyField treats a model with any populated part as non-empty", () => {
+      expect(
+        component.isEmptyField({ day: 1, month: undefined, year: undefined })
+      ).toBe(false);
+      expect(
+        component.isEmptyField({ day: undefined, month: 1, year: undefined })
+      ).toBe(false);
+      expect(
+        component.isEmptyField({ day: undefined, month: undefined, year: 2020 })
+      ).toBe(false);
+    });
+
+    it("writeValue ignores a non-object value", () => {
+      expect(() => component.writeValue("2020-01-01")).not.toThrow();
+    });
+
+    it("writeValue ignores an object with neither a start nor an end date", () => {
+      expect(() => component.writeValue({ somethingElse: true })).not.toThrow();
     });
   });
 });

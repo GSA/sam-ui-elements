@@ -43,5 +43,14 @@ describe("ListResultsMessage component", () => {
       let text = fixture.debugElement.nativeElement.textContent;
       expect(text).toBe("Showing 1 - 7 of 7 results");
     });
+    it("should clamp the upper bound to the total on a partial last page", function () {
+      component.total = 23;
+      component.currentPage = 3;
+      component.showing = 10;
+      component.ngOnChanges();
+      fixture.detectChanges();
+      const text = fixture.debugElement.nativeElement.textContent;
+      expect(text).toBe("Showing 21 - 23 of 23 results");
+    });
   });
 });

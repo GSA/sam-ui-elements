@@ -131,6 +131,115 @@ describe("The Sam Fieldset Wrapper component", () => {
       component.clearError();
       expect(component.errorMessage).toBe(undefined);
     });
+
+    it("keeps accumulated messages when clearing across multiple controls", () => {
+      // The errorMessage setter only resets the list for a single control;
+      // with multiple controls a later pristine control must not wipe the
+      // messages an earlier invalid one contributed.
+      const group = new FormGroup({
+        a: new FormControl(""),
+        b: new FormControl(""),
+      });
+      group.controls.a.markAsDirty();
+      group.controls.a.setErrors({ required: true });
+
+      component.formatErrors(group.controls.a, group.controls.b);
+
+      expect(component.errorMessages).toEqual(["This field is required"]);
+    });
+
+    it("clears a single control's message when it becomes valid", () => {
+      const control = new FormControl("");
+      control.markAsDirty();
+      control.setErrors({ required: true });
+      component.formatErrors(control);
+      expect(component.errorMessages.length).toBe(1);
+
+      control.setErrors(null);
+      component.formatErrors(control);
+
+      expect(component.errorMessages.length).toBe(0);
+    });
+
+    it("reports whether errors should be displayed and listed", () => {
+      expect(component.displayErrors()).toBe(false);
+      expect(component.displayErrorList()).toBe(false);
+
+      component.errorMessages = ["one"];
+      expect(component.displayErrors()).toBe(true);
+      expect(component.displayErrorList()).toBe(false);
+
+      component.errorMessages = ["one", "two"];
+      expect(component.displayErrorList()).toBe(true);
+    });
+  });
+
+  describe("hint overflow styling", () => {
+    let component: FieldsetWrapper;
+    const cdr = { detectChanges: () => undefined } as ChangeDetectorRef;
+
+    beforeEach(() => {
+      component = new FieldsetWrapper(cdr);
+    });
+
+    it("clamps a long hint while the toggle is showing and closed", () => {
+      component.showToggle = true;
+
+      expect(component.setOverflow()).toBe("hidden");
+      expect(component.setHeight()).toBe("2.88em");
+    });
+
+    it("stops clamping once the hint is toggled open", () => {
+      component.showToggle = true;
+      component.toggleHint(false);
+
+      expect(component.setOverflow()).toBe("");
+      expect(component.setHeight()).toBe("");
+    });
+
+    it("never clamps when there is no toggle to show", () => {
+      component.showToggle = false;
+
+      expect(component.setOverflow()).toBe("");
+      expect(component.setHeight()).toBe("");
+    });
+
+    it("calcToggle is a no-op when there is no hint container", () => {
+      component.calcToggle();
+      expect(component.showToggle).toBe(false);
+    });
+
+    it("calcToggle turns the toggle on when the hint exceeds the line limit", () => {
+      // jsdom reports offsetHeight as 0, so the layout measurement is stubbed
+      // at calculateNumberOfLines — the seam between layout and the decision.
+      vi.spyOn(component, "calculateNumberOfLines").mockReturnValue(5);
+      component.hintContainer = {
+        nativeElement: document.createElement("div"),
+      };
+
+      component.calcToggle();
+
+      expect(component.showToggle).toBe(true);
+    });
+
+    it("calcToggle leaves the toggle off when the hint fits", () => {
+      vi.spyOn(component, "calculateNumberOfLines").mockReturnValue(1);
+      component.hintContainer = {
+        nativeElement: document.createElement("div"),
+      };
+
+      component.calcToggle();
+
+      expect(component.showToggle).toBe(false);
+    });
+
+    it("onResize resets the toggle state so it is recalculated", () => {
+      component.showToggle = true;
+
+      component.onResize(undefined);
+
+      expect(component.showToggle).toBe(false);
+    });
   });
 
   describe("integration tests", () => {

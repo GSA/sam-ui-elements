@@ -11,14 +11,13 @@ describe("DateTimeDisplayPipe test", () => {
     );
   });
 
-  it.skip("FilterMultiArrayObjectPipe Test: Not nested: Single array", () => {
-    // This test is broken. Needs to be fixed, but I can't tell from the
-    // file what the business rules should be and, subsequently, the correct
-    // way to fix the test.
-    const datetime = moment().subtract(1, "month");
+  it("formats a date a day or more old but still within this year as MMM DD", () => {
+    const datetime = moment("2024-01-01T12:00:00Z");
+    vi.setSystemTime(new Date("2024-01-05T12:00:00Z"));
     expect(pipe.transform(datetime.format("YYYY-MM-DD HH:ss"))).toEqual(
       datetime.format("MMM DD")
     );
+    vi.useRealTimers();
   });
 
   it("FilterMultiArrayObjectPipe Test: Nested array", () => {
@@ -26,5 +25,16 @@ describe("DateTimeDisplayPipe test", () => {
     expect(pipe.transform(datetime.format("YYYY-MM-DD HH:ss"))).toEqual(
       datetime.format("MMM DD, YYYY")
     ); // second level
+  });
+
+  it("warns and returns undefined when the input is undefined", () => {
+    const warnSpy = vi
+      .spyOn(console, "warn")
+      .mockImplementation(() => undefined);
+    expect(pipe.transform(undefined)).toBeUndefined();
+    expect(warnSpy).toHaveBeenCalledWith(
+      "Invalid value passed into DateTimeDisplayPipe"
+    );
+    warnSpy.mockRestore();
   });
 });

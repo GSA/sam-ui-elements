@@ -17,17 +17,25 @@ describe("A pipe for shorter time formats", () => {
    * our filters broke. Most of the tests through the app need to be fixed.
    */
 
-  it.skip("should show month day time if date is same year as now", () => {
-    const jan1 = moment().set("month", 1).set("day", 1);
-    const jan2 = moment().set("month", 1).set("day", 2);
-    const display = pipe.transform(jan1, jan2);
-    expect(display.length).toEqual(pipe.sameYearFormat.length + 2);
+  it("should show month day time if date is a different day within the same year as now", () => {
+    const now = moment("2024-06-15T12:00:00Z");
+    const earlierThisYear = moment("2024-03-01T09:00:00Z");
+    const display = pipe.transform(earlierThisYear, now);
+    expect(display).toBe(earlierThisYear.format(pipe.sameYearFormat));
   });
 
-  it.skip("should show month day year if date is not this year", () => {
-    const thisYear = moment();
-    const lastYear = moment().subtract("year", 1);
-    const display = pipe.transform(lastYear, thisYear);
-    expect(display.length).toEqual(pipe.differentYearFormat.length + 2);
+  it("should show month day year if the date is in a different year than now", () => {
+    const now = moment("2024-06-15T12:00:00Z");
+    const lastYear = moment("2023-06-15T12:00:00Z");
+    const display = pipe.transform(lastYear, now);
+    expect(display).toBe(lastYear.format(pipe.differentYearFormat));
+  });
+
+  it("should default to the current time when no fakeNow is provided", () => {
+    const display = pipe.transform(moment());
+    // sameDayFormat is h:mmA; h is unpadded (1-2 digits) depending on the
+    // hour, so assert the pattern rather than a fixed length that would be
+    // flaky across different times of day.
+    expect(display).toMatch(/^\d{1,2}:\d{2}(AM|PM)$/);
   });
 });

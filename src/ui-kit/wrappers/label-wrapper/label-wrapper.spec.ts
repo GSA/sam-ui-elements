@@ -75,6 +75,129 @@ describe("The Sam Label Wrapper component", () => {
       component.clearError();
       expect(component.errorMessage).toBe("");
     });
+
+    it("falls through to setInvalidErrors when a message is not a string", () => {
+      const control = new FormControl("");
+      control.markAsDirty();
+      control.setErrors({ required: { message: { notAString: true } } });
+
+      component.formatErrors(control);
+
+      expect(component.errorMessage).toBe("This field is required");
+    });
+  });
+
+  describe("hint overflow styling", () => {
+    let component: LabelWrapper;
+    const cdr = { detectChanges: () => undefined } as ChangeDetectorRef;
+    const renderer = {
+      setAttribute: () => undefined,
+      removeAttribute: () => undefined,
+    } as unknown as Renderer2;
+
+    beforeEach(() => {
+      component = new LabelWrapper(cdr, renderer);
+    });
+
+    it("clamps a long hint when the toggle is showing and closed", () => {
+      component.showToggle = true;
+      component.showFullHint = false;
+
+      expect(component.setOverflow()).toBe("hidden");
+      expect(component.setHeight()).toBe("2.88em");
+    });
+
+    it("stops clamping once the hint is toggled open", () => {
+      component.showToggle = true;
+      component.showFullHint = false;
+      component.toggleHint(false);
+
+      expect(component.setOverflow()).toBe("");
+      expect(component.setHeight()).toBe("");
+    });
+
+    it("never clamps when showFullHint is set", () => {
+      component.showToggle = true;
+      component.showFullHint = true;
+
+      expect(component.setOverflow()).toBe("");
+      expect(component.setHeight()).toBe("");
+    });
+
+    it("never clamps when there is no toggle to show", () => {
+      component.showToggle = false;
+
+      expect(component.setOverflow()).toBe("");
+      expect(component.setHeight()).toBe("");
+    });
+
+    it("calcToggle is a no-op when there is no hint container", () => {
+      component.showToggle = false;
+
+      component.calcToggle();
+
+      expect(component.showToggle).toBe(false);
+    });
+
+    it("calcToggle turns the toggle on when the hint exceeds the line limit", () => {
+      // jsdom reports offsetHeight as 0, so the line measurement is stubbed:
+      // calculateNumberOfLines is the seam between layout and the decision.
+      vi.spyOn(component, "calculateNumberOfLines").mockReturnValue(5);
+      component.hintContainer = {
+        nativeElement: document.createElement("div"),
+      } as never;
+
+      component.calcToggle();
+
+      expect(component.showToggle).toBe(true);
+    });
+
+    it("calcToggle leaves the toggle off when the hint fits", () => {
+      vi.spyOn(component, "calculateNumberOfLines").mockReturnValue(1);
+      component.hintContainer = {
+        nativeElement: document.createElement("div"),
+      } as never;
+
+      component.calcToggle();
+
+      expect(component.showToggle).toBe(false);
+    });
+
+    it("onResize resets the toggle state so it is recalculated", () => {
+      component.showToggle = true;
+
+      component.onResize(undefined);
+
+      expect(component.showToggle).toBe(false);
+    });
+
+    it("setInputLabelElement is a no-op when no input has been located", () => {
+      const setAttribute = vi.fn();
+      const localComponent = new LabelWrapper(cdr, {
+        setAttribute,
+        removeAttribute: vi.fn(),
+      } as unknown as Renderer2);
+
+      localComponent.setInputLabelElement("some-id");
+
+      expect(setAttribute).not.toHaveBeenCalled();
+    });
+
+    it("setInputLabelElement removes aria-describedby when given no id", () => {
+      const removeAttribute = vi.fn();
+      const localComponent = new LabelWrapper(cdr, {
+        setAttribute: vi.fn(),
+        removeAttribute,
+      } as unknown as Renderer2);
+      localComponent.input = document.createElement("input");
+
+      localComponent.setInputLabelElement("");
+
+      expect(removeAttribute).toHaveBeenCalledWith(
+        localComponent.input,
+        "aria-describedby"
+      );
+    });
   });
 
   describe("integration tests", () => {
