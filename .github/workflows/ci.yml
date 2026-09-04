@@ -41,6 +41,13 @@ jobs:
       - name: Install test-app dependencies
         run: npm ci --prefix test-app
 
+      # Vitest transforms TS via esbuild for testing and does not run
+      # Angular's AOT compiler / template type-checking, so a change that
+      # breaks NgModule wiring or template types can pass lint + vitest while
+      # still failing a real build. `ng build` catches that class of error.
+      - name: Build test-app
+        run: npm --prefix test-app run build
+
       # Guards against the security CI configuration (workflow, ZAP gate,
       # exception baseline, docs) drifting out of the shape the QASP-driven
       # gate depends on -- see docs/security-scanning.md and #614.
