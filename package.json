@@ -71,7 +71,7 @@
     "eslint": "9.39.2",
     "github-release-notes": "^0.17.0",
     "prettier": "3.9.6",
-    "typescript": "<5.5.0",
+    "typescript": "<6.1.0",
     "typescript-eslint": "8.68.0"
   }
 }
