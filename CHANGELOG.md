@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased — ngx-formly 6 → 7 migration (consumer-impact)
+
+**⚠️ Consumer coordination required.** `src/formly` (`AbstractSamFormly` and its field/wrapper components) now targets `@ngx-formly/core@^7` — the peer dependency in `package.json` has been bumped from `^6.2.1`. Because sam-ui-elements publishes raw TypeScript source that consumers compile in-place, this peer requirement is enforced by `npm install` rather than by a compiled package build: **a consumer that keeps `@ngx-formly/core@6` installed will fail dependency resolution/installation against this version of sam-ui-elements** (an unmet peer dependency), even though the two versions are API-compatible for the subset of Formly this library uses.
+
+Consumers (`iae-sam-front-end` and other repos importing `@gsa-sam/sam-ui-elements/src/formly/index`) **must bump their own `@ngx-formly/core` dependency to `^7.0.0` in lockstep** with adopting this release. No consumer code changes are required beyond the dependency bump itself. See GSA/sam-ui-elements#573.
+
 ## v0.9.19 (04/09/2019)
 
 #### closed

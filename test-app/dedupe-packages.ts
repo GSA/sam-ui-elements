@@ -33,4 +33,5 @@ export const DEDUPED_PACKAGES = [
   "@fortawesome/angular-fontawesome",
   "@fortawesome/fontawesome-svg-core",
   "rxjs",
+  "@ngx-formly/core",
 ];
