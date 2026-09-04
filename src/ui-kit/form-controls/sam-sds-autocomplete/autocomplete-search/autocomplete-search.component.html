@@ -11,6 +11,9 @@
       [attr.id]="configuration.id + '-container'"
       [attr.aria-expanded]="showResults"
       [attr.aria-owns]="showResults ? configuration.id + '-listbox' : undefined"
+      [attr.aria-controls]="
+        showResults ? configuration.id + '-listbox' : undefined
+      "
       aria-haspopup="listbox"
     >
       <input
@@ -36,9 +39,6 @@
             ? configuration.id + '-resultItem-' + highlightedIndex
             : ''
         "
-        [attr.aria-controls]="
-          showResults ? configuration.id + '-listbox' : undefined
-        "
         autocomplete="off"
       />
     </div>
@@ -54,6 +54,8 @@
         <li
           [attr.id]="configuration.id + '-resultItem-' + i"
           role="option"
+          tabindex="-1"
+          [attr.aria-selected]="checkItemSelected(result)"
           [ngClass]="{
             'sds-autocomplete__group': configuration.isGroupingEnabled,
             'sds-autocomplete__item': !configuration.isGroupingEnabled,
@@ -64,6 +66,9 @@
           }"
           *ngFor="let result of results; let i = index"
           (click)="!configuration.isSelectableGroup ? '' : selectItem(result)"
+          (keydown.enter)="
+            !configuration.isSelectableGroup ? '' : selectItem(result)
+          "
         >
           <ng-container
             *ngIf="itemTemplate"
@@ -110,6 +115,8 @@
               <li
                 [attr.id]="configuration.id + '-childItem-' + j"
                 role="option"
+                tabindex="-1"
+                [attr.aria-selected]="checkItemSelected(child)"
                 [ngClass]="{
                   'sds-autocomplete__group':
                     child[configuration.groupByChild]?.length,
@@ -127,6 +134,7 @@
                   let j = index
                 "
                 (click)="selectItem(child)"
+                (keydown.enter)="selectItem(child)"
               >
                 <div
                   [ngClass]="{
@@ -169,7 +177,9 @@
                   <li
                     [attr.id]="configuration.id + '-grandchildren-' + k"
                     role="option"
+                    tabindex="-1"
                     class="sds-autocomplete__item"
+                    [attr.aria-selected]="checkItemSelected(subchild)"
                     [ngClass]="{
                       'sds-autocomplete__item--selected':
                         checkItemSelected(subchild),
@@ -181,6 +191,7 @@
                       let k = index
                     "
                     (click)="selectItem(subchild)"
+                    (keydown.enter)="selectItem(subchild)"
                   >
                     <div>
                       <div

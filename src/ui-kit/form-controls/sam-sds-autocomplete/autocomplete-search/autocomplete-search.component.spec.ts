@@ -11,6 +11,7 @@ import { SAMSDSAutocompleteSearchConfiguration } from "./models/SAMSDSAutocomple
 import { FormsModule } from "@angular/forms";
 import { SAMSDSSelectedItemModel } from "../selected-result/models/sds-selectedItem.model";
 import { SelectionMode } from "../selected-result/models/sds-selected-item-model-helper";
+import { SAMSDSSelectedItemModelHelper } from "../selected-result/models/sds-selected-item-model-helper";
 import { By } from "@angular/platform-browser";
 import { AutoCompleteSampleDataService } from "./autocomplete-seach-test-service.spec";
 
@@ -787,4 +788,52 @@ describe("SamAutocompleteComponent", () => {
     expect(component.inputValue).toBe("unchanged");
     expect(component.model).toBe(model);
   });
+
+  it("marks each rendered result option's aria-selected from checkItemSelected", fakeAsync(() => {
+    component.configuration.isSelectableGroup = true;
+    component.inputFocusHandler();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+
+    const options = fixture.debugElement.queryAll(By.css('li[role="option"]'));
+    expect(options.length).toBeGreaterThan(0);
+    expect(
+      options.every(
+        (opt) => opt.nativeElement.getAttribute("aria-selected") === "false"
+      )
+    ).toBe(true);
+
+    SAMSDSSelectedItemModelHelper.addItem(
+      { id: "1", name: "Level 1", subtext: "id 1" },
+      component.configuration.primaryKeyField,
+      component.configuration.selectionMode,
+      component.model
+    );
+    fixture.detectChanges();
+
+    const optionsAfter = fixture.debugElement.queryAll(
+      By.css('li[role="option"]')
+    );
+    const selected = optionsAfter.find(
+      (opt) => opt.nativeElement.getAttribute("aria-selected") === "true"
+    );
+    expect(selected).toBeTruthy();
+  }));
+
+  it("selects a result option via keyboard (Enter) same as click, when the group is selectable", fakeAsync(() => {
+    component.configuration.isSelectableGroup = true;
+    component.inputFocusHandler();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+
+    const firstOption = fixture.debugElement.query(
+      By.css('li[role="option"]')
+    ).nativeElement;
+    firstOption.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+    fixture.detectChanges();
+
+    expect(component.model.items.length).toBe(1);
+  }));
 });

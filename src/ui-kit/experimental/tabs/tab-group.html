@@ -10,12 +10,18 @@
     md-tab-label-wrapper
     *ngFor="let tab of _tabs; let i = index"
     [id]="_getTabLabelId(i)"
-    [tabIndex]="selectedIndex == i ? 0 : -1"
+    [tabIndex]="tab.disabled ? -1 : selectedIndex == i ? 0 : -1"
     [attr.aria-controls]="_getTabContentId(i)"
     [attr.aria-selected]="selectedIndex == i"
+    [attr.aria-disabled]="tab.disabled ? true : null"
     [class.mat-tab-label-active]="selectedIndex == i"
     [disabled]="tab.disabled"
-    (click)="tabHeader.focusIndex = selectedIndex = i"
+    (click)="!tab.disabled && (tabHeader.focusIndex = selectedIndex = i)"
+    (keydown.enter)="!tab.disabled && (tabHeader.focusIndex = selectedIndex = i)"
+    (keydown.space)="
+      $event.preventDefault();
+      !tab.disabled && (tabHeader.focusIndex = selectedIndex = i)
+    "
   >
     <!-- If there is a label template, use it. -->
     <ng-template [ngIf]="tab.templateLabel">

@@ -9,7 +9,7 @@
     [errorMessage]="errorMessage"
     [required]="required"
   >
-    <div id="listboxgroup-lable" (keydown)="onKeyDown($event)">
+    <div id="listboxgroup-lable" tabindex="-1" (keydown)="onKeyDown($event)">
       <ul
         role="listboxgroup"
         tabindex="0"
@@ -22,7 +22,8 @@
           [class]="option['highlighted'] ? 'selected-item' : ''"
           *ngFor="let option of options; let i = index"
           role="option"
-          aria-checked="false"
+          [attr.aria-selected]="isChecked(option.value)"
+          [attr.aria-checked]="isChecked(option.value)"
         >
           <input
             [disabled]="option.disabled || disabled ? 'disabled' : null"
@@ -31,7 +32,7 @@
             [attr.type]="optionsMode"
             [attr.aria-label]="option.name"
             [required]="option.required"
-            [checked]="option.checked"
+            [checked]="isChecked(option.value)"
             name="option"
             (change)="onChecked($event, option)"
           />

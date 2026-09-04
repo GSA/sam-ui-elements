@@ -402,6 +402,74 @@ describe("The Sam Autocomplete Component", () => {
       expect(emitCount).toBe(1);
     });
 
+    it("Should emit addOnIconEvent via keyboard (Enter) on the add-on icon, same as click", () => {
+      component.config = {
+        ...config,
+        addOnIconClass: "fa-search",
+        addOnIconName: "Search",
+      };
+      fixture.detectChanges();
+      let emitCount = 0;
+      component.addOnIconEvent.subscribe(() => emitCount++);
+
+      const addOn = fixture.debugElement.query(By.css(".add-on"));
+      addOn.nativeElement.dispatchEvent(
+        new KeyboardEvent("keydown", { key: "Enter", code: "Enter" })
+      );
+
+      expect(emitCount).toBe(1);
+    });
+
+    it("Should emit addOnIconEvent via keyboard (Space) on the add-on icon, same as click, and prevent page scroll", () => {
+      component.config = {
+        ...config,
+        addOnIconClass: "fa-search",
+        addOnIconName: "Search",
+      };
+      fixture.detectChanges();
+      let emitCount = 0;
+      component.addOnIconEvent.subscribe(() => emitCount++);
+
+      const addOn = fixture.debugElement.query(By.css(".add-on"));
+      const spaceEvent = new KeyboardEvent("keydown", {
+        key: " ",
+        code: "Space",
+      });
+      const preventDefaultSpy = vi.spyOn(spaceEvent, "preventDefault");
+      addOn.nativeElement.dispatchEvent(spaceEvent);
+
+      expect(emitCount).toBe(1);
+      expect(preventDefaultSpy).toHaveBeenCalled();
+    });
+
+    it("Should mirror the combobox's aria-owns onto aria-controls for the visible results list", () => {
+      component.hasFocus = true;
+      component.results = ["Alabama", "Alaska"];
+      fixture.detectChanges();
+      const combobox = fixture.debugElement.query(
+        By.css('[role="combobox"]')
+      ).nativeElement;
+      expect(combobox.getAttribute("aria-controls")).toBe(
+        "sam-autocomplete-results"
+      );
+      expect(combobox.getAttribute("aria-controls")).toBe(
+        combobox.getAttribute("aria-owns")
+      );
+    });
+
+    it("Should select a result item via keyboard (Enter), same as click", () => {
+      component.hasFocus = true;
+      component.results = ["Alabama", "Alaska"];
+      fixture.detectChanges();
+
+      const item = fixture.debugElement.query(By.css('[id="resultItem_0"]'));
+      item.nativeElement.dispatchEvent(
+        new KeyboardEvent("keydown", { key: "Enter", code: "Enter" })
+      );
+
+      expect(component.innerValue).toBe("Alabama");
+    });
+
     it("Should handle keyup", () => {
       component.hasFocus = true;
       component.inputFocusHandler({

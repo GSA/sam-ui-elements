@@ -207,4 +207,22 @@ describe("SDSSelectedResultComponent", () => {
     let data2 = { level1: "1" };
     expect(component.getObjectValue(data2, "level1,sub.level2")).toBe("1");
   });
+
+  it("marks each selected-result option as aria-selected", () => {
+    SAMSDSSelectedItemModelHelper.addItem(
+      {
+        id: "1",
+        parentId: null,
+        name: "Level 1",
+        subtext: "id 1",
+        type: "Level 1",
+      },
+      "id",
+      SelectionMode.SINGLE,
+      component.model
+    );
+    fixture.detectChanges();
+    const option = fixture.debugElement.query(By.css('li[role="option"]'));
+    expect(option.nativeElement.getAttribute("aria-selected")).toBe("true");
+  });
 });

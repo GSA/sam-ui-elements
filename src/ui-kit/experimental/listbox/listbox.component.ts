@@ -166,7 +166,16 @@ export class SamListBoxComponent implements ControlValueAccessor {
   }
 
   isChecked(value) {
-    return this.model.indexOf(value) !== -1;
+    // `model` may contain either raw option values (the
+    // ControlValueAccessor/writeValue contract) or, via onChecked's
+    // insertion path below, the option objects themselves. Treat both
+    // shapes as "the same canonical selection value" so the rendered
+    // aria-selected/aria-checked state (bound to this method) and the
+    // native checkbox/radio `checked` state never disagree, regardless of
+    // how selection was set.
+    return this.model.some(
+      (entry) => entry === value || (entry && entry.value === value)
+    );
   }
 
   /**
