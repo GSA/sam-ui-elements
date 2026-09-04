@@ -51,7 +51,7 @@
     "@fortawesome/free-regular-svg-icons": ">=5.15.4",
     "@fortawesome/free-solid-svg-icons": ">=5.15.4",
     "@gsa-sam/sam-styles": ">=0.0.34",
-    "@ngx-formly/core": "^6.2.1",
+    "@ngx-formly/core": "^7.0.0",
     "@types/lodash": ">=4.14.123",
     "accessible-html5-video-player": "^1.0.6",
     "core-js": "^3.22.4",
