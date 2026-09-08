@@ -1,6 +1,6 @@
 {
   "name": "@gsa-sam/sam-ui-elements",
-  "version": "19.0.0",
+  "version": "20.0.0",
   "description": "SAM UI library",
   "repository": {
     "type": "git",
@@ -36,16 +36,16 @@
     "validate:security-workflow": "node scripts/validate-security-workflow.mjs"
   },
   "peerDependencies": {
-    "@angular/animations": "^19.2.15",
-    "@angular/cdk": "^19.2.15",
-    "@angular/cli": "^19.2.17",
-    "@angular/common": "^19.2.15",
-    "@angular/forms": "^19.2.15",
-    "@angular/platform-browser": "^19.2.15",
-    "@angular/platform-browser-dynamic": "^19.2.15",
-    "@angular/platform-server": "^19.2.15",
-    "@angular/router": "^19.2.15",
-    "@fortawesome/angular-fontawesome": "~1.0.0",
+    "@angular/animations": "^20.3.30",
+    "@angular/cdk": "^20.2.14",
+    "@angular/cli": "^20.3.36",
+    "@angular/common": "^20.3.30",
+    "@angular/forms": "^20.3.30",
+    "@angular/platform-browser": "^20.3.30",
+    "@angular/platform-browser-dynamic": "^20.3.30",
+    "@angular/platform-server": "^20.3.30",
+    "@angular/router": "^20.3.30",
+    "@fortawesome/angular-fontawesome": "~3.0.0",
     "@fortawesome/fontawesome-free": ">=5.15.4",
     "@fortawesome/fontawesome-svg-core": ">=1.2.36",
     "@fortawesome/free-regular-svg-icons": ">=5.15.4",
@@ -67,11 +67,11 @@
     "@types/node": "6.0.38",
     "@types/source-map": "0.5.7",
     "@types/uglify-js": "2.0.27",
-    "angular-eslint": "19.8.1",
+    "angular-eslint": "20.1.1",
     "eslint": "9.39.2",
     "github-release-notes": "^0.17.0",
     "prettier": "3.9.6",
-    "typescript": "<5.5.0",
+    "typescript": "5.8.3",
     "typescript-eslint": "8.68.0"
   }
 }
