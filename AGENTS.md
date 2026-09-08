@@ -58,6 +58,14 @@ Two related traps worth knowing:
 - `.github/workflows/lint.yml` additionally runs `scripts/check-baseline-not-increased.mjs`, comparing `eslint-baseline.json` on the PR branch against the base branch — this closes the hole where a contributor could raise the ceiling by hand-editing the JSON in the same PR that adds new warnings. The `--bump` scripts are the only sanctioned way to change either baseline file; same rule as `coverage-floor.json` above.
 - Both `scripts/check-lint-baseline.test.mjs` and `scripts/check-baseline-not-increased.test.mjs` exist and pass but, like the coverage gate tests, are **not run in CI** — run `node --test scripts/*.test.mjs` manually when touching any gate script.
 
+### `@angular-eslint/prefer-inject` lint policy (deferred)
+
+`@angular-eslint/prefer-inject` is **disabled** (not just downgraded to a warning) in the root `eslint.config.mjs`, following the same precedent as `@angular-eslint/prefer-standalone` above:
+
+- angular-eslint 20's `tsRecommended` config newly includes this rule (as of the Angular 19→20 bump, #574), surfacing 142 constructor-DI findings that didn't exist in the prior baseline.
+- Angular ships a mechanical fixer (`ng generate @angular/core:inject-migration`), but running it repo-wide rewrites classes under `src/ui-kit/experimental/patterns/layout/components/core/**` (e.g. `ScrollDispatcher`, `Scrollable`) that several specs instantiate directly via `new ScrollDispatcher(ngZone, platform)` rather than through Angular DI — the migrated `inject()` field initializers throw `NG0203` outside an injection context, breaking 170 tests.
+- **Decision: defer.** Tracked in GSA/sam-ui-elements#710 (parented under the lint-debt epic #580) as consumer/spec-safe cleanup slices rather than a single mechanical pass. The rule stays off until that epic clears the debt, at which point it should be promoted to an error per #710's acceptance criteria.
+
 ## Formatting
 
 - `npm run format:check` / `npm run format` (Prettier). Applies to the whole repo — remember to run it on new root-level `scripts/*.mjs` files too, not just `src/`.
