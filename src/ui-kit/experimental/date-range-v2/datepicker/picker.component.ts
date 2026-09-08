@@ -131,6 +131,11 @@ export class DatepickerComponent
   input:not([type="hidden"])';
   @ViewChild("calendarpopup") calendarpopup: ElementRef;
   @ViewChild("calendarButton", { static: true }) calendarButton: ElementRef;
+  // The datepicker's own subtree. disablePageTabIndex has to leave it alone:
+  // the calendar button lives in here and the browser has just focused it, so
+  // Chrome refuses aria-hidden on it and logs a warning instead.
+  @ViewChild("wrapper", { read: ElementRef, static: true })
+  wrapperElement: ElementRef;
 
   static dateValidation() {
     const minYear = 1000;
@@ -460,9 +465,13 @@ export class DatepickerComponent
   }
 
   disablePageTabIndex() {
+    const host = this.wrapperElement ? this.wrapperElement.nativeElement : null;
     const els = document.querySelectorAll(this._focusableString);
     for (let i = 0; i < els.length; i++) {
       const el = els.item(i);
+      if (host && host.contains(el)) {
+        continue;
+      }
       const tabindex = el.getAttribute("tabindex")
         ? el.getAttribute("tabindex")
         : "0";
@@ -471,6 +480,13 @@ export class DatepickerComponent
       }
       el.setAttribute("data-sam-tabindex", tabindex);
       el.setAttribute("tabindex", "-1");
+      // aria-hidden needs the same bookkeeping tabindex already has, or the
+      // restore below cannot tell "had none" from "had one".
+      if (!el.hasAttribute("aria-hidden")) {
+        el.setAttribute("data-sam-noinitial-aria-hidden", "1");
+      } else {
+        el.setAttribute("data-sam-aria-hidden", el.getAttribute("aria-hidden"));
+      }
       el.setAttribute("aria-hidden", "true");
     }
   }
@@ -486,7 +502,15 @@ export class DatepickerComponent
         el.setAttribute("tabindex", el.getAttribute("data-sam-tabindex"));
       }
       el.removeAttribute("data-sam-tabindex");
-      el.setAttribute("aria-hidden", "false");
+      if (el.hasAttribute("data-sam-noinitial-aria-hidden")) {
+        el.removeAttribute("aria-hidden");
+        el.removeAttribute("data-sam-noinitial-aria-hidden");
+      } else if (el.hasAttribute("data-sam-aria-hidden")) {
+        el.setAttribute("aria-hidden", el.getAttribute("data-sam-aria-hidden"));
+        el.removeAttribute("data-sam-aria-hidden");
+      } else {
+        el.removeAttribute("aria-hidden");
+      }
     }
   }
 

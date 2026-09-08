@@ -88,14 +88,52 @@ test("opening the calendar disables other page elements, and closing it via outs
   await page.locator("h1").click();
   await expect(popup).not.toBeVisible();
 
-  // disablePageTabIndex/enablePageTabIndex fully remove the tabindex
-  // attribute for elements that had none originally (data-sam-noinitial-tabindex),
-  // which is the case for these plain <button> elements -- so "restored"
-  // means the attribute is gone entirely, not reset to some prior value.
+  // disablePageTabIndex/enablePageTabIndex fully remove both attributes for
+  // elements that had neither originally (data-sam-noinitial-tabindex and
+  // data-sam-noinitial-aria-hidden), which is the case for these plain
+  // <button> elements -- so "restored" means the attribute is gone entirely,
+  // not reset to some prior value.
   await expect(beforeButton).not.toHaveAttribute("tabindex", "-1");
-  await expect(beforeButton).toHaveAttribute("aria-hidden", "false");
+  await expect(beforeButton).not.toHaveAttribute("aria-hidden", /.*/);
   await expect(afterButton).not.toHaveAttribute("tabindex", "-1");
-  await expect(afterButton).toHaveAttribute("aria-hidden", "false");
+  await expect(afterButton).not.toHaveAttribute("aria-hidden", /.*/);
+});
+
+test("the calendar trigger is not hidden from assistive technology", async ({
+  page,
+}) => {
+  await page.goto("/datepicker");
+
+  const trigger = page.locator(".datepicker .fa-calendar");
+  await trigger.click();
+  await expect(page.locator("#sam-date-calendar-popup")).toBeVisible();
+
+  // The trigger is inside the datepicker's own subtree and holds focus, so
+  // hiding it is both wrong for screen readers and rejected by the browser.
+  await expect(trigger).not.toHaveAttribute("aria-hidden", "true");
+  await expect(trigger).toHaveAttribute("tabindex", "0");
+
+  // The masked input is in the same subtree and is likewise still reachable.
+  await expect(page.locator(".datepicker input").first()).not.toHaveAttribute(
+    "aria-hidden",
+    "true"
+  );
+});
+
+test("a pre-existing aria-hidden survives an open/close cycle", async ({
+  page,
+}) => {
+  await page.goto("/datepicker");
+
+  const beforeButton = page.locator("#before-button");
+  await beforeButton.evaluate((el) => el.setAttribute("aria-hidden", "true"));
+
+  await page.locator(".datepicker .fa-calendar").click();
+  await expect(page.locator("#sam-date-calendar-popup")).toBeVisible();
+  await page.locator("h1").click();
+  await expect(page.locator("#sam-date-calendar-popup")).not.toBeVisible();
+
+  await expect(beforeButton).toHaveAttribute("aria-hidden", "true");
 });
 
 test("opening the calendar via keyboard Enter still works", async ({
