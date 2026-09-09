@@ -20,6 +20,11 @@ const recommendedTypeScriptWarnings = asWarnings([
   ...angular.configs.tsRecommended,
 ]);
 
+// @angular-eslint/prefer-standalone is intentionally disabled; see the
+// matching rationale in the root eslint.config.mjs and AGENTS.md
+// "Standalone-component lint policy (deferred)" (GSA/sam-ui-elements#584).
+recommendedTypeScriptWarnings["@angular-eslint/prefer-standalone"] = "off";
+
 // Template accessibility debt (see #583) has been fully resolved in this
 // workspace (0 findings). Per #580's promotion policy, these rules are
 // enforced at the plugin's own recommended `error` severity instead of being
