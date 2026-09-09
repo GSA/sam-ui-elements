@@ -5,13 +5,7 @@ import {
   HostBinding,
   Input,
 } from "@angular/core";
-import {
-  CDK_TABLE_TEMPLATE,
-  CdkTable,
-  _CoalescedStyleScheduler,
-  _COALESCED_STYLE_SCHEDULER,
-  CDK_TABLE,
-} from "@angular/cdk/table";
+import { CdkTable, CDK_TABLE } from "@angular/cdk/table";
 
 import {
   _DisposeViewRepeaterStrategy,
@@ -23,15 +17,40 @@ export const _SamTable = CdkTable;
 
 /**
  * Wrapper for the CdkTable with Material design styles.
- * Todo: revert back to using CDK_TABLE_TEMPLATE in a later version
+ *
+ * `CDK_TABLE_TEMPLATE` is no longer exported from `@angular/cdk/table` as of
+ * CDK 20 (the template is now inlined directly in `CdkTable`'s own
+ * `@Component` decorator), so this is a local copy of that same template
+ * kept in sync with `@angular/cdk/table`'s `CdkTable` component template.
  */
 @Component({
   selector: "sam-datatable, table[sam-datatable]",
-  template: CDK_TABLE_TEMPLATE,
-  //   template: `
-  //     <ng-container headerRowPlaceholder></ng-container>
-  //     <ng-container rowPlaceholder></ng-container>
-  //     <ng-content select="[rowFooterPlaceholder]"></ng-content>`,
+  template: `
+    <ng-content select="caption" />
+    <ng-content select="colgroup, col" />
+
+    @if (_isServer) {
+      <ng-content />
+    }
+
+    @if (_isNativeHtmlTable) {
+      <thead role="rowgroup">
+        <ng-container headerRowOutlet />
+      </thead>
+      <tbody role="rowgroup">
+        <ng-container rowOutlet />
+        <ng-container noDataRowOutlet />
+      </tbody>
+      <tfoot role="rowgroup">
+        <ng-container footerRowOutlet />
+      </tfoot>
+    } @else {
+      <ng-container headerRowOutlet />
+      <ng-container rowOutlet />
+      <ng-container noDataRowOutlet />
+      <ng-container footerRowOutlet />
+    }
+  `,
   providers: [
     { provide: CdkTable, useExisting: SamDataTableComponent },
     { provide: CDK_TABLE, useExisting: SamDataTableComponent },
@@ -39,7 +58,6 @@ export const _SamTable = CdkTable;
       provide: _VIEW_REPEATER_STRATEGY,
       useClass: _DisposeViewRepeaterStrategy,
     },
-    { provide: _COALESCED_STYLE_SCHEDULER, useClass: _CoalescedStyleScheduler },
   ],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed, fakeAsync, tick } from "@angular/core/testing";
 
 // Load the implementations that should be tested
 import { SamNameEntryComponent } from "./name-entry.component";
@@ -114,21 +114,23 @@ describe("The Sam Name Entry component", () => {
       component.model = model;
     });
 
-    it("First name Check", function () {
+    it("First name Check", fakeAsync(() => {
+      fixture.detectChanges();
+      tick();
       fixture.detectChanges();
       expect(
-        fixture.nativeElement
-          .querySelector("#first-name")
-          .getAttribute("ng-reflect-model")
+        (fixture.nativeElement.querySelector("#first-name") as HTMLInputElement)
+          .value
       ).toBe("John");
-    });
-    it("Last name Check", function () {
+    }));
+    it("Last name Check", fakeAsync(() => {
+      fixture.detectChanges();
+      tick();
       fixture.detectChanges();
       expect(
-        fixture.nativeElement
-          .querySelector("#last-name")
-          .getAttribute("ng-reflect-model")
+        (fixture.nativeElement.querySelector("#last-name") as HTMLInputElement)
+          .value
       ).toBe("Doe");
-    });
+    }));
   });
 });

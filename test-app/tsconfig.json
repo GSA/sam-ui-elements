@@ -6,7 +6,8 @@
     "declaration": false,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
+    "module": "preserve",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "ES2022",
@@ -17,7 +18,8 @@
     "baseUrl": ".",
     "paths": {
       "@gsa-sam/sam-ui-elements": ["../index.ts"],
-      "@gsa-sam/sam-ui-elements/*": ["../*"]
+      "@gsa-sam/sam-ui-elements/*": ["../*"],
+      "@angular/*": ["node_modules/@angular/*"]
     }
   }
 }

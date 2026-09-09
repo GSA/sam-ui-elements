@@ -2,12 +2,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/app",
-    "baseUrl": "./",
-    "types": [],
-    "paths": {
-      "@gsa-sam/sam-ui-elements": ["../../index.ts"],
-      "@gsa-sam/sam-ui-elements/*": ["../../*"]
-    }
+    "types": []
   },
   "exclude": ["test-setup.ts", "**/*.spec.ts"]
 }
