@@ -121,7 +121,13 @@ export class SamStickyComponent implements OnInit, AfterViewChecked {
     const parentContainer = document.getElementsByClassName(
       this.container
     ) as HTMLCollectionOf<HTMLElement>;
+    if (!parentContainer[0]) {
+      return highest;
+    }
     const directChild = this.findDirectChild();
+    if (!directChild) {
+      return highest;
+    }
     const height = directChild.offsetHeight;
 
     for (let i = 0; i < parentContainer[0].children.length; i++) {
@@ -135,11 +141,11 @@ export class SamStickyComponent implements OnInit, AfterViewChecked {
     return highest;
   }
 
-  findDirectChild(): HTMLElement {
+  findDirectChild(): HTMLElement | undefined {
     const parentContainer = document.getElementsByClassName(
       this.container
     ) as HTMLCollectionOf<HTMLElement>;
-    let directChild: HTMLElement;
+    let directChild: HTMLElement | undefined;
     let curNode: HTMLElement = this.el.nativeElement;
     if (curNode.parentNode) {
       do {

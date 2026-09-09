@@ -58,7 +58,7 @@ export class FieldsetWrapper
    */
   @Input() public required: boolean = false;
   @ViewChild("hintContainer", { static: false })
-  public hintContainer: ElementRef<HTMLElement>;
+  public hintContainer: ElementRef<HTMLElement> | undefined;
   public showToggle: boolean = false;
   private toggleOpen: boolean = false;
   private lineSize: number;
