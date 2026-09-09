@@ -6,15 +6,9 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import {
-  ComponentFactoryResolver,
-  Injectable,
-  ApplicationRef,
-  Injector,
-  NgZone,
-} from "@angular/core";
+import { Injectable, ApplicationRef, Injector, NgZone } from "@angular/core";
 import { OverlayState } from "./overlay-state";
-import { DomPortalHost } from "@angular/cdk/portal";
+import { DomPortalOutlet } from "@angular/cdk/portal";
 import { OverlayRef } from "./overlay-ref";
 import { OverlayPositionBuilder } from "./position/overlay-position-builder";
 import { OverlayContainer } from "./overlay-container";
@@ -39,7 +33,6 @@ export class Overlay {
   constructor(
     public scrollStrategies: ScrollStrategyOptions,
     private _overlayContainer: OverlayContainer,
-    private _componentFactoryResolver: ComponentFactoryResolver,
     private _positionBuilder: OverlayPositionBuilder,
     private _appRef: ApplicationRef,
     private _injector: Injector,
@@ -78,17 +71,12 @@ export class Overlay {
   }
 
   /**
-   * Create a DomPortalHost into which the overlay content can be loaded.
+   * Create a DomPortalOutlet into which the overlay content can be loaded.
    * @param pane The DOM element to turn into a portal host.
    * @returns A portal host for the given DOM element.
    */
-  private _createPortalHost(pane: HTMLElement): DomPortalHost {
-    return new DomPortalHost(
-      pane,
-      this._componentFactoryResolver,
-      this._appRef,
-      this._injector
-    );
+  private _createPortalHost(pane: HTMLElement): DomPortalOutlet {
+    return new DomPortalOutlet(pane, this._appRef, this._injector);
   }
 
   /**
