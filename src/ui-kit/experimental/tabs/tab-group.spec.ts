@@ -114,4 +114,42 @@ describe("The Sam Tabs Next component", () => {
     host.tabGroup.dynamicHeight = true;
     expect(host.tabGroup.dynamicHeight).toBe(true);
   });
+
+  it("should select a tab label via keyboard (Enter) same as click", () => {
+    fixture.detectChanges();
+    fixture.detectChanges();
+    const labels = fixture.nativeElement.querySelectorAll(".mat-tab-label");
+    labels[1].dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+    fixture.detectChanges();
+    expect(host.tabGroup.selectedIndex).toBe(1);
+  });
+
+  it("should select a tab label via keyboard (Space) same as click, and prevent page scroll", () => {
+    fixture.detectChanges();
+    fixture.detectChanges();
+    const labels = fixture.nativeElement.querySelectorAll(".mat-tab-label");
+    const spaceEvent = new KeyboardEvent("keydown", { key: " " });
+    const preventDefaultSpy = vi.spyOn(spaceEvent, "preventDefault");
+    labels[1].dispatchEvent(spaceEvent);
+    fixture.detectChanges();
+    expect(host.tabGroup.selectedIndex).toBe(1);
+    expect(preventDefaultSpy).toHaveBeenCalled();
+  });
+
+  it("should not activate a disabled tab via click or keyboard, and should remove it from the tab order", () => {
+    fixture.detectChanges();
+    host.tabGroup._tabs.toArray()[1].disabled = true;
+    fixture.detectChanges();
+    fixture.detectChanges();
+
+    const labels = fixture.nativeElement.querySelectorAll(".mat-tab-label");
+    const disabledLabel = labels[1] as HTMLElement;
+    expect(disabledLabel.getAttribute("tabindex")).toBe("-1");
+
+    disabledLabel.dispatchEvent(new MouseEvent("click"));
+    disabledLabel.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+    fixture.detectChanges();
+
+    expect(host.tabGroup.selectedIndex).toBe(0);
+  });
 });

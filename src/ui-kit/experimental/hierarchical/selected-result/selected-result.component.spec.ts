@@ -135,4 +135,20 @@ describe("SamHierarchicalSelectedResultComponent", () => {
     const list = fixture.debugElement.query(By.css(".resultsList"));
     expect(list.nativeElement.children.length).toBe(1);
   });
+
+  it("marks each selected-result option as aria-selected", () => {
+    component.model.addItem(
+      {
+        id: "1",
+        parentId: null,
+        name: "Level 1",
+        subtext: "id 1",
+        type: "Level 1",
+      },
+      "id"
+    );
+    fixture.detectChanges();
+    const option = fixture.debugElement.query(By.css('li[role="option"]'));
+    expect(option.nativeElement.getAttribute("aria-selected")).toBe("true");
+  });
 });
