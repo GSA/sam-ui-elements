@@ -79,7 +79,7 @@ describe("The Sam Label Wrapper component", () => {
 
   describe("integration tests", () => {
     let component: LabelWrapper;
-    let fixture: any;
+    let fixture: ComponentFixture<LabelWrapper>;
 
     beforeEach(() => {
       TestBed.configureTestingModule({

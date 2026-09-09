@@ -22,7 +22,7 @@ export class SamFilterDrawerComponent {
   /**
    * Event emitter for the 'clear' event
    */
-  @Output() public clear = new EventEmitter<any>();
+  @Output() public clear = new EventEmitter<void>();
 
   @ViewChild(forwardRef(() => ChipHostDirective), { static: true })
   public chips: ChipHostDirective;

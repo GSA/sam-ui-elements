@@ -13,14 +13,24 @@ import { SamFilterDrawerComponent } from "../filter-drawer.component";
 
 import { SamPageNextService } from "../../../experimental/patterns/layout/architecture";
 
+interface FilterField {
+  key: string;
+  templateOptions: { label: string };
+}
+
+interface FilterDrawerChipModel {
+  label: string;
+  values: unknown[];
+}
+
 @Directive({
   selector: "[dynamicChips]",
   standalone: false,
 })
 export class DynamicChipsDirective implements OnInit {
-  @Input() public map: (...args) => { label: string; values: any[] }[];
+  @Input() public map: (obj: Record<string, unknown>) => unknown[];
   @Input() public disabled = false;
-  @Output() public remove = new EventEmitter<any>();
+  @Output() public remove = new EventEmitter<Record<string, unknown>>();
 
   constructor(
     public host: SamFilterDrawerComponent,
@@ -50,13 +60,15 @@ export class DynamicChipsDirective implements OnInit {
     });
   }
 
-  private _mapFilters(filters): { label: string; values: any[] }[] {
-    const fields = this._service.get("filterFields").value;
+  private _mapFilters(
+    filters: Record<string, unknown>
+  ): FilterDrawerChipModel[] {
+    const fields: FilterField[] = this._service.get("filterFields").value;
 
     return Object.keys(filters).map((key) => {
       const field = fields.filter((field) => field.key === key)[0];
 
-      const obj = {};
+      const obj: Record<string, unknown> = {};
       obj[key] = filters[key];
 
       return {
@@ -66,13 +78,13 @@ export class DynamicChipsDirective implements OnInit {
     });
   }
 
-  private _toggleClearAll(filters): void {
+  private _toggleClearAll(filters: FilterDrawerChipModel[]): void {
     filters.length > 0
       ? (this.host.showClear = true)
       : (this.host.showClear = false);
   }
 
-  private _renderChip(filter): void {
+  private _renderChip(filter: FilterDrawerChipModel): void {
     const chipRef = this._createChipComponent();
     this._setChipProperties(chipRef, filter);
   }
@@ -91,7 +103,7 @@ export class DynamicChipsDirective implements OnInit {
 
   private _setChipProperties(
     chipRef: ComponentRef<SamFilterDrawerItemComponent>,
-    model: { label: string; values: any[] }
+    model: FilterDrawerChipModel
   ): void {
     chipRef.instance.label = model.label;
     chipRef.instance.values = model.values;
