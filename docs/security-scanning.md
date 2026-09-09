@@ -51,7 +51,7 @@ expiry:
   with no `platform-server` and no hydration, so the vulnerable path was
   never reachable here regardless of version. **Resolved** by the Angular
   19→20 step (#574, `@angular/core` now `20.3.30`, past the
-  20.3.25/21.2.17 fixed-in line) — the `10003` row was removed from
+  20.3.25/21.2.17/22.0.1 fixed-in line) — the `10003` row was removed from
   `.zap/rules.tsv` and a local ZAP baseline run against the Angular 20
   production build no longer reports it. Tracked in #679.
 - **`10055` CSP: style-src unsafe-inline (Medium)** — `test-app`'s Angular
