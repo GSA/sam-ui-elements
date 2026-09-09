@@ -57,7 +57,9 @@ export class SamTabComponent {
       <ng-container *ngFor="let tab of tabs; let i = index">
         <a
           class="item"
+          [attr.tabindex]="tab.disabled ? -1 : 0"
           (click)="selectTab(tab, i)"
+          (keydown.enter)="selectTab(tab, i)"
           [ngClass]="{ active: tab.active, disabled: tab.disabled }"
           *ngIf="!tab.float"
         >
@@ -174,6 +176,9 @@ export class SamTabsComponent implements AfterContentInit, OnChanges {
   }
 
   selectTab(tab: SamTabComponent, index) {
+    if (tab.disabled) {
+      return;
+    }
     this.tabs.forEach((t) => (t.active = false));
     tab.active = true;
     this.active = index;

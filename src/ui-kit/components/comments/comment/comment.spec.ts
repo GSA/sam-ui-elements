@@ -53,4 +53,9 @@ describe("The Sam Comment component", () => {
     const imageEl = fixture.debugElement.query(By.css("img")).nativeElement;
     expect(imageEl.src).toBe(comment.image);
   });
+
+  it("Should provide a text alternative for the image (decorative, since the figcaption already names the user)", function () {
+    const imageEl = fixture.debugElement.query(By.css("img")).nativeElement;
+    expect(imageEl.getAttribute("alt")).toBe("");
+  });
 });

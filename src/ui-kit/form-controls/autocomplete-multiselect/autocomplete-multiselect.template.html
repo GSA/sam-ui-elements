@@ -34,6 +34,7 @@
       >
         <div
           class="sam-autocomplete-multiselect-input"
+          role="presentation"
           (click)="focusTextArea()"
           [ngClass]="{ active: displayList() }"
         >
@@ -121,7 +122,9 @@
             style="margin-left: 10px"
             class="free-text-item category-item"
             *ngIf="showResultsFreeText()"
+            tabindex="0"
             (click)="clearSearch(selectItem(searchText))"
+            (keydown.enter)="clearSearch(selectItem(searchText))"
           >
             {{ searchText }} - {{ freeTextSubtext }}
           </li>
@@ -136,22 +139,28 @@
                   *ngIf="category !== 'uncategorized' && displayCategory"
                   class="category-name"
                   [ngClass]="{ selectable: categoryIsSelectable }"
+                  tabindex="0"
                   (click)="clearSearch(selectItemByCategory(category))"
+                  (keydown.enter)="clearSearch(selectItemByCategory(category))"
                   [attr.data-category]="category"
                   role="option"
+                  aria-selected="false"
                 >
                   {{ category }}
                 </li>
                 <li
                   class="category-item"
                   *ngFor="let item of list[i]; let itemIndex = index"
+                  tabindex="0"
                   (mouseenter)="listItemHover(i, itemIndex)"
                   (click)="clearSearch(selectItem(item))"
+                  (keydown.enter)="clearSearch(selectItem(item))"
                   [ngClass]="{ marked: item._marked }"
                   [attr.data-category]="i"
                   [attr.data-index]="itemIndex"
                   [attr.id]="i + '-item-' + itemIndex"
                   role="option"
+                  [attr.aria-selected]="!!item._marked"
                 >
                   <ng-container *ngIf="!itemTemplate; else itemTemplateRef">
                     <p>{{ item[(keyValueConfig?.valueProperty)] }}</p>

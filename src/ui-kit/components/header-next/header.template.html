@@ -1,5 +1,6 @@
 <div
   class="usa-overlay"
+  role="presentation"
   [class.is-visible]="mobileNavActive"
   (click)="closeMobileNav()"
 ></div>
@@ -33,6 +34,7 @@
   <nav
     aria-label="Primary navigation"
     class="usa-nav"
+    tabindex="-1"
     (keydown.esc)="closeMobileNav()"
     (animationend)="navAnimationEnd()"
     [class.is-visible]="mobileNavActive"
