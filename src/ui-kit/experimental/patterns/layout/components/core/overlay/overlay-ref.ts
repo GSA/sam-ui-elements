@@ -7,7 +7,7 @@
  */
 
 import { NgZone } from "@angular/core";
-import { PortalHost, Portal } from "@angular/cdk/portal";
+import { PortalOutlet, Portal } from "@angular/cdk/portal";
 
 import { OverlayState } from "./overlay-state";
 import { ScrollStrategy } from "./scroll/scroll-strategy";
@@ -17,14 +17,14 @@ import { Observable, Subject } from "rxjs";
  * Reference to an overlay that has been created with the Overlay service.
  * Used to manipulate or dispose of said overlay.
  */
-export class OverlayRef implements PortalHost {
+export class OverlayRef implements PortalOutlet {
   private _backdropElement: HTMLElement | null = null;
   private _backdropClick: Subject<any> = new Subject();
   private _attachments = new Subject<void>();
   private _detachments = new Subject<void>();
 
   constructor(
-    private _portalHost: PortalHost,
+    private _portalHost: PortalOutlet,
     private _pane: HTMLElement,
     private _state: OverlayState,
     private _scrollStrategy: ScrollStrategy,

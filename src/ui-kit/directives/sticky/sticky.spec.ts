@@ -55,11 +55,11 @@ describe("The Sam Sticky directive", () => {
   });
 
   it("should compile", () => {
-    const comp = fixture.debugElement.query(By.css(".test-comp"));
-
-    expect(comp.nativeElement.getAttribute("ng-reflect-limit")).toContain(
-      "600"
-    );
+    // Angular 20 removes the `ng-reflect-*` debug attributes this assertion
+    // used to depend on (see AC 3 of GH-574: deprecated-API fixes from the
+    // Angular 20 migration). Assert the real behaviour instead: the
+    // directive received its bound `limit` input.
+    expect(directive.limit).toBe(600);
   });
 
   it("should handle when resized", () => {

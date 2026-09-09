@@ -242,21 +242,21 @@ describe("The picker component", () => {
       expect(emitted).toEqual([""]);
     });
 
-    // Outside-click-to-close cannot be covered here. `calendarpopup` is
-    // declared `@ViewChild(..., { static: true })` on an `*ngIf`-gated
-    // element, so it resolves once before the first change detection run --
-    // while `showCalendar` is still false -- and stays `undefined` forever.
-    // `handleGlobalClick` guards on `this.calendarpopup`, so the close path is
-    // unreachable and outside-click does not close the calendar. Changing the
-    // ViewChild to non-static makes the close path live but exposes a second
-    // defect: `handleGlobalClick` compares
-    // `calendarButton.nativeElement !== event.target` with strict inequality,
-    // and a real mouse click on the icon lands on its inner `.sr-only` child,
-    // so opening the calendar immediately closes it again -- the picker
-    // becomes unopenable by mouse. Both defects must be fixed together, and
-    // verified with a real browser click rather than a synthetic
-    // `handleGlobalClick` call. Tracked in GSA/sam-ui-elements#666.
-    it.skip("should close the calendar when clicking outside of it", () => {
+    // `calendarpopup` is now a non-static `@ViewChild` (see GH-666), so it
+    // resolves once the `*ngIf="showCalendar"` element renders on the change
+    // detection run after `displayCalendar()` flips the flag. The second
+    // `detectChanges()` call lets `enablePageTabIndex`/DOM updates settle
+    // before the outside click fires.
+    //
+    // A synthetic `{ target }` object passed directly to `handleGlobalClick`
+    // cannot reproduce the real-browser hit-testing defect (Defect 2 in
+    // GH-666) where a click on the calendar icon lands on its `.sr-only`
+    // child span rather than the icon itself -- jsdom has no layout engine to
+    // hit-test against, so this unit spec only exercises the containment
+    // check's positive case (a click target that is unambiguously outside
+    // both the popup and the button). The real-browser scenario is covered
+    // by `test-app/e2e/datepicker.spec.ts`, per GH-666's acceptance criteria.
+    it("should close the calendar when clicking outside of it", () => {
       component.displayCalendar();
       fixture.detectChanges();
       fixture.detectChanges();
@@ -269,13 +269,11 @@ describe("The picker component", () => {
       document.body.removeChild(outsideEl);
     });
 
-    // Passes today, but only vacuously: `calendarpopup` is always `undefined`
-    // (see above), so `handleGlobalClick` early-returns and `showCalendar`
-    // stays true regardless of the event target. It asserts nothing about the
-    // intended "clicking the button does not close it" behaviour, so it is
-    // skipped rather than left in place as false confidence.
-    // See GSA/sam-ui-elements#666.
-    it.skip("should not close the calendar when clicking the calendar button", () => {
+    // Exercises the containment branch directly (rather than vacuously
+    // early-returning as it did before GH-666's fix): the calendar button
+    // itself is contained within itself, so `handleGlobalClick` must treat a
+    // click on it as "not outside" and leave the calendar open.
+    it("should not close the calendar when clicking the calendar button", () => {
       component.displayCalendar();
       fixture.detectChanges();
       component.handleGlobalClick({

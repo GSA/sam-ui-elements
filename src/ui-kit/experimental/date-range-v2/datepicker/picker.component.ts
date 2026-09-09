@@ -129,7 +129,7 @@ export class DatepickerComponent
   _focusableString: string =
     'a[href], area, button, select, textarea, *[tabindex], \
   input:not([type="hidden"])';
-  @ViewChild("calendarpopup", { static: true }) calendarpopup: ElementRef;
+  @ViewChild("calendarpopup") calendarpopup: ElementRef;
   @ViewChild("calendarButton", { static: true }) calendarButton: ElementRef;
 
   static dateValidation() {
@@ -534,7 +534,7 @@ export class DatepickerComponent
       );
       if (
         !withinElement &&
-        this.calendarButton.nativeElement !== event.target
+        !this.calendarButton.nativeElement.contains(event.target)
       ) {
         this.showCalendar = false;
         this.enablePageTabIndex();
