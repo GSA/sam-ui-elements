@@ -44,24 +44,27 @@ This was the first security scan run on this repository. Its first CI run
 and baselined in `.zap/rules.tsv` with an owner, a triage issue, and an
 expiry:
 
-- **`10003` Vulnerable JS Library (High)** — flags `@angular/core` 19.2.25
+- **`10003` Vulnerable JS Library (High)** — flagged `@angular/core` 19.2.25
   against GHSA-rgjc-h3x7-9mwg (CVE-2026-54267), an Angular client-hydration
   DOM-clobbering advisory. That advisory's exploit path requires
   `provideClientHydration()` (SSR); `test-app` is a pure client-rendered SPA
-  with no `platform-server` and no hydration, so the vulnerable path is not
-  reachable here. Fixing the underlying version is an Angular
-  major/minor upgrade, tracked in #679 (and the broader #574/#562 upgrade
-  work), not a CI-gate change.
+  with no `platform-server` and no hydration, so the vulnerable path was
+  never reachable here regardless of version. **Resolved** by the Angular
+  19→20 step (#574, `@angular/core` now `20.3.30`, past the
+  20.3.25/21.2.17 fixed-in line) — the `10003` row was removed from
+  `.zap/rules.tsv` and a local ZAP baseline run against the Angular 20
+  production build no longer reports it. Tracked in #679.
 - **`10055` CSP: style-src unsafe-inline (Medium)** — `test-app`'s Angular
   production build inlines critical CSS and per-component styles that
   require `style-src 'unsafe-inline'` to render on this Angular version; this
   is `test-app` toolchain behavior, not a property of the shipped
-  `@gsa-sam/sam-ui-elements` library. Also tracked in #679, to revisit
-  alongside the Angular upgrade (newer Angular supports nonce/hash-based
-  inline styles).
+  `@gsa-sam/sam-ui-elements` library. **Still present** on Angular 20 (a
+  local ZAP run still reports it); the exception remains in
+  `.zap/rules.tsv`. Tracked in #679, to revisit alongside a later Angular
+  upgrade (newer Angular supports nonce/hash-based inline styles).
 
-Both exceptions are rule-wide (`*`) because they are properties of every
-page `test-app` currently renders, not of a specific URL; each has a
+The remaining exception is rule-wide (`*`) because it is a property of every
+page `test-app` currently renders, not of a specific URL; it has a
 2027-03-01 expiry and must be reviewed (renewed or removed) by then. Any
 _new_ finding surfaced by a future CI run must be triaged the same way: fix
 it in `test-app`/library markup where possible, and only add a reviewed
