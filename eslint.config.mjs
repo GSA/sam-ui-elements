@@ -33,6 +33,27 @@ recommendedTypeScriptWarnings["@angular-eslint/prefer-standalone"] = "off";
 
 const accessibilityWarnings = asWarnings(angular.configs.templateAccessibility);
 
+// @angular-eslint/prefer-inject is intentionally disabled, not just
+// downgraded to a warning: angular-eslint 20's tsRecommended config newly
+// includes this rule (0 -> 142 findings), which is a byproduct of the
+// angular-eslint 19->20 bump (#574), not new lint debt introduced by that
+// change. Angular's own `ng generate @angular/core:inject-migration`
+// schematic can mechanically convert these, but running it repo-wide also
+// rewrites constructor signatures under
+// src/ui-kit/experimental/patterns/layout/components/core/** (e.g.
+// ScrollDispatcher, Scrollable) — files already excluded from this
+// config's `ignores` above, but not from the migration schematic's own
+// scan. Several specs instantiate those classes directly via
+// `new ScrollDispatcher(ngZone, platform)` rather than through Angular DI,
+// so the migrated `inject()` field initializers throw NG0203 (`inject()`
+// called outside an injection context) when constructed that way, breaking
+// 170 tests. A real migration needs to be scoped per-area with matching
+// spec updates rather than run mechanically across the whole tree; tracked
+// in GSA/sam-ui-elements#710 (parented under the lint-debt epic #580).
+// See the matching precedent for @angular-eslint/prefer-standalone in
+// AGENTS.md "Standalone-component lint policy (deferred)" (#584).
+recommendedTypeScriptWarnings["@angular-eslint/prefer-inject"] = "off";
+
 // Bans the RxJS 5 "unbound operator" call pattern (e.g.
 // `first.call(observable).subscribe(...)`), which throws
 // `TypeError: ...subscribe is not a function` under RxJS 7 because an
