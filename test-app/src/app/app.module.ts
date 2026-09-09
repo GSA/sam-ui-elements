@@ -7,10 +7,12 @@ import { SamTabsNextModule } from "@gsa-sam/sam-ui-elements/src/ui-kit/experimen
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./home/home.component";
 import { TabsGalleryComponent } from "./tabs-gallery/tabs-gallery.component";
+import { DatepickerGalleryComponent } from "./datepicker-gallery/datepicker-gallery.component";
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
   { path: "tabs", component: TabsGalleryComponent },
+  { path: "datepicker", component: DatepickerGalleryComponent },
 ];
 
 @NgModule({
@@ -20,6 +22,9 @@ const routes: Routes = [
     BrowserAnimationsModule,
     RouterModule.forRoot(routes),
     SamTabsNextModule,
+    // DatepickerGalleryComponent is standalone (see that file for why), so it
+    // is imported here rather than added to `declarations`.
+    DatepickerGalleryComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

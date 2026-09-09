@@ -428,8 +428,8 @@ export class MdSidenavContainer implements AfterContentInit {
 
     // Give the view a chance to render the initial state, then enable transitions.
     this._sidenavs.changes.subscribe(() =>
-      first
-        .call(this._ngZone.onMicrotaskEmpty)
+      this._ngZone.onMicrotaskEmpty
+        .pipe(first())
         .subscribe(() => (this._enableTransitions = true))
     );
   }
@@ -476,8 +476,8 @@ export class MdSidenavContainer implements AfterContentInit {
     // NOTE: We need to wait for the microtask queue to be empty before validating,
     // since both drawers may be swapping sides at the same time.
     sidenav.onAlignChanged.subscribe(() =>
-      first
-        .call(this._ngZone.onMicrotaskEmpty)
+      this._ngZone.onMicrotaskEmpty
+        .pipe(first())
         .subscribe(() => this._validateDrawers())
     );
   }

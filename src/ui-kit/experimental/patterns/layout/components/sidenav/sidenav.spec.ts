@@ -37,6 +37,7 @@ function asContainerInternals(
       >
         Sidenav content
       </md-sidenav>
+      <md-sidenav *ngIf="showSecond" align="end">Second sidenav</md-sidenav>
     </md-sidenav-container>
   `,
   standalone: false,
@@ -46,6 +47,7 @@ class HostComponent {
   align: "start" | "end" = "start";
   disableClose = false;
   backdropClicked = false;
+  showSecond = false;
 
   @ViewChild(MdSidenav) sidenav: MdSidenav;
   @ViewChild(MdSidenavContainer) container: MdSidenavContainer;
@@ -234,5 +236,55 @@ describe("The Sam Sidenav component", () => {
     expect(typeof container._getMarginRight()).toBe("number");
     expect(typeof container._getPositionOffset()).toBe("number");
     expect(container._getStyles().marginLeft).toContain("px");
+  });
+
+  it("should not throw when a sidenav is added dynamically, enabling transitions once the view settles", async () => {
+    host.showSecond = true;
+
+    expect(() => fixture.detectChanges()).not.toThrow();
+
+    // Wait for the fixture (and NgZone) to become stable so the
+    // first()-gated subscription that enables transitions can run.
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(
+      (host.container as unknown as { _enableTransitions: boolean })
+        ._enableTransitions
+    ).toBe(true);
+  });
+
+  it("should not throw when a sidenav is removed dynamically", async () => {
+    host.showSecond = true;
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    host.showSecond = false;
+
+    expect(() => fixture.detectChanges()).not.toThrow();
+
+    await fixture.whenStable();
+    expect(() => fixture.detectChanges()).not.toThrow();
+  });
+
+  it("should not throw and should re-validate drawers when a sidenav's align changes at runtime", async () => {
+    const validateSpy = vi.spyOn(
+      host.container as unknown as { _validateDrawers(): void },
+      "_validateDrawers"
+    );
+    validateSpy.mockClear();
+
+    host.align = "end";
+
+    expect(() => fixture.detectChanges()).not.toThrow();
+
+    // The container waits for the microtask queue to be empty (via
+    // this._ngZone.onMicrotaskEmpty.pipe(first())) before re-validating,
+    // since both drawers may be swapping sides at the same time.
+    await fixture.whenStable();
+
+    expect(validateSpy).toHaveBeenCalled();
+    expect(host.sidenav._isEnd).toBe(true);
   });
 });

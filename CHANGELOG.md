@@ -1,5 +1,25 @@
 # Changelog
 
+## Unreleased — Angular 19 → 20 stepped upgrade (consumer-impact)
+
+**⚠️ Consumer coordination required.** Peer dependencies have been bumped to the Angular 20 line: `@angular/core`/`common`/`forms`/`router`/`animations`/`platform-browser`/`platform-browser-dynamic`/`platform-server` → `^20.3.30`, `@angular/cli` → `^20.3.36`, `@angular/cdk` → `^20.2.14`, `@fortawesome/angular-fontawesome` → `~3.0.0`, and the dev-only `typescript` constraint is now `5.8.3`. (`@angular/compiler` and `@angular/compiler-cli` are bumped in `test-app`'s own harness dependencies, not in this package's published `peerDependencies` — they aren't imported by `src/`.) As with the ngx-formly bump above, sam-ui-elements publishes raw TypeScript source, so these peer requirements are enforced by consumers' own `npm install` rather than a compiled build — **a consumer still on Angular 19 will fail dependency resolution against this version** until it completes its own Angular 20 upgrade. See GSA/sam-ui-elements#574 (part of the Angular 19→21 serial migration tracked in #562).
+
+Also adds an explicit `@angular/core` peer (`^20.3.30`) that was previously missing despite hundreds of direct source imports.
+
+The exported `Overlay` (`src/ui-kit/experimental/patterns/layout/components/core/overlay/index.ts`) constructor signature has changed: it no longer takes a `ComponentFactoryResolver` parameter (see below). Any consumer instantiating `Overlay` directly rather than via DI must update the call site.
+
+Other notable internal fixes required to keep the library building/testing green under Angular/CDK 20:
+
+- `@angular/cdk/portal`'s deprecated `PortalHost`/`DomPortalHost` aliases were removed; internal usages now use `PortalOutlet`/`DomPortalOutlet` directly (`src/ui-kit/experimental/patterns/layout/components/core/overlay/overlay-ref.ts`, `overlay.ts`). `Overlay`'s constructor no longer takes a `ComponentFactoryResolver` (removed/no longer needed by `DomPortalOutlet`).
+- `@angular/cdk/table` no longer exports `CDK_TABLE_TEMPLATE`, `_CoalescedStyleScheduler`, or `_COALESCED_STYLE_SCHEDULER` (sticky-column scheduling moved to `afterNextRender` internally). `SamDataTableComponent` (`src/ui-kit/components/data-table/data-table.component.ts`) now inlines its own copy of the CDK table template instead of importing the removed constant, and no longer provides the removed style-scheduler token.
+- Angular 20 no longer renders `ng-reflect-*` debug attributes in the DOM by default; a couple of specs (`sticky.spec.ts`, `name-entry.spec.ts`) that asserted on those attributes were rewritten to assert real component/DOM state instead.
+
+## Unreleased — ngx-formly 6 → 7 migration (consumer-impact)
+
+**⚠️ Consumer coordination required.** `src/formly` (`AbstractSamFormly` and its field/wrapper components) now targets `@ngx-formly/core@^7` — the peer dependency in `package.json` has been bumped from `^6.2.1`. Because sam-ui-elements publishes raw TypeScript source that consumers compile in-place, this peer requirement is enforced by `npm install` rather than by a compiled package build: **a consumer that keeps `@ngx-formly/core@6` installed will fail dependency resolution/installation against this version of sam-ui-elements** (an unmet peer dependency), even though the two versions are API-compatible for the subset of Formly this library uses.
+
+Consumers (`iae-sam-front-end` and other repos importing `@gsa-sam/sam-ui-elements/src/formly/index`) **must bump their own `@ngx-formly/core` dependency to `^7.0.0` in lockstep** with adopting this release. No consumer code changes are required beyond the dependency bump itself. See GSA/sam-ui-elements#573.
+
 ## v0.9.19 (04/09/2019)
 
 #### closed
