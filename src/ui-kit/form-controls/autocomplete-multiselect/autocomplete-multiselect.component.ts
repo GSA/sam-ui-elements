@@ -8,6 +8,8 @@ import {
   forwardRef,
   TemplateRef,
   AfterViewInit,
+  OnInit,
+  OnChanges,
 } from "@angular/core";
 import {
   animate,
@@ -105,7 +107,7 @@ import { SamCache } from "../autocomplete/autocomplete.component";
   standalone: false,
 })
 export class SamAutocompleteMultiselectComponent
-  implements ControlValueAccessor, AfterViewInit, SamCache
+  implements ControlValueAccessor, AfterViewInit, SamCache, OnInit, OnChanges
 {
   /**
    * Gets DOM element for the textarea used for input
@@ -505,7 +507,7 @@ export class SamAutocompleteMultiselectComponent
         let foundItem = false;
         if (Array.isArray(this.list)) {
           for (var i = 0; i < this.list.length; i++) {
-            let item = this.list[i];
+            const item = this.list[i];
             if (item) {
               if (item[this.keyValueConfig.valueProperty] === this.searchText) {
                 foundItem = true;
@@ -522,7 +524,7 @@ export class SamAutocompleteMultiselectComponent
         if (this.value) {
           if (!foundItem) {
             for (var i = 0; i < this.value.length; i++) {
-              let tempItem = this.value[i];
+              const tempItem = this.value[i];
               if (
                 tempItem[this.keyValueConfig.valueProperty] === this.searchText
               ) {
@@ -542,8 +544,8 @@ export class SamAutocompleteMultiselectComponent
 
   private findItemExistInList(item: any) {
     let foundItem = false;
-    for (var j = 0; j < item.length; j++) {
-      let subitem = item[j];
+    for (let j = 0; j < item.length; j++) {
+      const subitem = item[j];
       if (subitem[this.keyValueConfig.valueProperty] === this.searchText) {
         foundItem = true;
       }
@@ -980,7 +982,7 @@ export class SamAutocompleteMultiselectComponent
    */
   public selectItem(item): void {
     if (typeof item === "string") {
-      let added = { type: "custom" };
+      const added = { type: "custom" };
       added[this.keyValueConfig.valueProperty] = item;
       this.value.push(added);
     } else {
@@ -1096,7 +1098,7 @@ export class SamAutocompleteMultiselectComponent
   }
 
   public listItemHover(category, listIndex) {
-    let elements = this.getResults();
+    const elements = this.getResults();
 
     // Converts category list index to getResults() list index
     for (let i = 0; i < category; i++) {

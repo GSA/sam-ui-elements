@@ -99,12 +99,12 @@ describe("The Sam hierarchical grid component", () => {
     });
 
     it("onChecked checked/unchecked", () => {
-      let ev = {
+      const ev = {
         target: {
           checked: true,
         },
       };
-      let row = gridData[6];
+      const row = gridData[6];
       vi.spyOn(component.selectResults, "emit");
       component.onChecked(ev, row);
       fixture.detectChanges();
@@ -122,12 +122,12 @@ describe("The Sam hierarchical grid component", () => {
     });
 
     it("onRowChange has children", () => {
-      let ev = {
+      const ev = {
         target: {
           type: "",
         },
       };
-      let row = gridData[0];
+      const row = gridData[0];
       vi.spyOn(component.rowChanged, "emit");
       component.onRowChange(ev, row);
       fixture.detectChanges();
@@ -136,12 +136,12 @@ describe("The Sam hierarchical grid component", () => {
     });
 
     it("onRowChange has no children", () => {
-      let ev = {
+      const ev = {
         target: {
           type: "",
         },
       };
-      let row = gridData[6];
+      const row = gridData[6];
       vi.spyOn(component.rowChanged, "emit");
       component.onRowChange(ev, row);
       fixture.detectChanges();
@@ -151,7 +151,7 @@ describe("The Sam hierarchical grid component", () => {
 
     it("Scroll raised", () => {
       vi.spyOn(component.scrolled, "emit");
-      let item = {
+      const item = {
         target: {
           offsetHeight: 300,
           scrollTop: 400,
@@ -165,7 +165,7 @@ describe("The Sam hierarchical grid component", () => {
 
     it("Scroll not raised", () => {
       vi.spyOn(component.scrolled, "emit");
-      let item = {
+      const item = {
         target: {
           offsetHeight: 300,
           scrollTop: 0,

@@ -11,17 +11,17 @@ describe("The Sam Actions Dropdown Component", () => {
   let actionButton: HTMLButtonElement;
   let emittedAction: any;
   let emittedCallbackResult: any;
-  let dummyUpEvent = {
+  const dummyUpEvent = {
     key: "Up",
     preventDefault: function () {},
     stopPropagation: function () {},
   };
-  let dummyDownEvent = {
+  const dummyDownEvent = {
     key: "Down",
     preventDefault: function () {},
     stopPropagation: function () {},
   };
-  let dummyEscEvent = {
+  const dummyEscEvent = {
     key: "Esc",
     preventDefault: function () {},
     stopPropagation: function () {},

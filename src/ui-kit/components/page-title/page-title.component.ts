@@ -20,7 +20,7 @@ export class SamPageTitle {
   /**
    * Skip nav target ID, should be unique
    */
-  @Input("id") public id = "primary-content";
+  @Input() public id = "primary-content";
   /**
    * Sets the tabindex attribute on the header tag
    */

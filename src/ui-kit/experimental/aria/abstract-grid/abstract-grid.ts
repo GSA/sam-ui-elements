@@ -40,13 +40,13 @@ export class AbstractGrid {
     }
   }
 
-  public onClick(callback: Function, context: Object): void {
+  public onClick(callback: Function, context: object): void {
     this._onClickHandler = [callback, context];
     const [cb, ctx] = this._onClickHandler;
     this._dispatcher.on("click", cb, ctx);
   }
 
-  public onKeydown(callback: Function, context: Object): void {
+  public onKeydown(callback: Function, context: object): void {
     this._dispatcher.on("keydown", callback, context);
   }
 

@@ -15,7 +15,7 @@ import { AbstractControl } from "@angular/forms";
 
 @Injectable()
 export class SamFormService {
-  public formEvents = new Subject<Object>();
+  public formEvents = new Subject<object>();
   public formEventsUpdated$ = this.formEvents.asObservable();
 
   public fireSubmit(rootAbstractControl: AbstractControl = undefined) {

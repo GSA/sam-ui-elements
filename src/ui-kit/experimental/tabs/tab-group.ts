@@ -16,6 +16,8 @@ import {
   ContentChildren,
   ElementRef,
   Renderer2,
+  AfterContentChecked,
+  AfterViewChecked,
 } from "@angular/core";
 import { coerceBooleanProperty } from "@angular/cdk/coercion";
 import { Observable } from "rxjs";
@@ -51,7 +53,7 @@ export type MdTabHeaderPosition = "above" | "below";
   },
   standalone: false,
 })
-export class MdTabGroup {
+export class MdTabGroup implements AfterContentChecked, AfterViewChecked {
   @ContentChildren(MdTab) _tabs: QueryList<MdTab>;
 
   @ViewChild("tabBodyWrapper", { static: true }) _tabBodyWrapper: ElementRef;
@@ -119,7 +121,7 @@ export class MdTabGroup {
     // Clamp the next selected index to the bounds of 0 and the tabs length. Note the `|| 0`, which
     // ensures that values like NaN can't get through and which would otherwise throw the
     // component into an infinite loop (since Math.max(NaN, 0) === NaN).
-    let indexToSelect = (this._indexToSelect = Math.min(
+    const indexToSelect = (this._indexToSelect = Math.min(
       this._tabs.length - 1,
       Math.max(this._indexToSelect || 0, 0)
     ));

@@ -4,6 +4,8 @@ import {
   EventEmitter,
   Component,
   Optional,
+  OnInit,
+  OnChanges,
 } from "@angular/core";
 import { MdSidenav } from "../../experimental/patterns/layout/components/sidenav";
 import { ToolbarItem } from "../../experimental/actions-list";
@@ -24,7 +26,7 @@ import { SamPageNextService } from "../../experimental/patterns/layout/architect
   `,
   standalone: false,
 })
-export class SamAsideToggleComponent {
+export class SamAsideToggleComponent implements OnInit, OnChanges {
   /**
    * Shows/hides the toggle button
    */

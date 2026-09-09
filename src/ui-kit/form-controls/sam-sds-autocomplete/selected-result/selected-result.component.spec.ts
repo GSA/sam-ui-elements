@@ -135,7 +135,7 @@ describe("SDSSelectedResultComponent", () => {
 
   it("Tests remove item", () => {
     component.configuration.selectionMode = SelectionMode.MULTIPLE;
-    let item2 = {
+    const item2 = {
       id: "2",
       parentId: null,
       name: "Level 2",
@@ -173,7 +173,7 @@ describe("SDSSelectedResultComponent", () => {
     component.model = null;
     component.writeValue({});
     expect(component.model).toBe(null);
-    let model = new SAMSDSSelectedItemModel();
+    const model = new SAMSDSSelectedItemModel();
     component.writeValue(model);
     expect(component.model).toBe(model);
   });
@@ -187,24 +187,24 @@ describe("SDSSelectedResultComponent", () => {
   });
 
   it("should handle registerOnChange", () => {
-    let item = {};
+    const item = {};
     component.registerOnChange(item);
     expect(component.propogateChange).toBe(item);
   });
 
   it("should handle registerOnTouched", () => {
-    let item = {};
+    const item = {};
     component.registerOnTouched(item);
     expect(component.onTouchedCallback).toBe(item);
   });
 
   it("should handle multi value and depth of values", () => {
-    let data = { level1: "1", sub: { level2: "2" } };
+    const data = { level1: "1", sub: { level2: "2" } };
     expect(component.getObjectValue(data, "level1")).toBe("1");
     expect(component.getObjectValue(data, "sub.level2")).toBe("2");
     expect(component.getObjectValue(data, "level1,sub.level2")).toBe("1 2");
     expect(component.getObjectValue(data, "sub.level2,level1")).toBe("2 1");
-    let data2 = { level1: "1" };
+    const data2 = { level1: "1" };
     expect(component.getObjectValue(data2, "level1,sub.level2")).toBe("1");
   });
 });

@@ -26,21 +26,21 @@ describe("ListResultsMessage component", () => {
     });
 
     it("should display a message", function () {
-      let text = fixture.debugElement.nativeElement.textContent;
+      const text = fixture.debugElement.nativeElement.textContent;
       expect(text).toBe("Showing 11 - 20 of 23 results");
     });
     it("should allow a suffix", function () {
       component.suffix = "records";
       component.ngOnChanges();
       fixture.detectChanges();
-      let text = fixture.debugElement.nativeElement.textContent;
+      const text = fixture.debugElement.nativeElement.textContent;
       expect(text).toBe("Showing 11 - 20 of 23 records");
     });
     it("should handle showing less than total", function () {
       component.total = 7;
       component.ngOnChanges();
       fixture.detectChanges();
-      let text = fixture.debugElement.nativeElement.textContent;
+      const text = fixture.debugElement.nativeElement.textContent;
       expect(text).toBe("Showing 1 - 7 of 7 results");
     });
   });

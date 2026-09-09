@@ -84,10 +84,10 @@ export class PrototypeSearchService {
           .map((item) => {
             let description;
 
-            let regex = new RegExp(query, "gi");
+            const regex = new RegExp(query, "gi");
             let match;
             if ((match = regex.exec(item.name))) {
-              let wordLength = parseInt(match.index + query.length);
+              const wordLength = parseInt(match.index + query.length);
               if (match.index === 0) {
                 description = `${item.name.slice(match.index, wordLength)}<b>${item.name.slice(wordLength)}</b>`;
               } else {

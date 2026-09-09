@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
 
 /**
  * The <sam-alert> component keeps users informed of important and (optionally)
@@ -9,7 +9,7 @@ import { Component, Input, Output, EventEmitter } from "@angular/core";
   templateUrl: "./alert.template.html",
   standalone: false,
 })
-export class SamAlertComponent {
+export class SamAlertComponent implements OnInit {
   /**
    * Sets the alert type, defaults to 'success'
    */

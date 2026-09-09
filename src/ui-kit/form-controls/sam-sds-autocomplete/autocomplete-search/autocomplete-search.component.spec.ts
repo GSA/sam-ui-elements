@@ -469,19 +469,19 @@ describe("SamAutocompleteComponent", () => {
   });
 
   it("should handle registerOnChange", () => {
-    let item = {};
+    const item = {};
     component.registerOnChange(item);
     expect(component.propogateChange).toBe(item);
   });
 
   it("should handle registerOnTouched", () => {
-    let item = {};
+    const item = {};
     component.registerOnTouched(item);
     expect(component.onTouchedCallback).toBe(item);
   });
 
   it("should free text be shown", () => {
-    let textValue = "Some value";
+    const textValue = "Some value";
     expect(component.showFreeText()).toBeFalsy();
     component.configuration.isFreeTextEnabled = true;
     expect(component.showFreeText()).toBeFalsy();
@@ -490,12 +490,12 @@ describe("SamAutocompleteComponent", () => {
   });
 
   it("should handle multi value and depth of values", () => {
-    let data = { level1: "1", sub: { level2: "2" } };
+    const data = { level1: "1", sub: { level2: "2" } };
     expect(component.getObjectValue(data, "level1")).toBe("1");
     expect(component.getObjectValue(data, "sub.level2")).toBe("2");
     expect(component.getObjectValue(data, "level1,sub.level2")).toBe("1 2");
     expect(component.getObjectValue(data, "sub.level2,level1")).toBe("2 1");
-    let data2 = { level1: "1" };
+    const data2 = { level1: "1" };
     expect(component.getObjectValue(data2, "level1,sub.level2")).toBe("1");
   });
 

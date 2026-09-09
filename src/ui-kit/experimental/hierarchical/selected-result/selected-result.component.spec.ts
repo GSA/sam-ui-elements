@@ -111,7 +111,7 @@ describe("SamHierarchicalSelectedResultComponent", () => {
 
   it("Tests remove item", () => {
     component.model.treeMode = TreeMode.MULTIPLE;
-    let item2 = {
+    const item2 = {
       id: "2",
       parentId: null,
       name: "Level 2",

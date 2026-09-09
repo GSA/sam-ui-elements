@@ -10,15 +10,15 @@ describe("The calendar class", () => {
     });
 
     it("tests weekStartDate", () => {
-      let date = new Date("01/01/2018");
-      let weekStartDate = obj.weekStartDate(date);
+      const date = new Date("01/01/2018");
+      const weekStartDate = obj.weekStartDate(date);
       expect(weekStartDate.getMonth()).toBe(11); //december, 0-based
       expect(weekStartDate.getDate()).toBe(31);
       expect(weekStartDate.getFullYear()).toBe(2017);
     });
 
     it("tests monthDates", () => {
-      let monthDates = obj.monthDates(
+      const monthDates = obj.monthDates(
         2018,
         0,
         (date) => {
@@ -34,13 +34,13 @@ describe("The calendar class", () => {
     });
 
     it("tests monthDays", () => {
-      let monthDays = obj.monthDays(2018, 0);
+      const monthDays = obj.monthDays(2018, 0);
       expect(monthDays[0][0]).toBe(0);
     });
 
     it("tests monthText", () => {
-      let monthText = obj.monthText(2018, 0);
-      let expectedValue = `    1  2  3  4  5  6
+      const monthText = obj.monthText(2018, 0);
+      const expectedValue = `    1  2  3  4  5  6
  7  8  9 10 11 12 13
 14 15 16 17 18 19 20
 21 22 23 24 25 26 27
