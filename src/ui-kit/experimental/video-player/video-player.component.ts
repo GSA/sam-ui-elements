@@ -7,6 +7,9 @@ import {
   Renderer2,
   Output,
   EventEmitter,
+  AfterContentInit,
+  AfterViewInit,
+  OnDestroy,
 } from "@angular/core";
 import * as InitPxVideo from "accessible-html5-video-player/js/px-video.js";
 declare let InitPxVideo: any;
@@ -29,7 +32,9 @@ interface InitPxVideoConfig {
   },
   standalone: false,
 })
-export class SamVideoPlayerComponent {
+export class SamVideoPlayerComponent
+  implements AfterContentInit, AfterViewInit, OnDestroy
+{
   @ContentChildren("videoPly", { descendants: true })
   public videos: QueryList<ElementRef>;
   @ContentChildren("videoTrack", { descendants: true })

@@ -1,4 +1,10 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+} from "@angular/core";
 
 export type ToolbarItem = {
   label: string;
@@ -38,7 +44,7 @@ export type ToolbarItemIcon =
   `,
   standalone: false,
 })
-export class SamActionsListComponent {
+export class SamActionsListComponent implements OnChanges {
   /**
    * Passes in the content model for the top right items+icons
    */

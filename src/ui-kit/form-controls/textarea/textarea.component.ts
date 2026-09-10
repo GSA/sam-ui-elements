@@ -6,6 +6,8 @@ import {
   Output,
   EventEmitter,
   ChangeDetectorRef,
+  OnInit,
+  AfterViewInit,
 } from "@angular/core";
 import { LabelWrapper } from "../../wrappers/label-wrapper";
 import {
@@ -32,7 +34,9 @@ import { TextAreaWidthType } from "../../types";
   ],
   standalone: false,
 })
-export class SamTextareaComponent implements ControlValueAccessor {
+export class SamTextareaComponent
+  implements ControlValueAccessor, OnInit, AfterViewInit
+{
   /**
    * Sets the text input value
    */

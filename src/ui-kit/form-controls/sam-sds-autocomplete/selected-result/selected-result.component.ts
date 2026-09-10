@@ -92,7 +92,7 @@ export class SAMSDSSelectedResultComponent implements ControlValueAccessor {
    * @param object
    * @param propertyFields comma seperated list with periods depth of object
    */
-  getObjectValue(object: Object, propertyFields: string): string {
+  getObjectValue(object: object, propertyFields: string): string {
     let value = "";
     let current = object;
     const fieldSplit = propertyFields.split(",");

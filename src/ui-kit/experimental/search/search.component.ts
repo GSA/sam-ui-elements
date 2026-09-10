@@ -6,6 +6,7 @@ import {
   ElementRef,
   ViewChild,
   OnInit,
+  OnChanges,
 } from "@angular/core";
 
 import {
@@ -59,7 +60,7 @@ import { map, tap, filter, debounceTime, switchAll } from "rxjs/operators";
   providers: [PrototypeSearchService],
   standalone: false,
 })
-export class SamSearchComponent implements OnInit {
+export class SamSearchComponent implements OnInit, OnChanges {
   @ViewChild("searchInput", { static: true }) inputEl: ElementRef;
   @Input() public focus: boolean;
   @Output() selectedDomain: EventEmitter<any> = new EventEmitter();

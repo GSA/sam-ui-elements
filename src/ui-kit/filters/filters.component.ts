@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   Optional,
   SimpleChanges,
+  OnChanges,
 } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 
@@ -27,7 +28,7 @@ import { SamPageNextService } from "../experimental/patterns/layout/architecture
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: false,
 })
-export class SamFiltersComponent {
+export class SamFiltersComponent implements OnChanges {
   @Input() public form: FormGroup;
   @Input() public fields: FormlyFieldConfig[];
   @Input() public model: any;

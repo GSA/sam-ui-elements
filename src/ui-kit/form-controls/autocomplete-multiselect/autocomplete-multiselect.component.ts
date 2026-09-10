@@ -8,6 +8,8 @@ import {
   forwardRef,
   TemplateRef,
   AfterViewInit,
+  OnInit,
+  OnChanges,
 } from "@angular/core";
 import {
   animate,
@@ -104,7 +106,7 @@ import { SamCache } from "../autocomplete/autocomplete.component";
   standalone: false,
 })
 export class SamAutocompleteMultiselectComponent
-  implements ControlValueAccessor, AfterViewInit, SamCache
+  implements ControlValueAccessor, AfterViewInit, SamCache, OnInit, OnChanges
 {
   /**
    * Gets DOM element for the textarea used for input

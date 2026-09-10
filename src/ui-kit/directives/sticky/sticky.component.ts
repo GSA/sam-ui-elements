@@ -4,6 +4,7 @@ import {
   ElementRef,
   Input,
   OnInit,
+  AfterViewChecked,
 } from "@angular/core";
 
 /**
@@ -13,7 +14,7 @@ import {
   selector: "[sam-sticky]",
   standalone: false,
 })
-export class SamStickyComponent implements OnInit {
+export class SamStickyComponent implements OnInit, AfterViewChecked {
   // Research sticky polyfill
   // http://html5please.com/#sticky
   /**

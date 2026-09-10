@@ -5,7 +5,7 @@ export class EventDispatcher {
     this._initListeners(validListeners);
   }
 
-  public on(event: string, callback: Function, context: Object) {
+  public on(event: string, callback: Function, context: object) {
     const isRegistered = this._isRegisteredEvent(event);
     const isNotDuplicate = !this._isDuplicate(event, callback);
 

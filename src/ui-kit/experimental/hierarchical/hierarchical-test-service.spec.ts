@@ -26,7 +26,7 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
   ): Observable<SamHiercarchicalServiceResult> {
     const itemIncrease = 25;
     const data = of(this.loadedData);
-    let itemsOb: Observable<Object[]>;
+    let itemsOb: Observable<object[]>;
     if (searchValue) {
       itemsOb = data.pipe(
         map((items) =>
@@ -63,7 +63,7 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
     const itemIncrease = 15;
     const temp = this.getSortedData(this.loadedData, item.sort);
     const data = of(temp);
-    const itemsOb: Observable<Object[]> = this.filterItemsByAllFields(
+    const itemsOb: Observable<object[]> = this.filterItemsByAllFields(
       item,
       undefined,
       data

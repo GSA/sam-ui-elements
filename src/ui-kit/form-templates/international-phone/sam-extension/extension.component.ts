@@ -1,4 +1,9 @@
-import { Component, ChangeDetectorRef, ViewEncapsulation } from "@angular/core";
+import {
+  Component,
+  ChangeDetectorRef,
+  ViewEncapsulation,
+  OnInit,
+} from "@angular/core";
 
 import { FormControl } from "@angular/forms";
 
@@ -20,7 +25,7 @@ import { numberInputKeys } from "../number-input-keys";
   providers: [AccessorToken(SamExtension), ValidatorToken(SamExtension)],
   standalone: false,
 })
-export class SamExtension extends SamFormControl {
+export class SamExtension extends SamFormControl implements OnInit {
   /**
    * A placeholder value for the extention. In this
    * component, placeholder should represent the number

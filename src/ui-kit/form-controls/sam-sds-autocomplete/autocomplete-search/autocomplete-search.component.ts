@@ -160,7 +160,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    * @param propertyFields comma seperated list with periods depth of object
    */
 
-  getObjectValue(object: Object, propertyFields: string): string {
+  getObjectValue(object: object, propertyFields: string): string {
     let value = "";
     let current = object;
     const fieldSplit = propertyFields.split(",");
@@ -648,7 +648,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    * Sets the highlighted item by keyboard or mouseover
    * @param item
    */
-  private setHighlightedItem(item: Object): void {
+  private setHighlightedItem(item: object): void {
     if (this.results && this.results.length > 0) {
       if (this.highlightedItem) {
         this.highlightedItem[this.HighlightedPropertyName] = false;

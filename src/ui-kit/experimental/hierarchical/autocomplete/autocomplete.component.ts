@@ -398,7 +398,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
    * Sets the highlighted item by keyboard or mouseover
    * @param item
    */
-  private setHighlightedItem(item: Object): void {
+  private setHighlightedItem(item: object): void {
     if (this.results && this.results.length > 0) {
       if (this.highlightedItem) {
         this.highlightedItem[this.HighlightedPropertyName] = false;

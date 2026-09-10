@@ -1,4 +1,11 @@
-import { Component, Input, OnInit, ViewChild, ElementRef } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  OnDestroy,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 import { Observable, Subscription, Subject, of, fromEvent } from "rxjs";
@@ -12,7 +19,7 @@ import { Comment } from "./interfaces";
   templateUrl: "comments.template.html",
   standalone: false,
 })
-export class SamCommentsComponent implements OnInit {
+export class SamCommentsComponent implements OnInit, OnDestroy {
   /**
    * Sets disabled state
    */

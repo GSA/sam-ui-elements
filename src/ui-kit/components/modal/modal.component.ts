@@ -7,6 +7,8 @@ import {
   ElementRef,
   ViewChild,
   ChangeDetectorRef,
+  OnDestroy,
+  AfterViewChecked,
 } from "@angular/core";
 import { ScrollHelpers } from "../../dom-helpers";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -20,7 +22,7 @@ import { KeyHelper, KEYS } from "../../utilities/key-helper/key-helper";
   templateUrl: "./modal.template.html",
   standalone: false,
 })
-export class SamModalComponent implements OnInit {
+export class SamModalComponent implements OnInit, OnDestroy, AfterViewChecked {
   /**
    * Sets ID html attribute of modal
    */

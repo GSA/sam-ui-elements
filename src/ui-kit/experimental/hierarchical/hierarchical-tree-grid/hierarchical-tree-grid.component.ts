@@ -7,6 +7,8 @@ import {
   Output,
   EventEmitter,
   ChangeDetectorRef,
+  OnChanges,
+  AfterViewInit,
 } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { SamSortDirective } from "../../../components";
@@ -20,7 +22,7 @@ import { SamHierarchicalTreeGridConfiguration } from "../models/SamHierarchicalT
   standalone: false,
 })
 export class SamHierarchicalTreeGridComponent
-  implements OnInit, AfterViewChecked
+  implements OnInit, AfterViewChecked, OnChanges, AfterViewInit
 {
   /**
    * Table configurations

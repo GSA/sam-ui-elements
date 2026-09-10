@@ -7,6 +7,7 @@ import {
   EventEmitter,
   OnInit,
   forwardRef,
+  AfterViewInit,
 } from "@angular/core";
 import { LabelWrapper } from "../../wrappers/label-wrapper";
 import {
@@ -31,7 +32,9 @@ import { SamFormService } from "../../form-service";
   ],
   standalone: false,
 })
-export class SamPhoneEntryComponent implements OnInit, ControlValueAccessor {
+export class SamPhoneEntryComponent
+  implements OnInit, ControlValueAccessor, AfterViewInit
+{
   /**
    * The label text to appear above the input
    */

@@ -6,7 +6,11 @@
   class="sds-autocomplete-selected"
   aria-live="polite"
 >
-  <li role="option" *ngFor="let result of model.items; let i = index">
+  <li
+    role="option"
+    aria-selected="true"
+    *ngFor="let result of model.items; let i = index"
+  >
     <div
       class="sds-tag sds-tag--chip sds-tag--input"
       [ngClass]="disabled ? 'sds-tag--disabled' : ''"

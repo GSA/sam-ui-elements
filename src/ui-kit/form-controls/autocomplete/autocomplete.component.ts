@@ -11,6 +11,8 @@ import {
   ChangeDetectorRef,
   TemplateRef,
   OnDestroy,
+  OnInit,
+  AfterViewInit,
 } from "@angular/core";
 import {
   NG_VALUE_ACCESSOR,
@@ -46,7 +48,13 @@ export interface SamCache {
   standalone: false,
 })
 export class SamAutocompleteComponent
-  implements ControlValueAccessor, OnChanges, OnDestroy, SamCache
+  implements
+    ControlValueAccessor,
+    OnChanges,
+    OnDestroy,
+    SamCache,
+    OnInit,
+    AfterViewInit
 {
   @ViewChild("resultsList", { static: false }) resultsList: ElementRef;
   @ViewChild("resultsListKV", { static: false }) resultsListKV: ElementRef;

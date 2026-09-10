@@ -62,7 +62,7 @@ export class SamButtonNextComponent {
     dark: "inverted",
   };
 
-  get btnClass(): String {
+  get btnClass(): string {
     const classMap = [];
 
     // Adds action class

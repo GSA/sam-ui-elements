@@ -20,7 +20,24 @@ const recommendedTypeScriptWarnings = asWarnings([
   ...angular.configs.tsRecommended,
 ]);
 
-const accessibilityWarnings = asWarnings(angular.configs.templateAccessibility);
+// @angular-eslint/prefer-standalone is intentionally disabled, not just
+// downgraded to a warning: nearly every flagged component here is
+// `standalone: false` and registered via `declarations:` in a legacy
+// NgModule, several of which are in the frozen
+// scripts/consumer-deep-imports.json contract. Autofixing this rule flips
+// Angular's default to
+// `standalone: true` and broke 827 tests when tried (see #582/PR #675).
+// See AGENTS.md "Standalone-component lint policy (deferred)" for the
+// full rationale (GSA/sam-ui-elements#584).
+recommendedTypeScriptWarnings["@angular-eslint/prefer-standalone"] = "off";
+
+// Template accessibility debt (see #583) has been fully resolved: every rule
+// in `angular.configs.templateAccessibility` currently has 0 findings across
+// both workspaces. Per #580's promotion policy ("resolved rule categories are
+// promoted from warnings to errors"), these are enforced as errors directly
+// from the plugin's own recommended severities rather than downgraded to
+// warnings, so any future regression fails the build immediately instead of
+// silently inflating the warning baseline.
 
 // @angular-eslint/prefer-inject is intentionally disabled, not just
 // downgraded to a warning: angular-eslint 20's tsRecommended config newly
@@ -90,6 +107,5 @@ export default tseslint.config(
   {
     files: ["**/*.html"],
     extends: angular.configs.templateAccessibility,
-    rules: accessibilityWarnings,
   }
 );

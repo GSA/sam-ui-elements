@@ -16,6 +16,8 @@ import {
   ContentChildren,
   ElementRef,
   Renderer2,
+  AfterContentChecked,
+  AfterViewChecked,
 } from "@angular/core";
 import { coerceBooleanProperty } from "@angular/cdk/coercion";
 import { Observable } from "rxjs";
@@ -51,7 +53,7 @@ export type MdTabHeaderPosition = "above" | "below";
   },
   standalone: false,
 })
-export class MdTabGroup {
+export class MdTabGroup implements AfterContentChecked, AfterViewChecked {
   @ContentChildren(MdTab) _tabs: QueryList<MdTab>;
 
   @ViewChild("tabBodyWrapper", { static: true }) _tabBodyWrapper: ElementRef;

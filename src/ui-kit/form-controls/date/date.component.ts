@@ -8,6 +8,7 @@ import {
   OnInit,
   OnChanges,
   forwardRef,
+  AfterViewInit,
 } from "@angular/core";
 
 import moment from "moment";
@@ -40,7 +41,7 @@ import { KeyHelper } from "../../utilities/key-helper/key-helper";
   standalone: false,
 })
 export class SamDateComponent
-  implements OnInit, OnChanges, ControlValueAccessor
+  implements OnInit, OnChanges, ControlValueAccessor, AfterViewInit
 {
   /**
    * Sets the general error message for component

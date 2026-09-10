@@ -5,6 +5,7 @@ import {
   Input,
   Output,
   EventEmitter,
+  OnChanges,
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { SamMenuItemComponent } from "../menu-item";
@@ -19,7 +20,7 @@ import { MenuItem } from "../interfaces";
   templateUrl: "./sidenav.template.html",
   standalone: false,
 })
-export class SamSidenavComponent implements OnInit {
+export class SamSidenavComponent implements OnInit, OnChanges {
   /**
    * Sets type of side navigation, currently there are two options
    * 'default' & 'step'

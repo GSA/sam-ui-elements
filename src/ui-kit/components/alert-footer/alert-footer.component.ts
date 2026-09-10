@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { SamAlertFooterService } from "./alert-footer.service";
 import { AlertType } from "../../types";
 
@@ -7,7 +7,7 @@ import { AlertType } from "../../types";
   templateUrl: "alert-footer.template.html",
   standalone: false,
 })
-export class SamAlertFooterComponent {
+export class SamAlertFooterComponent implements OnInit {
   alerts: AlertType[] = [];
 
   constructor(private alertFooterService: SamAlertFooterService) {}
