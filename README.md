@@ -4,7 +4,7 @@ This package houses the SAM UI Kit, an Angular based UI component library design
 
 ## Contributing
 
-Create a feature branch from the latest `master` branch code. After development is finished, submit a PR with `master` as the target.
+This repository does not currently accept external pull requests — see [CONTRIBUTING.md](CONTRIBUTING.md) for details. Team members: create a feature branch from the latest `master` branch code, then submit a PR with `master` as the target.
 
 ## Release Notes
 
