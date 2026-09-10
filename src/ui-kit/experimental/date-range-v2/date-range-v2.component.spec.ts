@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 import { SamWrapperModule } from "../../../ui-kit/wrappers";
 import { SamDateRangeV2Component } from "./date-range-v2.component";
@@ -64,7 +64,7 @@ describe("The Sam Date Range V2 component", () => {
   });
   describe("rendered tests", () => {
     let component: SamDateRangeV2Component;
-    let fixture: any;
+    let fixture: ComponentFixture<SamDateRangeV2Component>;
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [
