@@ -2,13 +2,13 @@ export type modelType = {
   /**
    * Active filters, each property should be of type 'filterItemModel'
    */
-  filters?: {};
-  filterFields?: any[];
+  filters?: Record<string, unknown>;
+  filterFields?: unknown[];
   pagination?: paginationModel;
   /**
    *
    */
-  data?: any;
+  data?: unknown;
   sort?: sortModel;
 };
 

@@ -1,6 +1,10 @@
 import { Injectable } from "@angular/core";
 
-import { ServiceModel, ServiceProperty } from "./service-property";
+import {
+  ServiceModel,
+  ServiceProperty,
+  ServicePropertyUpdateFn,
+} from "./service-property";
 import { DataStore } from "../store";
 import { Observable, Subject } from "rxjs";
 
@@ -11,7 +15,7 @@ export type SamPageEvents = "open sidebar" | "close sidebar";
 
 @Injectable()
 export class SamPageNextService {
-  private pageSubject = new Subject<any>();
+  private pageSubject = new Subject<{ event: SamPageEvents }>();
   public model: ServiceModel;
 
   constructor(private _store: DataStore) {
@@ -22,7 +26,7 @@ export class SamPageNextService {
     this.pageSubject.next({ event: message });
   }
 
-  public getPageMessage(): Observable<any> {
+  public getPageMessage(): Observable<{ event: SamPageEvents }> {
     return this.pageSubject.asObservable();
   }
 
@@ -43,12 +47,12 @@ export class SamPageNextService {
       }
     );
 
-    this.model.registerChanges(this._updateFn(this));
+    this.model.registerChanges(this._updateFn(this) as ServicePropertyUpdateFn);
   }
 
-  private _updateFn(context) {
-    return function (event) {
-      return function (value) {
+  private _updateFn(context: SamPageNextService) {
+    return function (event: string) {
+      return function (value: unknown) {
         context._store.update({
           type: event,
           payload: value,

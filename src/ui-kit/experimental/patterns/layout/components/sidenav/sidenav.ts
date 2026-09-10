@@ -150,7 +150,7 @@ export class MdSidenav implements AfterContentInit, OnDestroy {
     private _elementRef: ElementRef,
     private _focusTrapFactory: FocusTrapFactory,
     public cdr: ChangeDetectorRef,
-    @Optional() @Inject(DOCUMENT) private _doc: any
+    @Optional() @Inject(DOCUMENT) private _doc: Document
   ) {
     this.onOpen.subscribe(() => {
       if (this._doc) {

@@ -42,7 +42,7 @@ export class SamPageNextComponent
   /**
    * Event emitter for back button interaction
    */
-  @Output() public backButtonClick = new EventEmitter<any>();
+  @Output() public backButtonClick = new EventEmitter<void>();
 
   @HostListener("window:resize")
   public resize() {

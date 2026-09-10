@@ -2,29 +2,37 @@ import { Observable, BehaviorSubject } from "rxjs";
 
 export interface DataStoreEvent {
   type: string;
-  payload?: any;
+  payload?: unknown;
 }
 
-export class DataStore {
-  public state: BehaviorSubject<any>;
-  public events: Observable<any>;
+export type DataStoreReducer<TState> = (
+  state: TState,
+  event: DataStoreEvent
+) => TState;
 
-  private _events: BehaviorSubject<any>;
+export class DataStore<TState = unknown> {
+  public state: BehaviorSubject<TState>;
+  public events: Observable<{ type: string; payload: TState }>;
+
+  private _events: BehaviorSubject<{ type: string; payload: TState }>;
   private _dispatcher: BehaviorSubject<DataStoreEvent>;
 
-  public get currentState(): any {
+  public get currentState(): TState {
     return this.state.getValue();
   }
 
   constructor(
-    private _reducer,
-    initialState
+    private _reducer: DataStoreReducer<TState>,
+    initialState: TState
   ) {
     // Initialize State
-    this.state = new BehaviorSubject<any>(initialState);
+    this.state = new BehaviorSubject<TState>(initialState);
 
     // Initialize Events
-    this._events = new BehaviorSubject<any>({ type: "init" });
+    this._events = new BehaviorSubject<{ type: string; payload: TState }>({
+      type: "init",
+      payload: initialState,
+    });
     this.events = this._events.asObservable();
 
     // Initialize Dispatcher
