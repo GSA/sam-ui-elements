@@ -162,9 +162,9 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
   private sortingDataAccessor(
     data: HierarchicalDataItem,
     sortHeaderId: string
-  ): unknown {
+  ): string | number {
     const value = (data as unknown as Record<string, unknown>)[sortHeaderId];
-    return value;
+    return value as string | number;
   }
 }
 

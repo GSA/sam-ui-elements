@@ -54,6 +54,10 @@ export class AbstractGrid {
     return this._rows[this._currentRow].cells[this._currentCol];
   }
 
+  public get node(): Element {
+    return this._node;
+  }
+
   public move(direction: string) {
     switch (direction) {
       case "up":

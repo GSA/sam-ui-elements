@@ -12,9 +12,9 @@ export type DataStoreReducer<TState> = (
 
 export class DataStore<TState = unknown> {
   public state: BehaviorSubject<TState>;
-  public events: Observable<{ type: string; payload: TState }>;
+  public events: Observable<{ type: string; payload?: TState }>;
 
-  private _events: BehaviorSubject<{ type: string; payload: TState }>;
+  private _events: BehaviorSubject<{ type: string; payload?: TState }>;
   private _dispatcher: BehaviorSubject<DataStoreEvent>;
 
   public get currentState(): TState {
@@ -29,9 +29,9 @@ export class DataStore<TState = unknown> {
     this.state = new BehaviorSubject<TState>(initialState);
 
     // Initialize Events
-    this._events = new BehaviorSubject<{ type: string; payload: TState }>({
+    this._events = new BehaviorSubject<{ type: string; payload?: TState }>({
       type: "init",
-      payload: initialState,
+      payload: undefined,
     });
     this.events = this._events.asObservable();
 

@@ -24,6 +24,16 @@ export interface OptionModel {
   checked: boolean;
   disabled: boolean;
 }
+
+/**
+ * `model` (and the CVA/two-way-binding surface built on it) may hold either
+ * raw option values — the `ControlValueAccessor`/`writeValue` contract — or,
+ * via `onChecked`'s insertion path, the option objects themselves (see
+ * `isChecked`). This union is the real value type instead of `unknown[]`, so
+ * a consumer with a typed `string[]` model can still assign the emitted
+ * value under a compatible (if slightly widened) type.
+ */
+export type SamListBoxValue = string | OptionModel;
 @Component({
   selector: "sam-listbox",
   templateUrl: "./listbox.component.html",
@@ -41,7 +51,7 @@ export class SamListBoxComponent implements ControlValueAccessor, OnInit {
   /**
    * Deprecated, Sets the bound value of the component
    */
-  @Input() model: unknown[] = [];
+  @Input() model: SamListBoxValue[] = [];
   /**
    * Sets the array of checkbox values and labels (see OptionsType[])
    */
@@ -108,8 +118,8 @@ export class SamListBoxComponent implements ControlValueAccessor, OnInit {
   /**
    * Deprecated, Event emitted when the model value changes
    */
-  @Output() modelChange: EventEmitter<unknown[]> = new EventEmitter<
-    unknown[]
+  @Output() modelChange: EventEmitter<SamListBoxValue[]> = new EventEmitter<
+    SamListBoxValue[]
   >();
 
   @Output() optionSelected: EventEmitter<OptionModel> =
@@ -123,14 +133,14 @@ export class SamListBoxComponent implements ControlValueAccessor, OnInit {
    * value is before another value
    */
   private _ordering: Record<string, number> = {};
-  onChange: (value: unknown[]) => void = () => undefined;
+  onChange: (value: SamListBoxValue[]) => void = () => undefined;
   onTouched: () => void = () => undefined;
   private disabled: boolean;
   get value() {
     return this.model;
   }
 
-  set value(val: unknown[]) {
+  set value(val: SamListBoxValue[]) {
     this.setSelectedItem(val);
     this.onChange(this.model);
     this.onTouched();
@@ -152,7 +162,7 @@ export class SamListBoxComponent implements ControlValueAccessor, OnInit {
     this.optionsMode = this.isSingleMode ? "radio" : "checkbox";
   }
 
-  setSelectedItem(val: unknown[]) {
+  setSelectedItem(val: SamListBoxValue[]) {
     let returnVal = val;
     if (!Array.isArray(returnVal)) {
       returnVal = [];
@@ -224,7 +234,7 @@ export class SamListBoxComponent implements ControlValueAccessor, OnInit {
       .focus();
   }
 
-  onChecked(ev: Event, option: unknown) {
+  onChecked(ev: Event, option: SamListBoxValue) {
     this.onTouched();
     if (!(ev.target as HTMLInputElement).checked) {
       // If the option was unchecked, remove it from the model
@@ -290,7 +300,7 @@ export class SamListBoxComponent implements ControlValueAccessor, OnInit {
     this.modelChange.emit(this.model);
   }
 
-  registerOnChange(fn: (value: unknown[]) => void) {
+  registerOnChange(fn: (value: SamListBoxValue[]) => void) {
     this.onChange = fn;
   }
 
@@ -302,7 +312,7 @@ export class SamListBoxComponent implements ControlValueAccessor, OnInit {
     this.disabled = isDisabled;
   }
 
-  writeValue(value: unknown[]) {
+  writeValue(value: SamListBoxValue[] | null | undefined) {
     let returnValue = value;
     if (!returnValue) {
       returnValue = [];

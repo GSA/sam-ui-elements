@@ -55,7 +55,7 @@ export class SamInputMaskComponent
   public get value(): string {
     return this._value;
   }
-  public set value(val: string) {
+  public set value(val: string | null | undefined) {
     this._value = !val ? this.defaultValue : val;
   }
 
@@ -149,7 +149,7 @@ export class SamInputMaskComponent
       .concat(digits.join(""));
   }
 
-  writeValue(val: string) {
+  writeValue(val: string | null | undefined) {
     this.value = val;
     this.previousVal = val;
     this.cdr.detectChanges();

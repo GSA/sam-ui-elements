@@ -117,7 +117,7 @@ export class SamDateRangeV2Component implements OnInit, ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  writeValue(value: DateModel) {
+  writeValue(value: DateModel | null | undefined) {
     let returnValue = value;
     if (!returnValue) {
       returnValue = { startDate: "", endDate: "" };

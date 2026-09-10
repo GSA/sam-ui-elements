@@ -15,11 +15,18 @@ export interface ServicePropertyConfig {
  * concrete subclass: `ServiceProperty` uses it as a plain setter
  * `(value) => void`, while `ServiceModel` uses it as a curried factory
  * `(key) => (value) => void` (see `_registerProperties`/`setValue` below).
- * Both shapes are `(...args: unknown[]) => unknown`-compatible, so callers
- * that rely on the curried shape narrow with a local cast rather than
- * widening this field back to `any`.
+ * Modeling both shapes explicitly (rather than a single
+ * `(...args: unknown[]) => unknown` signature) keeps `registerChanges` a
+ * variance-safe public API: callers can pass either concretely-typed
+ * callback shape directly, and the two subclasses narrow with a local cast
+ * to the shape they know they were given.
  */
-export type ServicePropertyUpdateFn = (...args: unknown[]) => unknown;
+export type ServicePropertySetterFn = (value: unknown) => void;
+export type ServicePropertyCurriedUpdateFn = (
+  key: string
+) => ServicePropertySetterFn;
+export type ServicePropertyUpdateFn =
+  ServicePropertySetterFn | ServicePropertyCurriedUpdateFn;
 
 export abstract class AbstractServiceProperty {
   public readonly name: string;
@@ -61,11 +68,11 @@ export class ServiceProperty extends AbstractServiceProperty {
   }
 
   public setValue(value: unknown): void {
-    this._updateFn(value);
+    (this._updateFn as ServicePropertySetterFn)(value);
   }
 
   public patchValue(value: unknown): void {
-    this._updateFn({
+    (this._updateFn as ServicePropertySetterFn)({
       ...(this.value as Record<string, unknown>),
       ...(value as Record<string, unknown>),
     });
@@ -110,19 +117,19 @@ export class ServiceModel extends AbstractServiceProperty {
 
   private _registerProperties() {
     Object.keys(this.properties).forEach((key) => {
-      const perPropertyUpdateFn = this._updateFn(
-        key
-      ) as ServicePropertyUpdateFn;
+      const perPropertyUpdateFn = (
+        this._updateFn as ServicePropertyCurriedUpdateFn
+      )(key);
       this.properties[key].registerChanges(perPropertyUpdateFn);
     });
   }
 
   public setValue(value: unknown) {
-    (this._updateFn(this.name) as ServicePropertyUpdateFn)(value);
+    (this._updateFn as ServicePropertyCurriedUpdateFn)(this.name)(value);
   }
 
   public patchValue(value: unknown): void {
-    (this._updateFn(this.name) as ServicePropertyUpdateFn)({
+    (this._updateFn as ServicePropertyCurriedUpdateFn)(this.name)({
       ...(this.value as Record<string, unknown>),
       ...(value as Record<string, unknown>),
     });

@@ -1,4 +1,14 @@
-export type EventListenerCallback = (...args: unknown[]) => void;
+/**
+ * Represents an arbitrary event-listener signature (e.g. `(e: KeyboardEvent) =>
+ * void`, `(e: MouseEvent) => void`, or a zero-arg handler). The
+ * bivariance-hack method-shorthand form is used instead of a plain function
+ * type so that concretely-typed listeners remain assignable here under
+ * `strictFunctionTypes` — a plain `(...args: unknown[]) => void` alias would
+ * reject any listener with a more specific parameter type.
+ */
+export type EventListenerCallback = {
+  bivarianceHack(...args: unknown[]): void;
+}["bivarianceHack"];
 
 export class EventDispatcher {
   private _listeners: Record<string, Array<[EventListenerCallback, object]>> =

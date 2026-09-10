@@ -204,6 +204,27 @@ describe("SamListBoxComponent", () => {
     fixture.detectChanges();
   });
 
+  it("onChecked with the full option object, as the template passes it", () => {
+    // The template's (change) binding calls onChecked($event, option) with
+    // the whole OptionModel, not just its value — exercise that path
+    // directly so insertion order/removal via the object-valued shape stays
+    // covered (isChecked treats both shapes as equivalent).
+    const ev = fakeCheckboxEvent(true);
+    component.options = cloneOptions();
+    const row = component.options[6];
+
+    component.onChecked(ev, row);
+    fixture.detectChanges();
+    expect(component.model).toContain(row);
+    expect(component.isChecked(row.value)).toBe(true);
+
+    (ev.target as unknown as { checked: boolean }).checked = false;
+    component.onChecked(ev, row);
+    fixture.detectChanges();
+    expect(component.model).not.toContain(row);
+    expect(component.isChecked(row.value)).toBe(false);
+  });
+
   it("should process arrow up and down keypresses", fakeAsync(() => {
     component.options = cloneOptions();
     fixture.detectChanges();
