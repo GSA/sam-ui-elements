@@ -31,8 +31,8 @@ describe("The Sam Textarea component", () => {
       component.inputEventChange.subscribe((data) => {
         expect(data).toBe("hello");
       });
-      component.onFocus(true);
-      component.inputEventHandler("hello");
+      component.onFocus(true as unknown as FocusEvent);
+      component.inputEventHandler("hello" as unknown as Event);
 
       /*When value sets to some value*/
       component.maxlength = 10;
@@ -65,7 +65,9 @@ describe("The Sam Textarea component", () => {
 
   describe("rendered tests", () => {
     let component: SamTextareaComponent;
-    let fixture: any;
+    let fixture: ReturnType<
+      typeof TestBed.createComponent<SamTextareaComponent>
+    >;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -156,11 +158,11 @@ describe("The Sam Textarea component", () => {
 
     it("should emit focus events", () => {
       fixture.detectChanges();
-      let focusEventValue: any;
-      let focusValue: any;
+      let focusEventValue: unknown;
+      let focusValue: unknown;
       component.focusEvent.subscribe((val) => (focusEventValue = val));
       component.focus.subscribe((val) => (focusValue = val));
-      component.onFocus("evt");
+      component.onFocus("evt" as unknown as FocusEvent);
       expect(focusEventValue).toBe("evt");
       expect(focusValue).toBe("evt");
     });

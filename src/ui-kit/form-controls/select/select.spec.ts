@@ -34,7 +34,7 @@ describe("The Sam Select component", () => {
   });
   describe("rendered tests", () => {
     let component: SamSelectComponent;
-    let fixture: any;
+    let fixture: ReturnType<typeof TestBed.createComponent<SamSelectComponent>>;
 
     const options = [
       { value: 1, label: "one", name: "one" },

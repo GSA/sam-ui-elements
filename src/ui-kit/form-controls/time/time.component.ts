@@ -13,7 +13,7 @@ import {
   ControlValueAccessor,
   FormControl,
 } from "@angular/forms";
-import { SamFormService } from "../../form-service";
+import { SamFormService, SamFormEvent } from "../../form-service";
 
 /**
  * Provides a time input form control
@@ -107,21 +107,23 @@ export class SamTimeComponent
         });
         this.wrapper.formatErrors(this.control);
       } else {
-        this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
-          if (
-            (!evt.root || evt.root === this.control.root) &&
-            evt.eventType &&
-            evt.eventType === "submit"
-          ) {
-            this.wrapper.formatErrors(this.control);
-          } else if (
-            (!evt.root || evt.root === this.control.root) &&
-            evt.eventType &&
-            evt.eventType === "reset"
-          ) {
-            this.wrapper.clearError();
+        this.samFormService.formEventsUpdated$.subscribe(
+          (evt: SamFormEvent) => {
+            if (
+              (!evt.root || evt.root === this.control.root) &&
+              evt.eventType &&
+              evt.eventType === "submit"
+            ) {
+              this.wrapper.formatErrors(this.control);
+            } else if (
+              (!evt.root || evt.root === this.control.root) &&
+              evt.eventType &&
+              evt.eventType === "reset"
+            ) {
+              this.wrapper.clearError();
+            }
           }
-        });
+        );
       }
     }
   }
@@ -221,7 +223,7 @@ export class SamTimeComponent
     );
   }
 
-  getTime(): any {
+  getTime(): moment.Moment | undefined {
     if (!this.isValid()) {
       return undefined;
     }
@@ -366,10 +368,10 @@ export class SamTimeComponent
     this.ampmV.nativeElement.value = "am";
   }
 
-  onChange: any = () => undefined;
-  onTouched: any = () => undefined;
+  onChange: (value: string) => void = () => undefined;
+  onTouched: () => void = () => undefined;
 
-  registerOnChange(fn) {
+  registerOnChange(fn: (value: string) => void) {
     this.onChange = fn;
   }
 

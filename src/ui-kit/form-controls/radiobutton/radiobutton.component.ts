@@ -65,7 +65,8 @@ export class SamRadioButtonComponent implements OnInit, AfterViewInit {
   /**
    * Event emitted when model value changes
    */
-  @Output() public modelChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() public modelChange: EventEmitter<string | number | symbol> =
+    new EventEmitter<string | number | symbol>();
 
   @ViewChild(FieldsetWrapper, { static: true }) public wrapper: FieldsetWrapper;
 
@@ -93,28 +94,28 @@ export class SamRadioButtonComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public onRadioChange(value) {
+  public onRadioChange(value: string | number | symbol) {
     this.model = value;
     this.onChange(value);
     this.modelChange.emit(value);
   }
 
-  public onChange: any = () => undefined;
-  public onTouched: any = () => undefined;
+  public onChange: (value: string | number | symbol) => void = () => undefined;
+  public onTouched: () => void = () => undefined;
 
-  public registerOnChange(fn) {
+  public registerOnChange(fn: (value: string | number | symbol) => void) {
     this.onChange = fn;
   }
 
-  public registerOnTouched(fn) {
+  public registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 
-  public setDisabledState(disabled) {
+  public setDisabledState(disabled: boolean) {
     this.disabled = disabled;
   }
 
-  public writeValue(value) {
+  public writeValue(value: string | number | symbol) {
     this.model = value;
     this.cdr.detectChanges();
   }

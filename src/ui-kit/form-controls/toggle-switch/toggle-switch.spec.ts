@@ -41,7 +41,9 @@ describe("The Sam Toggle Switch component", () => {
   });
   describe("rendered tests", () => {
     let component: SamToggleSwitchComponent;
-    let fixture: any;
+    let fixture: ReturnType<
+      typeof TestBed.createComponent<SamToggleSwitchComponent>
+    >;
 
     // provide our implementations or mocks to the dependency injector
     beforeEach(() => {

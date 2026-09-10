@@ -43,10 +43,10 @@ export class SamToggleSwitchComponent implements ControlValueAccessor {
   @Output() public switchStatusChange: EventEmitter<boolean> =
     new EventEmitter<boolean>();
 
-  public onSwitchClick(event) {
+  public onSwitchClick(event: Event) {
     this.onTouched();
     if (!this.disableSwitch) {
-      const val = event.target.checked;
+      const val = (event.target as HTMLInputElement).checked;
       this.isSwitchOn = val;
       this.onChange(val);
       this.switchStatusChange.emit(val);
@@ -56,18 +56,18 @@ export class SamToggleSwitchComponent implements ControlValueAccessor {
     }
   }
 
-  public onChange: any = () => undefined;
-  public onTouched: any = () => undefined;
+  public onChange: (value: boolean) => void = () => undefined;
+  public onTouched: () => void = () => undefined;
 
-  public registerOnChange(fn) {
+  public registerOnChange(fn: (value: boolean) => void) {
     this.onChange = fn;
   }
 
-  public registerOnTouched(fn) {
+  public registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 
-  public setDisabledState(disabled) {
+  public setDisabledState(disabled: boolean) {
     this.disableSwitch = disabled;
   }
 

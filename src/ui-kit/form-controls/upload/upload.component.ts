@@ -5,6 +5,7 @@ import {
   Input,
   ViewChild,
   forwardRef,
+  Provider,
 } from "@angular/core";
 import {
   HttpClient,
@@ -21,10 +22,10 @@ import { switchMap } from "rxjs/operators";
 
 export type RequestGenerator = (
   file: File
-) => HttpRequest<any> | Observable<HttpRequest<any>>;
+) => HttpRequest<unknown> | Observable<HttpRequest<unknown>>;
 export type DeleteRequestGenerator = (
   uf: UploadFile
-) => HttpRequest<any> | Observable<HttpRequest<any>>;
+) => HttpRequest<unknown> | Observable<HttpRequest<unknown>>;
 
 export enum UploadStatus {
   Initial,
@@ -37,7 +38,7 @@ export class Upload {
   public subscription: Subscription;
   public progress: number = 0.0;
   public status: UploadStatus = UploadStatus.Initial;
-  public request: HttpRequest<any>;
+  public request: HttpRequest<unknown>;
   public error?: string;
 }
 
@@ -46,36 +47,43 @@ export class UploadFile {
   public upload: Upload;
 }
 
-function toArray(list) {
+function toArray(list: FileList): File[] {
   return Array.prototype.slice.call(list);
 }
 
-const VALUE_ACCESSOR: any = {
+const VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamUploadComponent),
   multi: true,
 };
 
-export namespace UploadValidator {
-  export function Required(control) {
-    const error = {
-      required: "A file is required.",
-    };
+export interface UploadRequiredControlLike {
+  value: UploadFile[];
+}
 
-    const model: UploadFile[] = control.value;
+function uploadRequiredValidator(control: UploadRequiredControlLike) {
+  const error = {
+    required: "A file is required.",
+  };
 
-    if (!model || !model.length) {
-      return error;
-    }
+  const model: UploadFile[] = control.value;
 
-    const atLeastOneDone = model.some((uf: UploadFile) => {
-      return uf.upload.status === UploadStatus.Done;
-    });
-
-    if (!atLeastOneDone) {
-      return error;
-    }
+  if (!model || !model.length) {
+    return error;
   }
+
+  const atLeastOneDone = model.some((uf: UploadFile) => {
+    return uf.upload.status === UploadStatus.Done;
+  });
+
+  if (!atLeastOneDone) {
+    return error;
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-namespace -- keeps the public `UploadValidator.Required(...)` call shape consumers already use
+export namespace UploadValidator {
+  export const Required = uploadRequiredValidator;
 }
 
 @Component({
@@ -144,34 +152,32 @@ export class SamUploadComponent implements ControlValueAccessor {
   files. Does include files with errors */
   public _model: Array<UploadFile> = [];
 
-  private onChange: Function;
+  private onChange: (value: UploadFile[]) => void;
 
-  private onTouched: Function;
+  private onTouched: () => void;
 
   /* The hidden file input dom element */
   @ViewChild("file", { static: true }) private fileInput: ElementRef;
 
   constructor(private httpClient: HttpClient) {}
 
-  onDragStateChange(dragState) {
-    dragState !== DragState.NotDragging
-      ? (this.shouldShowDropTarget = true)
-      : (this.shouldShowDropTarget = false);
+  onDragStateChange(dragState: DragState) {
+    this.shouldShowDropTarget = dragState !== DragState.NotDragging;
   }
 
-  registerOnChange(fn) {
+  registerOnChange(fn: (value: UploadFile[]) => void) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn) {
+  registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 
-  setDisabledState(disabled) {
+  setDisabledState(disabled: boolean) {
     this.disabled = disabled;
   }
 
-  writeValue(value: null | undefined | any) {
+  writeValue(value: null | undefined | UploadFile[]) {
     if (value && value.length) {
       this._model = value;
     } else {
@@ -249,25 +255,30 @@ export class SamUploadComponent implements ControlValueAccessor {
       upload.status = UploadStatus.Uploading;
       const httpEvent$ = this._getHttpEventSteam(uf);
       upload.subscription = httpEvent$.subscribe(
-        (event: any) => {
+        (event: HttpEvent<unknown>) => {
           if (event.type === HttpEventType.UploadProgress) {
-            upload.progress = event.loaded / event.total;
+            upload.progress = event.loaded / (event.total ?? event.loaded);
           } else if (event instanceof HttpHeaderResponse) {
             upload.status = UploadStatus.Done;
           } else if (event instanceof HttpErrorResponse) {
             upload.status = UploadStatus.Error;
           }
-          if (event.ok === false) {
+          if (
+            event &&
+            typeof event === "object" &&
+            "ok" in event &&
+            (event as { ok?: boolean }).ok === false
+          ) {
             upload.error = "Upload failed";
             upload.status = UploadStatus.Error;
             this.emit();
           }
         },
-        (error) => {
+        (error: unknown) => {
           console.error("upload error", error);
-          let toJson: any = {};
+          let toJson: { statusText?: string; message?: string } = {};
           try {
-            toJson = JSON.parse(error);
+            toJson = JSON.parse(String(error));
           } catch {}
           upload.error = toJson.statusText || toJson.message || "Upload failed";
           upload.status = UploadStatus.Error;
@@ -354,13 +365,13 @@ export class SamUploadComponent implements ControlValueAccessor {
     }
   }
 
-  _getHttpEventSteam(uf: UploadFile): Observable<HttpEvent<any>> {
+  _getHttpEventSteam(uf: UploadFile): Observable<HttpEvent<unknown>> {
     const { file, upload } = uf;
     const request = this.uploadRequest(file);
 
     if (request instanceof Observable) {
       return request.pipe(
-        switchMap((req: HttpRequest<any>) => {
+        switchMap((req: HttpRequest<unknown>) => {
           upload.request = req;
           return this.httpClient.request(req);
         })
@@ -382,7 +393,7 @@ export class SamUploadComponent implements ControlValueAccessor {
     this.fileInput.nativeElement.value = "";
   }
 
-  _checkAcceptableFileType(uploadFiles) {
+  _checkAcceptableFileType(uploadFiles: File[]) {
     // restrict the file type
     // (<input accept="file_extension|audio/*|video/*|image/*|media_type">)
     uploadFiles.forEach((uf) => {

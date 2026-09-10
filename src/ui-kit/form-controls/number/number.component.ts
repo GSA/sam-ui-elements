@@ -13,8 +13,9 @@ import {
   ControlValueAccessor,
   FormControl,
   Validators,
+  ValidatorFn,
 } from "@angular/forms";
-import { SamFormService } from "../../form-service";
+import { SamFormService, SamFormEvent } from "../../form-service";
 
 /**
  *
@@ -101,10 +102,10 @@ export class SamNumberComponent
   @ViewChild(LabelWrapper, { static: true }) public wrapper: LabelWrapper;
   public invalidKeys = ["e", "E", ",", "-", "+"];
 
-  public onChange: any = () => {
+  public onChange: (value: number) => void = () => {
     this.wrapper.formatErrors(this.control);
   };
-  public onTouched: any = () => undefined;
+  public onTouched: () => void = () => undefined;
 
   constructor(
     private samFormService: SamFormService,
@@ -123,7 +124,7 @@ export class SamNumberComponent
       return;
     }
 
-    const validators: any[] = [];
+    const validators: ValidatorFn[] = [];
 
     if (this.control.validator) {
       validators.push(this.control.validator);
@@ -140,7 +141,7 @@ export class SamNumberComponent
         this.cdr.detectChanges();
       });
     } else {
-      this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
+      this.samFormService.formEventsUpdated$.subscribe((evt: SamFormEvent) => {
         if (
           (!evt.root || evt.root === this.control.root) &&
           evt.eventType &&
@@ -165,30 +166,30 @@ export class SamNumberComponent
     }
   }
 
-  keyDownHandler(event) {
+  keyDownHandler(event: KeyboardEvent) {
     if (this.invalidKeys.indexOf(event.key) !== -1) {
       event.preventDefault();
     }
   }
 
-  onInputChange(value) {
+  onInputChange(value: number) {
     this.value = value;
     this.onChange(value);
   }
 
-  registerOnChange(fn) {
+  registerOnChange(fn: (value: number) => void) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn) {
+  registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 
-  setDisabledState(disabled) {
+  setDisabledState(disabled: boolean) {
     this.disabled = disabled;
   }
 
-  writeValue(value) {
+  writeValue(value: number) {
     this.value = value;
   }
 }

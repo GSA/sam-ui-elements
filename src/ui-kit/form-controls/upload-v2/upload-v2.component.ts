@@ -12,6 +12,7 @@ import {
   EventEmitter,
   OnInit,
   OnChanges,
+  Provider,
 } from "@angular/core";
 import {
   HttpClient,
@@ -33,10 +34,10 @@ import moment from "moment";
 
 export type RequestGenerator = (
   file: File
-) => HttpRequest<any> | Observable<HttpRequest<any>>;
+) => HttpRequest<unknown> | Observable<HttpRequest<unknown>>;
 export type DeleteRequestGenerator = (
   uf: UploadFile
-) => HttpRequest<any> | Observable<HttpRequest<any>>;
+) => HttpRequest<unknown> | Observable<HttpRequest<unknown>>;
 
 export enum UploadStatus {
   Initial,
@@ -49,7 +50,7 @@ export class Upload {
   public subscription: Subscription;
   public progress: number = 0.0;
   public status: UploadStatus = UploadStatus.Initial;
-  public request: HttpRequest<any>;
+  public request: HttpRequest<unknown>;
   public error?: string;
 }
 
@@ -58,36 +59,77 @@ export class UploadFile {
   public upload: Upload;
 }
 
-function toArray(list) {
+/**
+ * The per-row config the template renders and the component mutates
+ * in place (name editing, ordering, drag state). Built from
+ * `UploadedFileData` by `initilizeFileCtrl`.
+ */
+export interface UploadFileCtrl {
+  date: string;
+  isSecure: boolean;
+  isNameEditMode: boolean;
+  fileName: string;
+  fileSize: number;
+  shadowFileName: string;
+  originName: string;
+  isFirst: boolean;
+  isLast: boolean;
+  url?: string;
+  icon: UploadedFileData["icon"];
+  disabled?: boolean;
+}
+
+/**
+ * The subset of `SamModalComponent`'s API this component drives via
+ * `@ViewChild` template-reference lookups.
+ */
+export interface UploadActionModal {
+  openModal(...args: unknown[]): void;
+  closeModal(emit?: boolean): void;
+}
+
+export interface UploadAccessToggleData {
+  fileIndex: number;
+  secure: boolean;
+}
+
+function toArray(list: FileList): File[] {
   return Array.prototype.slice.call(list);
 }
 
-const VALUE_ACCESSOR: any = {
+const VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamUploadComponentV2),
   multi: true,
 };
 
-export namespace UploadValidator {
-  export function Required(control) {
-    const error = {
-      required: "A file is required.",
-    };
+export interface UploadRequiredControlLike {
+  value: UploadFile[];
+}
 
-    const model: UploadFile[] = control.value;
+function uploadRequiredValidator(control: UploadRequiredControlLike) {
+  const error = {
+    required: "A file is required.",
+  };
 
-    if (!model || !model.length) {
-      return error;
-    }
+  const model: UploadFile[] = control.value;
 
-    const atLeastOneDone = model.some((uf: UploadFile) => {
-      return uf.upload.status === UploadStatus.Done;
-    });
-
-    if (!atLeastOneDone) {
-      return error;
-    }
+  if (!model || !model.length) {
+    return error;
   }
+
+  const atLeastOneDone = model.some((uf: UploadFile) => {
+    return uf.upload.status === UploadStatus.Done;
+  });
+
+  if (!atLeastOneDone) {
+    return error;
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-namespace -- keeps the public `UploadValidator.Required(...)` call shape consumers already use
+export namespace UploadValidator {
+  export const Required = uploadRequiredValidator;
 }
 
 @Component({
@@ -175,34 +217,38 @@ export class SamUploadComponentV2
   /**
    * Event emitted on remove action modal submit
    */
-  @Output() public modalChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() public modalChange: EventEmitter<number> =
+    new EventEmitter<number>();
 
   /**
    * Event emitted on remove action modal open
    */
-  @Output() public modalOpen: EventEmitter<any> = new EventEmitter<any>();
+  @Output() public modalOpen: EventEmitter<unknown> =
+    new EventEmitter<unknown>();
 
   /**
    * Event emitted on toggle access modal submit
    */
-  @Output() public toggleModalChange: EventEmitter<any> =
-    new EventEmitter<any>();
+  @Output() public toggleModalChange: EventEmitter<UploadAccessToggleData> =
+    new EventEmitter<UploadAccessToggleData>();
 
   /**
    * Event emitted on toggle access modal open
    */
-  @Output() public toggleModalOpen: EventEmitter<any> = new EventEmitter<any>();
+  @Output() public toggleModalOpen: EventEmitter<UploadAccessToggleData> =
+    new EventEmitter<UploadAccessToggleData>();
 
   /**
    * Event emitted on toggle access modal close/cancel
    */
-  @Output() public toggleModalClose: EventEmitter<any> =
-    new EventEmitter<any>();
+  @Output() public toggleModalClose: EventEmitter<UploadAccessToggleData> =
+    new EventEmitter<UploadAccessToggleData>();
 
   /**
    * Event emitted on toggling file access
    */
-  @Output() public toggleAccess: EventEmitter<any> = new EventEmitter<any>();
+  @Output() public toggleAccess: EventEmitter<UploadAccessToggleData> =
+    new EventEmitter<UploadAccessToggleData>();
 
   public dragState: DragState = DragState.NotDragging;
 
@@ -210,22 +256,22 @@ export class SamUploadComponentV2
 
   public disabled: boolean = false;
 
-  public fileCtrlConfig: any = [];
+  public fileCtrlConfig: UploadFileCtrl[] = [];
 
   /* The list of visible files. Does not include deleted
   files. Does include files with errors */
   public _model: Array<UploadFile> = [];
 
-  private onChange: Function;
+  private onChange: (value: UploadFile[]) => void;
 
-  private onTouched: Function;
+  private onTouched: () => void;
 
   /* The hidden file input dom element */
   @ViewChild("file", { static: true }) private fileInput: ElementRef;
 
   /* get references to modals */
-  @ViewChild("removeModal", { static: true }) removeModal;
-  @ViewChild("toggleModal", { static: true }) toggleModal;
+  @ViewChild("removeModal", { static: true }) removeModal: UploadActionModal;
+  @ViewChild("toggleModal", { static: true }) toggleModal: UploadActionModal;
 
   public uploadElIds = {
     tableId: "tableId",
@@ -281,24 +327,24 @@ export class SamUploadComponentV2
     }
   }
 
-  setUploadedFiles(uploadedFiles) {
+  setUploadedFiles(uploadedFiles: UploadedFileData[]) {
     this.fileCtrlConfig = uploadedFiles.map((uf) => this.initilizeFileCtrl(uf));
     this.updateFilePos();
   }
 
-  registerOnChange(fn) {
+  registerOnChange(fn: (value: UploadFile[]) => void) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn) {
+  registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 
-  setDisabledState(disabled) {
+  setDisabledState(disabled: boolean) {
     this.disabled = disabled;
   }
 
-  writeValue(value: null | undefined | any) {
+  writeValue(value: null | undefined | UploadedFileData[]) {
     if (value && value.length) {
       this.setUploadTableData(value);
     } else {
@@ -306,13 +352,19 @@ export class SamUploadComponentV2
       this._clearInput();
     }
   }
-  setUploadTableData(value: any[]) {
+  setUploadTableData(value: UploadedFileData[]) {
+    // `value` here holds already-uploaded file metadata (from the
+    // `uploadedFiles` input or a bound form value), not raw `File`
+    // objects. It's threaded through the same `UploadFile`-shaped
+    // pipeline as newly selected files (see `onFilesChange`), which
+    // only reads `name`/`size` off `.file` before handing it to
+    // `initilizeFileCtrl`, so the cast below is safe.
     const uploadedFilesConfig = value.map((file) => {
       return {
         file: file,
         upload: new Upload(),
       };
-    });
+    }) as unknown as UploadFile[];
     this.populateFiles(value, uploadedFilesConfig);
   }
 
@@ -336,7 +388,15 @@ export class SamUploadComponentV2
     this.emit();
   }
 
-  initilizeFileCtrl({ name, size, url, icon, disabled, isSecure, postedDate }) {
+  initilizeFileCtrl({
+    name,
+    size,
+    url,
+    icon,
+    disabled,
+    isSecure,
+    postedDate,
+  }: UploadedFileData): UploadFileCtrl {
     if (!isSecure) {
       isSecure = false;
     }
@@ -360,7 +420,7 @@ export class SamUploadComponentV2
     };
   }
 
-  getTableRowClass(fctrl) {
+  getTableRowClass(fctrl: UploadFileCtrl) {
     if (this.shouldShowDropTarget() || !this.isEditMode()) {
       return "";
     }
@@ -400,25 +460,30 @@ export class SamUploadComponentV2
       upload.status = UploadStatus.Uploading;
       const httpEvent$ = this._getHttpEventSteam(uf);
       upload.subscription = httpEvent$.subscribe(
-        (event: any) => {
+        (event: HttpEvent<unknown>) => {
           if (event.type === HttpEventType.UploadProgress) {
-            upload.progress = event.loaded / event.total;
+            upload.progress = event.loaded / (event.total ?? event.loaded);
           } else if (event instanceof HttpHeaderResponse) {
             upload.status = UploadStatus.Done;
           } else if (event instanceof HttpErrorResponse) {
             upload.status = UploadStatus.Error;
           }
-          if (event.ok === false) {
+          if (
+            event &&
+            typeof event === "object" &&
+            "ok" in event &&
+            (event as { ok?: boolean }).ok === false
+          ) {
             upload.error = "Upload failed";
             upload.status = UploadStatus.Error;
             this.emit();
           }
         },
-        (error) => {
+        (error: unknown) => {
           console.error("upload error", error);
-          let toJson: any = {};
+          let toJson: { statusText?: string; message?: string } = {};
           try {
-            toJson = JSON.parse(error);
+            toJson = JSON.parse(String(error));
           } catch {}
           upload.error = toJson.statusText || toJson.message || "Upload failed";
           upload.status = UploadStatus.Error;
@@ -432,7 +497,7 @@ export class SamUploadComponentV2
     });
   }
 
-  onNameEditSwitch(index, event) {
+  onNameEditSwitch(index: number, event: Event) {
     event.preventDefault();
     const curFileConfig = this.fileCtrlConfig[index];
     curFileConfig.shadowFileName = curFileConfig.fileName;
@@ -444,7 +509,7 @@ export class SamUploadComponentV2
     }
   }
 
-  onNameEditComplete(index, overwirte: boolean = true) {
+  onNameEditComplete(index: number, overwirte: boolean = true) {
     const curFileConfig = this.fileCtrlConfig[index];
     if (overwirte) {
       curFileConfig.fileName = curFileConfig.shadowFileName;
@@ -454,15 +519,15 @@ export class SamUploadComponentV2
     curFileConfig.isNameEditMode = false;
   }
 
-  onRemoveClick(fileName, index) {
+  onRemoveClick(fileName: string, index: number) {
     this.removeModal.openModal(index);
   }
 
-  onRemoveModalOpen(data) {
+  onRemoveModalOpen(data: unknown) {
     this.modalOpen.emit(data);
   }
 
-  onRemoveModalSubmit(index) {
+  onRemoveModalSubmit(index: number) {
     this.removeModal.closeModal();
     const file = this.fileCtrlConfig.splice(index, 1)[0];
     const uf = this._model.find((f) => f.file.name === file.originName);
@@ -473,7 +538,7 @@ export class SamUploadComponentV2
     this.modalChange.emit(index);
   }
 
-  removeUploadedFile(uf) {
+  removeUploadedFile(uf: UploadFile) {
     const { upload } = uf;
     if (upload.subscription && upload.status === UploadStatus.Uploading) {
       upload.subscription.unsubscribe();
@@ -492,24 +557,24 @@ export class SamUploadComponentV2
     delete$.subscribe();
   }
 
-  onAccessToggle(fileIndex, secure) {
-    const toggleData = { fileIndex, secure };
+  onAccessToggle(fileIndex: number, secure: boolean) {
+    const toggleData: UploadAccessToggleData = { fileIndex, secure };
     if (secure) {
       this.toggleModal.openModal(toggleData);
     }
     this.toggleAccess.emit(toggleData);
   }
 
-  onToggleModalOpen(toggleData) {
+  onToggleModalOpen(toggleData: [UploadAccessToggleData]) {
     this.toggleModalOpen.emit(toggleData[0]);
   }
 
-  onToggleModalSubmit(toggleData) {
+  onToggleModalSubmit(toggleData: [UploadAccessToggleData]) {
     this.toggleModalChange.emit(toggleData[0]);
     this.toggleModal.closeModal();
   }
 
-  onToggleModalClose(toggleData) {
+  onToggleModalClose(toggleData: [UploadAccessToggleData]) {
     this.toggleModalClose.emit(toggleData[0]);
   }
 
@@ -517,7 +582,7 @@ export class SamUploadComponentV2
     return this.mode === "edit";
   }
 
-  swapFiles(x, y) {
+  swapFiles(x: number, y: number) {
     const temp = this.fileCtrlConfig[x];
     this.fileCtrlConfig[x] = this.fileCtrlConfig[y];
     this.fileCtrlConfig[y] = temp;
@@ -544,7 +609,7 @@ export class SamUploadComponentV2
     return !!(this._model && this._model.length);
   }
 
-  getError(index) {
+  getError(index: number) {
     const fileName = this.fileCtrlConfig[index].fileName;
     return this._model.find((f) => f.file.name === fileName).upload.error;
   }
@@ -553,7 +618,7 @@ export class SamUploadComponentV2
     return uf.upload.status === UploadStatus.Uploading;
   }
 
-  shouldShowError(index) {
+  shouldShowError(index: number) {
     const fileName = this.fileCtrlConfig[index].fileName;
     const uf = this._model.find((f) => f.file.name === fileName);
     if (!!uf) {
@@ -600,13 +665,13 @@ export class SamUploadComponentV2
     }
   }
 
-  _getHttpEventSteam(uf: UploadFile): Observable<HttpEvent<any>> {
+  _getHttpEventSteam(uf: UploadFile): Observable<HttpEvent<unknown>> {
     const { file, upload } = uf;
     const request = this.uploadRequest(file);
 
     if (isObservable(request)) {
       return request.pipe(
-        switchMap((req: HttpRequest<any>) => {
+        switchMap((req: HttpRequest<unknown>) => {
           upload.request = req;
           return this.httpClient.request(req);
         })
@@ -630,24 +695,29 @@ export class SamUploadComponentV2
 
   private setUploadElementIds() {
     if (this.id) {
-      Object.keys(this.uploadElIds).forEach((key) => {
+      (
+        Object.keys(this.uploadElIds) as Array<keyof typeof this.uploadElIds>
+      ).forEach((key) => {
         this.setElementId(key);
       });
     }
   }
 
-  private setElementId(property: string): void {
+  private setElementId(property: keyof typeof this.uploadElIds): void {
     if (this.uploadElIds && this.uploadElIds[property]) {
       this.uploadElIds[property] = `${this.id}-${property}`;
     }
   }
 
-  private populateFiles(value, uploadedFilesConfig) {
+  private populateFiles(value: unknown[], uploadedFilesConfig: UploadFile[]) {
     this.validateUploadedFiles(value, uploadedFilesConfig);
     this.populateFileUploadTable(uploadedFilesConfig);
   }
 
-  private validateUploadedFiles(value, uploadedFilesConfig) {
+  private validateUploadedFiles(
+    value: unknown[],
+    uploadedFilesConfig: UploadFile[]
+  ) {
     this.showMaxFilesError = false;
     const wouldBeTotal = value.length + this._model.length;
     if (this.maxFiles > 0 && wouldBeTotal > this.maxFiles) {
@@ -656,7 +726,7 @@ export class SamUploadComponentV2
     }
     this.validateFiles(uploadedFilesConfig);
   }
-  private populateFileUploadTable(uploadedFilesConfig) {
+  private populateFileUploadTable(uploadedFilesConfig: UploadFile[]) {
     // concat old items and new items
     this._model = [...this._model, ...uploadedFilesConfig];
 
@@ -664,7 +734,7 @@ export class SamUploadComponentV2
     this.fileCtrlConfig = [
       ...this.fileCtrlConfig,
       ...uploadedFilesConfig.map((uploadFile) =>
-        this.initilizeFileCtrl(uploadFile.file)
+        this.initilizeFileCtrl(uploadFile.file as unknown as UploadedFileData)
       ),
     ];
     this.updateFilePos();

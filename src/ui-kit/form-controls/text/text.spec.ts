@@ -8,7 +8,7 @@ import { SamFormService } from "../../form-service";
 describe("The Sam Text component", () => {
   describe("rendered tests", () => {
     let component: SamTextComponent;
-    let fixture: any;
+    let fixture: ReturnType<typeof TestBed.createComponent<SamTextComponent>>;
 
     beforeEach(() => {
       TestBed.configureTestingModule({

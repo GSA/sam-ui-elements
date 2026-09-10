@@ -28,7 +28,7 @@ describe("The Sam Number component", () => {
 
   describe("rendered tests", () => {
     let component: SamNumberComponent;
-    let fixture: any;
+    let fixture: ReturnType<typeof TestBed.createComponent<SamNumberComponent>>;
 
     beforeEach(() => {
       TestBed.configureTestingModule({

@@ -16,7 +16,7 @@ import {
   NG_VALIDATORS,
 } from "@angular/forms";
 
-import { SamFormService } from "../../form-service";
+import { SamFormService, SamFormEvent } from "../../form-service";
 import { LabelWrapper } from "../../wrappers/label-wrapper";
 
 export function AccessorToken(className) {
@@ -92,23 +92,23 @@ export class SamFormControl
 
   public defaultValidators: ValidatorFn[] = [];
 
-  protected defaultValue: any = null;
+  protected defaultValue: unknown = null;
 
-  protected _value: any = null;
+  protected _value: unknown = null;
   protected _disabled: boolean;
 
-  public onChange: (_?: any) => any = (_) => {
-    return _;
+  public onChange: (value?: unknown) => void = () => {
+    return;
   };
-  public onTouched: () => any = () => {
+  public onTouched: () => void = () => {
     return;
   };
 
-  public get value(): any {
+  public get value(): unknown {
     return this._value;
   }
 
-  public set value(val: any) {
+  public set value(val: unknown) {
     this._value = !val ? this.defaultValue : val;
     this.onChange(this.value);
   }
@@ -138,19 +138,19 @@ export class SamFormControl
 
   // ControlValueAccessor Methods
 
-  public writeValue(val) {
+  public writeValue(val: unknown) {
     this.value = val;
   }
 
-  public registerOnChange(fn) {
+  public registerOnChange(fn: (value?: unknown) => void) {
     this.onChange = fn;
   }
 
-  public registerOnTouched(fn) {
+  public registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 
-  public setDisabledState(state) {
+  public setDisabledState(state: boolean) {
     this.disabled = state;
   }
 
@@ -187,7 +187,7 @@ export class SamFormControl
       );
     } else {
       this.samFormService.formEventsUpdated$.subscribe(
-        (evt: any) => {
+        (evt: SamFormEvent) => {
           if (
             (!evt.root || evt.root === this.control.root) &&
             evt.eventType &&
