@@ -35,7 +35,7 @@ export class SamPickerComponent implements AfterViewInit {
         this.popover.grid
       );
 
-      this.combobox.onSearch((e) => this.onSearch.emit(e), this);
+      this.combobox.onSearch((e) => this.onSearch.emit(e as string), this);
 
       this.combobox.onChange((e) => this._onChange(e), this);
     }
