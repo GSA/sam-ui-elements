@@ -73,6 +73,6 @@
     "github-release-notes": "^0.17.0",
     "prettier": "3.9.6",
     "typescript": "5.8.3",
-    "typescript-eslint": "8.68.0"
+    "typescript-eslint": "8.69.0"
   }
 }
