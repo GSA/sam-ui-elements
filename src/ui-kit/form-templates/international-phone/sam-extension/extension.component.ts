@@ -82,7 +82,7 @@ export class SamExtension extends SamFormControl implements OnInit {
       return;
     }
   }
-  public writeValue(val: string): void {
+  public writeValue(val: string | null): void {
     this.value = val;
   }
 

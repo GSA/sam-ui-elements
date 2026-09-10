@@ -168,7 +168,7 @@ export class SamIntlPhoneGroup extends SamFieldset implements OnInit {
           this.wrapper.clearError();
         }
       },
-      (err: unknown) => console.error("Error occured", err)
+      (err: unknown) => console.error("Error occurred", err)
     );
   }
 

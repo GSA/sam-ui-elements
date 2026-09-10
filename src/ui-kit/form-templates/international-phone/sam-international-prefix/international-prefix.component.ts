@@ -85,7 +85,7 @@ export class SamInternationalPrefix extends SamFormControl implements OnInit {
     return errs.length > 0 ? errs[0] : null;
   }
 
-  public writeValue(val: string): void {
+  public writeValue(val: string | null): void {
     this.value = val;
   }
 

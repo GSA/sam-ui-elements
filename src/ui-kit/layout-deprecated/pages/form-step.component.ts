@@ -24,10 +24,13 @@ export interface FormStepTabsComponent {
 
 /**
  * A single alert entry rendered by this component's template, matching the
- * `alerts[i].config.*` bindings used below.
+ * `alerts[i].config.*` bindings used below. Only the fields the template
+ * actually reads (`title`/`type`/`description`) are required here, since the
+ * previously `any[]`-typed `alerts` input accepted configs that omitted
+ * `AlertType`'s other fields (e.g. `timer`).
  */
 export interface FormStepAlert {
-  config: AlertType;
+  config: Pick<AlertType, "title" | "type" | "description">;
 }
 
 @Component({
