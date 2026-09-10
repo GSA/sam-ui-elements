@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 // Load the implementations that should be tested
 import { ListResultsMessageComponent } from "./list-results-message";
@@ -6,7 +6,7 @@ import { ListResultsMessageComponent } from "./list-results-message";
 describe("ListResultsMessage component", () => {
   describe("rendered tests", () => {
     let component: ListResultsMessageComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<ListResultsMessageComponent>;
 
     // provide our implementations or mocks to the dependency injector
     beforeEach(() => {

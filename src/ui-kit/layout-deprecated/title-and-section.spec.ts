@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 // Load the implementations that should be tested
 import { TitleAndSectionComponent } from "./title-and-section.component";
@@ -7,7 +7,7 @@ import { SamElementsModule } from "../elements";
 
 describe("TitleAndSectionComponent component", () => {
   describe("rendered tests", () => {
-    let fixture: any;
+    let fixture: ComponentFixture<TitleAndSectionComponent>;
 
     // provide our implementations or mocks to the dependency injector
     beforeEach(() => {

@@ -16,7 +16,7 @@ export class SamFieldset {
   /**
    * Set an array of error messages
    */
-  @Input() public errorMessages: any[] = [];
+  @Input() public errorMessages: string[] = [];
   /**
    * set the error message
    */

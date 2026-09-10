@@ -1,11 +1,11 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 // Load the implementations that should be tested
 import { WorkspaceTemplateComponent } from "./workspace-template.component";
 
 describe("Workspace template component", () => {
   describe("rendered tests", () => {
-    let fixture: any;
+    let fixture: ComponentFixture<WorkspaceTemplateComponent>;
 
     // provide our implementations or mocks to the dependency injector
     beforeEach(() => {

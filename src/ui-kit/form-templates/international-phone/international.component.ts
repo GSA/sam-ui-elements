@@ -149,7 +149,7 @@ export class SamIntlPhoneGroup extends SamFieldset implements OnInit {
 
   private _useFormServiceStrategy(): void {
     this._formService.formEventsUpdated$.subscribe(
-      (evt: any) => {
+      (evt: { root?: unknown; eventType?: string }) => {
         if (
           (!evt.root || evt.root === this.group.root) &&
           evt.eventType &&
@@ -168,7 +168,7 @@ export class SamIntlPhoneGroup extends SamFieldset implements OnInit {
           this.wrapper.clearError();
         }
       },
-      (err: any) => console.error("Error occured", err)
+      (err: unknown) => console.error("Error occured", err)
     );
   }
 

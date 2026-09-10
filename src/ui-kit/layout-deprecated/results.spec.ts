@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 // Load the implementations that should be tested
 import { ResultsTemplateComponent } from "./results.component";
@@ -7,7 +7,7 @@ import { SamPaginationComponent } from "../components/pagination";
 
 describe("ResultsTemplateComponent component", () => {
   describe("rendered tests", () => {
-    let fixture: any;
+    let fixture: ComponentFixture<ResultsTemplateComponent>;
 
     // provide our implementations or mocks to the dependency injector
     beforeEach(() => {
