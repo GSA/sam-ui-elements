@@ -13,8 +13,8 @@ export class SidenavService {
     return (this.children = children);
   }
 
-  setModel(model: MenuItem): void {
-    this.model = model;
+  setModel(model: MenuItem): MenuItem {
+    return (this.model = model);
   }
 
   getData(): number[] {

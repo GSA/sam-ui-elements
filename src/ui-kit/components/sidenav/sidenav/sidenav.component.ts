@@ -43,7 +43,7 @@ export class SamSidenavComponent implements OnInit, OnChanges {
   /**
    * (deprecated) Event emitted on interaction, returns the selected menu item
    */
-  @Output() data: EventEmitter<unknown> = new EventEmitter<unknown>();
+  @Output() data: EventEmitter<MenuItem> = new EventEmitter<MenuItem>();
   /**
    * Event emitted on interaction, returns the selected menu item's path value
    */
@@ -51,7 +51,7 @@ export class SamSidenavComponent implements OnInit, OnChanges {
   /**
    * Event emitted on interaction, returns the selected menu item
    */
-  @Output() selection: EventEmitter<unknown> = new EventEmitter<unknown>();
+  @Output() selection: EventEmitter<MenuItem> = new EventEmitter<MenuItem>();
 
   constructor(private service: SidenavService) {}
 
@@ -106,7 +106,7 @@ export class SamSidenavComponent implements OnInit, OnChanges {
     list: MenuItem[],
     lookup: string,
     trail: number[]
-  ): number[] | false {
+  ): number[] | false | undefined {
     if (!list || list.length === 0) {
       return false;
     } else {
@@ -152,7 +152,7 @@ export class SamSidenavComponent implements OnInit, OnChanges {
     return;
   }
 
-  emitChildData(event: Event): void {
+  emitChildData(event: MenuItem): void {
     this.data.emit(event);
     this.path.emit(this.service.getPath());
     this.selection.emit(event);

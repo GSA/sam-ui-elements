@@ -28,13 +28,14 @@ describe("The Sam Sidenav component", () => {
     });
 
     it("should trigger events", () => {
+      const dummyMenuItem: MenuItem = { label: "dummy" };
       component.selection.subscribe((evt) => {
-        expect((evt as Event).returnValue).toBe(true);
+        expect(evt).toBe(dummyMenuItem);
       });
       component.pathChange.subscribe((val) => {
         expect(val).toBe("");
       });
-      component.emitChildData(new Event("custom"));
+      component.emitChildData(dummyMenuItem);
     });
   });
   describe("rendered tests", () => {
