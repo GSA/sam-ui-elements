@@ -7,6 +7,7 @@ import {
   SimpleChanges,
   ViewChild,
   ViewEncapsulation,
+  OnInit,
 } from "@angular/core";
 
 import { ValidatorFn, FormControl, ValidationErrors } from "@angular/forms";
@@ -29,7 +30,7 @@ import { numberInputKeys } from "../number-input-keys";
   providers: [AccessorToken(SamExtension), ValidatorToken(SamExtension)],
   standalone: false,
 })
-export class SamExtension extends SamFormControl {
+export class SamExtension extends SamFormControl implements OnInit {
   /**
    * A placeholder value for the extention. In this
    * component, placeholder should represent the number

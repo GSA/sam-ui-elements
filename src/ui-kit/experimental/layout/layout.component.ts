@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 
 @Component({
   selector: "sam-layout",
@@ -9,7 +9,7 @@ import { Component, Input } from "@angular/core";
   `,
   standalone: false,
 })
-export class SamLayoutComponent {
+export class SamLayoutComponent implements OnInit {
   @Input() public pattern: string;
   @Input() public margin: string;
 
@@ -30,7 +30,7 @@ export class SamLayoutComponent {
   `,
   standalone: false,
 })
-export class SamLayoutImgComponent {
+export class SamLayoutImgComponent implements OnInit {
   @Input() public aligned: string;
 
   css_classes: string = "img";

@@ -23,7 +23,6 @@ describe("Overlay", () => {
     overlay = new Overlay(
       scrollStrategies,
       overlayContainer as never,
-      null as never,
       positionBuilder,
       null as never,
       null as never,

@@ -1,4 +1,10 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnChanges,
+} from "@angular/core";
 
 export type ToolbarItem = {
   label: string;
@@ -38,7 +44,7 @@ export type ToolbarItemIcon =
   `,
   standalone: false,
 })
-export class SamActionsListComponent {
+export class SamActionsListComponent implements OnChanges {
   /**
    * Passes in the content model for the top right items+icons
    */
@@ -56,7 +62,7 @@ export class SamActionsListComponent {
   }
 
   public dropdownClick(item) {
-    let matchedItem = this.contentModel.find((modelItem) => {
+    const matchedItem = this.contentModel.find((modelItem) => {
       if (modelItem.label === item.label) {
         return true;
       }
@@ -69,9 +75,9 @@ export class SamActionsListComponent {
   public ngOnChanges(c) {
     if (c.contentModel && this.contentModel) {
       this.showMoreActions = [];
-      for (let item of this.contentModel) {
+      for (const item of this.contentModel) {
         if (item.showMore) {
-          let showMoreAction = {
+          const showMoreAction = {
             name: item.label,
             label: item.label,
             icon: "fa " + item.icon,

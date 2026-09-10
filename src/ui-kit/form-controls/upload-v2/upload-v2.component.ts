@@ -10,6 +10,8 @@ import {
   SimpleChanges,
   Output,
   EventEmitter,
+  OnInit,
+  OnChanges,
 } from "@angular/core";
 import {
   HttpClient,
@@ -94,7 +96,9 @@ export namespace UploadValidator {
   templateUrl: "upload-v2.template.html",
   standalone: false,
 })
-export class SamUploadComponentV2 implements ControlValueAccessor {
+export class SamUploadComponentV2
+  implements ControlValueAccessor, OnInit, OnChanges
+{
   /**
    * Sets ID html attribute of upload component
    */
@@ -489,7 +493,7 @@ export class SamUploadComponentV2 implements ControlValueAccessor {
   }
 
   onAccessToggle(fileIndex, secure) {
-    let toggleData = { fileIndex, secure };
+    const toggleData = { fileIndex, secure };
     if (secure) {
       this.toggleModal.openModal(toggleData);
     }

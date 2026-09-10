@@ -6,6 +6,8 @@ import {
   ViewChild,
   forwardRef,
   ChangeDetectorRef,
+  OnInit,
+  AfterViewInit,
 } from "@angular/core";
 import { FieldsetWrapper } from "../../wrappers/fieldset-wrapper";
 import { OptionsType } from "../../types";
@@ -34,7 +36,7 @@ import { SamFormService } from "../../form-service";
   ],
   standalone: false,
 })
-export class SamRadioButtonComponent {
+export class SamRadioButtonComponent implements OnInit, AfterViewInit {
   /**
    * Sets the bound value of the component
    */

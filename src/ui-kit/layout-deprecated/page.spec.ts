@@ -46,7 +46,7 @@ describe("PageTemplateComponent component", () => {
     });
 
     it("should initialize", function () {
-      let text = fixture.debugElement.nativeElement.textContent;
+      const text = fixture.debugElement.nativeElement.textContent;
       expect(true).toBe(true);
     });
   });

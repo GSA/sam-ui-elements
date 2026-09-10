@@ -87,7 +87,7 @@ describe("SamHierarchicalTreeComponent", () => {
   }));
 
   it("Sort not empty ", fakeAsync(() => {
-    let sortItem = {
+    const sortItem = {
       active: "id",
       direction: sortOrder[0],
     };

@@ -6,7 +6,11 @@
   role="listbox"
   aria-live="polite"
 >
-  <li role="option" *ngFor="let result of model.getItems(); let i = index">
+  <li
+    role="option"
+    aria-selected="true"
+    *ngFor="let result of model.getItems(); let i = index"
+  >
     <div
       [attr.class]="
         disabled ? 'selected-item selected-item-disabled' : 'selected-item'

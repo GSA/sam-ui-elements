@@ -1,7 +1,7 @@
 import { FilesizePipe } from "./filesize.pipe";
 
 describe("src/app/opportunity/pipes/filesize.pipe.spec.ts", () => {
-  let pipe = new FilesizePipe();
+  const pipe = new FilesizePipe();
 
   it("FilesizePipe: adds the proper symbol", () => {
     expect(pipe.transform(1024)).toBe("1 KB");

@@ -126,7 +126,7 @@ export class SamButtonComponent {
     next: "next",
   };
 
-  get btnClass(): String {
+  get btnClass(): string {
     const classMap = [];
 
     // Adds action class

@@ -54,8 +54,8 @@ describe("Sam External Link Directive", () => {
 
   it("should add external link text for 508 compliance", () => {
     const cmps = fixture.debugElement.queryAll(By.css(".usa-sr-only"));
-    let el1 = cmps[0];
-    let el2 = cmps[1];
+    const el1 = cmps[0];
+    const el2 = cmps[1];
 
     expect(el1.nativeElement.innerText).toContain("(opens in new window)");
     expect(el2.nativeElement.innerText).toContain("(opens in new window)");

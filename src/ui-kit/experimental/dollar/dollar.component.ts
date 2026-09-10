@@ -6,6 +6,9 @@ import {
   forwardRef,
   Output,
   EventEmitter,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR, Validators, ValidatorFn } from "@angular/forms";
 import { Subject } from "rxjs";
@@ -27,7 +30,10 @@ import { SamFormControl } from "../../form-controls/sam-form-control";
   ],
   standalone: false,
 })
-export class SamDollarComponent extends SamFormControl {
+export class SamDollarComponent
+  extends SamFormControl
+  implements OnInit, OnDestroy, AfterViewInit
+{
   /**
    * Optional text to be displayed when the text area is empty
    */

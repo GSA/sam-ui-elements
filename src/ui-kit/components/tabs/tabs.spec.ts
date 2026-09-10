@@ -71,5 +71,32 @@ describe("The Sam Tabs component", () => {
       fixture.detectChanges();
       expect(component.comp.active).toBe(0);
     });
+
+    it("should select a tab via keyboard (Enter) same as click", function () {
+      const tabLinks = fixture.debugElement.queryAll(By.css("a.item"));
+      const secondTabLink = tabLinks[1].nativeElement;
+      secondTabLink.dispatchEvent(
+        new KeyboardEvent("keydown", { key: "Enter" })
+      );
+      fixture.detectChanges();
+      expect(component.comp.active).toBe(1);
+    });
+
+    it("should not activate a disabled tab via click or keyboard, and should remove it from the tab order", function () {
+      component.comp.tabs.toArray()[1].disabled = true;
+      fixture.detectChanges();
+
+      const tabLinks = fixture.debugElement.queryAll(By.css("a.item"));
+      const disabledTabLink = tabLinks[1].nativeElement;
+      expect(disabledTabLink.getAttribute("tabindex")).toBe("-1");
+
+      disabledTabLink.dispatchEvent(new MouseEvent("click"));
+      disabledTabLink.dispatchEvent(
+        new KeyboardEvent("keydown", { key: "Enter" })
+      );
+      fixture.detectChanges();
+
+      expect(component.comp.active).toBe(0);
+    });
   });
 });

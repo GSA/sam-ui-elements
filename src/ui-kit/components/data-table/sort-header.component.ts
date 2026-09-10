@@ -93,7 +93,7 @@ export class SamSortHeaderComponent implements SamSortable, OnInit, OnDestroy {
   @Input() disabled: boolean = false;
 
   /** Overrides the sort start value of the containing MdSort for this SamSortable. */
-  @Input("start") start: "asc" | "desc";
+  @Input() start: "asc" | "desc";
 
   /** Overrides the disable clear value of the containing MdSort for this SamSortable. */
   @Input()

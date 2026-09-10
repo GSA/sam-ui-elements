@@ -28,7 +28,7 @@ describe("Row Directive", () => {
 
     it("Get row class value", function () {
       fixture.detectChanges();
-      let str = fixture.debugElement.query(By.css("div"));
+      const str = fixture.debugElement.query(By.css("div"));
       expect(str.nativeElement.getAttribute("class")).toContain("row");
     });
   });

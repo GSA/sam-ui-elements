@@ -11,8 +11,8 @@ export class AutoCompleteSampleDataService implements SAMSDSAutocompleteServiceI
   constructor() {
     const data = SampleAutoCompleteData;
     for (let i = 0; i < data.length; i++) {
-      let item = data[i];
-      let results = data.filter((it) => it.parentId === item.id);
+      const item = data[i];
+      const results = data.filter((it) => it.parentId === item.id);
       item["childCount"] = results.length;
     }
     this.loadedData = data;
@@ -22,9 +22,9 @@ export class AutoCompleteSampleDataService implements SAMSDSAutocompleteServiceI
     currentItems: number,
     searchValue?: string
   ): Observable<SAMSDSHiercarchicalServiceResult> {
-    let itemIncrease = 25;
-    let data = of(this.loadedData);
-    let itemsOb: Observable<Object[]>;
+    const itemIncrease = 25;
+    const data = of(this.loadedData);
+    let itemsOb: Observable<object[]>;
     if (searchValue) {
       itemsOb = data.pipe(
         map((items) =>
@@ -38,17 +38,17 @@ export class AutoCompleteSampleDataService implements SAMSDSAutocompleteServiceI
     } else {
       itemsOb = data;
     }
-    let items: object[] = this.itemsListOutofObservable(itemsOb);
-    let totalItemCount = items.length;
+    const items: object[] = this.itemsListOutofObservable(itemsOb);
+    const totalItemCount = items.length;
 
-    let maxSectionPosition = this.getMaxSectionPosition(
+    const maxSectionPosition = this.getMaxSectionPosition(
       currentItems,
       itemIncrease,
       totalItemCount
     );
-    let subItemsitems = items.slice(currentItems, maxSectionPosition);
+    const subItemsitems = items.slice(currentItems, maxSectionPosition);
 
-    let returnItem = {
+    const returnItem = {
       items: subItemsitems,
       totalItems: totalItemCount,
     };
@@ -76,7 +76,7 @@ export class AutoCompleteSampleDataService implements SAMSDSAutocompleteServiceI
   }
 }
 
-export let SampleAutoCompleteData = [
+export const SampleAutoCompleteData = [
   {
     id: "1",
     parentId: null,

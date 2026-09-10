@@ -270,7 +270,7 @@ describe("The Sam Comments component", () => {
     });
 
     it("isSubmitDisabled handling", function () {
-      let formGroup = new FormGroup({
+      const formGroup = new FormGroup({
         test: new FormControl(""),
       });
       formGroup.controls["test"].markAsDirty();

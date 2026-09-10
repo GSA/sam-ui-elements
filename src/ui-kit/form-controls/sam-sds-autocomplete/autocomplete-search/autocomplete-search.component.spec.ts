@@ -11,6 +11,7 @@ import { SAMSDSAutocompleteSearchConfiguration } from "./models/SAMSDSAutocomple
 import { FormsModule } from "@angular/forms";
 import { SAMSDSSelectedItemModel } from "../selected-result/models/sds-selectedItem.model";
 import { SelectionMode } from "../selected-result/models/sds-selected-item-model-helper";
+import { SAMSDSSelectedItemModelHelper } from "../selected-result/models/sds-selected-item-model-helper";
 import { By } from "@angular/platform-browser";
 import { AutoCompleteSampleDataService } from "./autocomplete-seach-test-service.spec";
 
@@ -469,19 +470,19 @@ describe("SamAutocompleteComponent", () => {
   });
 
   it("should handle registerOnChange", () => {
-    let item = {};
+    const item = {};
     component.registerOnChange(item);
     expect(component.propogateChange).toBe(item);
   });
 
   it("should handle registerOnTouched", () => {
-    let item = {};
+    const item = {};
     component.registerOnTouched(item);
     expect(component.onTouchedCallback).toBe(item);
   });
 
   it("should free text be shown", () => {
-    let textValue = "Some value";
+    const textValue = "Some value";
     expect(component.showFreeText()).toBeFalsy();
     component.configuration.isFreeTextEnabled = true;
     expect(component.showFreeText()).toBeFalsy();
@@ -490,12 +491,12 @@ describe("SamAutocompleteComponent", () => {
   });
 
   it("should handle multi value and depth of values", () => {
-    let data = { level1: "1", sub: { level2: "2" } };
+    const data = { level1: "1", sub: { level2: "2" } };
     expect(component.getObjectValue(data, "level1")).toBe("1");
     expect(component.getObjectValue(data, "sub.level2")).toBe("2");
     expect(component.getObjectValue(data, "level1,sub.level2")).toBe("1 2");
     expect(component.getObjectValue(data, "sub.level2,level1")).toBe("2 1");
-    let data2 = { level1: "1" };
+    const data2 = { level1: "1" };
     expect(component.getObjectValue(data2, "level1,sub.level2")).toBe("1");
   });
 
@@ -1251,4 +1252,52 @@ describe("SamAutocompleteComponent", () => {
     component.inputValue = [] as never;
     expect(component.showFreeText()).toBe(false);
   });
+
+  it("marks each rendered result option's aria-selected from checkItemSelected", fakeAsync(() => {
+    component.configuration.isSelectableGroup = true;
+    component.inputFocusHandler();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+
+    const options = fixture.debugElement.queryAll(By.css('li[role="option"]'));
+    expect(options.length).toBeGreaterThan(0);
+    expect(
+      options.every(
+        (opt) => opt.nativeElement.getAttribute("aria-selected") === "false"
+      )
+    ).toBe(true);
+
+    SAMSDSSelectedItemModelHelper.addItem(
+      { id: "1", name: "Level 1", subtext: "id 1" },
+      component.configuration.primaryKeyField,
+      component.configuration.selectionMode,
+      component.model
+    );
+    fixture.detectChanges();
+
+    const optionsAfter = fixture.debugElement.queryAll(
+      By.css('li[role="option"]')
+    );
+    const selected = optionsAfter.find(
+      (opt) => opt.nativeElement.getAttribute("aria-selected") === "true"
+    );
+    expect(selected).toBeTruthy();
+  }));
+
+  it("selects a result option via keyboard (Enter) same as click, when the group is selectable", fakeAsync(() => {
+    component.configuration.isSelectableGroup = true;
+    component.inputFocusHandler();
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+
+    const firstOption = fixture.debugElement.query(
+      By.css('li[role="option"]')
+    ).nativeElement;
+    firstOption.dispatchEvent(new KeyboardEvent("keydown", { key: "Enter" }));
+    fixture.detectChanges();
+
+    expect(component.model.items.length).toBe(1);
+  }));
 });

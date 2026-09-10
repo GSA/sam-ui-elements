@@ -63,6 +63,26 @@ describe("SamHeaderNextComponent", () => {
     expect(logoElement.getAttribute("src")).toBe(logoPath);
   });
 
+  it("should mark the mobile nav overlay as presentational (click-to-close only, not independently focusable)", () => {
+    fixture.detectChanges();
+
+    const overlay: HTMLElement =
+      fixture.nativeElement.querySelector(".usa-overlay");
+    expect(overlay.getAttribute("role")).toBe("presentation");
+  });
+
+  it("should close the mobile nav when the overlay is clicked", () => {
+    component.mobileNavActive = true;
+    fixture.detectChanges();
+
+    const overlay: HTMLElement =
+      fixture.nativeElement.querySelector(".usa-overlay");
+    overlay.click();
+    fixture.detectChanges();
+
+    expect(component.mobileNavActive).toBe(false);
+  });
+
   it.skip("should add notifications indicator to menu button", () => {
     component.notifications = true;
     fixture.detectChanges();
