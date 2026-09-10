@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 import { SamAsideToggleComponent } from "./";
 import { SamPageNextService, DataStore, layoutStore } from "../../experimental";
 import { MdSidenav } from "../../experimental/patterns/layout/components/sidenav";
@@ -14,7 +14,7 @@ function asSidenav(sidenav: FakeSidenav): MdSidenav {
 describe("The Sam Aside Toggle component", () => {
   describe("rendered tests", () => {
     let component: SamAsideToggleComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<SamAsideToggleComponent>;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -84,7 +84,7 @@ describe("The Sam Aside Toggle component", () => {
 
   describe("with SamPageNextService", () => {
     let component: SamAsideToggleComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<SamAsideToggleComponent>;
     let service: SamPageNextService;
 
     beforeEach(() => {

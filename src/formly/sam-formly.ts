@@ -1,24 +1,41 @@
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import { FieldType } from "@ngx-formly/core";
+import { FormControl } from "@angular/forms";
+
+export interface SamFormlyTemplateComponent {
+  control?: FormControl;
+}
 
 @Component({
   template: "",
   standalone: false,
 })
-export abstract class AbstractSamFormly extends FieldType implements OnInit {
+export abstract class AbstractSamFormly<
+  T extends SamFormlyTemplateComponent = SamFormlyTemplateComponent,
+>
+  extends FieldType
+  implements OnInit
+{
   public cdr: ChangeDetectorRef;
-  public template: any;
+  public template: T;
 
   public ngOnInit() {
-    this.setProperties(this.template, (<any>this).field.templateOptions);
+    this.setProperties(
+      this.template,
+      this.field.templateOptions as Record<string, unknown>
+    );
   }
 
-  public setProperties(component: any, configuration: any) {
+  public setProperties(
+    component: T,
+    configuration: Record<string, unknown>
+  ): void {
     Object.keys(configuration).forEach((key) => {
-      component[key] = configuration[key];
+      (component as unknown as Record<string, unknown>)[key] =
+        configuration[key];
     });
-    if ((<any>this).template.control) {
-      (<any>this).template.control = (<any>this).formControl;
+    if (this.template.control) {
+      this.template.control = this.formControl as FormControl;
     }
     this.cdr.detectChanges();
   }

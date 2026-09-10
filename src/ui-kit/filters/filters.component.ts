@@ -31,7 +31,7 @@ import { SamPageNextService } from "../experimental/patterns/layout/architecture
 export class SamFiltersComponent implements OnChanges {
   @Input() public form: FormGroup;
   @Input() public fields: FormlyFieldConfig[];
-  @Input() public model: any;
+  @Input() public model: Record<string, unknown>;
 
   constructor(@Optional() private _service: SamPageNextService) {}
 
