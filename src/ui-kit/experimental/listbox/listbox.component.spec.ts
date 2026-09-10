@@ -76,6 +76,13 @@ const options = [
   },
 ];
 
+// Component mutates option objects in place (e.g. setting `highlighted`),
+// so each test needs its own deep copy of `options` to avoid leaking
+// highlighted/selection state between tests.
+function cloneOptions() {
+  return options.map((option) => ({ ...option }));
+}
+
 describe("SamListBoxComponent", () => {
   let component: SamListBoxComponent;
   let fixture: ComponentFixture<SamListBoxComponent>;
@@ -87,11 +94,11 @@ describe("SamListBoxComponent", () => {
     });
     fixture = TestBed.createComponent(SamListBoxComponent);
     component = fixture.componentInstance;
-    component.options = options;
+    component.options = cloneOptions();
   });
 
   it("on init with singlemode", () => {
-    component.options = options;
+    component.options = cloneOptions();
     component.isSingleMode = true;
     component.ngOnInit();
     fixture.detectChanges();
@@ -105,7 +112,7 @@ describe("SamListBoxComponent", () => {
       },
     };
     component.isSingleMode = true;
-    component.options = options;
+    component.options = cloneOptions();
     const row = options[6];
     component.onChecked(ev, row);
     fixture.detectChanges();
@@ -113,7 +120,7 @@ describe("SamListBoxComponent", () => {
   });
 
   it("Should have reuslts on focus", fakeAsync(() => {
-    component.options = options;
+    component.options = cloneOptions();
     fixture.detectChanges();
     tick();
     fixture.detectChanges();
@@ -141,7 +148,7 @@ describe("SamListBoxComponent", () => {
     expect(fixture.nativeElement.innerHTML).toContain(labelText);
   });
 
-  it.skip("should disable", function () {
+  it("should disable", function () {
     component.options[0].disabled = true;
     fixture.detectChanges();
     const value =
@@ -183,7 +190,7 @@ describe("SamListBoxComponent", () => {
         checked: true,
       },
     };
-    component.options = options;
+    component.options = cloneOptions();
     const row = options[6];
 
     component.onChecked(ev, row);
@@ -193,8 +200,8 @@ describe("SamListBoxComponent", () => {
     fixture.detectChanges();
   });
 
-  it.skip("should process arrow up and down keypresses", fakeAsync(() => {
-    component.options = options;
+  it("should process arrow up and down keypresses", fakeAsync(() => {
+    component.options = cloneOptions();
     fixture.detectChanges();
     tick();
     fixture.detectChanges();
@@ -220,8 +227,10 @@ describe("SamListBoxComponent", () => {
     expect(component.options[0]["highlighted"]).toBeTruthy();
   }));
 
-  it.skip("Up arrow when on first item", fakeAsync(() => {
-    component.options = options;
+  it("Up arrow when on first item", fakeAsync(() => {
+    component.options = cloneOptions();
+    fixture.detectChanges();
+    component.onHover(0);
     tick();
     fixture.detectChanges();
     const list = fixture.debugElement.query(By.css(".checkbox-container"));
@@ -238,8 +247,10 @@ describe("SamListBoxComponent", () => {
     expect(component.options[0]["highlighted"]).toBeTruthy();
   }));
 
-  it.skip("Down arrow when on over lists item", fakeAsync(() => {
-    component.options = options;
+  it("Down arrow when on over lists item", fakeAsync(() => {
+    component.options = cloneOptions();
+    fixture.detectChanges();
+    component.onHover(0);
     tick();
     fixture.detectChanges();
     expect(component.options[0]["highlighted"]).toBeTruthy();
@@ -288,14 +299,14 @@ describe("SamListBoxComponent", () => {
   });
 
   it("should default to an empty model when writeValue is called without an array", () => {
-    component.options = options;
+    component.options = cloneOptions();
     fixture.detectChanges();
     component.writeValue(undefined);
     expect(component.model).toEqual([]);
   });
 
   it("should report whether a value is currently checked", () => {
-    component.options = options;
+    component.options = cloneOptions();
     component.model = [options[2].value];
     fixture.detectChanges();
     expect(component.isChecked(options[2].value)).toBe(true);
