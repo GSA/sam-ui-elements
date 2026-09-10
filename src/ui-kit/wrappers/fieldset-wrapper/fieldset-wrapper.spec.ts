@@ -1,5 +1,6 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 import { ChangeDetectorRef } from "@angular/core";
+
 import { FormControl, FormGroup } from "@angular/forms";
 // Load the implementations that should be tested
 import { FieldsetWrapper } from "./fieldset-wrapper.component";
@@ -129,7 +130,7 @@ describe("The Sam Fieldset Wrapper component", () => {
 
   describe("integration tests", () => {
     let component: FieldsetWrapper;
-    let fixture: any;
+    let fixture: ComponentFixture<FieldsetWrapper>;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -152,6 +153,8 @@ describe("The Sam Fieldset Wrapper component", () => {
         hint: {
           previousValue: false,
           currentValue: true,
+          firstChange: false,
+          isFirstChange: () => false,
         },
       });
       fixture.detectChanges();

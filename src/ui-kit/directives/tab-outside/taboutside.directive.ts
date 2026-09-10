@@ -14,13 +14,14 @@ export class SamTabOutsideDirective {
   /**
    * Emitter for tabOutside event
    */
-  @Output() tabOutside: EventEmitter<any> = new EventEmitter();
+  @Output() tabOutside: EventEmitter<void> = new EventEmitter();
 
   constructor(private _elementRef: ElementRef) {}
 
   @HostListener("document:keyup", ["$event.target"])
-  public hasFocusChanged(target) {
-    const isInsideHost = this._elementRef.nativeElement.contains(target);
+  public hasFocusChanged(target: EventTarget | null): void {
+    const isInsideHost =
+      target instanceof Node && this._elementRef.nativeElement.contains(target);
     if (!isInsideHost) {
       this.tabOutside.emit(undefined);
     }

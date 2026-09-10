@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 import { ChangeDetectorRef, Renderer2 } from "@angular/core";
 import { FormControl } from "@angular/forms";
 // Load the implementations that should be tested
@@ -73,7 +73,7 @@ describe("The Sam Label Wrapper component", () => {
 
   describe("integration tests", () => {
     let component: LabelWrapper;
-    let fixture: any;
+    let fixture: ComponentFixture<LabelWrapper>;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
