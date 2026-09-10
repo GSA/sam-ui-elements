@@ -12,7 +12,7 @@ import {
   OnDestroy,
 } from "@angular/core";
 import * as InitPxVideo from "accessible-html5-video-player/js/px-video.js";
-declare let InitPxVideo: any;
+declare let InitPxVideo: new (config: InitPxVideoConfig) => unknown;
 
 // NOTE: Add px-video.js and strings.js files to your application .angular-cli.json script tag
 
@@ -46,8 +46,8 @@ export class SamVideoPlayerComponent
   @Input() public title: string;
   @Input() public captionOption: boolean;
   @Input() public seekInterval: number;
-  @Output() public onFullScreenChange: EventEmitter<any> =
-    new EventEmitter<any>();
+  @Output() public onFullScreenChange: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
   private config: InitPxVideoConfig;
 
   constructor(

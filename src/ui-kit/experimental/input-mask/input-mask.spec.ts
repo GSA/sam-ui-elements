@@ -1,4 +1,5 @@
 // Load the implementations that should be tested
+import { ChangeDetectorRef, SimpleChanges } from "@angular/core";
 import { SamInputMaskComponent } from "./input-mask.component";
 import { SamFormService } from "../../form-service";
 
@@ -8,9 +9,9 @@ describe("The Sam Input Mask component", () => {
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
     component = new SamInputMaskComponent(
-      <any>{
+      {
         detectChanges: () => {},
-      },
+      } as unknown as ChangeDetectorRef,
       new SamFormService()
     );
     component.template = "__/__/____";
@@ -62,10 +63,10 @@ describe("The Sam Input Mask component", () => {
 
   it("should test that maxlength is always a number", () => {
     try {
-      component.maxlength = <any>"10";
+      component.maxlength = "10" as unknown as number;
       component.ngOnChanges({
         maxlength: "10",
-      });
+      } as unknown as SimpleChanges);
       fail();
     } catch (exception) {
       expect(exception.toString()).toContain(

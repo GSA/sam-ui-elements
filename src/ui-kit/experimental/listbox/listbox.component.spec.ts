@@ -9,6 +9,18 @@ import { By } from "@angular/platform-browser";
 import { CommonModule } from "@angular/common";
 import { SamWrapperModule } from "../../../ui-kit/wrappers";
 
+function fakeCheckboxEvent(checked: boolean): Event {
+  return { target: { checked } } as unknown as Event;
+}
+
+function fakeKeyboardEvent(key: string): KeyboardEvent {
+  return {
+    key,
+    target: { value: "id" },
+    preventDefault: () => {},
+  } as unknown as KeyboardEvent;
+}
+
 const options = [
   {
     name: "id1",
@@ -106,14 +118,10 @@ describe("SamListBoxComponent", () => {
   });
 
   it("onCheck with single mode", () => {
-    const ev = {
-      target: {
-        checked: true,
-      },
-    };
+    const ev = fakeCheckboxEvent(true);
     component.isSingleMode = true;
     component.options = cloneOptions();
-    const row = options[6];
+    const row = options[6].value;
     component.onChecked(ev, row);
     fixture.detectChanges();
     expect(component.model.length).toBe(1);
@@ -162,7 +170,7 @@ describe("SamListBoxComponent", () => {
   });
 
   it("should implement controlvalueaccessor", () => {
-    component.onChange();
+    component.onChange([]);
     component.onTouched();
     component.registerOnChange(() => undefined);
     component.registerOnTouched(() => undefined);
@@ -185,17 +193,13 @@ describe("SamListBoxComponent", () => {
   });
 
   it("onChecked checked/unchecked", () => {
-    const ev = {
-      target: {
-        checked: true,
-      },
-    };
+    const ev = fakeCheckboxEvent(true);
     component.options = cloneOptions();
-    const row = options[6];
+    const row = options[6].value;
 
     component.onChecked(ev, row);
     fixture.detectChanges();
-    ev.target.checked = false;
+    (ev.target as unknown as { checked: boolean }).checked = false;
     component.onChecked(ev, row);
     fixture.detectChanges();
   });
@@ -207,20 +211,12 @@ describe("SamListBoxComponent", () => {
     fixture.detectChanges();
     const container = fixture.debugElement.query(By.css(".checkbox-container"));
     expect(container.nativeElement.children.length).toBe(8);
-    const downEvent = {
-      key: "Down",
-      target: { value: "id" },
-      preventDefault: function () {},
-    };
+    const downEvent = fakeKeyboardEvent("Down");
     component.onKeyDown(downEvent);
     tick();
     fixture.detectChanges();
     expect(component.options[1]["highlighted"]).toBeTruthy();
-    const upEvent = {
-      key: "Up",
-      target: { value: "id" },
-      preventDefault: function () {},
-    };
+    const upEvent = fakeKeyboardEvent("Up");
     component.onKeyDown(upEvent);
     tick();
     fixture.detectChanges();
@@ -236,11 +232,7 @@ describe("SamListBoxComponent", () => {
     const list = fixture.debugElement.query(By.css(".checkbox-container"));
     expect(list.nativeElement.children.length).toBe(8);
     expect(component.options[0]["highlighted"]).toBeTruthy();
-    const upEvent = {
-      key: "Up",
-      target: { value: "id" },
-      preventDefault: function () {},
-    };
+    const upEvent = fakeKeyboardEvent("Up");
     component.onKeyDown(upEvent);
     tick();
     fixture.detectChanges();
@@ -260,11 +252,7 @@ describe("SamListBoxComponent", () => {
     expect(
       component.options[component.options.length - 1]["highlighted"]
     ).toBeTruthy();
-    const upEvent = {
-      key: "Down",
-      target: { value: "id" },
-      preventDefault: function () {},
-    };
+    const upEvent = fakeKeyboardEvent("Down");
     component.onKeyDown(upEvent);
     tick();
     fixture.detectChanges();
@@ -272,14 +260,10 @@ describe("SamListBoxComponent", () => {
   }));
 
   it("Should remove item from selected results", fakeAsync(() => {
-    const ev = {
-      target: {
-        checked: false,
-      },
-    };
-    component.model.push(options[1]);
+    const ev = fakeCheckboxEvent(false);
+    component.model.push(options[1].value);
     vi.spyOn(component.modelChange, "emit");
-    component.onChecked(ev, options[1]);
+    component.onChecked(ev, options[1].value);
     fixture.detectChanges();
     expect(component.model.length).toBe(0);
     expect(component.modelChange.emit).toHaveBeenCalledWith(component.model);

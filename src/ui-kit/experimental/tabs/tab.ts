@@ -38,7 +38,7 @@ export class MdTab extends _MdTabMixinBase implements OnInit, CanDisable {
   @ContentChild(MdTabLabel, { static: true }) templateLabel: MdTabLabel;
 
   /** Template inside the MdTab view that contains an <ng-content>. */
-  @ViewChild(TemplateRef, { static: true }) _content: TemplateRef<any>;
+  @ViewChild(TemplateRef, { static: true }) _content: TemplateRef<unknown>;
 
   /** The plain text label for the tab, used when there is no template label. */
   @Input("label") textLabel: string = "";
