@@ -1,11 +1,11 @@
-import { TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 // Load the implementations that should be tested
 import { SamBannerComponent } from "./banner.component";
 
 describe("The Sam Banner component", () => {
   let component: SamBannerComponent;
-  let fixture: any;
+  let fixture: ComponentFixture<SamBannerComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

@@ -1,19 +1,20 @@
 import { Injectable } from "@angular/core";
+import { MenuItem } from "../interfaces";
 
 @Injectable()
 export class SidenavService {
   // array of selected children from parent to deepest child
   private indexArray: number[] = [];
   private path: string;
-  private children: any[];
-  private model: any;
+  private children: MenuItem[];
+  private model: MenuItem;
 
-  setChildren(children: any[]): any[] {
+  setChildren(children: MenuItem[]): MenuItem[] {
     return (this.children = children);
   }
 
-  setModel(model: any): void {
-    return (this.model = model);
+  setModel(model: MenuItem): void {
+    this.model = model;
   }
 
   getData(): number[] {
@@ -40,8 +41,8 @@ export class SidenavService {
     }
   }
 
-  getSelectedModel(): any {
-    let model: any = this.model;
+  getSelectedModel(): MenuItem {
+    let model: MenuItem = this.model;
     this.indexArray.forEach((index) => {
       model = model.children[index];
     });
@@ -51,7 +52,7 @@ export class SidenavService {
 
   getPath(): string {
     let path: string = "";
-    let model: any = this.model;
+    let model: MenuItem = this.model;
     this.indexArray.forEach((index) => {
       model = model.children[index];
       if (!model.route) {

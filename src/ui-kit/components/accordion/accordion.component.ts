@@ -9,6 +9,18 @@ import {
 } from "@angular/core";
 
 /**
+ * Minimal shape of `SamAccordionComponent` needed by `SamAccordionSection`.
+ * Kept as an interface (rather than referencing the class type directly) so
+ * `emitDecoratorMetadata` does not emit a value reference to a class that is
+ * declared later in this file, which caused a "Cannot access before
+ * initialization" error when the class type was used directly.
+ */
+export interface AccordionParent {
+  sections: SamAccordionSection[];
+  addSection(section: SamAccordionSection): void;
+}
+
+/**
  * The <sam-accordion-section> component can generates content for a single
  * accordion item
  */
@@ -38,7 +50,7 @@ export class SamAccordionSection implements OnInit {
 
   constructor(
     @Inject(forwardRef(() => SamAccordionComponent))
-    private parent: any
+    private parent: AccordionParent
   ) {
     this.parent.addSection(this);
   }

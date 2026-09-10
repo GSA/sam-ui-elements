@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { FormGroup, FormControl } from "@angular/forms";
 
@@ -99,7 +99,7 @@ export class CommentsDemoService implements CommentsService {
     return of(this._comments);
   }
 
-  postComment(_: any): Observable<Comment[]> {
+  postComment(_: Comment): Observable<Comment[]> {
     if (_.text === "asdf") {
       const err = new Error("I errored, bro");
       return throwError(() => err);
@@ -146,23 +146,35 @@ describe("The Sam Comments component", () => {
     });
 
     it.skip("service should have methods that return comments", () => {
-      expect(Array.isArray((service.getComments() as any).value)).toBe(true);
-      expect(Array.isArray((service.postComment(undefined) as any).value)).toBe(
-        true
-      );
       expect(
-        Array.isArray((service.deleteComment(undefined) as any).value)
+        Array.isArray(
+          (service.getComments() as unknown as { value: unknown[] }).value
+        )
       ).toBe(true);
-      expect(Array.isArray((service.getInitialState() as any).value)).toBe(
-        true
-      );
+      expect(
+        Array.isArray(
+          (service.postComment(undefined) as unknown as { value: unknown[] })
+            .value
+        )
+      ).toBe(true);
+      expect(
+        Array.isArray(
+          (service.deleteComment(undefined) as unknown as { value: unknown[] })
+            .value
+        )
+      ).toBe(true);
+      expect(
+        Array.isArray(
+          (service.getInitialState() as unknown as { value: unknown[] }).value
+        )
+      ).toBe(true);
     });
 
     // component
   });
   describe("rendered tests", () => {
     let component: SamCommentsComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<SamCommentsComponent>;
 
     beforeEach(() => {
       TestBed.configureTestingModule({

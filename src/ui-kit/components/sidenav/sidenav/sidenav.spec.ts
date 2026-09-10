@@ -1,8 +1,9 @@
-import { TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
 import { SamSidenavModule, SamSidenavComponent } from "./";
 import { SidenavService } from "../services";
+import { MenuItem } from "../interfaces";
 
 import { data } from "../services/testdata";
 
@@ -28,7 +29,7 @@ describe("The Sam Sidenav component", () => {
 
     it("should trigger events", () => {
       component.selection.subscribe((evt) => {
-        expect(evt.returnValue).toBe(true);
+        expect((evt as Event).returnValue).toBe(true);
       });
       component.pathChange.subscribe((val) => {
         expect(val).toBe("");
@@ -38,7 +39,7 @@ describe("The Sam Sidenav component", () => {
   });
   describe("rendered tests", () => {
     let component: SamSidenavComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<SamSidenavComponent>;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -74,7 +75,7 @@ describe("The Sam Sidenav component", () => {
         By.css(".usa-sidenav-sub_list > li")
       ).nativeElement;
       expect(subitem1.textContent.trim()).toContain(
-        (data.children[0] as any).children[0].label
+        (data.children[0] as MenuItem).children[0].label
       );
     });
 
