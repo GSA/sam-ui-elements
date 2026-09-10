@@ -1,11 +1,5 @@
 /* tslint:disable */
-import {
-  waitForAsync,
-  ComponentFixture,
-  TestBed,
-  fakeAsync,
-  tick,
-} from "@angular/core/testing";
+import { waitForAsync, ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { SdsFooterComponent } from "./footer.component";
 import { RouterTestingModule } from "@angular/router/testing";

@@ -115,7 +115,7 @@ export class SamTextComponent
 
   @ViewChild(LabelWrapper, { static: true }) public wrapper: LabelWrapper;
 
-  public onChange: any = (c) => null;
+  public onChange: any = () => null;
   public onTouched: any = () => null;
 
   public focusEvent = new Subject<any>();

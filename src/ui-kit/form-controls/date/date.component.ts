@@ -17,7 +17,6 @@ import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
   FormControl,
-  Validators,
   ValidatorFn,
   AbstractControl,
 } from "@angular/forms";
@@ -314,7 +313,8 @@ export class SamDateComponent
     }
   }
 
-  onMonthBlur(event) {
+  onMonthBlur(event?: Event) {
+    void event;
     this.isMonthBlur = true;
     if (this.month.nativeElement.value === "0") {
       this.month.nativeElement.value = "";
@@ -379,7 +379,8 @@ export class SamDateComponent
     return parseInt(possibleNum, 10);
   }
 
-  onDayBlur(event) {
+  onDayBlur(event?: Event) {
+    void event;
     this.isDayBlur = true;
     if (this.day.nativeElement.value === "0") {
       this.day.nativeElement.value = "";
@@ -457,7 +458,8 @@ export class SamDateComponent
     return month === 2 ? 2 : three;
   }
 
-  onYearBlur(event) {
+  onYearBlur(event?: Event) {
+    void event;
     this.isYearBlur = true;
     if (this.year.nativeElement.value === "0") {
       this.year.nativeElement.value = "";
@@ -621,7 +623,8 @@ export class SamDateComponent
     );
   }
 
-  triggerTouch(ev) {
+  triggerTouch(ev?: Event) {
+    void ev;
     this.isYearTouched = true;
     this.touchHandler();
     this.onTouched();

@@ -179,11 +179,11 @@ export class SamFormControl
   private setValidationMethod() {
     if (!this.useFormService) {
       this.control.statusChanges.subscribe(
-        (_: any) => {
+        () => {
           this.wrapper.formatErrors(this.control);
           this.cdr.detectChanges();
         },
-        (err: any) => console.error("Error occurred")
+        () => console.error("Error occurred")
       );
     } else {
       this.samFormService.formEventsUpdated$.subscribe(
@@ -202,7 +202,7 @@ export class SamFormControl
             this.wrapper.clearError();
           }
         },
-        (err: any) => console.error("Error occured")
+        () => console.error("Error occured")
       );
     }
   }

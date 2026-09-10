@@ -1,12 +1,8 @@
-import { TestBed, ComponentFixture } from "@angular/core/testing";
-import { By } from "@angular/platform-browser";
-import { EventEmitter, ElementRef, Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { TestBed } from "@angular/core/testing";
 
 import { SamMenuItemComponent } from "./";
 import { SamSidenavModule } from "../";
 import { SidenavService } from "../services";
-import { SamUIKitModule } from "../../../index";
 
 import { data } from "../services/testdata";
 
@@ -43,7 +39,6 @@ describe("The Sam MenuItem component", () => {
     });
   });
   describe("rendered tests", () => {
-    let component: SamMenuItemComponent;
     let fixture: any;
 
     beforeEach(() => {
@@ -52,7 +47,6 @@ describe("The Sam MenuItem component", () => {
       });
 
       fixture = TestBed.createComponent(SamMenuItemComponent);
-      component = fixture.componentInstance;
     });
 
     it("should compile", function () {

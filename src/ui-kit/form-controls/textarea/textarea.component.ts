@@ -122,7 +122,7 @@ export class SamTextareaComponent
   @ViewChild(LabelWrapper, { static: true }) wrapper: LabelWrapper;
 
   public characterCounterMsg: string;
-  public onChange: any = (_) => undefined;
+  public onChange: any = () => undefined;
   public onTouched: any = () => undefined;
 
   private inBrowser = typeof window !== "undefined";

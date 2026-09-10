@@ -5,19 +5,16 @@ import {
   EventEmitter,
   ElementRef,
   ViewChild,
-  AfterViewInit,
   OnInit,
   OnChanges,
 } from "@angular/core";
 
 import {
   trigger,
-  state,
   style,
   animate,
   transition,
   query,
-  animateChild,
   keyframes,
   stagger,
 } from "@angular/animations";

@@ -268,7 +268,7 @@ export class SamUploadComponent implements ControlValueAccessor {
           let toJson: any = {};
           try {
             toJson = JSON.parse(error);
-          } catch (ex) {}
+          } catch {}
           upload.error = toJson.statusText || toJson.message || "Upload failed";
           upload.status = UploadStatus.Error;
           this.emit();

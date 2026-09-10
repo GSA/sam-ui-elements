@@ -173,8 +173,6 @@ describe("Sam KeyEvent Class", () => {
   });
 
   describe("Instance methods", () => {
-    let instance: KeyHelper;
-
     it("Should instantiate with supported keys", () => {
       const keys = [
         "enter",

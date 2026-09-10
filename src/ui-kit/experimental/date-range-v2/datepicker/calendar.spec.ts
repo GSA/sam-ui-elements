@@ -1,6 +1,4 @@
-import { TestBed } from "@angular/core/testing";
 import { Calendar } from "./calendar";
-import { By } from "@angular/platform-browser";
 
 describe("The calendar class", () => {
   describe("isolated tests", () => {

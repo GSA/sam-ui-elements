@@ -2,7 +2,6 @@ import { TestBed } from "@angular/core/testing";
 import { SamTextareaComponent } from "./textarea.component";
 import { LabelWrapper } from "../../wrappers/label-wrapper";
 import { FormsModule, FormControl } from "@angular/forms";
-import { By } from "@angular/platform-browser";
 import { SamFormService } from "../../form-service";
 import { ChangeDetectorRef } from "@angular/core";
 
@@ -16,7 +15,7 @@ describe("The Sam Textarea component", () => {
     });
 
     it("should implement control value accessor", () => {
-      component.registerOnChange((_) => undefined);
+      component.registerOnChange(() => undefined);
       component.registerOnTouched(() => undefined);
       component.onChange(undefined);
       component.onTouched();
@@ -58,7 +57,7 @@ describe("The Sam Textarea component", () => {
       try {
         component.ngOnInit();
         fail();
-      } catch (e) {
+      } catch {
         expect(true).toBe(true);
       }
     });

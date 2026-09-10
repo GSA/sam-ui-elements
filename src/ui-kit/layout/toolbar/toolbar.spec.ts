@@ -1,11 +1,8 @@
-import { TestBed, ComponentFixture } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
 import { SamToolbarsModule, SamToolbarComponent } from "./";
 
 describe("The Sam Toolbar component", () => {
   describe("rendered tests", () => {
-    let component: SamToolbarComponent;
-    let fixture: ComponentFixture<SamToolbarComponent>;
-
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [SamToolbarsModule],
@@ -13,8 +10,7 @@ describe("The Sam Toolbar component", () => {
         providers: [],
       });
 
-      fixture = TestBed.createComponent(SamToolbarComponent);
-      component = fixture.componentInstance;
+      TestBed.createComponent(SamToolbarComponent);
     });
 
     it("should initialize", () => {

@@ -3,7 +3,6 @@ import { FormsModule } from "@angular/forms";
 
 // Load the implementations that should be tested
 import { SamToggleSwitchComponent } from "./toggle-switch.component";
-import { SamUIKitModule } from "../../index";
 import { By } from "@angular/platform-browser";
 
 describe("The Sam Toggle Switch component", () => {
@@ -33,7 +32,7 @@ describe("The Sam Toggle Switch component", () => {
     it("should implement controlvalueaccessor", () => {
       component.onChange();
       component.onTouched();
-      component.registerOnChange((_) => undefined);
+      component.registerOnChange(() => undefined);
       component.registerOnTouched(() => undefined);
       component.setDisabledState(false);
       component.writeValue(true);

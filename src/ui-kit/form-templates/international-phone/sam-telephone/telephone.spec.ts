@@ -53,8 +53,6 @@ describe("Sam Telephone Component", () => {
 
   it("should use international validation if country code\
     is not 1", () => {
-    const expected = "1234567890123456"; // Len > 15 fails
-
     component.countryCode = 44;
 
     expect("").not.toBeNull();

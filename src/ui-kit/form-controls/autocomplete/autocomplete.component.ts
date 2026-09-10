@@ -19,7 +19,7 @@ import {
   ControlValueAccessor,
   FormControl,
 } from "@angular/forms";
-import { Observable, Subject, of } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { AutocompleteConfig } from "../../types";
 import { AutocompleteService } from "./autocomplete.service";
 import { SamFormService } from "../../form-service";
@@ -260,7 +260,7 @@ export class SamAutocompleteComponent
   public keyEvents: Subject<any> = new Subject();
 
   public onTouchedCallback: () => void = () => null;
-  public propogateChange: (_: any) => void = (_: any) => null;
+  public propogateChange: (_val: any) => void = () => null;
 
   constructor(
     @Optional() public autocompleteService: AutocompleteService,
@@ -311,7 +311,8 @@ export class SamAutocompleteComponent
     this.endOfList = false;
   }
 
-  requestError(err) {
+  requestError(err?: unknown) {
+    void err;
     this.results = ["An error occurred. Try a different value."];
     const errorobj = {};
     errorobj[this.config.keyValueConfig.keyProperty] = "Error";
@@ -786,7 +787,8 @@ export class SamAutocompleteComponent
     }
   }
 
-  checkForFocus(event) {
+  checkForFocus(event?: Event) {
+    void event;
     if (
       !this.allowAny &&
       this.selectedInputValue !== this.inputValue &&
@@ -847,9 +849,8 @@ export class SamAutocompleteComponent
 
   filterKeyValuePairs(subStr: string, keyValuePairs: any): any {
     const lowerSubStr = subStr.toLowerCase();
-    const categories = [];
     let currentCategory = "";
-    const reducedArr = keyValuePairs.reduce((prev, curr, index, arr) => {
+    const reducedArr = keyValuePairs.reduce((prev, curr) => {
       if (
         curr[this.config.keyValueConfig.keyProperty]
           .toLowerCase()

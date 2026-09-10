@@ -1,7 +1,6 @@
 import { TestBed } from "@angular/core/testing";
 
 import { SamMultiSelectDropdownComponent } from "./multiselect-dropdown.component";
-import { SamUIKitModule } from "../../index";
 import { SamFormControlsModule } from "../../form-controls";
 import { SamFormService } from "../../form-service";
 

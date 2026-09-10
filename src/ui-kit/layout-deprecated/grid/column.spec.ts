@@ -1,4 +1,4 @@
-import { TestBed, waitForAsync } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
 
 import { Component } from "@angular/core";
 // Load the implementations that should be tested
@@ -13,7 +13,6 @@ class TestComponent {}
 
 describe("Column Directive", () => {
   describe("rendered tests", () => {
-    let component: TestComponent;
     let fixture: any;
 
     // provide our implementations or mocks to the dependency injector
@@ -23,7 +22,6 @@ describe("Column Directive", () => {
       });
 
       fixture = TestBed.createComponent(TestComponent);
-      component = fixture.componentInstance;
     });
 
     it("Get column class value", function () {

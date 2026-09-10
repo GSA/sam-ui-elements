@@ -1,6 +1,4 @@
 import { TestBed, inject } from "@angular/core/testing";
-import { Observable } from "rxjs";
-import { By } from "@angular/platform-browser";
 
 // Load the implementations that should be tested
 import { SamAlertFooterComponent, SamAlertFooterService } from "./index";
@@ -8,11 +6,10 @@ import { SamAlertComponent } from "../alert/alert.component";
 
 describe("The AlertFooter component", () => {
   describe("isolated tests", () => {
-    let component: SamAlertFooterComponent;
     let service: SamAlertFooterService;
     beforeEach(() => {
       service = new SamAlertFooterService();
-      component = new SamAlertFooterComponent(service);
+      new SamAlertFooterComponent(service);
       service.registerFooterAlert({
         description: "hello",
         title: "alert title",

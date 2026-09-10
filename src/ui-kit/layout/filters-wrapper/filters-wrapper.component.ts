@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnDestroy, Optional } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 
-import { Observable, Subject, Subscription, combineLatest } from "rxjs";
+import { Subject, Subscription, combineLatest } from "rxjs";
 
 import { SamPageNextService } from "../../experimental/patterns/layout/architecture";
 import { areEqual } from "../../utilities";
@@ -69,7 +69,7 @@ export class SamFiltersWrapperComponent implements OnInit, OnDestroy {
   }
 
   private _initializeHandlers() {
-    this._runReportSubscription = this.runReportEvent.subscribe((_) => {
+    this._runReportSubscription = this.runReportEvent.subscribe(() => {
       if (this._service) {
         this._service.model.properties["filters"].setValue(this.group.value);
       }
@@ -110,7 +110,7 @@ export class SamFiltersWrapperComponent implements OnInit, OnDestroy {
       ].valueChanges.subscribe((event) => {
         try {
           this.group.setValue(event, { emitEvent: false });
-        } catch (e) {
+        } catch {
           return;
         }
       });

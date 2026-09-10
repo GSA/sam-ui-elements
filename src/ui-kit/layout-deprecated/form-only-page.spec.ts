@@ -1,9 +1,7 @@
-import { TestBed, waitForAsync } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
 
-import { Component } from "@angular/core";
 // Load the implementations that should be tested
 import { FormOnlyPageTemplateComponent } from "./form-only-page.component";
-import { By } from "@angular/platform-browser";
 import { GridDirective } from "./grid/grid.directive";
 import { ColumnDirective } from "./grid/column.directive";
 import { RowDirective } from "./grid/row.directive";
@@ -12,7 +10,6 @@ import { SamBadgeComponent } from "../components/badge";
 
 describe("FormOnlyPageTemplate component", () => {
   describe("rendered tests", () => {
-    let component: FormOnlyPageTemplateComponent;
     let fixture: any;
 
     // provide our implementations or mocks to the dependency injector
@@ -29,7 +26,6 @@ describe("FormOnlyPageTemplate component", () => {
       });
 
       fixture = TestBed.createComponent(FormOnlyPageTemplateComponent);
-      component = fixture.componentInstance;
       fixture.detectChanges();
     });
 

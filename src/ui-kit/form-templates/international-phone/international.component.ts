@@ -173,7 +173,7 @@ export class SamIntlPhoneGroup extends SamFieldset implements OnInit {
   }
 
   private _useDefaultStrategy(): void {
-    this.group.valueChanges.subscribe((_) => {
+    this.group.valueChanges.subscribe(() => {
       this.wrapper.formatErrors(
         this.group.controls.prefix,
         this.group.controls.phone,

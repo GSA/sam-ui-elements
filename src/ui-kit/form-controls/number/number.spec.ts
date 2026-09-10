@@ -16,7 +16,7 @@ describe("The Sam Number component", () => {
     });
 
     it("should implement controlvalueaccessor", () => {
-      component.registerOnChange((_) => undefined);
+      component.registerOnChange(() => undefined);
       component.registerOnTouched(() => undefined);
       component.onChange();
       component.onTouched();

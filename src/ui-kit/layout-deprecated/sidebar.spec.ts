@@ -1,14 +1,11 @@
-import { TestBed, waitForAsync } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
 
-import { Component } from "@angular/core";
 // Load the implementations that should be tested
 import { SidebarTemplateComponent } from "./sidebar.component";
 import { PageService } from "./page.service";
-import { By } from "@angular/platform-browser";
 
 describe("SidebarTemplateComponent component", () => {
   describe("rendered tests", () => {
-    let component: SidebarTemplateComponent;
     let fixture: any;
 
     // provide our implementations or mocks to the dependency injector
@@ -19,7 +16,6 @@ describe("SidebarTemplateComponent component", () => {
       });
 
       fixture = TestBed.createComponent(SidebarTemplateComponent);
-      component = fixture.componentInstance;
       fixture.detectChanges();
     });
 

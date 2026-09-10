@@ -1,11 +1,6 @@
-import {
-  TestBed,
-  waitForAsync,
-  ComponentFixtureAutoDetect,
-  ComponentFixture,
-} from "@angular/core/testing";
-import { Component, ChangeDetectorRef } from "@angular/core";
-import { By } from "@angular/platform-browser";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
+import { ChangeDetectorRef } from "@angular/core";
+
 import { FormControl, FormGroup } from "@angular/forms";
 // Load the implementations that should be tested
 import { FieldsetWrapper } from "./fieldset-wrapper.component";

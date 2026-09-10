@@ -101,7 +101,7 @@ export class LabelWrapper
     let lookup;
     try {
       lookup = this.labelDiv.nativeElement.querySelector(selector);
-    } catch (exception) {
+    } catch {
       console.error(selector + " not found in label wrapper setup");
     }
     if (lookup) {
@@ -139,7 +139,7 @@ export class LabelWrapper
   }
 
   @HostListener("window:resize", ["$event"])
-  public onResize(event) {
+  public onResize() {
     // needs to be open to recalc correctly in
     // ngAfterViewChecked
     this.showToggle = false;

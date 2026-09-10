@@ -1,12 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  forwardRef,
-  ViewChild,
-} from "@angular/core";
+import { Component, OnInit, Input, forwardRef, ViewChild } from "@angular/core";
 
 import {
   ControlValueAccessor,
@@ -98,7 +90,7 @@ export class SamDateRangeV2Component implements OnInit, ControlValueAccessor {
     this.onChange(this.model);
     this.onTouched();
   }
-  onChange: any = (c) => undefined;
+  onChange: any = () => undefined;
   onTouched: any = () => undefined;
 
   ngOnInit() {

@@ -1,7 +1,6 @@
 import {
   Component,
   Input,
-  ElementRef,
   TemplateRef,
   Renderer2,
   ViewChild,

@@ -6,11 +6,7 @@ import {
   ElementRef,
   forwardRef,
 } from "@angular/core";
-import {
-  NG_VALUE_ACCESSOR,
-  ControlValueAccessor,
-  FormControl,
-} from "@angular/forms";
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { SamHiercarchicalServiceInterface } from "../hierarchical-interface";
 import { KeyHelper, KEYS } from "../../../utilities/key-helper/key-helper";
 import {
@@ -117,7 +113,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
   /**
    * Stored Event for ControlValueAccessor
    */
-  private propogateChange: (_: any) => void = (_: any) => null;
+  private propogateChange: (_val: any) => void = () => null;
 
   @Input()
   public disabled: boolean;
@@ -144,7 +140,8 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
    *
    * @param event
    */
-  checkForFocus(event): void {
+  checkForFocus(event?: Event): void {
+    void event;
     this.focusRemoved();
     this.showResults = false;
   }
@@ -263,7 +260,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
         if (this.inputValue.length !== 0) {
           let foundItem = false;
           if (this.results) {
-            for (var i = 0; i < this.results.length && !foundItem; i++) {
+            for (let i = 0; i < this.results.length && !foundItem; i++) {
               const item = this.results[i];
               foundItem =
                 item[this.configuration.primaryTextField] === this.inputValue;
@@ -271,7 +268,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
           }
           if (this.model.getItems().length > 0 && !foundItem) {
             for (
-              var i = 0;
+              let i = 0;
               i < this.model.getItems().length && !foundItem;
               i++
             ) {

@@ -8,12 +8,6 @@ import { SamFormService } from "../../../form-service";
 import { SamWrapperModule } from "../../../wrappers";
 import { SamFormControlsModule } from "../../../form-controls";
 
-const mockEvent = {
-  currentTarget: {
-    value: undefined,
-  },
-};
-
 describe("Sam extension", () => {
   let component: SamExtension;
 

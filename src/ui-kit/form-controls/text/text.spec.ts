@@ -27,7 +27,7 @@ describe("The Sam Text component", () => {
       component.onChange();
       component.onTouched();
       component.setDisabledState(false);
-      component.registerOnChange((_) => undefined);
+      component.registerOnChange(() => undefined);
       component.registerOnTouched(() => undefined);
       component.writeValue("hello");
       expect(component.value).toBe("hello");

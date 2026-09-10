@@ -1,12 +1,10 @@
-import { waitForAsync, ComponentFixture, TestBed } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
 
-import { NgModule } from "@angular/core";
 import { SamWrapperModule } from "../../../ui-kit/wrappers";
 import { SamDateRangeV2Component } from "./date-range-v2.component";
 import { DatepickerComponent } from "./datepicker/picker.component";
 import { SamInputMaskModule } from "../../experimental/input-mask";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { ChangeDetectorRef, Renderer2, ElementRef } from "@angular/core";
 import { SamFormService } from "../../../ui-kit/form-service";
 import { CommonModule } from "@angular/common";
 

@@ -1,10 +1,4 @@
-import {
-  TestBed,
-  waitForAsync,
-  fakeAsync,
-  tick,
-  ComponentFixture,
-} from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 import { Component, ViewChild } from "@angular/core";
 import { By } from "@angular/platform-browser";
@@ -38,7 +32,6 @@ class TestComponent {
 
 describe("The Sam Sticky directive", () => {
   let directive: SamStickyComponent;
-  let component: TestComponent;
   let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
@@ -47,7 +40,6 @@ describe("The Sam Sticky directive", () => {
     });
 
     fixture = TestBed.createComponent(TestComponent);
-    component = fixture.componentInstance;
     fixture.detectChanges();
     directive = fixture.debugElement
       .query(By.directive(SamStickyComponent))

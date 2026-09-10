@@ -14,9 +14,6 @@ import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
   AbstractControl,
-  FormControl,
-  Validators,
-  ValidatorFn,
 } from "@angular/forms";
 import { SamFormService } from "../../form-service";
 

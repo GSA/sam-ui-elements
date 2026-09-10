@@ -120,7 +120,7 @@ export class SamListBoxComponent implements ControlValueAccessor, OnInit {
    * value is before another value
    */
   private _ordering: any = {};
-  onChange: any = (c) => undefined;
+  onChange: any = () => undefined;
   onTouched: any = () => undefined;
   private disabled: boolean;
   get value() {

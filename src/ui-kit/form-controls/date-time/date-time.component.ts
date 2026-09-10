@@ -2,8 +2,6 @@ import {
   Component,
   Input,
   ViewChild,
-  Output,
-  EventEmitter,
   OnInit,
   forwardRef,
   OnChanges,

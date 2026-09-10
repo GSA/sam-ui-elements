@@ -1,4 +1,4 @@
-import { TestBed, waitForAsync, ComponentFixture } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 import { By } from "@angular/platform-browser";
 

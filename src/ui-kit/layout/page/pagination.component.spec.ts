@@ -1,7 +1,6 @@
 import { TestBed, waitForAsync, ComponentFixture } from "@angular/core/testing";
 
 import { FormsModule } from "@angular/forms";
-import { RouterTestingModule } from "@angular/router/testing";
 import { By } from "@angular/platform-browser";
 import {} from "../../";
 import {

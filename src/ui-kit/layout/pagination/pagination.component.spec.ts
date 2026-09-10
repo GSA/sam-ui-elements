@@ -3,9 +3,6 @@ import { TestBed, waitForAsync, ComponentFixture } from "@angular/core/testing";
 import { SamPaginationNextComponent } from "./pagination.component";
 import { FormsModule } from "@angular/forms";
 
-import { RouterTestingModule } from "@angular/router/testing";
-import { By } from "@angular/platform-browser";
-
 import { SamIconsModule } from "../../../ui-kit/experimental/icon/icon.module";
 
 import { Paginator } from "./paginator";
@@ -32,7 +29,6 @@ describe("SamPaginationNextComponent", () => {
   });
 
   it("page size", () => {
-    const paginator = new Paginator("Test Unit", 10, 100);
     expect(component.pageSize).toBe(10);
   });
 

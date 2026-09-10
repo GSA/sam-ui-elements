@@ -1,8 +1,6 @@
-import { TestBed, waitForAsync } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
 
-import { Component } from "@angular/core";
 // Load the implementations that should be tested
-import { By } from "@angular/platform-browser";
 import { ListResultsMessageComponent } from "./list-results-message";
 
 describe("ListResultsMessage component", () => {

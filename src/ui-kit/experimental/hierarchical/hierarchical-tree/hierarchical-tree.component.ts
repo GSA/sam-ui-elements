@@ -121,7 +121,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
       this.getResults();
     });
 
-    this.scrolled.subscribe((scroll) => {
+    this.scrolled.subscribe(() => {
       this.getResults(true);
     });
   }

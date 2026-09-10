@@ -26,7 +26,7 @@ describe("The Sam Radio Buttons component", () => {
       try {
         component.ngOnInit();
         fail();
-      } catch (e) {
+      } catch {
         expect(true).toBe(true);
       }
     });

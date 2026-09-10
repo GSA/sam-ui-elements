@@ -8,6 +8,7 @@ export class TestAutocompleteService implements AutocompleteService {
   public setFetchMethod() {}
 
   public fetch(val: string): Observable<unknown> {
+    void val;
     return of([
       { key: "MD", value: "Maryland", category: "Places" },
       { key: "VA", value: "Virginia", category: "Places" },

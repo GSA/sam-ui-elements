@@ -1,5 +1,4 @@
 import { Component, Input, forwardRef } from "@angular/core";
-import { LabelWrapper } from "../../wrappers/label-wrapper";
 //import * as suffixes from './suffixes.json';
 import { NameEntryType } from "../../types";
 import {
@@ -8,8 +7,6 @@ import {
   Validator,
   ControlValueAccessor,
   FormControl,
-  Validators,
-  ValidatorFn,
 } from "@angular/forms";
 
 const suffixes = [
@@ -196,7 +193,8 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator {
   // validates the form, returns null when valid else the validation object
   // in this case we're checking if the json parsing has passed or failed from
   // the onChange method
-  public validate(c: FormControl) {
+  public validate(c?: FormControl) {
+    void c;
     const obj: any = {};
     if (!this.validateFirstName()) {
       obj.firstName = {

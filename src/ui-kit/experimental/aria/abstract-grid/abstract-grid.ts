@@ -92,7 +92,7 @@ export class AbstractGrid {
       subtree: true,
     };
 
-    const cb = (mutations) => {
+    const cb = () => {
       this._rows = [];
       this.focused = undefined;
       this._main(element);
@@ -144,7 +144,7 @@ export class AbstractGrid {
 
     this._dispatcher.disconnect("click", this._handleCellClick);
 
-    const [cb, ctx] = this._onClickHandler;
+    const [cb] = this._onClickHandler;
     if (cb) {
       this._dispatcher.disconnect("click", cb);
     }

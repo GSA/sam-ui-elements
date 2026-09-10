@@ -2,17 +2,11 @@ import {
   Component,
   Input,
   OnInit,
-  Optional,
   ViewChild,
   ElementRef,
   OnDestroy,
 } from "@angular/core";
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ControlValueAccessor,
-} from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 import { Observable, Subscription, Subject, of, fromEvent } from "rxjs";
 import { flatMap, catchError, merge } from "rxjs/operators";
@@ -103,7 +97,7 @@ export class SamCommentsComponent implements OnInit, OnDestroy {
 
     // Map DOM events to actions
     this.getCommentsStream = this.showButtonStream.pipe(
-      flatMap((event) => {
+      flatMap(() => {
         return this.commentsService
           .getComments()
           .pipe(catchError((error) => of(error)));
@@ -111,7 +105,7 @@ export class SamCommentsComponent implements OnInit, OnDestroy {
     );
 
     this.collapseCommentsStream = this.hideCommentsStream.pipe(
-      flatMap((event) => {
+      flatMap(() => {
         return this.commentsService
           .getInitialState()
           .pipe(catchError((error) => of(error)));

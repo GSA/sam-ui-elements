@@ -63,8 +63,11 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
     const itemIncrease = 15;
     const temp = this.getSortedData(this.loadedData, item.sort);
     const data = of(temp);
-    let itemsOb: Observable<object[]>;
-    itemsOb = this.filterItemsByAllFields(item, itemsOb, data);
+    const itemsOb: Observable<object[]> = this.filterItemsByAllFields(
+      item,
+      undefined,
+      data
+    );
     const items: object[] = this.itemsListOutofObservable(itemsOb);
     const totalItemCount = items.length;
 
