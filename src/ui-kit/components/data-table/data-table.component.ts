@@ -8,11 +8,6 @@ import {
 } from "@angular/core";
 import { CdkTable, CDK_TABLE } from "@angular/cdk/table";
 
-import {
-  _DisposeViewRepeaterStrategy,
-  _VIEW_REPEATER_STRATEGY,
-} from "@angular/cdk/collections";
-
 /** Workaround for https://github.com/angular/angular/issues/17849 */
 export const _SamTable = CdkTable;
 
@@ -55,10 +50,6 @@ export const _SamTable = CdkTable;
   providers: [
     { provide: CdkTable, useExisting: SamDataTableComponent },
     { provide: CDK_TABLE, useExisting: SamDataTableComponent },
-    {
-      provide: _VIEW_REPEATER_STRATEGY,
-      useClass: _DisposeViewRepeaterStrategy,
-    },
   ],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
