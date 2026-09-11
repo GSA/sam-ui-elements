@@ -35,7 +35,10 @@ export class SamPickerComponent implements AfterViewInit {
         this.popover.grid
       );
 
-      this.combobox.onSearch((e) => this.onSearch.emit(e), this);
+      this.combobox.onSearch(
+        (e) => this.onSearch.emit(this._extractValue(e)),
+        this
+      );
 
       this.combobox.onChange((e) => this._onChange(e), this);
     }
@@ -49,5 +52,12 @@ export class SamPickerComponent implements AfterViewInit {
     void e;
     this.selected = this.combobox.selected;
     this.onChange.emit(this.selected);
+  }
+
+  private _extractValue(e: unknown): string {
+    if (e instanceof Event) {
+      return (e.target as HTMLInputElement).value;
+    }
+    return e as string;
   }
 }

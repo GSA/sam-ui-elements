@@ -47,9 +47,9 @@ export class SamButtonNextComponent {
   /**
    * Emmits event on click
    */
-  @Output() onClick: EventEmitter<any> = new EventEmitter();
+  @Output() onClick: EventEmitter<Event> = new EventEmitter();
 
-  private btnClassMap: any = {
+  private btnClassMap: Record<string, string> = {
     // Types
     default: "secondary",
     primary: "primary",
@@ -90,7 +90,7 @@ export class SamButtonNextComponent {
     return classMap.join(" ");
   }
 
-  click($event) {
+  click($event: Event) {
     if (!this.isDisabled) {
       this.onClick.emit($event);
     }

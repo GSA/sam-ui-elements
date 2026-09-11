@@ -5,6 +5,7 @@ import {
   TemplateRef,
   ElementRef,
   forwardRef,
+  Provider,
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { SamHiercarchicalServiceInterface } from "../hierarchical-interface";
@@ -14,7 +15,7 @@ import {
   TreeMode,
 } from "../hierarchical-tree-selectedItem.model";
 import { SamHierarchicalAutocompleteConfiguration } from "../models/SamHierarchicalAutocompleteConfiguration";
-const Hierarchical_Autocomplete_VALUE_ACCESSOR: any = {
+const Hierarchical_Autocomplete_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamHierarchicalAutocompleteComponent),
   multi: true,
@@ -46,7 +47,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
   /**
    * Allow to insert a customized template for suggestions to use
    */
-  @Input() itemTemplate: TemplateRef<any>;
+  @Input() itemTemplate: TemplateRef<unknown>;
 
   /**
    * The data model that has the selected item
@@ -113,7 +114,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
   /**
    * Stored Event for ControlValueAccessor
    */
-  private propogateChange: (_val: any) => void = () => null;
+  private propogateChange: (_val: unknown) => void = () => null;
 
   @Input()
   public disabled: boolean;
@@ -428,17 +429,17 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
     }
   }
 
-  writeValue(obj: any): void {
+  writeValue(obj: unknown): void {
     if (obj instanceof HierarchicalTreeSelectedItemModel) {
       this.model = obj as HierarchicalTreeSelectedItemModel;
     }
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (_val: unknown) => void): void {
     this.propogateChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouchedCallback = fn;
   }
 

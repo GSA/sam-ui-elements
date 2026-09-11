@@ -7,23 +7,41 @@ export interface ServicePropertyObj {
 
 export interface ServicePropertyConfig {
   name: string;
-  value?: any;
+  value?: unknown;
 }
+
+/**
+ * `_updateFn` is assigned two structurally different shapes depending on the
+ * concrete subclass: `ServiceProperty` uses it as a plain setter
+ * `(value) => void`, while `ServiceModel` uses it as a curried factory
+ * `(key) => (value) => void` (see `_registerProperties`/`setValue` below).
+ * Modeling both shapes explicitly (rather than a single
+ * `(...args: unknown[]) => unknown` signature) keeps `registerChanges` a
+ * variance-safe public API: callers can pass either concretely-typed
+ * callback shape directly, and the two subclasses narrow with a local cast
+ * to the shape they know they were given.
+ */
+export type ServicePropertySetterFn = (value: unknown) => void;
+export type ServicePropertyCurriedUpdateFn = (
+  key: string
+) => ServicePropertySetterFn;
+export type ServicePropertyUpdateFn =
+  ServicePropertySetterFn | ServicePropertyCurriedUpdateFn;
 
 export abstract class AbstractServiceProperty {
   public readonly name: string;
-  public valueChanges: Observable<any>;
+  public valueChanges: Observable<unknown>;
 
-  public get value(): any {
+  public get value(): unknown {
     return this._value.getValue();
   }
 
-  protected _value: BehaviorSubject<any>;
-  protected _updateFn: (value: any) => any;
+  protected _value: BehaviorSubject<unknown>;
+  protected _updateFn: ServicePropertyUpdateFn;
 
   constructor(
     config: ServicePropertyConfig,
-    protected _source?: Observable<any>
+    protected _source?: Observable<unknown>
   ) {
     this.name = config.name;
     this._value = new BehaviorSubject(config.value || {});
@@ -31,11 +49,11 @@ export abstract class AbstractServiceProperty {
     this._registerSource();
   }
 
-  public abstract setValue(value: any): void;
+  public abstract setValue(value: unknown): void;
 
-  public abstract patchValue(value: any): void;
+  public abstract patchValue(value: unknown): void;
 
-  public abstract registerChanges(fn): void;
+  public abstract registerChanges(fn: ServicePropertyUpdateFn): void;
 
   private _registerSource() {
     if (this._source) {
@@ -45,19 +63,22 @@ export abstract class AbstractServiceProperty {
 }
 
 export class ServiceProperty extends AbstractServiceProperty {
-  constructor(config: ServicePropertyConfig, source: Observable<any>) {
+  constructor(config: ServicePropertyConfig, source: Observable<unknown>) {
     super(config, source);
   }
 
-  public setValue(value: any): void {
-    this._updateFn(value);
+  public setValue(value: unknown): void {
+    (this._updateFn as ServicePropertySetterFn)(value);
   }
 
-  public patchValue(value: any): void {
-    this._updateFn({ ...this.value, ...value });
+  public patchValue(value: unknown): void {
+    (this._updateFn as ServicePropertySetterFn)({
+      ...(this.value as Record<string, unknown>),
+      ...(value as Record<string, unknown>),
+    });
   }
 
-  public registerChanges(fn): void {
+  public registerChanges(fn: ServicePropertyUpdateFn): void {
     this._updateFn = fn;
   }
 }
@@ -67,8 +88,8 @@ export class ServiceModel extends AbstractServiceProperty {
 
   constructor(
     config: ServicePropertyConfig,
-    source: Observable<any>,
-    properties?: { [key: string]: any }
+    source: Observable<unknown>,
+    properties?: Record<string, unknown>
   ) {
     super(config, source);
     this._initProperties(properties);
@@ -78,7 +99,7 @@ export class ServiceModel extends AbstractServiceProperty {
     return this.properties[propertyName];
   }
 
-  private _initProperties(properties: { [key: string]: any }) {
+  private _initProperties(properties: Record<string, unknown>) {
     if (properties) {
       const stream = this.valueChanges;
 
@@ -86,7 +107,7 @@ export class ServiceModel extends AbstractServiceProperty {
         this.properties[key] = new ServiceProperty(
           { name: key, value: properties[key] },
           stream.pipe(
-            map((value) => value[key]),
+            map((value) => (value as Record<string, unknown>)[key]),
             distinctUntilChanged()
           )
         );
@@ -96,19 +117,25 @@ export class ServiceModel extends AbstractServiceProperty {
 
   private _registerProperties() {
     Object.keys(this.properties).forEach((key) => {
-      this.properties[key].registerChanges(this._updateFn(key));
+      const perPropertyUpdateFn = (
+        this._updateFn as ServicePropertyCurriedUpdateFn
+      )(key);
+      this.properties[key].registerChanges(perPropertyUpdateFn);
     });
   }
 
-  public setValue(value: any) {
-    this._updateFn(this.name)(value);
+  public setValue(value: unknown) {
+    (this._updateFn as ServicePropertyCurriedUpdateFn)(this.name)(value);
   }
 
-  public patchValue(value: any): void {
-    this._updateFn(this.name)({ ...this.value, ...value });
+  public patchValue(value: unknown): void {
+    (this._updateFn as ServicePropertyCurriedUpdateFn)(this.name)({
+      ...(this.value as Record<string, unknown>),
+      ...(value as Record<string, unknown>),
+    });
   }
 
-  public registerChanges(fn): void {
+  public registerChanges(fn: ServicePropertyUpdateFn): void {
     this._updateFn = fn;
     this._registerProperties();
   }

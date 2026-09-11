@@ -19,11 +19,21 @@ import { FieldsetWrapper } from "../../wrappers/fieldset-wrapper";
 export interface OptionModel {
   name: string;
   value: string;
-  label: any;
+  label: string;
   required: boolean;
   checked: boolean;
   disabled: boolean;
 }
+
+/**
+ * `model` (and the CVA/two-way-binding surface built on it) may hold either
+ * raw option values — the `ControlValueAccessor`/`writeValue` contract — or,
+ * via `onChecked`'s insertion path, the option objects themselves (see
+ * `isChecked`). This union is the real value type instead of `unknown[]`, so
+ * a consumer with a typed `string[]` model can still assign the emitted
+ * value under a compatible (if slightly widened) type.
+ */
+export type SamListBoxValue = string | OptionModel;
 @Component({
   selector: "sam-listbox",
   templateUrl: "./listbox.component.html",
@@ -41,7 +51,7 @@ export class SamListBoxComponent implements ControlValueAccessor, OnInit {
   /**
    * Deprecated, Sets the bound value of the component
    */
-  @Input() model: any = [];
+  @Input() model: SamListBoxValue[] = [];
   /**
    * Sets the array of checkbox values and labels (see OptionsType[])
    */
@@ -108,9 +118,12 @@ export class SamListBoxComponent implements ControlValueAccessor, OnInit {
   /**
    * Deprecated, Event emitted when the model value changes
    */
-  @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() modelChange: EventEmitter<SamListBoxValue[]> = new EventEmitter<
+    SamListBoxValue[]
+  >();
 
-  @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
+  @Output() optionSelected: EventEmitter<OptionModel> =
+    new EventEmitter<OptionModel>();
 
   @ViewChild(FieldsetWrapper, { static: true })
   public wrapper: FieldsetWrapper;
@@ -119,15 +132,15 @@ export class SamListBoxComponent implements ControlValueAccessor, OnInit {
    * in the options list. This object allows us to efficiently determine if a
    * value is before another value
    */
-  private _ordering: any = {};
-  onChange: any = () => undefined;
-  onTouched: any = () => undefined;
+  private _ordering: Record<string, number> = {};
+  onChange: (value: SamListBoxValue[]) => void = () => undefined;
+  onTouched: () => void = () => undefined;
   private disabled: boolean;
   get value() {
     return this.model;
   }
 
-  set value(val) {
+  set value(val: SamListBoxValue[]) {
     this.setSelectedItem(val);
     this.onChange(this.model);
     this.onTouched();
@@ -149,7 +162,7 @@ export class SamListBoxComponent implements ControlValueAccessor, OnInit {
     this.optionsMode = this.isSingleMode ? "radio" : "checkbox";
   }
 
-  setSelectedItem(val) {
+  setSelectedItem(val: SamListBoxValue[]) {
     let returnVal = val;
     if (!Array.isArray(returnVal)) {
       returnVal = [];
@@ -166,7 +179,7 @@ export class SamListBoxComponent implements ControlValueAccessor, OnInit {
     this.model = returnVal;
   }
 
-  isChecked(value) {
+  isChecked(value: string) {
     // `model` may contain either raw option values (the
     // ControlValueAccessor/writeValue contract) or, via onChecked's
     // insertion path below, the option objects themselves. Treat both
@@ -175,7 +188,8 @@ export class SamListBoxComponent implements ControlValueAccessor, OnInit {
     // native checkbox/radio `checked` state never disagree, regardless of
     // how selection was set.
     return this.model.some(
-      (entry) => entry === value || (entry && entry.value === value)
+      (entry) =>
+        entry === value || (entry && (entry as OptionModel).value === value)
     );
   }
 
@@ -220,20 +234,20 @@ export class SamListBoxComponent implements ControlValueAccessor, OnInit {
       .focus();
   }
 
-  onChecked(ev, option) {
+  onChecked(ev: Event, option: SamListBoxValue) {
     this.onTouched();
-    if (!ev.target.checked) {
+    if (!(ev.target as HTMLInputElement).checked) {
       // If the option was unchecked, remove it from the model
       this.value = this.model.filter((val) => val !== option);
     } else {
       // Else, insert the checked item into the model in the correct order
       let i = 0;
-      const thisOrder = this._ordering[option];
+      const thisOrder = this._ordering[option as string];
       while (i < this.model.length) {
         const otherValue = this.model[i];
         // If the item being inserted is after the current value, break and
         // insert it.
-        if (thisOrder <= this._ordering[otherValue]) {
+        if (thisOrder <= this._ordering[otherValue as string]) {
           break;
         }
         i++;
@@ -252,7 +266,7 @@ export class SamListBoxComponent implements ControlValueAccessor, OnInit {
     this.emitModel();
   }
 
-  onKeyDown(evt): void {
+  onKeyDown(evt: KeyboardEvent): void {
     if (KeyHelper.is(KEYS.TAB, evt)) {
       return;
     } else if (KeyHelper.is(KEYS.DOWN, evt)) {
@@ -286,11 +300,11 @@ export class SamListBoxComponent implements ControlValueAccessor, OnInit {
     this.modelChange.emit(this.model);
   }
 
-  registerOnChange(fn) {
+  registerOnChange(fn: (value: SamListBoxValue[]) => void) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn) {
+  registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 
@@ -298,7 +312,7 @@ export class SamListBoxComponent implements ControlValueAccessor, OnInit {
     this.disabled = isDisabled;
   }
 
-  writeValue(value) {
+  writeValue(value: SamListBoxValue[] | null | undefined) {
     let returnValue = value;
     if (!returnValue) {
       returnValue = [];
