@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 import { ChangeDetectorRef } from "@angular/core";
 import { By } from "@angular/platform-browser";
@@ -46,7 +46,7 @@ describe("The Sam Phone Entry component", () => {
   });
   describe("rendered tests", () => {
     let component: SamPhoneEntryComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<SamPhoneEntryComponent>;
     let el;
 
     // provide our implementations or mocks to the dependency injector

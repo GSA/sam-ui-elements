@@ -5,9 +5,9 @@ import { SamTelephone } from "./telephone.component";
 
 const mockEvent = {
   currentTarget: {
-    value: undefined,
+    value: undefined as string | undefined,
   },
-};
+} as unknown as Event & { currentTarget: { value: string } };
 
 describe("Sam Telephone Component", () => {
   let component: SamTelephone;

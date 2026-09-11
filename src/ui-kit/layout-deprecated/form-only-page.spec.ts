@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 // Load the implementations that should be tested
 import { FormOnlyPageTemplateComponent } from "./form-only-page.component";
@@ -10,7 +10,7 @@ import { SamBadgeComponent } from "../components/badge";
 
 describe("FormOnlyPageTemplate component", () => {
   describe("rendered tests", () => {
-    let fixture: any;
+    let fixture: ComponentFixture<FormOnlyPageTemplateComponent>;
 
     // provide our implementations or mocks to the dependency injector
     beforeEach(() => {

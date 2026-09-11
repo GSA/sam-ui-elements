@@ -57,7 +57,7 @@ describe("Sam extension", () => {
         currentTarget: {
           value: "5",
         },
-      };
+      } as unknown as Event;
 
       component.inputChange(mock);
 
@@ -76,7 +76,7 @@ describe("Sam extension", () => {
         },
         preventDefault: function () {},
         stopPropagation: function () {},
-      };
+      } as unknown as KeyboardEvent;
 
       component.onKeyInput(mock);
 
@@ -93,7 +93,7 @@ describe("Sam extension", () => {
         key: "g",
         preventDefault: function () {},
         stopPropagation: function () {},
-      };
+      } as unknown as KeyboardEvent;
 
       component.onKeyInput(mock1);
 

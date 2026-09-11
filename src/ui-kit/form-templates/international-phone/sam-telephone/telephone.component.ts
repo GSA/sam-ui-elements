@@ -43,17 +43,17 @@ export class SamTelephone extends SamFormControl implements OnChanges {
   private keys: KeyHelper = new KeyHelper(...numberInputKeys);
 
   public defaultValidators: ValidatorFn[] = [];
-  public inputValue: any;
+  public inputValue: string;
   public template: string = "(___)___-____";
 
   protected defaultValue: number = null;
-  protected _value: any;
+  protected _value: string;
 
-  public get value() {
+  public get value(): string {
     return this._value;
   }
 
-  public set value(val: any) {
+  public set value(val: string) {
     this._value = this.templateToNumber(val);
     this.inputValue = this.numberToTemplate(this._value);
     this.onChange(this._value);
@@ -80,13 +80,13 @@ export class SamTelephone extends SamFormControl implements OnChanges {
     return errs.length > 0 ? errs[0] : null;
   }
 
-  onKeyInput(event) {
+  onKeyInput(event: KeyboardEvent) {
     if (!this.keys.isAllowed(event)) {
       event.preventDefault();
       return;
     }
   }
-  public inputChange(event: any): void {
+  public inputChange(event: Event): void {
     const target = <HTMLInputElement>event.currentTarget;
 
     if (target) {
@@ -94,7 +94,7 @@ export class SamTelephone extends SamFormControl implements OnChanges {
     }
   }
 
-  public handleFocus(event: any): void {
+  public handleFocus(event: Event): void {
     const target = <HTMLInputElement>event.currentTarget;
 
     if (target) {
@@ -102,7 +102,7 @@ export class SamTelephone extends SamFormControl implements OnChanges {
     }
   }
 
-  public handleBlur(event: any): void {
+  public handleBlur(event: Event): void {
     const target = <HTMLInputElement>event.currentTarget;
 
     if (target) {
@@ -158,7 +158,7 @@ export class SamTelephone extends SamFormControl implements OnChanges {
   }
 
   private usaValidator(): ValidatorFn {
-    return (c: FormControl): { [key: string]: any } => {
+    return (c: FormControl): ValidationErrors => {
       const usaRegex: RegExp = /^[0-9]{10}$/g;
       const message = "North American phone numbers must be 10 digits";
 
@@ -169,7 +169,7 @@ export class SamTelephone extends SamFormControl implements OnChanges {
   }
 
   private intlValidator(): ValidatorFn {
-    return (c: FormControl): { [key: string]: any } => {
+    return (c: FormControl): ValidationErrors => {
       const message =
         "International phone numbers must be between 4 and 15 digits";
 
