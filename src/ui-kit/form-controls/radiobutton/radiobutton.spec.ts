@@ -4,6 +4,7 @@ import { By } from "@angular/platform-browser";
 
 // Load the implementations that should be tested
 import { SamRadioButtonComponent } from "./radiobutton.component";
+import { OptionsType } from "../../types";
 import { SamWrapperModule } from "../../wrappers";
 import { SamFormService } from "../../form-service";
 import { FormsModule, FormControl } from "@angular/forms";
@@ -33,9 +34,11 @@ describe("The Sam Radio Buttons component", () => {
   });
   describe("rendered tests", () => {
     let component: SamRadioButtonComponent;
-    let fixture: any;
+    let fixture: ReturnType<
+      typeof TestBed.createComponent<SamRadioButtonComponent>
+    >;
 
-    const options: any[] = [
+    const options: OptionsType[] = [
       { value: "dc", label: "Washington DC", name: "dc" },
       { value: "ma", label: "Maryland", name: "dc" },
       { value: "va", label: "Virginia", name: "virginia" },

@@ -5,11 +5,11 @@ import { ChangeDetectorRef } from "@angular/core";
 import type { Mock } from "vitest";
 
 describe("The Sam Text component", () => {
-  let component: SamFormControl;
+  let component: SamFormControl<number>;
   const cdr: ChangeDetectorRef = undefined;
 
   beforeEach(() => {
-    component = new SamFormControl(new SamFormService(), cdr);
+    component = new SamFormControl<number>(new SamFormService(), cdr);
 
     // Mock Inputs
     component.label = "First Name";
