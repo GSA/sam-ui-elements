@@ -24,6 +24,25 @@ class HostComponent {
   @ViewChild(MdTabGroup) tabGroup: MdTabGroup;
 }
 
+@Component({
+  template: `
+    <sam-tabs-next [selectedIndex]="selectedIndex">
+      <sam-tab-next>
+        <ng-template sam-tab-label>
+          <span class="custom-label">Custom Label</span>
+        </ng-template>
+        Content One
+      </sam-tab-next>
+      <sam-tab-next label="Tab Two">Content Two</sam-tab-next>
+    </sam-tabs-next>
+  `,
+  standalone: false,
+})
+class TemplateLabelHostComponent {
+  selectedIndex = 0;
+  @ViewChild(MdTabGroup) tabGroup: MdTabGroup;
+}
+
 describe("The Sam Tabs Next component", () => {
   let fixture: ComponentFixture<HostComponent>;
   let host: HostComponent;
@@ -151,5 +170,23 @@ describe("The Sam Tabs Next component", () => {
     fixture.detectChanges();
 
     expect(host.tabGroup.selectedIndex).toBe(0);
+  });
+
+  it("should render an <ng-template sam-tab-label> as the tab's label content via the CdkPortalOutlet", () => {
+    TestBed.resetTestingModule();
+    TestBed.configureTestingModule({
+      declarations: [TemplateLabelHostComponent],
+      imports: [SamTabsNextModule, NoopAnimationsModule],
+    });
+    const templateFixture = TestBed.createComponent(TemplateLabelHostComponent);
+    templateFixture.detectChanges();
+    templateFixture.detectChanges();
+
+    const labels =
+      templateFixture.nativeElement.querySelectorAll(".mat-tab-label");
+    expect(labels[0].querySelector(".custom-label")?.textContent).toBe(
+      "Custom Label"
+    );
+    expect(labels[1].textContent).toContain("Tab Two");
   });
 });

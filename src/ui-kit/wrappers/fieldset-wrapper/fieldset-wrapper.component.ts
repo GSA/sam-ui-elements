@@ -103,9 +103,8 @@ export class FieldsetWrapper
     }
   }
 
-  @HostListener("window:resize", ["$event"])
-  public onResize(_event: Event) {
-    void _event;
+  @HostListener("window:resize")
+  public onResize() {
     // needs to be open to recalc correctly in
     // ngAfterViewChecked
     this.showToggle = false;
