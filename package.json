@@ -64,7 +64,7 @@
   },
   "devDependencies": {
     "@types/hammerjs": "2.0.46",
-    "@types/node": "26.1.1",
+    "@types/node": "26.4.1",
     "@types/source-map": "0.5.7",
     "@types/uglify-js": "2.0.27",
     "angular-eslint": "21.4.0",
@@ -72,6 +72,6 @@
     "github-release-notes": "^0.17.0",
     "prettier": "3.9.6",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.68.0"
+    "typescript-eslint": "8.69.0"
   }
 }
