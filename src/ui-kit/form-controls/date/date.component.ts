@@ -97,7 +97,7 @@ export class SamDateComponent
    * Event emitted when form control loses focus
    */
   // eslint-disable-next-line @angular-eslint/no-output-native -- renaming is a breaking change for consumers already bound to (blur)
-  @Output() public blur = new EventEmitter<boolean>();
+  @Output() public blur = new EventEmitter<boolean | undefined>();
 
   // eslint-disable-next-line @angular-eslint/no-output-native -- renaming is a breaking change for consumers already bound to (focus)
   @Output() public focus = new EventEmitter<boolean>();
@@ -389,7 +389,7 @@ export class SamDateComponent
     let possibleNum: string;
     const inputNum = KeyHelper.getNumberFromKey(event);
     if (this.keys.isAllowed(event)) {
-      const position = parseInt(item.selectionStart.toString(), 10);
+      const position = parseInt(String(item.selectionStart), 10);
       possibleNum =
         item.value.substring(0, position) +
         inputNum +
@@ -762,7 +762,7 @@ export class SamDateComponent
     this.disabled = disabled;
   }
 
-  writeValue(value: string) {
+  writeValue(value: string | null | undefined) {
     if (value) {
       this.value = value;
       this.parseValueString();

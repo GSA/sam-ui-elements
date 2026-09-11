@@ -75,7 +75,7 @@ export class SamDateTimeComponent
   public timeComponent: SamTimeComponent;
   @ViewChild(FieldsetWrapper, { static: true }) public wrapper: FieldsetWrapper;
 
-  public onChange: (value: string) => void;
+  public onChange: (value: string | undefined) => void;
   public onTouched: () => void;
 
   constructor(private samFormService: SamFormService) {}
@@ -133,7 +133,7 @@ export class SamDateTimeComponent
     }
   }
 
-  emitChanges(val: string): void {
+  emitChanges(val: string | undefined): void {
     this.value = val;
     // only when this component is used as a FormControl will change be
     // registered
@@ -164,7 +164,7 @@ export class SamDateTimeComponent
     this.time = "";
   }
 
-  registerOnChange(fn: (value: string) => void) {
+  registerOnChange(fn: (value: string | undefined) => void) {
     this.onChange = fn;
   }
 
@@ -176,7 +176,7 @@ export class SamDateTimeComponent
     this.disabled = disabled;
   }
 
-  writeValue(value: string) {
+  writeValue(value: string | null | undefined) {
     if (value) {
       this.value = value;
     } else {

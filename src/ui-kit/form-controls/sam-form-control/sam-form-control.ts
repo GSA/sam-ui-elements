@@ -38,7 +38,7 @@ export function ValidatorToken(className) {
   template: "",
   standalone: false,
 })
-export class SamFormControl
+export class SamFormControl<T = unknown>
   implements ControlValueAccessor, OnInit, AfterViewInit
 {
   /**
@@ -92,23 +92,23 @@ export class SamFormControl
 
   public defaultValidators: ValidatorFn[] = [];
 
-  protected defaultValue: unknown = null;
+  protected defaultValue: T = null;
 
-  protected _value: unknown = null;
+  protected _value: T = null;
   protected _disabled: boolean;
 
-  public onChange: (value?: unknown) => void = () => {
+  public onChange: (value?: T) => void = () => {
     return;
   };
   public onTouched: () => void = () => {
     return;
   };
 
-  public get value(): unknown {
+  public get value(): T {
     return this._value;
   }
 
-  public set value(val: unknown) {
+  public set value(val: T) {
     this._value = !val ? this.defaultValue : val;
     this.onChange(this.value);
   }
@@ -138,11 +138,11 @@ export class SamFormControl
 
   // ControlValueAccessor Methods
 
-  public writeValue(val: unknown) {
+  public writeValue(val: T) {
     this.value = val;
   }
 
-  public registerOnChange(fn: (value?: unknown) => void) {
+  public registerOnChange(fn: (value?: T) => void) {
     this.onChange = fn;
   }
 

@@ -172,9 +172,10 @@ export class SamNumberComponent
     }
   }
 
-  onInputChange(value: number) {
-    this.value = value;
-    this.onChange(value);
+  onInputChange(value: string) {
+    const parsed = value === "" ? null : Number(value);
+    this.value = parsed;
+    this.onChange(parsed);
   }
 
   registerOnChange(fn: (value: number) => void) {

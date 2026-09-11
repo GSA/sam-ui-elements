@@ -58,7 +58,7 @@ const VALUE_ACCESSOR: Provider = {
 };
 
 export interface UploadRequiredControlLike {
-  value: UploadFile[];
+  value: UploadFile[] | null | undefined;
 }
 
 function uploadRequiredValidator(control: UploadRequiredControlLike) {
@@ -66,7 +66,7 @@ function uploadRequiredValidator(control: UploadRequiredControlLike) {
     required: "A file is required.",
   };
 
-  const model: UploadFile[] = control.value;
+  const model: UploadFile[] | null | undefined = control.value;
 
   if (!model || !model.length) {
     return error;
@@ -257,7 +257,9 @@ export class SamUploadComponent implements ControlValueAccessor {
       upload.subscription = httpEvent$.subscribe(
         (event: HttpEvent<unknown>) => {
           if (event.type === HttpEventType.UploadProgress) {
-            upload.progress = event.loaded / (event.total ?? event.loaded);
+            if (event.total) {
+              upload.progress = event.loaded / event.total;
+            }
           } else if (event instanceof HttpHeaderResponse) {
             upload.status = UploadStatus.Done;
           } else if (event instanceof HttpErrorResponse) {

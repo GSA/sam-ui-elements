@@ -82,7 +82,7 @@ export class SamCheckboxComponent implements ControlValueAccessor, OnInit {
    */
   @Input() id: string;
 
-  public optionChange: string;
+  public optionChange: string | number;
 
   public optionId: string;
   /**
@@ -94,7 +94,7 @@ export class SamCheckboxComponent implements ControlValueAccessor, OnInit {
 
   @Output() optionSelected: EventEmitter<{
     model: (string | number)[];
-    selected: string;
+    selected: string | number;
     id: string;
   }> = new EventEmitter();
 
@@ -190,7 +190,7 @@ export class SamCheckboxComponent implements ControlValueAccessor, OnInit {
 
   onCheckChanged(value: string | number, isChecked: boolean, id: string) {
     this.onTouched();
-    this.optionChange = String(value);
+    this.optionChange = value;
     this.optionId = id;
     if (!isChecked) {
       // If the option was unchecked, remove it from the model

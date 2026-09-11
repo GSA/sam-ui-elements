@@ -19,8 +19,8 @@ describe("The Sam Select component", () => {
       component.registerOnChange(() => undefined);
       component.registerOnTouched(() => undefined);
       component.setDisabledState(false);
-      component.writeValue(["aaa"]);
-      expect(component.model[0]).toBe("aaa");
+      component.writeValue("aaa");
+      expect(component.model).toBe("aaa");
     });
 
     it("should check for a name", () => {

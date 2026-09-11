@@ -369,7 +369,7 @@ export class SamDateRangeComponent
     );
   }
 
-  dateBlur(evt: string) {
+  dateBlur(evt: boolean | string) {
     if (this.type === "date" && evt === "year entered") {
       this.endDateComp.month.nativeElement.focus();
     }
@@ -394,7 +394,7 @@ export class SamDateRangeComponent
     this.disabled = disabled;
   }
 
-  writeValue(value: DateRangeValue) {
+  writeValue(value: Partial<DateRangeValue> | null | undefined) {
     if (
       value &&
       typeof value === "object" &&
