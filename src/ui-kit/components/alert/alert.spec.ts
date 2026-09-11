@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 import { By } from "@angular/platform-browser";
 
@@ -68,7 +68,7 @@ describe("The Sam Alert component", () => {
   });
   describe("rendered tests", () => {
     let component: SamAlertComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<SamAlertComponent>;
 
     beforeEach(() => {
       TestBed.configureTestingModule({

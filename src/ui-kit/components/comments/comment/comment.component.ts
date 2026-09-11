@@ -19,7 +19,7 @@ export class SamCommentComponent {
   /**
    * Emits when delete action occurs
    */
-  @Output() delete: EventEmitter<any> = new EventEmitter<any>();
+  @Output() delete: EventEmitter<Comment> = new EventEmitter<Comment>();
 
   emitClick() {
     this.delete.emit(this.comment);

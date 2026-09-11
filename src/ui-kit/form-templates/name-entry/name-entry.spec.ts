@@ -1,4 +1,9 @@
-import { TestBed, fakeAsync, tick } from "@angular/core/testing";
+import {
+  TestBed,
+  fakeAsync,
+  tick,
+  ComponentFixture,
+} from "@angular/core/testing";
 
 // Load the implementations that should be tested
 import { SamNameEntryComponent } from "./name-entry.component";
@@ -97,7 +102,7 @@ describe("The Sam Name Entry component", () => {
   });
   describe("rendered tests", () => {
     let component: SamNameEntryComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<SamNameEntryComponent>;
 
     const model = modelMock;
 

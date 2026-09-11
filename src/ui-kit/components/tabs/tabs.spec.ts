@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { Component, ViewChild } from "@angular/core";
 import { By } from "@angular/platform-browser";
 
@@ -45,7 +45,7 @@ describe("The Sam Tabs component", () => {
   });
   describe("rendered tests", () => {
     let component: TabsDefault;
-    let fixture: any;
+    let fixture: ComponentFixture<TabsDefault>;
 
     beforeEach(() => {
       TestBed.configureTestingModule({

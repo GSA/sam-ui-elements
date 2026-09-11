@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Subscription } from "rxjs";
 import { IBreadcrumb } from "../../types";
 
 @Component({
@@ -15,9 +16,10 @@ export class SamBreadcrumbsComponent {
   /**
    * Emits when crumb action occurs
    */
-  @Output() public crumbAction = new EventEmitter();
+  @Output() public crumbAction: EventEmitter<string> =
+    new EventEmitter<string>();
 
-  private _routeSubscription: any;
+  private _routeSubscription: Subscription;
   private count = 0;
 
   public crumbHandler(crumb: string) {

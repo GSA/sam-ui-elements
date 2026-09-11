@@ -19,11 +19,11 @@ export class SamMenuItemComponent {
   /**
    * (deprecated) Emits when an item has been selected
    */
-  @Output() data: EventEmitter<any> = new EventEmitter<any>();
+  @Output() data: EventEmitter<MenuItem> = new EventEmitter<MenuItem>();
   /**
    * Emits when an item has been selected
    */
-  @Output() selection: EventEmitter<any> = new EventEmitter<any>();
+  @Output() selection: EventEmitter<MenuItem> = new EventEmitter<MenuItem>();
 
   constructor(private service: SidenavService) {}
 
@@ -41,15 +41,11 @@ export class SamMenuItemComponent {
     return this.service.getData()[this.nodeDepth] === index;
   }
 
-  hasChildren(item: object) {
-    if (item["children"] && item["children"].length !== 0) {
-      return true;
-    } else {
-      return false;
-    }
+  hasChildren(item: MenuItem): boolean {
+    return !!(item.children && item.children.length !== 0);
   }
 
-  emitSelectedChild(event: any): void {
+  emitSelectedChild(event: MenuItem): void {
     this.data.emit(event);
     this.selection.emit(event);
     return;

@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { RouterTestingModule } from "@angular/router/testing";
 
 // Load the implementations that should be tested
@@ -21,7 +21,7 @@ describe("The Sam Header component", () => {
   });
 
   describe("rendered test", () => {
-    let fixture: any;
+    let fixture: ComponentFixture<SamHeaderComponent>;
 
     // provide our implementations or mocks to the dependency injector
     beforeEach(() => {

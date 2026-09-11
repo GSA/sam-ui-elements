@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 import { RouterTestingModule } from "@angular/router/testing";
 // Load the implementations that should be tested
@@ -20,7 +20,7 @@ import { data } from "../../components/sidenav/services/testdata";
 describe("Form Step Component", () => {
   describe("rendered tests", () => {
     let component: FormStepComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<FormStepComponent>;
 
     // provide our implementations or mocks to the dependency injector
     beforeEach(() => {

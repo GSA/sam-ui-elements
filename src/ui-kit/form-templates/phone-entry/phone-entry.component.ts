@@ -14,6 +14,8 @@ import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
   AbstractControl,
+  ValidatorFn,
+  ValidationErrors,
 } from "@angular/forms";
 import { SamFormService } from "../../form-service";
 
@@ -156,21 +158,23 @@ export class SamPhoneEntryComponent
           this.cdr.detectChanges();
         });
       } else {
-        this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
-          if (
-            (!evt.root || evt.root === this.control.root) &&
-            evt.eventType &&
-            evt.eventType === "submit"
-          ) {
-            this.wrapper.formatErrors(this.control);
-          } else if (
-            (!evt.root || evt.root === this.control.root) &&
-            evt.eventType &&
-            evt.eventType === "reset"
-          ) {
-            this.wrapper.clearError();
+        this.samFormService.formEventsUpdated$.subscribe(
+          (evt: { root?: unknown; eventType?: string }) => {
+            if (
+              (!evt.root || evt.root === this.control.root) &&
+              evt.eventType &&
+              evt.eventType === "submit"
+            ) {
+              this.wrapper.formatErrors(this.control);
+            } else if (
+              (!evt.root || evt.root === this.control.root) &&
+              evt.eventType &&
+              evt.eventType === "reset"
+            ) {
+              this.wrapper.clearError();
+            }
           }
-        });
+        );
       }
     }
   }
@@ -182,8 +186,8 @@ export class SamPhoneEntryComponent
     }
   }
 
-  validatePhoneNumber(template): ValidatorFn {
-    return (c): { [key: string]: any } => {
+  validatePhoneNumber(template: string): ValidatorFn {
+    return (c: AbstractControl): ValidationErrors => {
       const digitCount = c.value.replace(/[^0-9]/g, "").length;
       const correctDigitCount = template.replace(/[^_]/g, "").length;
 
@@ -347,8 +351,8 @@ export class SamPhoneEntryComponent
     );
   }
 
-  onChange: any = () => undefined;
-  onTouched: any = () => undefined;
+  onChange: (value?: string) => void = () => undefined;
+  onTouched: () => void = () => undefined;
 
   registerOnChange(fn) {
     this.onChange = fn;

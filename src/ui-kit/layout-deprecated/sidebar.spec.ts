@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 // Load the implementations that should be tested
 import { SidebarTemplateComponent } from "./sidebar.component";
@@ -6,7 +6,7 @@ import { PageService } from "./page.service";
 
 describe("SidebarTemplateComponent component", () => {
   describe("rendered tests", () => {
-    let fixture: any;
+    let fixture: ComponentFixture<SidebarTemplateComponent>;
 
     // provide our implementations or mocks to the dependency injector
     beforeEach(() => {
