@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { By } from "@angular/platform-browser";
 
@@ -7,10 +7,10 @@ import { SamPaginationComponent } from "./pagination.component";
 
 describe("The Sam Pagination component", () => {
   let component: SamPaginationComponent;
-  let fixture: any;
+  let fixture: ComponentFixture<SamPaginationComponent>;
   const srPage = '<span class="sr-only">Page</span>';
 
-  const defaultOptions: any = {
+  const defaultOptions: { totalPages: number; currentPage: number } = {
     totalPages: 20,
     currentPage: 10,
   };

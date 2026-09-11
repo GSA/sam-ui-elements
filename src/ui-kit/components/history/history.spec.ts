@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { By } from "@angular/platform-browser";
 import { RouterTestingModule } from "@angular/router/testing";
@@ -29,7 +29,7 @@ const historyData = [
 
 describe("The SAM History Component", () => {
   let component: SamHistoryComponent;
-  let fixture: any;
+  let fixture: ComponentFixture<SamHistoryComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

@@ -1,14 +1,22 @@
-import { TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { SamMultiSelectDropdownComponent } from "./multiselect-dropdown.component";
 import { SamFormControlsModule } from "../../form-controls";
 import { SamFormService } from "../../form-service";
 
+interface DefaultOptions {
+  model: Array<string | number>;
+  options: Array<{ value: string; label: string; name: string }>;
+  name: string;
+  label: string;
+  hasSelectAll: boolean;
+}
+
 describe("Sam Multiselect Dropdown Component", function () {
   let component: SamMultiSelectDropdownComponent;
-  let fixture: any;
+  let fixture: ComponentFixture<SamMultiSelectDropdownComponent>;
 
-  const defaultOptions: any = {
+  const defaultOptions: DefaultOptions = {
     model: ["ma", "va", "dc"],
     options: [
       { value: "dc", label: "DC", name: "checkbox-dc" },
