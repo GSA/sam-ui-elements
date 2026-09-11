@@ -80,6 +80,19 @@ describe("Sam Autocomplete Cache Class", () => {
     expect(cache.get(testKey)).toEqual([]);
   });
 
+  it("Should not re-insert an unchanged value into the default cache", () => {
+    cache.insert(testValue);
+    cache.insert(testValue);
+
+    // updateDefault() short-circuits when the incoming value matches the
+    // default cache's lastValue, so the duplicate insert is a no-op rather
+    // than appending a second copy. Asserted directly here because the only
+    // other test reaching this branch did so incidentally, through the
+    // component spec's debounced service fetch — which made the branch's
+    // coverage dependent on cross-file execution order.
+    expect(cache.get()).toEqual(testValue);
+  });
+
   it("Should get totalByteSize of cache", () => {
     const expectedByteSize = 82;
 

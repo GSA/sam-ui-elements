@@ -144,5 +144,73 @@ describe("The Sam International Phone Group", () => {
       expect(expected).toEqual(countryCode);
       expect(component.phoneControl.valid).toBe(false);
     });
+
+    it("should throw when hasExtension is true but no extensionName is provided", () => {
+      component.phoneName = "a";
+      component.prefixName = "a";
+      component.extensionName = "";
+      component.hasExtension = true;
+
+      expect(() => fixture.detectChanges()).toThrow();
+
+      component.extensionName = "a";
+      component.hasExtension = false;
+    });
+
+    it("should reset the prefix to '1' when the group emits a value with no prefix", () => {
+      component.phoneName = "a";
+      component.prefixName = "a";
+      fixture.detectChanges();
+
+      component.group.patchValue({ prefix: "" });
+
+      expect(component.group.controls.prefix.value).toBe("1");
+    });
+
+    it("should format wrapper errors on SamFormService submit events when useFormService is true", () => {
+      component.phoneName = "a";
+      component.prefixName = "a";
+      component.useFormService = true;
+      fixture.detectChanges();
+
+      const formatSpy = vi.spyOn(component.wrapper, "formatErrors");
+      const samFormService = TestBed.inject(SamFormService);
+      samFormService.fireSubmit(component.group.root);
+
+      expect(formatSpy).toHaveBeenCalledWith(
+        component.group.controls.prefix,
+        component.group.controls.phone,
+        component.group.controls.extension
+      );
+    });
+
+    it("should clear wrapper errors on SamFormService reset events when useFormService is true", () => {
+      component.phoneName = "a";
+      component.prefixName = "a";
+      component.useFormService = true;
+      fixture.detectChanges();
+
+      const clearSpy = vi.spyOn(component.wrapper, "clearError");
+      const samFormService = TestBed.inject(SamFormService);
+      samFormService.fireReset(component.group.root);
+
+      expect(clearSpy).toHaveBeenCalled();
+    });
+
+    it("should format wrapper errors on group value changes when useFormService is false", () => {
+      component.phoneName = "a";
+      component.prefixName = "a";
+      component.useFormService = false;
+      fixture.detectChanges();
+
+      const formatSpy = vi.spyOn(component.wrapper, "formatErrors");
+      component.group.controls.phone.setValue("5551234");
+
+      expect(formatSpy).toHaveBeenCalledWith(
+        component.group.controls.prefix,
+        component.group.controls.phone,
+        component.group.controls.extension
+      );
+    });
   });
 });

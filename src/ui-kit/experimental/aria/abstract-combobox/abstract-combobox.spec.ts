@@ -147,4 +147,46 @@ describe("AbstractCombobox", () => {
 
     expect(input.value).toBe("Alpha");
   });
+
+  it("ArrowDown moves the popup selection down and updates aria-activedescendant", () => {
+    const { input, combobox } = buildCombobox();
+    void combobox;
+
+    input.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown" }));
+
+    expect(input.getAttribute("aria-activedescendant")).toBe("cell-1");
+  });
+
+  it("ArrowUp moves the popup selection up and updates aria-activedescendant", () => {
+    const { input, combobox } = buildCombobox();
+    void combobox;
+    input.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowDown" }));
+
+    input.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowUp" }));
+
+    expect(input.getAttribute("aria-activedescendant")).toBe("cell-0");
+  });
+
+  it("ignores keys that aren't arrows or Enter", () => {
+    const { input, combobox } = buildCombobox();
+    void combobox;
+
+    expect(() =>
+      input.dispatchEvent(new KeyboardEvent("keydown", { key: "Tab" }))
+    ).not.toThrow();
+    expect(input.getAttribute("aria-activedescendant")).toBeNull();
+  });
+
+  it("adds the selected cell to the tab order on focus and removes it on blur", () => {
+    const { input, popup } = buildCombobox();
+    const cell = popup.getSelected();
+    const addSpy = vi.spyOn(cell, "addToTabOrder");
+    const removeSpy = vi.spyOn(cell, "removeFromTabOrder");
+
+    input.dispatchEvent(new Event("focus"));
+    expect(addSpy).toHaveBeenCalled();
+
+    input.dispatchEvent(new Event("blur"));
+    expect(removeSpy).toHaveBeenCalled();
+  });
 });

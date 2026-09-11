@@ -123,39 +123,53 @@ describe("Sam KeyEvent Class", () => {
   });
 
   describe("KeyHelper getKeyCode method", () => {
-    const mock = {
-      code: undefined,
-      key: undefined,
-      keyIdentifier: undefined,
-    };
+    // Each case builds its own event stub. A single shared, mutated `mock`
+    // object made these tests pass vacuously: every case assigned the same
+    // string "asdf", so once test one had set `key`, the later cases asserted
+    // `getKeyCode() === "asdf"` while still returning `key` rather than the
+    // `code`/`keyIdentifier` fallback they claim to exercise. That left the
+    // fallback branches covered only by whichever *other* spec file happened
+    // to run first, making total branch coverage order-dependent.
 
     it("should return key if present", () => {
-      const expected = (mock.key = "asdf");
-      // Dummy data for testing
-      mock.code = "jkl;";
-      mock.keyIdentifier = "jkl;";
+      const actual = KeyHelper.getKeyCode({
+        key: "the-key",
+        code: "the-code",
+        keyIdentifier: "the-identifier",
+      });
 
-      const actual = KeyHelper.getKeyCode(mock);
-
-      expect(expected).toEqual(actual);
+      expect(actual).toEqual("the-key");
     });
 
     it("should return code when key not present", () => {
-      const expected = (mock.code = "asdf");
-      // Dummy data for testing
-      mock.keyIdentifier = "jkl;";
+      const actual = KeyHelper.getKeyCode({
+        key: undefined,
+        code: "the-code",
+        keyIdentifier: "the-identifier",
+      });
 
-      const actual = KeyHelper.getKeyCode(mock);
-
-      expect(expected).toEqual(actual);
+      expect(actual).toEqual("the-code");
     });
 
     it("should return keyIdentifier if present and key and\
       code are missing", () => {
-      const expected = (mock.keyIdentifier = "asdf");
-      const actual = KeyHelper.getKeyCode(mock);
+      const actual = KeyHelper.getKeyCode({
+        key: undefined,
+        code: undefined,
+        keyIdentifier: "the-identifier",
+      });
 
-      expect(expected).toEqual(actual);
+      expect(actual).toEqual("the-identifier");
+    });
+
+    it("should return undefined when key, code and keyIdentifier are all missing", () => {
+      const actual = KeyHelper.getKeyCode({
+        key: undefined,
+        code: undefined,
+        keyIdentifier: undefined,
+      });
+
+      expect(actual).toBeUndefined();
     });
 
     it("should return undefined if event is undefined", () => {

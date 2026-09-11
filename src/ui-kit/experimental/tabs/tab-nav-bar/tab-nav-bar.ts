@@ -66,7 +66,10 @@ export class MdTabNav
 
   ngOnDestroy() {
     this._onDestroy.next();
-    this._resizeSubscription.unsubscribe();
+    // Optional: _resizeSubscription is only ever assigned by a subclass that
+    // actually subscribes to window.resize. A plain MdTabNav leaves it
+    // undefined, so an unguarded unsubscribe() threw on every normal teardown.
+    this._resizeSubscription?.unsubscribe();
   }
 }
 
