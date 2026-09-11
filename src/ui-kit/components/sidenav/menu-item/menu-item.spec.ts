@@ -1,12 +1,15 @@
-import { TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { SamMenuItemComponent } from "./";
 import { SamSidenavModule } from "../";
 import { SidenavService } from "../services";
+import { MenuItem } from "../interfaces";
 
 import { data } from "../services/testdata";
 
 describe("The Sam MenuItem component", () => {
+  const dummyMenuItem: MenuItem = { label: "dummy" };
+
   describe("isolated tests", () => {
     let component: SamMenuItemComponent;
     let service: SidenavService;
@@ -25,21 +28,24 @@ describe("The Sam MenuItem component", () => {
 
     it("should emit on selecting children", () => {
       component.selection.subscribe((val) => {
-        expect(val).toBe(true);
+        expect(val).toBe(dummyMenuItem);
       });
-      component.emitSelectedChild(true);
+      component.emitSelectedChild(dummyMenuItem);
     });
     it("should show children", () => {
-      const obj = {};
+      const obj: MenuItem = { label: "empty" };
       expect(component.hasChildren(obj)).toBe(false);
-      const obj2 = { children: [{}] };
+      const obj2: MenuItem = {
+        label: "one child",
+        children: [{ label: "child" }],
+      };
       expect(component.hasChildren(obj2)).toBe(true);
-      const obj3 = { children: [] };
+      const obj3: MenuItem = { label: "empty children", children: [] };
       expect(component.hasChildren(obj3)).toBe(false);
     });
   });
   describe("rendered tests", () => {
-    let fixture: any;
+    let fixture: ComponentFixture<SamMenuItemComponent>;
 
     beforeEach(() => {
       TestBed.configureTestingModule({

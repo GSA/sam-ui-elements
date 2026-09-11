@@ -28,7 +28,7 @@ export class SamImageComponent implements OnInit {
   /*
    * Function that is called when the image is not found
    */
-  @Output() public error = new EventEmitter<any>();
+  @Output() public error = new EventEmitter<void>();
   /**
    * An event emitter that emits the file that the user uploaded.
    */
@@ -42,10 +42,10 @@ export class SamImageComponent implements OnInit {
   @ViewChild("cancelButton", { static: true }) private cancelButton: ElementRef;
   @ViewChild("saveButton", { static: true }) private saveButton: ElementRef;
 
-  private fileChangeStream: Observable<any>;
-  private editButtonStream: Observable<any>;
-  private cancelButtonStream: Observable<any>;
-  private saveButtonStream: Observable<any>;
+  private fileChangeStream: Observable<Event>;
+  private editButtonStream: Observable<Event>;
+  private cancelButtonStream: Observable<Event>;
+  private saveButtonStream: Observable<Event>;
 
   private editModeSubscription: Subscription;
   private fileChangeSubscription: Subscription;
@@ -56,7 +56,7 @@ export class SamImageComponent implements OnInit {
   private reader: FileReader = new FileReader();
   public editMode: boolean = false;
   private tmpValue: File;
-  private tmpSrc: any;
+  private tmpSrc: string;
 
   ngOnInit() {
     this.fileChangeStream = fromEvent(this.filePicker.nativeElement, "change");
@@ -67,8 +67,8 @@ export class SamImageComponent implements OnInit {
     );
     this.saveButtonStream = fromEvent(this.saveButton.nativeElement, "click");
 
-    this.reader.onload = (event: any) => {
-      this.tmpSrc = event.target.result;
+    this.reader.onload = (event: ProgressEvent<FileReader>) => {
+      this.tmpSrc = event.target.result as string;
     };
 
     this.editModeSubscription = this.editButtonStream
@@ -110,11 +110,12 @@ export class SamImageComponent implements OnInit {
     );
 
     this.fileChangeSubscription = this.fileChangeStream.subscribe(
-      (event) => {
-        if (event.target.files && event.target.files[0]) {
-          this.tmpValue = event.target.files[0];
+      (event: Event) => {
+        const target = event.target as HTMLInputElement;
+        if (target.files && target.files[0]) {
+          this.tmpValue = target.files[0];
         }
-        this.reader.readAsDataURL(event.target.files[0]);
+        this.reader.readAsDataURL(target.files[0]);
       },
       (error) => {
         console.error(error);
@@ -161,17 +162,17 @@ export class SamImageComponent implements OnInit {
   }
 
   // Drag and drop logic for later
-  public onDragEnter(event) {
+  public onDragEnter(event: DragEvent) {
     event.stopPropagation();
     event.preventDefault();
   }
 
-  public onDragOver(event) {
+  public onDragOver(event: DragEvent) {
     event.stopPropagation();
     event.preventDefault();
   }
 
-  public onDropEvent(event) {
+  public onDropEvent(event: DragEvent) {
     event.stopPropagation();
     event.preventDefault();
     if (this.editMode) {

@@ -33,21 +33,21 @@ export class SamCommentsComponent implements OnInit, OnDestroy {
   public hideCommentsButton: ElementRef;
   @ViewChild("textArea", { static: true }) public textArea: ElementRef;
 
-  public form: any;
+  public form: FormGroup;
 
   /**
    * Observables created from DOM events
    */
-  private showButtonStream: Observable<any>;
-  private hideCommentsStream: Observable<any>;
-  private enterEventStream: Observable<any>;
+  private showButtonStream: Observable<Event>;
+  private hideCommentsStream: Observable<Event>;
+  private enterEventStream: Observable<KeyboardEvent>;
 
   /**
    * Observables that map DOM events
    */
-  private getCommentsStream: Observable<any>;
-  private collapseCommentsStream: Observable<any>;
-  private submitStream: Observable<any>;
+  private getCommentsStream: Observable<Comment[] | Error>;
+  private collapseCommentsStream: Observable<Comment[] | Error>;
+  private submitStream: Observable<Comment[] | Error>;
 
   /**
    * Subscriptions for Observables
@@ -63,7 +63,7 @@ export class SamCommentsComponent implements OnInit, OnDestroy {
   /**
    * Playground
    */
-  private deleteStream: Subject<any> = new Subject<any>();
+  private deleteStream: Subject<Comment> = new Subject<Comment>();
 
   constructor(
     private commentsService: CommentsService,
@@ -113,8 +113,8 @@ export class SamCommentsComponent implements OnInit, OnDestroy {
     );
 
     this.submitStream = this.enterEventStream.pipe(
-      flatMap((event) => {
-        if (event.key === "Enter" || event.keyIdentified === "Enter") {
+      flatMap((event: KeyboardEvent) => {
+        if (event.key === "Enter") {
           this.form.controls.datetime.setValue(Date.now());
           return this.commentsService
             .postComment(this.form.value)
@@ -123,7 +123,7 @@ export class SamCommentsComponent implements OnInit, OnDestroy {
           return of(undefined);
         }
       }),
-      flatMap((event) => {
+      flatMap((event: Comment[] | Error | undefined) => {
         if (event instanceof Error) {
           return of(this.comments);
         } else if (event === null || event === undefined) {
@@ -136,12 +136,12 @@ export class SamCommentsComponent implements OnInit, OnDestroy {
     );
 
     const sub = this.deleteStream.pipe(
-      flatMap((comment) => {
+      flatMap((comment: Comment) => {
         return this.commentsService
           .deleteComment(comment)
           .pipe(catchError((err) => of(err)));
       }),
-      flatMap((event) => {
+      flatMap((event: Comment[] | Error) => {
         if (event instanceof Error) {
           return of(this.comments);
         } else {
@@ -161,7 +161,7 @@ export class SamCommentsComponent implements OnInit, OnDestroy {
         merge(sub)
       )
       .subscribe(
-        (comments) => {
+        (comments: Comment[]) => {
           this.comments = comments;
         },
         (err) => {

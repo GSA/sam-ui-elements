@@ -62,7 +62,7 @@ export class ExampleDatabase {
  * the underlying data. Instead, it only needs to take the data and send the table exactly what
  * should be rendered.
  */
-export class ExampleDataSource extends DataSource<any> {
+export class ExampleDataSource extends DataSource<CFDAData> {
   totalcost = 0;
   _filterChange = new BehaviorSubject("");
   get filter(): string {

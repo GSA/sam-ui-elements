@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { By } from "@angular/platform-browser";
 
@@ -7,7 +7,7 @@ import { SamPointOfContactComponent } from "./point-of-contact.component";
 
 describe("The Sam Point of Contact component", () => {
   let component: SamPointOfContactComponent;
-  let fixture: any;
+  let fixture: ComponentFixture<SamPointOfContactComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

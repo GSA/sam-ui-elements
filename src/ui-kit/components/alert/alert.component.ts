@@ -43,13 +43,13 @@ export class SamAlertComponent implements OnInit {
   /**
    * Emitted event when an alert is dismissed
    */
-  @Output() dismiss: EventEmitter<any> = new EventEmitter<any>();
+  @Output() dismiss: EventEmitter<void> = new EventEmitter<void>();
   /**
    * Emitted event when toggling content
    */
-  @Output() toggle: EventEmitter<any> = new EventEmitter<any>();
+  @Output() toggle: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  types: any = {
+  types: Record<string, { class: string; sr: string }> = {
     error: { class: "usa-alert-error", sr: "error alert" },
     info: { class: "usa-alert-info", sr: "info alert" },
     success: { class: "usa-alert-success", sr: "success alert" },
