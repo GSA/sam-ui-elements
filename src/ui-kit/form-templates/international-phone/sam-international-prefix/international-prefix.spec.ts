@@ -68,7 +68,7 @@ describe("Sam International Prefix", () => {
         currentTarget: {
           value: "5",
         },
-      };
+      } as unknown as Event;
 
       // Trigger ngOnInit (which seeds the default value) before simulating input.
       fixture.detectChanges();
@@ -84,7 +84,7 @@ describe("Sam International Prefix", () => {
         key: 5,
         preventDefault: vi.fn(),
         stopPropagation: function () {},
-      };
+      } as unknown as KeyboardEvent;
 
       component.onKeyInput(mock);
 
@@ -96,7 +96,7 @@ describe("Sam International Prefix", () => {
         key: "g",
         preventDefault: vi.fn(),
         stopPropagation: function () {},
-      };
+      } as unknown as KeyboardEvent;
 
       component.onKeyInput(mock);
 

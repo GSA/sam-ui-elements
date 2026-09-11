@@ -7,6 +7,31 @@ import {
   ChangeDetectorRef,
   AfterViewInit,
 } from "@angular/core";
+import { AlertType, IBreadcrumb } from "../../types";
+import { MenuItem } from "../../components/sidenav";
+
+/**
+ * A minimal shape for the (deprecated) `tabsComponent` input, describing the
+ * two boolean flags this component toggles on whatever tabbed component is
+ * passed in. Kept intentionally narrow rather than importing a concrete tabs
+ * component type, since any object satisfying this shape has historically
+ * been accepted here.
+ */
+export interface FormStepTabsComponent {
+  toggleButtonOnAccess?: boolean;
+  toggleButtonOnErrors?: boolean;
+}
+
+/**
+ * A single alert entry rendered by this component's template, matching the
+ * `alerts[i].config.*` bindings used below. Only the fields the template
+ * actually reads (`title`/`type`/`description`) are required here, since the
+ * previously `any[]`-typed `alerts` input accepted configs that omitted
+ * `AlertType`'s other fields (e.g. `timer`).
+ */
+export interface FormStepAlert {
+  config: Pick<AlertType, "title" | "type" | "description">;
+}
 
 @Component({
   selector: "form-step",
@@ -117,23 +142,23 @@ export class FormStepComponent implements OnChanges, AfterViewInit {
   /**
    * Sets breadcrumbs model
    */
-  @Input() crumbs;
+  @Input() crumbs: Array<IBreadcrumb>;
   /**
    * Sets sidenav model
    */
-  @Input() sideNavModel;
+  @Input() sideNavModel: MenuItem;
   /**
    * Sets sidenav selection
    */
-  @Input() sideNavSelection;
+  @Input() sideNavSelection: string;
   /**
    * Sets sidenav image src
    */
-  @Input() sideNavImage;
+  @Input() sideNavImage: string;
   /**
    * Sets sidenav image alt
    */
-  @Input() sideNavImageAlt;
+  @Input() sideNavImageAlt: string;
   /**
    * Used to toggle appearance of back/next buttons
    */
@@ -173,15 +198,15 @@ export class FormStepComponent implements OnChanges, AfterViewInit {
   /**
    * Passes in a tab component
    */
-  @Input() tabsComponent: any;
+  @Input() tabsComponent: FormStepTabsComponent;
   /**
    * Override to toggle buttons on/off if there are external errors
    */
-  @Input() hasErrors: any;
+  @Input() hasErrors: boolean;
   /**
    * Passes in an Alerts model
    */
-  @Input() alerts: any;
+  @Input() alerts: FormStepAlert[];
   /**
    * Disables form buttons
    */
@@ -221,16 +246,16 @@ export class FormStepComponent implements OnChanges, AfterViewInit {
     this.toggleButtons(this.hasErrors);
   }
 
-  breadcrumbHandler(evt) {
+  breadcrumbHandler(evt: unknown) {
     this.breadcrumbOut.emit(evt);
     this.breadcrumbChange.emit(evt);
   }
 
-  formAction(evtStr) {
+  formAction(evtStr: unknown) {
     this.action.emit({ event: evtStr });
   }
 
-  navHandler(evt) {
+  navHandler(evt: unknown) {
     this.sideNavOutput.emit(evt);
     this.sideNavChange.emit(evt);
   }

@@ -90,8 +90,8 @@ export class SamDateRangeV2Component implements OnInit, ControlValueAccessor {
     this.onChange(this.model);
     this.onTouched();
   }
-  onChange: any = () => undefined;
-  onTouched: any = () => undefined;
+  onChange: (value: DateModel) => void = () => undefined;
+  onTouched: () => void = () => undefined;
 
   ngOnInit() {
     if (this.control) {
@@ -106,21 +106,21 @@ export class SamDateRangeV2Component implements OnInit, ControlValueAccessor {
     this.onChange(this.model);
   }
 
-  setSelectedDate(val: any) {
+  setSelectedDate(val: DateModel) {
     this.model.startDate = val.startDate;
     this.model.endDate = val.endDate;
   }
-  registerOnChange(fn) {
+  registerOnChange(fn: (value: DateModel) => void) {
     this.onChange = fn;
   }
-  registerOnTouched(fn) {
+  registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 
-  writeValue(value) {
+  writeValue(value: DateModel | null | undefined) {
     let returnValue = value;
     if (!returnValue) {
-      returnValue = {};
+      returnValue = { startDate: "", endDate: "" };
     }
     this.setSelectedDate(returnValue);
   }

@@ -25,7 +25,7 @@ export class SamTitleComponent implements AfterViewInit, OnInit {
   @Input() public weight: string;
 
   @ViewChild("titleTemplate", { static: true })
-  titleTpl: TemplateRef<any>;
+  titleTpl: TemplateRef<unknown>;
 
   css_classes: string = "sam title";
 
@@ -47,7 +47,7 @@ export class SamTitleComponent implements AfterViewInit, OnInit {
     this.renderer.appendChild(parent, tag);
   }
 
-  getTitleTag(importance): string {
+  getTitleTag(importance: string): string {
     switch (importance) {
       case "highest": {
         return "h1";

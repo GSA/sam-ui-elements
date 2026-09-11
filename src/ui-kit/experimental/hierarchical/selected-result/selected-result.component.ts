@@ -1,8 +1,14 @@
-import { Component, Input, TemplateRef, forwardRef } from "@angular/core";
+import {
+  Component,
+  Input,
+  TemplateRef,
+  forwardRef,
+  Provider,
+} from "@angular/core";
 import { HierarchicalTreeSelectedItemModel } from "../hierarchical-tree-selectedItem.model";
 import { SelectedResultConfiguration } from "../models/SamHierarchicalSelectedResultConfiguration";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
-const Hierarchical_SelectedResult_VALUE_ACCESSOR: any = {
+const Hierarchical_SelectedResult_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamHierarchicalSelectedResultComponent),
   multi: true,
@@ -19,7 +25,7 @@ export class SamHierarchicalSelectedResultComponent implements ControlValueAcces
   /**
    * Allow to insert a customized template for suggestions to use
    */
-  @Input() itemTemplate: TemplateRef<any>;
+  @Input() itemTemplate: TemplateRef<unknown>;
 
   /**
    * The data model that has the selected item
@@ -40,7 +46,7 @@ export class SamHierarchicalSelectedResultComponent implements ControlValueAcces
   /**
    * Stored Event for ControlValueAccessor
    */
-  private propogateChange: (_val: any) => void = () => null;
+  private propogateChange: (_val: unknown) => void = () => null;
 
   @Input()
   public disabled: boolean;
@@ -57,17 +63,17 @@ export class SamHierarchicalSelectedResultComponent implements ControlValueAcces
     }
   }
 
-  writeValue(obj: any): void {
+  writeValue(obj: unknown): void {
     if (obj instanceof HierarchicalTreeSelectedItemModel) {
       this.model = obj as HierarchicalTreeSelectedItemModel;
     }
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (_val: unknown) => void): void {
     this.propogateChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouchedCallback = fn;
   }
 

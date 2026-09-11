@@ -20,7 +20,7 @@ export class SamAlertNextComponent implements OnInit {
    * Sets the alert type, defaults to 'success'
    */
   @Input() type: string = "success";
-  types: any = {
+  types: Record<string, { class: string; sr: string }> = {
     error: { class: "sam-alert-error", sr: "error alert" },
     info: { class: "sam-alert-info", sr: "info alert" },
     success: { class: "sam-alert-success", sr: "success alert" },

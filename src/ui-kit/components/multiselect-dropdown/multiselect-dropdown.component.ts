@@ -22,7 +22,7 @@ export class SamMultiSelectDropdownComponent implements OnChanges {
   /**
    * Sets the component model for active selections
    */
-  @Input() model: any = [];
+  @Input() model: Array<string | number> = [];
   /**
    * Set the dropdown option items
    */
@@ -54,7 +54,8 @@ export class SamMultiSelectDropdownComponent implements OnChanges {
   /**
    * Event emitted when model changes
    */
-  @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() modelChange: EventEmitter<Array<string | number>> =
+    new EventEmitter<Array<string | number>>();
 
   @ViewChild("optionsList", { static: true }) list: ElementRef;
 
@@ -81,14 +82,14 @@ export class SamMultiSelectDropdownComponent implements OnChanges {
     }
   }
 
-  labelForValue(val) {
+  labelForValue(val: string | number) {
     const option = this.options.find((o) => o.value === val);
     if (option) {
       return option.label;
     }
   }
 
-  toggleItemList(event) {
+  toggleItemList(event: Event) {
     if (this.isEnterEvent(event)) {
       const element = this.list.nativeElement;
       element.style.visibility =
@@ -96,14 +97,15 @@ export class SamMultiSelectDropdownComponent implements OnChanges {
     }
   }
 
-  isEnterEvent(event) {
+  isEnterEvent(event: Event) {
     const enterKey = 32;
     const spaceKey = 13;
+    const keyboardEvent = event as KeyboardEvent;
     // Returns true if event is click or key code is enter (32) or space (13)
     return (
       event.type === "click" ||
-      event.keyCode === enterKey ||
-      event.keyCode === spaceKey
+      keyboardEvent.keyCode === enterKey ||
+      keyboardEvent.keyCode === spaceKey
     );
   }
 
@@ -113,7 +115,7 @@ export class SamMultiSelectDropdownComponent implements OnChanges {
     }
   }
 
-  modelChanged(event) {
+  modelChanged(event: Array<string | number>) {
     this.updateLabel();
     this.modelChange.emit(event);
   }

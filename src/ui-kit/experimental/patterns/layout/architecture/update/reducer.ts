@@ -10,10 +10,13 @@ export const layoutEvents = {
   VALUE_CHANGED: "VALUE_CHANGED",
 };
 
-export function layoutReducer(state: any, action: DataStoreEvent): modelType {
+export function layoutReducer(
+  state: modelType,
+  action: DataStoreEvent
+): modelType {
   switch (action.type) {
     case "VALUE_CHANGED":
-      return action.payload;
+      return action.payload as modelType;
     case "data":
     case "DATA_CHANGED":
       return {
@@ -24,19 +27,19 @@ export function layoutReducer(state: any, action: DataStoreEvent): modelType {
     case "FILTERS_CHANGED":
       return {
         ...state,
-        filters: action.payload,
+        filters: action.payload as Record<string, unknown>,
       };
     case "pagination":
     case "PAGE_CHANGED":
       return {
         ...state,
-        pagination: action.payload,
+        pagination: action.payload as modelType["pagination"],
       };
     case "sort":
     case "SORT_CHANGED":
       return {
         ...state,
-        sort: action.payload,
+        sort: action.payload as modelType["sort"],
       };
     case "ERROR":
       return {
@@ -46,7 +49,7 @@ export function layoutReducer(state: any, action: DataStoreEvent): modelType {
     case "filterFields":
       return {
         ...state,
-        filterFields: action.payload,
+        filterFields: action.payload as unknown[],
       };
     default:
       return state;

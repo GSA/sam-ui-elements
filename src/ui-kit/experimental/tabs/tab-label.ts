@@ -19,7 +19,7 @@ export const _MdTabLabelBaseClass = TemplatePortalDirective;
 })
 export class MdTabLabel extends _MdTabLabelBaseClass {
   constructor(
-    templateRef: TemplateRef<any>,
+    templateRef: TemplateRef<unknown>,
     viewContainerRef: ViewContainerRef
   ) {
     super(templateRef, viewContainerRef);

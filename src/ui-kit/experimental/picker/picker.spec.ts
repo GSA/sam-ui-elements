@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { SamPickerComponent } from "./picker";
 import { SamPopoverComponent } from "./popover";
+import { AbstractCell } from "../aria/abstract-grid/abstract-cell";
 
 @Component({
   template: `
@@ -48,7 +49,7 @@ describe("The Sam Picker component", () => {
   });
 
   it("should emit onChange and update selected when a grid cell is clicked", () => {
-    const emitted: any[] = [];
+    const emitted: AbstractCell[] = [];
     picker.onChange.subscribe((cell) => emitted.push(cell));
     const cellEl: HTMLElement =
       fixture.nativeElement.querySelector('[data-value="a"]');

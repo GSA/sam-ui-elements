@@ -13,9 +13,10 @@ export class SamHeaderComponent {
   /**
    * Emitted event from child dropdown component
    */
-  @Output() headerDropdownControl: EventEmitter<any> = new EventEmitter<any>();
+  @Output() headerDropdownControl: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
 
-  dropdownEventControl(value) {
+  dropdownEventControl(value: boolean) {
     this.headerDropdownControl.emit(value);
   }
   // deprecated

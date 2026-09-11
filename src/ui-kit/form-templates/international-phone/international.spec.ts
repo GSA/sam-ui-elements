@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 // Load the implementations that should be tested
 import { SamIntlPhoneGroup } from "./international.component";
@@ -21,7 +21,7 @@ import { SamExtension } from "./sam-extension";
 describe("The Sam International Phone Group", () => {
   describe("rendered tests", () => {
     let component: SamIntlPhoneGroup;
-    let fixture: any;
+    let fixture: ComponentFixture<SamIntlPhoneGroup>;
 
     const group = new FormGroup({
       prefix: new FormControl("1"),

@@ -36,7 +36,7 @@ describe("SamSideNavigationToolbarItemComponent", () => {
   });
 
   it("should emit sideNavigationToolbarItemSelected and remain closed until a parent opens it", () => {
-    const emitted: any[] = [];
+    const emitted: SamSideNavigationToolbarItemComponent[] = [];
     component.sideNavigationToolbarItemSelected.subscribe((item) =>
       emitted.push(item)
     );
@@ -55,7 +55,7 @@ describe("SamSideNavigationToolbarItemComponent", () => {
   });
 
   it("should open the section when the trigger button is clicked", () => {
-    const emitted: any[] = [];
+    const emitted: SamSideNavigationToolbarItemComponent[] = [];
     component.sideNavigationToolbarItemSelected.subscribe((item) =>
       emitted.push(item)
     );

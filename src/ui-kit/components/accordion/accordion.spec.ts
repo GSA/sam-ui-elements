@@ -1,6 +1,7 @@
 import {
   waitForAsync,
   ComponentFixtureAutoDetect,
+  ComponentFixture,
   TestBed,
 } from "@angular/core/testing";
 import { Component } from "@angular/core";
@@ -57,7 +58,11 @@ class AccordionBordered {}
 })
 class AccordionInitialized {}
 
-function getComponent(fix: any) {
+function getComponent(
+  fix: ComponentFixture<
+    AccordionDefault | AccordionBordered | AccordionInitialized
+  >
+): SamAccordionComponent {
   return fix.debugElement.query(By.directive(SamAccordionComponent))
     .componentInstance;
 }
@@ -125,7 +130,9 @@ describe("The Sam Accordion component", () => {
 
   describe("integration tests", () => {
     let component: SamAccordionComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<
+      AccordionDefault | AccordionBordered | AccordionInitialized
+    >;
 
     beforeEach(waitForAsync(() => {
       TestBed.configureTestingModule({

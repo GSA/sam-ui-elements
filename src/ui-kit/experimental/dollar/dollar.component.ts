@@ -54,7 +54,7 @@ export class SamDollarComponent
   attrType = "text";
   previousValue = null;
   blurDisabled = false;
-  private ngUnsubscribe: Subject<any> = new Subject();
+  private ngUnsubscribe: Subject<void> = new Subject();
 
   constructor(
     public samFormService: SamFormService,
@@ -99,21 +99,23 @@ export class SamDollarComponent
           this.cdr.detectChanges();
         });
     } else {
-      this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
-        if (
-          (!evt.root || evt.root === this.control.root) &&
-          evt.eventType &&
-          evt.eventType === "submit"
-        ) {
-          this.wrapper.formatErrors(this.control);
-        } else if (
-          (!evt.root || evt.root === this.control.root) &&
-          evt.eventType &&
-          evt.eventType === "reset"
-        ) {
-          this.wrapper.clearError();
+      this.samFormService.formEventsUpdated$.subscribe(
+        (evt: { root?: unknown; eventType?: string }) => {
+          if (
+            (!evt.root || evt.root === this.control.root) &&
+            evt.eventType &&
+            evt.eventType === "submit"
+          ) {
+            this.wrapper.formatErrors(this.control);
+          } else if (
+            (!evt.root || evt.root === this.control.root) &&
+            evt.eventType &&
+            evt.eventType === "reset"
+          ) {
+            this.wrapper.clearError();
+          }
         }
-      });
+      );
     }
   }
 
@@ -207,7 +209,7 @@ export class SamDollarComponent
   }
 
   public onInputChange() {
-    const value: any = this.strToDollar(this.value);
+    const value: string = this.strToDollar(this.value);
     this.emitChange(value);
   }
 

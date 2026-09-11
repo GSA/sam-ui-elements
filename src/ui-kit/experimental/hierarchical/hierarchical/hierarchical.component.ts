@@ -7,6 +7,7 @@ import {
   forwardRef,
   AfterViewChecked,
   ChangeDetectorRef,
+  Provider,
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { SamHiercarchicalServiceInterface } from "../hierarchical-interface";
@@ -15,7 +16,7 @@ import {
   TreeMode,
 } from "../hierarchical-tree-selectedItem.model";
 import { SamHierarchicalConfiguration } from "../models/SamHierarchicalConfiguration";
-const Hierarchical_VALUE_ACCESSOR: any = {
+const Hierarchical_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamHierarchicalComponent),
   multi: true,
@@ -60,7 +61,7 @@ export class SamHierarchicalComponent
   /**
    * Stored Event for ControlValueAccessor
    */
-  public propogateChange: (_val: any) => void = () => null;
+  public propogateChange: (_val: unknown) => void = () => null;
 
   public disabled: boolean;
 
@@ -84,12 +85,12 @@ export class SamHierarchicalComponent
   /**
    * Allow to insert a customized template for suggestions results
    */
-  @Input() suggestionTemplate: TemplateRef<any>;
+  @Input() suggestionTemplate: TemplateRef<unknown>;
 
   /**
    * Allow to insert a customized template for selected items
    */
-  @Input() selectedItemTemplate: TemplateRef<any>;
+  @Input() selectedItemTemplate: TemplateRef<unknown>;
 
   constructor(private cdr: ChangeDetectorRef) {}
   public singleMode: boolean = false;
@@ -121,7 +122,7 @@ export class SamHierarchicalComponent
         this.autocomplete.selectItem(this.hierarchicaltree.results[0]);
       } else {
         this.model.addItems(
-          <object[]>this.hierarchicaltree.results,
+          this.hierarchicaltree.results as object[],
           this.configuration.primaryKeyField
         );
         this.propogateChange(this.model);
@@ -140,17 +141,17 @@ export class SamHierarchicalComponent
     }
   }
 
-  writeValue(obj: any): void {
+  writeValue(obj: unknown): void {
     if (obj instanceof HierarchicalTreeSelectedItemModel) {
       this.model = obj as HierarchicalTreeSelectedItemModel;
     }
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (_val: unknown) => void): void {
     this.propogateChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouchedCallback = fn;
   }
 

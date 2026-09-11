@@ -1,11 +1,24 @@
+/**
+ * Represents an arbitrary event-listener signature (e.g. `(e: KeyboardEvent) =>
+ * void`, `(e: MouseEvent) => void`, or a zero-arg handler). The
+ * bivariance-hack method-shorthand form is used instead of a plain function
+ * type so that concretely-typed listeners remain assignable here under
+ * `strictFunctionTypes` — a plain `(...args: unknown[]) => void` alias would
+ * reject any listener with a more specific parameter type.
+ */
+export type EventListenerCallback = {
+  bivarianceHack(...args: unknown[]): void;
+}["bivarianceHack"];
+
 export class EventDispatcher {
-  private _listeners: object = {};
+  private _listeners: Record<string, Array<[EventListenerCallback, object]>> =
+    {};
 
   constructor(validListeners: string[]) {
     this._initListeners(validListeners);
   }
 
-  public on(event: string, callback: Function, context: object) {
+  public on(event: string, callback: EventListenerCallback, context: object) {
     const isRegistered = this._isRegisteredEvent(event);
     const isNotDuplicate = !this._isDuplicate(event, callback);
 
@@ -18,7 +31,7 @@ export class EventDispatcher {
     }
   }
 
-  public dispatch(event: string, ...args) {
+  public dispatch(event: string, ...args: unknown[]) {
     if (this._listeners[event]) {
       this._executeListeners(event, ...args);
     } else {
@@ -26,7 +39,7 @@ export class EventDispatcher {
     }
   }
 
-  public disconnect(event: string, callback: Function): void {
+  public disconnect(event: string, callback: EventListenerCallback): void {
     const name1 = callback.name;
 
     this._listeners[event] = this._listeners[event].filter((listener) => {
@@ -44,7 +57,7 @@ export class EventDispatcher {
     });
   }
 
-  private _initListeners(listeners) {
+  private _initListeners(listeners: string[]) {
     listeners.forEach((listener) => {
       if (!this._listeners[listener]) {
         this._listeners[listener] = [];
@@ -52,7 +65,7 @@ export class EventDispatcher {
     });
   }
 
-  private _executeListeners(event: string, ...args) {
+  private _executeListeners(event: string, ...args: unknown[]) {
     this._listeners[event].forEach((listener) => {
       const [callback, context] = listener;
       callback.call(context, ...args);
@@ -68,7 +81,10 @@ export class EventDispatcher {
     return !!this._listeners[event];
   }
 
-  private _isDuplicate(event: string, callback: Function): boolean {
+  private _isDuplicate(
+    event: string,
+    callback: EventListenerCallback
+  ): boolean {
     const name1 = callback.name;
 
     return this._listeners[event].reduce((bool, ls) => {

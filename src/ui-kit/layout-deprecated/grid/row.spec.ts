@@ -1,4 +1,4 @@
-import { TestBed } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 import { Component } from "@angular/core";
 // Load the implementations that should be tested
@@ -13,7 +13,7 @@ class TestComponent {}
 
 describe("Row Directive", () => {
   describe("rendered tests", () => {
-    let fixture: any;
+    let fixture: ComponentFixture<TestComponent>;
 
     // provide our implementations or mocks to the dependency injector
     beforeEach(() => {

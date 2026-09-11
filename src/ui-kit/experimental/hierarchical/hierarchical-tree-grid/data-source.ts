@@ -1,16 +1,16 @@
-import { Observable, merge } from "rxjs";
+import { Observable, merge, BehaviorSubject } from "rxjs";
 import { map } from "rxjs/operators";
 import { DataSource } from "@angular/cdk/collections";
 
 // preparing data source for the hierarchical grid
-export class HierarchicalDataSource extends DataSource<any> {
-  renderedData: any[] = [];
+export class HierarchicalDataSource extends DataSource<object> {
+  renderedData: object[] = [];
 
-  constructor(private dataChange: any) {
+  constructor(private dataChange: BehaviorSubject<object[]>) {
     super();
   }
 
-  connect(): Observable<any[]> {
+  connect(): Observable<object[]> {
     const displayDataChanges = [this.dataChange];
     return merge(...displayDataChanges).pipe(
       map(() => {

@@ -1,4 +1,4 @@
-import { TestBed, inject } from "@angular/core/testing";
+import { ComponentFixture, TestBed, inject } from "@angular/core/testing";
 
 // Load the implementations that should be tested
 import { SamAlertFooterComponent, SamAlertFooterService } from "./index";
@@ -45,7 +45,7 @@ describe("The AlertFooter component", () => {
   });
   describe("rendered tests", () => {
     let component: SamAlertFooterComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<SamAlertFooterComponent>;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -60,7 +60,7 @@ describe("The AlertFooter component", () => {
 
     it("should show 1 alert", inject(
       [SamAlertFooterService],
-      (alertFooterService) => {
+      (alertFooterService: SamAlertFooterService) => {
         fixture.detectChanges();
         alertFooterService.registerFooterAlert({
           description: "test",

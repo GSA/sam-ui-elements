@@ -50,9 +50,9 @@ export class DynamicChipsDirective implements OnInit {
     this._service.get("filters").valueChanges.subscribe((filters) => {
       this.clearContainer();
 
-      const mapped = this._mapFilters(filters).filter(
-        (chip) => chip.values.length > 0
-      );
+      const mapped = this._mapFilters(
+        filters as Record<string, unknown>
+      ).filter((chip) => chip.values.length > 0);
 
       this._toggleClearAll(mapped);
 
@@ -63,7 +63,7 @@ export class DynamicChipsDirective implements OnInit {
   private _mapFilters(
     filters: Record<string, unknown>
   ): FilterDrawerChipModel[] {
-    const fields: FilterField[] = this._service.get("filterFields").value;
+    const fields = this._service.get("filterFields").value as FilterField[];
 
     return Object.keys(filters).map((key) => {
       const field = fields.filter((field) => field.key === key)[0];
