@@ -15,8 +15,9 @@ import {
   ControlValueAccessor,
   Validators,
   FormControl,
+  ValidatorFn,
 } from "@angular/forms";
-import { SamFormService } from "../../form-service";
+import { SamFormService, SamFormEvent } from "../../form-service";
 import { TextAreaWidthType } from "../../types";
 
 /**
@@ -105,25 +106,26 @@ export class SamTextareaComponent
   /**
    * (deprecated) Emits focus event
    */
-  @Output() focusEvent: EventEmitter<any> = new EventEmitter();
+  @Output() focusEvent: EventEmitter<FocusEvent> = new EventEmitter();
   /**
    * Emits focus event
    */
-  @Output() focus: EventEmitter<any> = new EventEmitter();
+  // eslint-disable-next-line @angular-eslint/no-output-native -- renaming is a breaking change for consumers already bound to (focus)
+  @Output() focus: EventEmitter<FocusEvent> = new EventEmitter();
   /**
    * deprecated, Emits event whenever input event is fired on the textarea
    */
-  @Output() inputEventChange: EventEmitter<any> = new EventEmitter();
+  @Output() inputEventChange: EventEmitter<Event> = new EventEmitter();
   /**
    * Emits event whenever input event is fired on the textarea
    */
-  @Output() inputChange: EventEmitter<any> = new EventEmitter();
+  @Output() inputChange: EventEmitter<Event> = new EventEmitter();
 
   @ViewChild(LabelWrapper, { static: true }) wrapper: LabelWrapper;
 
   public characterCounterMsg: string;
-  public onChange: any = () => undefined;
-  public onTouched: any = () => undefined;
+  public onChange: (value: string) => void = () => undefined;
+  public onTouched: () => void = () => undefined;
 
   private inBrowser = typeof window !== "undefined";
   private UA = this.inBrowser && window.navigator.userAgent.toLowerCase();
@@ -143,7 +145,7 @@ export class SamTextareaComponent
     }
 
     if (this.control) {
-      const validators: any[] = [];
+      const validators: ValidatorFn[] = [];
 
       if (this.control.validator) {
         validators.push(this.control.validator);
@@ -174,38 +176,40 @@ export class SamTextareaComponent
         });
         this.wrapper.formatErrors(this.control);
       } else {
-        this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
-          if (
-            (!evt.root || evt.root === this.control.root) &&
-            evt.eventType &&
-            evt.eventType === "submit"
-          ) {
-            this.wrapper.formatErrors(this.control);
-          } else if (
-            (!evt.root || evt.root === this.control.root) &&
-            evt.eventType &&
-            evt.eventType === "reset"
-          ) {
-            this.wrapper.clearError();
+        this.samFormService.formEventsUpdated$.subscribe(
+          (evt: SamFormEvent) => {
+            if (
+              (!evt.root || evt.root === this.control.root) &&
+              evt.eventType &&
+              evt.eventType === "submit"
+            ) {
+              this.wrapper.formatErrors(this.control);
+            } else if (
+              (!evt.root || evt.root === this.control.root) &&
+              evt.eventType &&
+              evt.eventType === "reset"
+            ) {
+              this.wrapper.clearError();
+            }
           }
-        });
+        );
       }
     }
   }
 
-  onFocus($event) {
+  onFocus($event: FocusEvent) {
     this.focusEvent.emit($event);
     this.focus.emit($event);
   }
 
-  onInputChange(value) {
+  onInputChange(value: string) {
     this.onTouched();
     this.value = value;
     this.onChange(value);
     this.valueChange.emit(value);
   }
 
-  inputEventHandler(event) {
+  inputEventHandler(event: Event) {
     this.inputEventChange.emit(event);
     this.inputChange.emit(event);
     this.setCharCounterMsg(this.value);
@@ -240,19 +244,19 @@ export class SamTextareaComponent
     }
   }
 
-  registerOnChange(fn) {
+  registerOnChange(fn: (value: string) => void) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn) {
+  registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 
-  setDisabledState(disabled) {
+  setDisabledState(disabled: boolean) {
     this.disabled = disabled;
   }
 
-  writeValue(value) {
+  writeValue(value: string) {
     this.value = value;
     this.setCharCounterMsg(this.value);
   }

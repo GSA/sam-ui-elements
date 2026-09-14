@@ -36,7 +36,7 @@ export class SamCheckboxComponent implements ControlValueAccessor, OnInit {
   /**
    * Deprecated, Sets the bound value of the component
    */
-  @Input() model: any = [];
+  @Input() model: (string | number)[] = [];
   /**
    * Sets the array of checkbox values and labels (see OptionsType[])
    */
@@ -82,15 +82,21 @@ export class SamCheckboxComponent implements ControlValueAccessor, OnInit {
    */
   @Input() id: string;
 
-  public optionChange: string;
+  public optionChange: string | number;
 
   public optionId: string;
   /**
    * Deprecated, Event emitted when the model value changes
    */
-  @Output() modelChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() modelChange: EventEmitter<(string | number)[]> = new EventEmitter<
+    (string | number)[]
+  >();
 
-  @Output() optionSelected: EventEmitter<any> = new EventEmitter<any>();
+  @Output() optionSelected: EventEmitter<{
+    model: (string | number)[];
+    selected: string | number;
+    id: string;
+  }> = new EventEmitter();
 
   @ViewChild(FieldsetWrapper, { static: true })
   public wrapper: FieldsetWrapper;
@@ -100,17 +106,17 @@ export class SamCheckboxComponent implements ControlValueAccessor, OnInit {
    * in the options list. This object allows us to efficiently determine if a
    * value is before another value
    */
-  private _ordering: any = {};
+  private _ordering: Record<string, number> = {};
 
-  onChange: any = () => undefined;
+  onChange: (value: (string | number)[]) => void = () => undefined;
 
-  onTouched: any = () => undefined;
+  onTouched: () => void = () => undefined;
 
   get value() {
     return this.model;
   }
 
-  set value(val) {
+  set value(val: (string | number)[]) {
     this.setModelValue(val);
     this.onChange(this.model);
     this.onTouched();
@@ -138,7 +144,7 @@ export class SamCheckboxComponent implements ControlValueAccessor, OnInit {
     this.setSelectAllCheck();
   }
 
-  setModelValue(val) {
+  setModelValue(val: (string | number)[]) {
     let returnVal = val;
     if (!Array.isArray(returnVal)) {
       returnVal = [];
@@ -178,11 +184,11 @@ export class SamCheckboxComponent implements ControlValueAccessor, OnInit {
     return labelOrId;
   }
 
-  isChecked(value) {
+  isChecked(value: string | number) {
     return this.model.indexOf(value) !== -1;
   }
 
-  onCheckChanged(value, isChecked, id) {
+  onCheckChanged(value: string | number, isChecked: boolean, id: string) {
     this.onTouched();
     this.optionChange = value;
     this.optionId = id;
@@ -210,7 +216,7 @@ export class SamCheckboxComponent implements ControlValueAccessor, OnInit {
     this.emitModel();
   }
 
-  onSelectAllChange(isSelectAllChecked) {
+  onSelectAllChange(isSelectAllChecked: boolean) {
     this.onTouched();
     this.value = !isSelectAllChecked
       ? []
@@ -228,19 +234,19 @@ export class SamCheckboxComponent implements ControlValueAccessor, OnInit {
     });
   }
 
-  registerOnChange(fn) {
+  registerOnChange(fn: (value: (string | number)[]) => void) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn) {
+  registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 
-  setDisabledState(disabled) {
+  setDisabledState(disabled: boolean) {
     this.disabled = disabled;
   }
 
-  writeValue(value) {
+  writeValue(value: (string | number)[]) {
     let returnValue = value;
     if (!returnValue) {
       returnValue = [];

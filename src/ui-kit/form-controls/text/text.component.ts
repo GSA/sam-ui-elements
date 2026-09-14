@@ -22,7 +22,17 @@ import { Subject, Subscription } from "rxjs";
 import { takeUntil, filter } from "rxjs/operators";
 
 import { LabelWrapper } from "../../wrappers/label-wrapper";
-import { SamFormService } from "../../form-service";
+import { SamFormService, SamFormEvent } from "../../form-service";
+
+export interface SamTextFocusEvent {
+  type: "focus" | "blur";
+  event: Event;
+}
+
+export interface SamTextChangeEvent {
+  type: "input" | "change";
+  event: Event;
+}
 
 /**
  * The <sam-text> component provides a text input form control
@@ -107,23 +117,25 @@ export class SamTextComponent
   /**
    * (deprecated) Lose focus event emit
    */
+  // eslint-disable-next-line @angular-eslint/no-output-on-prefix -- renaming is a breaking change for consumers already bound to (onBlur)
   @Output() public onBlur = new EventEmitter<boolean>();
   /**
    * Lose focus event emit
    */
+  // eslint-disable-next-line @angular-eslint/no-output-native -- renaming is a breaking change for consumers already bound to (blur)
   @Output() public blur = new EventEmitter<boolean>();
 
   @ViewChild(LabelWrapper, { static: true }) public wrapper: LabelWrapper;
 
-  public onChange: any = () => null;
-  public onTouched: any = () => null;
+  public onChange: (value: string) => void = () => null;
+  public onTouched: () => void = () => null;
 
-  public focusEvent = new Subject<any>();
-  public changeEvent = new Subject<any>();
+  public focusEvent = new Subject<SamTextFocusEvent>();
+  public changeEvent = new Subject<SamTextChangeEvent>();
 
   private _focusSubscription: Subscription;
   private _changeSubsription: Subscription;
-  private ngUnsubscribe = new Subject<any>();
+  private ngUnsubscribe = new Subject<void>();
 
   constructor(
     private samFormService: SamFormService,
@@ -154,19 +166,19 @@ export class SamTextComponent
     this.blur.emit(true);
   }
 
-  public registerOnChange(fn): void {
+  public registerOnChange(fn: (value: string) => void): void {
     this.onChange = fn;
   }
 
-  public registerOnTouched(fn): void {
+  public registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
-  public setDisabledState(disabled): void {
+  public setDisabledState(disabled: boolean): void {
     this.disabled = disabled;
   }
 
-  public writeValue(value): void {
+  public writeValue(value: string | null): void {
     this.value = value !== null ? "" + value : "";
     if (!this.cdr["destroyed"]) {
       this.cdr.detectChanges();
@@ -189,7 +201,9 @@ export class SamTextComponent
 
     this._changeSubsription = this.changeEvent
       .pipe(filter((event) => event.type === this.emitOn))
-      .subscribe((e) => this._setValue.call(this, e.event.target.value));
+      .subscribe((e) =>
+        this._setValue.call(this, (e.event.target as HTMLInputElement).value)
+      );
   }
 
   private _setupFormControl(): void {
@@ -207,7 +221,7 @@ export class SamTextComponent
           this.cdr.detectChanges();
         });
     } else {
-      this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
+      this.samFormService.formEventsUpdated$.subscribe((evt: SamFormEvent) => {
         if (this._isSubmitEvent(evt)) {
           this.wrapper.formatErrors(this.control);
         } else if (this._isResetEvent(evt)) {
@@ -218,7 +232,7 @@ export class SamTextComponent
   }
 
   private _unsubscribe(): void {
-    this.ngUnsubscribe.next(null);
+    this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
     if (this._focusSubscription) {
       this._focusSubscription.unsubscribe();
@@ -235,12 +249,12 @@ export class SamTextComponent
     }
   }
 
-  private _setValue(value): void {
+  private _setValue(value: string): void {
     this.value = value;
     this.onChange(this.value);
   }
 
-  private _handleFocusEvents(event): void {
+  private _handleFocusEvents(event: SamTextFocusEvent): void {
     if (event.type === "focus") {
       this.onTouched();
     } else if (event.type === "blur") {
@@ -248,7 +262,7 @@ export class SamTextComponent
     }
   }
 
-  private _getValidators(): any[] {
+  private _getValidators(): ValidatorFn[] {
     const validators: ValidatorFn[] = [];
 
     if (this.control.validator) {
@@ -266,7 +280,7 @@ export class SamTextComponent
     return validators;
   }
 
-  private _isSubmitEvent(evt): boolean {
+  private _isSubmitEvent(evt: SamFormEvent): boolean {
     return (
       (!evt.root || evt.root === this.control.root) &&
       evt.eventType &&
@@ -274,7 +288,7 @@ export class SamTextComponent
     );
   }
 
-  private _isResetEvent(evt): boolean {
+  private _isResetEvent(evt: SamFormEvent): boolean {
     return (
       (!evt.root || evt.root === this.control.root) &&
       evt.eventType &&

@@ -9,6 +9,7 @@ import {
   OnChanges,
   forwardRef,
   AfterViewInit,
+  ElementRef,
 } from "@angular/core";
 
 import moment from "moment";
@@ -21,9 +22,10 @@ import {
   AbstractControl,
 } from "@angular/forms";
 
-import { SamFormService } from "../../form-service";
+import { SamFormService, SamFormEvent } from "../../form-service";
 
 import { KeyHelper } from "../../utilities/key-helper/key-helper";
+import { FieldsetWrapper } from "../../wrappers/fieldset-wrapper";
 
 /**
  * The <sam-date> component is a Date entry portion of a form
@@ -86,21 +88,25 @@ export class SamDateComponent
   /**
    * Deprecated - Event emitted when value changes
    */
-  @Output() public valueChange = new EventEmitter<any>();
+  @Output() public valueChange = new EventEmitter<string | null>();
   /**
    * (deprecated) Event emitted when form control loses focus
    */
-  @Output() public blurEvent = new EventEmitter<any>();
+  @Output() public blurEvent = new EventEmitter<boolean | string>();
   /**
    * Event emitted when form control loses focus
    */
-  @Output() public blur = new EventEmitter<any>();
+  // eslint-disable-next-line @angular-eslint/no-output-native -- renaming is a breaking change for consumers already bound to (blur)
+  @Output() public blur = new EventEmitter<boolean | undefined>();
 
-  @Output() public focus = new EventEmitter<any>();
-  @ViewChild("month", { static: true }) public month;
-  @ViewChild("day", { static: true }) public day;
-  @ViewChild("year", { static: true }) public year;
-  @ViewChild("wrapper", { static: true }) public wrapper;
+  // eslint-disable-next-line @angular-eslint/no-output-native -- renaming is a breaking change for consumers already bound to (focus)
+  @Output() public focus = new EventEmitter<boolean>();
+  @ViewChild("month", { static: true })
+  public month: ElementRef<HTMLInputElement>;
+  @ViewChild("day", { static: true }) public day: ElementRef<HTMLInputElement>;
+  @ViewChild("year", { static: true })
+  public year: ElementRef<HTMLInputElement>;
+  @ViewChild("wrapper", { static: true }) public wrapper: FieldsetWrapper;
   public allowChars = [
     "0",
     "1",
@@ -119,7 +125,11 @@ export class SamDateComponent
     "delete",
   ];
 
-  public model: any = {
+  public model: {
+    month: number | string | undefined;
+    day: number | string | undefined;
+    year: number | string | undefined;
+  } = {
     month: undefined,
     day: undefined,
     year: undefined,
@@ -190,8 +200,8 @@ export class SamDateComponent
     };
   }
 
-  onChange: any = () => undefined;
-  onTouched: any = () => undefined;
+  onChange: (value: string | null) => void = () => undefined;
+  onTouched: () => void = () => undefined;
 
   constructor(
     private samFormService: SamFormService,
@@ -224,21 +234,23 @@ export class SamDateComponent
         });
         this.wrapper.formatErrors(this.control);
       } else {
-        this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
-          if (
-            (!evt.root || evt.root === this.control.root) &&
-            evt.eventType &&
-            evt.eventType === "submit"
-          ) {
-            this.wrapper.formatErrors(this.control);
-          } else if (
-            (!evt.root || evt.root === this.control.root) &&
-            evt.eventType &&
-            evt.eventType === "reset"
-          ) {
-            this.wrapper.clearError();
+        this.samFormService.formEventsUpdated$.subscribe(
+          (evt: SamFormEvent) => {
+            if (
+              (!evt.root || evt.root === this.control.root) &&
+              evt.eventType &&
+              evt.eventType === "submit"
+            ) {
+              this.wrapper.formatErrors(this.control);
+            } else if (
+              (!evt.root || evt.root === this.control.root) &&
+              evt.eventType &&
+              evt.eventType === "reset"
+            ) {
+              this.wrapper.clearError();
+            }
           }
-        });
+        );
       }
     }
   }
@@ -272,12 +284,18 @@ export class SamDateComponent
     }
   }
 
-  getDate(override = undefined) {
+  getDate(
+    override: {
+      day?: number | string;
+      month?: number | string;
+      year?: number | string;
+    } = undefined
+  ) {
     const obj = override ? override : this.model;
-    return moment([obj.year, obj.month - 1, obj.day]);
+    return moment([obj.year, Number(obj.month) - 1, obj.day]);
   }
 
-  onMonthPaste(event) {
+  onMonthPaste(event: ClipboardEvent) {
     const text = this._getClipboardText(event);
     if (text) {
       if (text.length > 2) {
@@ -290,7 +308,7 @@ export class SamDateComponent
     }
   }
 
-  onDayPaste(event) {
+  onDayPaste(event: ClipboardEvent) {
     const text = this._getClipboardText(event);
     if (text) {
       if (text.length > 2) {
@@ -303,7 +321,7 @@ export class SamDateComponent
     }
   }
 
-  onYearPaste(event) {
+  onYearPaste(event: ClipboardEvent) {
     const text = this._getClipboardText(event);
     const validYearLength = 4;
     if (text) {
@@ -321,7 +339,7 @@ export class SamDateComponent
     }
   }
 
-  onMonthInput(event: any) {
+  onMonthInput(event: KeyboardEvent) {
     const key = KeyHelper.getKeyCode(event);
     let dupModel;
     if (this._checkCopyPasteChar(key)) {
@@ -347,9 +365,10 @@ export class SamDateComponent
     }
 
     if (inputNum !== undefined) {
+      const target = event.target as HTMLInputElement;
       if (
-        event.target.value.length === 1 ||
-        (event.target.value.length === 0 && possibleNum > 1)
+        target.value.length === 1 ||
+        (target.value.length === 0 && possibleNum > 1)
       ) {
         if (
           this.day.nativeElement.value &&
@@ -359,18 +378,18 @@ export class SamDateComponent
         }
         this.day.nativeElement.focus();
       }
-      this.month.nativeElement.value = possibleNum;
+      this.month.nativeElement.value = String(possibleNum);
       dupModel = this.inputModel;
       event.preventDefault();
     }
     this.onChangeHandler(dupModel);
   }
 
-  getPossibleNum(item, event): number {
-    let possibleNum;
+  getPossibleNum(item: HTMLInputElement, event: KeyboardEvent): number {
+    let possibleNum: string;
     const inputNum = KeyHelper.getNumberFromKey(event);
     if (this.keys.isAllowed(event)) {
-      const position = parseInt(item.selectionStart, 10);
+      const position = parseInt(String(item.selectionStart), 10);
       possibleNum =
         item.value.substring(0, position) +
         inputNum +
@@ -387,7 +406,7 @@ export class SamDateComponent
     }
   }
 
-  onDayInput(event) {
+  onDayInput(event: KeyboardEvent) {
     const key = KeyHelper.getKeyCode(event);
     if (this._checkCopyPasteChar(key)) {
       return;
@@ -416,13 +435,14 @@ export class SamDateComponent
     }
     let dupModel;
     if (inputNum !== undefined) {
+      const target = event.target as HTMLInputElement;
       if (
-        event.target.value.length === 1 ||
-        (event.target.value.length === 0 && possibleNum > numJumpThreshold)
+        target.value.length === 1 ||
+        (target.value.length === 0 && possibleNum > numJumpThreshold)
       ) {
         this.year.nativeElement.focus();
       }
-      this.day.nativeElement.value = possibleNum;
+      this.day.nativeElement.value = String(possibleNum);
       dupModel = this.inputModel;
       event.preventDefault();
     }
@@ -453,9 +473,9 @@ export class SamDateComponent
     return maxDate;
   }
 
-  getNumJumpThreshold(month) {
+  getNumJumpThreshold(month: string | number) {
     const three = 3; // What is numJumpThreshold and what is this const?
-    return month === 2 ? 2 : three;
+    return String(month) === "2" ? 2 : three;
   }
 
   onYearBlur(event?: Event) {
@@ -474,7 +494,7 @@ export class SamDateComponent
     }
   }
 
-  onYearInput(event) {
+  onYearInput(event: KeyboardEvent) {
     const key = KeyHelper.getKeyCode(event);
     const maxValue = 9999;
     let dupModel;
@@ -501,11 +521,12 @@ export class SamDateComponent
     }
     if (inputNum !== undefined) {
       const three = 3;
-      if (event.target.value.length === three) {
+      const target = event.target as HTMLInputElement;
+      if (target.value.length === three) {
         this.blurEvent.emit("year entered");
         this.blur.emit();
       }
-      this.year.nativeElement.value = possibleNum;
+      this.year.nativeElement.value = String(possibleNum);
       dupModel = this.inputModel;
       event.preventDefault();
     }
@@ -517,7 +538,13 @@ export class SamDateComponent
     this.onChangeHandler(dupModel);
   }
 
-  onChangeHandler(override = undefined) {
+  onChangeHandler(
+    override: {
+      day?: number | string;
+      month?: number | string;
+      year?: number | string;
+    } = undefined
+  ) {
     this.onTouched();
     const dayCheck =
       this.isDateTouched ||
@@ -579,19 +606,26 @@ export class SamDateComponent
       this.onChangeHandler(dupModel);
     }
   }
-  isEmptyField(override = undefined) {
-    let dupModel = this.inputModel;
-    if (override) {
-      dupModel = override;
-    }
+  isEmptyField(
+    override: {
+      day?: number | string;
+      month?: number | string;
+      year?: number | string;
+    } = undefined
+  ) {
+    const dupModel: {
+      day?: number | string;
+      month?: number | string;
+      year?: number | string;
+    } = override || this.inputModel;
     return (
-      (isNaN(dupModel.day) ||
+      (isNaN(Number(dupModel.day)) ||
         dupModel.day === undefined ||
         dupModel.day === "") &&
-      (isNaN(dupModel.month) ||
+      (isNaN(Number(dupModel.month)) ||
         dupModel.month === undefined ||
         dupModel.month === "") &&
-      (isNaN(dupModel.year) ||
+      (isNaN(Number(dupModel.year)) ||
         dupModel.year === undefined ||
         dupModel.year === "")
     );
@@ -642,18 +676,20 @@ export class SamDateComponent
     this.isYearSelected = true;
   }
 
-  triggerMonthTouch(event) {
+  triggerMonthTouch(event: Event) {
     this.isMonthTouched = true;
-    if (event.target.value.substring(0, 1) === "0") {
-      this.month.nativeElement.value = event.target.value.substring(1);
+    const target = event.target as HTMLInputElement;
+    if (target.value.substring(0, 1) === "0") {
+      this.month.nativeElement.value = target.value.substring(1);
     }
     this.touchHandler();
     this.onTouched();
   }
-  triggerDayTouch(event) {
+  triggerDayTouch(event: Event) {
     this.isDateTouched = true;
-    if (event.target.value.substring(0, 1) === "0") {
-      this.day.nativeElement.value = event.target.value.substring(1);
+    const target = event.target as HTMLInputElement;
+    if (target.value.substring(0, 1) === "0") {
+      this.day.nativeElement.value = target.value.substring(1);
     }
     this.touchHandler();
     this.onTouched();
@@ -665,23 +701,23 @@ export class SamDateComponent
     this.year.nativeElement.value = "";
   }
 
-  _checkCopyPasteChar(char) {
+  _checkCopyPasteChar(char: string | number) {
     if (char === "c" || char === "v") {
       return true;
     }
   }
 
-  _keyIsNumber(char) {
+  _keyIsNumber(char: string) {
     // tslint:disable-next-line
     if (char.match(/[0-9]/) != undefined) {
       return true;
     }
   }
 
-  _getClipboardText(event) {
+  _getClipboardText(event: ClipboardEvent) {
     // It is problematic to reference DOM elements in Angular components
     // We should revisit that practice through our entire code base
-    const win: any = window;
+    const win = window as Window & { clipboardData?: DataTransfer };
     if (event.clipboardData && event.clipboardData.getData("text")) {
       return event.clipboardData.getData("text");
     } else if (win.clipboardData && win.clipboardData.getData("text")) {
@@ -689,9 +725,9 @@ export class SamDateComponent
     }
   }
 
-  _shouldClearDayInput(num) {
+  _shouldClearDayInput(num: number | string) {
     if (
-      (this.thirtyDayMonths.indexOf(parseInt(num, undefined)) !== -1 &&
+      (this.thirtyDayMonths.indexOf(parseInt(String(num), undefined)) !== -1 &&
         this.day.nativeElement.value === "31") ||
       (num === "2" &&
         this.nonFebruaryDays.indexOf(
@@ -702,30 +738,31 @@ export class SamDateComponent
     }
   }
 
-  _isLeapYear(year) {
+  _isLeapYear(year: number | string) {
     const quadrennial = 4;
     const centennial = 100;
     const quadricentennial = 400;
+    const y = Number(year);
     return (
-      (year % quadrennial === 0 && year % centennial !== 0) ||
-      year % quadricentennial === 0
+      (y % quadrennial === 0 && y % centennial !== 0) ||
+      y % quadricentennial === 0
     );
   }
 
   // controlvalueaccessor methods
-  registerOnChange(fn) {
+  registerOnChange(fn: (value: string | null) => void) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn) {
+  registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 
-  setDisabledState(disabled) {
+  setDisabledState(disabled: boolean) {
     this.disabled = disabled;
   }
 
-  writeValue(value) {
+  writeValue(value: string | null | undefined) {
     if (value) {
       this.value = value;
       this.parseValueString();
