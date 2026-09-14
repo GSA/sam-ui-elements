@@ -1,10 +1,7 @@
 import {
   Component,
-  ElementRef,
   HostListener,
   ViewEncapsulation,
-  Renderer2,
-  NgZone,
   Input,
   Output,
   EventEmitter,
@@ -61,11 +58,8 @@ export class SamPageNextComponent
   public backIcon = faLongArrowAltLeft;
   public closeIcon = faTimes;
   constructor() {
-    const _element = inject(ElementRef);
-    const _renderer = inject(Renderer2);
-    const _ngZone = inject(NgZone);
-
-    super(null, _element, _renderer, _ngZone);
+    super();
+    this._dir = null;
   }
 
   public ngOnInit() {

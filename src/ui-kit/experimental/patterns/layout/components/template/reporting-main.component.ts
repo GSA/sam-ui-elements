@@ -23,7 +23,7 @@ export class SamReportingMainComponent extends SamMainComponent {
   constructor() {
     const _service = inject(SamPageNextService);
 
-    super(_service);
+    super();
 
     this._service = _service;
   }

@@ -24,7 +24,6 @@ import {
 } from "@angular/animations";
 import { MdAccordionDirective, MdAccordionDisplayMode } from "./accordion";
 import { AccordionItem } from "./accordion-item";
-import { UniqueSelectionDispatcher } from "../core/coordination/unique-selection-dispatcher";
 
 /** MdExpansionPanel's states. */
 export type MdExpansionPanelState = "expanded" | "collapsed";
@@ -87,9 +86,8 @@ export class MdExpansionPanelComponent extends AccordionItem {
       optional: true,
       host: true,
     });
-    const _uniqueSelectionDispatcher = inject(UniqueSelectionDispatcher);
 
-    super(accordion, _uniqueSelectionDispatcher);
+    super();
     this.accordion = accordion;
   }
 

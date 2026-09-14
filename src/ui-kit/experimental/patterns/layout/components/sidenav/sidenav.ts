@@ -372,7 +372,7 @@ export class MdSidenav implements AfterContentInit, OnDestroy {
   standalone: false,
 })
 export class MdSidenavContainer implements AfterContentInit {
-  private _dir = inject(Directionality, { optional: true });
+  protected _dir = inject(Directionality, { optional: true });
   private _element = inject(ElementRef);
   private _renderer = inject(Renderer2);
   private _ngZone = inject(NgZone);
