@@ -6,6 +6,7 @@ import {
   ViewChild,
   AfterViewInit,
   OnInit,
+  inject,
 } from "@angular/core";
 
 @Component({
@@ -20,6 +21,8 @@ import {
   standalone: false,
 })
 export class SamTitleComponent implements AfterViewInit, OnInit {
+  private renderer = inject(Renderer2);
+
   @Input() public importance: string;
   @Input() public aligned: string;
   @Input() public weight: string;
@@ -28,8 +31,6 @@ export class SamTitleComponent implements AfterViewInit, OnInit {
   titleTpl: TemplateRef<unknown>;
 
   css_classes: string = "sam title";
-
-  constructor(private renderer: Renderer2) {}
 
   ngOnInit() {
     this.css_classes += this.aligned ? ` ${this.aligned} aligned` : "";

@@ -10,6 +10,7 @@ import {
   forwardRef,
   AfterViewInit,
   ElementRef,
+  inject,
 } from "@angular/core";
 
 import moment from "moment";
@@ -45,6 +46,9 @@ import { FieldsetWrapper } from "../../wrappers/fieldset-wrapper";
 export class SamDateComponent
   implements OnInit, OnChanges, ControlValueAccessor, AfterViewInit
 {
+  private samFormService = inject(SamFormService);
+  private cdr = inject(ChangeDetectorRef);
+
   /**
    * Sets the general error message for component
    */
@@ -202,11 +206,6 @@ export class SamDateComponent
 
   onChange: (value: string | null) => void = () => undefined;
   onTouched: () => void = () => undefined;
-
-  constructor(
-    private samFormService: SamFormService,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   ngOnInit() {
     if (!this.name) {

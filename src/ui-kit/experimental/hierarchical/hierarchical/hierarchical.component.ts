@@ -8,6 +8,7 @@ import {
   AfterViewChecked,
   ChangeDetectorRef,
   Provider,
+  inject,
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { SamHiercarchicalServiceInterface } from "../hierarchical-interface";
@@ -33,6 +34,8 @@ const Hierarchical_VALUE_ACCESSOR: Provider = {
 export class SamHierarchicalComponent
   implements AfterViewChecked, ControlValueAccessor
 {
+  private cdr = inject(ChangeDetectorRef);
+
   /**
    *
    */
@@ -91,8 +94,6 @@ export class SamHierarchicalComponent
    * Allow to insert a customized template for selected items
    */
   @Input() selectedItemTemplate: TemplateRef<unknown>;
-
-  constructor(private cdr: ChangeDetectorRef) {}
   public singleMode: boolean = false;
 
   ngAfterViewChecked() {

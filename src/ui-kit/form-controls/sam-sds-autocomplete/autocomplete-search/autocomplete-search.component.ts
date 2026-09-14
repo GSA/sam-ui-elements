@@ -6,6 +6,7 @@ import {
   ElementRef,
   forwardRef,
   ChangeDetectorRef,
+  inject,
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { SAMSDSAutocompleteServiceInterface } from "./models/SAMSDSAutocompleteServiceInterface";
@@ -32,12 +33,12 @@ const Autocomplete_Autocomplete_VALUE_ACCESSOR: any = {
   standalone: false,
 })
 export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
+  private _changeDetectorRef = inject(ChangeDetectorRef);
+
   /** Icons */
   faSquare = faSquare;
   faCircle = faCircle;
   faTimes = faTimes;
-
-  constructor(private _changeDetectorRef: ChangeDetectorRef) {}
   /**
    * Ul list of elements
    */

@@ -39,26 +39,18 @@ recommendedTypeScriptWarnings["@angular-eslint/prefer-standalone"] = "off";
 // warnings, so any future regression fails the build immediately instead of
 // silently inflating the warning baseline.
 
-// @angular-eslint/prefer-inject is intentionally disabled, not just
-// downgraded to a warning: angular-eslint 20's tsRecommended config newly
-// includes this rule (0 -> 142 findings), which is a byproduct of the
-// angular-eslint 19->20 bump (#574), not new lint debt introduced by that
-// change. Angular's own `ng generate @angular/core:inject-migration`
-// schematic can mechanically convert these, but running it repo-wide also
-// rewrites constructor signatures under
-// src/ui-kit/experimental/patterns/layout/components/core/** (e.g.
-// ScrollDispatcher, Scrollable) — files already excluded from this
-// config's `ignores` above, but not from the migration schematic's own
-// scan. Several specs instantiate those classes directly via
-// `new ScrollDispatcher(ngZone, platform)` rather than through Angular DI,
-// so the migrated `inject()` field initializers throw NG0203 (`inject()`
-// called outside an injection context) when constructed that way, breaking
-// 170 tests. A real migration needs to be scoped per-area with matching
-// spec updates rather than run mechanically across the whole tree; tracked
-// in GSA/sam-ui-elements#710 (parented under the lint-debt epic #580).
-// See the matching precedent for @angular-eslint/prefer-standalone in
-// AGENTS.md "Standalone-component lint policy (deferred)" (#584).
-recommendedTypeScriptWarnings["@angular-eslint/prefer-inject"] = "off";
+// @angular-eslint/prefer-inject was migrated repo-wide in #710:
+// constructor-parameter DI was converted to inject() field initializers
+// across all flagged component/directive/service areas, and specs that
+// constructed those classes directly (outside Angular's DI/TestBed) were
+// updated to build them via `constructWithInjector`
+// (src/testing/construct-with-injector.ts), which runs the same construction
+// under `runInInjectionContext` with the exact collaborators/mocks the spec
+// previously passed positionally. All 142 findings are resolved, so per
+// #580's promotion policy ("resolved rule categories are promoted from
+// warnings to errors") the rule is enforced as an error rather than staying
+// a warning.
+recommendedTypeScriptWarnings["@angular-eslint/prefer-inject"] = "error";
 
 // Bans the RxJS 5 "unbound operator" call pattern (e.g.
 // `first.call(observable).subscribe(...)`), which throws

@@ -16,6 +16,7 @@ import {
   OnDestroy,
   ViewEncapsulation,
   AfterContentChecked,
+  inject,
 } from "@angular/core";
 import {
   CanDisable,
@@ -88,6 +89,9 @@ export const _MdTabLinkMixinBase = mixinDisabled(MdTabLinkBase);
   standalone: false,
 })
 export class MdTabLink extends _MdTabLinkMixinBase implements CanDisable {
+  private _mdTabNavBar = inject(MdTabNav);
+  private _elementRef = inject(ElementRef);
+
   /** Whether the tab link is active or not. */
   private _isActive: boolean = false;
 
@@ -107,12 +111,5 @@ export class MdTabLink extends _MdTabLinkMixinBase implements CanDisable {
   @HostBinding("tabIndex")
   get tabIndex(): number {
     return this.disabled ? -1 : 0;
-  }
-
-  constructor(
-    private _mdTabNavBar: MdTabNav,
-    private _elementRef: ElementRef
-  ) {
-    super();
   }
 }

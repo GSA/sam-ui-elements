@@ -1,7 +1,9 @@
-import { SimpleChange } from "@angular/core";
+import { constructWithInjector } from "../../../../testing/construct-with-injector";
+import { SimpleChange, ChangeDetectorRef } from "@angular/core";
 
 // Load the implementations that should be tested
 import { SamTelephone } from "./telephone.component";
+import { SamFormService } from "../../../form-service";
 
 const mockEvent = {
   currentTarget: {
@@ -13,7 +15,13 @@ describe("Sam Telephone Component", () => {
   let component: SamTelephone;
 
   beforeEach(() => {
-    component = new SamTelephone(null, null);
+    component = constructWithInjector(
+      [
+        { provide: SamFormService, useValue: null },
+        { provide: ChangeDetectorRef, useValue: null },
+      ],
+      () => new SamTelephone()
+    );
     component.name = "tel";
     component.label = "Phone";
     component.placeholder = "ex: (555)555-5555";

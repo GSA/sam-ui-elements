@@ -6,6 +6,7 @@ import {
   ViewChild,
   forwardRef,
   Provider,
+  inject,
 } from "@angular/core";
 import {
   HttpClient,
@@ -93,6 +94,8 @@ export namespace UploadValidator {
   standalone: false,
 })
 export class SamUploadComponent implements ControlValueAccessor {
+  private httpClient = inject(HttpClient);
+
   /**
    * The request the gets called after a file has been selected for upload.
    * Report progress must be true if you want the progress bar.
@@ -158,8 +161,6 @@ export class SamUploadComponent implements ControlValueAccessor {
 
   /* The hidden file input dom element */
   @ViewChild("file", { static: true }) private fileInput: ElementRef;
-
-  constructor(private httpClient: HttpClient) {}
 
   onDragStateChange(dragState: DragState) {
     this.shouldShowDropTarget = dragState !== DragState.NotDragging;

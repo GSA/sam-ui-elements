@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../../testing/construct-with-injector";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { SamMenuItemComponent } from "./";
@@ -16,7 +17,10 @@ describe("The Sam MenuItem component", () => {
     beforeEach(() => {
       service = new SidenavService();
       service.setModel(data);
-      component = new SamMenuItemComponent(service);
+      component = constructWithInjector(
+        [{ provide: SidenavService, useValue: service }],
+        () => new SamMenuItemComponent()
+      );
     });
 
     it("should support updateUI on changes", () => {

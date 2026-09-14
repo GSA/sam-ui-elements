@@ -6,6 +6,7 @@ import {
   OnChanges,
   ChangeDetectorRef,
   AfterViewInit,
+  inject,
 } from "@angular/core";
 import { AlertType, IBreadcrumb } from "../../types";
 import { MenuItem } from "../../components/sidenav";
@@ -139,6 +140,8 @@ export interface FormStepAlert {
   standalone: false,
 })
 export class FormStepComponent implements OnChanges, AfterViewInit {
+  private cdr = inject(ChangeDetectorRef);
+
   /**
    * Sets breadcrumbs model
    */
@@ -235,8 +238,6 @@ export class FormStepComponent implements OnChanges, AfterViewInit {
    * Emitter for status banner events
    */
   @Output() statusBannerExpandedChange = new EventEmitter();
-
-  constructor(private cdr: ChangeDetectorRef) {}
 
   ngAfterViewInit() {
     this.cdr.detectChanges();

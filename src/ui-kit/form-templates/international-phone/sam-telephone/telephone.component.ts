@@ -5,6 +5,7 @@ import {
   ChangeDetectorRef,
   SimpleChanges,
   ViewEncapsulation,
+  inject,
 } from "@angular/core";
 
 import { ValidatorFn, FormControl, ValidationErrors } from "@angular/forms";
@@ -26,6 +27,9 @@ import { numberInputKeys } from "../number-input-keys";
   standalone: false,
 })
 export class SamTelephone extends SamFormControl implements OnChanges {
+  samFormService: SamFormService;
+  cdr: ChangeDetectorRef;
+
   /**
    * A number representing the country code. This number
    * is used internally by this component to set the
@@ -59,11 +63,14 @@ export class SamTelephone extends SamFormControl implements OnChanges {
     this.onChange(this._value);
   }
 
-  constructor(
-    public samFormService: SamFormService,
-    public cdr: ChangeDetectorRef
-  ) {
+  constructor() {
+    const samFormService = inject(SamFormService);
+    const cdr = inject(ChangeDetectorRef);
+
     super(samFormService, cdr);
+
+    this.samFormService = samFormService;
+    this.cdr = cdr;
   }
 
   public ngOnChanges(c: SimpleChanges): void {

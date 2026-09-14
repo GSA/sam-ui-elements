@@ -8,6 +8,7 @@ import {
   OnInit,
   OnChanges,
   SimpleChanges,
+  inject,
 } from "@angular/core";
 
 import {
@@ -62,14 +63,11 @@ import { map, tap, filter, debounceTime, switchAll } from "rxjs/operators";
   standalone: false,
 })
 export class SamSearchComponent implements OnInit, OnChanges {
+  private prototypedata = inject(PrototypeSearchService);
+
   @ViewChild("searchInput", { static: true }) inputEl: ElementRef;
   @Input() public focus: boolean;
   @Output() selectedDomain: EventEmitter<string> = new EventEmitter();
-
-  constructor(
-    //private masterpageservice: SamMasterPageService,
-    private prototypedata: PrototypeSearchService
-  ) {}
 
   loading = false;
   results = [];

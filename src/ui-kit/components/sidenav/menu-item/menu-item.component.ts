@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, Input, Output, EventEmitter, inject } from "@angular/core";
 import { SidenavService } from "../services";
 import { MenuItem } from "../interfaces";
 
@@ -8,6 +8,8 @@ import { MenuItem } from "../interfaces";
   standalone: false,
 })
 export class SamMenuItemComponent {
+  private service = inject(SidenavService);
+
   /**
    * Sets additional children in menu item
    */
@@ -24,8 +26,6 @@ export class SamMenuItemComponent {
    * Emits when an item has been selected
    */
   @Output() selection: EventEmitter<MenuItem> = new EventEmitter<MenuItem>();
-
-  constructor(private service: SidenavService) {}
 
   updateUI(index: number, event: Event, menuItem: MenuItem): void {
     if (menuItem && menuItem.disabled) {

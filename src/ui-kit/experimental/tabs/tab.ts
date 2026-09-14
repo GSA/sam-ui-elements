@@ -15,6 +15,7 @@ import {
   OnInit,
   ContentChild,
   Component,
+  inject,
 } from "@angular/core";
 import {
   CanDisable,
@@ -34,6 +35,8 @@ export const _MdTabMixinBase = mixinDisabled(MdTabBase);
   standalone: false,
 })
 export class MdTab extends _MdTabMixinBase implements OnInit, CanDisable {
+  private _viewContainerRef = inject(ViewContainerRef);
+
   /** Content for the tab label given by <ng-template md-tab-label>. */
   @ContentChild(MdTabLabel, { static: true }) templateLabel: MdTabLabel;
 
@@ -60,10 +63,6 @@ export class MdTab extends _MdTabMixinBase implements OnInit, CanDisable {
    * was already a selected tab. Provides context of what position the tab should originate from.
    */
   origin: number | null = null;
-
-  constructor(private _viewContainerRef: ViewContainerRef) {
-    super();
-  }
 
   ngOnInit() {
     this._contentPortal = new TemplatePortal(

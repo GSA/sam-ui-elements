@@ -5,6 +5,7 @@ import {
   Input,
   OnInit,
   AfterViewChecked,
+  inject,
 } from "@angular/core";
 
 /**
@@ -20,6 +21,8 @@ export interface OffsetParentLike {
   standalone: false,
 })
 export class SamStickyComponent implements OnInit, AfterViewChecked {
+  private el = inject(ElementRef);
+
   // Research sticky polyfill
   // http://html5please.com/#sticky
   /**
@@ -56,8 +59,6 @@ export class SamStickyComponent implements OnInit, AfterViewChecked {
     void event;
     this.makeSticky();
   }
-
-  constructor(private el: ElementRef) {}
 
   ngOnInit() {
     if (this.el.nativeElement.offsetWidth !== this.elemWidth) {

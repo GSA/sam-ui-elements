@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import { TestBed, ComponentFixture } from "@angular/core/testing";
 import { ChangeDetectorRef, Renderer2 } from "@angular/core";
 import { FormControl } from "@angular/forms";
@@ -10,7 +11,13 @@ describe("The Sam Label Wrapper component", () => {
     const cdr: ChangeDetectorRef = undefined;
     const renderer: Renderer2 = undefined;
     beforeEach(() => {
-      component = new LabelWrapper(cdr, renderer);
+      component = constructWithInjector(
+        [
+          { provide: ChangeDetectorRef, useValue: cdr },
+          { provide: Renderer2, useValue: renderer },
+        ],
+        () => new LabelWrapper()
+      );
     });
 
     it("should display error messages with a form control", () => {

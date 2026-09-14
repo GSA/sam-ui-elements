@@ -6,13 +6,13 @@ import {
   forwardRef,
   ViewChild,
   ElementRef,
-  Optional,
   OnChanges,
   ChangeDetectorRef,
   TemplateRef,
   OnDestroy,
   OnInit,
   AfterViewInit,
+  inject,
 } from "@angular/core";
 import {
   NG_VALUE_ACCESSOR,
@@ -56,6 +56,10 @@ export class SamAutocompleteComponent
     OnInit,
     AfterViewInit
 {
+  autocompleteService = inject(AutocompleteService, { optional: true });
+  private samFormService = inject(SamFormService);
+  private cdr = inject(ChangeDetectorRef);
+
   @ViewChild("resultsList", { static: false }) resultsList: ElementRef;
   @ViewChild("resultsListKV", { static: false }) resultsListKV: ElementRef;
   @ViewChild("input", { static: true }) input: ElementRef;
@@ -261,12 +265,6 @@ export class SamAutocompleteComponent
 
   public onTouchedCallback: () => void = () => null;
   public propogateChange: (_val: any) => void = () => null;
-
-  constructor(
-    @Optional() public autocompleteService: AutocompleteService,
-    private samFormService: SamFormService,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   ngOnChanges(changes) {
     if (changes.httpRequest) {

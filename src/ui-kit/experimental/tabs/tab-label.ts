@@ -6,7 +6,12 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import { Directive, TemplateRef, ViewContainerRef } from "@angular/core";
+import {
+  Directive,
+  TemplateRef,
+  ViewContainerRef,
+  inject,
+} from "@angular/core";
 import { CdkPortal } from "@angular/cdk/portal";
 
 /** Workaround for https://github.com/angular/angular/issues/17849 */
@@ -18,10 +23,10 @@ export const _MdTabLabelBaseClass = CdkPortal;
   standalone: false,
 })
 export class MdTabLabel extends _MdTabLabelBaseClass {
-  constructor(
-    templateRef: TemplateRef<unknown>,
-    viewContainerRef: ViewContainerRef
-  ) {
+  constructor() {
+    const templateRef = inject<TemplateRef<unknown>>(TemplateRef);
+    const viewContainerRef = inject(ViewContainerRef);
+
     super(templateRef, viewContainerRef);
   }
 }

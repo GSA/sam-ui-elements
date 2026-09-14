@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   ChangeDetectorRef,
+  inject,
 } from "@angular/core";
 
 import { AbstractSamFormly } from "../../sam-formly";
@@ -16,10 +17,8 @@ import { SamTextComponent } from "../../../ui-kit";
   standalone: false,
 })
 export class SamFormlyText extends AbstractSamFormly {
+  cdr = inject(ChangeDetectorRef);
+
   @ViewChild(SamTextComponent, { static: true })
   public template: SamTextComponent;
-
-  constructor(public cdr: ChangeDetectorRef) {
-    super();
-  }
 }

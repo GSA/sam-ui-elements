@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 
 import {
   ServiceModel,
@@ -15,10 +15,12 @@ export type SamPageEvents = "open sidebar" | "close sidebar";
 
 @Injectable()
 export class SamPageNextService {
+  private _store = inject(DataStore);
+
   private pageSubject = new Subject<{ event: SamPageEvents }>();
   public model: ServiceModel;
 
-  constructor(private _store: DataStore) {
+  constructor() {
     this._setupModel();
   }
 

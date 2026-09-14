@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../../testing/construct-with-injector";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ChangeDetectorRef } from "@angular/core";
 import { FormControl } from "@angular/forms";
@@ -21,7 +22,10 @@ describe("The picker component", () => {
     let component: DatepickerComponent;
     let cdr: ChangeDetectorRef;
     beforeEach(() => {
-      component = new DatepickerComponent(new SamFormService(), cdr);
+      component = constructWithInjector(
+        [SamFormService, { provide: ChangeDetectorRef, useValue: cdr }],
+        () => new DatepickerComponent()
+      );
     });
 
     it("test ngOnInit", () => {

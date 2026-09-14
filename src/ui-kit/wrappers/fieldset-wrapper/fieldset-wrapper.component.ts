@@ -9,6 +9,7 @@ import {
   AfterViewChecked,
   ElementRef,
   SimpleChanges,
+  inject,
 } from "@angular/core";
 import { AbstractControl } from "@angular/forms";
 
@@ -20,6 +21,8 @@ import { AbstractControl } from "@angular/forms";
 export class FieldsetWrapper
   implements OnChanges, AfterViewInit, AfterViewChecked
 {
+  private cdr = inject(ChangeDetectorRef);
+
   /**
    * sets the aria label for the anchor text
    */
@@ -65,7 +68,6 @@ export class FieldsetWrapper
   private lineLimit: number = 2;
   private checkMore = false; // semaphore
   private hasMultipleControls = false;
-  constructor(private cdr: ChangeDetectorRef) {}
 
   public ngOnChanges(c: SimpleChanges) {
     if (

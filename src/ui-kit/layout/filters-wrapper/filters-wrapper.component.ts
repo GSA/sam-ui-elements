@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, Optional } from "@angular/core";
+import { Component, Input, OnInit, OnDestroy, inject } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 
 import { Subject, Subscription, combineLatest } from "rxjs";
@@ -25,6 +25,8 @@ import { areEqual } from "../../utilities";
   standalone: false,
 })
 export class SamFiltersWrapperComponent implements OnInit, OnDestroy {
+  private _service = inject(SamPageNextService, { optional: true });
+
   /**
    * Sets primary button text submitting the form
    */
@@ -48,8 +50,6 @@ export class SamFiltersWrapperComponent implements OnInit, OnDestroy {
   private _runReportSubscription: Subscription;
   private _resetReportSubscription: Subscription;
   private _filtersSubscription: Subscription;
-
-  constructor(@Optional() private _service: SamPageNextService) {}
 
   public ngOnInit() {
     this._initializeService();

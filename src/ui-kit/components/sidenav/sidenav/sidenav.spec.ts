@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../../testing/construct-with-injector";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 
@@ -12,7 +13,10 @@ describe("The Sam Sidenav component", () => {
     let component: SamSidenavComponent;
 
     beforeEach(() => {
-      component = new SamSidenavComponent(new SidenavService());
+      component = constructWithInjector(
+        [SidenavService],
+        () => new SamSidenavComponent()
+      );
     });
 
     it("should support label lookup", () => {

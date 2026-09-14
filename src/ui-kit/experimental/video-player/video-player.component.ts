@@ -10,6 +10,7 @@ import {
   AfterContentInit,
   AfterViewInit,
   OnDestroy,
+  inject,
 } from "@angular/core";
 import * as InitPxVideo from "accessible-html5-video-player/js/px-video.js";
 declare let InitPxVideo: new (config: InitPxVideoConfig) => unknown;
@@ -35,6 +36,9 @@ interface InitPxVideoConfig {
 export class SamVideoPlayerComponent
   implements AfterContentInit, AfterViewInit, OnDestroy
 {
+  private render = inject(Renderer2);
+  private template = inject(ElementRef);
+
   @ContentChildren("videoPly", { descendants: true })
   public videos: QueryList<ElementRef>;
   @ContentChildren("videoTrack", { descendants: true })
@@ -49,11 +53,6 @@ export class SamVideoPlayerComponent
   @Output() public onFullScreenChange: EventEmitter<boolean> =
     new EventEmitter<boolean>();
   private config: InitPxVideoConfig;
-
-  constructor(
-    private render: Renderer2,
-    private template: ElementRef
-  ) {}
 
   ngAfterContentInit() {
     this.validateElement(

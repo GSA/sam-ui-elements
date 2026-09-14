@@ -7,6 +7,7 @@ import {
   OnInit,
   Output,
   ViewChild,
+  inject,
 } from "@angular/core";
 import {
   AbstractControl,
@@ -50,6 +51,8 @@ export interface DateRangeValue {
 export class SamDateRangeComponent
   implements OnInit, OnChanges, ControlValueAccessor
 {
+  private samFormService = inject(SamFormService);
+
   @ViewChild("startControl", { static: true }) public startControl;
   @ViewChild("endControl", { static: true }) public endControl;
   @ViewChild("startDate", { static: false }) public startDateComp;
@@ -228,8 +231,6 @@ export class SamDateRangeComponent
       },
     };
   }
-
-  constructor(private samFormService: SamFormService) {}
 
   public onChange: (value: DateRangeValue) => void = () => undefined;
   public onTouched: () => void = () => undefined;

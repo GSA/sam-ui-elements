@@ -16,6 +16,7 @@ import {
   ElementRef,
   AfterViewChecked,
   ViewEncapsulation,
+  inject,
 } from "@angular/core";
 import {
   trigger,
@@ -91,6 +92,8 @@ export type MdTabBodyOriginState = "left" | "right";
   standalone: false,
 })
 export class MdTabBody implements OnInit, AfterViewChecked {
+  private _elementRef = inject(ElementRef);
+
   /** The portal host inside of this container into which the tab body content will be loaded. */
   @ViewChild(CdkPortalOutlet, { static: true })
   _portalHost: CdkPortalOutlet;
@@ -131,8 +134,6 @@ export class MdTabBody implements OnInit, AfterViewChecked {
       this._origin = "right";
     }
   }
-
-  constructor(private _elementRef: ElementRef) {}
 
   /**
    * After initialized, check if the content is centered and has an origin. If so, set the

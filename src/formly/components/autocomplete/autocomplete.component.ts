@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   ChangeDetectorRef,
+  inject,
 } from "@angular/core";
 import { SamAutocompleteComponent } from "../../../ui-kit";
 
@@ -22,7 +23,9 @@ export class SamFormlyAutocomplete extends AbstractSamFormly {
   @ViewChild(SamAutocompleteComponent, { static: true })
   public template: SamAutocompleteComponent;
 
-  constructor(_cdr: ChangeDetectorRef) {
+  constructor() {
+    const _cdr = inject(ChangeDetectorRef);
+
     super();
     this.cdr = _cdr;
   }

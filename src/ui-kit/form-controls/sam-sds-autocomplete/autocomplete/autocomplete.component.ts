@@ -4,6 +4,7 @@ import {
   ViewChild,
   TemplateRef,
   forwardRef,
+  inject,
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { SAMSDSSelectedItemModel } from "../selected-result/models/sds-selectedItem.model";
@@ -33,6 +34,8 @@ const Autocomplete_VALUE_ACCESSOR: any = {
   standalone: false,
 })
 export class SAMSDSAutocompleteComponent implements ControlValueAccessor {
+  private cd = inject(ChangeDetectorRef);
+
   /**
    * Allow to insert a customized template for suggestions results
    */
@@ -70,7 +73,6 @@ export class SAMSDSAutocompleteComponent implements ControlValueAccessor {
 
   @ViewChild("autocomplete", { static: false })
   autocompleteSearch: SAMSDSAutocompleteSearchComponent;
-  constructor(private cd: ChangeDetectorRef) {}
 
   /**
    * Stored Event for ControlValueAccessor

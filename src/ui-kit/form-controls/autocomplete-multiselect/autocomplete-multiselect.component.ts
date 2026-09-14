@@ -4,12 +4,12 @@ import {
   ViewChild,
   ElementRef,
   ChangeDetectorRef,
-  Optional,
   forwardRef,
   TemplateRef,
   AfterViewInit,
   OnInit,
   OnChanges,
+  inject,
 } from "@angular/core";
 import {
   animate,
@@ -108,6 +108,10 @@ import { SamCache } from "../autocomplete/autocomplete.component";
 export class SamAutocompleteMultiselectComponent
   implements ControlValueAccessor, AfterViewInit, SamCache, OnInit, OnChanges
 {
+  private service = inject(AutocompleteService, { optional: true });
+  private ref = inject(ChangeDetectorRef);
+  private samFormService = inject(SamFormService);
+
   /**
    * Gets DOM element for the textarea used for input
    */
@@ -260,12 +264,6 @@ export class SamAutocompleteMultiselectComponent
   get value() {
     return this.innerValue;
   }
-
-  constructor(
-    @Optional() private service: AutocompleteService,
-    private ref: ChangeDetectorRef,
-    private samFormService: SamFormService
-  ) {}
 
   public ngOnInit() {
     if (this.list.length > 0) {

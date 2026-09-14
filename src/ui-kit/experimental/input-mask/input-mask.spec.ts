@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 // Load the implementations that should be tested
 import { ChangeDetectorRef, SimpleChanges } from "@angular/core";
 import { SamInputMaskComponent } from "./input-mask.component";
@@ -8,11 +9,15 @@ describe("The Sam Input Mask component", () => {
 
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
-    component = new SamInputMaskComponent(
-      {
-        detectChanges: () => {},
-      } as unknown as ChangeDetectorRef,
-      new SamFormService()
+    component = constructWithInjector(
+      [
+        SamFormService,
+        {
+          provide: ChangeDetectorRef,
+          useValue: { detectChanges: () => {} } as unknown as ChangeDetectorRef,
+        },
+      ],
+      () => new SamInputMaskComponent()
     );
     component.template = "__/__/____";
   });

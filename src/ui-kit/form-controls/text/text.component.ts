@@ -9,6 +9,7 @@ import {
   OnInit,
   AfterViewInit,
   OnDestroy,
+  inject,
 } from "@angular/core";
 import {
   NG_VALUE_ACCESSOR,
@@ -52,6 +53,9 @@ export interface SamTextChangeEvent {
 export class SamTextComponent
   implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy
 {
+  private samFormService = inject(SamFormService);
+  private cdr = inject(ChangeDetectorRef);
+
   /**
    * Sets the text input value
    */
@@ -136,11 +140,6 @@ export class SamTextComponent
   private _focusSubscription: Subscription;
   private _changeSubsription: Subscription;
   private ngUnsubscribe = new Subject<void>();
-
-  constructor(
-    private samFormService: SamFormService,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   public ngOnInit(): void {
     this._validateInputs();

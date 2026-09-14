@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import { TestBed, waitForAsync } from "@angular/core/testing";
 
 // Load the implementations that should be tested
@@ -12,7 +13,10 @@ describe("The Sam Select component", () => {
     let component: SamSelectComponent;
     const cdr: ChangeDetectorRef = undefined;
     beforeEach(() => {
-      component = new SamSelectComponent(cdr, new SamFormService());
+      component = constructWithInjector(
+        [SamFormService, { provide: ChangeDetectorRef, useValue: cdr }],
+        () => new SamSelectComponent()
+      );
     });
 
     it("should implement controlvalueaccessor", () => {

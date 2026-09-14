@@ -2,9 +2,9 @@ import {
   Component,
   Input,
   ChangeDetectionStrategy,
-  Optional,
   SimpleChanges,
   OnChanges,
+  inject,
 } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 
@@ -29,11 +29,11 @@ import { SamPageNextService } from "../experimental/patterns/layout/architecture
   standalone: false,
 })
 export class SamFiltersComponent implements OnChanges {
+  private _service = inject(SamPageNextService, { optional: true });
+
   @Input() public form: FormGroup;
   @Input() public fields: FormlyFieldConfig[];
   @Input() public model: Record<string, unknown>;
-
-  constructor(@Optional() private _service: SamPageNextService) {}
 
   public ngOnChanges(c: SimpleChanges) {
     if (this._service && c.fields) {

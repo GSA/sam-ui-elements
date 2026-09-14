@@ -10,6 +10,7 @@ import {
   OnChanges,
   SimpleChanges,
   Provider,
+  inject,
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import { SamFormControl } from "../../form-controls/sam-form-control";
@@ -43,6 +44,9 @@ export class SamInputMaskComponent
   extends SamFormControl
   implements OnInit, OnChanges
 {
+  cdr: ChangeDetectorRef;
+  service: SamFormService;
+
   @Input() template: string;
   @Input() placeholder: string;
   @Input() disableFocusBehavior: boolean = false;
@@ -59,11 +63,14 @@ export class SamInputMaskComponent
     this._value = !val ? this.defaultValue : val;
   }
 
-  constructor(
-    public cdr: ChangeDetectorRef,
-    public service: SamFormService
-  ) {
+  constructor() {
+    const cdr = inject(ChangeDetectorRef);
+    const service = inject(SamFormService);
+
     super(service, cdr);
+
+    this.cdr = cdr;
+    this.service = service;
   }
 
   @HostListener("focus") onHostFocus() {

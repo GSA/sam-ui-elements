@@ -6,6 +6,7 @@ import {
   forwardRef,
   OnChanges,
   Provider,
+  inject,
 } from "@angular/core";
 import moment from "moment";
 import {
@@ -36,6 +37,8 @@ const MY_VALUE_ACCESSOR: Provider = {
 export class SamDateTimeComponent
   implements OnInit, OnChanges, ControlValueAccessor
 {
+  private samFormService = inject(SamFormService);
+
   public INPUT_FORMAT: string = "Y-M-DTH:m";
   /**
    * Sets starting value for input
@@ -77,8 +80,6 @@ export class SamDateTimeComponent
 
   public onChange: (value: string | undefined) => void;
   public onTouched: () => void;
-
-  constructor(private samFormService: SamFormService) {}
 
   ngOnInit() {
     if (!this.name) {

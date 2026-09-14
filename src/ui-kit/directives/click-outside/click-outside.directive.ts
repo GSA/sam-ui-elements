@@ -4,6 +4,7 @@ import {
   Output,
   EventEmitter,
   HostListener,
+  inject,
 } from "@angular/core";
 
 /**
@@ -15,12 +16,12 @@ import {
   standalone: false,
 })
 export class SamClickOutsideDirective {
+  private _elementRef = inject(ElementRef);
+
   /**
    * Event emitted when clicked outside the target
    */
   @Output() clickOutside = new EventEmitter();
-
-  constructor(private _elementRef: ElementRef) {}
 
   @HostListener("document:click", ["$event.target"])
   public onClick(targetElement) {

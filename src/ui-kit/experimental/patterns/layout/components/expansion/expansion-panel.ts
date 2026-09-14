@@ -9,12 +9,11 @@
 import {
   Component,
   Directive,
-  Host,
   Input,
   ViewEncapsulation,
-  Optional,
   forwardRef,
   HostBinding,
+  inject,
 } from "@angular/core";
 import {
   trigger,
@@ -83,10 +82,13 @@ export class MdExpansionPanelComponent extends AccordionItem {
   /** Whether the toggle indicator should be hidden. */
   @Input() hideToggle: boolean = false;
 
-  constructor(
-    @Optional() @Host() accordion: MdAccordionDirective,
-    _uniqueSelectionDispatcher: UniqueSelectionDispatcher
-  ) {
+  constructor() {
+    const accordion = inject(MdAccordionDirective, {
+      optional: true,
+      host: true,
+    });
+    const _uniqueSelectionDispatcher = inject(UniqueSelectionDispatcher);
+
     super(accordion, _uniqueSelectionDispatcher);
     this.accordion = accordion;
   }

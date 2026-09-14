@@ -5,6 +5,7 @@ import {
   EventEmitter,
   Output,
   Input,
+  inject,
 } from "@angular/core";
 
 export enum DragState {
@@ -18,6 +19,8 @@ export enum DragState {
   standalone: false,
 })
 export class SamDragDropDirective {
+  private _elementRef = inject(ElementRef);
+
   /**
    * Disables the effect
    */
@@ -35,8 +38,6 @@ export class SamDragDropDirective {
    * Emitter for drop events
    */
   @Output() public dropEvent = new EventEmitter<File[]>();
-
-  constructor(private _elementRef: ElementRef) {}
 
   _eventIsInTarget(event) {
     return this._elementRef.nativeElement.contains(event.target);

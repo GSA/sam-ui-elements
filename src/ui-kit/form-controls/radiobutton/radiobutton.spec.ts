@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import { TestBed, waitForAsync } from "@angular/core/testing";
 
 import { By } from "@angular/platform-browser";
@@ -15,7 +16,10 @@ describe("The Sam Radio Buttons component", () => {
     let component: SamRadioButtonComponent;
     let cdr: ChangeDetectorRef;
     beforeEach(() => {
-      component = new SamRadioButtonComponent(cdr);
+      component = constructWithInjector(
+        [{ provide: ChangeDetectorRef, useValue: cdr }],
+        () => new SamRadioButtonComponent()
+      );
     });
 
     it("should process radio changes", () => {

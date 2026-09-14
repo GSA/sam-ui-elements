@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { SamAlertFooterService } from "./alert-footer.service";
 import { AlertType } from "../../types";
 
@@ -8,9 +8,9 @@ import { AlertType } from "../../types";
   standalone: false,
 })
 export class SamAlertFooterComponent implements OnInit {
-  alerts: AlertType[] = [];
+  private alertFooterService = inject(SamAlertFooterService);
 
-  constructor(private alertFooterService: SamAlertFooterService) {}
+  alerts: AlertType[] = [];
 
   ngOnInit() {
     this.refreshAlerts();

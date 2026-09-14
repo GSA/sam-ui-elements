@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import { ComponentFixture, TestBed, inject } from "@angular/core/testing";
 
 // Load the implementations that should be tested
@@ -9,7 +10,10 @@ describe("The AlertFooter component", () => {
     let service: SamAlertFooterService;
     beforeEach(() => {
       service = new SamAlertFooterService();
-      new SamAlertFooterComponent(service);
+      constructWithInjector(
+        [{ provide: SamAlertFooterService, useValue: service }],
+        () => new SamAlertFooterComponent()
+      );
       service.registerFooterAlert({
         description: "hello",
         title: "alert title",

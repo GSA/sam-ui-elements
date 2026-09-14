@@ -13,7 +13,6 @@ import {
   ContentChildren,
   ElementRef,
   Input,
-  Optional,
   Output,
   QueryList,
   ChangeDetectionStrategy,
@@ -22,8 +21,8 @@ import {
   ViewEncapsulation,
   NgZone,
   OnDestroy,
-  Inject,
   ChangeDetectorRef,
+  inject,
 } from "@angular/core";
 import { Directionality } from "@angular/cdk/bidi";
 import { coerceBooleanProperty } from "@angular/cdk/coercion";
@@ -77,6 +76,11 @@ export class MdSidenavToggleResult {
   standalone: false,
 })
 export class MdSidenav implements AfterContentInit, OnDestroy {
+  private _elementRef = inject(ElementRef);
+  private _focusTrapFactory = inject(FocusTrapFactory);
+  cdr = inject(ChangeDetectorRef);
+  private _doc = inject<Document>(DOCUMENT, { optional: true });
+
   private _focusTrap: FocusTrap;
 
   /** Alignment of the sidenav (direction neutral); whether 'start' or 'end'. */
@@ -146,12 +150,7 @@ export class MdSidenav implements AfterContentInit, OnDestroy {
    * @param _elementRef The DOM element reference. Used for transition and width calculation.
    *     If not available we do not hook on transitions.
    */
-  constructor(
-    private _elementRef: ElementRef,
-    private _focusTrapFactory: FocusTrapFactory,
-    public cdr: ChangeDetectorRef,
-    @Optional() @Inject(DOCUMENT) private _doc: Document
-  ) {
+  constructor() {
     this.onOpen.subscribe(() => {
       if (this._doc) {
         this._elementFocusedBeforeSidenavWasOpened = this._doc
@@ -373,6 +372,11 @@ export class MdSidenav implements AfterContentInit, OnDestroy {
   standalone: false,
 })
 export class MdSidenavContainer implements AfterContentInit {
+  private _dir = inject(Directionality, { optional: true });
+  private _element = inject(ElementRef);
+  private _renderer = inject(Renderer2);
+  private _ngZone = inject(NgZone);
+
   @ContentChildren(MdSidenav) _sidenavs: QueryList<MdSidenav>;
 
   /** The sidenav child with the `start` alignment. */
@@ -404,12 +408,9 @@ export class MdSidenavContainer implements AfterContentInit {
   /** Whether to enable open/close trantions. */
   _enableTransitions = false;
 
-  constructor(
-    @Optional() private _dir: Directionality,
-    private _element: ElementRef,
-    private _renderer: Renderer2,
-    private _ngZone: NgZone
-  ) {
+  constructor() {
+    const _dir = this._dir;
+
     // If a `Dir` directive exists up the tree, listen direction changes and update the left/right
     // properties to point to the proper start/end.
     if (_dir != null) {

@@ -6,6 +6,7 @@ import {
   ChangeDetectorRef,
   AfterViewInit,
   forwardRef,
+  inject,
 } from "@angular/core";
 
 import {
@@ -41,6 +42,9 @@ export function ValidatorToken(className) {
 export class SamFormControl<T = unknown>
   implements ControlValueAccessor, OnInit, AfterViewInit
 {
+  samFormService = inject(SamFormService);
+  cdr = inject(ChangeDetectorRef);
+
   /**
    * Sets the label text
    */
@@ -120,11 +124,6 @@ export class SamFormControl<T = unknown>
   public set disabled(state: boolean) {
     this._disabled = state;
   }
-
-  constructor(
-    public samFormService: SamFormService,
-    public cdr: ChangeDetectorRef
-  ) {}
 
   // Lifecycle Hooks
 

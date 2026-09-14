@@ -9,10 +9,10 @@ import {
   Output,
   EventEmitter,
   ContentChild,
-  Optional,
   OnInit,
   AfterContentInit,
   AfterViewInit,
+  inject,
 } from "@angular/core";
 import { faLongArrowAltLeft, faTimes } from "@fortawesome/free-solid-svg-icons";
 
@@ -31,6 +31,8 @@ export class SamPageNextComponent
   extends MdSidenavContainer
   implements OnInit, AfterContentInit, AfterViewInit
 {
+  _pageService = inject(SamPageNextService, { optional: true });
+
   /**
    * Text string for the back button
    */
@@ -58,12 +60,11 @@ export class SamPageNextComponent
 
   public backIcon = faLongArrowAltLeft;
   public closeIcon = faTimes;
-  constructor(
-    _element: ElementRef,
-    _renderer: Renderer2,
-    _ngZone: NgZone,
-    @Optional() public _pageService: SamPageNextService
-  ) {
+  constructor() {
+    const _element = inject(ElementRef);
+    const _renderer = inject(Renderer2);
+    const _ngZone = inject(NgZone);
+
     super(null, _element, _renderer, _ngZone);
   }
 

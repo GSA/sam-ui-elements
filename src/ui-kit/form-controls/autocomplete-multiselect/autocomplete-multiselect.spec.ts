@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 import { By } from "@angular/platform-browser";
@@ -39,10 +40,13 @@ describe("The Sam Autocomplete Multiselect Component", () => {
     let component: SamAutocompleteMultiselectComponent;
     const cdr: ChangeDetectorRef = undefined;
     beforeEach(() => {
-      component = new SamAutocompleteMultiselectComponent(
-        new AutocompleteService(),
-        cdr,
-        new SamFormService()
+      component = constructWithInjector(
+        [
+          AutocompleteService,
+          SamFormService,
+          { provide: ChangeDetectorRef, useValue: cdr },
+        ],
+        () => new SamAutocompleteMultiselectComponent()
       );
     });
 
@@ -225,10 +229,13 @@ describe("The Sam Autocomplete Multiselect Component", () => {
 
     it("should not mark options when driven by a service (updateMarked is a no-op)", () => {
       const service = new AutocompleteService();
-      const withService = new SamAutocompleteMultiselectComponent(
-        service,
-        cdr,
-        new SamFormService()
+      const withService = constructWithInjector(
+        [
+          { provide: AutocompleteService, useValue: service },
+          SamFormService,
+          { provide: ChangeDetectorRef, useValue: cdr },
+        ],
+        () => new SamAutocompleteMultiselectComponent()
       );
       withService.options = [{ key: "aaa", value: "aaa" }];
       withService.value = [{ key: "aaa", value: "aaa" }];
@@ -239,10 +246,13 @@ describe("The Sam Autocomplete Multiselect Component", () => {
     });
 
     it("should mark selected options when not driven by a service", () => {
-      const withoutService = new SamAutocompleteMultiselectComponent(
-        null,
-        cdr,
-        new SamFormService()
+      const withoutService = constructWithInjector(
+        [
+          { provide: AutocompleteService, useValue: null },
+          SamFormService,
+          { provide: ChangeDetectorRef, useValue: cdr },
+        ],
+        () => new SamAutocompleteMultiselectComponent()
       );
       withoutService.options = [
         { key: "aaa", value: "aaa" },

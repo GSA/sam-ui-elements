@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import { TestBed, ComponentFixture } from "@angular/core/testing";
 import { ChangeDetectorRef } from "@angular/core";
 
@@ -10,7 +11,10 @@ describe("The Sam Fieldset Wrapper component", () => {
     let component: FieldsetWrapper;
     const cdr: ChangeDetectorRef = undefined;
     beforeEach(() => {
-      component = new FieldsetWrapper(cdr);
+      component = constructWithInjector(
+        [{ provide: ChangeDetectorRef, useValue: cdr }],
+        () => new FieldsetWrapper()
+      );
     });
     /**
      * TODO: This test passes when run in isolation, then fails in the

@@ -4,12 +4,12 @@ import {
   ChangeDetectorRef,
   Component,
   Input,
-  Optional,
   ViewEncapsulation,
   OnDestroy,
   OnInit,
   HostBinding,
   HostListener,
+  inject,
 } from "@angular/core";
 import { SamSortDirective, SamSortable, SortDirection } from "./sort.directive";
 import { CdkColumnDef } from "@angular/cdk/table";
@@ -75,6 +75,11 @@ export class SamSortHeaderIntl {
   standalone: false,
 })
 export class SamSortHeaderComponent implements SamSortable, OnInit, OnDestroy {
+  _intl = inject(SamSortHeaderIntl);
+  private _changeDetectorRef = inject(ChangeDetectorRef);
+  _sort = inject(SamSortDirective, { optional: true });
+  _cdkColumnDef = inject(CdkColumnDef, { optional: true });
+
   /** @docs-private  */
   sortSubscription: Subscription;
 
@@ -114,12 +119,10 @@ export class SamSortHeaderComponent implements SamSortable, OnInit, OnDestroy {
   }
   private _disableClear: boolean;
 
-  constructor(
-    public _intl: SamSortHeaderIntl,
-    private _changeDetectorRef: ChangeDetectorRef,
-    @Optional() public _sort: SamSortDirective,
-    @Optional() public _cdkColumnDef: CdkColumnDef
-  ) {
+  constructor() {
+    const _changeDetectorRef = this._changeDetectorRef;
+    const _sort = this._sort;
+
     if (!_sort) {
       //throw getMdSortHeaderNotContainedWithinMdSortError();
     }
