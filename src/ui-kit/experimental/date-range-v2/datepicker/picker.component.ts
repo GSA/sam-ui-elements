@@ -170,7 +170,7 @@ export class DatepickerComponent
     const samFormService = inject(SamFormService);
     const cdr = inject(ChangeDetectorRef);
 
-    super(samFormService, cdr);
+    super();
     this.samFormService = samFormService;
     this.cdr = cdr;
 

@@ -67,7 +67,7 @@ export class SamInputMaskComponent
     const cdr = inject(ChangeDetectorRef);
     const service = inject(SamFormService);
 
-    super(service, cdr);
+    super();
 
     this.cdr = cdr;
     this.service = service;

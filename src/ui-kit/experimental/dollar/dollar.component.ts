@@ -64,7 +64,7 @@ export class SamDollarComponent
     const samFormService = inject(SamFormService);
     const cdr = inject(ChangeDetectorRef);
 
-    super(samFormService, cdr);
+    super();
 
     this.samFormService = samFormService;
     this.cdr = cdr;

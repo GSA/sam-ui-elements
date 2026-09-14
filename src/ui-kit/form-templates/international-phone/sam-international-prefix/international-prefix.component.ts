@@ -67,7 +67,7 @@ export class SamInternationalPrefix extends SamFormControl implements OnInit {
     const samFormService = inject(SamFormService);
     const cdr = inject(ChangeDetectorRef);
 
-    super(samFormService, cdr);
+    super();
 
     this.samFormService = samFormService;
     this.cdr = cdr;
