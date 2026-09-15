@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { Component, ViewChild } from "@angular/core";
 import { By } from "@angular/platform-browser";
@@ -26,7 +27,10 @@ describe("The Sam Tabs component", () => {
     let component: SamTabsComponent;
     const cdr: ChangeDetectorRef = undefined;
     beforeEach(() => {
-      component = new SamTabsComponent(cdr);
+      component = constructWithInjector(
+        [{ provide: ChangeDetectorRef, useValue: cdr }],
+        () => new SamTabsComponent()
+      );
     });
 
     it("should set size and theme", () => {

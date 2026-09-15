@@ -4,6 +4,7 @@ import {
   Output,
   EventEmitter,
   HostListener,
+  inject,
 } from "@angular/core";
 
 @Directive({
@@ -11,12 +12,12 @@ import {
   standalone: false,
 })
 export class SamTabOutsideDirective {
+  private _elementRef = inject(ElementRef);
+
   /**
    * Emitter for tabOutside event
    */
   @Output() tabOutside: EventEmitter<void> = new EventEmitter();
-
-  constructor(private _elementRef: ElementRef) {}
 
   @HostListener("document:keyup", ["$event.target"])
   public hasFocusChanged(target: EventTarget | null): void {

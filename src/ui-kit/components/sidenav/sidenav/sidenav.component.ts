@@ -7,6 +7,7 @@ import {
   EventEmitter,
   OnChanges,
   SimpleChanges,
+  inject,
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { SamMenuItemComponent } from "../menu-item";
@@ -22,6 +23,8 @@ import { MenuItem } from "../interfaces";
   standalone: false,
 })
 export class SamSidenavComponent implements OnInit, OnChanges {
+  private service = inject(SidenavService);
+
   /**
    * Sets type of side navigation, currently there are two options
    * 'default' & 'step'
@@ -52,8 +55,6 @@ export class SamSidenavComponent implements OnInit, OnChanges {
    * Event emitted on interaction, returns the selected menu item
    */
   @Output() selection: EventEmitter<MenuItem> = new EventEmitter<MenuItem>();
-
-  constructor(private service: SidenavService) {}
 
   ngOnInit(): void {
     if (!this.model || !this.model.label || !this.model.children) {

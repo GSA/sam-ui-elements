@@ -5,6 +5,7 @@ import {
   ViewChild,
   ElementRef,
   OnDestroy,
+  inject,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
@@ -20,6 +21,9 @@ import { Comment } from "./interfaces";
   standalone: false,
 })
 export class SamCommentsComponent implements OnInit, OnDestroy {
+  private commentsService = inject(CommentsService);
+  private fb = inject(FormBuilder);
+
   /**
    * Sets disabled state
    */
@@ -64,11 +68,6 @@ export class SamCommentsComponent implements OnInit, OnDestroy {
    * Playground
    */
   private deleteStream: Subject<Comment> = new Subject<Comment>();
-
-  constructor(
-    private commentsService: CommentsService,
-    private fb: FormBuilder
-  ) {}
 
   ngOnInit() {
     this.form = this.fb.group({

@@ -1,9 +1,9 @@
-import { Directive, ViewContainerRef } from "@angular/core";
+import { Directive, ViewContainerRef, inject } from "@angular/core";
 
 @Directive({
   selector: "[chipHost]",
   standalone: false,
 })
 export class ChipHostDirective {
-  constructor(public viewContainerRef: ViewContainerRef) {}
+  viewContainerRef = inject(ViewContainerRef);
 }

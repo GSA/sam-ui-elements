@@ -21,6 +21,7 @@ import {
   OnDestroy,
   NgZone,
   Renderer2,
+  inject,
 } from "@angular/core";
 import { RIGHT_ARROW, ENTER, LEFT_ARROW } from "@angular/cdk/keycodes";
 import { MdTabLabelWrapper } from "./tab-label-wrapper";
@@ -64,6 +65,10 @@ const EXAGGERATED_OVERSCROLL = 60;
 export class MdTabHeader
   implements AfterContentChecked, AfterContentInit, OnDestroy
 {
+  private _elementRef = inject(ElementRef);
+  private _ngZone = inject(NgZone);
+  private _renderer = inject(Renderer2);
+
   @ContentChildren(MdTabLabelWrapper)
   _labelWrappers: QueryList<MdTabLabelWrapper>;
 
@@ -130,12 +135,6 @@ export class MdTabHeader
 
   /** Event emitted when a label is focused. */
   @Output() indexFocused = new EventEmitter();
-
-  constructor(
-    private _elementRef: ElementRef,
-    private _ngZone: NgZone,
-    private _renderer: Renderer2
-  ) {}
 
   ngAfterContentChecked(): void {
     // If the number of tab labels have changed, check if scrolling should be enabled

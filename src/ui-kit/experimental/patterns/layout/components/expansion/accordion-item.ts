@@ -12,7 +12,7 @@ import {
   Input,
   Injectable,
   OnDestroy,
-  Optional,
+  inject,
 } from "@angular/core";
 import { UniqueSelectionDispatcher } from "../core/coordination/unique-selection-dispatcher";
 import { CdkAccordionDirective } from "./accordion";
@@ -26,6 +26,9 @@ let nextId = 0;
  */
 @Injectable()
 export class AccordionItem implements OnDestroy {
+  accordion = inject(CdkAccordionDirective, { optional: true });
+  protected _expansionDispatcher = inject(UniqueSelectionDispatcher);
+
   /** Event emitted every time the MdAccordianChild is closed. */
   @Output() closed = new EventEmitter<void>();
   /** Event emitted every time the MdAccordianChild is opened. */
@@ -63,10 +66,9 @@ export class AccordionItem implements OnDestroy {
   /** Unregister function for _expansionDispatcher **/
   private _removeUniqueSelectionListener: () => void = () => {};
 
-  constructor(
-    @Optional() public accordion: CdkAccordionDirective,
-    protected _expansionDispatcher: UniqueSelectionDispatcher
-  ) {
+  constructor() {
+    const _expansionDispatcher = this._expansionDispatcher;
+
     this._removeUniqueSelectionListener = _expansionDispatcher.listen(
       (id: string, accordionId: string) => {
         if (

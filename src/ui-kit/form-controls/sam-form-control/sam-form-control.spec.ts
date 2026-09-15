@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import { SamFormControl } from "./";
 import { FormControl } from "@angular/forms";
 import { SamFormService } from "../../form-service";
@@ -9,7 +10,10 @@ describe("The Sam Text component", () => {
   const cdr: ChangeDetectorRef = undefined;
 
   beforeEach(() => {
-    component = new SamFormControl<number>(new SamFormService(), cdr);
+    component = constructWithInjector(
+      [SamFormService, { provide: ChangeDetectorRef, useValue: cdr }],
+      () => new SamFormControl<number>()
+    );
 
     // Mock Inputs
     component.label = "First Name";

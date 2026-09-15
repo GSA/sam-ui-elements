@@ -13,6 +13,7 @@ import {
   OnInit,
   OnChanges,
   Provider,
+  inject,
 } from "@angular/core";
 import {
   HttpClient,
@@ -141,6 +142,9 @@ export namespace UploadValidator {
 export class SamUploadComponentV2
   implements ControlValueAccessor, OnInit, OnChanges
 {
+  private httpClient = inject(HttpClient);
+  private renderer = inject(Renderer2);
+
   /**
    * Sets ID html attribute of upload component
    */
@@ -298,11 +302,6 @@ export class SamUploadComponentV2
     date: "date",
     fileToolTip: "fileToolTip",
   };
-
-  constructor(
-    private httpClient: HttpClient,
-    private renderer: Renderer2
-  ) {}
 
   ngOnInit() {
     this.setUploadElementIds();

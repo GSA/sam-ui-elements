@@ -5,6 +5,7 @@ import {
   EventEmitter,
   ComponentRef,
   OnInit,
+  inject,
 } from "@angular/core";
 
 import { SamFilterDrawerItemComponent } from "../filter-drawer-item";
@@ -28,14 +29,12 @@ interface FilterDrawerChipModel {
   standalone: false,
 })
 export class DynamicChipsDirective implements OnInit {
+  host = inject(SamFilterDrawerComponent);
+  private _service = inject(SamPageNextService);
+
   @Input() public map: (obj: Record<string, unknown>) => unknown[];
   @Input() public disabled = false;
   @Output() public remove = new EventEmitter<Record<string, unknown>>();
-
-  constructor(
-    public host: SamFilterDrawerComponent,
-    private _service: SamPageNextService
-  ) {}
 
   public ngOnInit() {
     this.host.usingDirective = true;

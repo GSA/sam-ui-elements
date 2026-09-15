@@ -1,4 +1,11 @@
-import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  inject,
+} from "@angular/core";
 import { PageService } from "./page.service";
 import { PageConfig } from "./types";
 import { IBreadcrumb } from "../types";
@@ -10,6 +17,8 @@ import { IBreadcrumb } from "../types";
   standalone: false,
 })
 export class PageTemplateComponent implements OnInit {
+  pageService = inject(PageService);
+
   /**
    * Passes in the breadcrumb model
    */
@@ -72,8 +81,6 @@ export class PageTemplateComponent implements OnInit {
    * Emits breadcrumb events
    */
   @Output() public breadcrumbChange = new EventEmitter();
-
-  constructor(public pageService: PageService) {}
 
   ngOnInit(): void {
     // Reset sidebar

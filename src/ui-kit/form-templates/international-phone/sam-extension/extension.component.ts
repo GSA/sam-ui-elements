@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   ViewEncapsulation,
   OnInit,
+  inject,
 } from "@angular/core";
 
 import { FormControl } from "@angular/forms";
@@ -26,6 +27,9 @@ import { numberInputKeys } from "../number-input-keys";
   standalone: false,
 })
 export class SamExtension extends SamFormControl implements OnInit {
+  samFormService: SamFormService;
+  cdr: ChangeDetectorRef;
+
   /**
    * A placeholder value for the extention. In this
    * component, placeholder should represent the number
@@ -51,11 +55,14 @@ export class SamExtension extends SamFormControl implements OnInit {
     this.inputValue = this._value;
   }
 
-  constructor(
-    public samFormService: SamFormService,
-    public cdr: ChangeDetectorRef
-  ) {
-    super(samFormService, cdr);
+  constructor() {
+    const samFormService = inject(SamFormService);
+    const cdr = inject(ChangeDetectorRef);
+
+    super();
+
+    this.samFormService = samFormService;
+    this.cdr = cdr;
   }
 
   public ngOnInit() {

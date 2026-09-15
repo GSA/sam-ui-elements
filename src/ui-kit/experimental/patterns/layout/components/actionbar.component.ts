@@ -1,8 +1,8 @@
 import {
   Component,
   ContentChild,
-  Optional,
   AfterContentInit,
+  inject,
 } from "@angular/core";
 import { SamPaginationNextComponent } from "../../../../layout/pagination/pagination.module";
 import { SamPageNextService } from "../architecture";
@@ -18,10 +18,10 @@ import { SamPageNextService } from "../architecture";
   standalone: false,
 })
 export class SamActionBarComponent implements AfterContentInit {
+  private _service = inject(SamPageNextService, { optional: true });
+
   @ContentChild(SamPaginationNextComponent, { static: true })
   public pagination: SamPaginationNextComponent;
-
-  constructor(@Optional() private _service: SamPageNextService) {}
 
   public ngAfterContentInit() {
     if (this.pagination) {

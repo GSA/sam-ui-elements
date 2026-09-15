@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import {
   waitForAsync,
   ComponentFixtureAutoDetect,
@@ -73,8 +74,14 @@ describe("The Sam Accordion component", () => {
     let sectionComponent: SamAccordionSection;
     beforeEach(() => {
       component = new SamAccordionComponent();
-      sectionComponent = new SamAccordionSection(component);
-      new SamAccordionSection(component);
+      sectionComponent = constructWithInjector(
+        [{ provide: SamAccordionComponent, useValue: component }],
+        () => new SamAccordionSection()
+      );
+      constructWithInjector(
+        [{ provide: SamAccordionComponent, useValue: component }],
+        () => new SamAccordionSection()
+      );
     });
     // section
     it('should check for "name" prop and throw error', () => {

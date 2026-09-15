@@ -8,6 +8,7 @@ import {
   ChangeDetectorRef,
   OnInit,
   AfterViewInit,
+  inject,
 } from "@angular/core";
 import { LabelWrapper } from "../../wrappers/label-wrapper";
 import {
@@ -38,6 +39,9 @@ import { TextAreaWidthType } from "../../types";
 export class SamTextareaComponent
   implements ControlValueAccessor, OnInit, AfterViewInit
 {
+  private cdr = inject(ChangeDetectorRef);
+  private samFormService = inject(SamFormService);
+
   /**
    * Sets the text input value
    */
@@ -131,10 +135,6 @@ export class SamTextareaComponent
   private UA = this.inBrowser && window.navigator.userAgent.toLowerCase();
   private isIE = this.UA && /msie|trident/.test(this.UA);
   private ie11PristineFlag = false;
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private samFormService: SamFormService
-  ) {}
 
   ngOnInit() {
     if (!this.name) {

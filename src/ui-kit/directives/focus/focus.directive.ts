@@ -4,6 +4,7 @@ import {
   Output,
   EventEmitter,
   HostListener,
+  inject,
 } from "@angular/core";
 
 @Directive({
@@ -11,12 +12,12 @@ import {
   standalone: false,
 })
 export class SamFocusDirective {
+  private _elementRef = inject(ElementRef);
+
   /**
    * Event emitter for focus event
    */
   @Output() focus = new EventEmitter();
-
-  constructor(private _elementRef: ElementRef) {}
 
   @HostListener("document:click", ["$event.target"])
   public onClick(targetElement) {

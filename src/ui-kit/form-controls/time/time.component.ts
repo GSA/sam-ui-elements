@@ -5,6 +5,7 @@ import {
   OnInit,
   OnChanges,
   forwardRef,
+  inject,
 } from "@angular/core";
 import moment from "moment";
 import { LabelWrapper } from "../../wrappers/label-wrapper";
@@ -33,6 +34,8 @@ import { SamFormService, SamFormEvent } from "../../form-service";
 export class SamTimeComponent
   implements OnInit, OnChanges, ControlValueAccessor
 {
+  private samFormService = inject(SamFormService);
+
   INPUT_FORMAT: string = "H:m";
   OUTPUT_FORMAT: string = "HH:mm";
 
@@ -93,8 +96,6 @@ export class SamTimeComponent
     "Tab",
     "Delete",
   ];
-
-  constructor(private samFormService: SamFormService) {}
 
   ngOnInit() {
     if (!this.name) {

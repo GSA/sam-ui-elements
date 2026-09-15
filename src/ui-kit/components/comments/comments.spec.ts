@@ -1,6 +1,7 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup, FormControl, FormBuilder } from "@angular/forms";
 
 // Load the implementations that should be tested
 import {
@@ -128,7 +129,10 @@ describe("The Sam Comments component", () => {
     let service: CommentsService;
     beforeEach(() => {
       service = new CommentsService();
-      new SamCommentsComponent(service, undefined);
+      constructWithInjector(
+        [{ provide: CommentsService, useValue: service }, FormBuilder],
+        () => new SamCommentsComponent()
+      );
     });
     // service
     it("service should tell us if commenting is disabled", () => {

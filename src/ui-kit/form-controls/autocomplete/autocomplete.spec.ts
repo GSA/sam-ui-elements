@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 import { By } from "@angular/platform-browser";
@@ -19,7 +20,14 @@ describe("The Sam Autocomplete Component", () => {
     let component: SamAutocompleteComponent;
     const cdr: ChangeDetectorRef = undefined;
     beforeEach(() => {
-      component = new SamAutocompleteComponent(null, null, cdr);
+      component = constructWithInjector(
+        [
+          { provide: AutocompleteService, useValue: null },
+          SamFormService,
+          { provide: ChangeDetectorRef, useValue: cdr },
+        ],
+        () => new SamAutocompleteComponent()
+      );
     });
 
     it("should set a value", () => {

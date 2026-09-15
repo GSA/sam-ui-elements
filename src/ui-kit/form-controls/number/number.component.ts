@@ -6,6 +6,7 @@ import {
   forwardRef,
   OnInit,
   AfterViewInit,
+  inject,
 } from "@angular/core";
 import { LabelWrapper } from "../../wrappers/label-wrapper/label-wrapper.component";
 import {
@@ -54,6 +55,9 @@ import { SamFormService, SamFormEvent } from "../../form-service";
 export class SamNumberComponent
   implements ControlValueAccessor, OnInit, AfterViewInit
 {
+  private samFormService = inject(SamFormService);
+  private cdr = inject(ChangeDetectorRef);
+
   /**
    * (deprecated) sets value
    */
@@ -106,11 +110,6 @@ export class SamNumberComponent
     this.wrapper.formatErrors(this.control);
   };
   public onTouched: () => void = () => undefined;
-
-  constructor(
-    private samFormService: SamFormService,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   ngOnInit() {
     if (!this.name) {

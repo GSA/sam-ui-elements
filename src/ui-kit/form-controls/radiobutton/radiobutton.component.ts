@@ -8,6 +8,7 @@ import {
   ChangeDetectorRef,
   OnInit,
   AfterViewInit,
+  inject,
 } from "@angular/core";
 import { FieldsetWrapper } from "../../wrappers/fieldset-wrapper";
 import { OptionsType } from "../../types";
@@ -30,6 +31,8 @@ import { NG_VALUE_ACCESSOR, FormControl } from "@angular/forms";
   standalone: false,
 })
 export class SamRadioButtonComponent implements OnInit, AfterViewInit {
+  private cdr = inject(ChangeDetectorRef);
+
   /**
    * Sets the bound value of the component
    */
@@ -71,8 +74,6 @@ export class SamRadioButtonComponent implements OnInit, AfterViewInit {
   @ViewChild(FieldsetWrapper, { static: true }) public wrapper: FieldsetWrapper;
 
   public disabled = undefined;
-
-  constructor(private cdr: ChangeDetectorRef) {}
 
   public ngOnInit() {
     if (!this.name) {

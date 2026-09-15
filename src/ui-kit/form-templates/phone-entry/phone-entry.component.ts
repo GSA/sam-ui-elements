@@ -8,6 +8,7 @@ import {
   OnInit,
   forwardRef,
   AfterViewInit,
+  inject,
 } from "@angular/core";
 import { LabelWrapper } from "../../wrappers/label-wrapper";
 import {
@@ -37,6 +38,9 @@ import { SamFormService } from "../../form-service";
 export class SamPhoneEntryComponent
   implements OnInit, ControlValueAccessor, AfterViewInit
 {
+  private samFormService = inject(SamFormService);
+  private cdr = inject(ChangeDetectorRef);
+
   /**
    * The label text to appear above the input
    */
@@ -117,11 +121,6 @@ export class SamPhoneEntryComponent
     this.phoneNumber = modelCopy;
     this.phoneInput.nativeElement.value = this.phoneNumberMirror;
   }
-
-  constructor(
-    private samFormService: SamFormService,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   ngOnInit() {
     this.phoneNumber = this.phoneNumberTemplate;

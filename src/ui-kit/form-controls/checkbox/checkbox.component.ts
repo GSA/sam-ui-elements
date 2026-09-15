@@ -7,6 +7,7 @@ import {
   ChangeDetectorRef,
   ViewChild,
   OnInit,
+  inject,
 } from "@angular/core";
 import {
   FormControl,
@@ -33,6 +34,9 @@ import { SamFormService } from "../../form-service";
   standalone: false,
 })
 export class SamCheckboxComponent implements ControlValueAccessor, OnInit {
+  protected samFormService = inject(SamFormService);
+  private cdr = inject(ChangeDetectorRef);
+
   /**
    * Deprecated, Sets the bound value of the component
    */
@@ -121,11 +125,6 @@ export class SamCheckboxComponent implements ControlValueAccessor, OnInit {
     this.onChange(this.model);
     this.onTouched();
   }
-
-  constructor(
-    protected samFormService: SamFormService,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   ngOnInit() {
     // initialize the order lookup map

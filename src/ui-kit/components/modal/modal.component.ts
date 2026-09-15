@@ -9,6 +9,7 @@ import {
   ChangeDetectorRef,
   OnDestroy,
   AfterViewChecked,
+  inject,
 } from "@angular/core";
 import { ScrollHelpers } from "../../dom-helpers";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -23,6 +24,9 @@ import { KeyHelper, KEYS } from "../../utilities/key-helper/key-helper";
   standalone: false,
 })
 export class SamModalComponent implements OnInit, OnDestroy, AfterViewChecked {
+  private hostElement = inject(ElementRef);
+  cdr = inject(ChangeDetectorRef);
+
   /**
    * Sets ID html attribute of modal
    */
@@ -141,10 +145,7 @@ export class SamModalComponent implements OnInit, OnDestroy, AfterViewChecked {
     cancelId: "",
   };
 
-  constructor(
-    private hostElement: ElementRef,
-    public cdr: ChangeDetectorRef
-  ) {
+  constructor() {
     this.internalId = Date.now();
   }
 

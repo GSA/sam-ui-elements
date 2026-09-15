@@ -1,4 +1,4 @@
-import { Component, Host } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { SamHeaderNavComponent } from "./header-nav.component";
 
 @Component({
@@ -16,5 +16,5 @@ import { SamHeaderNavComponent } from "./header-nav.component";
   standalone: false,
 })
 export class SamHeaderNavItemComponent {
-  constructor(@Host() public headerNav: SamHeaderNavComponent) {}
+  headerNav = inject(SamHeaderNavComponent, { host: true });
 }

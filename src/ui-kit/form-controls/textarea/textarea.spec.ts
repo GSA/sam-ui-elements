@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import { TestBed } from "@angular/core/testing";
 import { SamTextareaComponent } from "./textarea.component";
 import { LabelWrapper } from "../../wrappers/label-wrapper";
@@ -11,7 +12,10 @@ describe("The Sam Textarea component", () => {
     const cdr: ChangeDetectorRef = undefined;
 
     beforeEach(() => {
-      component = new SamTextareaComponent(cdr, new SamFormService());
+      component = constructWithInjector(
+        [SamFormService, { provide: ChangeDetectorRef, useValue: cdr }],
+        () => new SamTextareaComponent()
+      );
     });
 
     it("should implement control value accessor", () => {

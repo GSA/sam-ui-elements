@@ -9,6 +9,7 @@ import {
   OnInit,
   OnDestroy,
   AfterViewInit,
+  inject,
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR, Validators, ValidatorFn } from "@angular/forms";
 import { Subject } from "rxjs";
@@ -34,6 +35,9 @@ export class SamDollarComponent
   extends SamFormControl
   implements OnInit, OnDestroy, AfterViewInit
 {
+  samFormService: SamFormService;
+  cdr: ChangeDetectorRef;
+
   /**
    * Optional text to be displayed when the text area is empty
    */
@@ -56,11 +60,14 @@ export class SamDollarComponent
   blurDisabled = false;
   private ngUnsubscribe: Subject<void> = new Subject();
 
-  constructor(
-    public samFormService: SamFormService,
-    public cdr: ChangeDetectorRef
-  ) {
-    super(samFormService, cdr);
+  constructor() {
+    const samFormService = inject(SamFormService);
+    const cdr = inject(ChangeDetectorRef);
+
+    super();
+
+    this.samFormService = samFormService;
+    this.cdr = cdr;
   }
 
   public ngOnInit() {

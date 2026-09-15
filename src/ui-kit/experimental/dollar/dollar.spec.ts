@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { SamDollarComponent } from "./dollar.component";
 import { LabelWrapper } from "../../wrappers/label-wrapper/label-wrapper.component";
@@ -11,7 +12,10 @@ describe("The Sam Dollar component", () => {
     const cdr: ChangeDetectorRef = undefined;
 
     beforeEach(() => {
-      component = new SamDollarComponent(new SamFormService(), cdr);
+      component = constructWithInjector(
+        [SamFormService, { provide: ChangeDetectorRef, useValue: cdr }],
+        () => new SamDollarComponent()
+      );
     });
 
     it("should convert a dollar-formatted string to a plain number string", () => {

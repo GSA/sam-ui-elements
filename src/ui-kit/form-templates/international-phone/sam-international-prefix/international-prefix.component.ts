@@ -4,6 +4,7 @@ import {
   ViewChild,
   ElementRef,
   OnInit,
+  inject,
 } from "@angular/core";
 
 import { FormControl } from "@angular/forms";
@@ -35,6 +36,9 @@ import { numberInputKeys } from "../number-input-keys";
   standalone: false,
 })
 export class SamInternationalPrefix extends SamFormControl implements OnInit {
+  samFormService: SamFormService;
+  cdr: ChangeDetectorRef;
+
   @ViewChild("input", { static: true }) public input: ElementRef;
   private keys: KeyHelper = new KeyHelper(...numberInputKeys);
 
@@ -59,11 +63,14 @@ export class SamInternationalPrefix extends SamFormControl implements OnInit {
     this.inputValue = this._value;
   }
 
-  constructor(
-    public samFormService: SamFormService,
-    public cdr: ChangeDetectorRef
-  ) {
-    super(samFormService, cdr);
+  constructor() {
+    const samFormService = inject(SamFormService);
+    const cdr = inject(ChangeDetectorRef);
+
+    super();
+
+    this.samFormService = samFormService;
+    this.cdr = cdr;
   }
 
   public ngOnInit() {

@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../../testing/construct-with-injector";
 import { SamExtension } from "./extension.component";
 import { ChangeDetectorRef } from "@angular/core";
 import { CommonModule } from "@angular/common";
@@ -13,7 +14,13 @@ describe("Sam extension", () => {
 
   describe("Standalone tests", () => {
     beforeEach(() => {
-      component = new SamExtension(null, null);
+      component = constructWithInjector(
+        [
+          { provide: SamFormService, useValue: null },
+          { provide: ChangeDetectorRef, useValue: null },
+        ],
+        () => new SamExtension()
+      );
       component.name = "extension";
       component.label = "Extension";
     });

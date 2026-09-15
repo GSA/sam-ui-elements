@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../../testing/construct-with-injector";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { CdkTableModule } from "@angular/cdk/table";
 import { SamDataTableModule } from "../../../components/data-table";
@@ -178,7 +179,10 @@ describe("The Sam hierarchical grid component", () => {
     let component: SamHierarchicalTreeGridComponent;
     const cdr: ChangeDetectorRef = undefined;
     beforeEach(() => {
-      component = new SamHierarchicalTreeGridComponent(cdr);
+      component = constructWithInjector(
+        [{ provide: ChangeDetectorRef, useValue: cdr }],
+        () => new SamHierarchicalTreeGridComponent()
+      );
     });
 
     it("should be datachange length is equal to data length", function () {

@@ -1,11 +1,11 @@
 import {
   Component,
-  Inject,
-  forwardRef,
   Input,
   Output,
   EventEmitter,
   OnInit,
+  forwardRef,
+  inject,
 } from "@angular/core";
 
 /**
@@ -30,6 +30,10 @@ export interface AccordionParent {
   standalone: false,
 })
 export class SamAccordionSection implements OnInit {
+  private parent: AccordionParent = inject(
+    forwardRef(() => SamAccordionComponent)
+  );
+
   /**
    * Accordion header text
    */
@@ -48,10 +52,7 @@ export class SamAccordionSection implements OnInit {
   @Output() isExpandedChange: EventEmitter<SamAccordionSection> =
     new EventEmitter<SamAccordionSection>();
 
-  constructor(
-    @Inject(forwardRef(() => SamAccordionComponent))
-    private parent: AccordionParent
-  ) {
+  constructor() {
     this.parent.addSection(this);
   }
 

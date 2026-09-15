@@ -9,6 +9,7 @@ import {
   Renderer2,
   OnChanges,
   AfterViewInit,
+  inject,
 } from "@angular/core";
 import { AbstractControl } from "@angular/forms";
 
@@ -20,6 +21,9 @@ import { AbstractControl } from "@angular/forms";
 export class LabelWrapper
   implements AfterViewChecked, OnChanges, AfterViewInit
 {
+  private cdr = inject(ChangeDetectorRef);
+  private _rend = inject(Renderer2);
+
   /**
    * sets the label text
    */
@@ -70,12 +74,7 @@ export class LabelWrapper
   private toggleOpen: boolean = false;
   private lineSize: number;
   private lineLimit: number = 2;
-  private checkMore = false; // semaphore
-
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private _rend: Renderer2
-  ) {}
+  private checkMore = false;
 
   public ngOnChanges(c) {
     if (

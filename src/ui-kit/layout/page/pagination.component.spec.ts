@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import { TestBed, waitForAsync, ComponentFixture } from "@angular/core/testing";
 
 import { FormsModule } from "@angular/forms";
@@ -44,7 +45,10 @@ describe("SamPageComponent", () => {
 describe("SamPageSidebarComponent", () => {
   it("marks the page service's sidebar flag true on init", () => {
     const pageService = new SamPageService();
-    const sidebarComponent = new SamPageSidebarComponent(pageService);
+    const sidebarComponent = constructWithInjector(
+      [{ provide: SamPageService, useValue: pageService }],
+      () => new SamPageSidebarComponent()
+    );
 
     sidebarComponent.ngOnInit();
 

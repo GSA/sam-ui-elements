@@ -3,13 +3,13 @@ import {
   Input,
   Output,
   ChangeDetectorRef,
-  Optional,
   ViewChild,
   EventEmitter,
   forwardRef,
   AfterViewInit,
   OnInit,
   Provider,
+  inject,
 } from "@angular/core";
 import { LabelWrapper } from "../../wrappers/label-wrapper";
 import { OptionsType } from "../../types";
@@ -38,6 +38,9 @@ const MY_VALUE_ACCESSOR: Provider = {
 export class SamSelectComponent
   implements ControlValueAccessor, AfterViewInit, OnInit
 {
+  private cdr = inject(ChangeDetectorRef, { optional: true });
+  private samFormService = inject(SamFormService);
+
   /**
    * Sets the bound value of the component
    */
@@ -98,11 +101,6 @@ export class SamSelectComponent
 
   private onChange: (value: string | number | symbol) => void;
   private onTouched: () => void;
-
-  constructor(
-    @Optional() private cdr: ChangeDetectorRef,
-    private samFormService: SamFormService
-  ) {}
 
   ngOnInit() {
     if (!this.ariaLabel) {

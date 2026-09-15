@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import { TestBed, waitForAsync, ComponentFixture } from "@angular/core/testing";
 
 import { FormsModule, FormControl } from "@angular/forms";
@@ -150,7 +151,10 @@ describe("The Sam Date component", () => {
     let component: SamDateComponent;
     const cdr: ChangeDetectorRef = undefined;
     beforeEach(() => {
-      component = new SamDateComponent(new SamFormService(), cdr);
+      component = constructWithInjector(
+        [SamFormService, { provide: ChangeDetectorRef, useValue: cdr }],
+        () => new SamDateComponent()
+      );
     });
 
     it("should check for name", () => {
