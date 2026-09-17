@@ -67,7 +67,7 @@
     "@types/node": "26.4.1",
     "@types/source-map": "0.5.7",
     "@types/uglify-js": "3.17.5",
-    "angular-eslint": "21.4.0",
+    "angular-eslint": "22.1.0",
     "eslint": "10.7.0",
     "github-release-notes": "^0.17.0",
     "prettier": "3.9.6",
