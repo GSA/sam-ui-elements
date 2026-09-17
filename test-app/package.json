@@ -46,7 +46,7 @@
     "@angular-builders/custom-esbuild": "21.1.0",
     "@angular-devkit/build-angular": "21.2.24",
     "@angular/cli": "21.2.24",
-    "@angular/compiler-cli": "21.2.23",
+    "@angular/compiler-cli": "22.0.7",
     "@angular/language-service": "21.2.23",
     "@playwright/test": "1.63.0",
     "@types/node": "26.4.1",
