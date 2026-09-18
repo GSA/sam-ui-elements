@@ -5,4 +5,4 @@
 # DevSecOps (sam-shared-frontend-admin) review in addition to the
 # default owners. This is a merge-time guardrail against unauthorized
 # modifications to dependency automation and repository configuration.
-/.github/ @GSA/sam-shared-frontend-admin @christyhermansen
+/.github/ @GSA/sam-shared-frontend-admin
