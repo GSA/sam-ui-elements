@@ -153,4 +153,82 @@ describe("The Sam Image Component", () => {
     expect(overEvent.stopPropagation).toHaveBeenCalled();
     expect(overEvent.preventDefault).toHaveBeenCalled();
   });
+
+  it("does not toggle edit mode when the component is not editable", () => {
+    component.editable = false;
+    fixture.detectChanges();
+    const before = component.editMode;
+
+    de.query(By.css("button.edit-button")).nativeElement.dispatchEvent(
+      new Event("click")
+    );
+
+    expect(component.editMode).toBe(before);
+  });
+
+  it("does not emit fileChange on save when no temporary image is staged", () => {
+    const emitted = vi.fn();
+    component.fileChange.subscribe(emitted);
+
+    de.query(By.css("button.save-button")).nativeElement.dispatchEvent(
+      new Event("click")
+    );
+
+    expect(emitted).not.toHaveBeenCalled();
+  });
+
+  it("truncates a long file name in the file picker label", () => {
+    const file = new File(["hello"], "a-very-long-file-name.png", {
+      type: "image/png",
+    });
+    const fileInputEl: HTMLInputElement = de.query(
+      By.css("input#file")
+    ).nativeElement;
+    Object.defineProperty(fileInputEl, "files", { value: [file] });
+    fileInputEl.dispatchEvent(new Event("change"));
+
+    expect(component.generateFilePickerLabelText()).toBe("a-very-l...");
+  });
+
+  it("falls back to placeholder label text when no file is staged", () => {
+    expect(component.generateFilePickerLabelText()).toBe("Select a file");
+  });
+
+  it("labels the done button 'Save' only while an image is staged", () => {
+    expect(component.generateDoneText()).toBe("Done");
+
+    const file = new File(["hello"], "x.png", { type: "image/png" });
+    const fileInputEl: HTMLInputElement = de.query(
+      By.css("input#file")
+    ).nativeElement;
+    Object.defineProperty(fileInputEl, "files", { value: [file] });
+    fileInputEl.dispatchEvent(new Event("change"));
+
+    expect(component.generateDoneText()).toBe("Save");
+  });
+
+  it("prefers the staged image over the committed src", () => {
+    expect(component.generateSrc()).toBe(washingtonImg);
+
+    const file = new File(["hello"], "x.png", { type: "image/png" });
+    const fileInputEl: HTMLInputElement = de.query(
+      By.css("input#file")
+    ).nativeElement;
+    Object.defineProperty(fileInputEl, "files", { value: [file] });
+    fileInputEl.dispatchEvent(new Event("change"));
+
+    expect(component.generateSrc()).toContain("data:fake");
+  });
+
+  it("hides the edit button when not editable or already editing", () => {
+    component.editable = false;
+    expect(component.hideEditButton()).toBe(true);
+
+    component.editable = true;
+    component.editMode = true;
+    expect(component.hideEditButton()).toBe(true);
+
+    component.editMode = false;
+    expect(component.hideEditButton()).toBe(false);
+  });
 });

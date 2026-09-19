@@ -80,9 +80,17 @@ export class Paginator {
   }
 
   private _exceedsTotal(pageNum): boolean {
-    const r = this._calculateRemainder(pageNum);
+    // A page is out of range once its first unit is past the end of the data,
+    // i.e. (pageNum - 1) * unitsPerPage >= totalUnits, which is the same as
+    // remainder >= unitsPerPage. The previous test was `r > 0 && r > upp`,
+    // which let the first empty page through whenever the total was an exact
+    // multiple of the page size (100 units at 10 per page accepted page 11).
+    // Page 1 stays valid for an empty data set.
+    if (pageNum === 1) {
+      return false;
+    }
 
-    return r > 0 && r > this.getUnitsPerPage();
+    return this._calculateRemainder(pageNum) >= this.getUnitsPerPage();
   }
 
   private _calculateRemainder(pageNum): number {
