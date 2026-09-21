@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import {
   waitForAsync,
   ComponentFixtureAutoDetect,
@@ -58,7 +59,11 @@ class AccordionBordered {}
 })
 class AccordionInitialized {}
 
-function getComponent(fix: any) {
+function getComponent(
+  fix: ComponentFixture<
+    AccordionDefault | AccordionBordered | AccordionInitialized
+  >
+): SamAccordionComponent {
   return fix.debugElement.query(By.directive(SamAccordionComponent))
     .componentInstance;
 }
@@ -67,11 +72,16 @@ describe("The Sam Accordion component", () => {
   describe("isolated tests", () => {
     let component: SamAccordionComponent;
     let sectionComponent: SamAccordionSection;
-    let sectionComponent2: SamAccordionSection;
     beforeEach(() => {
       component = new SamAccordionComponent();
-      sectionComponent = new SamAccordionSection(component);
-      sectionComponent2 = new SamAccordionSection(component);
+      sectionComponent = constructWithInjector(
+        [{ provide: SamAccordionComponent, useValue: component }],
+        () => new SamAccordionSection()
+      );
+      constructWithInjector(
+        [{ provide: SamAccordionComponent, useValue: component }],
+        () => new SamAccordionSection()
+      );
     });
     // section
     it('should check for "name" prop and throw error', () => {
@@ -79,7 +89,7 @@ describe("The Sam Accordion component", () => {
         sectionComponent.ngOnInit();
         // shouldn't get here
         expect(false).toBe(true);
-      } catch (e) {
+      } catch {
         expect(true).toBe(true);
       }
     });
@@ -127,7 +137,9 @@ describe("The Sam Accordion component", () => {
 
   describe("integration tests", () => {
     let component: SamAccordionComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<
+      AccordionDefault | AccordionBordered | AccordionInitialized
+    >;
 
     beforeEach(waitForAsync(() => {
       TestBed.configureTestingModule({

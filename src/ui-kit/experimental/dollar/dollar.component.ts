@@ -9,6 +9,7 @@ import {
   OnInit,
   OnDestroy,
   AfterViewInit,
+  inject,
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR, Validators, ValidatorFn } from "@angular/forms";
 import { Subject } from "rxjs";
@@ -34,6 +35,9 @@ export class SamDollarComponent
   extends SamFormControl
   implements OnInit, OnDestroy, AfterViewInit
 {
+  samFormService: SamFormService;
+  cdr: ChangeDetectorRef;
+
   /**
    * Optional text to be displayed when the text area is empty
    */
@@ -54,13 +58,16 @@ export class SamDollarComponent
   attrType = "text";
   previousValue = null;
   blurDisabled = false;
-  private ngUnsubscribe: Subject<any> = new Subject();
+  private ngUnsubscribe: Subject<void> = new Subject();
 
-  constructor(
-    public samFormService: SamFormService,
-    public cdr: ChangeDetectorRef
-  ) {
-    super(samFormService, cdr);
+  constructor() {
+    const samFormService = inject(SamFormService);
+    const cdr = inject(ChangeDetectorRef);
+
+    super();
+
+    this.samFormService = samFormService;
+    this.cdr = cdr;
   }
 
   public ngOnInit() {
@@ -99,21 +106,23 @@ export class SamDollarComponent
           this.cdr.detectChanges();
         });
     } else {
-      this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
-        if (
-          (!evt.root || evt.root === this.control.root) &&
-          evt.eventType &&
-          evt.eventType === "submit"
-        ) {
-          this.wrapper.formatErrors(this.control);
-        } else if (
-          (!evt.root || evt.root === this.control.root) &&
-          evt.eventType &&
-          evt.eventType === "reset"
-        ) {
-          this.wrapper.clearError();
+      this.samFormService.formEventsUpdated$.subscribe(
+        (evt: { root?: unknown; eventType?: string }) => {
+          if (
+            (!evt.root || evt.root === this.control.root) &&
+            evt.eventType &&
+            evt.eventType === "submit"
+          ) {
+            this.wrapper.formatErrors(this.control);
+          } else if (
+            (!evt.root || evt.root === this.control.root) &&
+            evt.eventType &&
+            evt.eventType === "reset"
+          ) {
+            this.wrapper.clearError();
+          }
         }
-      });
+      );
     }
   }
 
@@ -207,7 +216,7 @@ export class SamDollarComponent
   }
 
   public onInputChange() {
-    const value: any = this.strToDollar(this.value);
+    const value: string = this.strToDollar(this.value);
     this.emitChange(value);
   }
 

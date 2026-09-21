@@ -21,5 +21,5 @@ import { Component, Input, Output, EventEmitter } from "@angular/core";
 export class SamFilterDrawerChip {
   @Input() public label: string;
   @Input() public disabled = false;
-  @Output() public remove = new EventEmitter<any>();
+  @Output() public remove = new EventEmitter<unknown>();
 }

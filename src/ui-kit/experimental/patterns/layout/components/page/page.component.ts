@@ -1,18 +1,15 @@
 import {
   Component,
-  ElementRef,
   HostListener,
   ViewEncapsulation,
-  Renderer2,
-  NgZone,
   Input,
   Output,
   EventEmitter,
   ContentChild,
-  Optional,
   OnInit,
   AfterContentInit,
   AfterViewInit,
+  inject,
 } from "@angular/core";
 import { faLongArrowAltLeft, faTimes } from "@fortawesome/free-solid-svg-icons";
 
@@ -31,6 +28,8 @@ export class SamPageNextComponent
   extends MdSidenavContainer
   implements OnInit, AfterContentInit, AfterViewInit
 {
+  _pageService = inject(SamPageNextService, { optional: true });
+
   /**
    * Text string for the back button
    */
@@ -42,7 +41,7 @@ export class SamPageNextComponent
   /**
    * Event emitter for back button interaction
    */
-  @Output() public backButtonClick = new EventEmitter<any>();
+  @Output() public backButtonClick = new EventEmitter<void>();
 
   @HostListener("window:resize")
   public resize() {
@@ -58,13 +57,9 @@ export class SamPageNextComponent
 
   public backIcon = faLongArrowAltLeft;
   public closeIcon = faTimes;
-  constructor(
-    _element: ElementRef,
-    _renderer: Renderer2,
-    _ngZone: NgZone,
-    @Optional() public _pageService: SamPageNextService
-  ) {
-    super(null, _element, _renderer, _ngZone);
+  constructor() {
+    super();
+    this._dir = null;
   }
 
   public ngOnInit() {

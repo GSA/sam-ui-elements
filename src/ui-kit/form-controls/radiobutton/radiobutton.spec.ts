@@ -1,9 +1,11 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import { TestBed, waitForAsync } from "@angular/core/testing";
 
 import { By } from "@angular/platform-browser";
 
 // Load the implementations that should be tested
 import { SamRadioButtonComponent } from "./radiobutton.component";
+import { OptionsType } from "../../types";
 import { SamWrapperModule } from "../../wrappers";
 import { SamFormService } from "../../form-service";
 import { FormsModule, FormControl } from "@angular/forms";
@@ -14,7 +16,10 @@ describe("The Sam Radio Buttons component", () => {
     let component: SamRadioButtonComponent;
     let cdr: ChangeDetectorRef;
     beforeEach(() => {
-      component = new SamRadioButtonComponent(cdr);
+      component = constructWithInjector(
+        [{ provide: ChangeDetectorRef, useValue: cdr }],
+        () => new SamRadioButtonComponent()
+      );
     });
 
     it("should process radio changes", () => {
@@ -26,16 +31,18 @@ describe("The Sam Radio Buttons component", () => {
       try {
         component.ngOnInit();
         fail();
-      } catch (e) {
+      } catch {
         expect(true).toBe(true);
       }
     });
   });
   describe("rendered tests", () => {
     let component: SamRadioButtonComponent;
-    let fixture: any;
+    let fixture: ReturnType<
+      typeof TestBed.createComponent<SamRadioButtonComponent>
+    >;
 
-    const options: any[] = [
+    const options: OptionsType[] = [
       { value: "dc", label: "Washington DC", name: "dc" },
       { value: "ma", label: "Maryland", name: "dc" },
       { value: "va", label: "Virginia", name: "virginia" },

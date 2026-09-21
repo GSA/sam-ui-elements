@@ -6,17 +6,7 @@ import {
   Input,
   OnChanges,
 } from "@angular/core";
-import {
-  CdkTable,
-  STICKY_POSITIONING_LISTENER,
-  CDK_TABLE,
-} from "@angular/cdk/table";
-
-import {
-  _DisposeViewRepeaterStrategy,
-  _RecycleViewRepeaterStrategy,
-  _VIEW_REPEATER_STRATEGY,
-} from "@angular/cdk/collections";
+import { CdkTable, CDK_TABLE } from "@angular/cdk/table";
 
 /** Workaround for https://github.com/angular/angular/issues/17849 */
 export const _SamTable = CdkTable;
@@ -60,10 +50,6 @@ export const _SamTable = CdkTable;
   providers: [
     { provide: CdkTable, useExisting: SamDataTableComponent },
     { provide: CDK_TABLE, useExisting: SamDataTableComponent },
-    {
-      provide: _VIEW_REPEATER_STRATEGY,
-      useClass: _DisposeViewRepeaterStrategy,
-    },
   ],
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -82,10 +68,4 @@ export class SamDataTableComponent<T>
       this.samTableHorizontalClass = this.allowHorizontalScroll;
     }
   }
-}
-function Directive(arg0: {
-  selector: string;
-  providers: { provide: any; useClass: any }[];
-}) {
-  throw new Error("Function not implemented.");
 }

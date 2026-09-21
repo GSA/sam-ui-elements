@@ -5,12 +5,9 @@ import {
   TemplateRef,
   ElementRef,
   forwardRef,
+  Provider,
 } from "@angular/core";
-import {
-  NG_VALUE_ACCESSOR,
-  ControlValueAccessor,
-  FormControl,
-} from "@angular/forms";
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { SamHiercarchicalServiceInterface } from "../hierarchical-interface";
 import { KeyHelper, KEYS } from "../../../utilities/key-helper/key-helper";
 import {
@@ -18,7 +15,7 @@ import {
   TreeMode,
 } from "../hierarchical-tree-selectedItem.model";
 import { SamHierarchicalAutocompleteConfiguration } from "../models/SamHierarchicalAutocompleteConfiguration";
-const Hierarchical_Autocomplete_VALUE_ACCESSOR: any = {
+const Hierarchical_Autocomplete_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamHierarchicalAutocompleteComponent),
   multi: true,
@@ -50,7 +47,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
   /**
    * Allow to insert a customized template for suggestions to use
    */
-  @Input() itemTemplate: TemplateRef<any>;
+  @Input() itemTemplate: TemplateRef<unknown>;
 
   /**
    * The data model that has the selected item
@@ -117,7 +114,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
   /**
    * Stored Event for ControlValueAccessor
    */
-  private propogateChange: (_: any) => void = (_: any) => null;
+  private propogateChange: (_val: unknown) => void = () => null;
 
   @Input()
   public disabled: boolean;
@@ -144,7 +141,8 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
    *
    * @param event
    */
-  checkForFocus(event): void {
+  checkForFocus(event?: Event): void {
+    void event;
     this.focusRemoved();
     this.showResults = false;
   }
@@ -263,7 +261,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
         if (this.inputValue.length !== 0) {
           let foundItem = false;
           if (this.results) {
-            for (var i = 0; i < this.results.length && !foundItem; i++) {
+            for (let i = 0; i < this.results.length && !foundItem; i++) {
               const item = this.results[i];
               foundItem =
                 item[this.configuration.primaryTextField] === this.inputValue;
@@ -271,7 +269,7 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
           }
           if (this.model.getItems().length > 0 && !foundItem) {
             for (
-              var i = 0;
+              let i = 0;
               i < this.model.getItems().length && !foundItem;
               i++
             ) {
@@ -431,17 +429,17 @@ export class SamHierarchicalAutocompleteComponent implements ControlValueAccesso
     }
   }
 
-  writeValue(obj: any): void {
+  writeValue(obj: unknown): void {
     if (obj instanceof HierarchicalTreeSelectedItemModel) {
       this.model = obj as HierarchicalTreeSelectedItemModel;
     }
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (_val: unknown) => void): void {
     this.propogateChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouchedCallback = fn;
   }
 

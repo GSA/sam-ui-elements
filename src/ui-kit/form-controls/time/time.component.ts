@@ -2,11 +2,10 @@ import {
   Component,
   Input,
   ViewChild,
-  Output,
-  EventEmitter,
   OnInit,
   OnChanges,
   forwardRef,
+  inject,
 } from "@angular/core";
 import moment from "moment";
 import { LabelWrapper } from "../../wrappers/label-wrapper";
@@ -14,10 +13,8 @@ import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
   FormControl,
-  Validators,
-  ValidatorFn,
 } from "@angular/forms";
-import { SamFormService } from "../../form-service";
+import { SamFormService, SamFormEvent } from "../../form-service";
 
 /**
  * Provides a time input form control
@@ -37,6 +34,8 @@ import { SamFormService } from "../../form-service";
 export class SamTimeComponent
   implements OnInit, OnChanges, ControlValueAccessor
 {
+  private samFormService = inject(SamFormService);
+
   INPUT_FORMAT: string = "H:m";
   OUTPUT_FORMAT: string = "HH:mm";
 
@@ -98,8 +97,6 @@ export class SamTimeComponent
     "Delete",
   ];
 
-  constructor(private samFormService: SamFormService) {}
-
   ngOnInit() {
     if (!this.name) {
       throw new Error("SamTimeComponent required a [name] for 508 compliance");
@@ -111,21 +108,23 @@ export class SamTimeComponent
         });
         this.wrapper.formatErrors(this.control);
       } else {
-        this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
-          if (
-            (!evt.root || evt.root === this.control.root) &&
-            evt.eventType &&
-            evt.eventType === "submit"
-          ) {
-            this.wrapper.formatErrors(this.control);
-          } else if (
-            (!evt.root || evt.root === this.control.root) &&
-            evt.eventType &&
-            evt.eventType === "reset"
-          ) {
-            this.wrapper.clearError();
+        this.samFormService.formEventsUpdated$.subscribe(
+          (evt: SamFormEvent) => {
+            if (
+              (!evt.root || evt.root === this.control.root) &&
+              evt.eventType &&
+              evt.eventType === "submit"
+            ) {
+              this.wrapper.formatErrors(this.control);
+            } else if (
+              (!evt.root || evt.root === this.control.root) &&
+              evt.eventType &&
+              evt.eventType === "reset"
+            ) {
+              this.wrapper.clearError();
+            }
           }
-        });
+        );
       }
     }
   }
@@ -225,7 +224,7 @@ export class SamTimeComponent
     );
   }
 
-  getTime(): any {
+  getTime(): moment.Moment | undefined {
     if (!this.isValid()) {
       return undefined;
     }
@@ -370,10 +369,10 @@ export class SamTimeComponent
     this.ampmV.nativeElement.value = "am";
   }
 
-  onChange: any = () => undefined;
-  onTouched: any = () => undefined;
+  onChange: (value: string) => void = () => undefined;
+  onTouched: () => void = () => undefined;
 
-  registerOnChange(fn) {
+  registerOnChange(fn: (value: string) => void) {
     this.onChange = fn;
   }
 

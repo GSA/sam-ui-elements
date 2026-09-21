@@ -8,15 +8,15 @@ import {
   OnInit,
   forwardRef,
   AfterViewInit,
+  inject,
 } from "@angular/core";
 import { LabelWrapper } from "../../wrappers/label-wrapper";
 import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
   AbstractControl,
-  FormControl,
-  Validators,
   ValidatorFn,
+  ValidationErrors,
 } from "@angular/forms";
 import { SamFormService } from "../../form-service";
 
@@ -38,6 +38,9 @@ import { SamFormService } from "../../form-service";
 export class SamPhoneEntryComponent
   implements OnInit, ControlValueAccessor, AfterViewInit
 {
+  private samFormService = inject(SamFormService);
+  private cdr = inject(ChangeDetectorRef);
+
   /**
    * The label text to appear above the input
    */
@@ -119,11 +122,6 @@ export class SamPhoneEntryComponent
     this.phoneInput.nativeElement.value = this.phoneNumberMirror;
   }
 
-  constructor(
-    private samFormService: SamFormService,
-    private cdr: ChangeDetectorRef
-  ) {}
-
   ngOnInit() {
     this.phoneNumber = this.phoneNumberTemplate;
     this.phoneNumberMirror = this.phoneNumberTemplate;
@@ -159,21 +157,23 @@ export class SamPhoneEntryComponent
           this.cdr.detectChanges();
         });
       } else {
-        this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
-          if (
-            (!evt.root || evt.root === this.control.root) &&
-            evt.eventType &&
-            evt.eventType === "submit"
-          ) {
-            this.wrapper.formatErrors(this.control);
-          } else if (
-            (!evt.root || evt.root === this.control.root) &&
-            evt.eventType &&
-            evt.eventType === "reset"
-          ) {
-            this.wrapper.clearError();
+        this.samFormService.formEventsUpdated$.subscribe(
+          (evt: { root?: unknown; eventType?: string }) => {
+            if (
+              (!evt.root || evt.root === this.control.root) &&
+              evt.eventType &&
+              evt.eventType === "submit"
+            ) {
+              this.wrapper.formatErrors(this.control);
+            } else if (
+              (!evt.root || evt.root === this.control.root) &&
+              evt.eventType &&
+              evt.eventType === "reset"
+            ) {
+              this.wrapper.clearError();
+            }
           }
-        });
+        );
       }
     }
   }
@@ -185,8 +185,8 @@ export class SamPhoneEntryComponent
     }
   }
 
-  validatePhoneNumber(template): ValidatorFn {
-    return (c): { [key: string]: any } => {
+  validatePhoneNumber(template: string): ValidatorFn {
+    return (c: AbstractControl): ValidationErrors => {
       const digitCount = c.value.replace(/[^0-9]/g, "").length;
       const correctDigitCount = template.replace(/[^_]/g, "").length;
 
@@ -350,8 +350,8 @@ export class SamPhoneEntryComponent
     );
   }
 
-  onChange: any = () => undefined;
-  onTouched: any = () => undefined;
+  onChange: (value?: string) => void = () => undefined;
+  onTouched: () => void = () => undefined;
 
   registerOnChange(fn) {
     this.onChange = fn;

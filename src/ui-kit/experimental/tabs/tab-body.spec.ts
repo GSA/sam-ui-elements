@@ -4,6 +4,7 @@ import {
   TemplateRef,
   ViewChild,
   ViewContainerRef,
+  inject,
 } from "@angular/core";
 import {
   ComponentFixture,
@@ -41,6 +42,8 @@ function asInternals(tabBody: MdTabBody): TabBodyInternals {
   standalone: false,
 })
 class HostComponent implements OnInit {
+  viewContainerRef = inject(ViewContainerRef);
+
   position = 0;
   origin: number | null = null;
 
@@ -48,8 +51,6 @@ class HostComponent implements OnInit {
   contentTemplate: TemplateRef<unknown>;
 
   content: TemplatePortal;
-
-  constructor(public viewContainerRef: ViewContainerRef) {}
 
   ngOnInit() {
     this.content = new TemplatePortal(

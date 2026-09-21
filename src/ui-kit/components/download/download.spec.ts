@@ -1,7 +1,6 @@
 import { TestBed, ComponentFixture } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { DebugElement } from "@angular/core";
 import { AccessType, ExpansionType } from "../../types";
 import { SamDownloadComponent } from "./download.component";
 

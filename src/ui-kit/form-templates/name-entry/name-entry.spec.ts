@@ -1,8 +1,12 @@
-import { TestBed, waitForAsync, fakeAsync, tick } from "@angular/core/testing";
+import {
+  TestBed,
+  fakeAsync,
+  tick,
+  ComponentFixture,
+} from "@angular/core/testing";
 
 // Load the implementations that should be tested
 import { SamNameEntryComponent } from "./name-entry.component";
-import { SamUIKitModule } from "../../index";
 import { SamFormService } from "../../form-service";
 import { SamWrapperModule } from "../../wrappers";
 import { FormsModule, FormControl } from "@angular/forms";
@@ -29,7 +33,7 @@ describe("The Sam Name Entry component", () => {
       component.setDisabledState(false);
       component.onChange();
       component.onTouched();
-      component.registerOnChange((_) => undefined);
+      component.registerOnChange(() => undefined);
       component.registerOnTouched(() => undefined);
       component.modelChange(); // triggers ontouched,onchanged
       const mockValue = {
@@ -98,7 +102,7 @@ describe("The Sam Name Entry component", () => {
   });
   describe("rendered tests", () => {
     let component: SamNameEntryComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<SamNameEntryComponent>;
 
     const model = modelMock;
 

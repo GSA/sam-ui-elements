@@ -1,18 +1,20 @@
 import { AbstractCell } from "../abstract-grid/abstract-cell";
-import { EventDispatcher } from "../utils/events";
-import { AbstractGrid } from "../abstract-grid/abstract-grid";
+import { EventDispatcher, EventListenerCallback } from "../utils/events";
 
 interface AbstractPopup {
-  onClick: (callback: Function, context: object) => void;
-  onKeydown: (callback: Function, context: object) => void;
+  onClick: (callback: EventListenerCallback, context: object) => void;
+  onKeydown: (callback: EventListenerCallback, context: object) => void;
   focused: AbstractCell;
+  node: Element;
+  getSelected: () => AbstractCell;
+  move: (direction: string) => void;
 }
 
 export class AbstractCombobox {
   public selected: AbstractCell = undefined;
 
   private _input: HTMLInputElement;
-  private _popup: any;
+  private _popup: AbstractPopup;
   private _dispatcher: EventDispatcher;
 
   public get value(): string {
@@ -32,15 +34,15 @@ export class AbstractCombobox {
     this._setupPopupEvents();
   }
 
-  public onSearch(callback: Function, context: object): void {
+  public onSearch(callback: EventListenerCallback, context: object): void {
     this._dispatcher.on("search", callback, context);
   }
 
-  public onInput(callback: Function, context: object): void {
+  public onInput(callback: EventListenerCallback, context: object): void {
     this._dispatcher.on("input", callback, context);
   }
 
-  public onChange(callback: Function, context: object): void {
+  public onChange(callback: EventListenerCallback, context: object): void {
     this._dispatcher.on("change", callback, context);
   }
 
@@ -49,7 +51,6 @@ export class AbstractCombobox {
   }
 
   private _setAriaValues() {
-    const inputId = this._input.id;
     const popupId = this._popup.node.id;
     const activeCell = this._popup.getSelected().node.id;
     this._input.setAttribute("aria-autocomplete", "list");
@@ -73,11 +74,11 @@ export class AbstractCombobox {
       this._handleKeydown(e);
     });
 
-    this._input.addEventListener("focus", (e) => {
+    this._input.addEventListener("focus", () => {
       this._popup.getSelected().addToTabOrder();
     });
 
-    this._input.addEventListener("blur", (e) => {
+    this._input.addEventListener("blur", () => {
       this._popup.getSelected().removeFromTabOrder();
     });
   }
@@ -116,7 +117,7 @@ export class AbstractCombobox {
   }
 
   private _setupPopupEvents(): void {
-    this._popup.onClick(function handleClick(e) {
+    this._popup.onClick(function handleClick() {
       this._onChange();
     }, this);
   }

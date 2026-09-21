@@ -12,7 +12,7 @@
     "baseUrl": "./src",
     "paths": {},
     "lib": ["dom", "es6"],
-    "types": ["hammerjs", "jasmine", "node", "source-map", "uglify-js"]
+    "types": ["hammerjs", "node", "source-map", "uglify-js"]
   },
   "exclude": ["node_modules", "dist"],
   "awesomeTypescriptLoaderOptions": {

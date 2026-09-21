@@ -48,7 +48,7 @@ export class SAMSDSSelectedResultComponent implements ControlValueAccessor {
   /**
    * Stored Event for ControlValueAccessor
    */
-  public propogateChange: (_: any) => void = (_: any) => null;
+  public propogateChange: (_val: any) => void = () => null;
 
   @Input()
   public disabled: boolean;

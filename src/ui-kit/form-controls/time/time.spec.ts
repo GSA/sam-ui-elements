@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import { TestBed, ComponentFixture } from "@angular/core/testing";
 import { FormsModule, FormControl } from "@angular/forms";
 import { By } from "@angular/platform-browser";
@@ -11,14 +12,17 @@ describe("The Sam Time component", () => {
   describe("isolated test", () => {
     let component: SamTimeComponent;
     beforeEach(() => {
-      component = new SamTimeComponent(new SamFormService());
+      component = constructWithInjector(
+        [SamFormService],
+        () => new SamTimeComponent()
+      );
     });
 
     it("should check for name", () => {
       try {
         component.ngOnInit();
         fail();
-      } catch (e) {
+      } catch {
         expect(true).toBe(true);
       }
     });
@@ -43,7 +47,7 @@ describe("The Sam Time component", () => {
 
     it("should implement controlvalueaccessor", () => {
       component.setDisabledState(false);
-      component.registerOnChange((_) => undefined);
+      component.registerOnChange(() => undefined);
       component.registerOnTouched(() => undefined);
       component.writeValue("12:12");
       expect(true).toBe(true);

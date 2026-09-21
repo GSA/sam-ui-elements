@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, inject } from "@angular/core";
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 
 @Component({
@@ -16,6 +16,8 @@ import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
   standalone: false,
 })
 export class SamYoutubeComponent implements OnInit {
+  private sanitizer = inject(DomSanitizer);
+
   /**
    * YouTube video id
    */
@@ -23,8 +25,6 @@ export class SamYoutubeComponent implements OnInit {
 
   YouTubeVideoUrl: string;
   videoUrl: SafeResourceUrl;
-
-  constructor(private sanitizer: DomSanitizer) {}
 
   ngOnInit() {
     this.updateVideoUrl(this.id);

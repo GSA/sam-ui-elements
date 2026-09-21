@@ -1,6 +1,14 @@
-import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  inject,
+} from "@angular/core";
 import { PageService } from "./page.service";
 import { PageConfig } from "./types";
+import { IBreadcrumb } from "../types";
 
 @Component({
   selector: "page",
@@ -9,10 +17,12 @@ import { PageConfig } from "./types";
   standalone: false,
 })
 export class PageTemplateComponent implements OnInit {
+  pageService = inject(PageService);
+
   /**
    * Passes in the breadcrumb model
    */
-  @Input() public breadcrumbs: any;
+  @Input() public breadcrumbs: Array<IBreadcrumb>;
   /**
    * Sets a theme on the template
    */
@@ -20,11 +30,11 @@ export class PageTemplateComponent implements OnInit {
   /**
    * Sets the TitleAndSectionComponent section input
    */
-  @Input() public section: any;
+  @Input() public section: string;
   /**
    * Sets the TitleAndSectionComponent title input
    */
-  @Input() public title: any;
+  @Input() public title: string;
   /**
    * Sets the TitleAndSectionComponent id input
    */
@@ -72,15 +82,13 @@ export class PageTemplateComponent implements OnInit {
    */
   @Output() public breadcrumbChange = new EventEmitter();
 
-  constructor(public pageService: PageService) {}
-
   ngOnInit(): void {
     // Reset sidebar
     this.pageService.sidebar = false;
     this.pageService.wideSidebar = false;
   }
 
-  breadcrumbHandler(evt) {
+  breadcrumbHandler(evt: string) {
     this.breadcrumbOut.emit(evt);
     this.breadcrumbChange.emit(evt);
   }

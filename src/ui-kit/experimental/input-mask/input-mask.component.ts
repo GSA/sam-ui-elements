@@ -8,12 +8,15 @@ import {
   HostListener,
   OnInit,
   OnChanges,
+  SimpleChanges,
+  Provider,
+  inject,
 } from "@angular/core";
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
+import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import { SamFormControl } from "../../form-controls/sam-form-control";
 import { SamFormService } from "../../form-service";
 
-export const VALUE_ACCESSOR: any = {
+export const VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamInputMaskComponent),
   multi: true,
@@ -41,27 +44,33 @@ export class SamInputMaskComponent
   extends SamFormControl
   implements OnInit, OnChanges
 {
+  cdr: ChangeDetectorRef;
+  service: SamFormService;
+
   @Input() template: string;
   @Input() placeholder: string;
   @Input() disableFocusBehavior: boolean = false;
   @Input() maxlength: number;
 
-  previousVal;
+  previousVal: string;
   pattern = /([^_\/\)\(-\s])/g;
   defaultValue = "";
-  protected _value: any = null;
-  public get value(): any {
+  protected _value: string = null;
+  public get value(): string {
     return this._value;
   }
-  public set value(val: any) {
+  public set value(val: string | null | undefined) {
     this._value = !val ? this.defaultValue : val;
   }
 
-  constructor(
-    public cdr: ChangeDetectorRef,
-    public service: SamFormService
-  ) {
-    super(service, cdr);
+  constructor() {
+    const cdr = inject(ChangeDetectorRef);
+    const service = inject(SamFormService);
+
+    super();
+
+    this.cdr = cdr;
+    this.service = service;
   }
 
   @HostListener("focus") onHostFocus() {
@@ -84,7 +93,7 @@ export class SamInputMaskComponent
     }
   }
 
-  onModelChange(newVal) {
+  onModelChange(newVal: string) {
     this.value = newVal;
     if (this.previousVal && this._value === "") {
       this.onChange(this._value);
@@ -95,7 +104,7 @@ export class SamInputMaskComponent
     }
   }
 
-  ngOnChanges(changes) {
+  ngOnChanges(changes: SimpleChanges) {
     if (changes["maxlength"] && typeof this.maxlength !== "number") {
       throw Error(
         'Wrong data type passed in for maxlength. Expected "number", got ' +
@@ -147,7 +156,7 @@ export class SamInputMaskComponent
       .concat(digits.join(""));
   }
 
-  writeValue(val) {
+  writeValue(val: string | null | undefined) {
     this.value = val;
     this.previousVal = val;
     this.cdr.detectChanges();

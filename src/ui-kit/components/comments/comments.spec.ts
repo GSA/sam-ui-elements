@@ -1,6 +1,7 @@
-import { TestBed } from "@angular/core/testing";
+import { constructWithInjector } from "../../../testing/construct-with-injector";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup, FormControl, FormBuilder } from "@angular/forms";
 
 // Load the implementations that should be tested
 import {
@@ -9,7 +10,6 @@ import {
   CommentsService,
   Comment,
 } from "./";
-import { SamPipesModule } from "../../pipes";
 
 import { Observable, of, throwError } from "rxjs";
 
@@ -88,7 +88,7 @@ export class CommentsDemoService implements CommentsService {
     return this._disabled;
   }
 
-  isCommentDeletable(comment: Comment): boolean {
+  isCommentDeletable(): boolean {
     return true;
   }
 
@@ -100,7 +100,7 @@ export class CommentsDemoService implements CommentsService {
     return of(this._comments);
   }
 
-  postComment(_: any): Observable<Comment[]> {
+  postComment(_: Comment): Observable<Comment[]> {
     if (_.text === "asdf") {
       const err = new Error("I errored, bro");
       return throwError(() => err);
@@ -126,11 +126,13 @@ export class CommentsDemoService implements CommentsService {
 
 describe("The Sam Comments component", () => {
   describe("isolated tests", () => {
-    let component: SamCommentsComponent;
     let service: CommentsService;
     beforeEach(() => {
       service = new CommentsService();
-      component = new SamCommentsComponent(service, undefined);
+      constructWithInjector(
+        [{ provide: CommentsService, useValue: service }, FormBuilder],
+        () => new SamCommentsComponent()
+      );
     });
     // service
     it("service should tell us if commenting is disabled", () => {
@@ -148,23 +150,35 @@ describe("The Sam Comments component", () => {
     });
 
     it.skip("service should have methods that return comments", () => {
-      expect(Array.isArray((service.getComments() as any).value)).toBe(true);
-      expect(Array.isArray((service.postComment(undefined) as any).value)).toBe(
-        true
-      );
       expect(
-        Array.isArray((service.deleteComment(undefined) as any).value)
+        Array.isArray(
+          (service.getComments() as unknown as { value: unknown[] }).value
+        )
       ).toBe(true);
-      expect(Array.isArray((service.getInitialState() as any).value)).toBe(
-        true
-      );
+      expect(
+        Array.isArray(
+          (service.postComment(undefined) as unknown as { value: unknown[] })
+            .value
+        )
+      ).toBe(true);
+      expect(
+        Array.isArray(
+          (service.deleteComment(undefined) as unknown as { value: unknown[] })
+            .value
+        )
+      ).toBe(true);
+      expect(
+        Array.isArray(
+          (service.getInitialState() as unknown as { value: unknown[] }).value
+        )
+      ).toBe(true);
     });
 
     // component
   });
   describe("rendered tests", () => {
     let component: SamCommentsComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<SamCommentsComponent>;
 
     beforeEach(() => {
       TestBed.configureTestingModule({

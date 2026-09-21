@@ -14,4 +14,9 @@ export interface MenuItem {
   children?: MenuItem[];
   iconClass?: string;
   id?: string;
+  /**
+   * Set on the selected model by `SidenavService#getSelectedModel()` to the
+   * index path (per nesting depth) that identifies the selected item.
+   */
+  selection?: number[];
 }

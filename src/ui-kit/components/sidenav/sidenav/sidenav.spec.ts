@@ -1,11 +1,10 @@
-import { TestBed, ComponentFixture } from "@angular/core/testing";
+import { constructWithInjector } from "../../../../testing/construct-with-injector";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { EventEmitter, ElementRef, Injectable } from "@angular/core";
-import { Observable } from "rxjs";
 
 import { SamSidenavModule, SamSidenavComponent } from "./";
 import { SidenavService } from "../services";
-import { SamUIKitModule } from "../../../index";
+import { MenuItem } from "../interfaces";
 
 import { data } from "../services/testdata";
 
@@ -14,7 +13,10 @@ describe("The Sam Sidenav component", () => {
     let component: SamSidenavComponent;
 
     beforeEach(() => {
-      component = new SamSidenavComponent(new SidenavService());
+      component = constructWithInjector(
+        [SidenavService],
+        () => new SamSidenavComponent()
+      );
     });
 
     it("should support label lookup", () => {
@@ -30,18 +32,19 @@ describe("The Sam Sidenav component", () => {
     });
 
     it("should trigger events", () => {
+      const dummyMenuItem: MenuItem = { label: "dummy" };
       component.selection.subscribe((evt) => {
-        expect(evt.returnValue).toBe(true);
+        expect(evt).toBe(dummyMenuItem);
       });
       component.pathChange.subscribe((val) => {
         expect(val).toBe("");
       });
-      component.emitChildData(new Event("custom"));
+      component.emitChildData(dummyMenuItem);
     });
   });
   describe("rendered tests", () => {
     let component: SamSidenavComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<SamSidenavComponent>;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -77,7 +80,7 @@ describe("The Sam Sidenav component", () => {
         By.css(".usa-sidenav-sub_list > li")
       ).nativeElement;
       expect(subitem1.textContent.trim()).toContain(
-        (data.children[0] as any).children[0].label
+        (data.children[0] as MenuItem).children[0].label
       );
     });
 

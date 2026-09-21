@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
+import { Component, Input, Output, EventEmitter } from "@angular/core";
 import { SamActionInterface } from "../action-interface";
 
 @Component({
@@ -18,11 +18,12 @@ export class SamActionButton {
   /**
    * EventEmitter that emits action name when button is clicked
    */
-  @Output() emitAction: EventEmitter<any> = new EventEmitter<any>();
+  @Output() emitAction: EventEmitter<SamActionInterface> =
+    new EventEmitter<SamActionInterface>();
   /**
    * Emits the results of the callback
    */
-  @Output() emitCallback: EventEmitter<any> = new EventEmitter<any>();
+  @Output() emitCallback: EventEmitter<unknown> = new EventEmitter<unknown>();
 
   actionClicked() {
     this.emitCallback.emit(this.action.callback());

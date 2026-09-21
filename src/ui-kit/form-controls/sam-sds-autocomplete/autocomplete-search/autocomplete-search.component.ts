@@ -6,6 +6,7 @@ import {
   ElementRef,
   forwardRef,
   ChangeDetectorRef,
+  inject,
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { SAMSDSAutocompleteServiceInterface } from "./models/SAMSDSAutocompleteServiceInterface";
@@ -32,12 +33,12 @@ const Autocomplete_Autocomplete_VALUE_ACCESSOR: any = {
   standalone: false,
 })
 export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
+  private _changeDetectorRef = inject(ChangeDetectorRef);
+
   /** Icons */
   faSquare = faSquare;
   faCircle = faCircle;
   faTimes = faTimes;
-
-  constructor(private _changeDetectorRef: ChangeDetectorRef) {}
   /**
    * Ul list of elements
    */
@@ -144,7 +145,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
   /**
    * Stored Event for ControlValueAccessor
    */
-  public propogateChange: (_: any) => void = (_: any) => null;
+  public propogateChange: (_val: any) => void = () => null;
 
   @Input()
   public disabled: boolean;
@@ -201,7 +202,8 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    *
    * @param event
    */
-  checkForFocus(event): void {
+  checkForFocus(event?: Event): void {
+    void event;
     if (this.configuration) {
       if (
         this.configuration.isTagModeEnabled ||
@@ -226,7 +228,8 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
     }
   }
 
-  clickOutSide(event): void {
+  clickOutSide(event?: Event): void {
+    void event;
     this.focusRemoved();
     this.showResults = false;
   }
@@ -286,7 +289,8 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
     }
   }
 
-  onkeypress(ev) {
+  onkeypress(ev?: KeyboardEvent) {
+    void ev;
     return this.configuration.inputReadOnly ? false : true;
   }
   textChange(event) {
@@ -466,9 +470,10 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    */
   private scrollToSelectedItem() {
     if (this.highlightedIndex >= 0) {
-      let selectedChild;
       const dom = this.resultsListElement.nativeElement;
-      selectedChild = dom.querySelector(".sds-autocomplete__item--highlighted");
+      const selectedChild = dom.querySelector(
+        ".sds-autocomplete__item--highlighted"
+      );
       if (selectedChild) {
         selectedChild.scrollIntoView({
           behavior: "smooth",
@@ -510,14 +515,14 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
         if (this.inputValue.length !== 0) {
           let foundItem = false;
           if (this.results) {
-            for (var i = 0; i < this.results.length && !foundItem; i++) {
+            for (let i = 0; i < this.results.length && !foundItem; i++) {
               const item = this.results[i];
               foundItem =
                 item[this.configuration.primaryTextField] === this.inputValue;
             }
           }
           if (this.model.items.length > 0 && !foundItem) {
-            for (var i = 0; i < this.model.items.length && !foundItem; i++) {
+            for (let i = 0; i < this.model.items.length && !foundItem; i++) {
               const item = this.model.items[i];
               foundItem =
                 item[this.configuration.primaryTextField] === this.inputValue;

@@ -1,10 +1,8 @@
-import { TestBed, waitForAsync } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 import { RouterTestingModule } from "@angular/router/testing";
-import { Component } from "@angular/core";
 // Load the implementations that should be tested
 import { FormStepComponent } from "./form-step.component";
-import { By } from "@angular/platform-browser";
 import { SamStickyComponent } from "../../directives/sticky/sticky.component";
 import { SamSidenavModule } from "../../components/sidenav";
 import { SamBreadcrumbsComponent } from "../../components/breadcrumbs";
@@ -22,7 +20,7 @@ import { data } from "../../components/sidenav/services/testdata";
 describe("Form Step Component", () => {
   describe("rendered tests", () => {
     let component: FormStepComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<FormStepComponent>;
 
     // provide our implementations or mocks to the dependency injector
     beforeEach(() => {

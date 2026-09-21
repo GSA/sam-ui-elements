@@ -7,6 +7,7 @@ import {
   OnInit,
   Output,
   ViewChild,
+  inject,
 } from "@angular/core";
 import {
   AbstractControl,
@@ -16,7 +17,21 @@ import {
   ValidatorFn,
 } from "@angular/forms";
 import moment from "moment";
-import { SamFormService } from "../../form-service";
+import { SamFormService, SamFormEvent } from "../../form-service";
+
+export interface DateRangeModel {
+  month: number | string | undefined;
+  day: number | string | undefined;
+  year: number | string | undefined;
+  time?: string;
+}
+
+export interface DateRangeValue {
+  startDate: string;
+  endDate: string;
+  startTime?: string;
+  endTime?: string;
+}
 
 /**
  * The <sam-date> component is a Date entry portion of a form
@@ -36,6 +51,8 @@ import { SamFormService } from "../../form-service";
 export class SamDateRangeComponent
   implements OnInit, OnChanges, ControlValueAccessor
 {
+  private samFormService = inject(SamFormService);
+
   @ViewChild("startControl", { static: true }) public startControl;
   @ViewChild("endControl", { static: true }) public endControl;
   @ViewChild("startDate", { static: false }) public startDateComp;
@@ -113,19 +130,19 @@ export class SamDateRangeComponent
   /**
    * (deprecated) Event emitted when value changes
    */
-  @Output() valueChange = new EventEmitter<any>();
+  @Output() valueChange = new EventEmitter<DateRangeValue>();
 
   public INPUT_FORMAT: string = "Y-M-D";
   public OUTPUT_FORMAT: string = "YYYY-MM-DD";
   public DT_INPUT_FORMAT: string = "Y-M-DTH:m";
   public T_OUTPUT_FORMAT: string = "HH:mm";
   public hasFocus: boolean = false;
-  public startModel: any = {
+  public startModel: DateRangeModel = {
     month: undefined,
     day: undefined,
     year: undefined,
   };
-  public endModel: any = {
+  public endModel: DateRangeModel = {
     month: undefined,
     day: undefined,
     year: undefined,
@@ -134,12 +151,6 @@ export class SamDateRangeComponent
   private endDateValue;
 
   public static dateRangeValidation(c: AbstractControl) {
-    const error = {
-      dateRangeError: {
-        message: "",
-      },
-    };
-
     if (c.value && c.value.startDate && c.value.endDate) {
       return SamDateRangeComponent.validateStartAndEnd(c);
     }
@@ -221,10 +232,8 @@ export class SamDateRangeComponent
     };
   }
 
-  constructor(private samFormService: SamFormService) {}
-
-  public onChange: any = () => undefined;
-  public onTouched: any = () => undefined;
+  public onChange: (value: DateRangeValue) => void = () => undefined;
+  public onTouched: () => void = () => undefined;
 
   ngOnInit() {
     this.id = this.id.replace(new RegExp("-", "g"), "_");
@@ -248,7 +257,7 @@ export class SamDateRangeComponent
       });
       this.wrapper.formatErrors(this.control);
     } else {
-      this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
+      this.samFormService.formEventsUpdated$.subscribe((evt: SamFormEvent) => {
         if (
           (!evt.root || evt.root === this.control.root) &&
           evt.eventType &&
@@ -312,17 +321,17 @@ export class SamDateRangeComponent
     }
   }
 
-  getDate(model) {
-    return moment([model.year, model.month - 1, model.day]);
+  getDate(model: DateRangeModel) {
+    return moment([model.year, Number(model.month) - 1, model.day]);
   }
 
-  startDateChange(evt) {
+  startDateChange(evt: string) {
     this.startDateValue = evt;
     this.parseValueString();
     this.dateChange();
   }
 
-  endDateChange(evt) {
+  endDateChange(evt: string) {
     this.endDateValue = evt;
     this.parseValueString();
     this.dateChange();
@@ -339,7 +348,7 @@ export class SamDateRangeComponent
     if (!this.isEmptyField(this.endModel)) {
       endDateString = this.getDate(this.endModel).format(this.OUTPUT_FORMAT);
     }
-    const output: any = {
+    const output: DateRangeValue = {
       startDate: startDateString,
       endDate: endDateString,
     };
@@ -353,7 +362,7 @@ export class SamDateRangeComponent
     this.valueChange.emit(output);
   }
 
-  isEmptyField(model) {
+  isEmptyField(model: DateRangeModel) {
     return (
       (model.day === "" || model.day === undefined) &&
       (model.month === "" || model.month === undefined) &&
@@ -361,7 +370,7 @@ export class SamDateRangeComponent
     );
   }
 
-  dateBlur(evt) {
+  dateBlur(evt: boolean | string) {
     if (this.type === "date" && evt === "year entered") {
       this.endDateComp.month.nativeElement.focus();
     }
@@ -374,19 +383,19 @@ export class SamDateRangeComponent
     this.dateChange();
   }
 
-  registerOnChange(fn) {
+  registerOnChange(fn: (value: DateRangeValue) => void) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn) {
+  registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 
-  setDisabledState(disabled) {
+  setDisabledState(disabled: boolean) {
     this.disabled = disabled;
   }
 
-  writeValue(value: any) {
+  writeValue(value: Partial<DateRangeValue> | null | undefined) {
     if (
       value &&
       typeof value === "object" &&

@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import { TestBed, waitForAsync } from "@angular/core/testing";
 
 // Load the implementations that should be tested
@@ -12,29 +13,32 @@ describe("The Sam Select component", () => {
     let component: SamSelectComponent;
     const cdr: ChangeDetectorRef = undefined;
     beforeEach(() => {
-      component = new SamSelectComponent(cdr, new SamFormService());
+      component = constructWithInjector(
+        [SamFormService, { provide: ChangeDetectorRef, useValue: cdr }],
+        () => new SamSelectComponent()
+      );
     });
 
     it("should implement controlvalueaccessor", () => {
-      component.registerOnChange((_) => undefined);
+      component.registerOnChange(() => undefined);
       component.registerOnTouched(() => undefined);
       component.setDisabledState(false);
-      component.writeValue(["aaa"]);
-      expect(component.model[0]).toBe("aaa");
+      component.writeValue("aaa");
+      expect(component.model).toBe("aaa");
     });
 
     it("should check for a name", () => {
       try {
         component.ngOnInit();
         fail();
-      } catch (e) {
+      } catch {
         expect(true).toBe(true);
       }
     });
   });
   describe("rendered tests", () => {
     let component: SamSelectComponent;
-    let fixture: any;
+    let fixture: ReturnType<typeof TestBed.createComponent<SamSelectComponent>>;
 
     const options = [
       { value: 1, label: "one", name: "one" },

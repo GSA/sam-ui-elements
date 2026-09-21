@@ -8,8 +8,17 @@ import {
 } from "./hierarchical-interface";
 import { Sort } from "../../components/data-table/sort.directive";
 
+export interface HierarchicalDataItem {
+  id: string;
+  parentId: string | null;
+  name: string;
+  subtext: string;
+  type: string;
+  childCount?: number;
+}
+
 export class HierarchicalDataService implements SamHiercarchicalServiceInterface {
-  private loadedData: any[];
+  private loadedData: HierarchicalDataItem[];
   constructor() {
     const data = SampleHierarchicalData;
     for (let i = 0; i < data.length; i++) {
@@ -63,8 +72,11 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
     const itemIncrease = 15;
     const temp = this.getSortedData(this.loadedData, item.sort);
     const data = of(temp);
-    let itemsOb: Observable<object[]>;
-    itemsOb = this.filterItemsByAllFields(item, itemsOb, data);
+    const itemsOb: Observable<object[]> = this.filterItemsByAllFields(
+      item,
+      undefined,
+      data
+    );
     const items: object[] = this.itemsListOutofObservable(itemsOb);
     const totalItemCount = items.length;
 
@@ -85,7 +97,7 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
     return of(returnItem);
   }
 
-  private itemsListOutofObservable(itemsOb: any) {
+  private itemsListOutofObservable(itemsOb: Observable<object[]>): object[] {
     let items: object[];
     itemsOb.subscribe((result) => {
       items = result;
@@ -107,12 +119,12 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
 
   private filterItemsByAllFields(
     item: SamHiercarchicalServiceSearchItem,
-    itemsOb: any,
-    data: any
-  ) {
+    itemsOb: Observable<HierarchicalDataItem[]>,
+    data: Observable<HierarchicalDataItem[]>
+  ): Observable<HierarchicalDataItem[]> {
     if (item.searchValue) {
       itemsOb = data.pipe(
-        map((items: any[]) =>
+        map((items: HierarchicalDataItem[]) =>
           items.filter(
             (itm) =>
               itm.parentId === item.id &&
@@ -123,13 +135,18 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
       );
     } else {
       itemsOb = data.pipe(
-        map((items: any[]) => items.filter((itm) => itm.parentId === item.id))
+        map((items: HierarchicalDataItem[]) =>
+          items.filter((itm) => itm.parentId === item.id)
+        )
       );
     }
     return itemsOb;
   }
 
-  private getSortedData(data: any[], sort: Sort): any[] {
+  private getSortedData(
+    data: HierarchicalDataItem[],
+    sort: Sort
+  ): HierarchicalDataItem[] {
     if (!sort || !sort.active || sort.direction === "") {
       return data;
     }
@@ -142,9 +159,12 @@ export class HierarchicalDataService implements SamHiercarchicalServiceInterface
     });
   }
 
-  private sortingDataAccessor(data: any, sortHeaderId: string) {
-    const value = (data as { [key: string]: any })[sortHeaderId];
-    return value;
+  private sortingDataAccessor(
+    data: HierarchicalDataItem,
+    sortHeaderId: string
+  ): string | number {
+    const value = (data as unknown as Record<string, unknown>)[sortHeaderId];
+    return value as string | number;
   }
 }
 

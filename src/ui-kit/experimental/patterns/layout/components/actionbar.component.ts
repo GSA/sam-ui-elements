@@ -1,8 +1,8 @@
 import {
   Component,
   ContentChild,
-  Optional,
   AfterContentInit,
+  inject,
 } from "@angular/core";
 import { SamPaginationNextComponent } from "../../../../layout/pagination/pagination.module";
 import { SamPageNextService } from "../architecture";
@@ -18,10 +18,10 @@ import { SamPageNextService } from "../architecture";
   standalone: false,
 })
 export class SamActionBarComponent implements AfterContentInit {
+  private _service = inject(SamPageNextService, { optional: true });
+
   @ContentChild(SamPaginationNextComponent, { static: true })
   public pagination: SamPaginationNextComponent;
-
-  constructor(@Optional() private _service: SamPageNextService) {}
 
   public ngAfterContentInit() {
     if (this.pagination) {
@@ -40,7 +40,8 @@ export class SamActionBarComponent implements AfterContentInit {
     }
   }
 
-  private _onPageChange(event) {
+  private _onPageChange(event?: unknown) {
+    void event;
     const pg = {
       pageSize: this.pagination.pageSize,
       currentPage: this.pagination.currentPage,
@@ -51,7 +52,8 @@ export class SamActionBarComponent implements AfterContentInit {
     this._service.model.properties["pagination"].setValue(pg);
   }
 
-  private _onUnitsChange(size) {
+  private _onUnitsChange(size?: unknown) {
+    void size;
     const pg = {
       pageSize: this.pagination.pageSize,
       currentPage: this.pagination.currentPage,

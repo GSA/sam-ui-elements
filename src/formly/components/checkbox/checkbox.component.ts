@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   ChangeDetectorRef,
+  inject,
 } from "@angular/core";
 
 import { AbstractSamFormly } from "../../sam-formly";
@@ -14,10 +15,8 @@ import { SamCheckboxComponent } from "../../../ui-kit";
   standalone: false,
 })
 export class SamFormlyCheckbox extends AbstractSamFormly {
+  cdr = inject(ChangeDetectorRef);
+
   @ViewChild(SamCheckboxComponent, { static: true })
   public template: SamCheckboxComponent;
-
-  constructor(public cdr: ChangeDetectorRef) {
-    super();
-  }
 }

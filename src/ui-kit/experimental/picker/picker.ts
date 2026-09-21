@@ -5,9 +5,6 @@ import {
   AfterViewInit,
   Output,
   EventEmitter,
-  forwardRef,
-  ViewChild,
-  Directive,
   Input,
 } from "@angular/core";
 
@@ -38,7 +35,10 @@ export class SamPickerComponent implements AfterViewInit {
         this.popover.grid
       );
 
-      this.combobox.onSearch((e) => this.onSearch.emit(e), this);
+      this.combobox.onSearch(
+        (e) => this.onSearch.emit(this._extractValue(e)),
+        this
+      );
 
       this.combobox.onChange((e) => this._onChange(e), this);
     }
@@ -48,8 +48,16 @@ export class SamPickerComponent implements AfterViewInit {
     this.combobox.clearInput();
   }
 
-  private _onChange(e) {
+  private _onChange(e?: unknown) {
+    void e;
     this.selected = this.combobox.selected;
     this.onChange.emit(this.selected);
+  }
+
+  private _extractValue(e: unknown): string {
+    if (e instanceof Event) {
+      return (e.target as HTMLInputElement).value;
+    }
+    return e as string;
   }
 }

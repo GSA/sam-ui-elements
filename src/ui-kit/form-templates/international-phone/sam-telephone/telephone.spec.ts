@@ -1,19 +1,27 @@
-import { SimpleChange } from "@angular/core";
+import { constructWithInjector } from "../../../../testing/construct-with-injector";
+import { SimpleChange, ChangeDetectorRef } from "@angular/core";
 
 // Load the implementations that should be tested
 import { SamTelephone } from "./telephone.component";
+import { SamFormService } from "../../../form-service";
 
 const mockEvent = {
   currentTarget: {
-    value: undefined,
+    value: undefined as string | undefined,
   },
-};
+} as unknown as Event & { currentTarget: { value: string } };
 
 describe("Sam Telephone Component", () => {
   let component: SamTelephone;
 
   beforeEach(() => {
-    component = new SamTelephone(null, null);
+    component = constructWithInjector(
+      [
+        { provide: SamFormService, useValue: null },
+        { provide: ChangeDetectorRef, useValue: null },
+      ],
+      () => new SamTelephone()
+    );
     component.name = "tel";
     component.label = "Phone";
     component.placeholder = "ex: (555)555-5555";
@@ -53,8 +61,6 @@ describe("Sam Telephone Component", () => {
 
   it("should use international validation if country code\
     is not 1", () => {
-    const expected = "1234567890123456"; // Len > 15 fails
-
     component.countryCode = 44;
 
     expect("").not.toBeNull();

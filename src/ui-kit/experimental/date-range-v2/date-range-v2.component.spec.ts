@@ -1,12 +1,10 @@
-import { waitForAsync, ComponentFixture, TestBed } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
-import { NgModule } from "@angular/core";
 import { SamWrapperModule } from "../../../ui-kit/wrappers";
 import { SamDateRangeV2Component } from "./date-range-v2.component";
 import { DatepickerComponent } from "./datepicker/picker.component";
 import { SamInputMaskModule } from "../../experimental/input-mask";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { ChangeDetectorRef, Renderer2, ElementRef } from "@angular/core";
 import { SamFormService } from "../../../ui-kit/form-service";
 import { CommonModule } from "@angular/common";
 
@@ -66,7 +64,7 @@ describe("The Sam Date Range V2 component", () => {
   });
   describe("rendered tests", () => {
     let component: SamDateRangeV2Component;
-    let fixture: any;
+    let fixture: ComponentFixture<SamDateRangeV2Component>;
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [

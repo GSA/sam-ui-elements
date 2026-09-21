@@ -16,6 +16,7 @@ import {
   ElementRef,
   AfterViewChecked,
   ViewEncapsulation,
+  inject,
 } from "@angular/core";
 import {
   trigger,
@@ -25,8 +26,7 @@ import {
   transition,
   AnimationEvent,
 } from "@angular/animations";
-// import {TemplatePortal, PortalHostDirective} from '@angular/cdk';
-import { PortalHostDirective, TemplatePortal } from "@angular/cdk/portal";
+import { CdkPortalOutlet, TemplatePortal } from "@angular/cdk/portal";
 
 /**
  * These position states are used internally as animation states for the tab body. Setting the
@@ -92,9 +92,11 @@ export type MdTabBodyOriginState = "left" | "right";
   standalone: false,
 })
 export class MdTabBody implements OnInit, AfterViewChecked {
+  private _elementRef = inject(ElementRef);
+
   /** The portal host inside of this container into which the tab body content will be loaded. */
-  @ViewChild(PortalHostDirective, { static: true })
-  _portalHost: PortalHostDirective;
+  @ViewChild(CdkPortalOutlet, { static: true })
+  _portalHost: CdkPortalOutlet;
 
   /** Event emitted when the tab begins to animate towards the center as the active tab. */
   @Output() onCentering: EventEmitter<number> = new EventEmitter<number>();
@@ -132,8 +134,6 @@ export class MdTabBody implements OnInit, AfterViewChecked {
       this._origin = "right";
     }
   }
-
-  constructor(private _elementRef: ElementRef) {}
 
   /**
    * After initialized, check if the content is centered and has an origin. If so, set the

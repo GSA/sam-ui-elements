@@ -5,6 +5,7 @@ import {
   EventEmitter,
   ComponentRef,
   OnInit,
+  inject,
 } from "@angular/core";
 
 import { SamFilterDrawerItemComponent } from "../filter-drawer-item";
@@ -13,19 +14,27 @@ import { SamFilterDrawerComponent } from "../filter-drawer.component";
 
 import { SamPageNextService } from "../../../experimental/patterns/layout/architecture";
 
+interface FilterField {
+  key: string;
+  templateOptions: { label: string };
+}
+
+interface FilterDrawerChipModel {
+  label: string;
+  values: unknown[];
+}
+
 @Directive({
   selector: "[dynamicChips]",
   standalone: false,
 })
 export class DynamicChipsDirective implements OnInit {
-  @Input() public map: (...args) => { label: string; values: any[] }[];
-  @Input() public disabled = false;
-  @Output() public remove = new EventEmitter<any>();
+  host = inject(SamFilterDrawerComponent);
+  private _service = inject(SamPageNextService);
 
-  constructor(
-    public host: SamFilterDrawerComponent,
-    private _service: SamPageNextService
-  ) {}
+  @Input() public map: (obj: Record<string, unknown>) => unknown[];
+  @Input() public disabled = false;
+  @Output() public remove = new EventEmitter<Record<string, unknown>>();
 
   public ngOnInit() {
     this.host.usingDirective = true;
@@ -40,9 +49,9 @@ export class DynamicChipsDirective implements OnInit {
     this._service.get("filters").valueChanges.subscribe((filters) => {
       this.clearContainer();
 
-      const mapped = this._mapFilters(filters).filter(
-        (chip) => chip.values.length > 0
-      );
+      const mapped = this._mapFilters(
+        filters as Record<string, unknown>
+      ).filter((chip) => chip.values.length > 0);
 
       this._toggleClearAll(mapped);
 
@@ -50,13 +59,15 @@ export class DynamicChipsDirective implements OnInit {
     });
   }
 
-  private _mapFilters(filters): { label: string; values: any[] }[] {
-    const fields = this._service.get("filterFields").value;
+  private _mapFilters(
+    filters: Record<string, unknown>
+  ): FilterDrawerChipModel[] {
+    const fields = this._service.get("filterFields").value as FilterField[];
 
     return Object.keys(filters).map((key) => {
       const field = fields.filter((field) => field.key === key)[0];
 
-      const obj = {};
+      const obj: Record<string, unknown> = {};
       obj[key] = filters[key];
 
       return {
@@ -66,13 +77,13 @@ export class DynamicChipsDirective implements OnInit {
     });
   }
 
-  private _toggleClearAll(filters): void {
+  private _toggleClearAll(filters: FilterDrawerChipModel[]): void {
     filters.length > 0
       ? (this.host.showClear = true)
       : (this.host.showClear = false);
   }
 
-  private _renderChip(filter): void {
+  private _renderChip(filter: FilterDrawerChipModel): void {
     const chipRef = this._createChipComponent();
     this._setChipProperties(chipRef, filter);
   }
@@ -91,7 +102,7 @@ export class DynamicChipsDirective implements OnInit {
 
   private _setChipProperties(
     chipRef: ComponentRef<SamFilterDrawerItemComponent>,
-    model: { label: string; values: any[] }
+    model: FilterDrawerChipModel
   ): void {
     chipRef.instance.label = model.label;
     chipRef.instance.values = model.values;

@@ -4,6 +4,7 @@ import {
   Output,
   EventEmitter,
   OnChanges,
+  SimpleChanges,
 } from "@angular/core";
 
 export type ToolbarItem = {
@@ -52,16 +53,16 @@ export class SamActionsListComponent implements OnChanges {
   /**
    * Emitter for interaction handling
    */
-  @Output() action: EventEmitter<any> = new EventEmitter<any>();
-  public showMoreActions = [];
+  @Output() action: EventEmitter<ToolbarItem> = new EventEmitter<ToolbarItem>();
+  public showMoreActions: ToolbarItem[] = [];
 
-  public actionClick(item) {
+  public actionClick(item: ToolbarItem) {
     if (!item.disabled) {
       this.action.emit(item);
     }
   }
 
-  public dropdownClick(item) {
+  public dropdownClick(item: { label: string }) {
     const matchedItem = this.contentModel.find((modelItem) => {
       if (modelItem.label === item.label) {
         return true;
@@ -72,7 +73,7 @@ export class SamActionsListComponent implements OnChanges {
     }
   }
 
-  public ngOnChanges(c) {
+  public ngOnChanges(c: SimpleChanges) {
     if (c.contentModel && this.contentModel) {
       this.showMoreActions = [];
       for (const item of this.contentModel) {
@@ -81,7 +82,7 @@ export class SamActionsListComponent implements OnChanges {
             name: item.label,
             label: item.label,
             icon: "fa " + item.icon,
-          };
+          } as unknown as ToolbarItem;
           this.showMoreActions.push(showMoreAction);
         }
       }

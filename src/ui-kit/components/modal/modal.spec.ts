@@ -1,4 +1,6 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ElementRef, ChangeDetectorRef } from "@angular/core";
 
 import { By } from "@angular/platform-browser";
 
@@ -10,7 +12,13 @@ describe("The Sam Modal component", () => {
   describe("isolated tests", () => {
     let component: SamModalComponent;
     beforeEach(() => {
-      component = new SamModalComponent(undefined, undefined);
+      component = constructWithInjector(
+        [
+          { provide: ElementRef, useValue: undefined },
+          { provide: ChangeDetectorRef, useValue: undefined },
+        ],
+        () => new SamModalComponent()
+      );
     });
 
     it("should have a submit handler", () => {

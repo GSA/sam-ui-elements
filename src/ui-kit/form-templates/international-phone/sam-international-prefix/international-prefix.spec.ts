@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../../testing/construct-with-injector";
 import { ChangeDetectorRef } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, FormControl, ReactiveFormsModule } from "@angular/forms";
@@ -13,7 +14,13 @@ describe("Sam International Prefix", () => {
 
   describe("Standalone tests", () => {
     beforeEach(() => {
-      component = new SamInternationalPrefix(null, null);
+      component = constructWithInjector(
+        [
+          { provide: SamFormService, useValue: null },
+          { provide: ChangeDetectorRef, useValue: null },
+        ],
+        () => new SamInternationalPrefix()
+      );
       component.name = "tel";
       component.label = "Phone";
     });
@@ -68,7 +75,7 @@ describe("Sam International Prefix", () => {
         currentTarget: {
           value: "5",
         },
-      };
+      } as unknown as Event;
 
       // Trigger ngOnInit (which seeds the default value) before simulating input.
       fixture.detectChanges();
@@ -84,7 +91,7 @@ describe("Sam International Prefix", () => {
         key: 5,
         preventDefault: vi.fn(),
         stopPropagation: function () {},
-      };
+      } as unknown as KeyboardEvent;
 
       component.onKeyInput(mock);
 
@@ -96,7 +103,7 @@ describe("Sam International Prefix", () => {
         key: "g",
         preventDefault: vi.fn(),
         stopPropagation: function () {},
-      };
+      } as unknown as KeyboardEvent;
 
       component.onKeyInput(mock);
 

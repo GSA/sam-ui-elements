@@ -9,6 +9,7 @@ import {
   Output,
   EventEmitter,
   OnChanges,
+  inject,
 } from "@angular/core";
 
 /**
@@ -79,6 +80,8 @@ export class SamTabComponent {
   standalone: false,
 })
 export class SamTabsComponent implements AfterContentInit, OnChanges {
+  private cdr = inject(ChangeDetectorRef);
+
   @ContentChildren(SamTabComponent) tabs: QueryList<SamTabComponent>;
 
   /**
@@ -133,8 +136,6 @@ export class SamTabsComponent implements AfterContentInit, OnChanges {
     default: "secondary pointing",
     separate: "separate tabular",
   };
-
-  constructor(private cdr: ChangeDetectorRef) {}
 
   _setActiveTab() {
     const arr = this.tabs.toArray();

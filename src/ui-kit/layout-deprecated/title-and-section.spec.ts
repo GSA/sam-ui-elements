@@ -1,16 +1,13 @@
-import { TestBed, waitForAsync } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
-import { Component } from "@angular/core";
 // Load the implementations that should be tested
 import { TitleAndSectionComponent } from "./title-and-section.component";
-import { By } from "@angular/platform-browser";
 import { SamBadgeComponent } from "../components/badge";
 import { SamElementsModule } from "../elements";
 
 describe("TitleAndSectionComponent component", () => {
   describe("rendered tests", () => {
-    let component: TitleAndSectionComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<TitleAndSectionComponent>;
 
     // provide our implementations or mocks to the dependency injector
     beforeEach(() => {
@@ -20,7 +17,6 @@ describe("TitleAndSectionComponent component", () => {
       });
 
       fixture = TestBed.createComponent(TitleAndSectionComponent);
-      component = fixture.componentInstance;
       fixture.detectChanges();
     });
 

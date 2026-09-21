@@ -4,6 +4,7 @@ import {
   ViewChild,
   ElementRef,
   OnInit,
+  inject,
 } from "@angular/core";
 
 import { FormControl } from "@angular/forms";
@@ -35,35 +36,41 @@ import { numberInputKeys } from "../number-input-keys";
   standalone: false,
 })
 export class SamInternationalPrefix extends SamFormControl implements OnInit {
+  samFormService: SamFormService;
+  cdr: ChangeDetectorRef;
+
   @ViewChild("input", { static: true }) public input: ElementRef;
   private keys: KeyHelper = new KeyHelper(...numberInputKeys);
 
   public min = 1;
   public max = 999;
-  public inputValue: any = "1";
+  public inputValue: string = "1";
   public defaultValidators = [this.countryCodeValidator];
 
   protected defaultValue = "1";
 
-  public get value(): any {
+  public get value(): string {
     return this._value;
   }
-  onKeyInput(event) {
+  onKeyInput(event: KeyboardEvent) {
     if (!this.keys.isAllowed(event)) {
       event.preventDefault();
       return;
     }
   }
-  public set value(val: any) {
+  public set value(val: string) {
     this._value = val ? val : this.defaultValue;
     this.inputValue = this._value;
   }
 
-  constructor(
-    public samFormService: SamFormService,
-    public cdr: ChangeDetectorRef
-  ) {
-    super(samFormService, cdr);
+  constructor() {
+    const samFormService = inject(SamFormService);
+    const cdr = inject(ChangeDetectorRef);
+
+    super();
+
+    this.samFormService = samFormService;
+    this.cdr = cdr;
   }
 
   public ngOnInit() {
@@ -72,8 +79,9 @@ export class SamInternationalPrefix extends SamFormControl implements OnInit {
     this.onChange(this.value);
   }
 
-  public inputChange(event) {
-    this.value = event.currentTarget.value ? event.currentTarget.value : "1";
+  public inputChange(event: Event) {
+    const target = event.currentTarget as HTMLInputElement;
+    this.value = target.value ? target.value : "1";
 
     this.onChange(this.value);
   }
@@ -84,7 +92,7 @@ export class SamInternationalPrefix extends SamFormControl implements OnInit {
     return errs.length > 0 ? errs[0] : null;
   }
 
-  public writeValue(val: any): void {
+  public writeValue(val: string | null): void {
     this.value = val;
   }
 

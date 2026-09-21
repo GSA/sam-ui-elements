@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   ChangeDetectorRef,
+  inject,
 } from "@angular/core";
 import { SamRadioButtonComponent } from "../../../ui-kit";
 import { AbstractSamFormly } from "../../sam-formly";
@@ -21,7 +22,9 @@ export class SamFormlyRadio extends AbstractSamFormly {
 
   public cdr: ChangeDetectorRef;
 
-  constructor(_cdr: ChangeDetectorRef) {
+  constructor() {
+    const _cdr = inject(ChangeDetectorRef);
+
     super();
     this.cdr = _cdr;
   }

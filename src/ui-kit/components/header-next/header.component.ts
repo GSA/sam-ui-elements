@@ -31,7 +31,7 @@ export class SamHeaderNextComponent {
   // we know the user's viewport has been resized to be larger.
   // Let's make the page state consistent by deactivating the mobile nav.
   @HostListener("window:resize", ["$event"])
-  onBrowserResize(event) {
+  onBrowserResize() {
     if (
       this.mobileNavActive &&
       this.closeNavBtn.nativeElement.getBoundingClientRect().width === 0

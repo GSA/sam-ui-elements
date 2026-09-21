@@ -1,10 +1,10 @@
-import { Component, Injectable } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { AlertType } from "../../types";
 @Injectable()
 export class SamAlertFooterService {
-  private alerts: any = [];
+  private alerts: AlertType[] = [];
 
-  getAlerts() {
+  getAlerts(): AlertType[] {
     return this.alerts;
   }
 
@@ -12,7 +12,7 @@ export class SamAlertFooterService {
     this.alerts.unshift(data);
   }
 
-  dismissFooterAlert(i) {
+  dismissFooterAlert(i: number) {
     this.alerts = this.alerts.filter(function (obj, idx) {
       if (idx === i) {
         return false;

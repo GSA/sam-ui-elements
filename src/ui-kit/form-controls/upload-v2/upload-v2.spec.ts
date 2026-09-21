@@ -239,7 +239,7 @@ describe("The Sam Upload v2 component", () => {
   describe("remove flow", () => {
     it("opens the remove modal via onRemoveClick", () => {
       const openModal = vi.fn();
-      component.removeModal = { openModal };
+      component.removeModal = { openModal, closeModal: vi.fn() };
       component.onRemoveClick("a.pdf", 0);
       expect(openModal).toHaveBeenCalledWith(0);
     });
@@ -260,7 +260,7 @@ describe("The Sam Upload v2 component", () => {
       component.uploadRequest = () => request;
       component.onFilesChange(fakeFileList(file));
       const closeModal = vi.fn();
-      component.removeModal = { closeModal };
+      component.removeModal = { openModal: vi.fn(), closeModal };
       const changeSpy = vi.fn();
       component.modalChange.subscribe(changeSpy);
 
@@ -288,7 +288,7 @@ describe("The Sam Upload v2 component", () => {
       uf.upload.subscription = {
         unsubscribe,
       } as unknown as UploadFile["upload"]["subscription"];
-      component.removeModal = { closeModal: vi.fn() };
+      component.removeModal = { openModal: vi.fn(), closeModal: vi.fn() };
       component.onRemoveModalSubmit(0);
       expect(unsubscribe).toHaveBeenCalled();
     });
@@ -297,7 +297,7 @@ describe("The Sam Upload v2 component", () => {
   describe("access toggle flow", () => {
     it("opens the toggle modal only when securing a file", () => {
       const openModal = vi.fn();
-      component.toggleModal = { openModal };
+      component.toggleModal = { openModal, closeModal: vi.fn() };
       const emitSpy = vi.fn();
       component.toggleAccess.subscribe(emitSpy);
 
@@ -319,17 +319,17 @@ describe("The Sam Upload v2 component", () => {
       component.toggleModalChange.subscribe(submitSpy);
       component.toggleModalClose.subscribe(closeSpy);
       const closeModal = vi.fn();
-      component.toggleModal = { closeModal };
+      component.toggleModal = { openModal: vi.fn(), closeModal };
 
-      component.onToggleModalOpen([{ a: 1 }]);
-      expect(openSpy).toHaveBeenCalledWith({ a: 1 });
+      component.onToggleModalOpen([{ fileIndex: 1, secure: true }]);
+      expect(openSpy).toHaveBeenCalledWith({ fileIndex: 1, secure: true });
 
-      component.onToggleModalSubmit([{ b: 2 }]);
-      expect(submitSpy).toHaveBeenCalledWith({ b: 2 });
+      component.onToggleModalSubmit([{ fileIndex: 2, secure: false }]);
+      expect(submitSpy).toHaveBeenCalledWith({ fileIndex: 2, secure: false });
       expect(closeModal).toHaveBeenCalled();
 
-      component.onToggleModalClose([{ c: 3 }]);
-      expect(closeSpy).toHaveBeenCalledWith({ c: 3 });
+      component.onToggleModalClose([{ fileIndex: 3, secure: true }]);
+      expect(closeSpy).toHaveBeenCalledWith({ fileIndex: 3, secure: true });
     });
   });
 

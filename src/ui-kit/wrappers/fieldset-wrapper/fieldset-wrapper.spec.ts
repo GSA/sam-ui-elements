@@ -1,11 +1,7 @@
-import {
-  TestBed,
-  waitForAsync,
-  ComponentFixtureAutoDetect,
-  ComponentFixture,
-} from "@angular/core/testing";
-import { Component, ChangeDetectorRef } from "@angular/core";
-import { By } from "@angular/platform-browser";
+import { constructWithInjector } from "../../../testing/construct-with-injector";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
+import { ChangeDetectorRef } from "@angular/core";
+
 import { FormControl, FormGroup } from "@angular/forms";
 // Load the implementations that should be tested
 import { FieldsetWrapper } from "./fieldset-wrapper.component";
@@ -15,7 +11,10 @@ describe("The Sam Fieldset Wrapper component", () => {
     let component: FieldsetWrapper;
     const cdr: ChangeDetectorRef = undefined;
     beforeEach(() => {
-      component = new FieldsetWrapper(cdr);
+      component = constructWithInjector(
+        [{ provide: ChangeDetectorRef, useValue: cdr }],
+        () => new FieldsetWrapper()
+      );
     });
     /**
      * TODO: This test passes when run in isolation, then fails in the
@@ -244,7 +243,7 @@ describe("The Sam Fieldset Wrapper component", () => {
 
   describe("integration tests", () => {
     let component: FieldsetWrapper;
-    let fixture: any;
+    let fixture: ComponentFixture<FieldsetWrapper>;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -267,6 +266,8 @@ describe("The Sam Fieldset Wrapper component", () => {
         hint: {
           previousValue: false,
           currentValue: true,
+          firstChange: false,
+          isFirstChange: () => false,
         },
       });
       fixture.detectChanges();

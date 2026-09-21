@@ -1,16 +1,12 @@
 import {
   Component,
-  Input,
-  ElementRef,
-  OnChanges,
   ChangeDetectorRef,
-  SimpleChanges,
-  ViewChild,
   ViewEncapsulation,
   OnInit,
+  inject,
 } from "@angular/core";
 
-import { ValidatorFn, FormControl, ValidationErrors } from "@angular/forms";
+import { FormControl } from "@angular/forms";
 
 import { SamFormService } from "../../../form-service";
 
@@ -31,6 +27,9 @@ import { numberInputKeys } from "../number-input-keys";
   standalone: false,
 })
 export class SamExtension extends SamFormControl implements OnInit {
+  samFormService: SamFormService;
+  cdr: ChangeDetectorRef;
+
   /**
    * A placeholder value for the extention. In this
    * component, placeholder should represent the number
@@ -42,25 +41,28 @@ export class SamExtension extends SamFormControl implements OnInit {
    * is extension required
    */
   private keys: KeyHelper = new KeyHelper(...numberInputKeys);
-  public inputValue: any = "";
+  public inputValue: string = "";
 
   protected defaultValue = "";
   public defaultValidators = [this.extensionValidator];
 
-  public get value(): any {
+  public get value(): string {
     return this._value;
   }
 
-  public set value(val: any) {
+  public set value(val: string) {
     this._value = val ? val : this.defaultValue;
     this.inputValue = this._value;
   }
 
-  constructor(
-    public samFormService: SamFormService,
-    public cdr: ChangeDetectorRef
-  ) {
-    super(samFormService, cdr);
+  constructor() {
+    const samFormService = inject(SamFormService);
+    const cdr = inject(ChangeDetectorRef);
+
+    super();
+
+    this.samFormService = samFormService;
+    this.cdr = cdr;
   }
 
   public ngOnInit() {
@@ -69,8 +71,9 @@ export class SamExtension extends SamFormControl implements OnInit {
     this.onChange(this.value);
   }
 
-  public inputChange(event) {
-    this.value = event.currentTarget.value ? event.currentTarget.value : "";
+  public inputChange(event: Event) {
+    const target = event.currentTarget as HTMLInputElement;
+    this.value = target.value ? target.value : "";
     this.onChange(this.value);
   }
 
@@ -80,13 +83,13 @@ export class SamExtension extends SamFormControl implements OnInit {
     return errs.length > 0 ? errs[0] : null;
   }
 
-  onKeyInput(event) {
+  onKeyInput(event: KeyboardEvent) {
     if (!this.keys.isAllowed(event)) {
       event.preventDefault();
       return;
     }
   }
-  public writeValue(val: any): void {
+  public writeValue(val: string | null): void {
     this.value = val;
   }
 

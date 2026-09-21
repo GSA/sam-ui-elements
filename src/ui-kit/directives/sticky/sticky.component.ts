@@ -5,16 +5,24 @@ import {
   Input,
   OnInit,
   AfterViewChecked,
+  inject,
 } from "@angular/core";
 
 /**
  * The sam-sticky directive is made to help nav bar stick on the page
  */
+export interface OffsetParentLike {
+  offsetTop: number;
+  offsetParent: Element | null;
+}
+
 @Directive({
   selector: "[sam-sticky]",
   standalone: false,
 })
 export class SamStickyComponent implements OnInit, AfterViewChecked {
+  private el = inject(ElementRef);
+
   // Research sticky polyfill
   // http://html5please.com/#sticky
   /**
@@ -35,7 +43,8 @@ export class SamStickyComponent implements OnInit, AfterViewChecked {
   private elemWidth: number;
 
   @HostListener("window:resize", ["$event"])
-  resize(event) {
+  resize(event?: Event) {
+    void event;
     // Set element to initial styles
     // to help finding the initial element width
     this.el.nativeElement.style.position = "static";
@@ -46,11 +55,10 @@ export class SamStickyComponent implements OnInit, AfterViewChecked {
   }
 
   @HostListener("window:scroll", ["$event"])
-  scroll(event) {
+  scroll(event?: Event) {
+    void event;
     this.makeSticky();
   }
-
-  constructor(private el: ElementRef) {}
 
   ngOnInit() {
     if (this.el.nativeElement.offsetWidth !== this.elemWidth) {
@@ -99,13 +107,13 @@ export class SamStickyComponent implements OnInit, AfterViewChecked {
   /**
    * Get the distance from the element to the top of the document
    */
-  getElemDistanceToTop(elem) {
+  getElemDistanceToTop(elem: OffsetParentLike): number {
     let distance = 0;
-    let el = elem;
+    let el: OffsetParentLike = elem;
     if (el.offsetParent) {
       do {
         distance += el.offsetTop;
-        el = el.offsetParent;
+        el = el.offsetParent as unknown as OffsetParentLike;
       } while (el);
     }
     return distance;
@@ -113,16 +121,22 @@ export class SamStickyComponent implements OnInit, AfterViewChecked {
 
   isTallestAmongSiblings(): boolean {
     let highest = true;
-    const parentContainer: any = document.getElementsByClassName(
+    const parentContainer = document.getElementsByClassName(
       this.container
-    );
+    ) as HTMLCollectionOf<HTMLElement>;
+    if (!parentContainer[0]) {
+      return highest;
+    }
     const directChild = this.findDirectChild();
+    if (!directChild) {
+      return highest;
+    }
     const height = directChild.offsetHeight;
 
     for (let i = 0; i < parentContainer[0].children.length; i++) {
       if (
         directChild !== parentContainer[0].children[i] &&
-        parentContainer[0].children[i].offsetHeight > height
+        (parentContainer[0].children[i] as HTMLElement).offsetHeight > height
       ) {
         highest = false;
       }
@@ -130,19 +144,19 @@ export class SamStickyComponent implements OnInit, AfterViewChecked {
     return highest;
   }
 
-  findDirectChild() {
-    const parentContainer: any = document.getElementsByClassName(
+  findDirectChild(): HTMLElement | undefined {
+    const parentContainer = document.getElementsByClassName(
       this.container
-    );
-    let directChild;
-    let curNode = this.el.nativeElement;
+    ) as HTMLCollectionOf<HTMLElement>;
+    let directChild: HTMLElement | undefined;
+    let curNode: HTMLElement = this.el.nativeElement;
     if (curNode.parentNode) {
       do {
         if (curNode.parentNode === parentContainer[0]) {
           directChild = curNode;
           break;
         }
-        curNode = curNode.parentNode;
+        curNode = curNode.parentNode as HTMLElement;
       } while (curNode);
     }
     return directChild;
@@ -155,9 +169,9 @@ export class SamStickyComponent implements OnInit, AfterViewChecked {
     }
     const defaultTopMargin = 20;
     const defaultOffset = 50;
-    const parentContainer: any = document.getElementsByClassName(
+    const parentContainer = document.getElementsByClassName(
       this.container
-    );
+    ) as HTMLCollectionOf<HTMLElement>;
     const documentHeight = this.getDocHeight();
     const scrollPosition = this.getScrollTop() + window.innerHeight;
     const parentContainerLimit =

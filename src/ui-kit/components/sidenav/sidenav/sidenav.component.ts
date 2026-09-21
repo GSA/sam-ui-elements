@@ -6,6 +6,8 @@ import {
   Output,
   EventEmitter,
   OnChanges,
+  SimpleChanges,
+  inject,
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { SamMenuItemComponent } from "../menu-item";
@@ -21,6 +23,8 @@ import { MenuItem } from "../interfaces";
   standalone: false,
 })
 export class SamSidenavComponent implements OnInit, OnChanges {
+  private service = inject(SidenavService);
+
   /**
    * Sets type of side navigation, currently there are two options
    * 'default' & 'step'
@@ -42,7 +46,7 @@ export class SamSidenavComponent implements OnInit, OnChanges {
   /**
    * (deprecated) Event emitted on interaction, returns the selected menu item
    */
-  @Output() data: EventEmitter<any> = new EventEmitter<any>();
+  @Output() data: EventEmitter<MenuItem> = new EventEmitter<MenuItem>();
   /**
    * Event emitted on interaction, returns the selected menu item's path value
    */
@@ -50,9 +54,7 @@ export class SamSidenavComponent implements OnInit, OnChanges {
   /**
    * Event emitted on interaction, returns the selected menu item
    */
-  @Output() selection: EventEmitter<any> = new EventEmitter<any>();
-
-  constructor(private service: SidenavService) {}
+  @Output() selection: EventEmitter<MenuItem> = new EventEmitter<MenuItem>();
 
   ngOnInit(): void {
     if (!this.model || !this.model.label || !this.model.children) {
@@ -77,7 +79,7 @@ export class SamSidenavComponent implements OnInit, OnChanges {
     this.service.setChildren(this.model.children);
   }
 
-  ngOnChanges(c) {
+  ngOnChanges(c: SimpleChanges) {
     if (c.model) {
       //if model changes, need set to new model, and reset to 0 index tab
       this.service.setModel(this.model);
@@ -101,7 +103,11 @@ export class SamSidenavComponent implements OnInit, OnChanges {
   }
 
   // recursive label lookup
-  lookupLabelInModel(list, lookup, trail) {
+  lookupLabelInModel(
+    list: MenuItem[],
+    lookup: string,
+    trail: number[]
+  ): number[] | false | undefined {
     if (!list || list.length === 0) {
       return false;
     } else {
@@ -124,7 +130,7 @@ export class SamSidenavComponent implements OnInit, OnChanges {
     }
   }
 
-  setSelection(selection) {
+  setSelection(selection: number[]): void {
     for (let i = 1; i <= selection.length; i++) {
       const idx = selection[i - 1];
       this.service.overrideData(i - 1, idx);
@@ -147,7 +153,7 @@ export class SamSidenavComponent implements OnInit, OnChanges {
     return;
   }
 
-  emitChildData(event: Event): void {
+  emitChildData(event: MenuItem): void {
     this.data.emit(event);
     this.path.emit(this.service.getPath());
     this.selection.emit(event);

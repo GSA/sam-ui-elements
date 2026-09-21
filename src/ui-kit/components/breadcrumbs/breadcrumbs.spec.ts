@@ -1,8 +1,6 @@
-import { TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { RouterTestingModule } from "@angular/router/testing";
-import { Observable, Subject } from "rxjs";
-import { ActivatedRoute } from "@angular/router";
 
 // Load the implementations that should be tested
 import { SamBreadcrumbsComponent } from "./breadcrumbs.component";
@@ -23,7 +21,7 @@ describe("The Sam Breadcrumbs component", () => {
   });
   describe("rendered tests", () => {
     let component: SamBreadcrumbsComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<SamBreadcrumbsComponent>;
 
     beforeEach(() => {
       TestBed.configureTestingModule({

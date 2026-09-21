@@ -1,5 +1,4 @@
 import { Component, Input, forwardRef } from "@angular/core";
-import { LabelWrapper } from "../../wrappers/label-wrapper";
 //import * as suffixes from './suffixes.json';
 import { NameEntryType } from "../../types";
 import {
@@ -8,8 +7,6 @@ import {
   Validator,
   ControlValueAccessor,
   FormControl,
-  Validators,
-  ValidatorFn,
 } from "@angular/forms";
 
 const suffixes = [
@@ -106,7 +103,7 @@ const suffixes = [
     description: "The Sixth",
   },
 ];
-const suffixOptions = (suffixes as any).map((item) => {
+const suffixOptions = suffixes.map((item) => {
   return {
     label: item.suffix,
     value: item.suffix,
@@ -196,8 +193,13 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator {
   // validates the form, returns null when valid else the validation object
   // in this case we're checking if the json parsing has passed or failed from
   // the onChange method
-  public validate(c: FormControl) {
-    const obj: any = {};
+  public validate(c?: FormControl) {
+    void c;
+    const obj: {
+      firstName?: { errorMessage: string; valid: boolean };
+      middleName?: { errorMessage: string; valid: boolean };
+      lastName?: { errorMessage: string; valid: boolean };
+    } = {};
     if (!this.validateFirstName()) {
       obj.firstName = {
         errorMessage: this.fNameErrorMsg,
@@ -219,7 +221,7 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator {
     return Object.keys(obj).length ? obj : undefined;
   }
 
-  public getIdentifer(str) {
+  public getIdentifer(str: string) {
     let newString = str;
     if (this.prefix.length > 0) {
       newString = this.prefix + "-" + newString;
@@ -276,8 +278,8 @@ export class SamNameEntryComponent implements ControlValueAccessor, Validator {
     this.onChange(this.model);
   }
 
-  public onChange: any = () => undefined;
-  public onTouched: any = () => undefined;
+  public onChange: (value?: NameEntryType) => void = () => undefined;
+  public onTouched: () => void = () => undefined;
 
   public registerOnChange(fn) {
     this.onChange = fn;

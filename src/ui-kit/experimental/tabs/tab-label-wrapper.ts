@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import { Directive, ElementRef } from "@angular/core";
+import { Directive, ElementRef, inject } from "@angular/core";
 import {
   CanDisable,
   mixinDisabled,
@@ -33,9 +33,7 @@ export class MdTabLabelWrapper
   extends _MdTabLabelWrapperMixinBase
   implements CanDisable
 {
-  constructor(public elementRef: ElementRef) {
-    super();
-  }
+  elementRef = inject(ElementRef);
 
   /** Sets focus on the wrapper element */
   focus(): void {

@@ -1,4 +1,4 @@
-import { TestBed, waitForAsync, fakeAsync, tick } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 import { Component, Output, ViewChild, EventEmitter } from "@angular/core";
 import { By } from "@angular/platform-browser";
 
@@ -16,16 +16,15 @@ import { SamClickOutsideDirective } from "./click-outside.directive";
   standalone: false,
 })
 class TestComponent {
-  @Output() action: EventEmitter<any> = new EventEmitter<any>();
+  @Output() action: EventEmitter<boolean> = new EventEmitter<boolean>();
   @ViewChild("var", { static: true }) var;
   clickOutsideHandler() {
     this.action.emit(true);
   }
 }
 describe("The Sam Click Outside directive", () => {
-  let directive: SamClickOutsideDirective;
   let component: TestComponent;
-  let fixture: any;
+  let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -35,9 +34,6 @@ describe("The Sam Click Outside directive", () => {
     fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    directive = fixture.debugElement
-      .query(By.directive(SamClickOutsideDirective))
-      .injector.get(SamClickOutsideDirective);
   });
 
   it("should compile", () => {

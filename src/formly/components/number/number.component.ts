@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   ViewChild,
   ChangeDetectorRef,
+  inject,
 } from "@angular/core";
 
 import { AbstractSamFormly } from "../../sam-formly";
@@ -22,7 +23,9 @@ export class SamFormlyNumber extends AbstractSamFormly {
   @ViewChild(SamNumberComponent, { static: true })
   public template: SamNumberComponent;
 
-  constructor(_cdr: ChangeDetectorRef) {
+  constructor() {
+    const _cdr = inject(ChangeDetectorRef);
+
     super();
     this.cdr = _cdr;
   }

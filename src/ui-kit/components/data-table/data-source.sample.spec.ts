@@ -2,7 +2,6 @@ import { SamSortable, SamSortDirective } from "./";
 import { merge } from "rxjs";
 import { map } from "rxjs/operators";
 import { DataSource } from "@angular/cdk/collections";
-import { fromEvent } from "rxjs";
 import { RECORDS } from "./data.sample.spec";
 import { BehaviorSubject } from "rxjs";
 /* tslint:disable */
@@ -63,7 +62,7 @@ export class ExampleDatabase {
  * the underlying data. Instead, it only needs to take the data and send the table exactly what
  * should be rendered.
  */
-export class ExampleDataSource extends DataSource<any> {
+export class ExampleDataSource extends DataSource<CFDAData> {
   totalcost = 0;
   _filterChange = new BehaviorSubject("");
   get filter(): string {

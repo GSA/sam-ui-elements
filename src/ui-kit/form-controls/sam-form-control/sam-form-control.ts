@@ -6,6 +6,7 @@ import {
   ChangeDetectorRef,
   AfterViewInit,
   forwardRef,
+  inject,
 } from "@angular/core";
 
 import {
@@ -16,7 +17,7 @@ import {
   NG_VALIDATORS,
 } from "@angular/forms";
 
-import { SamFormService } from "../../form-service";
+import { SamFormService, SamFormEvent } from "../../form-service";
 import { LabelWrapper } from "../../wrappers/label-wrapper";
 
 export function AccessorToken(className) {
@@ -38,9 +39,12 @@ export function ValidatorToken(className) {
   template: "",
   standalone: false,
 })
-export class SamFormControl
+export class SamFormControl<T = unknown>
   implements ControlValueAccessor, OnInit, AfterViewInit
 {
+  samFormService = inject(SamFormService);
+  cdr = inject(ChangeDetectorRef);
+
   /**
    * Sets the label text
    */
@@ -92,23 +96,23 @@ export class SamFormControl
 
   public defaultValidators: ValidatorFn[] = [];
 
-  protected defaultValue: any = null;
+  protected defaultValue: T = null;
 
-  protected _value: any = null;
+  protected _value: T = null;
   protected _disabled: boolean;
 
-  public onChange: (_?: any) => any = (_) => {
-    return _;
+  public onChange: (value?: T) => void = () => {
+    return;
   };
-  public onTouched: () => any = () => {
+  public onTouched: () => void = () => {
     return;
   };
 
-  public get value(): any {
+  public get value(): T {
     return this._value;
   }
 
-  public set value(val: any) {
+  public set value(val: T) {
     this._value = !val ? this.defaultValue : val;
     this.onChange(this.value);
   }
@@ -120,11 +124,6 @@ export class SamFormControl
   public set disabled(state: boolean) {
     this._disabled = state;
   }
-
-  constructor(
-    public samFormService: SamFormService,
-    public cdr: ChangeDetectorRef
-  ) {}
 
   // Lifecycle Hooks
 
@@ -138,19 +137,19 @@ export class SamFormControl
 
   // ControlValueAccessor Methods
 
-  public writeValue(val) {
+  public writeValue(val: T) {
     this.value = val;
   }
 
-  public registerOnChange(fn) {
+  public registerOnChange(fn: (value?: T) => void) {
     this.onChange = fn;
   }
 
-  public registerOnTouched(fn) {
+  public registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 
-  public setDisabledState(state) {
+  public setDisabledState(state: boolean) {
     this.disabled = state;
   }
 
@@ -179,15 +178,15 @@ export class SamFormControl
   private setValidationMethod() {
     if (!this.useFormService) {
       this.control.statusChanges.subscribe(
-        (_: any) => {
+        () => {
           this.wrapper.formatErrors(this.control);
           this.cdr.detectChanges();
         },
-        (err: any) => console.error("Error occurred")
+        () => console.error("Error occurred")
       );
     } else {
       this.samFormService.formEventsUpdated$.subscribe(
-        (evt: any) => {
+        (evt: SamFormEvent) => {
           if (
             (!evt.root || evt.root === this.control.root) &&
             evt.eventType &&
@@ -202,7 +201,7 @@ export class SamFormControl
             this.wrapper.clearError();
           }
         },
-        (err: any) => console.error("Error occured")
+        () => console.error("Error occured")
       );
     }
   }

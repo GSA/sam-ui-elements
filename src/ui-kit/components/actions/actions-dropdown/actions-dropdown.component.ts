@@ -4,8 +4,9 @@ import {
   Output,
   EventEmitter,
   ViewChild,
-  ElementRef,
   ViewChildren,
+  ElementRef,
+  QueryList,
 } from "@angular/core";
 
 import { KeyHelper, KEYS } from "../../../utilities/key-helper/key-helper";
@@ -42,20 +43,23 @@ export class SamActionsDropdownComponent {
   /**
    * Emits event when action changes
    */
-  @Output() public emitAction: EventEmitter<any> = new EventEmitter<any>();
+  @Output() public emitAction: EventEmitter<SamActionInterface> =
+    new EventEmitter<SamActionInterface>();
   /**
    * Emits result of callback
    */
-  @Output() public emitCallback: EventEmitter<any> = new EventEmitter<any>();
+  @Output() public emitCallback: EventEmitter<unknown> =
+    new EventEmitter<unknown>();
 
-  @ViewChildren("actionsList") public actionsList;
+  @ViewChildren("actionsList") public actionsList: QueryList<ElementRef>;
 
-  @ViewChild("actionButton", { static: true }) public actionButton;
+  @ViewChild("actionButton", { static: true }) public actionButton: ElementRef;
 
   showActions = false;
   focusIndex = -1;
 
-  hideActions(event) {
+  hideActions(event: Event) {
+    void event;
     return (this.showActions = false);
   }
 
@@ -68,7 +72,7 @@ export class SamActionsDropdownComponent {
     }
   }
 
-  chooseAction(action) {
+  chooseAction(action: SamActionInterface) {
     this.toggleActions();
     this.emitAction.emit(action);
     if (action.callback) {
@@ -77,7 +81,7 @@ export class SamActionsDropdownComponent {
     return;
   }
 
-  leadKeyDownHandler(event) {
+  leadKeyDownHandler(event: KeyboardEvent) {
     if (KeyHelper.is(KEYS.DOWN, event) && !this.showActions) {
       this.toggleActions();
       event.preventDefault();
@@ -88,7 +92,7 @@ export class SamActionsDropdownComponent {
   }
 
   setFocusOnFirstItem() {
-    this.actionsList.changes.subscribe((t) => {
+    this.actionsList.changes.subscribe(() => {
       this.ngForRendered();
     });
   }
@@ -100,7 +104,7 @@ export class SamActionsDropdownComponent {
     }
   }
 
-  keyDownHandler(event) {
+  keyDownHandler(event: KeyboardEvent) {
     if (KeyHelper.is(KEYS.DOWN, event)) {
       if (this.focusIndex + 1 < this.actionsList.toArray().length) {
         this.focusIndex++;

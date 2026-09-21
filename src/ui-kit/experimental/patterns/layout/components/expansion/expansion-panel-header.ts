@@ -7,7 +7,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
-import { Component, Directive, Host, ViewEncapsulation } from "@angular/core";
+import { Component, Directive, ViewEncapsulation, inject } from "@angular/core";
 import {
   trigger,
   state,
@@ -66,7 +66,7 @@ import {
   standalone: false,
 })
 export class MdExpansionPanelHeader {
-  constructor(@Host() public panel: MdExpansionPanelComponent) {}
+  panel = inject(MdExpansionPanelComponent, { host: true });
 
   /** Toggles the expanded state of the panel. */
   _toggle(): void {

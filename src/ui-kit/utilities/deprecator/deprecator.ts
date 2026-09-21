@@ -11,7 +11,7 @@ export class Deprecator {
   private _deprecated: Deprecated[] = [];
 
   constructor(
-    public parentClass: any,
+    public parentClass: object,
     public globalMessage?: string
   ) {}
 
@@ -31,7 +31,7 @@ export class Deprecator {
     this._deprecated.push(dep);
   }
 
-  public render(parent: any): void {
+  public render(parent: object): void {
     if (this._deprecated.length > 0) {
       console.warn(this._createWarningMessage());
       if (this.globalMessage) {
@@ -41,9 +41,10 @@ export class Deprecator {
     }
   }
 
-  private _createTableRows(parent) {
+  private _createTableRows(parent: object) {
+    const parentRecord = parent as Record<string, unknown>;
     return this._deprecated
-      .filter((prop) => parent[prop.deprecated])
+      .filter((prop) => parentRecord[prop.deprecated])
       .map((dep) => {
         return {
           deprecated: dep.deprecated,

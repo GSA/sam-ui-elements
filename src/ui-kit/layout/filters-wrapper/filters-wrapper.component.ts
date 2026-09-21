@@ -1,7 +1,7 @@
-import { Component, Input, OnInit, OnDestroy, Optional } from "@angular/core";
+import { Component, Input, OnInit, OnDestroy, inject } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 
-import { Observable, Subject, Subscription, combineLatest } from "rxjs";
+import { Subject, Subscription, combineLatest } from "rxjs";
 
 import { SamPageNextService } from "../../experimental/patterns/layout/architecture";
 import { areEqual } from "../../utilities";
@@ -25,6 +25,8 @@ import { areEqual } from "../../utilities";
   standalone: false,
 })
 export class SamFiltersWrapperComponent implements OnInit, OnDestroy {
+  private _service = inject(SamPageNextService, { optional: true });
+
   /**
    * Sets primary button text submitting the form
    */
@@ -42,14 +44,12 @@ export class SamFiltersWrapperComponent implements OnInit, OnDestroy {
    */
   @Input() public disabled = false;
 
-  public runReportEvent = new Subject<any>();
-  public resetReportEvent = new Subject<any>();
+  public runReportEvent = new Subject<unknown>();
+  public resetReportEvent = new Subject<unknown>();
   public disableAction = false;
   private _runReportSubscription: Subscription;
   private _resetReportSubscription: Subscription;
   private _filtersSubscription: Subscription;
-
-  constructor(@Optional() private _service: SamPageNextService) {}
 
   public ngOnInit() {
     this._initializeService();
@@ -69,7 +69,7 @@ export class SamFiltersWrapperComponent implements OnInit, OnDestroy {
   }
 
   private _initializeHandlers() {
-    this._runReportSubscription = this.runReportEvent.subscribe((_) => {
+    this._runReportSubscription = this.runReportEvent.subscribe(() => {
       if (this._service) {
         this._service.model.properties["filters"].setValue(this.group.value);
       }
@@ -110,7 +110,7 @@ export class SamFiltersWrapperComponent implements OnInit, OnDestroy {
       ].valueChanges.subscribe((event) => {
         try {
           this.group.setValue(event, { emitEvent: false });
-        } catch (e) {
+        } catch {
           return;
         }
       });

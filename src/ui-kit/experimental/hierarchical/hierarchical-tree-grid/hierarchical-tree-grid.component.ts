@@ -9,6 +9,7 @@ import {
   ChangeDetectorRef,
   OnChanges,
   AfterViewInit,
+  inject,
 } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { SamSortDirective } from "../../../components";
@@ -24,6 +25,8 @@ import { SamHierarchicalTreeGridConfiguration } from "../models/SamHierarchicalT
 export class SamHierarchicalTreeGridComponent
   implements OnInit, AfterViewChecked, OnChanges, AfterViewInit
 {
+  private cdr = inject(ChangeDetectorRef);
+
   /**
    * Table configurations
    */
@@ -101,8 +104,6 @@ export class SamHierarchicalTreeGridComponent
    */
   @ViewChild(SamSortDirective, { static: true })
   sortDirective: SamSortDirective;
-
-  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnChanges() {
     this.dataChange.next(this.gridData);

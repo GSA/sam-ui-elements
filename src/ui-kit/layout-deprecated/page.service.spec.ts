@@ -1,9 +1,3 @@
-import { TestBed, waitForAsync } from "@angular/core/testing";
-
-import { Component } from "@angular/core";
-import { RouterTestingModule } from "@angular/router/testing";
-// Load the implementations that should be tested
-import { By } from "@angular/platform-browser";
 import { PageService } from "./page.service";
 
 describe("PageService", () => {

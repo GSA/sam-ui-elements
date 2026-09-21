@@ -4,6 +4,7 @@ import {
   ElementRef,
   Renderer2,
   Input,
+  inject,
 } from "@angular/core";
 
 @Directive({
@@ -11,6 +12,9 @@ import {
   standalone: false,
 })
 export class SamExternalLinkDirective implements AfterViewInit {
+  private el = inject(ElementRef);
+  private renderer = inject(Renderer2);
+
   @Input() public hideIcon: boolean = false;
 
   private get hasExternalIcon(): boolean {
@@ -22,11 +26,6 @@ export class SamExternalLinkDirective implements AfterViewInit {
   private get canRenderIcon(): boolean {
     return !(this.hasExternalIcon || this.hideIcon);
   }
-
-  constructor(
-    private el: ElementRef,
-    private renderer: Renderer2
-  ) {}
 
   public ngAfterViewInit() {
     if (this.canRenderIcon) {

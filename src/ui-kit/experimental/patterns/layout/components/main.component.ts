@@ -4,6 +4,7 @@ import {
   AfterContentInit,
   HostBinding,
   forwardRef,
+  inject,
 } from "@angular/core";
 import { SamFilterDrawerComponent } from "../../../../layout/filter-drawer";
 import { SamPageNextService } from "../architecture";
@@ -18,16 +19,16 @@ import { SamPageNextService } from "../architecture";
   standalone: false,
 })
 export class SamMainComponent implements AfterContentInit {
+  protected _service = inject(SamPageNextService);
+
   @HostBinding("class") public classes = "sam-main";
 
   @ContentChild(forwardRef(() => SamFilterDrawerComponent), { static: true })
   public drawer: SamFilterDrawerComponent;
 
-  constructor(protected _service: SamPageNextService) {}
-
   public ngAfterContentInit() {
     if (this.drawer) {
-      this.drawer.clear.subscribe((evt) => this._clearDrawer());
+      this.drawer.clear.subscribe(() => this._clearDrawer());
     }
   }
 

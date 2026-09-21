@@ -5,19 +5,18 @@ import {
   EventEmitter,
   ElementRef,
   ViewChild,
-  AfterViewInit,
   OnInit,
   OnChanges,
+  SimpleChanges,
+  inject,
 } from "@angular/core";
 
 import {
   trigger,
-  state,
   style,
   animate,
   transition,
   query,
-  animateChild,
   keyframes,
   stagger,
 } from "@angular/animations";
@@ -64,14 +63,11 @@ import { map, tap, filter, debounceTime, switchAll } from "rxjs/operators";
   standalone: false,
 })
 export class SamSearchComponent implements OnInit, OnChanges {
+  private prototypedata = inject(PrototypeSearchService);
+
   @ViewChild("searchInput", { static: true }) inputEl: ElementRef;
   @Input() public focus: boolean;
-  @Output() selectedDomain: EventEmitter<any> = new EventEmitter();
-
-  constructor(
-    //private masterpageservice: SamMasterPageService,
-    private prototypedata: PrototypeSearchService
-  ) {}
+  @Output() selectedDomain: EventEmitter<string> = new EventEmitter();
 
   loading = false;
   results = [];
@@ -83,7 +79,7 @@ export class SamSearchComponent implements OnInit, OnChanges {
     // convert the `keyup` event into an observable stream
     fromEvent(this.inputEl.nativeElement, "keyup")
       .pipe(
-        map((e: any) => e.target.value), // extract the value of the input
+        map((e: Event) => (e.target as HTMLInputElement).value), // extract the value of the input
         filter((text: string) => text.length > 1), // filter out if empty
         tap(() => (this.loading = true)), // enable loading
         debounceTime(350), // only once every 250ms
@@ -99,13 +95,13 @@ export class SamSearchComponent implements OnInit, OnChanges {
       });
   }
 
-  ngOnChanges(c) {
+  ngOnChanges(c: SimpleChanges) {
     if (c.focus.currentValue) {
       this.inputFocus();
     }
   }
 
-  closeAutocomplete(name) {
+  closeAutocomplete(name: string) {
     this.results = [];
     this.inputEl.nativeElement.value = name;
   }
@@ -115,28 +111,30 @@ export class SamSearchComponent implements OnInit, OnChanges {
   }
 
   tabSearch = false;
-  inputTab($event) {
-    if ($event.target.value === "cfda") {
+  inputTab($event: Event) {
+    const target = $event.target as HTMLInputElement;
+    if (target.value === "cfda") {
       $event.preventDefault();
       this.tabSearch = true;
-      $event.target.value = "";
+      target.value = "";
     }
   }
-  inputBackspace($event) {
-    if (this.tabSearch && $event.target.value === "") {
+  inputBackspace($event: Event) {
+    const target = $event.target as HTMLInputElement;
+    if (this.tabSearch && target.value === "") {
       $event.preventDefault();
       this.tabSearch = false;
-      $event.target.value = "cfda";
+      target.value = "cfda";
     }
-    if (!this.tabSearch && $event.target.value.length <= 1) {
+    if (!this.tabSearch && target.value.length <= 1) {
       this.results = [];
     }
   }
 
   selectedOption: string;
-  resultsWidth;
-  onSelectChange(event) {
-    this.selectedOption = event.target.value.trim();
+  resultsWidth: string;
+  onSelectChange(event: Event) {
+    this.selectedOption = (event.target as HTMLSelectElement).value.trim();
     this.inputEl.nativeElement.focus();
     //this.masterpageservice.selectedDomain = this.selectedOption;
     //this.selectedDomain.emit(this.selectedOption);
@@ -146,8 +144,8 @@ export class SamSearchComponent implements OnInit, OnChanges {
   updateResultsWidth() {
     setTimeout(() => {
       const styles = getComputedStyle(this.inputEl.nativeElement);
-      this.resultsWidth = parseInt(styles.width.slice(0, -2)) + 48;
-      this.resultsWidth = `${this.resultsWidth}px`;
+      const width = parseInt(styles.width.slice(0, -2)) + 48;
+      this.resultsWidth = `${width}px`;
     }, 1);
   }
 }

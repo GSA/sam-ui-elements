@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import { TestBed } from "@angular/core/testing";
 import { SamNumberComponent } from "./number.component";
 import { LabelWrapper } from "../../wrappers/label-wrapper/label-wrapper.component";
@@ -12,11 +13,14 @@ describe("The Sam Number component", () => {
     const cdr: ChangeDetectorRef = undefined;
 
     beforeEach(() => {
-      component = new SamNumberComponent(new SamFormService(), cdr);
+      component = constructWithInjector(
+        [SamFormService, { provide: ChangeDetectorRef, useValue: cdr }],
+        () => new SamNumberComponent()
+      );
     });
 
     it("should implement controlvalueaccessor", () => {
-      component.registerOnChange((_) => undefined);
+      component.registerOnChange(() => undefined);
       component.registerOnTouched(() => undefined);
       component.onChange();
       component.onTouched();
@@ -28,7 +32,7 @@ describe("The Sam Number component", () => {
 
   describe("rendered tests", () => {
     let component: SamNumberComponent;
-    let fixture: any;
+    let fixture: ReturnType<typeof TestBed.createComponent<SamNumberComponent>>;
 
     beforeEach(() => {
       TestBed.configureTestingModule({

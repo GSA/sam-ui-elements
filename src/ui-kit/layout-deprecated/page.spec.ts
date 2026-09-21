@@ -1,9 +1,7 @@
-import { TestBed, waitForAsync } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
-import { Component } from "@angular/core";
 import { RouterTestingModule } from "@angular/router/testing";
 // Load the implementations that should be tested
-import { By } from "@angular/platform-browser";
 import { PageTemplateComponent } from "./page.component";
 import { SamStickyComponent } from "../directives/sticky/sticky.component";
 import { SamSidenavModule } from "../components/sidenav";
@@ -19,8 +17,7 @@ import { SamElementsModule } from "../elements";
 
 describe("PageTemplateComponent component", () => {
   describe("rendered tests", () => {
-    let component: PageTemplateComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<PageTemplateComponent>;
 
     // provide our implementations or mocks to the dependency injector
     beforeEach(() => {
@@ -41,12 +38,10 @@ describe("PageTemplateComponent component", () => {
       });
 
       fixture = TestBed.createComponent(PageTemplateComponent);
-      component = fixture.componentInstance;
       fixture.detectChanges();
     });
 
     it("should initialize", function () {
-      const text = fixture.debugElement.nativeElement.textContent;
       expect(true).toBe(true);
     });
   });

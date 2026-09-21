@@ -3,35 +3,36 @@ import { By } from "@angular/platform-browser";
 import { DebugElement } from "@angular/core";
 
 import { SamActionsDropdownComponent } from "./actions-dropdown.component";
+import { SamActionInterface } from "../action-interface";
 
 describe("The Sam Actions Dropdown Component", () => {
   let component: SamActionsDropdownComponent;
   let fixture: ComponentFixture<SamActionsDropdownComponent>;
   let de: DebugElement;
   let actionButton: HTMLButtonElement;
-  let emittedAction: any;
-  let emittedCallbackResult: any;
+  let emittedAction: SamActionInterface;
+  let emittedCallbackResult: unknown;
   const dummyUpEvent = {
     key: "Up",
     preventDefault: function () {},
     stopPropagation: function () {},
-  };
+  } as unknown as KeyboardEvent;
   const dummyDownEvent = {
     key: "Down",
     preventDefault: function () {},
     stopPropagation: function () {},
-  };
+  } as unknown as KeyboardEvent;
   const dummyEscEvent = {
     key: "Esc",
     preventDefault: function () {},
     stopPropagation: function () {},
-  };
+  } as unknown as KeyboardEvent;
 
   const callback = () => {
     return "success";
   };
 
-  const actions: Array<any> = [
+  const actions: Array<SamActionInterface> = [
     { name: "edit", label: "Edit", icon: "fa fa-pencil", callback: callback },
     {
       callback: callback,
@@ -52,10 +53,10 @@ describe("The Sam Actions Dropdown Component", () => {
 
     component.actions = actions;
     component.disabled = false;
-    component.emitAction.subscribe((_: any) => {
+    component.emitAction.subscribe((_: SamActionInterface) => {
       emittedAction = _;
     });
-    component.emitCallback.subscribe((_: any) => {
+    component.emitCallback.subscribe((_: unknown) => {
       emittedCallbackResult = _;
     });
 

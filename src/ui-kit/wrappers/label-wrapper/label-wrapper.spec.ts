@@ -1,11 +1,6 @@
-import {
-  TestBed,
-  waitForAsync,
-  ComponentFixtureAutoDetect,
-  ComponentFixture,
-} from "@angular/core/testing";
-import { Component, ChangeDetectorRef, Renderer2 } from "@angular/core";
-import { By } from "@angular/platform-browser";
+import { constructWithInjector } from "../../../testing/construct-with-injector";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
+import { ChangeDetectorRef, Renderer2 } from "@angular/core";
 import { FormControl } from "@angular/forms";
 // Load the implementations that should be tested
 import { LabelWrapper } from "./label-wrapper.component";
@@ -16,7 +11,13 @@ describe("The Sam Label Wrapper component", () => {
     const cdr: ChangeDetectorRef = undefined;
     const renderer: Renderer2 = undefined;
     beforeEach(() => {
-      component = new LabelWrapper(cdr, renderer);
+      component = constructWithInjector(
+        [
+          { provide: ChangeDetectorRef, useValue: cdr },
+          { provide: Renderer2, useValue: renderer },
+        ],
+        () => new LabelWrapper()
+      );
     });
 
     it("should display error messages with a form control", () => {
@@ -202,7 +203,7 @@ describe("The Sam Label Wrapper component", () => {
 
   describe("integration tests", () => {
     let component: LabelWrapper;
-    let fixture: any;
+    let fixture: ComponentFixture<LabelWrapper>;
 
     beforeEach(() => {
       TestBed.configureTestingModule({

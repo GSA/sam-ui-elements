@@ -5,6 +5,7 @@ import {
   ViewChild,
   ViewEncapsulation,
   ChangeDetectorRef,
+  inject,
 } from "@angular/core";
 import { AbstractControl } from "@angular/forms";
 
@@ -83,6 +84,9 @@ import { SamFormService } from "../../form-service";
   standalone: false,
 })
 export class SamIntlPhoneGroup extends SamFieldset implements OnInit {
+  private _formService = inject(SamFormService);
+  private cdr = inject(ChangeDetectorRef);
+
   @Input() public name: string;
   @Input() public useFormService: boolean = false;
   @Input() public useDefaultValidations: boolean = true;
@@ -102,13 +106,6 @@ export class SamIntlPhoneGroup extends SamFieldset implements OnInit {
   public extensionError: string = "";
   public hint = "Country Code is 1 for USA and North America";
   public countryCode: string = "1";
-
-  constructor(
-    private _formService: SamFormService,
-    private cdr: ChangeDetectorRef
-  ) {
-    super();
-  }
 
   public ngOnInit() {
     const msg = "Phone, Prefix and Extension names required for 508 compliance";
@@ -149,7 +146,7 @@ export class SamIntlPhoneGroup extends SamFieldset implements OnInit {
 
   private _useFormServiceStrategy(): void {
     this._formService.formEventsUpdated$.subscribe(
-      (evt: any) => {
+      (evt: { root?: unknown; eventType?: string }) => {
         if (
           (!evt.root || evt.root === this.group.root) &&
           evt.eventType &&
@@ -168,12 +165,12 @@ export class SamIntlPhoneGroup extends SamFieldset implements OnInit {
           this.wrapper.clearError();
         }
       },
-      (err: any) => console.error("Error occured", err)
+      (err: unknown) => console.error("Error occurred", err)
     );
   }
 
   private _useDefaultStrategy(): void {
-    this.group.valueChanges.subscribe((_) => {
+    this.group.valueChanges.subscribe(() => {
       this.wrapper.formatErrors(
         this.group.controls.prefix,
         this.group.controls.phone,

@@ -3,12 +3,13 @@ import {
   Input,
   Output,
   ChangeDetectorRef,
-  Optional,
   ViewChild,
   EventEmitter,
   forwardRef,
   AfterViewInit,
   OnInit,
+  Provider,
+  inject,
 } from "@angular/core";
 import { LabelWrapper } from "../../wrappers/label-wrapper";
 import { OptionsType } from "../../types";
@@ -17,10 +18,9 @@ import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
 } from "@angular/forms";
-import { SamFormService } from "../../form-service";
+import { SamFormService, SamFormEvent } from "../../form-service";
 
-const noop = () => undefined;
-const MY_VALUE_ACCESSOR: any = {
+const MY_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamSelectComponent),
   multi: true,
@@ -38,6 +38,9 @@ const MY_VALUE_ACCESSOR: any = {
 export class SamSelectComponent
   implements ControlValueAccessor, AfterViewInit, OnInit
 {
+  private cdr = inject(ChangeDetectorRef, { optional: true });
+  private samFormService = inject(SamFormService);
+
   /**
    * Sets the bound value of the component
    */
@@ -89,19 +92,15 @@ export class SamSelectComponent
   /**
    * Event emitted on modal value change
    */
-  @Output() public modelChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() public modelChange: EventEmitter<string | number | symbol> =
+    new EventEmitter<string | number | symbol>();
 
   @ViewChild(LabelWrapper, { static: true }) public wrapper: LabelWrapper;
 
-  @ViewChild("select", { static: true }) public select: any;
+  @ViewChild("select", { static: true }) public select: unknown;
 
-  private onChange: (_: any) => void;
+  private onChange: (value: string | number | symbol) => void;
   private onTouched: () => void;
-
-  constructor(
-    @Optional() private cdr: ChangeDetectorRef,
-    private samFormService: SamFormService
-  ) {}
 
   ngOnInit() {
     if (!this.ariaLabel) {
@@ -125,21 +124,23 @@ export class SamSelectComponent
         });
         this.wrapper.formatErrors(this.control);
       } else {
-        this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
-          if (
-            (!evt.root || evt.root === this.control.root) &&
-            evt.eventType &&
-            evt.eventType === "submit"
-          ) {
-            this.wrapper.formatErrors(this.control);
-          } else if (
-            (!evt.root || evt.root === this.control.root) &&
-            evt.eventType &&
-            evt.eventType === "reset"
-          ) {
-            this.wrapper.clearError();
+        this.samFormService.formEventsUpdated$.subscribe(
+          (evt: SamFormEvent) => {
+            if (
+              (!evt.root || evt.root === this.control.root) &&
+              evt.eventType &&
+              evt.eventType === "submit"
+            ) {
+              this.wrapper.formatErrors(this.control);
+            } else if (
+              (!evt.root || evt.root === this.control.root) &&
+              evt.eventType &&
+              evt.eventType === "reset"
+            ) {
+              this.wrapper.clearError();
+            }
           }
-        });
+        );
       }
     }
   }
@@ -152,7 +153,7 @@ export class SamSelectComponent
     this.cdr.detectChanges();
   }
 
-  onSelectChange(val) {
+  onSelectChange(val: string | number | symbol) {
     if (this.onChange) {
       this.onChange(val);
     }
@@ -160,11 +161,11 @@ export class SamSelectComponent
     this.modelChange.emit(val);
   }
 
-  setDisabledState(disabled) {
+  setDisabledState(disabled: boolean) {
     this.disabled = disabled;
   }
 
-  writeValue(value) {
+  writeValue(value: string | number | symbol) {
     this.model = value;
   }
 
@@ -175,11 +176,11 @@ export class SamSelectComponent
     }
   }
 
-  registerOnChange(fn: any) {
+  registerOnChange(fn: (value: string | number | symbol) => void) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any) {
+  registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 }

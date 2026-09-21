@@ -1,5 +1,4 @@
-import { TestBed } from "@angular/core/testing";
-import { CommonModule } from "@angular/common";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import moment from "moment";
 import { By } from "@angular/platform-browser";
 
@@ -10,7 +9,7 @@ import { SamCommentComponent } from "./";
 
 describe("The Sam Comment component", () => {
   let component: SamCommentComponent;
-  let fixture: any;
+  let fixture: ComponentFixture<SamCommentComponent>;
   const imgUrl =
     "https://upload.wikimedia.org/wikipedia/commons/c/c6/Georgewashington.jpg";
 

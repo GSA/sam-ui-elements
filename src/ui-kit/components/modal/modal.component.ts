@@ -9,6 +9,7 @@ import {
   ChangeDetectorRef,
   OnDestroy,
   AfterViewChecked,
+  inject,
 } from "@angular/core";
 import { ScrollHelpers } from "../../dom-helpers";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
@@ -23,6 +24,9 @@ import { KeyHelper, KEYS } from "../../utilities/key-helper/key-helper";
   standalone: false,
 })
 export class SamModalComponent implements OnInit, OnDestroy, AfterViewChecked {
+  private hostElement = inject(ElementRef);
+  cdr = inject(ChangeDetectorRef);
+
   /**
    * Sets ID html attribute of modal
    */
@@ -85,34 +89,34 @@ export class SamModalComponent implements OnInit, OnDestroy, AfterViewChecked {
   /**
    * (deprecated) Emitted event when modal is opened
    */
-  @Output() onOpen: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onOpen: EventEmitter<unknown[]> = new EventEmitter<unknown[]>();
   /**
    * Emitted event when modal is opened
    */
-  @Output() open: EventEmitter<any> = new EventEmitter<any>();
+  @Output() open: EventEmitter<unknown[]> = new EventEmitter<unknown[]>();
   /**
    * (deprecated) Emitted event when modal is closed
    */
-  @Output() onClose: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onClose: EventEmitter<unknown[]> = new EventEmitter<unknown[]>();
   /**
    * Emitted event when modal is closed
    */
-  @Output() close: EventEmitter<any> = new EventEmitter<any>();
+  @Output() close: EventEmitter<unknown[]> = new EventEmitter<unknown[]>();
   /**
    * (deprecated) Emitted event on modal submission
    */
-  @Output() onSubmit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() onSubmit: EventEmitter<unknown[]> = new EventEmitter<unknown[]>();
   /**
    * Emitted event on modal submission
    */
-  @Output() submit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() submit: EventEmitter<unknown[]> = new EventEmitter<unknown[]>();
 
   @ViewChild("modalRoot", { static: false }) public modalRoot: ElementRef;
   @ViewChild("modalContent", { static: false }) public modalContent: ElementRef;
   @ViewChild("closeButton", { static: true }) public closeButton: ElementRef;
   public show = false;
   public clickOutsideReady = false;
-  public types: any = {
+  public types: Record<string, { class: string; sr?: string }> = {
     success: { class: "usa-alert-success", sr: "success alert" },
     warning: { class: "usa-alert-warning", sr: "warning alert" },
     error: { class: "usa-alert-error", sr: "error alert" },
@@ -132,19 +136,16 @@ export class SamModalComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   private _allFocusableElements: NodeListOf<Element>;
   private _modalFocusableElements: NodeListOf<Element>;
-  private _scrollHelpers: any;
+  private _scrollHelpers: ReturnType<typeof ScrollHelpers>;
 
-  private args = undefined;
+  private args: unknown[] = undefined;
   public modalElIds = {
     closeId: "",
     submitId: "",
     cancelId: "",
   };
 
-  constructor(
-    private hostElement: ElementRef,
-    public cdr: ChangeDetectorRef
-  ) {
+  constructor() {
     this.internalId = Date.now();
   }
 
@@ -176,7 +177,7 @@ export class SamModalComponent implements OnInit, OnDestroy, AfterViewChecked {
     return false;
   }
 
-  openModal(...args: any[]) {
+  openModal(...args: unknown[]) {
     if (this.show) {
       return;
     }

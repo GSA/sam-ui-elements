@@ -1,4 +1,4 @@
-import { Component, HostBinding, forwardRef } from "@angular/core";
+import { Component, HostBinding, forwardRef, inject } from "@angular/core";
 
 import { SamMainComponent } from "../";
 import { SamPageNextService } from "../../architecture";
@@ -15,10 +15,16 @@ import { SamPageNextService } from "../../architecture";
   standalone: false,
 })
 export class SamReportingMainComponent extends SamMainComponent {
+  _service: SamPageNextService;
+
   @HostBinding("class.sam-reporting-main")
   public reportingMainClass = true;
 
-  constructor(public _service: SamPageNextService) {
-    super(_service);
+  constructor() {
+    const _service = inject(SamPageNextService);
+
+    super();
+
+    this._service = _service;
   }
 }

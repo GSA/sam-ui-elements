@@ -12,6 +12,8 @@
 // precedent on the same Angular 19 / Analog 2.5.1 stack).
 import "@analogjs/vitest-angular/setup-zone";
 import { getTestBed } from "@angular/core/testing";
+import { provideZoneChangeDetection } from "@angular/core";
+import { TestBed } from "@angular/core/testing";
 import {
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting,
@@ -76,3 +78,22 @@ getTestBed().initTestEnvironment(
   platformBrowserDynamicTesting(),
   { teardown: { destroyAfterEach: true } }
 );
+
+// Angular 21 changed TestBed's default change-detection strategy to
+// zoneless (`provideZonelessChangeDetectionInternal()` is now baked into
+// every test module's root providers). That default surfaces
+// `ExpressionChangedAfterItHasBeenCheckedError` for any spec that mutates
+// a bound property and calls `fixture.detectChanges()` a second time
+// (previously legal, zone-based behavior that the vast majority of specs
+// in this library rely on) because zoneless `detectChanges()` runs an
+// exhaustive `checkNoChanges` pass across every view via `ApplicationRef.tick()`.
+// Restore zone-based change detection globally so existing specs keep their
+// original (Angular <=20) semantics without every spec file opting back in
+// individually. `TestBed.configureTestingModule` providers are additive
+// (pushed, not replaced), so this composes safely with each spec's own
+// `configureTestingModule` call.
+beforeEach(() => {
+  TestBed.configureTestingModule({
+    providers: [provideZoneChangeDetection()],
+  });
+});

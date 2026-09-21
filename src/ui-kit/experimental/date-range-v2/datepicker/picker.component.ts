@@ -12,6 +12,7 @@ import {
   OnChanges,
   forwardRef,
   HostListener,
+  inject,
 } from "@angular/core";
 import {
   FormControl,
@@ -80,6 +81,9 @@ export class DatepickerComponent
   extends SamFormControl
   implements OnInit, OnChanges, ControlValueAccessor
 {
+  samFormService: SamFormService;
+  cdr: ChangeDetectorRef;
+
   private readonly DEFAULT_FORMAT = "MM/DD/YYYY";
 
   private dateVal: Date;
@@ -162,11 +166,14 @@ export class DatepickerComponent
     this.handleGlobalClick(event);
   }
 
-  constructor(
-    public samFormService: SamFormService,
-    public cdr: ChangeDetectorRef
-  ) {
-    super(samFormService, cdr);
+  constructor() {
+    const samFormService = inject(SamFormService);
+    const cdr = inject(ChangeDetectorRef);
+
+    super();
+    this.samFormService = samFormService;
+    this.cdr = cdr;
+
     this.dateFormat = this.DEFAULT_FORMAT;
     // view logic
     this.showCalendar = false;

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { Component, Input, Output, EventEmitter, inject } from "@angular/core";
 import { SidenavService } from "../services";
 import { MenuItem } from "../interfaces";
 
@@ -8,6 +8,8 @@ import { MenuItem } from "../interfaces";
   standalone: false,
 })
 export class SamMenuItemComponent {
+  private service = inject(SidenavService);
+
   /**
    * Sets additional children in menu item
    */
@@ -19,13 +21,11 @@ export class SamMenuItemComponent {
   /**
    * (deprecated) Emits when an item has been selected
    */
-  @Output() data: EventEmitter<any> = new EventEmitter<any>();
+  @Output() data: EventEmitter<MenuItem> = new EventEmitter<MenuItem>();
   /**
    * Emits when an item has been selected
    */
-  @Output() selection: EventEmitter<any> = new EventEmitter<any>();
-
-  constructor(private service: SidenavService) {}
+  @Output() selection: EventEmitter<MenuItem> = new EventEmitter<MenuItem>();
 
   updateUI(index: number, event: Event, menuItem: MenuItem): void {
     if (menuItem && menuItem.disabled) {
@@ -41,15 +41,11 @@ export class SamMenuItemComponent {
     return this.service.getData()[this.nodeDepth] === index;
   }
 
-  hasChildren(item: object) {
-    if (item["children"] && item["children"].length !== 0) {
-      return true;
-    } else {
-      return false;
-    }
+  hasChildren(item: MenuItem): boolean {
+    return !!(item.children && item.children.length !== 0);
   }
 
-  emitSelectedChild(event: any): void {
+  emitSelectedChild(event: MenuItem): void {
     this.data.emit(event);
     this.selection.emit(event);
     return;

@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../../testing/construct-with-injector";
 import { TestBed } from "@angular/core/testing";
 import { DynamicChipsDirective } from "./dynamic-chips.directive";
 import { SamFilterDrawerComponent } from "../filter-drawer.component";
@@ -39,7 +40,13 @@ describe("DynamicChipsDirective", () => {
       },
     ]);
 
-    directive = new DynamicChipsDirective(host, service);
+    directive = constructWithInjector(
+      [
+        { provide: SamFilterDrawerComponent, useValue: host },
+        { provide: SamPageNextService, useValue: service },
+      ],
+      () => new DynamicChipsDirective()
+    );
     directive.map = (obj: Record<string, unknown>) => {
       const value = obj.status;
       if (value === undefined || value === null) {

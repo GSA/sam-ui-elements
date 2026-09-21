@@ -8,8 +8,6 @@ import {
   ViewChild,
 } from "@angular/core";
 
-import { SamPageNextService } from "../../experimental/patterns/layout/architecture";
-
 import { ChipHostDirective } from "./chip-host";
 import { SamFilterDrawerItemComponent } from "./filter-drawer-item";
 
@@ -22,7 +20,7 @@ export class SamFilterDrawerComponent {
   /**
    * Event emitter for the 'clear' event
    */
-  @Output() public clear = new EventEmitter<any>();
+  @Output() public clear = new EventEmitter<void>();
 
   @ViewChild(forwardRef(() => ChipHostDirective), { static: true })
   public chips: ChipHostDirective;

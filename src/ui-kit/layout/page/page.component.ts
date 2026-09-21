@@ -1,4 +1,4 @@
-import { Component, Input, Injectable, OnInit } from "@angular/core";
+import { Component, Input, Injectable, OnInit, inject } from "@angular/core";
 
 @Injectable()
 export class SamPageService {
@@ -15,6 +15,8 @@ export class SamPageService {
   standalone: false,
 })
 export class SamPageComponent {
+  pageService = inject(SamPageService);
+
   /**
    * Sets the page header for the page
    */
@@ -24,8 +26,6 @@ export class SamPageComponent {
    * Sets an introduction to the page
    */
   @Input() public intro: string;
-
-  constructor(public pageService: SamPageService) {}
 }
 
 /**
@@ -41,7 +41,7 @@ export class SamPageComponent {
   standalone: false,
 })
 export class SamPageSidebarComponent implements OnInit {
-  constructor(private pageService: SamPageService) {}
+  private pageService = inject(SamPageService);
 
   ngOnInit() {
     this.pageService.sidebar = true;

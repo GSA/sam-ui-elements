@@ -2,8 +2,8 @@ import {
   Component,
   forwardRef,
   AfterViewInit,
-  ViewChild,
   ElementRef,
+  inject,
 } from "@angular/core";
 import {
   AbstractGrid,
@@ -27,9 +27,9 @@ export class Popover {
   standalone: false,
 })
 export class SamPopoverComponent implements AfterViewInit {
-  public grid: AbstractGrid;
+  el = inject(ElementRef);
 
-  constructor(public el: ElementRef) {}
+  public grid: AbstractGrid;
 
   public ngAfterViewInit() {
     const config: AbstractGridConfig = {

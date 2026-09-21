@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../../testing/construct-with-injector";
 import { SamExtension } from "./extension.component";
 import { ChangeDetectorRef } from "@angular/core";
 import { CommonModule } from "@angular/common";
@@ -8,18 +9,18 @@ import { SamFormService } from "../../../form-service";
 import { SamWrapperModule } from "../../../wrappers";
 import { SamFormControlsModule } from "../../../form-controls";
 
-const mockEvent = {
-  currentTarget: {
-    value: undefined,
-  },
-};
-
 describe("Sam extension", () => {
   let component: SamExtension;
 
   describe("Standalone tests", () => {
     beforeEach(() => {
-      component = new SamExtension(null, null);
+      component = constructWithInjector(
+        [
+          { provide: SamFormService, useValue: null },
+          { provide: ChangeDetectorRef, useValue: null },
+        ],
+        () => new SamExtension()
+      );
       component.name = "extension";
       component.label = "Extension";
     });
@@ -63,7 +64,7 @@ describe("Sam extension", () => {
         currentTarget: {
           value: "5",
         },
-      };
+      } as unknown as Event;
 
       component.inputChange(mock);
 
@@ -82,7 +83,7 @@ describe("Sam extension", () => {
         },
         preventDefault: function () {},
         stopPropagation: function () {},
-      };
+      } as unknown as KeyboardEvent;
 
       component.onKeyInput(mock);
 
@@ -99,7 +100,7 @@ describe("Sam extension", () => {
         key: "g",
         preventDefault: function () {},
         stopPropagation: function () {},
-      };
+      } as unknown as KeyboardEvent;
 
       component.onKeyInput(mock1);
 

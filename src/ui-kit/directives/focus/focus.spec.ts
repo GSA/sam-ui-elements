@@ -1,4 +1,4 @@
-import { TestBed, waitForAsync, fakeAsync, tick } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 import { Component, Output, ViewChild, EventEmitter } from "@angular/core";
 import { By } from "@angular/platform-browser";
@@ -17,16 +17,15 @@ import { SamFocusDirective } from "./focus.directive";
   standalone: false,
 })
 class TestComponent {
-  @Output() action: EventEmitter<any> = new EventEmitter<any>();
+  @Output() action: EventEmitter<boolean> = new EventEmitter<boolean>();
   @ViewChild("var", { static: true }) var;
   focusHandler() {
     this.action.emit(true);
   }
 }
 describe("The Sam Focus directive", () => {
-  let directive: SamFocusDirective;
   let component: TestComponent;
-  let fixture: any;
+  let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -36,9 +35,6 @@ describe("The Sam Focus directive", () => {
     fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    directive = fixture.debugElement
-      .query(By.directive(SamFocusDirective))
-      .injector.get(SamFocusDirective);
   });
 
   it("should compile", () => {

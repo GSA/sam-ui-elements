@@ -4,6 +4,7 @@ import {
   Component,
   HostBinding,
   SimpleChanges,
+  inject,
 } from "@angular/core";
 import {
   icon,
@@ -39,6 +40,8 @@ import { faNotFoundIconHtml } from "./shared/errors/not-found-icon-html";
   standalone: false,
 })
 export class SamFAIconComponent implements OnChanges {
+  private sanitizer = inject(DomSanitizer);
+
   @HostBinding("class") public faIconClass = "ng-fa-icon";
   // tslint:disable-next-line:no-input-rename
   @Input("icon") iconProp: IconProp;
@@ -63,8 +66,6 @@ export class SamFAIconComponent implements OnChanges {
 
   @HostBinding("innerHTML")
   public renderedIconHTML: SafeHtml;
-
-  constructor(private sanitizer: DomSanitizer) {}
 
   private params: IconParams;
   private iconSpec: IconLookup;

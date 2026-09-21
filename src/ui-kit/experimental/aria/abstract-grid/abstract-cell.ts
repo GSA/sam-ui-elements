@@ -1,4 +1,4 @@
-import { EventDispatcher } from "../utils/events";
+import { EventDispatcher, EventListenerCallback } from "../utils/events";
 
 export type CellRole = "gridcell" | "columnheader" | "rowheader";
 
@@ -23,15 +23,15 @@ export class AbstractCell {
     this._initCell();
   }
 
-  public onKeydown(callback: Function, context: object) {
+  public onKeydown(callback: EventListenerCallback, context: object) {
     this._dispatcher.on("keydown", callback, context);
   }
 
-  public onClick(callback: Function, context: object) {
+  public onClick(callback: EventListenerCallback, context: object) {
     this._dispatcher.on("click", callback, context);
   }
 
-  public disconnect(event: string, callback: Function) {
+  public disconnect(event: string, callback: EventListenerCallback) {
     this._dispatcher.disconnect(event, callback);
   }
 

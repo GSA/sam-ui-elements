@@ -6,20 +6,20 @@ import {
   forwardRef,
   ViewChild,
   ElementRef,
-  Optional,
   OnChanges,
   ChangeDetectorRef,
   TemplateRef,
   OnDestroy,
   OnInit,
   AfterViewInit,
+  inject,
 } from "@angular/core";
 import {
   NG_VALUE_ACCESSOR,
   ControlValueAccessor,
   FormControl,
 } from "@angular/forms";
-import { Observable, Subject, of } from "rxjs";
+import { Observable, Subject } from "rxjs";
 import { AutocompleteConfig } from "../../types";
 import { AutocompleteService } from "./autocomplete.service";
 import { SamFormService } from "../../form-service";
@@ -56,6 +56,10 @@ export class SamAutocompleteComponent
     OnInit,
     AfterViewInit
 {
+  autocompleteService = inject(AutocompleteService, { optional: true });
+  private samFormService = inject(SamFormService);
+  private cdr = inject(ChangeDetectorRef);
+
   @ViewChild("resultsList", { static: false }) resultsList: ElementRef;
   @ViewChild("resultsListKV", { static: false }) resultsListKV: ElementRef;
   @ViewChild("input", { static: true }) input: ElementRef;
@@ -260,13 +264,7 @@ export class SamAutocompleteComponent
   public keyEvents: Subject<any> = new Subject();
 
   public onTouchedCallback: () => void = () => null;
-  public propogateChange: (_: any) => void = (_: any) => null;
-
-  constructor(
-    @Optional() public autocompleteService: AutocompleteService,
-    private samFormService: SamFormService,
-    private cdr: ChangeDetectorRef
-  ) {}
+  public propogateChange: (_val: any) => void = () => null;
 
   ngOnChanges(changes) {
     if (changes.httpRequest) {
@@ -311,7 +309,8 @@ export class SamAutocompleteComponent
     this.endOfList = false;
   }
 
-  requestError(err) {
+  requestError(err?: unknown) {
+    void err;
     this.results = ["An error occurred. Try a different value."];
     const errorobj = {};
     errorobj[this.config.keyValueConfig.keyProperty] = "Error";
@@ -786,7 +785,8 @@ export class SamAutocompleteComponent
     }
   }
 
-  checkForFocus(event) {
+  checkForFocus(event?: Event) {
+    void event;
     if (
       !this.allowAny &&
       this.selectedInputValue !== this.inputValue &&
@@ -847,9 +847,8 @@ export class SamAutocompleteComponent
 
   filterKeyValuePairs(subStr: string, keyValuePairs: any): any {
     const lowerSubStr = subStr.toLowerCase();
-    const categories = [];
     let currentCategory = "";
-    const reducedArr = keyValuePairs.reduce((prev, curr, index, arr) => {
+    const reducedArr = keyValuePairs.reduce((prev, curr) => {
       if (
         curr[this.config.keyValueConfig.keyProperty]
           .toLowerCase()

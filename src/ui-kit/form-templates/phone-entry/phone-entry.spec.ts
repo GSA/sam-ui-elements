@@ -1,4 +1,5 @@
-import { TestBed } from "@angular/core/testing";
+import { constructWithInjector } from "../../../testing/construct-with-injector";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 import { ChangeDetectorRef } from "@angular/core";
 import { By } from "@angular/platform-browser";
@@ -20,7 +21,10 @@ describe("The Sam Phone Entry component", () => {
     let component: SamPhoneEntryComponent;
     const cdr: ChangeDetectorRef = undefined;
     beforeEach(() => {
-      component = new SamPhoneEntryComponent(new SamFormService(), cdr);
+      component = constructWithInjector(
+        [SamFormService, { provide: ChangeDetectorRef, useValue: cdr }],
+        () => new SamPhoneEntryComponent()
+      );
     });
 
     it("should have a prefixer for ids", () => {
@@ -46,7 +50,7 @@ describe("The Sam Phone Entry component", () => {
   });
   describe("rendered tests", () => {
     let component: SamPhoneEntryComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<SamPhoneEntryComponent>;
     let el;
 
     // provide our implementations or mocks to the dependency injector

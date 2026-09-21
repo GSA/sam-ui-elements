@@ -5,7 +5,7 @@ export class Calendar {
     this.firstWeekDay = firstWeekDay; // 0 = Sunday
   }
 
-  weekStartDate(date: any) {
+  weekStartDate(date: Date): Date {
     const startDate = new Date(date.getTime());
     while (startDate.getDay() !== this.firstWeekDay) {
       startDate.setDate(startDate.getDate() - 1);
@@ -13,48 +13,48 @@ export class Calendar {
     return startDate;
   }
 
-  monthDates(
-    year: any,
-    month: any,
-    dayFormatter: any = null,
-    weekFormatter: any = null
-  ) {
+  monthDates<T = Date, W = T[]>(
+    year: number,
+    month: number,
+    dayFormatter?: (date: Date) => T,
+    weekFormatter?: (week: T[]) => W
+  ): W[] {
     if (typeof year !== "number" || year < 1970) {
       throw Error("year must be a number >= 1970");
     }
     if (typeof month !== "number" || month < 0 || month > 11) {
       throw Error("month must be a number (Jan is 0)");
     }
-    const weeks: Array<any> = [];
-    let week: Array<any> = [],
+    const weeks: W[] = [];
+    let week: T[] = [],
       i = 0,
       date = this.weekStartDate(new Date(year, month, 1));
     do {
       for (i = 0; i < 7; i++) {
-        week.push(dayFormatter ? dayFormatter(date) : date);
+        week.push(dayFormatter ? dayFormatter(date) : (date as unknown as T));
         date = new Date(date.getTime());
         date.setDate(date.getDate() + 1);
       }
-      weeks.push(weekFormatter ? weekFormatter(week) : week);
+      weeks.push(weekFormatter ? weekFormatter(week) : (week as unknown as W));
       week = [];
     } while (date.getMonth() <= month && date.getFullYear() === year);
     return weeks;
   }
 
-  monthDays(year: any, month: any) {
-    const getDayOrZero = (date: any) => {
+  monthDays(year: number, month: number): (Date | number)[][] {
+    const getDayOrZero = (date: Date): Date | number => {
       return date.getMonth() === month ? date : 0;
     };
     return this.monthDates(year, month, getDayOrZero);
   }
 
-  monthText(year: any, month: any) {
+  monthText(year?: number, month?: number): string {
     if (typeof year === "undefined") {
       const now = new Date();
       year = now.getFullYear();
       month = now.getMonth();
     }
-    const getDayOrBlank = (date: any) => {
+    const getDayOrBlank = (date: Date): string => {
       let s = date.getMonth() === month ? date.getDate().toString() : "  ";
       while (s.length < 2) {
         s = " " + s;
@@ -65,7 +65,7 @@ export class Calendar {
       year,
       month,
       getDayOrBlank,
-      function (week: any) {
+      function (week: string[]) {
         return week.join(" ");
       }
     );
@@ -75,5 +75,5 @@ export class Calendar {
 
 const months = "JAN FEB MAR APR MAY JUN JUL AUG SEP OCT NOV DEC".split(" ");
 for (let i = 0; i < months.length; i++) {
-  Calendar[months[i]] = i;
+  (Calendar as unknown as Record<string, number>)[months[i]] = i;
 }

@@ -1,21 +1,19 @@
 import {
   Component,
   Input,
-  OnInit,
   ContentChildren,
   QueryList,
   ElementRef,
-  forwardRef,
   Renderer2,
   Output,
   EventEmitter,
   AfterContentInit,
   AfterViewInit,
   OnDestroy,
+  inject,
 } from "@angular/core";
-import GLOBAL_STRINGS from "accessible-html5-video-player/js/strings.js";
 import * as InitPxVideo from "accessible-html5-video-player/js/px-video.js";
-declare var InitPxVideo: any;
+declare let InitPxVideo: new (config: InitPxVideoConfig) => unknown;
 
 // NOTE: Add px-video.js and strings.js files to your application .angular-cli.json script tag
 
@@ -38,6 +36,9 @@ interface InitPxVideoConfig {
 export class SamVideoPlayerComponent
   implements AfterContentInit, AfterViewInit, OnDestroy
 {
+  private render = inject(Renderer2);
+  private template = inject(ElementRef);
+
   @ContentChildren("videoPly", { descendants: true })
   public videos: QueryList<ElementRef>;
   @ContentChildren("videoTrack", { descendants: true })
@@ -49,14 +50,9 @@ export class SamVideoPlayerComponent
   @Input() public title: string;
   @Input() public captionOption: boolean;
   @Input() public seekInterval: number;
-  @Output() public onFullScreenChange: EventEmitter<any> =
-    new EventEmitter<any>();
+  @Output() public onFullScreenChange: EventEmitter<boolean> =
+    new EventEmitter<boolean>();
   private config: InitPxVideoConfig;
-
-  constructor(
-    private render: Renderer2,
-    private template: ElementRef
-  ) {}
 
   ngAfterContentInit() {
     this.validateElement(
@@ -94,7 +90,8 @@ export class SamVideoPlayerComponent
     this.setElementAttribute(videoEl, "role", "presentation");
   }
 
-  onToggleFullScreen(event) {
+  onToggleFullScreen(event?: Event) {
+    void event;
     const isFullScreen = document["fullscreen"];
     this.onFullScreenChange.emit(isFullScreen);
   }

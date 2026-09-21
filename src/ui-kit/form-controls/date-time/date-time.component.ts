@@ -2,20 +2,24 @@ import {
   Component,
   Input,
   ViewChild,
-  Output,
-  EventEmitter,
   OnInit,
   forwardRef,
   OnChanges,
+  Provider,
+  inject,
 } from "@angular/core";
 import moment from "moment";
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
+import {
+  NG_VALUE_ACCESSOR,
+  ControlValueAccessor,
+  FormControl,
+} from "@angular/forms";
 import { FieldsetWrapper } from "../../wrappers/fieldset-wrapper";
 import { SamDateComponent } from "../date/date.component";
 import { SamTimeComponent } from "../time/time.component";
-import { SamFormService } from "../../form-service";
+import { SamFormService, SamFormEvent } from "../../form-service";
 
-const MY_VALUE_ACCESSOR: any = {
+const MY_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamDateTimeComponent),
   multi: true,
@@ -33,6 +37,8 @@ const MY_VALUE_ACCESSOR: any = {
 export class SamDateTimeComponent
   implements OnInit, OnChanges, ControlValueAccessor
 {
+  private samFormService = inject(SamFormService);
+
   public INPUT_FORMAT: string = "Y-M-DTH:m";
   /**
    * Sets starting value for input
@@ -57,12 +63,12 @@ export class SamDateTimeComponent
   /**
    * Sets the formControl to check validations and update error messaged
    */
-  @Input() control;
+  @Input() control: FormControl;
   /**
    * Toggles validations to display with SamFormService events
    */
   @Input() useFormService: boolean;
-  public value;
+  public value: string;
   public time: string = undefined;
   public date: string = undefined;
 
@@ -70,12 +76,10 @@ export class SamDateTimeComponent
   public dateComponent: SamDateComponent;
   @ViewChild("timeComponent", { static: true })
   public timeComponent: SamTimeComponent;
-  @ViewChild(FieldsetWrapper, { static: true }) public wrapper;
+  @ViewChild(FieldsetWrapper, { static: true }) public wrapper: FieldsetWrapper;
 
-  public onChange: Function;
-  public onTouched: Function;
-
-  constructor(private samFormService: SamFormService) {}
+  public onChange: (value: string | undefined) => void;
+  public onTouched: () => void;
 
   ngOnInit() {
     if (!this.name) {
@@ -92,21 +96,23 @@ export class SamDateTimeComponent
         });
         this.wrapper.formatErrors(this.control);
       } else {
-        this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
-          if (
-            (!evt.root || evt.root === this.control.root) &&
-            evt.eventType &&
-            evt.eventType === "submit"
-          ) {
-            this.wrapper.formatErrors(this.control);
-          } else if (
-            (!evt.root || evt.root === this.control.root) &&
-            evt.eventType &&
-            evt.eventType === "reset"
-          ) {
-            this.wrapper.clearError();
+        this.samFormService.formEventsUpdated$.subscribe(
+          (evt: SamFormEvent) => {
+            if (
+              (!evt.root || evt.root === this.control.root) &&
+              evt.eventType &&
+              evt.eventType === "submit"
+            ) {
+              this.wrapper.formatErrors(this.control);
+            } else if (
+              (!evt.root || evt.root === this.control.root) &&
+              evt.eventType &&
+              evt.eventType === "reset"
+            ) {
+              this.wrapper.clearError();
+            }
           }
-        });
+        );
       }
     }
   }
@@ -128,7 +134,7 @@ export class SamDateTimeComponent
     }
   }
 
-  emitChanges(val: string): void {
+  emitChanges(val: string | undefined): void {
     this.value = val;
     // only when this component is used as a FormControl will change be
     // registered
@@ -159,19 +165,19 @@ export class SamDateTimeComponent
     this.time = "";
   }
 
-  registerOnChange(fn) {
+  registerOnChange(fn: (value: string | undefined) => void) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn) {
+  registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 
-  setDisabledState(disabled) {
+  setDisabledState(disabled: boolean) {
     this.disabled = disabled;
   }
 
-  writeValue(value) {
+  writeValue(value: string | null | undefined) {
     if (value) {
       this.value = value;
     } else {

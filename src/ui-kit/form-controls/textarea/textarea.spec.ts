@@ -1,8 +1,8 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import { TestBed } from "@angular/core/testing";
 import { SamTextareaComponent } from "./textarea.component";
 import { LabelWrapper } from "../../wrappers/label-wrapper";
 import { FormsModule, FormControl } from "@angular/forms";
-import { By } from "@angular/platform-browser";
 import { SamFormService } from "../../form-service";
 import { ChangeDetectorRef } from "@angular/core";
 
@@ -12,11 +12,14 @@ describe("The Sam Textarea component", () => {
     const cdr: ChangeDetectorRef = undefined;
 
     beforeEach(() => {
-      component = new SamTextareaComponent(cdr, new SamFormService());
+      component = constructWithInjector(
+        [SamFormService, { provide: ChangeDetectorRef, useValue: cdr }],
+        () => new SamTextareaComponent()
+      );
     });
 
     it("should implement control value accessor", () => {
-      component.registerOnChange((_) => undefined);
+      component.registerOnChange(() => undefined);
       component.registerOnTouched(() => undefined);
       component.onChange(undefined);
       component.onTouched();
@@ -32,8 +35,8 @@ describe("The Sam Textarea component", () => {
       component.inputEventChange.subscribe((data) => {
         expect(data).toBe("hello");
       });
-      component.onFocus(true);
-      component.inputEventHandler("hello");
+      component.onFocus(true as unknown as FocusEvent);
+      component.inputEventHandler("hello" as unknown as Event);
 
       /*When value sets to some value*/
       component.maxlength = 10;
@@ -58,7 +61,7 @@ describe("The Sam Textarea component", () => {
       try {
         component.ngOnInit();
         fail();
-      } catch (e) {
+      } catch {
         expect(true).toBe(true);
       }
     });
@@ -66,7 +69,9 @@ describe("The Sam Textarea component", () => {
 
   describe("rendered tests", () => {
     let component: SamTextareaComponent;
-    let fixture: any;
+    let fixture: ReturnType<
+      typeof TestBed.createComponent<SamTextareaComponent>
+    >;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -157,11 +162,11 @@ describe("The Sam Textarea component", () => {
 
     it("should emit focus events", () => {
       fixture.detectChanges();
-      let focusEventValue: any;
-      let focusValue: any;
+      let focusEventValue: unknown;
+      let focusValue: unknown;
       component.focusEvent.subscribe((val) => (focusEventValue = val));
       component.focus.subscribe((val) => (focusValue = val));
-      component.onFocus("evt");
+      component.onFocus("evt" as unknown as FocusEvent);
       expect(focusEventValue).toBe("evt");
       expect(focusValue).toBe("evt");
     });

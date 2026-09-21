@@ -1,14 +1,11 @@
-import { TestBed, waitForAsync } from "@angular/core/testing";
+import { TestBed, ComponentFixture } from "@angular/core/testing";
 
-import { Component } from "@angular/core";
 // Load the implementations that should be tested
 import { WorkspaceTemplateComponent } from "./workspace-template.component";
-import { By } from "@angular/platform-browser";
 
 describe("Workspace template component", () => {
   describe("rendered tests", () => {
-    let component: WorkspaceTemplateComponent;
-    let fixture: any;
+    let fixture: ComponentFixture<WorkspaceTemplateComponent>;
 
     // provide our implementations or mocks to the dependency injector
     beforeEach(() => {
@@ -17,7 +14,6 @@ describe("Workspace template component", () => {
       });
 
       fixture = TestBed.createComponent(WorkspaceTemplateComponent);
-      component = fixture.componentInstance;
       fixture.detectChanges();
     });
 

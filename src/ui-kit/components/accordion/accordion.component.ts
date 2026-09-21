@@ -1,12 +1,24 @@
 import {
   Component,
-  Inject,
-  forwardRef,
   Input,
   Output,
   EventEmitter,
   OnInit,
+  forwardRef,
+  inject,
 } from "@angular/core";
+
+/**
+ * Minimal shape of `SamAccordionComponent` needed by `SamAccordionSection`.
+ * Kept as an interface (rather than referencing the class type directly) so
+ * `emitDecoratorMetadata` does not emit a value reference to a class that is
+ * declared later in this file, which caused a "Cannot access before
+ * initialization" error when the class type was used directly.
+ */
+export interface AccordionParent {
+  sections: SamAccordionSection[];
+  addSection(section: SamAccordionSection): void;
+}
 
 /**
  * The <sam-accordion-section> component can generates content for a single
@@ -18,6 +30,10 @@ import {
   standalone: false,
 })
 export class SamAccordionSection implements OnInit {
+  private parent: AccordionParent = inject(
+    forwardRef(() => SamAccordionComponent)
+  );
+
   /**
    * Accordion header text
    */
@@ -36,10 +52,7 @@ export class SamAccordionSection implements OnInit {
   @Output() isExpandedChange: EventEmitter<SamAccordionSection> =
     new EventEmitter<SamAccordionSection>();
 
-  constructor(
-    @Inject(forwardRef(() => SamAccordionComponent))
-    private parent: any
-  ) {
+  constructor() {
     this.parent.addSection(this);
   }
 

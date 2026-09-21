@@ -1,23 +1,23 @@
-import { TestBed } from "@angular/core/testing";
-import { FormsModule } from "@angular/forms";
-
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 // Load the implementations that should be tested
+import { ChangeDetectorRef, SimpleChanges } from "@angular/core";
 import { SamInputMaskComponent } from "./input-mask.component";
 import { SamFormService } from "../../form-service";
-import { SamWrapperModule } from "../../wrappers";
-import { ChangeDetectorRef } from "@angular/core";
 
 describe("The Sam Input Mask component", () => {
   let component: SamInputMaskComponent;
-  let cdr: ChangeDetectorRef;
 
   // provide our implementations or mocks to the dependency injector
   beforeEach(() => {
-    component = new SamInputMaskComponent(
-      <any>{
-        detectChanges: () => {},
-      },
-      new SamFormService()
+    component = constructWithInjector(
+      [
+        SamFormService,
+        {
+          provide: ChangeDetectorRef,
+          useValue: { detectChanges: () => {} } as unknown as ChangeDetectorRef,
+        },
+      ],
+      () => new SamInputMaskComponent()
     );
     component.template = "__/__/____";
   });
@@ -68,10 +68,10 @@ describe("The Sam Input Mask component", () => {
 
   it("should test that maxlength is always a number", () => {
     try {
-      component.maxlength = <any>"10";
+      component.maxlength = "10" as unknown as number;
       component.ngOnChanges({
         maxlength: "10",
-      });
+      } as unknown as SimpleChanges);
       fail();
     } catch (exception) {
       expect(exception.toString()).toContain(

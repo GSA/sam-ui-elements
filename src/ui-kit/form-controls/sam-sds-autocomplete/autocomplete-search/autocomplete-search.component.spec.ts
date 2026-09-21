@@ -100,7 +100,6 @@ describe("SamAutocompleteComponent", () => {
     fixture.detectChanges();
     tick();
     fixture.detectChanges();
-    const list = fixture.debugElement.query(By.css(".sds-autocomplete"));
   }));
 
   it.skip("Should have results with input and free text search on", fakeAsync(() => {
@@ -410,7 +409,6 @@ describe("SamAutocompleteComponent", () => {
     fixture.detectChanges();
     tick();
     fixture.detectChanges();
-    const list = fixture.debugElement.query(By.css(".sds-autocomplete"));
     const event = {
       key: "Enter",
       target: { value: "id" },

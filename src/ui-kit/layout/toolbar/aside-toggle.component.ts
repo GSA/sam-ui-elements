@@ -3,9 +3,9 @@ import {
   Output,
   EventEmitter,
   Component,
-  Optional,
   OnInit,
   OnChanges,
+  inject,
 } from "@angular/core";
 import { MdSidenav } from "../../experimental/patterns/layout/components/sidenav";
 import { ToolbarItem } from "../../experimental/actions-list";
@@ -27,6 +27,8 @@ import { SamPageNextService } from "../../experimental/patterns/layout/architect
   standalone: false,
 })
 export class SamAsideToggleComponent implements OnInit, OnChanges {
+  _pageService = inject(SamPageNextService, { optional: true });
+
   /**
    * Shows/hides the toggle button
    */
@@ -47,8 +49,6 @@ export class SamAsideToggleComponent implements OnInit, OnChanges {
    * The event emitter for toggle events
    */
   @Output() public toggle = new EventEmitter<ToolbarItem>();
-
-  constructor(@Optional() public _pageService: SamPageNextService) {}
 
   ngOnInit() {
     if (this._pageService) {

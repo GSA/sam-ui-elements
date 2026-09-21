@@ -1,6 +1,6 @@
 import { AbstractRow } from "./abstract-row";
 import { AbstractCell } from "./abstract-cell";
-import { EventDispatcher } from "../utils/events";
+import { EventDispatcher, EventListenerCallback } from "../utils/events";
 
 export type AbstractGridEvent = "keydown" | "click";
 
@@ -40,18 +40,22 @@ export class AbstractGrid {
     }
   }
 
-  public onClick(callback: Function, context: object): void {
+  public onClick(callback: EventListenerCallback, context: object): void {
     this._onClickHandler = [callback, context];
     const [cb, ctx] = this._onClickHandler;
     this._dispatcher.on("click", cb, ctx);
   }
 
-  public onKeydown(callback: Function, context: object): void {
+  public onKeydown(callback: EventListenerCallback, context: object): void {
     this._dispatcher.on("keydown", callback, context);
   }
 
   public getSelected(): AbstractCell {
     return this._rows[this._currentRow].cells[this._currentCol];
+  }
+
+  public get node(): Element {
+    return this._node;
   }
 
   public move(direction: string) {
@@ -92,7 +96,7 @@ export class AbstractGrid {
       subtree: true,
     };
 
-    const cb = (mutations) => {
+    const cb = () => {
       this._rows = [];
       this.focused = undefined;
       this._main(element);
@@ -144,7 +148,7 @@ export class AbstractGrid {
 
     this._dispatcher.disconnect("click", this._handleCellClick);
 
-    const [cb, ctx] = this._onClickHandler;
+    const [cb] = this._onClickHandler;
     if (cb) {
       this._dispatcher.disconnect("click", cb);
     }

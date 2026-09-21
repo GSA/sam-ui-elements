@@ -1,12 +1,12 @@
 import {
   Component,
   Input,
-  ElementRef,
   TemplateRef,
   Renderer2,
   ViewChild,
   AfterViewInit,
   OnInit,
+  inject,
 } from "@angular/core";
 
 @Component({
@@ -21,16 +21,16 @@ import {
   standalone: false,
 })
 export class SamTitleComponent implements AfterViewInit, OnInit {
+  private renderer = inject(Renderer2);
+
   @Input() public importance: string;
   @Input() public aligned: string;
   @Input() public weight: string;
 
   @ViewChild("titleTemplate", { static: true })
-  titleTpl: TemplateRef<any>;
+  titleTpl: TemplateRef<unknown>;
 
   css_classes: string = "sam title";
-
-  constructor(private renderer: Renderer2) {}
 
   ngOnInit() {
     this.css_classes += this.aligned ? ` ${this.aligned} aligned` : "";
@@ -48,7 +48,7 @@ export class SamTitleComponent implements AfterViewInit, OnInit {
     this.renderer.appendChild(parent, tag);
   }
 
-  getTitleTag(importance): string {
+  getTitleTag(importance: string): string {
     switch (importance) {
       case "highest": {
         return "h1";

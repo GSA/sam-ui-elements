@@ -121,7 +121,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
       this.getResults();
     });
 
-    this.scrolled.subscribe((scroll) => {
+    this.scrolled.subscribe(() => {
       this.getResults(true);
     });
   }
@@ -130,7 +130,7 @@ export class SamHierarchicalTreeComponent implements OnInit {
    * Sets the selected items
    * @param res
    */
-  private setSelectedResults(res: any) {
+  private setSelectedResults(res: object[]) {
     this.results = [];
     this.results = res;
   }

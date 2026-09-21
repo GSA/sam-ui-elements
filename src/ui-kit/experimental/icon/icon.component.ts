@@ -1,13 +1,7 @@
 import { Input, Component } from "@angular/core";
 import {
-  Icon,
-  Styles,
-  PullProp,
   IconProp,
   SizeProp,
-  FlipProp,
-  FaSymbol,
-  Transform,
   RotateProp,
 } from "@fortawesome/fontawesome-svg-core";
 

@@ -3,6 +3,7 @@ import { By } from "@angular/platform-browser";
 import { DebugElement } from "@angular/core";
 
 import { SamActionButton } from "./action-button.component";
+import { SamActionInterface } from "../action-interface";
 
 describe("The SAM Action Button Component", () => {
   let comp: SamActionButton;
@@ -44,7 +45,7 @@ describe("The SAM Action Button Component", () => {
   });
 
   it("Should disable button when disabled is set", () => {
-    const element: any = de.query(By.css("button")).nativeElement;
+    const element: HTMLButtonElement = de.query(By.css("button")).nativeElement;
     comp.disabled = true;
     fixture.detectChanges();
 
@@ -54,8 +55,8 @@ describe("The SAM Action Button Component", () => {
   it("Should emit callback results on button click", () => {
     const button = de.query(By.css("button"));
 
-    let emittedResult: any;
-    comp.emitCallback.subscribe((_: any) => {
+    let emittedResult: unknown;
+    comp.emitCallback.subscribe((_: unknown) => {
       emittedResult = _;
     });
     fixture.detectChanges();
@@ -68,8 +69,8 @@ describe("The SAM Action Button Component", () => {
   it("Should emit action when button is clicked", () => {
     const button = de.query(By.css("button"));
 
-    let emittedAction: any;
-    comp.emitAction.subscribe((_: any) => {
+    let emittedAction: SamActionInterface;
+    comp.emitAction.subscribe((_: SamActionInterface) => {
       emittedAction = _;
     });
     fixture.detectChanges();

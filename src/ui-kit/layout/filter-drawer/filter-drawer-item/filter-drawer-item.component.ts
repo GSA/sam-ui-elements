@@ -16,12 +16,12 @@ import { Component, Input, Output, EventEmitter } from "@angular/core";
 })
 export class SamFilterDrawerItemComponent {
   @Input() public label: string;
-  @Input() public values: any[];
+  @Input() public values: unknown[];
   @Input() public disabled = false;
-  @Output() public remove = new EventEmitter();
+  @Output() public remove = new EventEmitter<Record<string, unknown>>();
 
-  public removeFilter(value): void {
-    const removed = {};
+  public removeFilter(value: unknown): void {
+    const removed: Record<string, unknown> = {};
     removed[this.label] = value;
     this.remove.emit(removed);
   }

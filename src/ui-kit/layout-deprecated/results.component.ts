@@ -10,18 +10,18 @@ export class ResultsTemplateComponent {
    * Total number of results, value passed to generate list results
    * message and pagination
    */
-  @Input() public totalElements: any;
+  @Input() public totalElements: number;
   /**
    * Current page number, value passed to generate list results message
    * and pagination
    */
-  @Input() public currentPage: any;
+  @Input() public currentPage: number;
 
   /**
    * Total number of pages, value passed to generate list results message
    * and pagination
    */
-  @Input() public totalPages: any;
+  @Input() public totalPages: number;
 
   /**
    * Total number of resuls shown per page
@@ -39,7 +39,7 @@ export class ResultsTemplateComponent {
   @Output() public pageChange: EventEmitter<number> =
     new EventEmitter<number>();
 
-  pageChangeHandler(event): void {
+  pageChangeHandler(event: number): void {
     this.pageChange.emit(event);
   }
 }

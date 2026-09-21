@@ -1,3 +1,4 @@
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 import { TestBed, ComponentFixture } from "@angular/core/testing";
 
 import { FormsModule, FormControl } from "@angular/forms";
@@ -14,7 +15,10 @@ describe("The Sam Date Range component", () => {
     let component: SamDateRangeComponent;
 
     beforeEach(() => {
-      component = new SamDateRangeComponent(new SamFormService());
+      component = constructWithInjector(
+        [SamFormService],
+        () => new SamDateRangeComponent()
+      );
     });
 
     it("should get a moment-based date", () => {
@@ -130,7 +134,10 @@ describe("The Sam Date Range component", () => {
     let component: SamDateRangeComponent;
 
     beforeEach(() => {
-      component = new SamDateRangeComponent(new SamFormService());
+      component = constructWithInjector(
+        [SamFormService],
+        () => new SamDateRangeComponent()
+      );
     });
 
     it("requires both dates when required is set and returns an error when missing focus", () => {
@@ -265,7 +272,7 @@ describe("The Sam Date Range component", () => {
       component.onChange();
       component.onTouched();
       component.registerOnTouched(() => undefined);
-      component.registerOnChange((_) => undefined);
+      component.registerOnChange(() => undefined);
       component.setDisabledState(false);
       component.writeValue(undefined);
       component.focusHandler();

@@ -1,10 +1,13 @@
-import { Directive, ElementRef, Renderer2, Input } from "@angular/core";
+import { Directive, ElementRef, Renderer2, Input, inject } from "@angular/core";
 
 @Directive({
   selector: "[columns]",
   standalone: false,
 })
 export class ColumnDirective {
+  private renderer = inject(Renderer2);
+  el = inject(ElementRef);
+
   public columnsClass: string;
   public _number: string;
 
@@ -45,9 +48,4 @@ export class ColumnDirective {
     this.renderer.removeClass(this.el.nativeElement, "wide");
     this.renderer.removeClass(this.el.nativeElement, "column");
   }
-
-  constructor(
-    private renderer: Renderer2,
-    public el: ElementRef
-  ) {}
 }

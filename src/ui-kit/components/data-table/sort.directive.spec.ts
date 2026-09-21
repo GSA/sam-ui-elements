@@ -1,4 +1,4 @@
-import { SamSortDirective, SamSortable } from "./sort.directive";
+import { SamSortDirective, SamSortable, Sort } from "./sort.directive";
 
 function makeSortable(overrides: Partial<SamSortable> = {}): SamSortable {
   return {
@@ -67,7 +67,7 @@ describe("The Sam Sort directive", () => {
 
   it("emits samSortChange with the active id and direction", () => {
     const sortable = makeSortable({ id: "col-a", start: "asc" });
-    let emitted: any;
+    let emitted: Sort;
     directive.samSortChange.subscribe((val) => {
       emitted = val;
     });
