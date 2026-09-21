@@ -2,6 +2,7 @@ import { ElementRef, NgZone, Renderer2 } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { CommonModule } from "@angular/common";
 import { A11yModule } from "@angular/cdk/a11y";
+import { Directionality } from "@angular/cdk/bidi";
 import { By } from "@angular/platform-browser";
 
 import { SamPageNextComponent } from "./page.component";
@@ -9,12 +10,25 @@ import { MdSidenav } from "../sidenav/sidenav";
 import { MdSidenavModule } from "../sidenav";
 import { SamToolbarComponent } from "../../../../../layout/toolbar";
 import { SamIconsModule } from "../../../../icon";
+import { SamPageNextService } from "../../architecture";
+import { constructWithInjector } from "../../../../../../testing/construct-with-injector";
 
-function createComponent(pageService: any = undefined) {
+function createComponent(
+  pageService: Partial<SamPageNextService> | undefined = undefined
+) {
   const element = new ElementRef(document.createElement("div"));
   const renderer = {} as Renderer2;
   const ngZone = {} as NgZone;
-  return new SamPageNextComponent(element, renderer, ngZone, pageService);
+  return constructWithInjector(
+    [
+      { provide: ElementRef, useValue: element },
+      { provide: Renderer2, useValue: renderer },
+      { provide: NgZone, useValue: ngZone },
+      { provide: SamPageNextService, useValue: pageService },
+      { provide: Directionality, useValue: null },
+    ],
+    () => new SamPageNextComponent()
+  );
 }
 
 function createFakeAside(overrides: Partial<MdSidenav> = {}) {

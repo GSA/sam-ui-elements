@@ -3,6 +3,7 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { UniqueSelectionDispatcher } from "../core/coordination/unique-selection-dispatcher";
 import { MdAccordionDirective } from "./accordion";
 import { MdExpansionPanelComponent } from "./expansion-panel";
+import { constructWithInjector } from "../../../../../../testing/construct-with-injector";
 
 describe("MdExpansionPanelComponent", () => {
   function createComponent(accordion: MdAccordionDirective | null = null) {
@@ -10,7 +11,17 @@ describe("MdExpansionPanelComponent", () => {
       imports: [NoopAnimationsModule],
     });
     const dispatcher = new UniqueSelectionDispatcher();
-    return new MdExpansionPanelComponent(accordion as never, dispatcher);
+    return constructWithInjector(
+      [
+        { provide: UniqueSelectionDispatcher, useValue: dispatcher },
+        {
+          provide: MdAccordionDirective,
+          useValue: accordion,
+          host: true,
+        } as never,
+      ],
+      () => new MdExpansionPanelComponent()
+    );
   }
 
   it("hides the toggle based on its own hideToggle input when there is no accordion", () => {

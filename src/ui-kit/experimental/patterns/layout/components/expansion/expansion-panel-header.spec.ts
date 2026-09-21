@@ -2,12 +2,19 @@ import { UniqueSelectionDispatcher } from "../core/coordination/unique-selection
 import { MdExpansionPanelComponent } from "./expansion-panel";
 import { MdExpansionPanelHeader } from "./expansion-panel-header";
 import { SPACE, ENTER } from "@angular/cdk/keycodes";
+import { constructWithInjector } from "../../../../../../testing/construct-with-injector";
 
 describe("MdExpansionPanelHeader", () => {
   function createHeader() {
     const dispatcher = new UniqueSelectionDispatcher();
-    const panel = new MdExpansionPanelComponent(null as never, dispatcher);
-    const header = new MdExpansionPanelHeader(panel);
+    const panel = constructWithInjector(
+      [{ provide: UniqueSelectionDispatcher, useValue: dispatcher }],
+      () => new MdExpansionPanelComponent()
+    );
+    const header = constructWithInjector(
+      [{ provide: MdExpansionPanelComponent, useValue: panel }],
+      () => new MdExpansionPanelHeader()
+    );
     return { header, panel };
   }
 

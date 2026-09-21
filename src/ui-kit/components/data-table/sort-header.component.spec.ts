@@ -5,6 +5,8 @@ import {
   SamSortHeaderIntl,
 } from "./sort-header.component";
 import { SamSortDirective } from "./sort.directive";
+import { CdkColumnDef } from "@angular/cdk/table";
+import { constructWithInjector } from "../../../testing/construct-with-injector";
 
 describe("SamSortHeaderIntl", () => {
   it("returns the id as the button label", () => {
@@ -40,13 +42,19 @@ describe("SamSortHeaderComponent", () => {
     } as unknown as SamSortDirective;
   }
 
-  function createComponent(sort: SamSortDirective, cdkColumnDef: any = null) {
+  function createComponent(
+    sort: SamSortDirective,
+    cdkColumnDef: Partial<CdkColumnDef> | null = null
+  ) {
     const cdr = { markForCheck: vi.fn() } as unknown as ChangeDetectorRef;
-    return new SamSortHeaderComponent(
-      new SamSortHeaderIntl(),
-      cdr,
-      sort,
-      cdkColumnDef
+    return constructWithInjector(
+      [
+        { provide: SamSortHeaderIntl, useValue: new SamSortHeaderIntl() },
+        { provide: ChangeDetectorRef, useValue: cdr },
+        { provide: SamSortDirective, useValue: sort },
+        { provide: CdkColumnDef, useValue: cdkColumnDef },
+      ],
+      () => new SamSortHeaderComponent()
     );
   }
 

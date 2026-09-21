@@ -422,7 +422,10 @@ describe("SamHierarchicalAutocompleteComponent", () => {
     component.inputFocusHandler();
     tick();
     fixture.detectChanges();
-    const previous: any = { name: "prev", highlighted: true };
+    const previous: Record<string, unknown> = {
+      name: "prev",
+      highlighted: true,
+    };
     component["highlightedItem"] = previous;
     component["setHighlightedItem"]({ name: "next" });
     expect(previous.highlighted).toBe(false);
@@ -432,7 +435,10 @@ describe("SamHierarchicalAutocompleteComponent", () => {
     component.inputFocusHandler();
     tick();
     fixture.detectChanges();
-    const item: any = { name: "Level X", subtext: "Extra info" };
+    const item: Record<string, unknown> = {
+      name: "Level X",
+      subtext: "Extra info",
+    };
     component["setHighlightedItem"](item);
     expect(component["highlightedItem"].highlighted).toBe(true);
   }));

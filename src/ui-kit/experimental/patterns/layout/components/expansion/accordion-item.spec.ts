@@ -1,6 +1,20 @@
 import { AccordionItem } from "./accordion-item";
 import { UniqueSelectionDispatcher } from "../core/coordination/unique-selection-dispatcher";
 import { CdkAccordionDirective } from "./accordion";
+import { constructWithInjector } from "../../../../../../testing/construct-with-injector";
+
+function createItem(
+  accordion: CdkAccordionDirective | null,
+  dispatcher: UniqueSelectionDispatcher
+) {
+  return constructWithInjector(
+    [
+      { provide: CdkAccordionDirective, useValue: accordion },
+      { provide: UniqueSelectionDispatcher, useValue: dispatcher },
+    ],
+    () => new AccordionItem()
+  );
+}
 
 describe("AccordionItem", () => {
   let dispatcher: UniqueSelectionDispatcher;
@@ -10,12 +24,12 @@ describe("AccordionItem", () => {
   });
 
   it("defaults expanded to false when never set", () => {
-    const item = new AccordionItem(null, dispatcher);
+    const item = createItem(null, dispatcher);
     expect(item.expanded).toBe(false);
   });
 
   it("emits opened and notifies the dispatcher when expanded is set to true", () => {
-    const item = new AccordionItem(null, dispatcher);
+    const item = createItem(null, dispatcher);
     const openedSpy = vi.fn();
     item.opened.subscribe(openedSpy);
     const notifySpy = vi.spyOn(dispatcher, "notify");
@@ -30,7 +44,7 @@ describe("AccordionItem", () => {
 
   it("uses the accordion's id as the accordionId when a parent accordion exists", () => {
     const accordion = new CdkAccordionDirective();
-    const item = new AccordionItem(accordion, dispatcher);
+    const item = createItem(accordion, dispatcher);
     const notifySpy = vi.spyOn(dispatcher, "notify");
 
     item.expanded = true;
@@ -39,7 +53,7 @@ describe("AccordionItem", () => {
   });
 
   it("emits closed when expanded is set to false", () => {
-    const item = new AccordionItem(null, dispatcher);
+    const item = createItem(null, dispatcher);
     item.expanded = true;
     const closedSpy = vi.fn();
     item.closed.subscribe(closedSpy);
@@ -51,7 +65,7 @@ describe("AccordionItem", () => {
   });
 
   it("does nothing when expanded is set to its current value", () => {
-    const item = new AccordionItem(null, dispatcher);
+    const item = createItem(null, dispatcher);
     // Establish an explicit baseline of false first: the internal
     // `_expanded` field starts `undefined`, so setting `false` on a fresh
     // instance would itself be a change (undefined !== false) and emit
@@ -71,7 +85,7 @@ describe("AccordionItem", () => {
   });
 
   it("toggle() flips the expanded state", () => {
-    const item = new AccordionItem(null, dispatcher);
+    const item = createItem(null, dispatcher);
     item.toggle();
     expect(item.expanded).toBe(true);
     item.toggle();
@@ -79,7 +93,7 @@ describe("AccordionItem", () => {
   });
 
   it("open() and close() force the expanded state", () => {
-    const item = new AccordionItem(null, dispatcher);
+    const item = createItem(null, dispatcher);
     item.open();
     expect(item.expanded).toBe(true);
     item.close();
@@ -89,8 +103,8 @@ describe("AccordionItem", () => {
   it("collapses when the dispatcher notifies another item in the same non-multi accordion", () => {
     const accordion = new CdkAccordionDirective();
     accordion.multi = false;
-    const itemA = new AccordionItem(accordion, dispatcher);
-    const itemB = new AccordionItem(accordion, dispatcher);
+    const itemA = createItem(accordion, dispatcher);
+    const itemB = createItem(accordion, dispatcher);
 
     itemA.expanded = true;
     itemB.expanded = true;
@@ -102,8 +116,8 @@ describe("AccordionItem", () => {
   it("does not collapse other items when the accordion allows multiple expansion", () => {
     const accordion = new CdkAccordionDirective();
     accordion.multi = true;
-    const itemA = new AccordionItem(accordion, dispatcher);
-    const itemB = new AccordionItem(accordion, dispatcher);
+    const itemA = createItem(accordion, dispatcher);
+    const itemB = createItem(accordion, dispatcher);
 
     itemA.expanded = true;
     itemB.expanded = true;
@@ -113,7 +127,7 @@ describe("AccordionItem", () => {
   });
 
   it("ignores dispatcher notifications when there is no parent accordion", () => {
-    const item = new AccordionItem(null, dispatcher);
+    const item = createItem(null, dispatcher);
     item.expanded = true;
 
     // Simulate another item notifying under some other accordion/id pair;
@@ -125,7 +139,7 @@ describe("AccordionItem", () => {
 
   it("ignores notifications about itself", () => {
     const accordion = new CdkAccordionDirective();
-    const item = new AccordionItem(accordion, dispatcher);
+    const item = createItem(accordion, dispatcher);
     item.expanded = true;
 
     dispatcher.notify(item.id, accordion.id);
@@ -138,7 +152,7 @@ describe("AccordionItem", () => {
     // prove anything: if its listener were still registered, a notification
     // about a *different* id in the *same* accordion would collapse it.
     const accordion = new CdkAccordionDirective();
-    const item = new AccordionItem(accordion, dispatcher);
+    const item = createItem(accordion, dispatcher);
     const destroyedSpy = vi.fn();
     item.destroyed.subscribe(destroyedSpy);
     item.expanded = true;
@@ -156,7 +170,7 @@ describe("AccordionItem", () => {
     // Control for the test above — without this, a deregistration assertion
     // could pass simply because the notification never had any effect.
     const accordion = new CdkAccordionDirective();
-    const item = new AccordionItem(accordion, dispatcher);
+    const item = createItem(accordion, dispatcher);
     item.expanded = true;
 
     dispatcher.notify("a-different-item-id", accordion.id);

@@ -1,7 +1,8 @@
 import { faClassList, faLayerClassList } from "./classlist.util";
+import { FaProps } from "../models/prop.model";
 
 describe("faClassList", () => {
-  const baseProps: any = {
+  const baseProps: FaProps = {
     spin: false,
     pulse: false,
     fixedWidth: false,

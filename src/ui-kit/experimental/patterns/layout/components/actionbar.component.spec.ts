@@ -1,5 +1,7 @@
 import { SamActionBarComponent } from "./actionbar.component";
 import { SamPaginationNextComponent } from "../../../../layout/pagination/pagination.module";
+import { SamPageNextService } from "../architecture";
+import { constructWithInjector } from "../../../../../testing/construct-with-injector";
 
 function createFakeService() {
   return {
@@ -9,6 +11,13 @@ function createFakeService() {
       },
     },
   } as never;
+}
+
+function createActionBar(service: unknown) {
+  return constructWithInjector(
+    [{ provide: SamPageNextService, useValue: service }],
+    () => new SamActionBarComponent()
+  );
 }
 
 function createFakePagination() {
@@ -25,14 +34,14 @@ function createFakePagination() {
 describe("SamActionBarComponent", () => {
   it("does nothing on ngAfterContentInit when there is no pagination child", () => {
     const service = createFakeService();
-    const actionBar = new SamActionBarComponent(service);
+    const actionBar = createActionBar(service);
     expect(() => actionBar.ngAfterContentInit()).not.toThrow();
     expect(service.model.properties.pagination.setValue).not.toHaveBeenCalled();
   });
 
   it("subscribes to pageChange/unitsChange and emits the initial page when pagination exists", () => {
     const service = createFakeService();
-    const actionBar = new SamActionBarComponent(service);
+    const actionBar = createActionBar(service);
     actionBar.pagination = createFakePagination();
 
     actionBar.ngAfterContentInit();
@@ -46,7 +55,7 @@ describe("SamActionBarComponent", () => {
 
   it("writes pagination state to the service model when the page changes", () => {
     const service = createFakeService();
-    const actionBar = new SamActionBarComponent(service);
+    const actionBar = createActionBar(service);
     const pagination = createFakePagination();
     actionBar.pagination = pagination;
 
@@ -68,7 +77,7 @@ describe("SamActionBarComponent", () => {
 
   it("writes pagination state to the service model when the units change", () => {
     const service = createFakeService();
-    const actionBar = new SamActionBarComponent(service);
+    const actionBar = createActionBar(service);
     const pagination = createFakePagination();
     actionBar.pagination = pagination;
 

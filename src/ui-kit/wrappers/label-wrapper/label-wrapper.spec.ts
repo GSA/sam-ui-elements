@@ -97,7 +97,13 @@ describe("The Sam Label Wrapper component", () => {
     } as unknown as Renderer2;
 
     beforeEach(() => {
-      component = new LabelWrapper(cdr, renderer);
+      component = constructWithInjector(
+        [
+          { provide: ChangeDetectorRef, useValue: cdr },
+          { provide: Renderer2, useValue: renderer },
+        ],
+        () => new LabelWrapper()
+      );
     });
 
     it("clamps a long hint when the toggle is showing and closed", () => {
@@ -174,10 +180,19 @@ describe("The Sam Label Wrapper component", () => {
 
     it("setInputLabelElement is a no-op when no input has been located", () => {
       const setAttribute = vi.fn();
-      const localComponent = new LabelWrapper(cdr, {
-        setAttribute,
-        removeAttribute: vi.fn(),
-      } as unknown as Renderer2);
+      const localComponent = constructWithInjector(
+        [
+          { provide: ChangeDetectorRef, useValue: cdr },
+          {
+            provide: Renderer2,
+            useValue: {
+              setAttribute,
+              removeAttribute: vi.fn(),
+            } as unknown as Renderer2,
+          },
+        ],
+        () => new LabelWrapper()
+      );
 
       localComponent.setInputLabelElement("some-id");
 
@@ -186,10 +201,19 @@ describe("The Sam Label Wrapper component", () => {
 
     it("setInputLabelElement removes aria-describedby when given no id", () => {
       const removeAttribute = vi.fn();
-      const localComponent = new LabelWrapper(cdr, {
-        setAttribute: vi.fn(),
-        removeAttribute,
-      } as unknown as Renderer2);
+      const localComponent = constructWithInjector(
+        [
+          { provide: ChangeDetectorRef, useValue: cdr },
+          {
+            provide: Renderer2,
+            useValue: {
+              setAttribute: vi.fn(),
+              removeAttribute,
+            } as unknown as Renderer2,
+          },
+        ],
+        () => new LabelWrapper()
+      );
       localComponent.input = document.createElement("input");
 
       localComponent.setInputLabelElement("");

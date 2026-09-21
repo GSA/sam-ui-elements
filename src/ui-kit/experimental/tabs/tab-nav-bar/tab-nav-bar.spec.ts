@@ -1,6 +1,7 @@
 import { ElementRef } from "@angular/core";
 import { Subscription } from "rxjs";
 import { MdTabNav, MdTabLink } from "./tab-nav-bar";
+import { constructWithInjector } from "../../../../testing/construct-with-injector";
 
 describe("MdTabNav", () => {
   let tabNav: MdTabNav;
@@ -64,7 +65,13 @@ describe("MdTabLink", () => {
     const mdTabNavBar = { updateActiveLink: vi.fn() } as unknown as MdTabNav;
     const elementRef = new ElementRef(document.createElement("a"));
     return {
-      tabLink: new MdTabLink(mdTabNavBar, elementRef),
+      tabLink: constructWithInjector(
+        [
+          { provide: MdTabNav, useValue: mdTabNavBar },
+          { provide: ElementRef, useValue: elementRef },
+        ],
+        () => new MdTabLink()
+      ),
       mdTabNavBar,
       elementRef,
     };

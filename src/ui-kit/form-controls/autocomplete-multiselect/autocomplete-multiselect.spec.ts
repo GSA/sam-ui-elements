@@ -521,7 +521,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
     it("showResultsFreeText() checks a nested category sublist for a match", () => {
       component.isFreeTextEnabled = true;
       component.searchText = "aaa";
-      const nested: any = [{ key: "a", value: "aaa" }];
+      const nested = [{ key: "a", value: "aaa" }];
       component.list = [nested];
       component.value = [];
       // The list already contains an exact "aaa", so free text must not be
@@ -532,7 +532,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
     it("showResultsFreeText() offers free text when a nested sublist has no match", () => {
       component.isFreeTextEnabled = true;
       component.searchText = "aaa";
-      const nested: any = [{ key: "b", value: "bbb" }];
+      const nested = [{ key: "b", value: "bbb" }];
       component.list = [nested];
       component.value = [];
       expect(component.showResultsFreeText()).toBe(true);
@@ -541,7 +541,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
     it("showResultsFreeText() searches non-array lists via the first category sublist", () => {
       component.isFreeTextEnabled = true;
       component.searchText = "aaa";
-      const nested: any = [{ key: "a", value: "aaa" }];
+      const nested = [{ key: "a", value: "aaa" }];
       component["list"] = { 0: nested };
       component.value = [];
       expect(component.showResultsFreeText()).toBe(false);

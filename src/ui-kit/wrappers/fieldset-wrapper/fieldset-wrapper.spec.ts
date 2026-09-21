@@ -178,7 +178,10 @@ describe("The Sam Fieldset Wrapper component", () => {
     const cdr = { detectChanges: () => undefined } as ChangeDetectorRef;
 
     beforeEach(() => {
-      component = new FieldsetWrapper(cdr);
+      component = constructWithInjector(
+        [{ provide: ChangeDetectorRef, useValue: cdr }],
+        () => new FieldsetWrapper()
+      );
     });
 
     it("clamps a long hint while the toggle is showing and closed", () => {
