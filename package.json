@@ -70,7 +70,7 @@
     "angular-eslint": "21.4.0",
     "eslint": "10.10.0",
     "github-release-notes": "^0.17.0",
-    "prettier": "3.9.6",
+    "prettier": "3.9.8",
     "typescript": "5.9.3",
     "typescript-eslint": "8.70.0"
   }
