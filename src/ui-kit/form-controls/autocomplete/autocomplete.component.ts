@@ -13,6 +13,7 @@ import {
   OnInit,
   AfterViewInit,
   inject,
+  Provider,
 } from "@angular/core";
 import {
   NG_VALUE_ACCESSOR,
@@ -22,17 +23,26 @@ import {
 import { Observable, Subject } from "rxjs";
 import { AutocompleteConfig } from "../../types";
 import { AutocompleteService } from "./autocomplete.service";
-import { SamFormService } from "../../form-service";
+import { SamFormService, SamFormEvent } from "../../form-service";
 
-import { KeyHelper } from "../../utilities/key-helper/key-helper";
+import { KeyHelper, KeyEventLike } from "../../utilities/key-helper/key-helper";
 import { areEqual } from "../../utilities/are-equal/are-equal";
 import { AutocompleteCache } from "../autocomplete-multiselect/autocomplete-cache";
 
-const AUTOCOMPLETE_VALUE_ACCESSOR: any = {
+const AUTOCOMPLETE_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SamAutocompleteComponent),
   multi: true,
 };
+
+/**
+ * A key/value option object rendered by the key-value results list.
+ * Property names come from `AutocompleteKeyValueConfig`
+ * (`keyProperty`/`valueProperty`/`subheadProperty`), so consumers may pass
+ * any object shape (including named interfaces without a string index
+ * signature); configured keys are read dynamically at runtime.
+ */
+export type AutocompleteItem = object;
 
 /**
  * Methods we're externally exposing
@@ -56,7 +66,10 @@ export class SamAutocompleteComponent
     OnInit,
     AfterViewInit
 {
-  autocompleteService = inject(AutocompleteService, { optional: true });
+  autocompleteService: AutocompleteService<string | AutocompleteItem> = inject(
+    AutocompleteService,
+    { optional: true }
+  );
   private samFormService = inject(SamFormService);
   private cdr = inject(ChangeDetectorRef);
 
@@ -93,7 +106,7 @@ export class SamAutocompleteComponent
   /**
    * Define autocomplete options
    */
-  @Input() public options: Array<any>;
+  @Input() public options: Array<string | AutocompleteItem>;
   /**
    * Allows for a configuration object
    */
@@ -110,8 +123,11 @@ export class SamAutocompleteComponent
   @Input() useFormService: boolean;
   /**
    * Array of categories. Applies category class if labels match values.
+   *
+   * Accepts either plain category labels (strings) or key/value objects --
+   * `isCategory()` checks incoming values against this array as-is.
    */
-  @Input() public categories: any = [];
+  @Input() public categories: Array<string | AutocompleteItem> = [];
   /**
    * Sets the form control
    */
@@ -130,15 +146,16 @@ export class SamAutocompleteComponent
    * the user clicks enter and the mode is allowAny. This is useful if you do
    * not want to respond to onChange events when the input is blurred.
    */
-  @Output() public enterEvent: EventEmitter<any> = new EventEmitter();
+  @Output() public enterEvent: EventEmitter<string | AutocompleteItem> =
+    new EventEmitter();
   /**
    * Emitted only when add on icon is clicked  
    */
-  @Output() public addOnIconEvent: EventEmitter<any> = new EventEmitter();
+  @Output() public addOnIconEvent: EventEmitter<void> = new EventEmitter();
   /**
    * Allow to insert a customized template for suggestions to use
    */
-  @Input() itemTemplate: TemplateRef<any>;
+  @Input() itemTemplate: TemplateRef<unknown>;
   /**
    * Set timer that keyboard input should poll to trigger service calls
    */
@@ -201,7 +218,7 @@ export class SamAutocompleteComponent
   /**
    * Passes in a observable for handling when keyEvents subject triggers updates
    */
-  @Input() public httpRequest: Observable<any>;
+  @Input() public httpRequest: Observable<Array<string | AutocompleteItem>>;
 
   // Defines how many items to initially display as well as
   // increment amount of new items as user scrolls through suggesstions
@@ -211,9 +228,9 @@ export class SamAutocompleteComponent
 
   public results: Array<string> = [];
   public maxNumResultsToDisplay = this.STARTING_MAX_ITEMS;
-  public innerValue: any = "";
-  public inputValue: any = "";
-  public selectedInputValue: any;
+  public innerValue: string | AutocompleteItem = "";
+  public inputValue: string = "";
+  public selectedInputValue: string;
   public selectedChild: HTMLElement;
   public hasFocus: boolean = false;
   public hasServiceError: boolean = false;
@@ -221,22 +238,22 @@ export class SamAutocompleteComponent
   public endOfList: boolean = true;
   public lastSearchedValue: string;
 
-  public lastReturnedResults: Array<string>;
+  public lastReturnedResults: Array<string | AutocompleteItem>;
 
-  public keyValuePairs: any;
-  public filteredKeyValuePairs: any[] = [];
-  public inputTimer;
-  public cache: AutocompleteCache = new AutocompleteCache();
+  public filteredKeyValuePairs: AutocompleteItem[] = [];
+  public inputTimer: number;
+  public cache: AutocompleteCache<string | AutocompleteItem> =
+    new AutocompleteCache();
 
   public resultsAvailable: string =
     " results available. Use up and down arrows\
    to scroll through results. Hit enter to select.";
 
-  public get value(): any {
+  public get value(): string | AutocompleteItem {
     return this.innerValue;
   }
 
-  public set value(val: any) {
+  public set value(val: string | AutocompleteItem) {
     if (val !== this.innerValue) {
       this.innerValue = val;
       this.propogateChange(val);
@@ -261,12 +278,13 @@ export class SamAutocompleteComponent
     return arrayToCheck.slice(0, sliceIndex);
   }
 
-  public keyEvents: Subject<any> = new Subject();
+  public keyEvents: Subject<string> = new Subject();
 
   public onTouchedCallback: () => void = () => null;
-  public propogateChange: (_val: any) => void = () => null;
+  public propogateChange: (_val: string | AutocompleteItem) => void = () =>
+    null;
 
-  ngOnChanges(changes) {
+  ngOnChanges(changes: { httpRequest?: unknown }) {
     if (changes.httpRequest) {
       this.httpRequest.subscribe(
         (res) => this.requestSuccess(res),
@@ -275,17 +293,17 @@ export class SamAutocompleteComponent
     }
   }
 
-  requestSuccess(data) {
+  requestSuccess(data: Array<string | AutocompleteItem>) {
     this.hasServiceError = false;
     if (this.isKeyValuePair(data)) {
       if (this.filteredKeyValuePairs) {
         if (!areEqual(data, this.lastReturnedResults)) {
-          data.forEach((item) => {
+          (data as AutocompleteItem[]).forEach((item) => {
             this.filteredKeyValuePairs.push(item);
           });
         }
       } else {
-        this.filteredKeyValuePairs = data;
+        this.filteredKeyValuePairs = data as AutocompleteItem[];
       }
       const len = !!this.filteredKeyValuePairs
         ? this.filteredKeyValuePairs.length
@@ -295,12 +313,12 @@ export class SamAutocompleteComponent
     } else {
       if (this.results) {
         if (!areEqual(data, this.lastReturnedResults)) {
-          data.forEach((item) => {
+          (data as string[]).forEach((item) => {
             this.results.push(item);
           });
         }
       } else {
-        this.results = data;
+        this.results = data as string[];
       }
       const len = !!this.results ? this.results.length : 0;
       this.pushSROnlyMessage(len + this.resultsAvailable);
@@ -312,7 +330,7 @@ export class SamAutocompleteComponent
   requestError(err?: unknown) {
     void err;
     this.results = ["An error occurred. Try a different value."];
-    const errorobj = {};
+    const errorobj: AutocompleteItem = {};
     errorobj[this.config.keyValueConfig.keyProperty] = "Error";
     errorobj[this.config.keyValueConfig.valueProperty] =
       "An error occurred. Try a different value.";
@@ -332,7 +350,7 @@ export class SamAutocompleteComponent
         });
       });
     } else {
-      this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
+      this.samFormService.formEventsUpdated$.subscribe((evt: SamFormEvent) => {
         if (
           (!evt.root || evt.root === this.control.root) &&
           evt.eventType &&
@@ -372,7 +390,7 @@ export class SamAutocompleteComponent
     }
   }
 
-  isKeyValuePair(arr: Array<any>): boolean {
+  isKeyValuePair(arr: Array<string | AutocompleteItem>): boolean {
     if (arr && arr[0] && typeof arr[0] !== "string") {
       return true;
     } else {
@@ -414,7 +432,7 @@ export class SamAutocompleteComponent
     }
   }
 
-  onKeydown(event: any) {
+  onKeydown(event: KeyEventLike) {
     if (KeyHelper.is("tab", event)) {
       return;
     }
@@ -474,19 +492,19 @@ export class SamAutocompleteComponent
     if (this.isKeyValuePair(this.options)) {
       this.filteredKeyValuePairs = this.filterKeyValuePairs(
         searchString,
-        this.options
+        this.options as AutocompleteItem[]
       );
       this.pushSROnlyMessage(
         this.filteredKeyValuePairs.length + this.resultsAvailable
       );
     } else {
-      this.results = this.filterResults(searchString, this.options);
+      this.results = this.filterResults(searchString, this.options as string[]);
       this.pushSROnlyMessage(this.results.length + this.resultsAvailable);
     }
   }
 
   onKeyUpUsingService(searchString: string) {
-    let options = null;
+    let options: unknown = null;
     if (this.config) {
       options = this.config.serviceOptions || null;
     }
@@ -496,17 +514,19 @@ export class SamAutocompleteComponent
         this.autocompleteService
           .fetch(searchString, this.endOfList, options)
           .subscribe(
-            (res) => {
+            (res: (string | AutocompleteItem)[]) => {
               let len;
               this.hasServiceError = false;
               this.cache.insert(res, searchString);
               if (this.config && this.config.keyValueConfig) {
-                this.filteredKeyValuePairs = this.cache.get(searchString);
+                this.filteredKeyValuePairs = this.cache.get(
+                  searchString
+                ) as AutocompleteItem[];
                 len = !!this.filteredKeyValuePairs
                   ? this.filteredKeyValuePairs.length
                   : 0;
               } else {
-                this.results = this.cache.get(searchString);
+                this.results = this.cache.get(searchString) as string[];
                 len = !!this.results ? this.results.length : 0;
               }
               this.pushSROnlyMessage(len + this.resultsAvailable);
@@ -630,10 +650,9 @@ export class SamAutocompleteComponent
       if (isFirstItemFreeText) {
         index--;
       }
-      message =
-        this.filteredKeyValuePairs[index][
-          this.config.keyValueConfig.valueProperty
-        ];
+      message = this.filteredKeyValuePairs[index][
+        this.config.keyValueConfig.valueProperty
+      ] as string;
     }
 
     return message;
@@ -766,7 +785,7 @@ export class SamAutocompleteComponent
     }
   }
 
-  getSelectedChildIndex(children: any): number {
+  getSelectedChildIndex(children: HTMLCollection): number {
     let selectedChild: number = -1;
     for (let child = 0; child < children.length; child++) {
       if (children[child].classList.contains("isSelected")) {
@@ -802,7 +821,7 @@ export class SamAutocompleteComponent
     this.srOnly.nativeElement.innerHTML = null;
   }
 
-  setSelected(value: any) {
+  setSelected(value: string | AutocompleteItem) {
     if (
       this.config &&
       this.config.categoryProperty &&
@@ -811,16 +830,17 @@ export class SamAutocompleteComponent
     ) {
       return;
     }
-    let displayValue = value ? value : "";
+    let displayValue: string | unknown = value ? value : "";
     if (
       this.config &&
       this.config.keyValueConfig &&
       value &&
+      typeof value !== "string" &&
       value[this.config.keyValueConfig.valueProperty]
     ) {
       displayValue = value[this.config.keyValueConfig.valueProperty];
     }
-    const message = displayValue;
+    const message = displayValue as string;
     this.innerValue = value ? value : "";
     this.hasFocus = false;
     this.inputValue = message;
@@ -845,52 +865,55 @@ export class SamAutocompleteComponent
     return reducedArr;
   }
 
-  filterKeyValuePairs(subStr: string, keyValuePairs: any): any {
+  filterKeyValuePairs(
+    subStr: string,
+    keyValuePairs: AutocompleteItem[]
+  ): AutocompleteItem[] {
     const lowerSubStr = subStr.toLowerCase();
     let currentCategory = "";
-    const reducedArr = keyValuePairs.reduce((prev, curr) => {
-      if (
-        curr[this.config.keyValueConfig.keyProperty]
-          .toLowerCase()
-          .includes(lowerSubStr) ||
-        curr[this.config.keyValueConfig.valueProperty]
-          .toLowerCase()
-          .includes(lowerSubStr)
-      ) {
-        /**
-         * Check if the current item in the array contains the substring value
-         * in either the key or value property provided on the config input
-         */
+    const reducedArr = keyValuePairs.reduce(
+      (prev: AutocompleteItem[], curr) => {
+        const keyValue = curr[this.config.keyValueConfig.keyProperty] as string;
+        const valueValue = curr[
+          this.config.keyValueConfig.valueProperty
+        ] as string;
         if (
-          curr[this.config.categoryProperty] &&
-          currentCategory !== curr[this.config.categoryProperty]
+          keyValue.toLowerCase().includes(lowerSubStr) ||
+          valueValue.toLowerCase().includes(lowerSubStr)
         ) {
           /**
-           * Checks if the current item in the array has a category. If so,
-           * checks to see if this category is the current category. If not, it
-           * will push it to the returned array. If it is the current category,
-           * it skips.
+           * Check if the current item in the array contains the substring value
+           * in either the key or value property provided on the config input
            */
-          currentCategory = curr[this.config.categoryProperty];
-          const filteredCategories = this.categories.filter((category) => {
+          const curCategory = curr[this.config.categoryProperty] as string;
+          if (curCategory && currentCategory !== curCategory) {
             /**
-             * Filters the category input array property for a matching
-             * category property.
+             * Checks if the current item in the array has a category. If so,
+             * checks to see if this category is the current category. If not, it
+             * will push it to the returned array. If it is the current category,
+             * it skips.
              */
-            if (
-              category[this.config.keyValueConfig.keyProperty] ===
-              curr[this.config.categoryProperty]
-            ) {
-              category.isCategory = true;
-              return category;
-            }
-          });
-          prev.push(filteredCategories[0]);
+            currentCategory = curCategory;
+            const filteredCategories = this.categories.filter((category) => {
+              /**
+               * Filters the category input array property for a matching
+               * category property.
+               */
+              if (
+                category[this.config.keyValueConfig.keyProperty] === curCategory
+              ) {
+                category.isCategory = true;
+                return category;
+              }
+            });
+            prev.push(filteredCategories[0]);
+          }
+          prev.push(curr);
         }
-        prev.push(curr);
-      }
-      return prev;
-    }, []);
+        return prev;
+      },
+      []
+    );
     return reducedArr;
   }
 
@@ -921,12 +944,8 @@ export class SamAutocompleteComponent
     this.clearDropdown();
   }
 
-  isCategory(object: any): boolean {
-    if (this.categories.indexOf(object) !== -1) {
-      return true;
-    } else {
-      return false;
-    }
+  isCategory(object: string | AutocompleteItem): boolean {
+    return this.categories.indexOf(object as AutocompleteItem) !== -1;
   }
 
   dropdownClick(obj) {
@@ -937,12 +956,14 @@ export class SamAutocompleteComponent
     this.hasFocus = false;
   }
 
-  writeValue(value: any): void {
+  writeValue(value: string | AutocompleteItem): void {
     if (value !== this.innerValue) {
       this.inputValue =
         value && this.config && this.config.keyValueConfig
-          ? (this.inputValue = value[this.config.keyValueConfig.valueProperty])
-          : (this.inputValue = value);
+          ? (this.inputValue = value[
+              this.config.keyValueConfig.valueProperty
+            ] as string)
+          : (this.inputValue = value as string);
       this.selectedInputValue = this.inputValue;
       this.innerValue = value;
       // angular isn't populating this
@@ -954,11 +975,11 @@ export class SamAutocompleteComponent
     }
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (val: string | AutocompleteItem) => void): void {
     this.propogateChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouchedCallback = fn;
   }
 

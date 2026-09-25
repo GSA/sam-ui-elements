@@ -1,11 +1,17 @@
-import { Component, Input, TemplateRef, forwardRef } from "@angular/core";
+import {
+  Component,
+  Input,
+  TemplateRef,
+  forwardRef,
+  Provider,
+} from "@angular/core";
 import { SAMSDSSelectedItemModel } from "./models/sds-selectedItem.model";
 import { SDSSelectedResultConfiguration } from "./models/SDSSelectedResultConfiguration";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { SAMSDSSelectedItemModelHelper } from "./models/sds-selected-item-model-helper";
 import { faSquare, faCircle, faTimes } from "@fortawesome/free-solid-svg-icons";
 
-const SDS_SelectedResult_VALUE_ACCESSOR: any = {
+const SDS_SelectedResult_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SAMSDSSelectedResultComponent),
   multi: true,
@@ -27,7 +33,7 @@ export class SAMSDSSelectedResultComponent implements ControlValueAccessor {
   /**
    * Allow to insert a customized template for suggestions to use
    */
-  @Input() itemTemplate: TemplateRef<any>;
+  @Input() itemTemplate: TemplateRef<unknown>;
 
   /**
    * The data model that has the selected item
@@ -48,7 +54,7 @@ export class SAMSDSSelectedResultComponent implements ControlValueAccessor {
   /**
    * Stored Event for ControlValueAccessor
    */
-  public propogateChange: (_val: any) => void = () => null;
+  public propogateChange: (_val: unknown) => void = () => null;
 
   @Input()
   public disabled: boolean;
@@ -69,17 +75,17 @@ export class SAMSDSSelectedResultComponent implements ControlValueAccessor {
     }
   }
 
-  writeValue(obj: any): void {
+  writeValue(obj: unknown): void {
     if (obj instanceof SAMSDSSelectedItemModel) {
       this.model = obj as SAMSDSSelectedItemModel;
     }
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (_val: unknown) => void): void {
     this.propogateChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouchedCallback = fn;
   }
 

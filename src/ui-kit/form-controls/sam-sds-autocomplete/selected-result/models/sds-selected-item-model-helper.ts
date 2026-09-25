@@ -98,7 +98,7 @@ export class SAMSDSSelectedItemModelHelper {
    * Clears the list of items
    * @param items
    */
-  public static clearItems(model: any) {
+  public static clearItems(model: SAMSDSSelectedItemModel) {
     while (model.items.length > 0) {
       model.items.pop();
     }
