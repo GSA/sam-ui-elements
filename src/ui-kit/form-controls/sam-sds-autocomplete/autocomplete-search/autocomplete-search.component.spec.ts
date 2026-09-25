@@ -468,13 +468,13 @@ describe("SamAutocompleteComponent", () => {
   });
 
   it("should handle registerOnChange", () => {
-    const item = {};
+    const item = () => {};
     component.registerOnChange(item);
     expect(component.propogateChange).toBe(item);
   });
 
   it("should handle registerOnTouched", () => {
-    const item = {};
+    const item = () => {};
     component.registerOnTouched(item);
     expect(component.onTouchedCallback).toBe(item);
   });
@@ -599,7 +599,9 @@ describe("SamAutocompleteComponent", () => {
   it("should clear the model and propagate the change on updateSingleModeFocusOutModel in single mode", () => {
     component.model.items = [{ id: "1", name: "Level 1" }];
     let propagated: SAMSDSSelectedItemModel;
-    component.registerOnChange((val) => (propagated = val));
+    component.registerOnChange(
+      (val) => (propagated = val as SAMSDSSelectedItemModel)
+    );
     component.updateSingleModeFocusOutModel();
     expect(component.model.items.length).toBe(0);
     expect(propagated).toBe(component.model);

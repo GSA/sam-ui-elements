@@ -38,10 +38,11 @@ const AUTOCOMPLETE_VALUE_ACCESSOR: Provider = {
 /**
  * A key/value option object rendered by the key-value results list.
  * Property names come from `AutocompleteKeyValueConfig`
- * (`keyProperty`/`valueProperty`/`subheadProperty`), so this is indexed by
- * string rather than a fixed shape.
+ * (`keyProperty`/`valueProperty`/`subheadProperty`), so consumers may pass
+ * any object shape (including named interfaces without a string index
+ * signature); configured keys are read dynamically at runtime.
  */
-export type AutocompleteItem = Record<string, unknown>;
+export type AutocompleteItem = object;
 
 /**
  * Methods we're externally exposing
@@ -65,7 +66,10 @@ export class SamAutocompleteComponent
     OnInit,
     AfterViewInit
 {
-  autocompleteService = inject(AutocompleteService, { optional: true });
+  autocompleteService: AutocompleteService<string | AutocompleteItem> = inject(
+    AutocompleteService,
+    { optional: true }
+  );
   private samFormService = inject(SamFormService);
   private cdr = inject(ChangeDetectorRef);
 
@@ -119,8 +123,11 @@ export class SamAutocompleteComponent
   @Input() useFormService: boolean;
   /**
    * Array of categories. Applies category class if labels match values.
+   *
+   * Accepts either plain category labels (strings) or key/value objects --
+   * `isCategory()` checks incoming values against this array as-is.
    */
-  @Input() public categories: AutocompleteItem[] = [];
+  @Input() public categories: Array<string | AutocompleteItem> = [];
   /**
    * Sets the form control
    */

@@ -35,20 +35,25 @@ import { SamCache } from "../autocomplete/autocomplete.component";
  * A key/value option object rendered by the multiselect results list.
  * Property names come from `KeyValueConfig`
  * (`keyProperty`/`valueProperty`/`subheadProperty`/`categoryProperty`), so
- * this is indexed by string rather than a fixed shape.
+ * consumers may pass any object shape (including named interfaces without a
+ * string index signature); configured keys are read dynamically at runtime.
  */
-export type MultiselectItem = Record<string, unknown>;
+export type MultiselectItem = object;
 
 /**
  * Associative array-like structure `sortByCategory`/`filterOptions` build to
  * group `MultiselectItem`s by category for the template's category/sublist
  * rendering. `[index: number]` holds each category's items (with a
- * `category` label stamped onto the array itself); `categories` and
- * `totalItems()` are the bookkeeping the template and component logic read.
+ * `category` label stamped onto the array itself); `categories` is the
+ * bookkeeping the template and component logic read. `totalItems()` is an
+ * optional convenience method `sortByCategory` attaches to the structures it
+ * builds internally -- it is not required of callers who construct or pass
+ * in a `CategorizedList`-shaped value directly (see
+ * autocomplete-multiselect.spec.ts).
  */
 export interface CategorizedList<T> {
   categories: string[];
-  totalItems(): number;
+  totalItems?(): number;
   [index: number]: T[] & { category?: string };
 }
 
