@@ -1,15 +1,15 @@
 import { areEqual } from "../../utilities/are-equal/are-equal";
 import { isEqual } from "lodash";
 
-export class Cached {
-  private contents: any[] = [];
-  private _lastValue: any[] = [];
+export class Cached<T = unknown> {
+  private contents: T[] = [];
+  private _lastValue: T[] = [];
 
-  public get value() {
+  public get value(): T[] {
     return this.contents;
   }
 
-  public get lastValue(): any[] {
+  public get lastValue(): T[] {
     return this._lastValue;
   }
 
@@ -21,7 +21,7 @@ export class Cached {
     return Cached.countBytes(this.value);
   }
 
-  public static countBytes(s: any): number {
+  public static countBytes(s: unknown): number {
     return (
       encodeURI(JSON.stringify(s)).split(/%(?:u[0-9A-F]{2})?[0-9A-F]{2}|./)
         .length - 1
@@ -30,12 +30,12 @@ export class Cached {
 
   constructor(
     public readonly name: string,
-    initialValue: any[] = []
+    initialValue: T[] = []
   ) {
     this.insert(initialValue);
   }
 
-  public insert(val: any[]): any[] {
+  public insert(val: T[]): T[] {
     const deduped = this.dedupe(val);
     this._lastValue = deduped;
     this.contents = [...this.contents, ...deduped];
@@ -47,8 +47,8 @@ export class Cached {
     this._lastValue = [];
   }
 
-  private dedupe(newContents): any[] {
-    return newContents.filter((item: any) => {
+  private dedupe(newContents: T[]): T[] {
+    return newContents.filter((item: T) => {
       let foundDupe = false;
       for (let i = 0; i < this.value.length; i++) {
         if (areEqual(item, this.value[i])) {
@@ -62,11 +62,14 @@ export class Cached {
   }
 }
 
-export class AutocompleteCache {
-  private cached: { [index: string]: Cached } = {};
-  private default: Cached = new Cached("default");
+export class AutocompleteCache<T = unknown> {
+  private cached: { [index: string]: Cached<T> } = {};
+  private default: Cached<T> = new Cached("default");
   private history: string[] = [];
-  private historyTuple: Array<string[] | Cached> = [this.default, this.history];
+  private historyTuple: Array<string[] | Cached<T>> = [
+    this.default,
+    this.history,
+  ];
   private byteSize: number = 0;
 
   public get totalBytes(): number {
@@ -82,7 +85,7 @@ export class AutocompleteCache {
     }
   }
 
-  public get lastAdded(): any[] {
+  public get lastAdded(): T[] {
     switch (this.lastSearched) {
       case "default":
         return this.default.lastValue;
@@ -91,7 +94,7 @@ export class AutocompleteCache {
     }
   }
 
-  public static arraysEqual(arr1, arr2) {
+  public static arraysEqual(arr1: unknown, arr2: unknown): boolean {
     return isEqual(arr1, arr2);
   }
 
@@ -99,7 +102,7 @@ export class AutocompleteCache {
     this.default = new Cached("default");
   }
 
-  public get(key?: string): any[] {
+  public get(key?: string): T[] {
     if (key) {
       if (this.cached[key]) {
         return this.cached[key].value;
@@ -111,7 +114,7 @@ export class AutocompleteCache {
     }
   }
 
-  public insert(value: any[], key?: string): any[] {
+  public insert(value: T[], key?: string): T[] {
     if (key) {
       return this.insertIntoCache(value, key);
     } else {
@@ -136,7 +139,7 @@ export class AutocompleteCache {
     this.default.clear();
   }
 
-  private insertIntoCache(value: any, key: string): any[] {
+  private insertIntoCache(value: T[], key: string): T[] {
     if (
       this.cached[key] &&
       AutocompleteCache.arraysEqual(value, this.cached[key].lastValue)
@@ -156,7 +159,7 @@ export class AutocompleteCache {
     return this.cached[key].value;
   }
 
-  private updateDefault(value: any): any[] {
+  private updateDefault(value: T[]): T[] {
     if (AutocompleteCache.arraysEqual(value, this.default.lastValue)) {
       return this.default.value;
     }

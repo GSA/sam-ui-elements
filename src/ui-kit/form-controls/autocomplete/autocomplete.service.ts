@@ -4,7 +4,7 @@ import { map } from "rxjs/operators";
 
 @Injectable()
 export class AutocompleteService {
-  setFetchMethod(fn?: (...args: unknown[]) => unknown): any {
+  setFetchMethod(fn?: (...args: unknown[]) => unknown): void {
     void fn;
     return;
   }
@@ -13,7 +13,7 @@ export class AutocompleteService {
     val?: string,
     pageEnd?: boolean,
     serviceOptions?: unknown
-  ): Observable<any> {
+  ): Observable<unknown[]> {
     void val;
     void pageEnd;
     void serviceOptions;

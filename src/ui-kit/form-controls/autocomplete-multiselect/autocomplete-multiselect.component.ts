@@ -27,9 +27,30 @@ import { LabelWrapper } from "../../wrappers/label-wrapper";
 import { AutocompleteService } from "../autocomplete/autocomplete.service";
 import { AutocompleteCache } from "./autocomplete-cache";
 
-import { SamFormService } from "../../form-service";
+import { SamFormService, SamFormEvent } from "../../form-service";
 import { KeyHelper } from "../../utilities/key-helper/key-helper";
 import { SamCache } from "../autocomplete/autocomplete.component";
+
+/**
+ * A key/value option object rendered by the multiselect results list.
+ * Property names come from `KeyValueConfig`
+ * (`keyProperty`/`valueProperty`/`subheadProperty`/`categoryProperty`), so
+ * this is indexed by string rather than a fixed shape.
+ */
+export type MultiselectItem = Record<string, unknown>;
+
+/**
+ * Associative array-like structure `sortByCategory`/`filterOptions` build to
+ * group `MultiselectItem`s by category for the template's category/sublist
+ * rendering. `[index: number]` holds each category's items (with a
+ * `category` label stamped onto the array itself); `categories` and
+ * `totalItems()` are the bookkeeping the template and component logic read.
+ */
+export interface CategorizedList<T> {
+  categories: string[];
+  totalItems(): number;
+  [index: number]: T[] & { category?: string };
+}
 
 @Component({
   selector: "sam-autocomplete-multiselect",
@@ -128,7 +149,7 @@ export class SamAutocompleteMultiselectComponent
    * Options should be an array of objects that contain the key value pairs
    * to be used to select in the component.
    */
-  @Input() public options: Array<any> = [];
+  @Input() public options: Array<MultiselectItem> = [];
   /**
    * Key Value Config is an object that sets which property on the options
    * objects should be used to display the key, value, and subhead properties
@@ -142,7 +163,7 @@ export class SamAutocompleteMultiselectComponent
   /**
    * Used when a service is used to get autocomplete options
    */
-  @Input() public serviceOptions: any;
+  @Input() public serviceOptions: unknown;
   /**
    * Used by labelWrapper. Makes field required and displays required on label.
    * See labelWrapper for more detail.
@@ -185,7 +206,7 @@ export class SamAutocompleteMultiselectComponent
    * The array should be the object for the category
    * to be selected.
    */
-  @Input() public categories: Array<any> = [];
+  @Input() public categories: Array<MultiselectItem> = [];
   /**
    * Provides the option to allow categories to be selected
    */
@@ -228,7 +249,7 @@ export class SamAutocompleteMultiselectComponent
   /**
    * Allow to insert a customized template for suggestions to use
    */
-  @Input() public itemTemplate: TemplateRef<any>;
+  @Input() public itemTemplate: TemplateRef<unknown>;
 
   /**
    * Allow to control whether display the category option in the result list or
@@ -245,18 +266,18 @@ export class SamAutocompleteMultiselectComponent
 
   public searchText: string = "";
 
-  public innerValue: Array<any> = [];
+  public innerValue: Array<MultiselectItem> = [];
   public isDisabled: boolean = false;
-  private list: any = [];
-  private inputTimer: any;
+  private list: MultiselectItem[] | CategorizedList<MultiselectItem> = [];
+  private inputTimer: number;
   public displaySpinner: boolean = false;
   private textAreaMinHeight = 22;
   private debounceTime = 250;
-  private cache: AutocompleteCache = new AutocompleteCache();
+  private cache: AutocompleteCache<MultiselectItem> = new AutocompleteCache();
   private endOfList = true;
   private selectedEl;
 
-  set value(val: any) {
+  set value(val: Array<MultiselectItem>) {
     this.innerValue = val;
     this.onChangeCallback(this.innerValue);
   }
@@ -266,8 +287,9 @@ export class SamAutocompleteMultiselectComponent
   }
 
   public ngOnInit() {
-    if (this.list.length > 0) {
-      this.list = this.sortByCategory(this.list);
+    const list = this.list as MultiselectItem[];
+    if (list.length > 0) {
+      this.list = this.sortByCategory(list);
     }
   }
 
@@ -281,7 +303,7 @@ export class SamAutocompleteMultiselectComponent
       });
       this.wrapper.formatErrors(this.control);
     } else {
-      this.samFormService.formEventsUpdated$.subscribe((evt: any) => {
+      this.samFormService.formEventsUpdated$.subscribe((evt: SamFormEvent) => {
         if (
           (!evt.root || evt.root === this.control.root) &&
           evt.eventType &&
@@ -411,7 +433,7 @@ export class SamAutocompleteMultiselectComponent
     return obj;
   }
 
-  public getItem(): any {
+  public getItem(): MultiselectItem {
     const results = this.getResults();
     const selectedChildIndex = this.getSelectedChildIndex(results);
     const selectedResultIndex: number =
@@ -440,7 +462,9 @@ export class SamAutocompleteMultiselectComponent
   }
 
   public getItemFromListByIndices(categoryIndex, itemIndex) {
-    return this.list[categoryIndex][itemIndex];
+    return (this.list as CategorizedList<MultiselectItem>)[categoryIndex][
+      itemIndex
+    ];
   }
 
   public handleDownArrow(event) {
@@ -504,7 +528,7 @@ export class SamAutocompleteMultiselectComponent
         let foundItem = false;
         if (Array.isArray(this.list)) {
           for (let i = 0; i < this.list.length; i++) {
-            const item = this.list[i];
+            const item = this.list[i] as MultiselectItem & MultiselectItem[];
             if (item) {
               if (item[this.keyValueConfig.valueProperty] === this.searchText) {
                 foundItem = true;
@@ -520,7 +544,9 @@ export class SamAutocompleteMultiselectComponent
             }
           }
         } else {
-          foundItem = this.findItemExistInList(this.list[0]);
+          foundItem = this.findItemExistInList(
+            (this.list as CategorizedList<MultiselectItem>)[0]
+          );
         }
 
         if (this.value) {
@@ -544,7 +570,7 @@ export class SamAutocompleteMultiselectComponent
     }
   }
 
-  private findItemExistInList(item: any) {
+  private findItemExistInList(item: MultiselectItem[]) {
     let foundItem = false;
     for (let j = 0; j < item.length; j++) {
       const subitem = item[j];
@@ -571,7 +597,7 @@ export class SamAutocompleteMultiselectComponent
     }
   }
 
-  public getSelectedChildIndex(elements: any): number {
+  public getSelectedChildIndex(elements: NodeListOf<Element>): number {
     let selectedIndex = -1;
 
     if (elements.length === 0) {
@@ -590,7 +616,7 @@ export class SamAutocompleteMultiselectComponent
   public setSelectedChild(
     currentSelectedIndex: number,
     direction: string,
-    elements: any
+    elements: NodeListOf<Element>
   ): number {
     if (currentSelectedIndex !== -1) {
       elements[currentSelectedIndex].classList.remove("selected");
@@ -614,7 +640,7 @@ export class SamAutocompleteMultiselectComponent
     return indexToSelect;
   }
 
-  public addSelectedClass(elements: any, index: number): void {
+  public addSelectedClass(elements: NodeListOf<Element>, index: number): void {
     elements[index].classList.add("selected");
     this.selectedEl = elements[index];
   }
@@ -757,12 +783,16 @@ export class SamAutocompleteMultiselectComponent
   /***************************************************************
    * Logic for filtering options                                 *
    ***************************************************************/
-  public fetchFromService(searchString: string, options: any, context: this) {
+  public fetchFromService(
+    searchString: string,
+    options: unknown,
+    context: this
+  ) {
     context.displaySpinner = true;
     return context.service
       .fetch(searchString, context.endOfList, options)
       .subscribe(
-        (data) => {
+        (data: MultiselectItem[]) => {
           context.cache.insert(data, searchString);
           context.displaySpinner = false;
           context.endOfList = false;
@@ -772,7 +802,7 @@ export class SamAutocompleteMultiselectComponent
         },
         () => {
           context.displaySpinner = false;
-          const errorObject = {
+          const errorObject: MultiselectItem = {
             cannotBeSelected: true,
           };
           errorObject[context.keyValueConfig.valueProperty] =
@@ -824,36 +854,32 @@ export class SamAutocompleteMultiselectComponent
     } else {
       this.list = this.options.filter((option) => {
         if (this.categoryIsSelectable) {
+          const optionCategory = option[
+            this.keyValueConfig.categoryProperty
+          ] as string;
           if (
-            option[this.keyValueConfig.categoryProperty] &&
-            option[this.keyValueConfig.categoryProperty]
-              .toLowerCase()
-              .includes(searchString) &&
-            availableCategories.indexOf(
-              option[this.keyValueConfig.categoryProperty]
-            ) === -1
+            optionCategory &&
+            optionCategory.toLowerCase().includes(searchString) &&
+            availableCategories.indexOf(optionCategory) === -1
           ) {
-            availableCategories.push(
-              option[this.keyValueConfig.categoryProperty]
-            );
+            availableCategories.push(optionCategory);
           }
         }
+        const optionKey = option[this.keyValueConfig.keyProperty] as string;
+        const optionValue = option[this.keyValueConfig.valueProperty] as string;
         if (
-          option[this.keyValueConfig.keyProperty]
-            .toLowerCase()
-            .includes(searchString) ||
-          option[this.keyValueConfig.valueProperty]
-            .toLowerCase()
-            .includes(searchString)
+          optionKey.toLowerCase().includes(searchString) ||
+          optionValue.toLowerCase().includes(searchString)
         ) {
           return option;
         }
       });
-      this.list = this.sortByCategory(this.list);
+      this.list = this.sortByCategory(this.list as MultiselectItem[]);
       if (this.categoryIsSelectable) {
+        const categorizedList = this.list as CategorizedList<MultiselectItem>;
         availableCategories.forEach((category) => {
-          if (this.list.categories.indexOf(category) === -1) {
-            this.list.categories.push(category);
+          if (categorizedList.categories.indexOf(category) === -1) {
+            categorizedList.categories.push(category);
           }
         });
       }
@@ -866,7 +892,9 @@ export class SamAutocompleteMultiselectComponent
    * Procedure to check this.list for categories
    * and sort data by category
    */
-  public sortByCategory(results: Array<any>): Array<any> {
+  public sortByCategory(
+    results: Array<MultiselectItem>
+  ): CategorizedList<MultiselectItem> {
     /**
      * Initializes a data structure to sort data by categories.
      * Object works like an associative array with additional
@@ -880,10 +908,10 @@ export class SamAutocompleteMultiselectComponent
      * items in each category in lieu of a length property
      * for the entire data structure.
      */
-    const initialObject = {
+    const initialObject: CategorizedList<MultiselectItem> = {
       0: [],
       categories: ["uncategorized"],
-      totalItems: function (this) {
+      totalItems(this: CategorizedList<MultiselectItem>) {
         let totalItems = 0;
         this.categories.forEach((category, index) => {
           if (this[index]) {
@@ -896,14 +924,15 @@ export class SamAutocompleteMultiselectComponent
 
     return results.reduce((prev, curr) => {
       const category = this.keyValueConfig.categoryProperty;
-      if (curr[category]) {
-        const categoryIndex = prev.categories.indexOf(curr[category]);
+      const categoryValue = curr[category] as string;
+      if (categoryValue) {
+        const categoryIndex = prev.categories.indexOf(categoryValue);
         if (categoryIndex !== -1) {
           prev[categoryIndex].push(curr);
         } else {
-          const newLength = prev.categories.push(curr[category]);
+          const newLength = prev.categories.push(categoryValue);
           prev[newLength - 1] = [curr];
-          prev[newLength - 1].category = curr[category];
+          prev[newLength - 1].category = categoryValue;
         }
       } else {
         prev[0].push(curr);
@@ -916,13 +945,15 @@ export class SamAutocompleteMultiselectComponent
    * Checks if array is empty. If so, returns an array with no key
    * and value 'No results found'.
    */
-  public handleEmptyList(object: any): any[] {
+  public handleEmptyList(
+    object: CategorizedList<MultiselectItem>
+  ): CategorizedList<MultiselectItem> {
     if (
       object.categories.length === 1 &&
       object[0].length === 0 &&
       !this.showResultsFreeText()
     ) {
-      const noResultsObject = {
+      const noResultsObject: MultiselectItem = {
         cannotBeSelected: true,
       };
       noResultsObject[this.keyValueConfig.keyProperty] = null;
@@ -942,13 +973,14 @@ export class SamAutocompleteMultiselectComponent
   }
 
   public displayList(): boolean {
-    if (this.list && this.list.categories) {
-      if (this.list.categories.length > 1) {
+    const list = this.list as CategorizedList<MultiselectItem>;
+    if (list && list.categories) {
+      if (list.categories.length > 1) {
         return true;
       } else if (
-        this.list.categories.length === 1 &&
-        this.list[0] &&
-        this.list[0].length > 0
+        list.categories.length === 1 &&
+        list[0] &&
+        list[0].length > 0
       ) {
         return true;
       } else {
@@ -963,7 +995,10 @@ export class SamAutocompleteMultiselectComponent
     if (this.categoryIsSelectable) {
       return true;
     } else {
-      return this.list[categoryIndex].length > 0;
+      return (
+        (this.list as CategorizedList<MultiselectItem>)[categoryIndex].length >
+        0
+      );
     }
   }
 
@@ -1104,7 +1139,7 @@ export class SamAutocompleteMultiselectComponent
 
     // Converts category list index to getResults() list index
     for (let i = 0; i < category; i++) {
-      listIndex += this.list[i].length;
+      listIndex += (this.list as CategorizedList<MultiselectItem>)[i].length;
     }
 
     if (this.selectedEl) {
@@ -1126,7 +1161,7 @@ export class SamAutocompleteMultiselectComponent
    * Implementation of ControlValueAccessor Methods              *
    ***************************************************************/
 
-  public writeValue(value: any) {
+  public writeValue(value: Array<MultiselectItem>) {
     let val = value;
     if (!val) {
       val = [];
@@ -1135,11 +1170,11 @@ export class SamAutocompleteMultiselectComponent
     this.updateMarked();
   }
 
-  public registerOnChange(fn: any) {
+  public registerOnChange(fn: (val: Array<MultiselectItem>) => void) {
     this.onChangeCallback = fn;
   }
 
-  public registerOnTouched(fn: any) {
+  public registerOnTouched(fn: () => void) {
     this.onTouchedCallback = fn;
   }
 
@@ -1147,7 +1182,7 @@ export class SamAutocompleteMultiselectComponent
     this.isDisabled = isDisabled;
   }
 
-  private onChangeCallback: (_: any) => void = () => null;
+  private onChangeCallback: (_: Array<MultiselectItem>) => void = () => null;
   private onTouchedCallback: () => void = () => null;
 }
 
