@@ -871,7 +871,7 @@ export class SamAutocompleteComponent
   ): AutocompleteItem[] {
     const lowerSubStr = subStr.toLowerCase();
     let currentCategory = "";
-    const reducedArr = keyValuePairs.reduce(
+    const reducedArr = keyValuePairs.reduce<AutocompleteItem[]>(
       (prev: AutocompleteItem[], curr) => {
         const keyValue = curr[this.config.keyValueConfig.keyProperty] as string;
         const valueValue = curr[
@@ -902,11 +902,11 @@ export class SamAutocompleteComponent
               if (
                 category[this.config.keyValueConfig.keyProperty] === curCategory
               ) {
-                category.isCategory = true;
+                (category as { isCategory?: boolean }).isCategory = true;
                 return category;
               }
             });
-            prev.push(filteredCategories[0]);
+            prev.push(filteredCategories[0] as AutocompleteItem);
           }
           prev.push(curr);
         }

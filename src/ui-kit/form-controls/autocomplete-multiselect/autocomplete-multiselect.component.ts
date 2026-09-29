@@ -420,7 +420,8 @@ export class SamAutocompleteMultiselectComponent
     const listItem = this.getItem();
 
     if (
-      (!listItem || listItem.value === "No results found") &&
+      (!listItem ||
+        (listItem as { value?: unknown }).value === "No results found") &&
       highlighted === -1
     ) {
       returnValue = this.createReturnObject(event);
@@ -927,7 +928,7 @@ export class SamAutocompleteMultiselectComponent
       },
     };
 
-    return results.reduce((prev, curr) => {
+    return results.reduce<CategorizedList<MultiselectItem>>((prev, curr) => {
       const category = this.keyValueConfig.categoryProperty;
       const categoryValue = curr[category] as string;
       if (categoryValue) {
@@ -1135,7 +1136,7 @@ export class SamAutocompleteMultiselectComponent
           this.options[key][this.keyValueConfig.keyProperty]
         );
       });
-      this.options[key]._marked = !!x ? true : false;
+      (this.options[key] as { _marked?: boolean })._marked = !!x ? true : false;
     }
   }
 
