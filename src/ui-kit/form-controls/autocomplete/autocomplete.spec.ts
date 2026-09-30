@@ -8,7 +8,10 @@ import { ChangeDetectorRef } from "@angular/core";
 import { SamFormService } from "../../form-service";
 import { SamWrapperModule } from "../../wrappers";
 
-import { SamAutocompleteComponent } from "./autocomplete.component";
+import {
+  SamAutocompleteComponent,
+  AutocompleteItem,
+} from "./autocomplete.component";
 import { AutocompleteService } from "../autocomplete/autocomplete.service";
 
 import { AutocompleteConfig } from "../../types";
@@ -52,11 +55,7 @@ describe("The Sam Autocomplete Component", () => {
         nativeElement: { innerHTML: "" },
       };
 
-      component.inputFocusHandler({
-        target: {
-          value: "",
-        },
-      });
+      component.inputFocusHandler({});
       expect(component.hasFocus).toBe(true);
     });
 
@@ -568,14 +567,20 @@ describe("The Sam Autocomplete Component", () => {
     it("Should display only given value in list", () => {
       component.hasFocus = true;
       fixture.detectChanges();
-      component.results = component.filterResults("Alaska", component.options);
+      component.results = component.filterResults(
+        "Alaska",
+        component.options as string[]
+      );
       expect(component.results).toEqual(["Alaska"]);
     });
 
     it("Should display no results message", () => {
       component.hasFocus = true;
       fixture.detectChanges();
-      component.results = component.filterResults("zzzzzz", component.options);
+      component.results = component.filterResults(
+        "zzzzzz",
+        component.options as string[]
+      );
       expect(component.results).toEqual([]);
     });
 
@@ -586,8 +591,8 @@ describe("The Sam Autocomplete Component", () => {
       fixture.detectChanges();
       component.results = component.filterKeyValuePairs(
         "Alaska",
-        component.options
-      );
+        component.options as AutocompleteItem[]
+      ) as unknown as string[];
       expect((component.results[0] as { name: string }).name).toEqual("AK");
     });
 
@@ -598,8 +603,8 @@ describe("The Sam Autocomplete Component", () => {
       fixture.detectChanges();
       component.results = component.filterKeyValuePairs(
         "zzzzzz",
-        component.options
-      );
+        component.options as AutocompleteItem[]
+      ) as unknown as string[];
       expect(component.results).toEqual([]);
     });
 
@@ -795,45 +800,29 @@ describe("The Sam Autocomplete Component", () => {
 
     it("Should handle keyup", () => {
       component.hasFocus = true;
-      component.inputFocusHandler({
-        target: {
-          value: "",
-        },
-      });
+      component.inputFocusHandler({});
       component.results = ["aaa", "bbb"];
       fixture.detectChanges();
       //index -1 to 0
       component.onKeydown({
         key: "Down",
         code: "Down",
-        target: {
-          value: "",
-        },
       });
       //index 0 to 1
       component.onKeydown({
         key: "Down",
         code: "Down",
-        target: {
-          value: "",
-        },
       });
       fixture.detectChanges();
       //index 1 to 0
       component.onKeydown({
         key: "Up",
         code: "Up",
-        target: {
-          value: "",
-        },
       });
       fixture.detectChanges();
       component.onKeydown({
         key: "Enter",
         code: "Enter",
-        target: {
-          value: "",
-        },
       });
       expect(component.value).toBe("aaa");
       fixture.detectChanges();
@@ -843,9 +832,6 @@ describe("The Sam Autocomplete Component", () => {
       component.onKeydown({
         key: "Escape",
         code: "Escape",
-        target: {
-          value: "",
-        },
       });
       fixture.detectChanges();
       component.allowAny = true;
@@ -853,9 +839,6 @@ describe("The Sam Autocomplete Component", () => {
       component.onKeydown({
         key: "Enter",
         code: "Enter",
-        target: {
-          value: "",
-        },
       });
       fixture.detectChanges();
       expect(component.value).toBe("ccc");
@@ -873,17 +856,16 @@ describe("The Sam Autocomplete Component", () => {
       fixture.detectChanges();
 
       // Move down through the key/value list
-      component.onKeydown({ key: "Down", code: "Down", target: { value: "" } });
+      component.onKeydown({ key: "Down", code: "Down" });
       fixture.detectChanges();
-      component.onKeydown({ key: "Down", code: "Down", target: { value: "" } });
+      component.onKeydown({ key: "Down", code: "Down" });
       fixture.detectChanges();
       // Move back up
-      component.onKeydown({ key: "Up", code: "Up", target: { value: "" } });
+      component.onKeydown({ key: "Up", code: "Up" });
       fixture.detectChanges();
       component.onKeydown({
         key: "Enter",
         code: "Enter",
-        target: { value: "" },
       });
       fixture.detectChanges();
 
@@ -894,14 +876,13 @@ describe("The Sam Autocomplete Component", () => {
       component.hasFocus = true;
       component.results = ["aaa", "bbb"];
       fixture.detectChanges();
-      component.onKeydown({ key: "Down", code: "Down", target: { value: "" } });
+      component.onKeydown({ key: "Down", code: "Down" });
       fixture.detectChanges();
 
       const escSpy = vi.spyOn(component, "clearDropdown");
       component.onKeydown({
         key: "Escape",
         code: "Escape",
-        target: { value: "" },
       });
 
       expect(escSpy).toHaveBeenCalled();
@@ -918,7 +899,6 @@ describe("The Sam Autocomplete Component", () => {
       component.onKeydown({
         key: "Backspace",
         code: "Backspace",
-        target: { value: "" },
       });
 
       expect(component.results).toBe(null);
@@ -933,7 +913,6 @@ describe("The Sam Autocomplete Component", () => {
       const result = component.onKeydown({
         key: "Tab",
         code: "Tab",
-        target: { value: "" },
       });
 
       expect(result).toBe(undefined);
@@ -942,7 +921,7 @@ describe("The Sam Autocomplete Component", () => {
 
     it("Should populate results via a service-backed search after debounce", () => {
       vi.useFakeTimers();
-      const service = new AutocompleteService();
+      const service = new AutocompleteService<string | AutocompleteItem>();
       vi.spyOn(service, "fetch").mockReturnValue(of(["Alabama", "Alaska"]));
 
       fixture = TestBed.createComponent(SamAutocompleteComponent);
@@ -967,7 +946,7 @@ describe("The Sam Autocomplete Component", () => {
 
     it("Should surface a service error via requestError when the service-backed search fails", () => {
       vi.useFakeTimers();
-      const service = new AutocompleteService();
+      const service = new AutocompleteService<string | AutocompleteItem>();
       vi.spyOn(service, "fetch").mockReturnValue(
         throwError(() => new Error("boom"))
       );
@@ -996,7 +975,7 @@ describe("The Sam Autocomplete Component", () => {
 
     it("Should populate filteredKeyValuePairs via a service-backed search when a keyValueConfig is set", () => {
       vi.useFakeTimers();
-      const service = new AutocompleteService();
+      const service = new AutocompleteService<string | AutocompleteItem>();
       vi.spyOn(service, "fetch").mockReturnValue(
         of([{ name: "AL", value: "Alabama" }])
       );
@@ -1024,7 +1003,7 @@ describe("The Sam Autocomplete Component", () => {
     });
 
     it("Should populate results from an httpRequest observable (plain array)", () => {
-      const subject = new Subject<unknown>();
+      const subject = new Subject<Array<string | AutocompleteItem>>();
       component.options = undefined;
       component.httpRequest = subject;
       component.ngOnChanges({ httpRequest: true });
@@ -1035,7 +1014,7 @@ describe("The Sam Autocomplete Component", () => {
     });
 
     it("Should emit onto keyEvents when driven by an httpRequest with no autocompleteService", () => {
-      const subject = new Subject<unknown>();
+      const subject = new Subject<Array<string | AutocompleteItem>>();
       component.autocompleteService = null;
       component.options = undefined;
       component.httpRequest = subject;
@@ -1052,7 +1031,7 @@ describe("The Sam Autocomplete Component", () => {
     });
 
     it("Should populate filteredKeyValuePairs from an httpRequest observable (key/value array)", () => {
-      const subject = new Subject<unknown>();
+      const subject = new Subject<Array<string | AutocompleteItem>>();
       component.options = undefined;
       component.httpRequest = subject;
       component.ngOnChanges({ httpRequest: true });
@@ -1065,7 +1044,7 @@ describe("The Sam Autocomplete Component", () => {
     });
 
     it("Should route httpRequest errors to requestError", () => {
-      const subject = new Subject<unknown>();
+      const subject = new Subject<Array<string | AutocompleteItem>>();
       component.options = undefined;
       component.httpRequest =
         subject as unknown as typeof component.httpRequest;
@@ -1205,7 +1184,6 @@ describe("The Sam Autocomplete Component", () => {
       component.onKeydown({
         key: "Enter",
         code: "Enter",
-        target: { value: "" },
       });
 
       expect(component.innerValue).toBe("custom value");
@@ -1252,7 +1230,6 @@ describe("The Sam Autocomplete Component", () => {
         component.onKeydown({
           key: "Down",
           code: "Down",
-          target: { value: "" },
         });
         fixture.detectChanges();
       }
@@ -1260,7 +1237,7 @@ describe("The Sam Autocomplete Component", () => {
 
       // Now walk up past a category header boundary.
       for (let i = 0; i < 3; i++) {
-        component.onKeydown({ key: "Up", code: "Up", target: { value: "" } });
+        component.onKeydown({ key: "Up", code: "Up" });
         fixture.detectChanges();
       }
 
@@ -1275,12 +1252,11 @@ describe("The Sam Autocomplete Component", () => {
       component.results = ["Alabama", "Alaska"];
       fixture.detectChanges();
 
-      component.onKeydown({ key: "Down", code: "Down", target: { value: "" } });
+      component.onKeydown({ key: "Down", code: "Down" });
       fixture.detectChanges();
       component.onKeydown({
         key: "Enter",
         code: "Enter",
-        target: { value: "" },
       });
       fixture.detectChanges();
 
