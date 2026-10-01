@@ -6,8 +6,17 @@ import {
 } from "./models/SAMSDSAutocompleteServiceInterface";
 import { map } from "rxjs/operators";
 
+export interface HierarchicalDataItem {
+  id: string;
+  parentId: string | null;
+  name: string;
+  subtext: string;
+  type: string;
+  childCount?: number;
+}
+
 export class AutoCompleteSampleDataService implements SAMSDSAutocompleteServiceInterface {
-  private loadedData;
+  private loadedData: HierarchicalDataItem[];
   constructor() {
     const data = SampleAutoCompleteData;
     for (let i = 0; i < data.length; i++) {
@@ -24,7 +33,7 @@ export class AutoCompleteSampleDataService implements SAMSDSAutocompleteServiceI
   ): Observable<SAMSDSHiercarchicalServiceResult> {
     const itemIncrease = 25;
     const data = of(this.loadedData);
-    let itemsOb: Observable<object[]>;
+    let itemsOb: Observable<HierarchicalDataItem[]>;
     if (searchValue) {
       itemsOb = data.pipe(
         map((items) =>
@@ -38,7 +47,8 @@ export class AutoCompleteSampleDataService implements SAMSDSAutocompleteServiceI
     } else {
       itemsOb = data;
     }
-    const items: object[] = this.itemsListOutofObservable(itemsOb);
+    const items: HierarchicalDataItem[] =
+      this.itemsListOutofObservable(itemsOb);
     const totalItemCount = items.length;
 
     const maxSectionPosition = this.getMaxSectionPosition(
@@ -55,8 +65,10 @@ export class AutoCompleteSampleDataService implements SAMSDSAutocompleteServiceI
     return of(returnItem);
   }
 
-  private itemsListOutofObservable(itemsOb: any) {
-    let items: object[];
+  private itemsListOutofObservable(
+    itemsOb: Observable<HierarchicalDataItem[]>
+  ): HierarchicalDataItem[] {
+    let items: HierarchicalDataItem[];
     itemsOb.subscribe((result) => {
       items = result;
     });

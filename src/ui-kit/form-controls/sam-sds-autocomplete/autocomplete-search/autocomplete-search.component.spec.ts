@@ -468,13 +468,13 @@ describe("SamAutocompleteComponent", () => {
   });
 
   it("should handle registerOnChange", () => {
-    const item = {};
+    const item = () => {};
     component.registerOnChange(item);
     expect(component.propogateChange).toBe(item);
   });
 
   it("should handle registerOnTouched", () => {
-    const item = {};
+    const item = () => {};
     component.registerOnTouched(item);
     expect(component.onTouchedCallback).toBe(item);
   });
@@ -598,8 +598,10 @@ describe("SamAutocompleteComponent", () => {
 
   it("should clear the model and propagate the change on updateSingleModeFocusOutModel in single mode", () => {
     component.model.items = [{ id: "1", name: "Level 1" }];
-    let propagated: any;
-    component.registerOnChange((val) => (propagated = val));
+    let propagated: SAMSDSSelectedItemModel;
+    component.registerOnChange(
+      (val) => (propagated = val as SAMSDSSelectedItemModel)
+    );
     component.updateSingleModeFocusOutModel();
     expect(component.model.items.length).toBe(0);
     expect(propagated).toBe(component.model);
@@ -1221,7 +1223,7 @@ describe("SamAutocompleteComponent", () => {
     component.inputFocusHandler();
     tick();
     fixture.detectChanges();
-    const previous: any = { name: "prev" };
+    const previous: { name: string; highlighted?: boolean } = { name: "prev" };
     component["highlightedItem"] = previous;
     component["setHighlightedItem"](undefined);
     expect(previous.highlighted).toBe(false);
@@ -1231,7 +1233,10 @@ describe("SamAutocompleteComponent", () => {
     component.inputFocusHandler();
     tick();
     fixture.detectChanges();
-    const item: any = { name: "Level X", subtext: "Extra info" };
+    const item: { name: string; subtext: string } = {
+      name: "Level X",
+      subtext: "Extra info",
+    };
     component["setHighlightedItem"](item);
     expect(component.srOnlyText).toContain("Extra info");
   }));
@@ -1240,7 +1245,7 @@ describe("SamAutocompleteComponent", () => {
     component.inputFocusHandler();
     tick();
     fixture.detectChanges();
-    const item: any = { name: "Level X" };
+    const item: { name: string } = { name: "Level X" };
     component["setHighlightedItem"](item);
     expect(component.srOnlyText).toBe("Level X");
   }));

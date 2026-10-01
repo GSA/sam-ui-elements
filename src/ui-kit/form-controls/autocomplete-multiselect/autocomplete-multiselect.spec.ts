@@ -96,7 +96,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
       component.ngOnInit();
       const test = component.filterOptions("bbb");
       expect(test[0].length === 1).toBe(true);
-      expect(test[0][0].value).toBe("bbb");
+      expect((test[0][0] as { value?: string }).value).toBe("bbb");
     });
 
     it("should support categories", () => {
@@ -275,7 +275,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
         nativeElement: { focus: () => undefined },
       } as unknown as ElementRef;
       component.selectItem("Freeform");
-      expect(component.value[0].type).toBe("custom");
+      expect((component.value[0] as { type?: string }).type).toBe("custom");
       expect(component.value[0][component.keyValueConfig.valueProperty]).toBe(
         "Freeform"
       );
@@ -542,7 +542,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
       component.isFreeTextEnabled = true;
       component.searchText = "aaa";
       const nested = [{ key: "a", value: "aaa" }];
-      component["list"] = { 0: nested };
+      component["list"] = { 0: nested, categories: [] };
       component.value = [];
       expect(component.showResultsFreeText()).toBe(false);
     });
@@ -828,7 +828,9 @@ describe("The Sam Autocomplete Multiselect Component", () => {
         const results = fixture.nativeElement.querySelectorAll(
           "li.category-item, li.category-name"
         );
-        expect(results[0].innerText).toContain(component.options[0].value);
+        expect((results[0] as HTMLElement).innerText).toContain(
+          (component.options[0] as { value?: string }).value
+        );
       });
     });
 
@@ -878,7 +880,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
     it("Should select free text", () => {
       const text = "TEST ITEM";
       component.selectItem(text);
-      expect(component.value[0].type).toBe("custom");
+      expect((component.value[0] as { type?: string }).type).toBe("custom");
       expect(component.value[0][component.keyValueConfig.valueProperty]).toBe(
         text
       );
@@ -1065,7 +1067,7 @@ describe("The Sam Autocomplete Multiselect Component", () => {
         preventDefault: () => undefined,
       });
 
-      expect(component.value[0].type).toBe("custom");
+      expect((component.value[0] as { type?: string }).type).toBe("custom");
       expect(component.value[0][component.keyValueConfig.valueProperty]).toBe(
         "Nowhere"
       );

@@ -7,6 +7,7 @@ import {
   forwardRef,
   ChangeDetectorRef,
   inject,
+  Provider,
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { SAMSDSAutocompleteServiceInterface } from "./models/SAMSDSAutocompleteServiceInterface";
@@ -19,7 +20,7 @@ import {
 import { SAMSDSAutocompleteSearchConfiguration } from "./models/SAMSDSAutocompleteConfiguration";
 import { faSquare, faCircle, faTimes } from "@fortawesome/free-solid-svg-icons";
 
-const Autocomplete_Autocomplete_VALUE_ACCESSOR: any = {
+const Autocomplete_Autocomplete_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SAMSDSAutocompleteSearchComponent),
   multi: true,
@@ -52,7 +53,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
   /**
    * Allow to insert a customized template for suggestions to use
    */
-  @Input() itemTemplate: TemplateRef<any>;
+  @Input() itemTemplate: TemplateRef<unknown>;
 
   /**
    * The data model that has the selected item
@@ -145,7 +146,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
   /**
    * Stored Event for ControlValueAccessor
    */
-  public propogateChange: (_val: any) => void = () => null;
+  public propogateChange: (_val: unknown) => void = () => null;
 
   @Input()
   public disabled: boolean;
@@ -450,7 +451,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
   public getFlatElements() {
     const results = this.results;
     const flat = [];
-    const flatten = (array: any) => {
+    const flatten = (array: object[]) => {
       for (const i in array) {
         const item = array[i];
         flat.push(item);
@@ -551,7 +552,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
    *  return Item is already selected or not
    * @param result
    */
-  checkItemSelected(result: any) {
+  checkItemSelected(result: object) {
     const selectedItem = this.model.items.filter(
       (item) =>
         item[this.configuration.primaryKeyField] ===
@@ -681,7 +682,7 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
     this.srOnlyText = message;
   }
 
-  writeValue(obj: any): void {
+  writeValue(obj: unknown): void {
     if (obj instanceof SAMSDSSelectedItemModel) {
       this.model = obj as SAMSDSSelectedItemModel;
       this._changeDetectorRef.markForCheck();
@@ -704,11 +705,11 @@ export class SAMSDSAutocompleteSearchComponent implements ControlValueAccessor {
       : "";
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (_val: unknown) => void): void {
     this.propogateChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouchedCallback = fn;
   }
 

@@ -5,6 +5,7 @@ import {
   TemplateRef,
   forwardRef,
   inject,
+  Provider,
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { SAMSDSSelectedItemModel } from "../selected-result/models/sds-selectedItem.model";
@@ -19,7 +20,7 @@ import {
 } from "@angular/core";
 import { SAMSDSAutocompleteSearchComponent } from "../autocomplete-search/autocomplete-search.component";
 
-const Autocomplete_VALUE_ACCESSOR: any = {
+const Autocomplete_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => SAMSDSAutocompleteComponent),
   multi: true,
@@ -39,12 +40,12 @@ export class SAMSDSAutocompleteComponent implements ControlValueAccessor {
   /**
    * Allow to insert a customized template for suggestions results
    */
-  @Input() suggestionTemplate: TemplateRef<any>;
+  @Input() suggestionTemplate: TemplateRef<unknown>;
 
   /**
    * Allow to insert a customized template for selected items
    */
-  @Input() selectedItemTemplate: TemplateRef<any>;
+  @Input() selectedItemTemplate: TemplateRef<unknown>;
 
   /**
    * The data model that has the selected item
@@ -90,7 +91,7 @@ export class SAMSDSAutocompleteComponent implements ControlValueAccessor {
   // ControlValueAccessor (and Formly) is trying to update the value of the FormControl (our custom component) programatically
   // If there is a value we will just overwrite items
   // If there is no value we reset the items array to be empty
-  writeValue(value: any) {
+  writeValue(value: unknown) {
     if (
       value instanceof SAMSDSSelectedItemModel &&
       value.items &&
@@ -99,11 +100,15 @@ export class SAMSDSAutocompleteComponent implements ControlValueAccessor {
     ) {
       this.model.items = [...value.items];
       this.cd.markForCheck();
-    } else if (value && value.length && this.model.items !== value) {
+    } else if (
+      Array.isArray(value) &&
+      value.length &&
+      this.model.items !== value
+    ) {
       this.model.items = value;
       this.cd.markForCheck();
     } else {
-      const items = value && value.items ? value.items : [];
+      const items = value instanceof SAMSDSSelectedItemModel ? value.items : [];
       this.model = new SAMSDSSelectedItemModel(items);
       this.cd.markForCheck();
     }
@@ -127,12 +132,12 @@ export class SAMSDSAutocompleteComponent implements ControlValueAccessor {
   }
 
   // ControlValueAccessor hook that lets us call this._onChange(var) to let the form know our variable has changed (in this case model)
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (val: unknown) => void): void {
     this.onChange = fn;
   }
 
   // ControlValueAccessor hook (not used)
-  registerOnTouched(fn: any) {
+  registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 

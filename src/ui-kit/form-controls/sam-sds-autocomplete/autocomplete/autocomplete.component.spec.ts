@@ -90,13 +90,13 @@ describe("SAMSDSAutocompleteComponent", () => {
   });
 
   it("should handle registerOnChange", () => {
-    const item = {};
+    const item = () => {};
     component.registerOnChange(item);
     expect(component.onChange).toBe(item);
   });
 
   it("should handle registerOnTouched", () => {
-    const item = {};
+    const item = () => {};
     component.registerOnTouched(item);
     expect(component.onTouched).toBe(item);
   });
