@@ -14,6 +14,16 @@ name: Publish to npm
 # Until registration is complete, DRY_RUN defaults to true. DevSecOps must set
 # the release environment/repository variable DRY_RUN=false to enable a live
 # Release publish. No long-lived npm token is supported.
+#
+# Security model: values that originate outside this workflow file
+# (`vars.DRY_RUN`, `inputs.dry-run`, event metadata) are never interpolated
+# with `${{ }}` directly into a `run:` script body. Expression interpolation
+# is substituted into the script *text* before bash parses it, so a value
+# containing shell metacharacters would execute as code before any
+# validation in the script could reject it. Such values are passed through
+# a step's `env:` block instead and read as quoted shell variables. This
+# matters most in the `publish` job, which holds `id-token: write` for npm
+# Trusted Publishing.
 
 on:
   release:
@@ -91,17 +101,29 @@ jobs:
 
       - name: Determine dry-run mode
         id: mode
+        env:
+          # NEVER interpolate these with `${{ }}` inside the script body:
+          # expression interpolation is substituted into the script *text*
+          # before bash parses it, so a DRY_RUN value such as
+          # `true"; echo PWNED; #` would execute as a command before the
+          # boolean validation below could reject it. This job holds
+          # `id-token: write` for npm Trusted Publishing, so the blast
+          # radius is publish credentials. Read these as quoted shell
+          # variables instead.
+          EVENT_NAME: ${{ github.event_name }}
+          DISPATCH_DRY_RUN: ${{ inputs.dry-run }}
+          VARS_DRY_RUN: ${{ vars.DRY_RUN }}
         run: |
           # Manual dispatch is rehearsal-only. Only a full GitHub Release may
           # perform a live publish, controlled by repo/environment DRY_RUN.
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            DRY="${{ inputs.dry-run }}"
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            DRY="$DISPATCH_DRY_RUN"
             if [ "$DRY" != "true" ]; then
               echo "::error::workflow_dispatch runs must use dry-run=true. Publish a GitHub Release to run a live publish."
               exit 1
             fi
           else
-            DRY="${{ vars.DRY_RUN }}"
+            DRY="$VARS_DRY_RUN"
           fi
           DRY="${DRY:-true}"
           DRY="$(echo "$DRY" | tr '[:upper:]' '[:lower:]')"
